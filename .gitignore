@@ -1,0 +1,15 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+/.quarto/
+**/*.quarto_ipynb
+
+# Quarto working directory (stores temporary rendering files)
+/.quarto/
+
+# Rendered website output 
+/_site/
+
+.DS_Store

@@ -1,0 +1,4 @@
+---
+title: "24: Deviance Goodness of Fit Tests"
+---
+

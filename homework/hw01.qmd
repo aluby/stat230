@@ -1,0 +1,90 @@
+---
+title: "hw01"
+format: html
+---
+
+```{r}
+#| echo: false
+
+library(tidyverse)
+library(here)
+library(broom)
+```
+
+Due: Friday of Week 1 at start of class
+
+::: callout-important
+## Important! 
+
+I will add problems after each class day. Be sure to check back here after each class meeting for new problems.
+:::
+
+
+# Problem 1: Intro Stat review
+
+A 2021 article in *Pediatrics* ("Baby’s First Years: Design of a Randomized Controlled Trial of Poverty Reduction in the United States") describes the design of a study to measure the impact of poverty reduction on children's early development: 
+
+> A total of 1000 low-income mothers of newborns were enrolled in the study and began receiving a monthly unconditional cash gift for the first several years of their children’s lives. Mothers were randomly assigned to receive either a large monthly cash gift ($333) or a nominal monthly cash gift ($20). All monthly gifts are administered via debit card and can be freely spent with no restrictions. Baby’s First Years aims to answer whether poverty reduction in early childhood (1) improves children’s developmental outcomes and promotes healthier brain functioning, and (2) improves family functioning and better enables parents to support child development. 
+
+   (a) Why was it important to randomize amount of the cash gift in the study?
+
+   (b) Suppose the outcome variable $Y$ in a statistical analysis is a quantitative measure of child brain functioning. We then calculate the mean of the large gift group ($\bar{Y}_{large}$) and the small gift group ($\bar{Y}_{small}$). What would an appropriate hypothesis test be? (You only need to set up the hypotheses statements)
+
+  (c) If the researchers fail to reject the null hypothesis from (b), what type of error might they have made?
+  
+  (d) How could the researchers decrease the probability that they make the type of error in (c)?
+  
+# Problem 2: Regression
+
+One factor affecting water availability in Southern California is stream runoff from snowfall.
+If runoff could be predicted, engineers, planners, and policy makers could do their jobs more
+effectively because they would have an estimate as to how much water is entering the area.
+
+We have access to a data set compares the stream runoff (in acre-feet) of a river near Bishop,
+California (due east of San Jose) with snowfall (in inches) at a site in the Sierra Nevada
+mountains. For each of the following questions, assume that your audience is city water
+planners with moderate statistical training.
+
+```{r}
+#| echo: false
+runoff <- read_csv(here(here(), "data/runoff.csv"))
+```
+
+(a) Below is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).
+
+```{r}
+#| echo: false
+#| fig-width: 4
+#| fig-height: 3
+
+
+ggplot(runoff, aes(x = Precip, y = Runoff)) + 
+  geom_point() + 
+  theme_minimal() +
+  labs(
+    x = "Snowfall (inches)",
+    y = "Runoff (acre-feet)"
+  )
+```
+
+
+(b) Below is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.
+
+```{r}
+lm(Runoff ~ Precip, data = runoff) |> tidy()
+```
+
+
+(c)  Interpret the slope coefficient in the context of the problem. (Don’t forget to specify
+units.)
+
+(d) Interpret the intercept in the context of the problem. (Don’t forget to specify units.)
+
+(e) If one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t
+forget to specify units.)
+
+
+# Problem 3: TBA Wed
+
+# Problem 4: TBA Wed
+

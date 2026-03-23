@@ -1,0 +1,23 @@
+institute: "Carleton College <br> Stat 230 - Spring 2026"
+author: "Prof Amanda Luby"
+format:
+  revealjs:
+    theme: slides.scss
+    transition: fade
+    slide-number: true
+    chalkboard: true
+    highlight-style: a11y
+    code-block-border-left: "#00ccccff"
+    incremental: true
+    code-copy: true
+    scrollable: true
+editor: source
+execute:
+  freeze: auto
+  echo: true
+  warning: true
+engine: knitr
+knitr:
+  opts_chunk: 
+    R.options:
+      width: 80

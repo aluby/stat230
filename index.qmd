@@ -1,0 +1,5 @@
+---
+title: "Stat 230: Applied Regression Analysis"
+---
+
+This is the landing page for Amanda Luby's Stat230 course materials 

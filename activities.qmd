@@ -1,0 +1,6 @@
+---
+title: "Activities"
+listing: 
+  contents: activities # This must match your folder name exactly
+  type: table
+---

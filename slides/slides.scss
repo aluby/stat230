@@ -1,0 +1,104 @@
+/*-- scss:defaults --*/
+
+/* SCSS HEX Colors */
+$darkgreen: #003300;
+$dark-moss-green: #40531b;
+$text-muted: #464a53; /* Added for title slide author/institute */
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Gochi+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&display=swap');
+
+/* Quarto Variables */
+$font-family-sans-serif: "Source Sans Pro", sans-serif; /* Fixed name */
+$font-family-monospace: "Source Code Pro", monospace;
+$presentation-heading-font: "Merriweather", serif;
+$presentation-heading-color: $darkgreen;
+$link-color: $dark-moss-green;
+$code-block-font-size: 0.7em;
+$presentation-h2-font-size: 1.4em !default;
+$presentation-font-size-root: 36px !default;
+$presentation-title-slide-text-align: left;
+
+/*-- scss:rules --*/
+
+/* Base Typography Adjustments */
+details > summary {
+  font-size: 0.75em;
+  cursor: pointer; /* Makes it clear it is clickable */
+}
+
+.small { font-size: 0.75em; }
+.smallest { font-size: 0.5em; }
+.large { font-size: 1.5em; }
+.medium { font-size: 0.9em; }
+.center-align { text-align: center; }
+
+/* Title Slide Styling */
+#title-slide .title,
+#title-slide .subtitle {
+  font-weight: bold;
+  text-align: left;
+}
+
+#title-slide .author {
+  text-align: left;
+  color: $text-muted;
+}
+
+#title-slide .institute {
+  text-align: left;
+  padding-bottom: 10%; /* Swapped 200px for % to scale better on small screens */
+  color: $text-muted;
+}
+
+.reveal .quarto-title-block .quarto-title-authors .quarto-title-author {
+  background-color: transparent;
+}
+
+/* Custom Text Classes */
+.reveal .hand {
+  font-family: 'Gochi Hand', cursive;
+  font-size: 1.2em;
+}
+
+/* Modernized Task Box */
+.reveal .slide .task {
+  padding: 15px 20px;
+  margin: 15px 0;
+  border-left: solid 5px $darkgreen;
+  background-color: #e6f0e6; /* Lightened the green slightly for better contrast */
+  border-radius: 0 8px 8px 0; /* Rounded corners on the right */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Soft drop shadow */
+}
+
+/* Modernized Terminal/Popup Box */
+.reveal .slide .popup {
+  padding: 15px 20px;
+  margin: 15px 0;
+  border-left: solid 5px #a8a8a8;
+  background-color: #1e1e1e; /* Standard dark mode UI background */
+  color: #DCDCDC;
+  font-family: $font-family-monospace; /* Uses the variable defined above */
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Slide Backgrounds */
+.colorslide {
+  background-color: $darkgreen !important;
+  color: white !important; /* Ensure text is readable */
+}
+
+.colorslide h1, .colorslide h2, .colorslide h3, .colorslide h4 {
+  color: white !important; /* Ensure headers flip to white */
+}
+
+/* Code Block Polish */
+.reveal div.sourceCode {
+  border-radius: 8px; /* Rounded code blocks look much cleaner */
+  margin-bottom: 10px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
