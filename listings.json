@@ -1,0 +1,37 @@
+[
+  {
+    "listing": "/activities.html",
+    "items": [
+      "/activities/01-intro.html",
+      "/activities/02-SLR.html",
+      "/activities/03-r.html",
+      "/activities/04-prediction.html",
+      "/activities/05-diagnostics.html",
+      "/activities/06-transformations.html",
+      "/activities/08-polynomial.html",
+      "/activities/09-mlr.html",
+      "/activities/10-cat-predictors.html",
+      "/activities/11-tbd.html",
+      "/activities/12-tbd.html",
+      "/activities/13-tbd.html",
+      "/activities/14-tbd.html",
+      "/activities/15-tbd.html",
+      "/activities/18-odds.html",
+      "/activities/19-binary-logistic.html",
+      "/activities/20-logistic-inference.html",
+      "/activities/21-r-logistic.html",
+      "/activities/22-diagnostic-logistic.html",
+      "/activities/23-binomial-logistic.html",
+      "/activities/24-deviance.html",
+      "/activities/26-overdispersion.html",
+      "/activities/27-poisson.html",
+      "/activities/28-quasibinomial.html"
+    ]
+  },
+  {
+    "listing": "/slides.html",
+    "items": [
+      "/slides/slides-cheat-sheet.html"
+    ]
+  }
+]
