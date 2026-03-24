@@ -12,4 +12,6 @@
 # Rendered website output 
 /_site/
 
+/_freeze/
+
 .DS_Store
