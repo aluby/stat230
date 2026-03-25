@@ -1,4 +1,150 @@
 ---
-title: "01: Intro"
+title: "01: Intro Stats Review"
+format: 
+  html: default
+  pdf: default
 ---
 
+
+```{r}
+#| echo: false
+
+
+library(tidyverse)
+```
+
+Researchers examined the relationship between sleep duration and simple reaction time performance in healthy young adults in a controlled laboratory setting. 
+
+Sixty-five college-aged participants (ages 18-25) were recruited and randomly assigned to sleep either 4 hours per night (**low sleep**) or 8 hours per night (**high sleep**) over a one-week period. Each morning, participants completed a computerized simple reaction time task where they responded to visual stimuli as quickly as possible, with reaction times measured in milliseconds. The researchers are interested in whether there is a difference in reaction time for the low sleep vs the high sleep group. 
+
+|   | Sample size ($n$) | Sample mean ($\bar{x}$) | Sample SD ($s$) |
+|----|----|----|----|
+| **Low Sleep** | 33 | 390 ms | 45 ms |
+| **High Sleep** | 32 | 360 ms | 40 ms |
+
+1.  What is the null hypothesis for this test?
+
+::: {.content-visible when-format="html"}
+
+::: {.callout-tip collapse="true"}
+
+### Solution
+
+$H_0: \mu_1 = \mu_2$ (or $H_0: \mu_1 - \mu_2 = 0$)
+
+:::
+
+:::
+
+
+\vspace{1in}
+
+2.  What is the alternative hypothesis for this test?
+
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+$H_A: \mu_1 \neq \mu_2$ (two-sided)
+
+:::
+:::
+
+\vspace{1in}
+
+3.  The researchers conduct a two-sample t-test and report a test statistic of $t=2.84$. Below is a plot of the appropriate t-distribution for this test. Sketch how you would calculate the p-value for this situation.
+
+```{r}
+#| echo: false
+#| fig.height: 2.5
+#| fig.width: 4
+#| fig.align: center
+data.frame(x = seq(-4, 4, length = 100)) |>
+  ggplot(aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 20), linewidth = 1) +
+  labs(y = "Density", x = "t") +
+  theme_classic() +
+  theme(text = element_text(size=12))
+```
+
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+The p-value is equal to the area in the two tails beyond $2.5$ and $-2.5$.
+
+```{r}
+#| echo: false
+#| fig.height: 3
+#| fig.width: 6
+#| fig.align: center
+data.frame(x = seq(-4, 4, length = 100)) |>
+  ggplot(aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 20), linewidth = 1) +
+  stat_function(fun = dt, args = list(df = 20),
+                xlim = c(-4,-2.5),
+                geom = "area", fill = "blue", alpha = 0.6) +
+stat_function(fun = dt, args = list(df = 20),
+                xlim = c(2.5, 4),
+                geom = "area", fill = "blue", alpha = 0.6) +
+  labs(y = "Density", x = "t") +
+  theme_classic() +
+  theme(text = element_text(size=12))
+```
+
+:::
+:::
+
+
+4.  How did you calculate this p-value in your last statistics course?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+Answers will vary based on where you took intro stats. You may have used StatKey or a similar online app/calculator, you may have used R's `pt()` command, or you may have used a t-distribution table (we won't use tables in this class).
+:::
+:::
+
+\vspace{1in}
+
+
+5.  If the p-value you calculated was 0.02, what would you conclude about the null hypothesis?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+A p-value of 0.02 provides evidence against the null hypothesis. In other words, there is statistically discernible evidence of a difference in means between the two groups ($t=2.5$, p-value = 0.02).
+
+:::
+:::
+
+\vspace{1in}
+
+6.  Why did researchers randomly assign participants to a sleep condition?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+Random assignment helps to ensure that any confounding variables are evenly distributed across the different sleep conditions. This allows the researchers to make a causal conclusion about the effect of sleep duration on reaction time.
+
+:::
+:::
+
+\vspace{1in}
+
+
+7.  Can you generalize these results to all young adults in the U.S.? Why or why not?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+No, we cannot generalize these results to all young adults in the U.S. because it may not be representative of all young adults in the U.S. It we truly wanted to generalize to the entire population, then we should draw a random sample from the population of interest.
+
+:::
+:::

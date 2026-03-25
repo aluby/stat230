@@ -1,0 +1,26 @@
+---
+title: "Some guidelines for statistical writing"
+---
+
+# Avoid "AI tropes"
+
+These "tropes" are not how we talk to each other or write about our work naturally. When I see them, it signals AI use. 
+
+- "It's not X -- it's Y"
+- "Not X. Not Y. Just Z."
+- "The X? A Y."
+- Em-dash overuse
+- Short punchy fragments of sentences
+- Repeating the same sentence opening multiple times
+- Bold text/bullet points combinations
+- Overstating results; lack of uncertainty
+- Characters that can't be typed directly on a keyboard
+- Stating something is obvious, clear, or simple instead of proving it or providing justification
+- Listicle in a trench coat
+- "The same point, restated eight ways across 4000 words"
+- Inflating the stakes
+- Magic adverbs: "quietly", "deeply", "fundamentally"
+- Teacher-student dynamic ("let's break this down", "let's unpack this", ...)
+- Signposting conclusions 
+- Inventing labels 
+
