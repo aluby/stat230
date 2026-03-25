@@ -2,13 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Prof Amanda Luby">
 
-<title>10: Sampling Distributions with StatKey – stat230</title>
+<title>Some guidelines for statistical writing – stat230</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -73,10 +37,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -106,7 +70,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../styles.scss">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -133,16 +97,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../slides.html"> 
 <span class="menu-text">Slides</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../activities.html"> 
 <span class="menu-text">Activities</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -156,27 +120,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="activity-template.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#avoid-ai-tropes" id="toc-avoid-ai-tropes" class="nav-link active" data-scroll-target="#avoid-ai-tropes">Avoid “AI tropes”</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">10: Sampling Distributions with StatKey</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">Stat 230</p>
+<h1 class="title">Some guidelines for statistical writing</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Prof Amanda Luby </p>
-          </div>
-  </div>
     
   
     
@@ -187,47 +150,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>No R needed today! We’ll focus on concepts and intuition with StatKey</p>
-</div>
-</div>
-<p><strong>1. </strong> Use StatKey’s <strong>mean</strong> menu: <a href="https://www.lock5stat.com/StatKey/sampling_1_quant/sampling_1_quant.html" class="uri">https://www.lock5stat.com/StatKey/sampling_1_quant/sampling_1_quant.html</a> and select “Percent with internet access 3e (countries)”. Click “Show data table”.</p>
-<ol type="a">
-<li>What is each case?</li>
-<li>What is each variable?</li>
-<li>Do you think this dataset represents a population or a sample?</li>
-<li>Close the dataset viewer. Click “Generate 10 samples”. What does each dot represent?</li>
-<li>What happens to the shape, center, and spread of the sampling distribution as n increases? (You can use “Generate 1000 samples” to speed this up)</li>
-<li>Is there a number of samples where the distribution doesn’t change much?</li>
-</ol>
-<p><strong>2.</strong> Use StatKey’s <strong>proportion</strong> menu: <a href="https://www.lock5stat.com/StatKey/sampling_1_cat/sampling_1_cat.html" class="uri">https://www.lock5stat.com/StatKey/sampling_1_cat/sampling_1_cat.html</a> to answer the following. (a) Click the “edit proportion” button to change the population parameter p</p>
-<ol type="a">
-<li>Choose a value of p that is between .2 and .8. Describe how the shape, center, and spread of the sampling distribution changes as n increases</li>
-<li>Describe how the shape, center, and spread of the sampling distribution changes as p gets closer to 1</li>
-</ol>
-<p><strong>3.</strong> About 10% of the worldwide population is left-handed. A 200-seat lecture hall has been built with 15 rows (the number of seats in each row varies). Each row has a single “lefty seat” that has the built-in desk on the left rather than the right arm of the chair. In a class of 90 students, what’s the probability that there will not be enough seats for the left-handed students?</p>
-<ol type="a">
-<li>What number of left-handed students would have to be in the class for there to not be enough desks?</li>
-<li>Set up the sampling distribution using StatKey. What is p and n?</li>
-<li>Simulate 1000 samples. Use the results to estimate the probability.</li>
-<li>Now suppose there’s a class of 50 instead. Do you think this probability will be higher, lower, or about the same as (d)?</li>
-<li>Use StatKey to estimate the probability in (d). Are you surprised?</li>
-</ol>
-<p><strong>4.</strong> Explain the difference between (1) the distribution of a population, (2) the distribution of a sample, (3) the sampling distribution. Be sure to fill in these definitions in your note sheet.</p>
-<p>When you’re done, submit the answers to number 3 on gradescope. You only need to submit 1 per group.</p>
+<section id="avoid-ai-tropes" class="level1">
+<h1>Avoid “AI tropes”</h1>
+<p>These “tropes” are not how we talk to each other or write about our work naturally. When I see them, it signals AI use.</p>
+<ul>
+<li>“It’s not X – it’s Y”</li>
+<li>“Not X. Not Y. Just Z.”</li>
+<li>“The X? A Y.”</li>
+<li>Em-dash overuse</li>
+<li>Short punchy fragments of sentences</li>
+<li>Repeating the same sentence opening multiple times</li>
+<li>Bold text/bullet points combinations</li>
+<li>Overstating results; lack of uncertainty</li>
+<li>Characters that can’t be typed directly on a keyboard</li>
+<li>Stating something is obvious, clear, or simple instead of proving it or providing justification</li>
+<li>Listicle in a trench coat</li>
+<li>“The same point, restated eight ways across 4000 words”</li>
+<li>Inflating the stakes</li>
+<li>Magic adverbs: “quietly”, “deeply”, “fundamentally”</li>
+<li>Teacher-student dynamic (“let’s break this down”, “let’s unpack this”, …)</li>
+<li>Signposting conclusions</li>
+<li>Inventing labels</li>
+</ul>
 
 
-<!-- -->
-
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -301,60 +248,9 @@ Note
       });
       clipboardModal.on('success', onCopySuccess);
     }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
-    }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -680,41 +576,7 @@ Note
       }
     }
   });
-  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "10: Sampling Distributions with StatKey"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>No R needed today! We'll focus on concepts and intuition with StatKey</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>**1. ** Use StatKey’s **mean** menu: <span class="ot">&lt;https://www.lock5stat.com/StatKey/sampling_1_quant/sampling_1_quant.html&gt;</span> and select “Percent with internet access 3e (countries)”. Click “Show data table”. </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  (a) What is each case? </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  (a) What is each variable? </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  (a) Do you think this dataset represents a population or a sample? </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  (a) Close the dataset viewer. Click “Generate 10 samples”. What does each dot represent? </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  (a) What happens to the shape, center, and spread of the sampling distribution as n increases? (You can use “Generate 1000 samples” to speed this up) </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  (a) Is there a number of samples where the distribution doesn’t change much? </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>**2.** Use StatKey’s **proportion** menu: <span class="ot">&lt;https://www.lock5stat.com/StatKey/sampling_1_cat/sampling_1_cat.html&gt;</span> to answer the following.   (a) Click the “edit proportion” button to change the population parameter p</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  (a) Choose a value of p that is between .2 and .8. Describe how the shape, center, and spread of the sampling distribution changes as n increases</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  (a) Describe how the shape, center, and spread of the sampling distribution changes as p gets closer to 1</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>**3.** About 10% of the worldwide population is left-handed. A 200-seat lecture hall has been built with 15 rows (the number of seats in each row varies). Each row has a single "lefty seat" that has the built-in desk on the left rather than the right arm of the chair. In a class of 90 students, what’s the probability that there will not be enough seats for the left-handed students? </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  (a) What number of left-handed students would have to be in the class for there to not be enough desks? </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  (a) Set up the sampling distribution using StatKey. What is p and n? </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  (a) Simulate 1000 samples. Use the results to estimate the probability. </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  (a) Now suppose there’s a class of 50 instead. Do you think this probability will be higher, lower, or about the same as (d)? </span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  (a) Use StatKey to estimate the probability in (d). Are you surprised? </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>**4.** Explain the difference between (1) the distribution of a population, (2) the distribution of a sample, (3) the sampling distribution. Be sure to fill in these definitions in your note sheet. </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>When you’re done, submit the answers to number 3 on gradescope. You only need to submit 1 per group. </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+  </script>
 </div> <!-- /content -->
 
 

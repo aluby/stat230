@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About – stat230</title>
+<title>Stat230: Applied Regression Analysis – stat230</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -72,10 +37,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -105,7 +70,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.scss">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -132,16 +97,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="./slides.html"> 
 <span class="menu-text">Slides</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./activities.html"> 
 <span class="menu-text">Activities</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./syllabus.html" aria-current="page"> 
+<span class="menu-text">Syllabus</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -154,15 +119,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#course-description" id="toc-course-description" class="nav-link active" data-scroll-target="#course-description">Course Description</a></li>
+  <li><a href="#course-objectives" id="toc-course-objectives" class="nav-link" data-scroll-target="#course-objectives">Course Objectives</a></li>
+  <li><a href="#course-components" id="toc-course-components" class="nav-link" data-scroll-target="#course-components">Course Components</a>
+  <ul class="collapse">
+  <li><a href="#meetings" id="toc-meetings" class="nav-link" data-scroll-target="#meetings">Meetings</a></li>
+  <li><a href="#homework-assignments" id="toc-homework-assignments" class="nav-link" data-scroll-target="#homework-assignments">Homework Assignments</a></li>
+  <li><a href="#midterm-exams" id="toc-midterm-exams" class="nav-link" data-scroll-target="#midterm-exams">Midterm Exams</a></li>
+  <li><a href="#case-studies" id="toc-case-studies" class="nav-link" data-scroll-target="#case-studies">Case Studies</a></li>
+  <li><a href="#final-project" id="toc-final-project" class="nav-link" data-scroll-target="#final-project">Final Project</a></li>
+  <li><a href="#communication" id="toc-communication" class="nav-link" data-scroll-target="#communication">Communication</a></li>
+  </ul></li>
+  <li><a href="#grading-policies" id="toc-grading-policies" class="nav-link" data-scroll-target="#grading-policies">Grading Policies</a>
+  <ul class="collapse">
+  <li><a href="#regrade-requests" id="toc-regrade-requests" class="nav-link" data-scroll-target="#regrade-requests">Regrade requests</a></li>
+  <li><a href="#tokens" id="toc-tokens" class="nav-link" data-scroll-target="#tokens">Tokens</a></li>
+  <li><a href="#exam-revisions" id="toc-exam-revisions" class="nav-link" data-scroll-target="#exam-revisions">Exam revisions</a></li>
+  <li><a href="#case-study-revisions" id="toc-case-study-revisions" class="nav-link" data-scroll-target="#case-study-revisions">Case Study revisions</a></li>
+  </ul></li>
+  <li><a href="#academic-integrity" id="toc-academic-integrity" class="nav-link" data-scroll-target="#academic-integrity">Academic Integrity</a></li>
+  <li><a href="#diversity-and-inclusion" id="toc-diversity-and-inclusion" class="nav-link" data-scroll-target="#diversity-and-inclusion">Diversity and Inclusion</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a>
+  <ul class="collapse">
+  <li><a href="#professor-availability" id="toc-professor-availability" class="nav-link" data-scroll-target="#professor-availability">Professor availability</a></li>
+  <li><a href="#accomodations" id="toc-accomodations" class="nav-link" data-scroll-target="#accomodations">Accomodations</a></li>
+  <li><a href="#stat-lab" id="toc-stat-lab" class="nav-link" data-scroll-target="#stat-lab">Stat Lab</a></li>
+  <li><a href="#title-ix" id="toc-title-ix" class="nav-link" data-scroll-target="#title-ix">Title IX</a></li>
+  <li><a href="#take-care-of-yourself" id="toc-take-care-of-yourself" class="nav-link" data-scroll-target="#take-care-of-yourself">Take care of yourself</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="syllabus.pdf"><i class="bi bi-file-pdf"></i>Typst (syllabus)</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Stat230: Applied Regression Analysis</h1>
+<p class="subtitle lead">Spring 2026</p>
 </div>
 
 
@@ -179,15 +178,190 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>About this site</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<div class="boxed-text">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 50%">
+<col style="width: 20%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>MEETINGS:</strong></td>
+<td style="text-align: left;">MWF 5a</td>
+<td style="text-align: left;"><strong>CMC 306</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1:50-3 MW; 2:20-3:20 F</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>PROFESSOR:</strong></td>
+<td style="text-align: left;">Amanda Luby</td>
+<td style="text-align: left;"><strong>CMC 223</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">aluby@carleton</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>DROP-IN:</strong></td>
+<td style="text-align: left;">Mon 3-4pm</td>
+<td style="text-align: left;"><strong>CMC 307</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Tues 2-3</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Wed 9:30-10:30 (120 priority)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Fri 10-11 (230 priority)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Or by appointment!</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>WEBSITE:</strong></td>
+<td style="text-align: left;"><a href="https://moodle.carleton.edu">moodle.carleton.edu</a></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>TEXT:</strong></td>
+<td style="text-align: left;">TODO</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TODO</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>SOFTWARE:</strong></td>
+<td style="text-align: left;"><a href="https://maize.mathcs.carleton.edu">maize.mathcs.carleton.edu</a></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
+<section id="course-description" class="level1">
+<h1>Course Description</h1>
+<p>TODO</p>
+</section>
+<section id="course-objectives" class="level1">
+<h1>Course Objectives</h1>
+<p>TODO</p>
+</section>
+<section id="course-components" class="level1">
+<h1>Course Components</h1>
+<section id="meetings" class="level2">
+<h2 class="anchored" data-anchor-id="meetings">Meetings</h2>
+<p>There will be three course meetings per week (Mondays, Wednesdays, and Fridays). Daily attendance is expected. Course meetings will combine demonstrations using R, theoretical background, and in-class group exercises. TODO participation</p>
+</section>
+<section id="homework-assignments" class="level2">
+<h2 class="anchored" data-anchor-id="homework-assignments">Homework Assignments</h2>
+<p>Homework will be assigned once per week (typically dueFridays) and should be submitted on gradescope before class. There is an 8 hour grace period for each assignment. If you are ill or have an emergency, please contact me to arrange an alternative due date. Assignment submissions should be neatly written and scanned or submitted as a PDF file. You must show all work to receive credit.</p>
+</section>
+<section id="midterm-exams" class="level2">
+<h2 class="anchored" data-anchor-id="midterm-exams">Midterm Exams</h2>
+<p>A key part of statistical literacy is being able to recall concepts “on the fly”. I use in-class exams to assess your understanding of class material without access to resources. There will be two midterm exams — tentatively scheduled for <strong>TODO</strong>.</p>
+</section>
+<section id="case-studies" class="level2">
+<h2 class="anchored" data-anchor-id="case-studies">Case Studies</h2>
+<p><strong>TODO</strong></p>
+</section>
+<section id="final-project" class="level2">
+<h2 class="anchored" data-anchor-id="final-project">Final Project</h2>
+<p><strong>TODO</strong></p>
+</section>
+<section id="communication" class="level2">
+<h2 class="anchored" data-anchor-id="communication">Communication</h2>
+<p>Assignments, note sets, and grades will be posted on Moodle. We will also use Ed for announcements, discussion, and homework questions. Please use Ed for any homework or course content questions; email me privately with any personal matters (grade discussions, illness, emergency, etc.). Any time-sensitive announcements will be posted on Ed. It is your responsibility to make sure that your notification settings allow time-sensitive announcements to reach you.</p>
+</section>
+</section>
+<section id="grading-policies" class="level1">
+<h1>Grading Policies</h1>
+<p>Grades are an imperfect measure of learning, and no grading scheme will perfectly capture your “true” learning in this course. This grading scheme is designed to reward you for consistently participating, staying on top of the course material, and demonstrating proficiency with the content through in-class assessments.</p>
+<p>Final grades will be calculated as follows:</p>
+<ul>
+<li>15% Homework</li>
+<li>30% Exams (15% each)</li>
+<li>25% Final Project</li>
+<li>25% Case Studies (8.33% each)</li>
+<li>5% Attendance and participation in group work</li>
+</ul>
+<p>More than 5 absences from class will result in a 0% attendance and participation grade.</p>
+<p>Letter grades will be assigned based on the usual grading scale (A = 93% and above, A- = 90-92.9%, B+ = 88-89.9%, B = 83-87.9%, etc.).</p>
+<p><em>A note on the “genius myth”</em>: I’ve found that many carls buy into the “genius myth” when it comes to math/stat courses: that you need to be a “math person” and have some innate mathematical ability in order to do well. This could not be further from the truth! The best statisticians don’t necessarily have the “best” math or programming background, but are people that are able to formulate interesting questions and use math and programming to answer those questions. Many of the best statisticians I know became statisticians because they were initially interested in something else (biology, public health, psychology, neuroscience, physics, etc.) and realized that being able to answer important questions with data was not only valuable but fun and interesting. Being able to perform interesting statistical analyses is a skill that is learned, not an innate ability, and working hard at developing that skill is the point of this course.</p>
+<section id="regrade-requests" class="level2">
+<h2 class="anchored" data-anchor-id="regrade-requests">Regrade requests</h2>
+<p>Grading is often a tedious task, and the grading team will sometimes make mistakes. I am always happy to fix these mistakes, and gradescope makes it easy to do so. Regrade requests must be submitted on gradescope within two weekdays after an assignment or exam has been returned to you. Regrade requests are for administrative errors or obvious grading mistakes. I will not consider regrade requests for anything that applied to the entire class (e.g.&nbsp;“I think this mistake should only be worth 1 point instead of 2” or “I didn’t realize we had to do X”). If you submit two or more inappropriate regrade requests, I will not consider additional regrade requests from you for the remainder of the term. If you’re unsure whether you should file a regrade request or not, just ask! You are always welcome to discuss any grading questions with me in office hours.</p>
+</section>
+<section id="tokens" class="level2">
+<h2 class="anchored" data-anchor-id="tokens">Tokens</h2>
+<p>You have 5 tokens to use throughout the term. Tokens can be used for:</p>
+<ul>
+<li>a 48-hour extension on homework or case study due date</li>
+<li>revise a case study</li>
+<li>revise an exam</li>
+</ul>
+</section>
+<section id="exam-revisions" class="level2">
+<h2 class="anchored" data-anchor-id="exam-revisions">Exam revisions</h2>
+<p><strong>TODO</strong></p>
+<p>If you miss a class when there is an exam, then there are no revisions or makeups offered. If must miss an exam due to an illness or other last minute emergency, please let me know in advance to arrange an alternative.</p>
+</section>
+<section id="case-study-revisions" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-revisions">Case Study revisions</h2>
+<p><strong>TODO</strong></p>
+</section>
+</section>
+<section id="academic-integrity" class="level1">
+<h1>Academic Integrity</h1>
+<p>You are expected to follow Carleton’s <a href="https://www.carleton.edu/handbook/academics/?policy=329">policies regarding academic integrity</a>. I encourage you to discuss the homework problems with other humans and do background reading as needed. You should code and write up your solutions on your own. Exams must be done by yourself without communicating with others; all work must be your own. You should collaborate with your teammates on projects, and should use external resources for background research and debugging, but all work should be original and all sources should be properly cited. The use of textbook solution manuals (physical or online), course materials from other students, or materials from previous versions of this course are not allowed.</p>
+<p>Large-language models (e.g.&nbsp;ChatGPT, Gemini, etc.) should only be used for coding or debugging help after you’ve attempted to solve the problem on your own, and you should never type homework problems directly into a prompt. Copying, paraphrasing, summarizing, or submitting work generated by anyone but yourself without proper attribution is considered academic dishonesty (this includes output from LLMs).</p>
+<p>I also have a few rules in place to protect my intellectual property. You may not record my lectures using tools such as Otter.ai or upload any video or audio recordings to generate transcripts or study notes. You may not upload my course materials (slides, assignment prompts, note sets, etc.) into AI tools or homework help sites.</p>
+<p>“AI” tools are new for all of us and it’s OK to have questions about what is and isn’t appropriate. Please ask if you are unsure of whether or not your actions are complying with the assignment/quiz/project instructions. Always default to acknowledging any help received. Cases of suspected academic dishonesty are handled by the Provost’s Office and I am obligated to report any suspected violations of this policy.</p>
+</section>
+<section id="diversity-and-inclusion" class="level1">
+<h1>Diversity and Inclusion</h1>
+<p>We all come to class with different backgrounds and experiences, and this diversity makes our class environment richer. I value diversity and inclusion, and am committed to a climate of mutual respect and full participation in and out of the classroom. This class strives to be a learning environment that is usable, equitable, inclusive and welcoming, regardless of race, ethnicity, religion, gender and gender identities, sexual orientation, ability, socioeconomic background, and nationality. If you anticipate or experience any barriers to learning, please discuss your concerns with me.</p>
+</section>
+<section id="resources" class="level1">
+<h1>Resources</h1>
+<section id="professor-availability" class="level2">
+<h2 class="anchored" data-anchor-id="professor-availability">Professor availability</h2>
+<p>Please reach out to me if you have any questions! You can reach me on Ed, email, drop-in hours, or make an appointment. Ed is typically the best venue for homework/content questions outside of drop-in hours. I’ll respond to Ed messages at least 3 times each week day, and try to respond to emails within 48 hours You will receive responses faster on Ed than email. I am online irregularly over evenings and weekends to devote time to family and rest, and I hope that you also find time over the weekend to recharge and reset!</p>
+</section>
+<section id="accomodations" class="level2">
+<h2 class="anchored" data-anchor-id="accomodations">Accomodations</h2>
+<p>Carleton College is committed to providing equitable access to learning opportunities for all students. The Office of Accessibility Resources (Henry House, 107 Union Street) is the campus office that collaborates with students who have disabilities to provide and/or arrange reasonable accommodations. If you have, or think you may have, a disability, please contact OAR@carleton.edu to arrange a confidential discussion regarding equitable access and reasonable accommodations. You are also welcome to contact me privately to discuss your academic needs. However, all disability-related&nbsp;accommodations&nbsp;must be arranged, in advance, through OAR.</p>
+</section>
+<section id="stat-lab" class="level2">
+<h2 class="anchored" data-anchor-id="stat-lab">Stat Lab</h2>
+<p>The Stats Lab (CMC 304) offers drop-in help R/RStudio help sessions run by friendly and knowledgeable lab assistants from 7-10pm Sunday through Thursday evenings. To make the most of your time, attempt homework problems on your own beforehand and bring your class notes and lab manual as these are helpful references for both you and the lab assistant.</p>
+</section>
+<section id="title-ix" class="level2">
+<h2 class="anchored" data-anchor-id="title-ix">Title IX</h2>
+<p>Please be aware that all faculty are “responsible employees”, which means that if you tell me about a situation involving sexual harassment, sexual assault, dating violence, domestic violence, or stalking, I must share that information with the Title IX Coordinator. Although I have to make this notification, you will control how your case will be handled, including whether or not you wish to meet with the Title IX coordinator or pursue a formal complaint.</p>
+</section>
+<section id="take-care-of-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="take-care-of-yourself">Take care of yourself</h2>
+<p>Do your best to maintain a healthy lifestyle this term by wearing a mask when you’re sick, eating a vegetable every now and then, exercising, avoiding excessive drug and alcohol use, getting enough sleep, and taking some time to relax. Your physical and mental health is more important than your grade in this course. There are many helpful resources available on campus and an important part of the college experience is learning how to ask for help. For more information, see Student Health and Counseling (SHAC), the Office of Health Promotion, or the Office of the Chaplain. If you are experiencing physical or mental health symptoms as a result of coursework, please speak with me so we can address the problem together.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -263,7 +437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
