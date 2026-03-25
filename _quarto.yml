@@ -3,7 +3,9 @@ project:
 
 website:
   title: "stat230"
+  search: true
   navbar:
+    background: "#003300"
     left:
       - href: index.qmd
         text: Home
@@ -11,11 +13,12 @@ website:
         text: Slides
       - href: activities.qmd   # Adds the Activities tab
         text: Activities
-
+      - href: syllabus.qmd   # Adds the Activities tab
+        text: Syllabus
 format:
   html:
     theme:
       - cosmo
       - brand
-    css: styles.css
+    css: styles.scss
     toc: true

@@ -2,4 +2,38 @@
 title: "Stat 230: Applied Regression Analysis"
 ---
 
-This is the landing page for Amanda Luby's Stat230 course materials 
+Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in [Moodle](https://moodle.carleton.edu), this website hosts all of the slides, R coding activities, and reference materials.
+
+
+:::: {.columns}
+
+::: {.column width="45%"}
+### 👩‍🏫 Instructor Info
+
+**Amanda Luby** 
+
+- **Email:** <aluby@carleton.edu>
+- **Office:** CMC 223
+- **Office Hours:** in CMC 307
+    - Mon 3-4pm
+    - Tues 2-3pm
+    - Wed 9:30-10:30 (Stat120 priority)
+    - Fri 10-11 (Stat230 priority) 
+- **Individual Appointments**: [Google Cal](https://calendar.app.google/5gQeTJCHD5rUWYp56)
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="45%"}
+### 🚀 Getting Started
+Before our first class, please make sure you:
+
+1. **Bookmark** this website.
+2. **Sign up** for our Ed discussion board: <https://edstem.org/us/join/9uGcQg>
+3. Complete the **welcome survey**
+4. Review the [**full syllabus**](/syllabus.html)
+5. Make sure you can **access** <https://maize.mathcs.carleton.edu> with your Carleton credentials
+:::
+
+::::
