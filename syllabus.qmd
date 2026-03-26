@@ -1,6 +1,7 @@
 ---
 title: "Stat230: Applied Regression Analysis"
 subtitle: "Spring 2026"
+navbar: false
 execute:
   freeze: true
 typst-logo:

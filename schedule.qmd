@@ -1,6 +1,7 @@
 ---
 title: "Stat230: Applied Regression Analysis"
 subtitle: "Tentative Calendar - Spring 2026"
+navbar: false
 execute:
   freeze: true
 format: 
@@ -76,7 +77,7 @@ d |>
         stringr::str_replace_all("^|$", "**") |>
         md()
     }) |>
-  tab_options(table.font.size = 13) |>
-  opt_row_striping()
+  tab_options(table.font.size = 13) #|>
+  #opt_row_striping()
 ```
 
