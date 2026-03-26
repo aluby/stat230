@@ -1,0 +1,82 @@
+---
+title: "Stat230: Applied Regression Analysis"
+subtitle: "Tentative Calendar - Spring 2026"
+execute:
+  freeze: true
+format: 
+  html: default
+  pdf: 
+    pdf-engine: lualatex
+    mainfont: "Palatino"
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(googlesheets4)
+library(gt)
+library(tidyverse)
+gs4_deauth()
+d <- read_sheet("https://docs.google.com/spreadsheets/d/1AyvpFMtNRidAAaTjZ-iSJXE7VpgHBSRauv_TtiFEF_Y/edit?usp=sharing")
+
+```
+
+```{r}
+#| echo: false
+
+options(gt.html_tag_check = FALSE)
+
+d |>
+  select(week, dow, date, `reference reading`, topic, due) |>
+  rowwise() |>
+  gt() |>
+  fmt_date(date, date_style = 30) |>
+  sub_missing(columns = c(week, dow, date, `reference reading`, topic, due), missing_text = "") |>
+  cols_align(
+    align = "center", 
+    columns = c(week)
+  ) |>
+  cols_align(
+    align = "right", 
+    columns = c(date)
+  ) |>
+  cols_align(
+    align = "left", 
+    columns = c(topic, `reference reading`, due)
+  ) |>
+  tab_style(
+    style = cell_borders(
+      sides = "right",
+      color = "#D3D3D3",
+      style = "solid"
+    ),
+    locations = cells_body(
+      columns = c(date, topic, `reference reading`, due)
+    )
+  ) |>
+  fmt_markdown(
+    columns = c(topic, `reference reading`, due)
+  ) |>
+  cols_width(
+    week ~ px(45),
+    dow ~ px(30),
+    date ~ px(50), 
+    `reference reading` ~ px(150),
+    topic ~ px(200),
+    due ~ px(150)
+  ) |>
+  cols_label_with(fn = function(x) {
+      janitor::make_clean_names(x, case = "title") |>
+        toupper() |>
+        stringr::str_replace_all("^|$", "**") |>
+        md()
+    }) |>
+  tab_options(table.font.size = 13) |>
+  opt_row_striping()
+```
+

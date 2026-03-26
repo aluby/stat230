@@ -1,9 +1,8 @@
 #let boxed-text(body) = {
-  block(
-    width: 100%,
-    stroke: 0.5pt + black,
+  rect(
     inset: 10pt,
     radius: 4pt,
+    stroke: black,
     body
   )
 }

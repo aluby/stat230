@@ -16,3 +16,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Merriweather";
   color: #003300; 
 }
+
+/*-- scss:rules --*/
+
+.boxed-text {
+  border: 2px solid #333; /* Sets a 2px solid border with a dark grey color */
+  padding: 10px;          /* Adds 10px of space between the text and the border */
+  display: inline-block;  /* Optional: Makes the div behave like an inline element but with block properties,
+                             allowing it to wrap around the text content and not take up the full width.
+                             Use 'block' if you want it to take up the full available width. */
+  border-radius: 5px;     /* Optional: Adds rounded corners to the box */
+}
