@@ -9,12 +9,14 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: slides.qmd       # Adds the Slides tab
+      - href: slides.qmd      
         text: Slides
-      - href: activities.qmd   # Adds the Activities tab
+      - href: activities.qmd  
         text: Activities
-      - href: syllabus.qmd   # Adds the Activities tab
+      - href: syllabus.qmd   
         text: Syllabus
+      - href: schedule.qmd   
+        text: Schedule
 format:
   html:
     theme:
