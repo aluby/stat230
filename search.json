@@ -11,7 +11,7 @@
     "href": "syllabus.html",
     "title": "Stat230: Applied Regression Analysis",
     "section": "",
-    "text": "MEETINGS:\nMWF 5a\n1:50-3 MW; 2:20-3:20 F\nCMC 306\n\n\n\nPROFESSOR:\nAmanda Luby aluby@carleton\nCMC 223\n\n\n\nDROP-IN:\nMon 3-4pm Tues 2-3 Wed 9:30-10:30 (120 priority) Fri 10-11 (230 priority) Or by appointment!\nCMC 307\n\n\n\nWEBSITE:\nmoodle.carleton.edu\n\n\n\n\nTEXT:\nRegression Analysis by Example by A. Hadi | | Freely available through the Library |\n\n\n\n\nSOFTWARE:\nmaize.mathcs.carleton.edu"
+    "text": "MEETINGS:\nMWF 5a\n1:50-3 MW; 2:20-3:20 F\nCMC 306\n\n\n\nPROFESSOR:\nAmanda Luby aluby@carleton\nCMC 223\n\n\n\nDROP-IN:\nMon 3-4pm\nTues 2-3\nWed 9:30-10:30 (120 priority)\nFri 10-11 (230 priority)\nOr by appointment!\nCMC 307\n\n\n\nWEBSITE:\nmoodle.carleton.edu\n\n\n\n\nTEXT:\nRegression Analysis by Example by A. Hadi | | Freely available through the Library |\n\n\n\n\nSOFTWARE:\nmaize.mathcs.carleton.edu (R code)\ngradescope (homework)"
   },
   {
     "objectID": "syllabus.html#meetings",
@@ -273,207 +273,11 @@
     "text": "Acknowledgements\nThe movie example was adapted from Maria Tackett’s draft of Introduction to Regression Analysis: A Data Science Approach."
   },
   {
-    "objectID": "case-studies/stat-writing.html",
-    "href": "case-studies/stat-writing.html",
-    "title": "Some guidelines for statistical writing",
+    "objectID": "homework/hw01.html",
+    "href": "homework/hw01.html",
+    "title": "hw01",
     "section": "",
-    "text": "Avoid “AI tropes”\nThese “tropes” are not how we talk to each other or write about our work naturally. When I see them, it signals AI use.\n\n“It’s not X – it’s Y”\n“Not X. Not Y. Just Z.”\n“The X? A Y.”\nEm-dash overuse\nShort punchy fragments of sentences\nRepeating the same sentence opening multiple times\nBold text/bullet points combinations\nOverstating results; lack of uncertainty\nCharacters that can’t be typed directly on a keyboard\nStating something is obvious, clear, or simple instead of proving it or providing justification\nListicle in a trench coat\n“The same point, restated eight ways across 4000 words”\nInflating the stakes\nMagic adverbs: “quietly”, “deeply”, “fundamentally”\nTeacher-student dynamic (“let’s break this down”, “let’s unpack this”, …)\nSignposting conclusions\nInventing labels"
-  },
-  {
-    "objectID": "slides/slides02.html#section",
-    "href": "slides/slides02.html#section",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "",
-    "text": "Describe the scatterplot\nWrite the equation of the regression line\nInterpret the slope and intercept\nMake a prediction"
-  },
-  {
-    "objectID": "slides/slides02.html#q-describe-the-scatterplot",
-    "href": "slides/slides02.html#q-describe-the-scatterplot",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Q: Describe the scatterplot",
-    "text": "Q: Describe the scatterplot\n\n\n\n\n\n\nThere is a strong, positive, linear association between temperature and number of rides.\nThere is a moderate, positive, linear association between temperature and number of rides.\n\n\n\n\n\n\n\nThere is a moderate, positive, non-linear association between temperature and number of rides.\nThere is a moderate, positive, linear association between temperature and number of rides, but there are a few extreme outliers."
-  },
-  {
-    "objectID": "slides/slides02.html#q-write-the-equation-of-the-regression-line",
-    "href": "slides/slides02.html#q-write-the-equation-of-the-regression-line",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Q: Write the equation of the regression line",
-    "text": "Q: Write the equation of the regression line\n\nlm(rides ~ temp_actual, data = bikes) \n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nCoefficients:\n(Intercept)  temp_actual  \n   -2168.77        89.23  \n\n\nWhat is the equation of the regression line?"
-  },
-  {
-    "objectID": "slides/slides02.html#q-interpret-the-slope-in-context",
-    "href": "slides/slides02.html#q-interpret-the-slope-in-context",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Q: Interpret the slope in context",
-    "text": "Q: Interpret the slope in context\n\n\nFor every one degree increase in temperature, the model predicts an average decrease of 89.23 rides\nFor every one-degree decrease in temperature, the model predicts an average increase of 89.23 rides\nIf the daily temperature is 0, we’d expect 89.23 rides\nIf the temperature increases by one degree, it will cause an increase of 89.23 rides every day"
-  },
-  {
-    "objectID": "slides/slides02.html#q-make-a-prediction",
-    "href": "slides/slides02.html#q-make-a-prediction",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Q: Make a prediction",
-    "text": "Q: Make a prediction\nThe high temperature forecast tomorrow is 72 degrees F. What does the model predict for ridership?"
-  },
-  {
-    "objectID": "slides/slides02.html#simple-linear-regression-model",
-    "href": "slides/slides02.html#simple-linear-regression-model",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Simple Linear Regression Model",
-    "text": "Simple Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
-  },
-  {
-    "objectID": "slides/slides02.html#a-deterministic-model",
-    "href": "slides/slides02.html#a-deterministic-model",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "A deterministic model",
-    "text": "A deterministic model\n\n\\(Y_i = \\beta_0 + \\beta_1 x_i\\)\nNo uncertainty!"
-  },
-  {
-    "objectID": "slides/slides02.html#linear-regression-model",
-    "href": "slides/slides02.html#linear-regression-model",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Linear Regression Model",
-    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
-  },
-  {
-    "objectID": "slides/slides02.html#linear-regression-model-1",
-    "href": "slides/slides02.html#linear-regression-model-1",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Linear Regression Model",
-    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
-  },
-  {
-    "objectID": "slides/slides02.html#linear-regression-model-2",
-    "href": "slides/slides02.html#linear-regression-model-2",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Linear Regression Model",
-    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
-  },
-  {
-    "objectID": "slides/slides02.html#simple-linear-regression-model-1",
-    "href": "slides/slides02.html#simple-linear-regression-model-1",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Simple Linear Regression Model",
-    "text": "Simple Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)\n\n\nLinear relationship between \\(x\\) and \\(y\\)\nErrors are independent and identically distributed (iid)\nErrors are normally distributed\nErrors have mean 0\nVariance of the errors doesn’t depend on \\(x\\)"
-  },
-  {
-    "objectID": "slides/slides02.html#notation",
-    "href": "slides/slides02.html#notation",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Notation",
-    "text": "Notation\nMean function:\n\\(\\quad E(Y|X)=\\mu\\{Y|X\\} = \\beta_0 + \\beta_1 x_i\\)\n\nFitted model equation:\n\\(\\quad \\widehat{Y}_i = \\widehat{\\mu}\\{Y|X\\} = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x_i\\)"
-  },
-  {
-    "objectID": "slides/slides02.html#uncertainty-in-the-parameters",
-    "href": "slides/slides02.html#uncertainty-in-the-parameters",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Uncertainty in the parameters",
-    "text": "Uncertainty in the parameters"
-  },
-  {
-    "objectID": "slides/slides02.html#uncertainty-in-the-parameters-1",
-    "href": "slides/slides02.html#uncertainty-in-the-parameters-1",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Uncertainty in the parameters",
-    "text": "Uncertainty in the parameters"
-  },
-  {
-    "objectID": "slides/slides02.html#uncertainty-in-the-parameters-2",
-    "href": "slides/slides02.html#uncertainty-in-the-parameters-2",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Uncertainty in the parameters",
-    "text": "Uncertainty in the parameters"
-  },
-  {
-    "objectID": "slides/slides02.html#rest-of-today",
-    "href": "slides/slides02.html#rest-of-today",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Rest of today",
-    "text": "Rest of today\n\n\nOpen the SLR in R activity on Moodle and complete in your groups\nMake note of any questions\nChoose someone responsible for reporting out your answers"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stat 230: Applied Regression Analysis",
-    "section": "",
-    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
-  },
-  {
-    "objectID": "slides.html",
-    "href": "slides.html",
-    "title": "Slides",
-    "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#columns",
-    "href": "slides/slides-cheat-sheet.html#columns",
-    "title": "Slides Cheat Sheet",
-    "section": "Columns",
-    "text": "Columns\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#only-graph-from-code",
-    "href": "slides/slides-cheat-sheet.html#only-graph-from-code",
-    "title": "Slides Cheat Sheet",
-    "section": "Only graph from code",
-    "text": "Only graph from code"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#background-image-half",
-    "href": "slides/slides-cheat-sheet.html#background-image-half",
-    "title": "Slides Cheat Sheet",
-    "section": "Background Image (half)",
-    "text": "Background Image (half)\n\n\nWhat skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#full-size-image",
-    "href": "slides/slides-cheat-sheet.html#full-size-image",
-    "title": "Slides Cheat Sheet",
-    "section": "Full size image",
-    "text": "Full size image\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#background-image-full-size",
-    "href": "slides/slides-cheat-sheet.html#background-image-full-size",
-    "title": "Slides Cheat Sheet",
-    "section": "Background image (full size)",
-    "text": "Background image (full size)"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#countdown",
-    "href": "slides/slides-cheat-sheet.html#countdown",
-    "title": "Slides Cheat Sheet",
-    "section": "Countdown",
-    "text": "Countdown\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#table-column-widths",
-    "href": "slides/slides-cheat-sheet.html#table-column-widths",
-    "title": "Slides Cheat Sheet",
-    "section": "table column widths",
-    "text": "table column widths\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
-    "href": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
-    "title": "Slides Cheat Sheet",
-    "section": "Use of generative artificial intelligence (AI)",
-    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#linktask",
-    "href": "slides/slides-cheat-sheet.html#linktask",
-    "title": "Slides Cheat Sheet",
-    "section": "Link/task",
-    "text": "Link/task\n\nhttps://github.com/stat220-w25\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#handwriting-font",
-    "href": "slides/slides-cheat-sheet.html#handwriting-font",
-    "title": "Slides Cheat Sheet",
-    "section": "handwriting font",
-    "text": "handwriting font\n\nin case you don’t yet have a GitHub account…"
+    "text": "Due: Friday of Week 1 at start of class\n\n\n\n\n\n\nImportantImportant!\n\n\n\nI will add problems after each class day. Be sure to check back here after each class meeting for new problems.\n\n\n\nProblem 1: Intro Stat review\nA 2021 article in Pediatrics (“Baby’s First Years: Design of a Randomized Controlled Trial of Poverty Reduction in the United States”) describes the design of a study to measure the impact of poverty reduction on children’s early development:\n\nA total of 1000 low-income mothers of newborns were enrolled in the study and began receiving a monthly unconditional cash gift for the first several years of their children’s lives. Mothers were randomly assigned to receive either a large monthly cash gift ($333) or a nominal monthly cash gift ($20). All monthly gifts are administered via debit card and can be freely spent with no restrictions. Baby’s First Years aims to answer whether poverty reduction in early childhood (1) improves children’s developmental outcomes and promotes healthier brain functioning, and (2) improves family functioning and better enables parents to support child development.\n\n\nWhy was it important to randomize amount of the cash gift in the study?\nSuppose the outcome variable \\(Y\\) in a statistical analysis is a quantitative measure of child brain functioning. We then calculate the mean of the large gift group (\\(\\bar{Y}_{large}\\)) and the small gift group (\\(\\bar{Y}_{small}\\)). What would an appropriate hypothesis test be? (You only need to set up the hypotheses statements)\nIf the researchers fail to reject the null hypothesis from (b), what type of error might they have made?\nHow could the researchers decrease the probability that they make the type of error in (c)?\n\n\n\nProblem 2: Regression\nOne factor affecting water availability in Southern California is stream runoff from snowfall. If runoff could be predicted, engineers, planners, and policy makers could do their jobs more effectively because they would have an estimate as to how much water is entering the area.\nWe have access to a data set compares the stream runoff (in acre-feet) of a river near Bishop, California (due east of San Jose) with snowfall (in inches) at a site in the Sierra Nevada mountains. For each of the following questions, assume that your audience is city water planners with moderate statistical training.\n\nBelow is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).\n\n\n\n\n\n\n\n\n\n\n\nBelow is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.\n\n\nlm(Runoff ~ Precip, data = runoff) |&gt; tidy()\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)   27015.     3219.      8.39 1.93e-10\n2 Precip         3752.      216.     17.4  1.56e-20\n\n\n\nInterpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\nInterpret the intercept in the context of the problem. (Don’t forget to specify units.)\nIf one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t forget to specify units.)\n\n\n\nProblem 3: TBA Wed\n\n\nProblem 4: TBA Wed"
   },
   {
     "objectID": "slides/slides01.html#im-amanda-sheher",
@@ -602,11 +406,221 @@
     "text": "Before next class:\n\n\nReview solutions to activity on Moodle\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials\nSkim textbook chapters and come prepared for some simple linear regression next time!"
   },
   {
-    "objectID": "homework/hw01.html",
-    "href": "homework/hw01.html",
-    "title": "hw01",
+    "objectID": "slides/slides-cheat-sheet.html#columns",
+    "href": "slides/slides-cheat-sheet.html#columns",
+    "title": "Slides Cheat Sheet",
+    "section": "Columns",
+    "text": "Columns\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#only-graph-from-code",
+    "href": "slides/slides-cheat-sheet.html#only-graph-from-code",
+    "title": "Slides Cheat Sheet",
+    "section": "Only graph from code",
+    "text": "Only graph from code"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#background-image-half",
+    "href": "slides/slides-cheat-sheet.html#background-image-half",
+    "title": "Slides Cheat Sheet",
+    "section": "Background Image (half)",
+    "text": "Background Image (half)\n\n\nWhat skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#full-size-image",
+    "href": "slides/slides-cheat-sheet.html#full-size-image",
+    "title": "Slides Cheat Sheet",
+    "section": "Full size image",
+    "text": "Full size image\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#background-image-full-size",
+    "href": "slides/slides-cheat-sheet.html#background-image-full-size",
+    "title": "Slides Cheat Sheet",
+    "section": "Background image (full size)",
+    "text": "Background image (full size)"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#countdown",
+    "href": "slides/slides-cheat-sheet.html#countdown",
+    "title": "Slides Cheat Sheet",
+    "section": "Countdown",
+    "text": "Countdown\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#table-column-widths",
+    "href": "slides/slides-cheat-sheet.html#table-column-widths",
+    "title": "Slides Cheat Sheet",
+    "section": "table column widths",
+    "text": "table column widths\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
+    "href": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
+    "title": "Slides Cheat Sheet",
+    "section": "Use of generative artificial intelligence (AI)",
+    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#linktask",
+    "href": "slides/slides-cheat-sheet.html#linktask",
+    "title": "Slides Cheat Sheet",
+    "section": "Link/task",
+    "text": "Link/task\n\nhttps://github.com/stat220-w25\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#handwriting-font",
+    "href": "slides/slides-cheat-sheet.html#handwriting-font",
+    "title": "Slides Cheat Sheet",
+    "section": "handwriting font",
+    "text": "handwriting font\n\nin case you don’t yet have a GitHub account…"
+  },
+  {
+    "objectID": "slides.html",
+    "href": "slides.html",
+    "title": "Slides",
     "section": "",
-    "text": "Due: Friday of Week 1 at start of class\n\n\n\n\n\n\nImportantImportant!\n\n\n\nI will add problems after each class day. Be sure to check back here after each class meeting for new problems.\n\n\n\nProblem 1: Intro Stat review\nA 2021 article in Pediatrics (“Baby’s First Years: Design of a Randomized Controlled Trial of Poverty Reduction in the United States”) describes the design of a study to measure the impact of poverty reduction on children’s early development:\n\nA total of 1000 low-income mothers of newborns were enrolled in the study and began receiving a monthly unconditional cash gift for the first several years of their children’s lives. Mothers were randomly assigned to receive either a large monthly cash gift ($333) or a nominal monthly cash gift ($20). All monthly gifts are administered via debit card and can be freely spent with no restrictions. Baby’s First Years aims to answer whether poverty reduction in early childhood (1) improves children’s developmental outcomes and promotes healthier brain functioning, and (2) improves family functioning and better enables parents to support child development.\n\n\nWhy was it important to randomize amount of the cash gift in the study?\nSuppose the outcome variable \\(Y\\) in a statistical analysis is a quantitative measure of child brain functioning. We then calculate the mean of the large gift group (\\(\\bar{Y}_{large}\\)) and the small gift group (\\(\\bar{Y}_{small}\\)). What would an appropriate hypothesis test be? (You only need to set up the hypotheses statements)\nIf the researchers fail to reject the null hypothesis from (b), what type of error might they have made?\nHow could the researchers decrease the probability that they make the type of error in (c)?\n\n\n\nProblem 2: Regression\nOne factor affecting water availability in Southern California is stream runoff from snowfall. If runoff could be predicted, engineers, planners, and policy makers could do their jobs more effectively because they would have an estimate as to how much water is entering the area.\nWe have access to a data set compares the stream runoff (in acre-feet) of a river near Bishop, California (due east of San Jose) with snowfall (in inches) at a site in the Sierra Nevada mountains. For each of the following questions, assume that your audience is city water planners with moderate statistical training.\n\nBelow is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).\n\n\n\n\n\n\n\n\n\n\n\nBelow is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.\n\n\nlm(Runoff ~ Precip, data = runoff) |&gt; tidy()\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)   27015.     3219.      8.39 1.93e-10\n2 Precip         3752.      216.     17.4  1.56e-20\n\n\n\nInterpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\nInterpret the intercept in the context of the problem. (Don’t forget to specify units.)\nIf one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t forget to specify units.)\n\n\n\nProblem 3: TBA Wed\n\n\nProblem 4: TBA Wed"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "readings.html",
+    "href": "readings.html",
+    "title": "Readings",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nIntro Stat Review\n\n\n \n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 230: Applied Regression Analysis",
+    "section": "",
+    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
+  },
+  {
+    "objectID": "slides/slides02.html#section",
+    "href": "slides/slides02.html#section",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "",
+    "text": "Describe the scatterplot\nWrite the equation of the regression line\nInterpret the slope and intercept\nMake a prediction"
+  },
+  {
+    "objectID": "slides/slides02.html#q-describe-the-scatterplot",
+    "href": "slides/slides02.html#q-describe-the-scatterplot",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Describe the scatterplot",
+    "text": "Q: Describe the scatterplot\n\n\n\n\n\n\nThere is a strong, positive, linear association between temperature and number of rides.\nThere is a moderate, positive, linear association between temperature and number of rides.\n\n\n\n\n\n\n\nThere is a moderate, positive, non-linear association between temperature and number of rides.\nThere is a moderate, positive, linear association between temperature and number of rides, but there are a few extreme outliers."
+  },
+  {
+    "objectID": "slides/slides02.html#q-write-the-equation-of-the-regression-line",
+    "href": "slides/slides02.html#q-write-the-equation-of-the-regression-line",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Write the equation of the regression line",
+    "text": "Q: Write the equation of the regression line\n\nlm(rides ~ temp_actual, data = bikes) \n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nCoefficients:\n(Intercept)  temp_actual  \n   -2168.77        89.23  \n\n\nWhat is the equation of the regression line?"
+  },
+  {
+    "objectID": "slides/slides02.html#q-interpret-the-slope-in-context",
+    "href": "slides/slides02.html#q-interpret-the-slope-in-context",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Interpret the slope in context",
+    "text": "Q: Interpret the slope in context\n\n\nFor every one degree increase in temperature, the model predicts an average decrease of 89.23 rides\nFor every one-degree decrease in temperature, the model predicts an average increase of 89.23 rides\nIf the daily temperature is 0, we’d expect 89.23 rides\nIf the temperature increases by one degree, it will cause an increase of 89.23 rides every day"
+  },
+  {
+    "objectID": "slides/slides02.html#q-make-a-prediction",
+    "href": "slides/slides02.html#q-make-a-prediction",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Make a prediction",
+    "text": "Q: Make a prediction\nThe high temperature forecast tomorrow is 72 degrees F. What does the model predict for ridership?"
+  },
+  {
+    "objectID": "slides/slides02.html#simple-linear-regression-model",
+    "href": "slides/slides02.html#simple-linear-regression-model",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Simple Linear Regression Model",
+    "text": "Simple Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#a-deterministic-model",
+    "href": "slides/slides02.html#a-deterministic-model",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "A deterministic model",
+    "text": "A deterministic model\n\n\\(Y_i = \\beta_0 + \\beta_1 x_i\\)\nNo uncertainty!"
+  },
+  {
+    "objectID": "slides/slides02.html#linear-regression-model",
+    "href": "slides/slides02.html#linear-regression-model",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Linear Regression Model",
+    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#linear-regression-model-1",
+    "href": "slides/slides02.html#linear-regression-model-1",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Linear Regression Model",
+    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#linear-regression-model-2",
+    "href": "slides/slides02.html#linear-regression-model-2",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Linear Regression Model",
+    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#simple-linear-regression-model-1",
+    "href": "slides/slides02.html#simple-linear-regression-model-1",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Simple Linear Regression Model",
+    "text": "Simple Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)\n\n\nLinear relationship between \\(x\\) and \\(y\\)\nErrors are independent and identically distributed (iid)\nErrors are normally distributed\nErrors have mean 0\nVariance of the errors doesn’t depend on \\(x\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#notation",
+    "href": "slides/slides02.html#notation",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Notation",
+    "text": "Notation\nMean function:\n\\(\\quad E(Y|X)=\\mu\\{Y|X\\} = \\beta_0 + \\beta_1 x_i\\)\n\nFitted model equation:\n\\(\\quad \\widehat{Y}_i = \\widehat{\\mu}\\{Y|X\\} = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x_i\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#uncertainty-in-the-parameters",
+    "href": "slides/slides02.html#uncertainty-in-the-parameters",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Uncertainty in the parameters",
+    "text": "Uncertainty in the parameters"
+  },
+  {
+    "objectID": "slides/slides02.html#uncertainty-in-the-parameters-1",
+    "href": "slides/slides02.html#uncertainty-in-the-parameters-1",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Uncertainty in the parameters",
+    "text": "Uncertainty in the parameters"
+  },
+  {
+    "objectID": "slides/slides02.html#uncertainty-in-the-parameters-2",
+    "href": "slides/slides02.html#uncertainty-in-the-parameters-2",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Uncertainty in the parameters",
+    "text": "Uncertainty in the parameters"
+  },
+  {
+    "objectID": "slides/slides02.html#rest-of-today",
+    "href": "slides/slides02.html#rest-of-today",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Rest of today",
+    "text": "Rest of today\n\n\nOpen the SLR in R activity on Moodle and complete in your groups\nMake note of any questions\nChoose someone responsible for reporting out your answers"
+  },
+  {
+    "objectID": "case-studies/stat-writing.html",
+    "href": "case-studies/stat-writing.html",
+    "title": "Some guidelines for statistical writing",
+    "section": "",
+    "text": "Avoid “AI tropes”\nThese “tropes” are not how we talk to each other or write about our work naturally. When I see them, it signals AI use.\n\n“It’s not X – it’s Y”\n“Not X. Not Y. Just Z.”\n“The X? A Y.”\nEm-dash overuse\nShort punchy fragments of sentences\nRepeating the same sentence opening multiple times\nBold text/bullet points combinations\nOverstating results; lack of uncertainty\nCharacters that can’t be typed directly on a keyboard\nStating something is obvious, clear, or simple instead of proving it or providing justification\nListicle in a trench coat\n“The same point, restated eight ways across 4000 words”\nInflating the stakes\nMagic adverbs: “quietly”, “deeply”, “fundamentally”\nTeacher-student dynamic (“let’s break this down”, “let’s unpack this”, …)\nSignposting conclusions\nInventing labels"
+  },
+  {
+    "objectID": "readings/intro-review.html",
+    "href": "readings/intro-review.html",
+    "title": "Intro Stat Review",
+    "section": "",
+    "text": "If you’re looking for review material from Intro Stat, I recommend the following\n\nStat Quest Videos (optional - as needed)\nIntuitive explanations of Inference\n\n\n\n\n\n\n\n\nIntro to Modern Statistics (optional - as needed)\n\nCategorical data: IMS Ch 4\nQuantitative data: IMS Ch 5\nRandomization tests: IMS Ch 11\nBootstrapping: IMS Ch 12\nCentral Limit Theorem: IMS Ch 13"
   },
   {
     "objectID": "activities/01-intro.html",
