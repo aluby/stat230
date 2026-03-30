@@ -24,10 +24,15 @@ editor:
 | PROFESSOR: | Amanda Luby                               | CMC 223 |
 |            | aluby@carleton                            |         |
 +------------+-------------------------------------------+---------+
-| DROP-IN:   | Mon 3-4pm                                 | CMC 307 |
+| DROP-IN:   |                                           | CMC 307 |
+|            | Mon 3-4pm                                 |         |
+|            |                                           |         |
 |            | Tues 2-3                                  |         |
+|            |                                           |         |
 |            | Wed 9:30-10:30 (120 priority)             |         |
+|            |                                           |         |
 |            | Fri 10-11 (230 priority)                  |         |
+|            |                                           |         |
 |            | Or by appointment!                        |         |
 +------------+-------------------------------------------+---------+
 | WEBSITE:   | moodle.carleton.edu                       |         |
@@ -35,7 +40,10 @@ editor:
 | TEXT:      | Regression Analysis by Example by A. Hadi |         |
 |            | [Freely available through the Library](https://ebookcentral.proquest.com/lib/carleton-ebooks/detail.action?docID=7103682)      |         |
 +------------+-------------------------------------------+---------+
-| SOFTWARE:  | maize.mathcs.carleton.edu                 |         |
+| SOFTWARE:  |                                           |         |
+|            |  maize.mathcs.carleton.edu  (R code)      |         |
+|            |                                           |         |
+|            |  gradescope  (homework)                   |         |
 +------------+-------------------------------------------+---------+
 
 : {tbl-colwidths="[30,50,20]"}

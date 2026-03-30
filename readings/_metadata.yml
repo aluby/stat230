@@ -1,0 +1,18 @@
+subtitle: "Stat 230 - Spring 2026"
+engine: knitr
+execute:
+  freeze: auto
+  echo: true
+  warning: false
+  message: false
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+navbar: false
+format:
+  html: 
+    toc: true
+    urlcolor: blue
+    code_download: false
+    code-tools: false
+    

@@ -13,6 +13,8 @@ website:
         text: Slides
       - href: activities.qmd  
         text: Activities
+      - href: readings.qmd   
+        text: Readings
       - href: syllabus.qmd   
         text: Syllabus
       - href: schedule.qmd   

@@ -1,0 +1,6 @@
+---
+title: "Readings"
+listing: 
+  contents: readings 
+  type: table
+---

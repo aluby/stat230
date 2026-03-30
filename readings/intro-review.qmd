@@ -1,0 +1,31 @@
+---
+title: "Intro Stat Review"
+format: html
+---
+
+If you're looking for review material from Intro Stat, I recommend the following
+
+# Stat Quest Videos (optional - as needed)
+
+Intuitive explanations of Inference
+
+{{< video https://youtu.be/0oc49DyA3hU?si=Wom4S_wqPF72p4AK >}}
+
+{{< video https://youtu.be/5koKb5B_YWo?si=CnAAcsrYAjuq9p2_ >}}
+
+{{< video https://youtu.be/vemZtEM63GY?si=dsUKdR5sKwNxJo3c >}}
+
+{{< video https://youtu.be/bsZGt-caXO4?si=wOrMy7UjtvSCccmH >}}
+
+{{< video https://youtu.be/XNgt7F6FqDU?si=SpwqHtInEZWX0Gpd >}}
+
+{{< video https://youtu.be/TqOeMYtOc1w?si=6KHA0aBmKsfFdU4Y >}}
+
+# *Intro to Modern Statistics* (optional - as needed)
+
+- Categorical data: [IMS Ch 4](https://openintro-ims.netlify.app/explore-categorical) 
+- Quantitative data: [IMS Ch 5](https://openintro-ims.netlify.app/explore-numerical) 
+- Randomization tests: [IMS Ch 11](https://openintro-ims.netlify.app/foundations-randomization)
+- Bootstrapping: [IMS Ch 12](https://openintro-ims.netlify.app/foundations-bootstrapping)
+- Central Limit Theorem: [IMS Ch 13](https://openintro-ims.netlify.app/foundations-mathematical)
+
