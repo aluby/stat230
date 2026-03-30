@@ -102,3 +102,43 @@ details > summary {
   margin-bottom: 10px !important;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
+
+.reveal .slide .conceptest ol {
+  list-style: upper-alpha;
+  /* remove default bullets */
+  padding-left: 1em;
+  /* space for custom bullets */
+}
+
+.large {
+  font-size: 1.4em;
+}
+
+.huge {
+  font-size: 4em;
+}
+
+.medium2 {
+  font-size: 0.9em;
+}
+
+.medium {
+  font-size: 0.8em;
+}
+
+.small {
+  font-size: 0.75em;
+}
+
+.xsmall {
+  font-size: 0.6em;
+}
+
+.xxsmall {
+  font-size: 0.5em;
+}
+
+.xxxsmall {
+  font-size: 0.4em;
+}
+

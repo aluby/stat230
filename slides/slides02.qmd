@@ -1,0 +1,382 @@
+---
+title: Simple Linear Regression (SLR)
+subtitle: Day 02
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
+theme_set(notes_theme)
+```
+
+
+# Regression in Intro
+
+## 
+
+::::: columns
+::: {.column width="60%"}
+<br>
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 6
+#| fig.align: center
+#| out.width: 100%
+#| echo: false
+gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No. rides", color = "#003300", size = 1) |>
+  gf_lm(rides ~ temp_actual, size = 1.5, color = "#f15a31") 
+```
+:::
+
+::: {.column width="40%"}
+
+<br>
+
+-   Describe the scatterplot
+-   Write the equation of the regression line
+-   Interpret the slope and intercept
+-   Make a prediction
+:::
+:::::
+
+## Q: Describe the scatterplot
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 6
+#| fig.align: center
+#| out.width: 70%
+#| echo: false
+ gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No. rides", color = "#003300", size = 1) # |>
+#   gf_lm(rides ~ temp_actual, size = 1.5, color = "#f15a31") 
+```
+
+::::: columns
+::: {.column width="50%"}
+
+:::{.small}
+::: {.conceptest}
+1. There is a strong, positive, linear association between temperature and number of rides.
+
+2. There is a moderate, positive, linear association between temperature and number of rides.
+:::
+:::
+
+:::
+
+::: {.column width="50%"}
+
+
+:::{.small}
+::: {.conceptest}
+3. There is a moderate, positive, non-linear association between temperature and number of rides.
+
+4. There is a moderate, positive, linear association between temperature and number of rides, but there are a few extreme outliers.
+:::
+:::
+
+:::
+:::::
+
+
+## Q: Write the equation of the regression line
+
+```{r}
+#| echo: true
+
+
+lm(rides ~ temp_actual, data = bikes) 
+```
+
+What is the equation of the regression line?
+
+<br>
+
+
+## Q: Interpret the slope in context
+
+::: {.conceptest}
+1. For every one degree increase in temperature, the model predicts an average decrease of 89.23 rides
+
+1. For every one-degree decrease in temperature, the model predicts an average increase of 89.23 rides
+
+1. If the daily temperature is 0, we'd expect 89.23 rides
+
+1. If the temperature increases by one degree, it will cause an increase of 89.23 rides every day 
+:::
+
+
+## Q: Make a prediction
+
+The high temperature forecast tomorrow is 72 degrees F. What does the model predict for ridership?
+
+
+# Regression in Stat230
+
+## Simple Linear Regression Model
+
+$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)$
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 6
+#| fig.align: center
+#| echo: false
+
+
+library(ggdist)
+
+bike_lm <- lm(rides ~ temp_actual, data = bikes)
+bike_dsn <- data.frame(
+  temp_actual = c(50, 60, 70, 80),
+  yhat = predict(bike_lm, data.frame(temp_actual = c(50, 60, 70, 80))),
+  resid_sd = rep(sigma(bike_lm), 4)
+)
+
+
+ggplot(data = bikes, aes(x = temp_actual, y = rides)) +
+  geom_point(alpha = 0.4, size = 1.5, color = "#003300") +
+  geom_lm(color = "#f15a31") +
+  stat_slab(aes(x = temp_actual, ydist = "norm", arg1 = yhat, arg2 = resid_sd), data = bike_dsn, alpha = 0.4, inherit.aes = FALSE, scale = 0.6, fill = "#f15a31") +
+  xlab("Temperature") +
+  ylab("No. rides")
+```
+
+## A deterministic model
+
+- $Y_i = \beta_0 + \beta_1 x_i$
+
+- No uncertainty!
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 5
+#| fig.align: center
+
+bikes |>
+  ggplot(aes(x = temp_actual, y = rides)) +
+  # geom_point(alpha = 0.6, color = "#003069") +
+  geom_lm(color = "#f15a31") +
+  labs(x = "Temperature", y = "No. rides") 
+```
+
+## Linear Regression Model
+
+$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)$
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 5
+#| fig.align: center
+
+ bike_lm <- lm(rides ~ temp_actual, data = bikes)
+ bike_dsn <- data.frame(
+   temp_actual = c(50, 60, 70, 80),
+   yhat = predict(bike_lm, data.frame(temp_actual = c(50, 60, 70, 80))),
+   resid_sd = rep(sigma(bike_lm), 4)
+ )
+
+# mod <- lm(Head ~ Mass, data = blue_jays_male)
+# 
+# blue_jay_dsn <- 
+#   tibble(
+#     Mass = c(60, 65, 70, 75, 80),
+#     yhat = predict(mod, newdata = data.frame(Mass = c(60, 65, 70, 75, 80))),
+#     resid_sd = sigma(mod)
+#   )
+
+bikes |>
+  ggplot(aes(x = temp_actual, y = rides)) +
+  stat_slab(aes(x = temp_actual, ydist = "norm", arg1 = yhat, arg2 = resid_sd), data = bike_dsn, alpha = 0.4, inherit.aes = FALSE, scale = 0.6, fill = "#f15a31") +
+  geom_lm(color = "#f15a31") +
+  labs(x = "Temperature", y = "No. rides") 
+```
+
+## Linear Regression Model
+
+$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)$
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 5
+#| fig.align: center
+
+predict_head <- function(n, x) {
+  rnorm(n, mean = predict( bike_lm , data.frame(temp_actual = x)), sd = sigma( bike_lm ))
+}
+
+set.seed(1234)
+
+mod_sims <- tibble(
+  temp_actual = rep( c(50, 60, 70, 80), each = 20),
+  rides = c(predict_head(20, 50), predict_head(20, 60), predict_head(20, 70), predict_head(20, 80))
+)
+
+p <- bikes |>
+  ggplot(aes(x = temp_actual, y = rides)) +
+  stat_slab(aes(x = temp_actual, ydist = "norm", arg1 = yhat, arg2 = resid_sd), 
+            data = bike_dsn, alpha = 0.4, inherit.aes = FALSE, scale = 0.6, fill = "#f15a31") +
+  geom_point(data = mod_sims, aes(temp_actual, rides), inherit.aes = FALSE, alpha = 0.4, color = "#003300") +
+  geom_lm(color = "#f15a31") +
+  labs(x = "Temperature", y = "No. rides") 
+p
+```
+
+## Linear Regression Model
+
+$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)$
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 5
+#| fig.align: center
+
+bikes |>
+  ggplot(aes(x = temp_actual, y = rides)) +
+  geom_point(alpha = 0.6, color = "#003300") +
+  geom_lm(color = "#f15a31") +
+  labs(x = "Temperature", y = "No. rides") 
+```
+
+## Simple Linear Regression Model
+
+$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)$
+
+<br>
+
+-   Linear relationship between $x$ and $y$
+-   Errors are independent and identically distributed (iid)
+-   Errors are normally distributed
+-   Errors have mean 0
+-   Variance of the errors doesn't depend on $x$
+
+## Notation
+
+Mean function:
+
+$\quad E(Y|X)=\mu\{Y|X\} = \beta_0 + \beta_1 x_i$
+
+<br>
+
+Fitted model equation:
+
+$\quad \widehat{Y}_i = \widehat{\mu}\{Y|X\} = \widehat{\beta}_0 + \widehat{\beta}_1 x_i$
+
+## Uncertainty in the parameters
+
+```{r}
+#| echo: false
+#| fig.height: 2.5
+#| fig.width: 6
+
+set.seed(1234)
+
+boots <- bootstraps(bikes, times = 20, apparent = TRUE)
+
+fit_lm_on_bootstrap <- function(split) {
+    lm(rides ~ temp_actual, data = analysis(split))
+}
+
+boot_models <-
+  boots |>
+  mutate(model = map(splits, fit_lm_on_bootstrap),
+         coef_info = map(model, tidy))
+
+boot_coefs <- 
+  boot_models %>% 
+  unnest(coef_info) |>
+  select(-std.error, -statistic, -p.value) |>
+  pivot_wider(names_from = term, values_from = estimate)
+
+boot_aug3 <- 
+  boot_models %>% 
+  slice(1:3) %>% 
+  mutate(augmented = map(model, augment)) %>% 
+  unnest(augmented)
+
+labels <- c("Bootstrap01" = "Sample 1", "Bootstrap02" = "Sample 2", "Bootstrap03" = "Sample 3")
+
+ggplot(boot_aug3, aes(temp_actual, rides)) +
+  geom_point(alpha = 0.6) +
+  geom_line(aes(y = .fitted, group = id), col = "#00aeef") +
+  facet_wrap(~id, labeller = as_labeller(labels)) +
+  labs(x = "Temperature", y = "No. rides") 
+```
+
+## Uncertainty in the parameters
+
+```{r}
+#| echo: false
+#| fig.height: 3
+#| fig.width: 5
+hop <- 
+  ggplot(data = boot_coefs) +
+  geom_abline(aes(slope = temp_actual, intercept = `(Intercept)`, group = id), color = "#00aeef", size = 0.5) +
+  geom_point(data = bikes, aes(temp_actual, rides), color = "grey60", inherit.aes = FALSE) +
+  labs(x = "Temperature", y = "No. rides") +
+  theme(
+    strip.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = unit(0, "pt"),
+    # plot.margin = margin(7, 1.5, 3.5, 1.5)
+  ) +
+  # panel_border() +
+  transition_states(id, 0, 1) +
+  shadow_mark(future = TRUE, color = "gray50", alpha = 1/20)
+
+animate(hop)
+```
+
+## Uncertainty in the parameters
+
+```{r}
+#| echo: false
+#| fig.width: 5
+#| fig.height: 3
+ggplot(data = boot_coefs) +
+  geom_abline(aes(slope = temp_actual, intercept = `(Intercept)`, group = id), color = "#0072B2", size = 0.5, alpha = 0.2) +
+  # theme_dviz_grid() +
+  geom_point(data = bikes, aes(temp_actual, rides), color = "grey60", inherit.aes = FALSE) +
+  theme(
+    # strip.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = unit(0, "pt"),
+    plot.margin = margin(7, 1.5, 3.5, 1.5)
+  ) +
+  labs(x = "Temperature", y = "No. rides") 
+```
+
+## Rest of today
+
+::: {.task .nonincremental}
+- Open the SLR in R activity on Moodle and complete in your groups
+- Make note of any questions
+- Choose someone responsible for reporting out your answers
+:::

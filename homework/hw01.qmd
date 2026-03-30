@@ -1,6 +1,10 @@
 ---
 title: "hw01"
 format: html
+execute: 
+  echo: true
+  message: false
+  warning: false
 ---
 
 ```{r}

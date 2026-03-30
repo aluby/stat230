@@ -47,6 +47,8 @@ library(lubridate)
 :::
 :::::
 
+# 👋 I'm Noah
+
 ## Proud of/ Nervous about {.center}
 
 ## In groups of 2-3
@@ -61,8 +63,6 @@ library(lubridate)
 
 countdown::countdown(8)
 ```
-
-## Course prefect
 
 ## What is this class about?
 
@@ -91,7 +91,7 @@ p1 <- ggplot(d1, aes(x = calls, y = temp)) +
 d2 <- tibble(
   sqft = runif(100, 1000, 4000),
   pool = sample(c("Yes", "No"), 100, replace = TRUE),
-  price = 50000 + 150 * sqft + ifelse(pool == "Yes", 40000, 0) + rnorm(100, 0, 20000)
+  price = 50000 + 150 * sqft + ifelse(pool == "Yes", 40000, 0) + rnorm(100, 0, 100000)
 )
 
 p2 <- ggplot(d2, aes(x = sqft, y = price, color = pool)) +
@@ -215,14 +215,16 @@ p4
 
 ::: {.task .nonincremental}
 
-Talk through the answers to the worksheet
+- Work through the questions on the handout together
+- Choose a person who will write assigned answer(s) on the board
+- Make a note of any questions you're not sure about
 
 :::
 
 ```{r}
 #| echo: false
 
-countdown::countdown(8)
+countdown::countdown(15)
 ```
 
 # Syllabus highlights
@@ -241,9 +243,10 @@ Read the full syllabus by next class
 -   submit assignments
 -   access through moodle to automatically enroll
 
-### <https://aluby.github.io/stat230>
+### Ed
 
--   where all materials will be hosted
+-   contact Amanda
+-   get homework help
 
 ## Office hours (*tentative*)
 
@@ -262,7 +265,7 @@ Read the full syllabus by next class
 
 -   Homework
 -   Case Studies
--   Quizzes
+-   Exams
 -   Final Project
 :::
 
@@ -270,7 +273,7 @@ Read the full syllabus by next class
 **Ungraded work:**
 
 -   Prepare for class
--   Review textbook after class
+-   Read textbook
 -   Practice problems
 -   Attend and engage in class
 :::
@@ -305,6 +308,14 @@ Read the full syllabus by next class
 ::::::
 
 ## Grading
+
+- 15% Homework
+- 30% Exams (10% each)
+- 25% Final Project
+- 25% Case Studies (8.33% each)
+- 5% Attendance and participation in group work
+    - 5+ absences &rarr; 0%
+-   Letter grades will be assigned based on the usual grading scale (A = 93%+, A- = 90-92.9%, B+ = 88-89.9%, B = 83-87.9, etc.)
 
 ## Tokens
 
@@ -347,7 +358,7 @@ I will track balances in the moodle gradebook (updated weekly, typically Fridays
 
 -   **❌ AI tools for editing:** AI has a distinct writing style that I do not care for, especially when it comes to statistical writing. If your reports have an AI-generated flavor, you will not earn a good grade, even if you wrote it yourself
 
--   **✅ AI tools for background reading:** AI companies have stolen teaching material from some of the best educators in the world! If you don't understand something from class and the homework, first try reading the textbook. If you still don't understand, you can ask AI to explain *the concept* (not a specific problem) in more detail.  
+-   **✅ AI tools for background reading:** AI companies have stolen teaching material from some of the best educators in the world! If you don't understand something from class and the homework, first try reading the textbook. If you still don't understand, you can ask AI to explain *the concept* (not a specific problem) in more detail. It won't always be right; always default to the textbook or course material if you encounter conflicting explanations. 
 
 :::
 
@@ -360,9 +371,7 @@ I will track balances in the moodle gradebook (updated weekly, typically Fridays
 Source: DeLuca, L. S. et al (2025). [Developing Students’ Statistical Expertise Through Writing in the Age of AI](https://doi.org/10.1080/26939169.2025.2497547). *Journal of Statistics and Data Science Education*, 33(3), 266–278.
 :::
 
-## Wrap-up
-
-Before next class: 
+## Before next class: 
 
 ::: {.task .nonincremental}
 1. Review solutions to activity on Moodle
