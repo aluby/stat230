@@ -73,7 +73,7 @@ data.frame(x = seq(-4, 4, length = 100)) |>
 ::: {.callout-tip collapse="true"}
 ### Solution
 
-The p-value is equal to the area in the two tails beyond $2.5$ and $-2.5$.
+The p-value is equal to the area in the two tails beyond $2.84$ and $-2.84$.
 
 ```{r}
 #| echo: false
@@ -84,10 +84,10 @@ data.frame(x = seq(-4, 4, length = 100)) |>
   ggplot(aes(x = x)) +
   stat_function(fun = dt, args = list(df = 20), linewidth = 1) +
   stat_function(fun = dt, args = list(df = 20),
-                xlim = c(-4,-2.5),
+                xlim = c(-4,-2.84),
                 geom = "area", fill = "blue", alpha = 0.6) +
 stat_function(fun = dt, args = list(df = 20),
-                xlim = c(2.5, 4),
+                xlim = c(2.84, 4),
                 geom = "area", fill = "blue", alpha = 0.6) +
   labs(y = "Density", x = "t") +
   theme_classic() +
