@@ -221,30 +221,6 @@ window.Quarto = {
 </header>
 
 
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'ggplot2' was built under R version 4.5.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tidyr' was built under R version 4.5.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'readr' was built under R version 4.5.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.6
-✔ forcats   1.0.0     ✔ stringr   1.6.0
-✔ ggplot2   4.0.1     ✔ tibble    3.3.0
-✔ lubridate 1.9.4     ✔ tidyr     1.3.2
-✔ purrr     1.2.0     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
-here() starts at /Users/aluby/github-repos/stat230</code></pre>
-</div>
-</div>
 <p>Due: Friday of Week 1 at start of class</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -276,17 +252,6 @@ here() starts at /Users/aluby/github-repos/stat230</code></pre>
 <h1>Problem 2: Regression</h1>
 <p>One factor affecting water availability in Southern California is stream runoff from snowfall. If runoff could be predicted, engineers, planners, and policy makers could do their jobs more effectively because they would have an estimate as to how much water is entering the area.</p>
 <p>We have access to a data set compares the stream runoff (in acre-feet) of a river near Bishop, California (due east of San Jose) with snowfall (in inches) at a site in the Sierra Nevada mountains. For each of the following questions, assume that your audience is city water planners with moderate statistical training.</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 43 Columns: 2
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-dbl (2): Precip, Runoff
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
 <ol type="a">
 <li>Below is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).</li>
 </ol>
@@ -303,7 +268,7 @@ dbl (2): Precip, Runoff
 <li>Below is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Runoff <span class="sc">~</span> Precip, <span class="at">data =</span> runoff) <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Runoff <span class="sc">~</span> Precip, <span class="at">data =</span> runoff) <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic  p.value

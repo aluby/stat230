@@ -4,7 +4,7 @@
     "href": "activities.html",
     "title": "Activities",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\n01: Intro Stats Review\n\n\n \n\n\n\n\n\n\n02: SLR\n\n\n \n\n\n\n\n\n\n03: Intro to R for Regression\n\n\n \n\n\n\n\n\n\n04: Prediction for SLR\n\n\n \n\n\n\n\n\n\n05: Diagnostics\n\n\n \n\n\n\n\n\n\n06: Transformations and Interpretations\n\n\n \n\n\n\n\n\n\n08: Polynomial Regression\n\n\n \n\n\n\n\n\n\n09: Intro to Multiple Regression\n\n\n \n\n\n\n\n\n\n10: Categorical Predictors\n\n\n \n\n\n\n\n\n\n11: TBD\n\n\n \n\n\n\n\n\n\n12: TBD\n\n\n \n\n\n\n\n\n\n13: tbd\n\n\n \n\n\n\n\n\n\n14: TBD\n\n\n \n\n\n\n\n\n\n15: tbd\n\n\n \n\n\n\n\n\n\n18: Odds, Odds Ratio, Chi-square\n\n\n \n\n\n\n\n\n\n19: Binary Logistic Regression\n\n\n \n\n\n\n\n\n\n20: Inference for Logistic Regression\n\n\n \n\n\n\n\n\n\n21: R for Logistic Regression\n\n\n \n\n\n\n\n\n\n22: Diagnostics for Logistic Regression\n\n\n \n\n\n\n\n\n\n23: Binomial Logistic Regression\n\n\n \n\n\n\n\n\n\n24: Deviance Goodness of Fit Tests\n\n\n \n\n\n\n\n\n\n26: Overdispersion\n\n\n \n\n\n\n\n\n\n27: Intro to Poisson Regression\n\n\n \n\n\n\n\n\n\n28: Quasibinomial Logistic Regression\n\n\n \n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\n01: Intro Stats Review\n\n\n \n\n\n\n\n\n\n02: Intro to R for Regression\n\n\n \n\n\n\n\n\n\n03: Inference for SLR\n\n\n \n\n\n\n\n\n\n04: Prediction for SLR\n\n\n \n\n\n\n\n\n\n05: Diagnostics\n\n\n \n\n\n\n\n\n\n06: Transformations and Interpretations\n\n\n \n\n\n\n\n\n\n08: Polynomial Regression\n\n\n \n\n\n\n\n\n\n09: Intro to Multiple Regression\n\n\n \n\n\n\n\n\n\n10: Categorical Predictors\n\n\n \n\n\n\n\n\n\n11: TBD\n\n\n \n\n\n\n\n\n\n12: TBD\n\n\n \n\n\n\n\n\n\n13: tbd\n\n\n \n\n\n\n\n\n\n14: TBD\n\n\n \n\n\n\n\n\n\n15: tbd\n\n\n \n\n\n\n\n\n\n18: Odds, Odds Ratio, Chi-square\n\n\n \n\n\n\n\n\n\n19: Binary Logistic Regression\n\n\n \n\n\n\n\n\n\n20: Inference for Logistic Regression\n\n\n \n\n\n\n\n\n\n21: R for Logistic Regression\n\n\n \n\n\n\n\n\n\n22: Diagnostics for Logistic Regression\n\n\n \n\n\n\n\n\n\n23: Binomial Logistic Regression\n\n\n \n\n\n\n\n\n\n24: Deviance Goodness of Fit Tests\n\n\n \n\n\n\n\n\n\n26: Overdispersion\n\n\n \n\n\n\n\n\n\n27: Intro to Poisson Regression\n\n\n \n\n\n\n\n\n\n28: Quasibinomial Logistic Regression\n\n\n \n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "syllabus.html",
@@ -119,11 +119,291 @@
     "text": "Take care of yourself\nDo your best to maintain a healthy lifestyle this term by wearing a mask when you’re sick, eating a vegetable every now and then, exercising, avoiding excessive drug and alcohol use, getting enough sleep, and taking some time to relax. Your physical and mental health is more important than your grade in this course. There are many helpful resources available on campus and an important part of the college experience is learning how to ask for help. For more information, see Student Health and Counseling (SHAC), the Office of Health Promotion, or the Office of the Chaplain. If you are experiencing physical or mental health symptoms as a result of coursework, please speak with me so we can address the problem together."
   },
   {
+    "objectID": "activities/02-r-live.html",
+    "href": "activities/02-r-live.html",
+    "title": "02: Intro to R for Regression",
+    "section": "",
+    "text": "In Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
+  },
+  {
+    "objectID": "activities/02-r-live.html#overview",
+    "href": "activities/02-r-live.html#overview",
+    "title": "02: Intro to R for Regression",
+    "section": "",
+    "text": "In Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
+  },
+  {
+    "objectID": "activities/02-r-live.html#loading-data",
+    "href": "activities/02-r-live.html#loading-data",
+    "title": "02: Intro to R for Regression",
+    "section": "Loading data",
+    "text": "Loading data\nToday we will work with the movies data set. The data set contains the critic’s score and the audience score for movie released in 2014-2015. The critic’s score is the percentage of critics who had a favorable view of the movie. Similarly, the audience score is the percentage of users who had a favorable view of the movie. Today, you’ll explore the relationship between the audience and critic scores.\nTo load data into R, we use the read.csv() command and pass in either a file path or URL in quotes. Below, the data are being loaded from the web. Click “Run code” to load the data.\n\n\n\n\n\n\n\n\nNotice that we use parentheses with functions and place the arguments for that function inside those parentheses.\n\n\n\n\n\n\nNote\n\n\n\nYou should notice that R did not appear to do anything when you ran the above code. That’s because everything was done in the background and R will only show you what is requested. So don’t panic if you don’t see any output!"
+  },
+  {
+    "objectID": "activities/02-r-live.html#getting-a-glimpse-of-the-data-set",
+    "href": "activities/02-r-live.html#getting-a-glimpse-of-the-data-set",
+    "title": "02: Intro to R for Regression",
+    "section": "Getting a glimpse of the data set",
+    "text": "Getting a glimpse of the data set\nThroughout the term I’ll refer to small pieces of code as “code chunks.” This is both descriptive and will be what RStudio (our interface) calls them later on. For today, we’ll focus on how to write small code chunks to accomplish specific tasks for simple linear regression.\nFor example, we might wish to get an overview of the data set by printing the first few rows via head()\n\n\n\n\n\n\n\n\nI prefer to use a different function, glimpse(), which is in the {dplyr} package. To load a package we first must run the library() command. The below code chunk loads this package and gives a “glimpse” of the movies data set:\n\n\n\n\n\n\n\n\n\nCheckpoint questions:\nUsing the output from the above code chunk, answer the following questions in the code box below:\n\nHow many rows are in the movies data set?\nHow many variables are in the movies data set? Are any categorical? Are any quantitative?"
+  },
+  {
+    "objectID": "activities/02-r-live.html#univariate-exploration",
+    "href": "activities/02-r-live.html#univariate-exploration",
+    "title": "02: Intro to R for Regression",
+    "section": "Univariate exploration",
+    "text": "Univariate exploration\nBefore jumping into a regression model, it can be useful to understand more about each variable. This can be accomplished using intro stat tools such as histograms and summary statistics.\nThe fastest way to get started is using the summary() function, which returns a brief set of summary statistics for each variable in the data set.\n\n\n\n\n\n\n\n\nR also has built-in functions to compute summary statistics one by one for a specific column. To “extract” a variable from the data set, we use a $. For example, we can extract the critics column from the movies data frame and calculate the standard deviation:\n\n\n\n\n\n\n\n\nOther useful summary statistics for quantitative variables include (here x denotes an extracted column):\n\n\n\nFunction\nSummary statistic\n\n\n\n\nmedian(x)\nmedian\n\n\nmean(x)\nmean\n\n\nvar(x)\nvariance\n\n\nIQR(x)\ninterquartile range\n\n\n\n\nTo create graphics in this course, I’ll often use the {ggformula} R package. All of the functions will begin with gf_ and have similar syntax. If you’re familiar with the {ggplot2} package, feel free to use it for this class, but many students like the “one-liners” that {ggformula} allows.\nTo begin, load the {ggformula} package using the library command:\n\n\n\n\n\n\n\n\nFor example, to create a histogram of the critic’s score we can run\n\n\n\n\n\n\n\n\nHere we use the ~ to tell R that critics is a variable in the data set. We must also specify data and adjust the number of bins as needed.\nSimilar syntax is used to create a boxplot\n\n\n\n\n\n\n\n\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nCalculate the mean audience score using the mean() function.\nCreate a histogram of the audience score and describe what you see.\nChange the number of bins for a histogram of audience. What number of bins seems “about right” in your opinion?"
+  },
+  {
+    "objectID": "activities/02-r-live.html#bivariate-exploration",
+    "href": "activities/02-r-live.html#bivariate-exploration",
+    "title": "02: Intro to R for Regression",
+    "section": "Bivariate exploration",
+    "text": "Bivariate exploration\n\nScatterplots\nIn this course we are interested in exploring relationships between variables. If we have two quantitative variables, then a scatterplot is a natural way to visually explore this relationship. To create a scatterplot we can use the gf_point() function (since scatterplots are just points):\n\n\n\n\n\n\n\n\nNotice that we put the response variable on the left of the ~ and the explanatory variable on the right.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nCreate a scatterplot where critics score is the response variable and audience score is the explanatory variable.\nYou can adjust the axis labels by adding an xlab or ylab argument. Add xlab = \"Your axis label\" and ylab = \"Your other axis label\" to your scatterplot and give more verbose axis labels.\n\n\n\n\nScatterplots with regression lines\nYou can also add a simple linear regression line to your scatterplot by adding a layer. To add a layer, we append the |&gt; pipe operator to the end of our gf_point() code and use the gf_lm() command to add a line:\n\n\n\n\n\n\n\n\n\n\nCorrelation\nIf you want a numeric summary of the strength of the linear association between two quantitative variables, then you can calculate the correlation. In R, you do this using the cor() function. Similar to calculating the mean, you need to extract the columns using $ as shown below:\n\n\n\n\n\n\n\n\n\nCheckpoint questions\nUse the below code box for the checkpoint question:\n\n\n\n\n\n\n\n\n\nSwap the order of the variables in the cor() command. Does the correlation change? Is this what you expected?"
+  },
+  {
+    "objectID": "activities/02-r-live.html#fitting-a-regression-model",
+    "href": "activities/02-r-live.html#fitting-a-regression-model",
+    "title": "02: Intro to R for Regression",
+    "section": "Fitting a regression model",
+    "text": "Fitting a regression model\nFinally, lets fit a simple linear regression model. To do this we use the lm() command (which stands for linear model). Here, we use the same syntax as when creating a scatterplot:\n\n\n\n\n\n\n\n\nWhen you run this command, R prints some very basic information about the SLR model.\nCheckpoint: What information do you get when you run the above command?\nOften, you will want to obtain more information than you get from simply printing the fitted model. The summary() function provides much more information. I recommend storing your fitted model as a named object (such as movie_lm) and then running the summary():\n\n\n\n\n\n\n\n\n\nCheckpoint question\nWhat information do you get when you run the above summary() command? If you’re not sure what something means, discuss it with your group and then ask about it in our debrief."
+  },
+  {
+    "objectID": "activities/02-r-live.html#constructing-confidence-intervals",
+    "href": "activities/02-r-live.html#constructing-confidence-intervals",
+    "title": "02: Intro to R for Regression",
+    "section": "Constructing confidence intervals",
+    "text": "Constructing confidence intervals\nThe table obtained by summary() contains all of the necessary information to conduct hypothesis tests for regression coefficients; however, it does not provide confidence intervals. To instruct R to construct a confidence interval for a regression coefficient, we can use the confint() function:\n\n\n\n\n\n\n\n\n\nCheckpoint questions\n\nWhat information do you get when you run the above confint() command?\nChange the level argument to construct a 90% confidence interval. How does the interval change?"
+  },
+  {
+    "objectID": "activities/02-r-live.html#making-predictions",
+    "href": "activities/02-r-live.html#making-predictions",
+    "title": "02: Intro to R for Regression",
+    "section": "Making predictions",
+    "text": "Making predictions\nTo make predictions, we use our fitted regression equation. While you can (and should be able to) do this by hand, you can also use R as your calculator.\nSuppose we can use our model to predict the audience score for more recent movies. Then we could predict the audience score for the Barbie Movie by running:\n\n\n\n\n\n\n\n\nHere, we first need to create a new data set with a column named identically to the original data set. Here we have a single column named critics with the value of the explanatory variable we want to use. Next, we use the predict() function, passing in the name of our model and the new data set we want to make predictions for.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nThe critics score for Asteroid City was 75. What is the expected audience score for this movie?\nThe actual (observed) value for Asteroid City was 62. Did the mode over- or under-predict the audience score?\nDo you think it’s reasonable to use our model to predict the audience score for movies released in 2023? Why or why not?\n\n\n\nMaking multiple predictions\nIf you want to make multiple predictions, then you can create a new data frame with multiple values for the explanatory variable. For example, we can use c(88, 75) to make a data frame with two values in the critics column:"
+  },
+  {
+    "objectID": "activities/02-r-live.html#function-quick-reference",
+    "href": "activities/02-r-live.html#function-quick-reference",
+    "title": "02: Intro to R for Regression",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nread.csv(\"file_path_or_URL\")\nLoad a CSV data set from a file or the web\n\n\nhead(data)\nPrint the first few rows of a data set\n\n\nglimpse(data)\nGet a quick overview of a data set (from {dplyr} package)\n\n\nsummary(data)\nGet summary statistics for each variable in a data set\n\n\nmean(x)\nCalculate the mean of a quantitative variable\n\n\nmedian(x)\nCalculate the median of a quantitative variable\n\n\nsd(x)\nCalculate the standard deviation of a quantitative variable\n\n\nvar(x)\nCalculate the variance of a quantitative variable\n\n\ngf_histogram(~x, data = data, bins = n)\nCreate a histogram of a quantitative variable (from {ggformula} package)\n\n\ngf_boxplot(~x, data = data)\nCreate a boxplot of a quantitative variable (from {ggformula} package)\n\n\ngf_point(y ~ x, data = data)\nCreate a scatterplot of two quantitative variables (from {ggformula} package)\n\n\ngf_lm()\nAdd a simple linear regression line to a scatterplot (from {ggformula} package)\n\n\ncor(x, y)\nCalculate the correlation between two quantitative variables\n\n\nlm(y ~ x, data = data)\nFit a simple linear regression model\n\n\nsummary(model)\nGet detailed information about a fitted regression model\n\n\nconfint(model, level = 0.95)\nConstruct a confidence interval for regression coefficients\n\n\npredict(model, newdata = new_data)\nMake predictions using a fitted regression model for new data"
+  },
+  {
+    "objectID": "activities/02-r-live.html#acknowledgements",
+    "href": "activities/02-r-live.html#acknowledgements",
+    "title": "02: Intro to R for Regression",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThe movie example was adapted from Maria Tackett’s draft of Introduction to Regression Analysis: A Data Science Approach."
+  },
+  {
+    "objectID": "activities/02-SLR.html",
+    "href": "activities/02-SLR.html",
+    "title": "02: Intro to R for Regression",
+    "section": "",
+    "text": "In Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
+  },
+  {
+    "objectID": "activities/02-SLR.html#overview",
+    "href": "activities/02-SLR.html#overview",
+    "title": "02: Intro to R for Regression",
+    "section": "",
+    "text": "In Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
+  },
+  {
+    "objectID": "activities/02-SLR.html#loading-data",
+    "href": "activities/02-SLR.html#loading-data",
+    "title": "02: Intro to R for Regression",
+    "section": "Loading data",
+    "text": "Loading data\nToday we will work with the movies data set. The data set contains the critic’s score and the audience score for movie released in 2014-2015. The critic’s score is the percentage of critics who had a favorable view of the movie. Similarly, the audience score is the percentage of users who had a favorable view of the movie. Today, you’ll explore the relationship between the audience and critic scores.\nTo load data into R, we use the read.csv() command and pass in either a file path or URL in quotes. Below, the data are being loaded from the web. Click “Run code” to load the data.\n\nmovies &lt;- read.csv(\"https://aloy.github.io/stat230-materials/data/movie_scores.csv\")\n\nNotice that we use parentheses with functions and place the arguments for that function inside those parentheses.\n\n\n\n\n\n\nNote\n\n\n\nYou should notice that R did not appear to do anything when you ran the above code. That’s because everything was done in the background and R will only show you what is requested. So don’t panic if you don’t see any output!"
+  },
+  {
+    "objectID": "activities/02-SLR.html#getting-a-glimpse-of-the-data-set",
+    "href": "activities/02-SLR.html#getting-a-glimpse-of-the-data-set",
+    "title": "02: Intro to R for Regression",
+    "section": "Getting a glimpse of the data set",
+    "text": "Getting a glimpse of the data set\nThroughout the term I’ll refer to small pieces of code as “code chunks.” This is both descriptive and will be what RStudio (our interface) calls them later on. For today, we’ll focus on how to write small code chunks to accomplish specific tasks for simple linear regression.\nFor example, we might wish to get an overview of the data set by printing the first few rows via head()\n\nhead(movies)\n\nI prefer to use a different function, glimpse(), which is in the {dplyr} package. To load a package we first must run the library() command. The below code chunk loads this package and gives a “glimpse” of the movies data set:\n\nlibrary(dplyr)\nglimpse(movies)\n\n\nCheckpoint questions:\nUsing the output from the above code chunk, answer the following questions in the code box below:\n\nHow many rows are in the movies data set?\nHow many variables are in the movies data set? Are any categorical? Are any quantitative?"
+  },
+  {
+    "objectID": "activities/02-SLR.html#univariate-exploration",
+    "href": "activities/02-SLR.html#univariate-exploration",
+    "title": "02: Intro to R for Regression",
+    "section": "Univariate exploration",
+    "text": "Univariate exploration\nBefore jumping into a regression model, it can be useful to understand more about each variable. This can be accomplished using intro stat tools such as histograms and summary statistics.\nThe fastest way to get started is using the summary() function, which returns a brief set of summary statistics for each variable in the data set.\n\nsummary(movies)\n\nR also has built-in functions to compute summary statistics one by one for a specific column. To “extract” a variable from the data set, we use a $. For example, we can extract the critics column from the movies data frame and calculate the standard deviation:\n\nsd(movies$critics)\n\nOther useful summary statistics for quantitative variables include (here x denotes an extracted column):\n\n\n\nFunction\nSummary statistic\n\n\n\n\nmedian(x)\nmedian\n\n\nmean(x)\nmean\n\n\nvar(x)\nvariance\n\n\nIQR(x)\ninterquartile range\n\n\n\n\nTo create graphics in this course, I’ll often use the {ggformula} R package. All of the functions will begin with gf_ and have similar syntax. If you’re familiar with the {ggplot2} package, feel free to use it for this class, but many students like the “one-liners” that {ggformula} allows.\nTo begin, load the {ggformula} package using the library command:\n\nlibrary(ggformula)\n\nFor example, to create a histogram of the critic’s score we can run\n\ngf_histogram(~critics, data = movies, bins = 10)\n\nHere we use the ~ to tell R that critics is a variable in the data set. We must also specify data and adjust the number of bins as needed.\nSimilar syntax is used to create a boxplot\n\ngf_boxplot(~critics, data = movies)\n\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nCalculate the mean audience score using the mean() function.\nCreate a histogram of the audience score and describe what you see.\nChange the number of bins for a histogram of audience. What number of bins seems “about right” in your opinion?"
+  },
+  {
+    "objectID": "activities/02-SLR.html#bivariate-exploration",
+    "href": "activities/02-SLR.html#bivariate-exploration",
+    "title": "02: Intro to R for Regression",
+    "section": "Bivariate exploration",
+    "text": "Bivariate exploration\n\nScatterplots\nIn this course we are interested in exploring relationships between variables. If we have two quantitative variables, then a scatterplot is a natural way to visually explore this relationship. To create a scatterplot we can use the gf_point() function (since scatterplots are just points):\n\ngf_point(audience ~ critics, data = movies)\n\nNotice that we put the response variable on the left of the ~ and the explanatory variable on the right.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nCreate a scatterplot where critics score is the response variable and audience score is the explanatory variable.\nYou can adjust the axis labels by adding an xlab or ylab argument. Add xlab = \"Your axis label\" and ylab = \"Your other axis label\" to your scatterplot and give more verbose axis labels.\n\n\n\n\nScatterplots with regression lines\nYou can also add a simple linear regression line to your scatterplot by adding a layer. To add a layer, we append the |&gt; pipe operator to the end of our gf_point() code and use the gf_lm() command to add a line:\n\ngf_point(audience ~ critics, data = movies) |&gt;\n  gf_lm()\n\n\n\nCorrelation\nIf you want a numeric summary of the strength of the linear association between two quantitative variables, then you can calculate the correlation. In R, you do this using the cor() function. Similar to calculating the mean, you need to extract the columns using $ as shown below:\n\ncor(movies$audience, movies$critics)\n\n\nCheckpoint questions\nUse the below code box for the checkpoint question:\n\n#| min-lines: 5\n\n\nSwap the order of the variables in the cor() command. Does the correlation change? Is this what you expected?"
+  },
+  {
+    "objectID": "activities/02-SLR.html#fitting-a-regression-model",
+    "href": "activities/02-SLR.html#fitting-a-regression-model",
+    "title": "02: Intro to R for Regression",
+    "section": "Fitting a regression model",
+    "text": "Fitting a regression model\nFinally, lets fit a simple linear regression model. To do this we use the lm() command (which stands for linear model). Here, we use the same syntax as when creating a scatterplot:\n\nlm(audience ~ critics, data = movies)\n\nWhen you run this command, R prints some very basic information about the SLR model.\nCheckpoint: What information do you get when you run the above command?\nOften, you will want to obtain more information than you get from simply printing the fitted model. The summary() function provides much more information. I recommend storing your fitted model as a named object (such as movie_lm) and then running the summary():\n\nmovie_lm &lt;- lm(audience ~ critics, data = movies)\nsummary(movie_lm)\n\n\nCheckpoint question\nWhat information do you get when you run the above summary() command? If you’re not sure what something means, discuss it with your group and then ask about it in our debrief."
+  },
+  {
+    "objectID": "activities/02-SLR.html#constructing-confidence-intervals",
+    "href": "activities/02-SLR.html#constructing-confidence-intervals",
+    "title": "02: Intro to R for Regression",
+    "section": "Constructing confidence intervals",
+    "text": "Constructing confidence intervals\nThe table obtained by summary() contains all of the necessary information to conduct hypothesis tests for regression coefficients; however, it does not provide confidence intervals. To instruct R to construct a confidence interval for a regression coefficient, we can use the confint() function:\n\nconfint(movie_lm, level = 0.95)\n\n\nCheckpoint questions\n\nWhat information do you get when you run the above confint() command?\nChange the level argument to construct a 90% confidence interval. How does the interval change?"
+  },
+  {
+    "objectID": "activities/02-SLR.html#making-predictions",
+    "href": "activities/02-SLR.html#making-predictions",
+    "title": "02: Intro to R for Regression",
+    "section": "Making predictions",
+    "text": "Making predictions\nTo make predictions, we use our fitted regression equation. While you can (and should be able to) do this by hand, you can also use R as your calculator.\nSuppose we can use our model to predict the audience score for more recent movies. Then we could predict the audience score for the Barbie Movie by running:\n\nbarbie_movie &lt;- data.frame(critics = 88)\npredict(movie_lm, newdata = barbie_movie)\n\nHere, we first need to create a new data set with a column named identically to the original data set. Here we have a single column named critics with the value of the explanatory variable we want to use. Next, we use the predict() function, passing in the name of our model and the new data set we want to make predictions for.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nThe critics score for Asteroid City was 75. What is the expected audience score for this movie?\nThe actual (observed) value for Asteroid City was 62. Did the mode over- or under-predict the audience score?\nDo you think it’s reasonable to use our model to predict the audience score for movies released in 2023? Why or why not?\n\n\n\nMaking multiple predictions\nIf you want to make multiple predictions, then you can create a new data frame with multiple values for the explanatory variable. For example, we can use c(88, 75) to make a data frame with two values in the critics column:\n\nnew_movies &lt;- data.frame(critics = c(88, 75))\npredict(movie_lm, newdata = new_movies)"
+  },
+  {
+    "objectID": "activities/02-SLR.html#function-quick-reference",
+    "href": "activities/02-SLR.html#function-quick-reference",
+    "title": "02: Intro to R for Regression",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nread.csv(\"file_path_or_URL\")\nLoad a CSV data set from a file or the web\n\n\nhead(data)\nPrint the first few rows of a data set\n\n\nglimpse(data)\nGet a quick overview of a data set (from {dplyr} package)\n\n\nsummary(data)\nGet summary statistics for each variable in a data set\n\n\nmean(x)\nCalculate the mean of a quantitative variable\n\n\nmedian(x)\nCalculate the median of a quantitative variable\n\n\nsd(x)\nCalculate the standard deviation of a quantitative variable\n\n\nvar(x)\nCalculate the variance of a quantitative variable\n\n\ngf_histogram(~x, data = data, bins = n)\nCreate a histogram of a quantitative variable (from {ggformula} package)\n\n\ngf_boxplot(~x, data = data)\nCreate a boxplot of a quantitative variable (from {ggformula} package)\n\n\ngf_point(y ~ x, data = data)\nCreate a scatterplot of two quantitative variables (from {ggformula} package)\n\n\ngf_lm()\nAdd a simple linear regression line to a scatterplot (from {ggformula} package)\n\n\ncor(x, y)\nCalculate the correlation between two quantitative variables\n\n\nlm(y ~ x, data = data)\nFit a simple linear regression model\n\n\nsummary(model)\nGet detailed information about a fitted regression model\n\n\nconfint(model, level = 0.95)\nConstruct a confidence interval for regression coefficients\n\n\npredict(model, newdata = new_data)\nMake predictions using a fitted regression model for new data"
+  },
+  {
+    "objectID": "activities/02-SLR.html#acknowledgements",
+    "href": "activities/02-SLR.html#acknowledgements",
+    "title": "02: Intro to R for Regression",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThe movie example was adapted from Maria Tackett’s draft of Introduction to Regression Analysis: A Data Science Approach."
+  },
+  {
     "objectID": "case-studies/stat-writing.html",
     "href": "case-studies/stat-writing.html",
     "title": "Some guidelines for statistical writing",
     "section": "",
     "text": "Avoid “AI tropes”\nThese “tropes” are not how we talk to each other or write about our work naturally. When I see them, it signals AI use.\n\n“It’s not X – it’s Y”\n“Not X. Not Y. Just Z.”\n“The X? A Y.”\nEm-dash overuse\nShort punchy fragments of sentences\nRepeating the same sentence opening multiple times\nBold text/bullet points combinations\nOverstating results; lack of uncertainty\nCharacters that can’t be typed directly on a keyboard\nStating something is obvious, clear, or simple instead of proving it or providing justification\nListicle in a trench coat\n“The same point, restated eight ways across 4000 words”\nInflating the stakes\nMagic adverbs: “quietly”, “deeply”, “fundamentally”\nTeacher-student dynamic (“let’s break this down”, “let’s unpack this”, …)\nSignposting conclusions\nInventing labels"
+  },
+  {
+    "objectID": "slides/slides02.html#section",
+    "href": "slides/slides02.html#section",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "",
+    "text": "Describe the scatterplot\nWrite the equation of the regression line\nInterpret the slope and intercept\nMake a prediction"
+  },
+  {
+    "objectID": "slides/slides02.html#q-describe-the-scatterplot",
+    "href": "slides/slides02.html#q-describe-the-scatterplot",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Describe the scatterplot",
+    "text": "Q: Describe the scatterplot\n\n\n\n\n\n\nThere is a strong, positive, linear association between temperature and number of rides.\nThere is a moderate, positive, linear association between temperature and number of rides.\n\n\n\n\n\n\n\nThere is a moderate, positive, non-linear association between temperature and number of rides.\nThere is a moderate, positive, linear association between temperature and number of rides, but there are a few extreme outliers."
+  },
+  {
+    "objectID": "slides/slides02.html#q-write-the-equation-of-the-regression-line",
+    "href": "slides/slides02.html#q-write-the-equation-of-the-regression-line",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Write the equation of the regression line",
+    "text": "Q: Write the equation of the regression line\n\nlm(rides ~ temp_actual, data = bikes) \n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nCoefficients:\n(Intercept)  temp_actual  \n   -2168.77        89.23  \n\n\nWhat is the equation of the regression line?"
+  },
+  {
+    "objectID": "slides/slides02.html#q-interpret-the-slope-in-context",
+    "href": "slides/slides02.html#q-interpret-the-slope-in-context",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Interpret the slope in context",
+    "text": "Q: Interpret the slope in context\n\n\nFor every one degree increase in temperature, the model predicts an average decrease of 89.23 rides\nFor every one-degree decrease in temperature, the model predicts an average increase of 89.23 rides\nIf the daily temperature is 0, we’d expect 89.23 rides\nIf the temperature increases by one degree, it will cause an increase of 89.23 rides every day"
+  },
+  {
+    "objectID": "slides/slides02.html#q-make-a-prediction",
+    "href": "slides/slides02.html#q-make-a-prediction",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Make a prediction",
+    "text": "Q: Make a prediction\nThe high temperature forecast tomorrow is 72 degrees F. What does the model predict for ridership?"
+  },
+  {
+    "objectID": "slides/slides02.html#simple-linear-regression-model",
+    "href": "slides/slides02.html#simple-linear-regression-model",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Simple Linear Regression Model",
+    "text": "Simple Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#a-deterministic-model",
+    "href": "slides/slides02.html#a-deterministic-model",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "A deterministic model",
+    "text": "A deterministic model\n\n\\(Y_i = \\beta_0 + \\beta_1 x_i\\)\nNo uncertainty!"
+  },
+  {
+    "objectID": "slides/slides02.html#linear-regression-model",
+    "href": "slides/slides02.html#linear-regression-model",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Linear Regression Model",
+    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#linear-regression-model-1",
+    "href": "slides/slides02.html#linear-regression-model-1",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Linear Regression Model",
+    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#linear-regression-model-2",
+    "href": "slides/slides02.html#linear-regression-model-2",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Linear Regression Model",
+    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#simple-linear-regression-model-1",
+    "href": "slides/slides02.html#simple-linear-regression-model-1",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Simple Linear Regression Model",
+    "text": "Simple Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)\n\n\nLinear relationship between \\(x\\) and \\(y\\)\nErrors are independent and identically distributed (iid)\nErrors are normally distributed\nErrors have mean 0\nVariance of the errors doesn’t depend on \\(x\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#notation",
+    "href": "slides/slides02.html#notation",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Notation",
+    "text": "Notation\nMean function:\n\\(\\quad E(Y|X)=\\mu\\{Y|X\\} = \\beta_0 + \\beta_1 x_i\\)\n\nFitted model equation:\n\\(\\quad \\widehat{Y}_i = \\widehat{\\mu}\\{Y|X\\} = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x_i\\)"
+  },
+  {
+    "objectID": "slides/slides02.html#uncertainty-in-the-parameters",
+    "href": "slides/slides02.html#uncertainty-in-the-parameters",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Uncertainty in the parameters",
+    "text": "Uncertainty in the parameters"
+  },
+  {
+    "objectID": "slides/slides02.html#uncertainty-in-the-parameters-1",
+    "href": "slides/slides02.html#uncertainty-in-the-parameters-1",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Uncertainty in the parameters",
+    "text": "Uncertainty in the parameters"
+  },
+  {
+    "objectID": "slides/slides02.html#uncertainty-in-the-parameters-2",
+    "href": "slides/slides02.html#uncertainty-in-the-parameters-2",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Uncertainty in the parameters",
+    "text": "Uncertainty in the parameters"
+  },
+  {
+    "objectID": "slides/slides02.html#rest-of-today",
+    "href": "slides/slides02.html#rest-of-today",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Rest of today",
+    "text": "Rest of today\n\n\nOpen the SLR in R activity on Moodle and complete in your groups\nMake note of any questions\nChoose someone responsible for reporting out your answers"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 230: Applied Regression Analysis",
+    "section": "",
+    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
+  },
+  {
+    "objectID": "slides.html",
+    "href": "slides.html",
+    "title": "Slides",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "slides/slides-cheat-sheet.html#columns",
@@ -196,20 +476,6 @@
     "text": "handwriting font\n\nin case you don’t yet have a GitHub account…"
   },
   {
-    "objectID": "slides.html",
-    "href": "slides.html",
-    "title": "Slides",
-    "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stat 230: Applied Regression Analysis",
-    "section": "",
-    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
-  },
-  {
     "objectID": "slides/slides01.html#im-amanda-sheher",
     "href": "slides/slides01.html#im-amanda-sheher",
     "title": "Welcome to Stat230!",
@@ -229,13 +495,6 @@
     "title": "Welcome to Stat230!",
     "section": "In groups of 2-3",
     "text": "In groups of 2-3\n\n\nIntroduce yourselves: name, year, academic interest, personal interest\nShare a bit about why you’re taking this class\n\n\n\n\n\n−+\n08:00"
-  },
-  {
-    "objectID": "slides/slides01.html#course-prefect",
-    "href": "slides/slides01.html#course-prefect",
-    "title": "Welcome to Stat230!",
-    "section": "Course prefect",
-    "text": "Course prefect"
   },
   {
     "objectID": "slides/slides01.html#what-is-this-class-about",
@@ -263,14 +522,14 @@
     "href": "slides/slides01.html#in-groups-of-2-3-1",
     "title": "Welcome to Stat230!",
     "section": "In groups of 2-3",
-    "text": "In groups of 2-3\n\nTalk through the answers to the worksheet\n\n\n\n\n−+\n08:00"
+    "text": "In groups of 2-3\n\n\nWork through the questions on the handout together\nChoose a person who will write assigned answer(s) on the board\nMake a note of any questions you’re not sure about\n\n\n\n\n\n−+\n15:00"
   },
   {
     "objectID": "slides/slides01.html#section",
     "href": "slides/slides01.html#section",
     "title": "Welcome to Stat230!",
     "section": "",
-    "text": "Moodle\n\naccess slides\nsee schedule\n\nGradescope\n\nsubmit assignments\naccess through moodle to automatically enroll\n\nhttps://aluby.github.io/stat230\n\nwhere all materials will be hosted"
+    "text": "Moodle\n\naccess slides\nsee schedule\n\nGradescope\n\nsubmit assignments\naccess through moodle to automatically enroll\n\nEd\n\ncontact Amanda\nget homework help"
   },
   {
     "objectID": "slides/slides01.html#office-hours-tentative",
@@ -284,7 +543,7 @@
     "href": "slides/slides01.html#what-will-you-do-in-this-course",
     "title": "Welcome to Stat230!",
     "section": "What will you do in this course?",
-    "text": "What will you do in this course?\n\n\nGraded work:\n\nHomework\nCase Studies\nQuizzes\nFinal Project\n\n\nUngraded work:\n\nPrepare for class\nReview textbook after class\nPractice problems\nAttend and engage in class"
+    "text": "What will you do in this course?\n\n\nGraded work:\n\nHomework\nCase Studies\nExams\nFinal Project\n\n\nUngraded work:\n\nPrepare for class\nRead textbook\nPractice problems\nAttend and engage in class"
   },
   {
     "objectID": "slides/slides01.html#what-will-a-typical-dayweek-look-like",
@@ -298,7 +557,7 @@
     "href": "slides/slides01.html#grading",
     "title": "Welcome to Stat230!",
     "section": "Grading",
-    "text": "Grading"
+    "text": "Grading\n\n15% Homework\n30% Exams (10% each)\n25% Final Project\n25% Case Studies (8.33% each)\n5% Attendance and participation in group work\n\n5+ absences → 0%\n\nLetter grades will be assigned based on the usual grading scale (A = 93%+, A- = 90-92.9%, B+ = 88-89.9%, B = 83-87.9, etc.)"
   },
   {
     "objectID": "slides/slides01.html#tokens",
@@ -326,7 +585,7 @@
     "href": "slides/slides01.html#specific-guidelines",
     "title": "Welcome to Stat230!",
     "section": "Specific guidelines",
-    "text": "Specific guidelines\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues. Rule of thumb: never type code into or out of an AI interface\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments.\n❌ AI tools for brainstorming: Your brain is infinitely more capable than ChatGPT and your ideas are more interesting.\n❌ AI tools for editing: AI has a distinct writing style that I do not care for, especially when it comes to statistical writing. If your reports have an AI-generated flavor, you will not earn a good grade, even if you wrote it yourself\n✅ AI tools for background reading: AI companies have stolen teaching material from some of the best educators in the world! If you don’t understand something from class and the homework, first try reading the textbook. If you still don’t understand, you can ask AI to explain the concept (not a specific problem) in more detail."
+    "text": "Specific guidelines\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues. Rule of thumb: never type code into or out of an AI interface\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments.\n❌ AI tools for brainstorming: Your brain is infinitely more capable than ChatGPT and your ideas are more interesting.\n❌ AI tools for editing: AI has a distinct writing style that I do not care for, especially when it comes to statistical writing. If your reports have an AI-generated flavor, you will not earn a good grade, even if you wrote it yourself\n✅ AI tools for background reading: AI companies have stolen teaching material from some of the best educators in the world! If you don’t understand something from class and the homework, first try reading the textbook. If you still don’t understand, you can ask AI to explain the concept (not a specific problem) in more detail. It won’t always be right; always default to the textbook or course material if you encounter conflicting explanations."
   },
   {
     "objectID": "slides/slides01.html#ai-vs-learners-vs-experts",
@@ -336,18 +595,18 @@
     "text": "AI vs learners vs experts\n\n\n\nSource: DeLuca, L. S. et al (2025). Developing Students’ Statistical Expertise Through Writing in the Age of AI. Journal of Statistics and Data Science Education, 33(3), 266–278."
   },
   {
-    "objectID": "slides/slides01.html#wrap-up",
-    "href": "slides/slides01.html#wrap-up",
+    "objectID": "slides/slides01.html#before-next-class",
+    "href": "slides/slides01.html#before-next-class",
     "title": "Welcome to Stat230!",
-    "section": "Wrap-up",
-    "text": "Wrap-up\nBefore next class:\n\n\nReview solutions to activity on Moodle\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials\nSkim textbook chapters and come prepared for some simple linear regression next time!"
+    "section": "Before next class:",
+    "text": "Before next class:\n\n\nReview solutions to activity on Moodle\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials\nSkim textbook chapters and come prepared for some simple linear regression next time!"
   },
   {
     "objectID": "homework/hw01.html",
     "href": "homework/hw01.html",
     "title": "hw01",
     "section": "",
-    "text": "Warning: package 'ggplot2' was built under R version 4.5.2\n\n\nWarning: package 'tidyr' was built under R version 4.5.2\n\n\nWarning: package 'readr' was built under R version 4.5.2\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.6\n✔ forcats   1.0.0     ✔ stringr   1.6.0\n✔ ggplot2   4.0.1     ✔ tibble    3.3.0\n✔ lubridate 1.9.4     ✔ tidyr     1.3.2\n✔ purrr     1.2.0     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\nhere() starts at /Users/aluby/github-repos/stat230\n\n\nDue: Friday of Week 1 at start of class\n\n\n\n\n\n\nImportantImportant!\n\n\n\nI will add problems after each class day. Be sure to check back here after each class meeting for new problems.\n\n\n\nProblem 1: Intro Stat review\nA 2021 article in Pediatrics (“Baby’s First Years: Design of a Randomized Controlled Trial of Poverty Reduction in the United States”) describes the design of a study to measure the impact of poverty reduction on children’s early development:\n\nA total of 1000 low-income mothers of newborns were enrolled in the study and began receiving a monthly unconditional cash gift for the first several years of their children’s lives. Mothers were randomly assigned to receive either a large monthly cash gift ($333) or a nominal monthly cash gift ($20). All monthly gifts are administered via debit card and can be freely spent with no restrictions. Baby’s First Years aims to answer whether poverty reduction in early childhood (1) improves children’s developmental outcomes and promotes healthier brain functioning, and (2) improves family functioning and better enables parents to support child development.\n\n\nWhy was it important to randomize amount of the cash gift in the study?\nSuppose the outcome variable \\(Y\\) in a statistical analysis is a quantitative measure of child brain functioning. We then calculate the mean of the large gift group (\\(\\bar{Y}_{large}\\)) and the small gift group (\\(\\bar{Y}_{small}\\)). What would an appropriate hypothesis test be? (You only need to set up the hypotheses statements)\nIf the researchers fail to reject the null hypothesis from (b), what type of error might they have made?\nHow could the researchers decrease the probability that they make the type of error in (c)?\n\n\n\nProblem 2: Regression\nOne factor affecting water availability in Southern California is stream runoff from snowfall. If runoff could be predicted, engineers, planners, and policy makers could do their jobs more effectively because they would have an estimate as to how much water is entering the area.\nWe have access to a data set compares the stream runoff (in acre-feet) of a river near Bishop, California (due east of San Jose) with snowfall (in inches) at a site in the Sierra Nevada mountains. For each of the following questions, assume that your audience is city water planners with moderate statistical training.\n\n\nRows: 43 Columns: 2\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\ndbl (2): Precip, Runoff\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\n\nBelow is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).\n\n\n\n\n\n\n\n\n\n\n\nBelow is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.\n\n\nlm(Runoff ~ Precip, data = runoff) |&gt; tidy()\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)   27015.     3219.      8.39 1.93e-10\n2 Precip         3752.      216.     17.4  1.56e-20\n\n\n\nInterpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\nInterpret the intercept in the context of the problem. (Don’t forget to specify units.)\nIf one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t forget to specify units.)\n\n\n\nProblem 3: TBA Wed\n\n\nProblem 4: TBA Wed"
+    "text": "Due: Friday of Week 1 at start of class\n\n\n\n\n\n\nImportantImportant!\n\n\n\nI will add problems after each class day. Be sure to check back here after each class meeting for new problems.\n\n\n\nProblem 1: Intro Stat review\nA 2021 article in Pediatrics (“Baby’s First Years: Design of a Randomized Controlled Trial of Poverty Reduction in the United States”) describes the design of a study to measure the impact of poverty reduction on children’s early development:\n\nA total of 1000 low-income mothers of newborns were enrolled in the study and began receiving a monthly unconditional cash gift for the first several years of their children’s lives. Mothers were randomly assigned to receive either a large monthly cash gift ($333) or a nominal monthly cash gift ($20). All monthly gifts are administered via debit card and can be freely spent with no restrictions. Baby’s First Years aims to answer whether poverty reduction in early childhood (1) improves children’s developmental outcomes and promotes healthier brain functioning, and (2) improves family functioning and better enables parents to support child development.\n\n\nWhy was it important to randomize amount of the cash gift in the study?\nSuppose the outcome variable \\(Y\\) in a statistical analysis is a quantitative measure of child brain functioning. We then calculate the mean of the large gift group (\\(\\bar{Y}_{large}\\)) and the small gift group (\\(\\bar{Y}_{small}\\)). What would an appropriate hypothesis test be? (You only need to set up the hypotheses statements)\nIf the researchers fail to reject the null hypothesis from (b), what type of error might they have made?\nHow could the researchers decrease the probability that they make the type of error in (c)?\n\n\n\nProblem 2: Regression\nOne factor affecting water availability in Southern California is stream runoff from snowfall. If runoff could be predicted, engineers, planners, and policy makers could do their jobs more effectively because they would have an estimate as to how much water is entering the area.\nWe have access to a data set compares the stream runoff (in acre-feet) of a river near Bishop, California (due east of San Jose) with snowfall (in inches) at a site in the Sierra Nevada mountains. For each of the following questions, assume that your audience is city water planners with moderate statistical training.\n\nBelow is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).\n\n\n\n\n\n\n\n\n\n\n\nBelow is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.\n\n\nlm(Runoff ~ Precip, data = runoff) |&gt; tidy()\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)   27015.     3219.      8.39 1.93e-10\n2 Precip         3752.      216.     17.4  1.56e-20\n\n\n\nInterpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\nInterpret the intercept in the context of the problem. (Don’t forget to specify units.)\nIf one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t forget to specify units.)\n\n\n\nProblem 3: TBA Wed\n\n\nProblem 4: TBA Wed"
   },
   {
     "objectID": "activities/01-intro.html",
@@ -355,160 +614,6 @@
     "title": "01: Intro Stats Review",
     "section": "",
     "text": "Researchers examined the relationship between sleep duration and simple reaction time performance in healthy young adults in a controlled laboratory setting.\nSixty-five college-aged participants (ages 18-25) were recruited and randomly assigned to sleep either 4 hours per night (low sleep) or 8 hours per night (high sleep) over a one-week period. Each morning, participants completed a computerized simple reaction time task where they responded to visual stimuli as quickly as possible, with reaction times measured in milliseconds. The researchers are interested in whether there is a difference in reaction time for the low sleep vs the high sleep group.\n\n\n\n\nSample size (\\(n\\))\nSample mean (\\(\\bar{x}\\))\nSample SD (\\(s\\))\n\n\n\n\nLow Sleep\n33\n390 ms\n45 ms\n\n\nHigh Sleep\n32\n360 ms\n40 ms\n\n\n\n\nWhat is the null hypothesis for this test?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(H_0: \\mu_1 = \\mu_2\\) (or \\(H_0: \\mu_1 - \\mu_2 = 0\\))\n\n\n\n\nWhat is the alternative hypothesis for this test?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(H_A: \\mu_1 \\neq \\mu_2\\) (two-sided)\n\n\n\n\nThe researchers conduct a two-sample t-test and report a test statistic of \\(t=2.84\\). Below is a plot of the appropriate t-distribution for this test. Sketch how you would calculate the p-value for this situation.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nThe p-value is equal to the area in the two tails beyond \\(2.5\\) and \\(-2.5\\).\n\n\n\n\n\n\n\n\n\n\n\n\n\nHow did you calculate this p-value in your last statistics course?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nAnswers will vary based on where you took intro stats. You may have used StatKey or a similar online app/calculator, you may have used R’s pt() command, or you may have used a t-distribution table (we won’t use tables in this class).\n\n\n\n\nIf the p-value you calculated was 0.02, what would you conclude about the null hypothesis?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nA p-value of 0.02 provides evidence against the null hypothesis. In other words, there is statistically discernible evidence of a difference in means between the two groups (\\(t=2.5\\), p-value = 0.02).\n\n\n\n\nWhy did researchers randomly assign participants to a sleep condition?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nRandom assignment helps to ensure that any confounding variables are evenly distributed across the different sleep conditions. This allows the researchers to make a causal conclusion about the effect of sleep duration on reaction time.\n\n\n\n\nCan you generalize these results to all young adults in the U.S.? Why or why not?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nNo, we cannot generalize these results to all young adults in the U.S. because it may not be representative of all young adults in the U.S. It we truly wanted to generalize to the entire population, then we should draw a random sample from the population of interest."
-  },
-  {
-    "objectID": "activities/03-r.html",
-    "href": "activities/03-r.html",
-    "title": "03: Intro to R for Regression",
-    "section": "",
-    "text": "In Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
-  },
-  {
-    "objectID": "activities/03-r.html#overview",
-    "href": "activities/03-r.html#overview",
-    "title": "03: Intro to R for Regression",
-    "section": "",
-    "text": "In Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
-  },
-  {
-    "objectID": "activities/03-r.html#loading-data",
-    "href": "activities/03-r.html#loading-data",
-    "title": "03: Intro to R for Regression",
-    "section": "Loading data",
-    "text": "Loading data\nToday we will work with the movies data set. The data set contains the critic’s score and the audience score for movie released in 2014-2015. The critic’s score is the percentage of critics who had a favorable view of the movie. Similarly, the audience score is the percentage of users who had a favorable view of the movie. Today, you’ll explore the relationship between the audience and critic scores.\nTo load data into R, we use the read.csv() command and pass in either a file path or URL in quotes. Below, the data are being loaded from the web. Click “Run code” to load the data.\n\nmovies &lt;- read.csv(\"https://aloy.github.io/stat230-materials/data/movie_scores.csv\")\n\nNotice that we use parentheses with functions and place the arguments for that function inside those parentheses.\n\n\n\n\n\n\nNote\n\n\n\nYou should notice that R did not appear to do anything when you ran the above code. That’s because everything was done in the background and R will only show you what is requested. So don’t panic if you don’t see any output!"
-  },
-  {
-    "objectID": "activities/03-r.html#getting-a-glimpse-of-the-data-set",
-    "href": "activities/03-r.html#getting-a-glimpse-of-the-data-set",
-    "title": "03: Intro to R for Regression",
-    "section": "Getting a glimpse of the data set",
-    "text": "Getting a glimpse of the data set\nThroughout the term I’ll refer to small pieces of code as “code chunks.” This is both descriptive and will be what RStudio (our interface) calls them later on. For today, we’ll focus on how to write small code chunks to accomplish specific tasks for simple linear regression.\nFor example, we might wish to get an overview of the data set by printing the first few rows via head()\n\nhead(movies)\n\nI prefer to use a different function, glimpse(), which is in the {dplyr} package. To load a package we first must run the library() command. The below code chunk loads this package and gives a “glimpse” of the movies data set:\n\nlibrary(dplyr)\nglimpse(movies)\n\n\nCheckpoint questions:\nUsing the output from the above code chunk, answer the following questions in the code box below:\n\nHow many rows are in the movies data set?\nHow many variables are in the movies data set? Are any categorical? Are any quantitative?"
-  },
-  {
-    "objectID": "activities/03-r.html#univariate-exploration",
-    "href": "activities/03-r.html#univariate-exploration",
-    "title": "03: Intro to R for Regression",
-    "section": "Univariate exploration",
-    "text": "Univariate exploration\nBefore jumping into a regression model, it can be useful to understand more about each variable. This can be accomplished using intro stat tools such as histograms and summary statistics.\nThe fastest way to get started is using the summary() function, which returns a brief set of summary statistics for each variable in the data set.\n\nsummary(movies)\n\nR also has built-in functions to compute summary statistics one by one for a specific column. To “extract” a variable from the data set, we use a $. For example, we can extract the critics column from the movies data frame and calculate the standard deviation:\n\nsd(movies$critics)\n\nOther useful summary statistics for quantitative variables include (here x denotes an extracted column):\n\n\n\nFunction\nSummary statistic\n\n\n\n\nmedian(x)\nmedian\n\n\nmean(x)\nmean\n\n\nvar(x)\nvariance\n\n\nIQR(x)\ninterquartile range\n\n\n\n\nTo create graphics in this course, I’ll often use the {ggformula} R package. All of the functions will begin with gf_ and have similar syntax. If you’re familiar with the {ggplot2} package, feel free to use it for this class, but many students like the “one-liners” that {ggformula} allows.\nTo begin, load the {ggformula} package using the library command:\n\nlibrary(ggformula)\n\nFor example, to create a histogram of the critic’s score we can run\n\ngf_histogram(~critics, data = movies, bins = 10)\n\nHere we use the ~ to tell R that critics is a variable in the data set. We must also specify data and adjust the number of bins as needed.\nSimilar syntax is used to create a boxplot\n\ngf_boxplot(~critics, data = movies)\n\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nCalculate the mean audience score using the mean() function.\nCreate a histogram of the audience score and describe what you see.\nChange the number of bins for a histogram of audience. What number of bins seems “about right” in your opinion?"
-  },
-  {
-    "objectID": "activities/03-r.html#bivariate-exploration",
-    "href": "activities/03-r.html#bivariate-exploration",
-    "title": "03: Intro to R for Regression",
-    "section": "Bivariate exploration",
-    "text": "Bivariate exploration\n\nScatterplots\nIn this course we are interested in exploring relationships between variables. If we have two quantitative variables, then a scatterplot is a natural way to visually explore this relationship. To create a scatterplot we can use the gf_point() function (since scatterplots are just points):\n\ngf_point(audience ~ critics, data = movies)\n\nNotice that we put the response variable on the left of the ~ and the explanatory variable on the right.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nCreate a scatterplot where critics score is the response variable and audience score is the explanatory variable.\nYou can adjust the axis labels by adding an xlab or ylab argument. Add xlab = \"Your axis label\" and ylab = \"Your other axis label\" to your scatterplot and give more verbose axis labels.\n\n\n\n\nScatterplots with regression lines\nYou can also add a simple linear regression line to your scatterplot by adding a layer. To add a layer, we append the |&gt; pipe operator to the end of our gf_point() code and use the gf_lm() command to add a line:\n\ngf_point(audience ~ critics, data = movies) |&gt;\n  gf_lm()\n\n\n\nCorrelation\nIf you want a numeric summary of the strength of the linear association between two quantitative variables, then you can calculate the correlation. In R, you do this using the cor() function. Similar to calculating the mean, you need to extract the columns using $ as shown below:\n\ncor(movies$audience, movies$critics)\n\n\nCheckpoint questions\nUse the below code box for the checkpoint question:\n\n#| min-lines: 5\n\n\nSwap the order of the variables in the cor() command. Does the correlation change? Is this what you expected?"
-  },
-  {
-    "objectID": "activities/03-r.html#fitting-a-regression-model",
-    "href": "activities/03-r.html#fitting-a-regression-model",
-    "title": "03: Intro to R for Regression",
-    "section": "Fitting a regression model",
-    "text": "Fitting a regression model\nFinally, lets fit a simple linear regression model. To do this we use the lm() command (which stands for linear model). Here, we use the same syntax as when creating a scatterplot:\n\nlm(audience ~ critics, data = movies)\n\nWhen you run this command, R prints some very basic information about the SLR model.\nCheckpoint: What information do you get when you run the above command?\nOften, you will want to obtain more information than you get from simply printing the fitted model. The summary() function provides much more information. I recommend storing your fitted model as a named object (such as movie_lm) and then running the summary():\n\nmovie_lm &lt;- lm(audience ~ critics, data = movies)\nsummary(movie_lm)\n\n\nCheckpoint question\nWhat information do you get when you run the above summary() command? If you’re not sure what something means, discuss it with your group and then ask about it in our debrief."
-  },
-  {
-    "objectID": "activities/03-r.html#constructing-confidence-intervals",
-    "href": "activities/03-r.html#constructing-confidence-intervals",
-    "title": "03: Intro to R for Regression",
-    "section": "Constructing confidence intervals",
-    "text": "Constructing confidence intervals\nThe table obtained by summary() contains all of the necessary information to conduct hypothesis tests for regression coefficients; however, it does not provide confidence intervals. To instruct R to construct a confidence interval for a regression coefficient, we can use the confint() function:\n\nconfint(movie_lm, level = 0.95)\n\n\nCheckpoint questions\n\nWhat information do you get when you run the above confint() command?\nChange the level argument to construct a 90% confidence interval. How does the interval change?"
-  },
-  {
-    "objectID": "activities/03-r.html#making-predictions",
-    "href": "activities/03-r.html#making-predictions",
-    "title": "03: Intro to R for Regression",
-    "section": "Making predictions",
-    "text": "Making predictions\nTo make predictions, we use our fitted regression equation. While you can (and should be able to) do this by hand, you can also use R as your calculator.\nSuppose we can use our model to predict the audience score for more recent movies. Then we could predict the audience score for the Barbie Movie by running:\n\nbarbie_movie &lt;- data.frame(critics = 88)\npredict(movie_lm, newdata = barbie_movie)\n\nHere, we first need to create a new data set with a column named identically to the original data set. Here we have a single column named critics with the value of the explanatory variable we want to use. Next, we use the predict() function, passing in the name of our model and the new data set we want to make predictions for.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nThe critics score for Asteroid City was 75. What is the expected audience score for this movie?\nThe actual (observed) value for Asteroid City was 62. Did the mode over- or under-predict the audience score?\nDo you think it’s reasonable to use our model to predict the audience score for movies released in 2023? Why or why not?\n\n\n\nMaking multiple predictions\nIf you want to make multiple predictions, then you can create a new data frame with multiple values for the explanatory variable. For example, we can use c(88, 75) to make a data frame with two values in the critics column:\n\nnew_movies &lt;- data.frame(critics = c(88, 75))\npredict(movie_lm, newdata = new_movies)"
-  },
-  {
-    "objectID": "activities/03-r.html#function-quick-reference",
-    "href": "activities/03-r.html#function-quick-reference",
-    "title": "03: Intro to R for Regression",
-    "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nread.csv(\"file_path_or_URL\")\nLoad a CSV data set from a file or the web\n\n\nhead(data)\nPrint the first few rows of a data set\n\n\nglimpse(data)\nGet a quick overview of a data set (from {dplyr} package)\n\n\nsummary(data)\nGet summary statistics for each variable in a data set\n\n\nmean(x)\nCalculate the mean of a quantitative variable\n\n\nmedian(x)\nCalculate the median of a quantitative variable\n\n\nsd(x)\nCalculate the standard deviation of a quantitative variable\n\n\nvar(x)\nCalculate the variance of a quantitative variable\n\n\ngf_histogram(~x, data = data, bins = n)\nCreate a histogram of a quantitative variable (from {ggformula} package)\n\n\ngf_boxplot(~x, data = data)\nCreate a boxplot of a quantitative variable (from {ggformula} package)\n\n\ngf_point(y ~ x, data = data)\nCreate a scatterplot of two quantitative variables (from {ggformula} package)\n\n\ngf_lm()\nAdd a simple linear regression line to a scatterplot (from {ggformula} package)\n\n\ncor(x, y)\nCalculate the correlation between two quantitative variables\n\n\nlm(y ~ x, data = data)\nFit a simple linear regression model\n\n\nsummary(model)\nGet detailed information about a fitted regression model\n\n\nconfint(model, level = 0.95)\nConstruct a confidence interval for regression coefficients\n\n\npredict(model, newdata = new_data)\nMake predictions using a fitted regression model for new data"
-  },
-  {
-    "objectID": "activities/03-r.html#acknowledgements",
-    "href": "activities/03-r.html#acknowledgements",
-    "title": "03: Intro to R for Regression",
-    "section": "Acknowledgements",
-    "text": "Acknowledgements\nThe movie example was adapted from Maria Tackett’s draft of Introduction to Regression Analysis: A Data Science Approach."
-  },
-  {
-    "objectID": "activities/03-r-live.html",
-    "href": "activities/03-r-live.html",
-    "title": "03: Intro to R for Regression",
-    "section": "",
-    "text": "In Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
-  },
-  {
-    "objectID": "activities/03-r-live.html#overview",
-    "href": "activities/03-r-live.html#overview",
-    "title": "03: Intro to R for Regression",
-    "section": "",
-    "text": "In Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
-  },
-  {
-    "objectID": "activities/03-r-live.html#loading-data",
-    "href": "activities/03-r-live.html#loading-data",
-    "title": "03: Intro to R for Regression",
-    "section": "Loading data",
-    "text": "Loading data\nToday we will work with the movies data set. The data set contains the critic’s score and the audience score for movie released in 2014-2015. The critic’s score is the percentage of critics who had a favorable view of the movie. Similarly, the audience score is the percentage of users who had a favorable view of the movie. Today, you’ll explore the relationship between the audience and critic scores.\nTo load data into R, we use the read.csv() command and pass in either a file path or URL in quotes. Below, the data are being loaded from the web. Click “Run code” to load the data.\n\n\n\n\n\n\n\n\nNotice that we use parentheses with functions and place the arguments for that function inside those parentheses.\n\n\n\n\n\n\nNote\n\n\n\nYou should notice that R did not appear to do anything when you ran the above code. That’s because everything was done in the background and R will only show you what is requested. So don’t panic if you don’t see any output!"
-  },
-  {
-    "objectID": "activities/03-r-live.html#getting-a-glimpse-of-the-data-set",
-    "href": "activities/03-r-live.html#getting-a-glimpse-of-the-data-set",
-    "title": "03: Intro to R for Regression",
-    "section": "Getting a glimpse of the data set",
-    "text": "Getting a glimpse of the data set\nThroughout the term I’ll refer to small pieces of code as “code chunks.” This is both descriptive and will be what RStudio (our interface) calls them later on. For today, we’ll focus on how to write small code chunks to accomplish specific tasks for simple linear regression.\nFor example, we might wish to get an overview of the data set by printing the first few rows via head()\n\n\n\n\n\n\n\n\nI prefer to use a different function, glimpse(), which is in the {dplyr} package. To load a package we first must run the library() command. The below code chunk loads this package and gives a “glimpse” of the movies data set:\n\n\n\n\n\n\n\n\n\nCheckpoint questions:\nUsing the output from the above code chunk, answer the following questions in the code box below:\n\nHow many rows are in the movies data set?\nHow many variables are in the movies data set? Are any categorical? Are any quantitative?"
-  },
-  {
-    "objectID": "activities/03-r-live.html#univariate-exploration",
-    "href": "activities/03-r-live.html#univariate-exploration",
-    "title": "03: Intro to R for Regression",
-    "section": "Univariate exploration",
-    "text": "Univariate exploration\nBefore jumping into a regression model, it can be useful to understand more about each variable. This can be accomplished using intro stat tools such as histograms and summary statistics.\nThe fastest way to get started is using the summary() function, which returns a brief set of summary statistics for each variable in the data set.\n\n\n\n\n\n\n\n\nR also has built-in functions to compute summary statistics one by one for a specific column. To “extract” a variable from the data set, we use a $. For example, we can extract the critics column from the movies data frame and calculate the standard deviation:\n\n\n\n\n\n\n\n\nOther useful summary statistics for quantitative variables include (here x denotes an extracted column):\n\n\n\nFunction\nSummary statistic\n\n\n\n\nmedian(x)\nmedian\n\n\nmean(x)\nmean\n\n\nvar(x)\nvariance\n\n\nIQR(x)\ninterquartile range\n\n\n\n\nTo create graphics in this course, I’ll often use the {ggformula} R package. All of the functions will begin with gf_ and have similar syntax. If you’re familiar with the {ggplot2} package, feel free to use it for this class, but many students like the “one-liners” that {ggformula} allows.\nTo begin, load the {ggformula} package using the library command:\n\n\n\n\n\n\n\n\nFor example, to create a histogram of the critic’s score we can run\n\n\n\n\n\n\n\n\nHere we use the ~ to tell R that critics is a variable in the data set. We must also specify data and adjust the number of bins as needed.\nSimilar syntax is used to create a boxplot\n\n\n\n\n\n\n\n\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nCalculate the mean audience score using the mean() function.\nCreate a histogram of the audience score and describe what you see.\nChange the number of bins for a histogram of audience. What number of bins seems “about right” in your opinion?"
-  },
-  {
-    "objectID": "activities/03-r-live.html#bivariate-exploration",
-    "href": "activities/03-r-live.html#bivariate-exploration",
-    "title": "03: Intro to R for Regression",
-    "section": "Bivariate exploration",
-    "text": "Bivariate exploration\n\nScatterplots\nIn this course we are interested in exploring relationships between variables. If we have two quantitative variables, then a scatterplot is a natural way to visually explore this relationship. To create a scatterplot we can use the gf_point() function (since scatterplots are just points):\n\n\n\n\n\n\n\n\nNotice that we put the response variable on the left of the ~ and the explanatory variable on the right.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nCreate a scatterplot where critics score is the response variable and audience score is the explanatory variable.\nYou can adjust the axis labels by adding an xlab or ylab argument. Add xlab = \"Your axis label\" and ylab = \"Your other axis label\" to your scatterplot and give more verbose axis labels.\n\n\n\n\nScatterplots with regression lines\nYou can also add a simple linear regression line to your scatterplot by adding a layer. To add a layer, we append the |&gt; pipe operator to the end of our gf_point() code and use the gf_lm() command to add a line:\n\n\n\n\n\n\n\n\n\n\nCorrelation\nIf you want a numeric summary of the strength of the linear association between two quantitative variables, then you can calculate the correlation. In R, you do this using the cor() function. Similar to calculating the mean, you need to extract the columns using $ as shown below:\n\n\n\n\n\n\n\n\n\nCheckpoint questions\nUse the below code box for the checkpoint question:\n\n\n\n\n\n\n\n\n\nSwap the order of the variables in the cor() command. Does the correlation change? Is this what you expected?"
-  },
-  {
-    "objectID": "activities/03-r-live.html#fitting-a-regression-model",
-    "href": "activities/03-r-live.html#fitting-a-regression-model",
-    "title": "03: Intro to R for Regression",
-    "section": "Fitting a regression model",
-    "text": "Fitting a regression model\nFinally, lets fit a simple linear regression model. To do this we use the lm() command (which stands for linear model). Here, we use the same syntax as when creating a scatterplot:\n\n\n\n\n\n\n\n\nWhen you run this command, R prints some very basic information about the SLR model.\nCheckpoint: What information do you get when you run the above command?\nOften, you will want to obtain more information than you get from simply printing the fitted model. The summary() function provides much more information. I recommend storing your fitted model as a named object (such as movie_lm) and then running the summary():\n\n\n\n\n\n\n\n\n\nCheckpoint question\nWhat information do you get when you run the above summary() command? If you’re not sure what something means, discuss it with your group and then ask about it in our debrief."
-  },
-  {
-    "objectID": "activities/03-r-live.html#constructing-confidence-intervals",
-    "href": "activities/03-r-live.html#constructing-confidence-intervals",
-    "title": "03: Intro to R for Regression",
-    "section": "Constructing confidence intervals",
-    "text": "Constructing confidence intervals\nThe table obtained by summary() contains all of the necessary information to conduct hypothesis tests for regression coefficients; however, it does not provide confidence intervals. To instruct R to construct a confidence interval for a regression coefficient, we can use the confint() function:\n\n\n\n\n\n\n\n\n\nCheckpoint questions\n\nWhat information do you get when you run the above confint() command?\nChange the level argument to construct a 90% confidence interval. How does the interval change?"
-  },
-  {
-    "objectID": "activities/03-r-live.html#making-predictions",
-    "href": "activities/03-r-live.html#making-predictions",
-    "title": "03: Intro to R for Regression",
-    "section": "Making predictions",
-    "text": "Making predictions\nTo make predictions, we use our fitted regression equation. While you can (and should be able to) do this by hand, you can also use R as your calculator.\nSuppose we can use our model to predict the audience score for more recent movies. Then we could predict the audience score for the Barbie Movie by running:\n\n\n\n\n\n\n\n\nHere, we first need to create a new data set with a column named identically to the original data set. Here we have a single column named critics with the value of the explanatory variable we want to use. Next, we use the predict() function, passing in the name of our model and the new data set we want to make predictions for.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nThe critics score for Asteroid City was 75. What is the expected audience score for this movie?\nThe actual (observed) value for Asteroid City was 62. Did the mode over- or under-predict the audience score?\nDo you think it’s reasonable to use our model to predict the audience score for movies released in 2023? Why or why not?\n\n\n\nMaking multiple predictions\nIf you want to make multiple predictions, then you can create a new data frame with multiple values for the explanatory variable. For example, we can use c(88, 75) to make a data frame with two values in the critics column:"
-  },
-  {
-    "objectID": "activities/03-r-live.html#function-quick-reference",
-    "href": "activities/03-r-live.html#function-quick-reference",
-    "title": "03: Intro to R for Regression",
-    "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nread.csv(\"file_path_or_URL\")\nLoad a CSV data set from a file or the web\n\n\nhead(data)\nPrint the first few rows of a data set\n\n\nglimpse(data)\nGet a quick overview of a data set (from {dplyr} package)\n\n\nsummary(data)\nGet summary statistics for each variable in a data set\n\n\nmean(x)\nCalculate the mean of a quantitative variable\n\n\nmedian(x)\nCalculate the median of a quantitative variable\n\n\nsd(x)\nCalculate the standard deviation of a quantitative variable\n\n\nvar(x)\nCalculate the variance of a quantitative variable\n\n\ngf_histogram(~x, data = data, bins = n)\nCreate a histogram of a quantitative variable (from {ggformula} package)\n\n\ngf_boxplot(~x, data = data)\nCreate a boxplot of a quantitative variable (from {ggformula} package)\n\n\ngf_point(y ~ x, data = data)\nCreate a scatterplot of two quantitative variables (from {ggformula} package)\n\n\ngf_lm()\nAdd a simple linear regression line to a scatterplot (from {ggformula} package)\n\n\ncor(x, y)\nCalculate the correlation between two quantitative variables\n\n\nlm(y ~ x, data = data)\nFit a simple linear regression model\n\n\nsummary(model)\nGet detailed information about a fitted regression model\n\n\nconfint(model, level = 0.95)\nConstruct a confidence interval for regression coefficients\n\n\npredict(model, newdata = new_data)\nMake predictions using a fitted regression model for new data"
-  },
-  {
-    "objectID": "activities/03-r-live.html#acknowledgements",
-    "href": "activities/03-r-live.html#acknowledgements",
-    "title": "03: Intro to R for Regression",
-    "section": "Acknowledgements",
-    "text": "Acknowledgements\nThe movie example was adapted from Maria Tackett’s draft of Introduction to Regression Analysis: A Data Science Approach."
   },
   {
     "objectID": "schedule.html",

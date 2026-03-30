@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
-  <title>stat230 – Slides Cheat Sheet</title>
+  <title>stat230 – Simple Linear Regression (SLR)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,6 +28,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #767676;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #767676;  padding-left: 4px; }
+    div.sourceCode
+      { color: #545454; background-color: #fefefe; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #545454; } /* Normal */
+    code span.al { color: #7928a1; } /* Alert */
+    code span.an { color: #696969; } /* Annotation */
+    code span.at { color: #a55a00; } /* Attribute */
+    code span.bn { color: #7928a1; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #d91e18; } /* ControlFlow */
+    code span.ch { color: #008000; } /* Char */
+    code span.cn { color: #d91e18; } /* Constant */
+    code span.co { color: #696969; } /* Comment */
+    code span.cv { color: #696969; font-style: italic; } /* CommentVar */
+    code span.do { color: #696969; font-style: italic; } /* Documentation */
+    code span.dt { color: #7928a1; } /* DataType */
+    code span.dv { color: #7928a1; } /* DecVal */
+    code span.er { color: #7928a1; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #a55a00; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #696969; } /* Information */
+    code span.kw { color: #d91e18; } /* Keyword */
+    code span.op { color: #00769e; } /* Operator */
+    code span.ot { color: #d91e18; } /* Other */
+    code span.pp { color: #7928a1; } /* Preprocessor */
+    code span.sc { color: #00769e; } /* SpecialChar */
+    code span.ss { color: #008000; } /* SpecialString */
+    code span.st { color: #008000; } /* String */
+    code span.va { color: #a55a00; } /* Variable */
+    code span.vs { color: #008000; } /* VerbatimString */
+    code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-4b8f244490ab824b6183a9146e95bcf1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -47,6 +113,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -123,16 +190,14 @@
       margin-right: 0; 
     }
   </style>
-  <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
-  <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" data-background-color="#003300" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Slides Cheat Sheet</h1>
-  <p class="subtitle">Day 01</p>
+  <h1 class="title">Simple Linear Regression (SLR)</h1>
+  <p class="subtitle">Day 02</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -147,132 +212,163 @@ Prof Amanda Luby
 
 </section>
 <section>
-<section id="intros" class="title-slide slide level1 center">
-<h1>Intros</h1>
+<section id="regression-in-intro" class="title-slide slide level1 center">
+<h1>Regression in Intro</h1>
 
 </section>
-<section id="columns" class="slide level2">
-<h2>Columns</h2>
+<section id="section" class="slide level2">
+<h2></h2>
 <div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li>First year at Carleton!</li>
-<li>Taught at Swarthmore for 5 years before moving here this fall</li>
-<li>PhD in Statistics &amp; Data Science from Carnegie Mellon University</li>
-<li>Grew up in Minnesota, went to St Ben’s as an undergrad</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><img data-src="../slides/img/about-me.jpeg"></p>
-</div></div>
-</section>
-<section id="only-graph-from-code" class="slide level2">
-<h2>Only graph from code</h2>
-<div class="fragment">
-<p><img data-src="gtrends-data-sci.png"></p>
-</div>
-</section>
-<section id="background-image-half" class="slide level2" data-background-image="../img/data_scientist_infographic.png" data-background-position="right" data-background-size="50%">
-<h2>Background Image (half)</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<h3 id="what-skills-do-you-need">What skills do you need?</h3>
-<ul>
-<li><p>programming with data</p></li>
-<li><p>statistical modeling</p></li>
-<li><p>domain knowledge</p></li>
-<li><p>communication</p></li>
-</ul>
-</div></div>
-</section>
-<section id="full-size-image" class="slide level2">
-<h2>Full size image</h2>
-<img data-src="../img/01-ds-cycle.png" class="r-stretch">
-
-<aside><div>
-<p>Image by Adam Loy <br> adapted from work of Joe Blitzstein, Hanspeter Pfister,<br> and Hadley Wickham</p>
-</div></aside></section>
-<section id="background-image-full-size" class="slide level2" data-background-image="../img/wordcloud-nervous.png" data-background-size="contain">
-<h2>Background image (full size)</h2>
-</section>
-<section id="countdown" class="slide level2">
-<h2>Countdown</h2>
-<div class="task">
-<p>With your neighbor(s):</p>
-<p>Choose two countries to compare to the U.S. voting record in the U.N. over the years.</p>
-<p>What did you learn?</p>
-</div>
-<div class="cell">
+<div class="column" style="width:60%;">
+<p><br></p>
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div class="countdown" id="timer_246b009f" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">04</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides02_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
 </div>
 </div>
+</div>
+</div><div class="column" style="width:40%;">
+<p><br></p>
+<ul>
+<li>Describe the scatterplot</li>
+<li>Write the equation of the regression line</li>
+<li>Interpret the slope and intercept</li>
+<li>Make a prediction</li>
+</ul>
+</div></div>
+</section>
+<section id="q-describe-the-scatterplot" class="slide level2 scrollable">
+<h2>Q: Describe the scatterplot</h2>
+
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div class="columns">
+<div class="column" style="width:50%;">
+<div class="small">
+<div class="conceptest">
+<ol type="1">
+<li><p>There is a strong, positive, linear association between temperature and number of rides.</p></li>
+<li><p>There is a moderate, positive, linear association between temperature and number of rides.</p></li>
+</ol>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="small">
+<div class="conceptest">
+<ol start="3" type="1">
+<li><p>There is a moderate, positive, non-linear association between temperature and number of rides.</p></li>
+<li><p>There is a moderate, positive, linear association between temperature and number of rides, but there are a few extreme outliers.</p></li>
+</ol>
+</div>
+</div>
+</div></div>
+</section>
+<section id="q-write-the-equation-of-the-regression-line" class="slide level2">
+<h2>Q: Write the equation of the regression line</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual, <span class="at">data =</span> bikes) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rides ~ temp_actual, data = bikes)
+
+Coefficients:
+(Intercept)  temp_actual  
+   -2168.77        89.23  </code></pre>
+</div>
+</div>
+<p>What is the equation of the regression line?</p>
+<p><br></p>
+</section>
+<section id="q-interpret-the-slope-in-context" class="slide level2 scrollable">
+<h2>Q: Interpret the slope in context</h2>
+<div class="conceptest">
+<ol type="1">
+<li><p>For every one degree increase in temperature, the model predicts an average decrease of 89.23 rides</p></li>
+<li><p>For every one-degree decrease in temperature, the model predicts an average increase of 89.23 rides</p></li>
+<li><p>If the daily temperature is 0, we’d expect 89.23 rides</p></li>
+<li><p>If the temperature increases by one degree, it will cause an increase of 89.23 rides every day</p></li>
+</ol>
 </div>
 </section>
-<section id="table-column-widths" class="slide level2 smaller">
-<h2>table column widths</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 85%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Collaboration Allowed</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Homework Problems</td>
-<td>You are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .</td>
-</tr>
-<tr class="even">
-<td>Lab Quiz Problems</td>
-<td><strong>No collaboration is allowed at all</strong> . You may use your own notes for resubmissions, but should not use outside resources.</td>
-</tr>
-<tr class="odd">
-<td>Portfolio Projects</td>
-<td>You are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.</td>
-</tr>
-<tr class="even">
-<td>Final Project</td>
-<td>You are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited.</td>
-</tr>
-</tbody>
-</table>
+<section id="q-make-a-prediction" class="slide level2">
+<h2>Q: Make a prediction</h2>
+<p>The high temperature forecast tomorrow is 72 degrees F. What does the model predict for ridership?</p>
+</section></section>
+<section>
+<section id="regression-in-stat230" class="title-slide slide level1 center">
+<h1>Regression in Stat230</h1>
+
 </section>
-<section id="use-of-generative-artificial-intelligence-ai" class="slide level2 smaller">
-<h2>Use of generative artificial intelligence (AI)</h2>
+<section id="simple-linear-regression-model" class="slide level2">
+<h2>Simple Linear Regression Model</h2>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
+
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
+<section id="a-deterministic-model" class="slide level2">
+<h2>A deterministic model</h2>
 <ul>
-<li><p>Treat generative AI, such as ChatGPT or Gemini, the same as other online resources.</p></li>
-<li><p>Guiding principles:</p>
-<ul>
-<li><p>(1) <em>Cognitive dimension:</em> Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.</p></li>
-<li><p>(2) <em>Ethical dimension</em><strong>:</strong> Students using AI should be transparent about their use and make sure it aligns with academic integrity.</p></li>
-</ul></li>
-<li><p><strong>❌ AI tools for writing code:</strong> You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.</p></li>
-<li><p><strong>✅ AI tools for debugging code:</strong> You may make use of the technology to get help with error messages or trying to fix issues</p></li>
-<li><p><strong>❌ AI tools for narrative:</strong> Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.</p></li>
+<li><p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i\)</span></p></li>
+<li><p>No uncertainty!</p></li>
 </ul>
 
-<aside><div>
-<p>Adapted from Mine Çetinkaya-Rundel</p>
-</div></aside></section>
-<section id="linktask" class="slide level2">
-<h2>Link/task</h2>
-<div class="large" style="text-align: center;">
-<p><a href="https://github.com/stat220-w25" class="uri">https://github.com/stat220-w25</a></p>
-</div>
-<div class="task">
-<p>Fill out the <em>Welcome Survey</em> for collection of your account names, later this week you will be invited to the course organization.</p>
-</div>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<section id="linear-regression-model" class="slide level2">
+<h2>Linear Regression Model</h2>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
+
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<section id="linear-regression-model-1" class="slide level2">
+<h2>Linear Regression Model</h2>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
+
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<section id="linear-regression-model-2" class="slide level2">
+<h2>Linear Regression Model</h2>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
+
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<section id="simple-linear-regression-model-1" class="slide level2">
+<h2>Simple Linear Regression Model</h2>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
+<p><br></p>
+<ul>
+<li>Linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span></li>
+<li>Errors are independent and identically distributed (iid)</li>
+<li>Errors are normally distributed</li>
+<li>Errors have mean 0</li>
+<li>Variance of the errors doesn’t depend on <span class="math inline">\(x\)</span></li>
+</ul>
 </section>
-<section id="handwriting-font" class="slide level2">
-<h2>handwriting font</h2>
-<div class="hand">
-<p>in case you don’t yet have a GitHub account…</p>
+<section id="notation" class="slide level2">
+<h2>Notation</h2>
+<p>Mean function:</p>
+<p><span class="math inline">\(\quad E(Y|X)=\mu\{Y|X\} = \beta_0 + \beta_1 x_i\)</span></p>
+<p><br></p>
+<p>Fitted model equation:</p>
+<p><span class="math inline">\(\quad \widehat{Y}_i = \widehat{\mu}\{Y|X\} = \widehat{\beta}_0 + \widehat{\beta}_1 x_i\)</span></p>
+</section>
+<section id="uncertainty-in-the-parameters" class="slide level2">
+<h2>Uncertainty in the parameters</h2>
+
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-10-1.png" width="576" class="r-stretch"></section>
+<section id="uncertainty-in-the-parameters-1" class="slide level2">
+<h2>Uncertainty in the parameters</h2>
+
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-11-1.gif" class="r-stretch"></section>
+<section id="uncertainty-in-the-parameters-2" class="slide level2">
+<h2>Uncertainty in the parameters</h2>
+
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-12-1.png" width="480" class="r-stretch"></section>
+<section id="rest-of-today" class="slide level2">
+<h2>Rest of today</h2>
+<div class="task">
+<ul>
+<li>Open the SLR in R activity on Moodle and complete in your groups</li>
+<li>Make note of any questions</li>
+<li>Choose someone responsible for reporting out your answers</li>
+</ul>
 </div>
 
 

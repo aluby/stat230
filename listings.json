@@ -31,6 +31,7 @@
   {
     "listing": "/slides.html",
     "items": [
+      "/slides/slides02.html",
       "/slides/slides-cheat-sheet.html",
       "/slides/slides01.html"
     ]
