@@ -104,7 +104,8 @@ forget to specify units.)
 The data below are length and girth measurements (in inches) for a sample of Grizzly bears. 
 
 ```{webr}
-grizzly <- read.csv("https://aluby.github.io/stat230/data/grizzly.csv"))
+grizzly <- read.csv("https://aluby.github.io/stat230/data/grizzly.csv")
+grizzly
 ```
 
 (a) Plot the bear's girth (response variable) against its length (predictor variable) and show the linear regression line. Describe the relationship.
