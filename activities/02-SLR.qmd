@@ -290,4 +290,4 @@ The following table summarizes the functions we learned today:
 
 ## Acknowledgements
 
-The movie example was adapted from Maria Tackett's draft of *Introduction to Regression Analysis: A Data Science Approach*.
+The movie example was adapted by Adam Loy from Maria Tackett's draft of *Introduction to Regression Analysis: A Data Science Approach*.

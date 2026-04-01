@@ -1,5 +1,6 @@
 subtitle: "Stat 230 - Spring 2026"
 engine: knitr
+navbar: false
 execute:
   freeze: auto
   echo: true
