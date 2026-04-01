@@ -497,6 +497,13 @@
     "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
   },
   {
+    "objectID": "slides/slides02.html#data-for-today",
+    "href": "slides/slides02.html#data-for-today",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Data for today",
+    "text": "Data for today\nCapital Bikeshare is a bike sharing service in the Washington, D.C. area. To best serve its registered members, the company must understand the demand for its service. To help them out, we can analyze the number of rides taken on a random sample of n days.\n\n\n\n\n\n\n\n\n\n\n\n\n\n The data also has information about:\n\nWeekend/holiday/etc\nDay of the measurement\nWeather information\n\n\nFor our first analysis, we’ll investigate the relationship between temperature and daily ridership"
+  },
+  {
     "objectID": "slides/slides02.html#section",
     "href": "slides/slides02.html#section",
     "title": "Simple Linear Regression (SLR)",
@@ -530,6 +537,20 @@
     "title": "Simple Linear Regression (SLR)",
     "section": "Q: Make a prediction",
     "text": "Q: Make a prediction\nThe high temperature forecast tomorrow is 72 degrees F. What does the model predict for ridership?"
+  },
+  {
+    "objectID": "slides/slides02.html#overview-the-normal-distribution",
+    "href": "slides/slides02.html#overview-the-normal-distribution",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Overview: The Normal Distribution",
+    "text": "Overview: The Normal Distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\n If Y is:\n\nnumeric\nunimodal\nand symmetric,\n\nwe might use a Normal model"
+  },
+  {
+    "objectID": "slides/slides02.html#y-sim-nmu-sigma2",
+    "href": "slides/slides02.html#y-sim-nmu-sigma2",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "\\(Y \\sim N(\\mu, \\sigma^2)\\)",
+    "text": "\\(Y \\sim N(\\mu, \\sigma^2)\\)"
   },
   {
     "objectID": "slides/slides02.html#simple-linear-regression-model",
