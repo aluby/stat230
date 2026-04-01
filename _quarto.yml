@@ -1,6 +1,9 @@
 project:
   type: website
-
+  resources: 
+    - "files/"
+    - "data/"
+    
 website:
   title: "stat230"
   search: true
