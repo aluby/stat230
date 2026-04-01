@@ -1,17 +1,27 @@
 ---
-title: "hw01"
-format: html
-navbar: false
-execute: 
-  echo: true
-  message: false
-  warning: false
+title: "Homework 01"
+webr:
+  packages:
+    - dplyr
+    - ggformula
+    - ggplot2
+    - Sleuth3
+format: 
+  live-html:
+    toc: true
+engine: knitr
+editor: source
 ---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
 
 ```{r}
 #| echo: false
+#| warning: false
+#| message: false
 
-library(tidyverse)
+library(ggplot2)
+library(ggformula)
 library(here)
 library(broom)
 ```
@@ -52,7 +62,7 @@ planners with moderate statistical training.
 
 ```{r}
 #| echo: false
-runoff <- read_csv(here(here(), "data/runoff.csv"))
+runoff <- read.csv(here(here(), "data/runoff.csv"))
 ```
 
 (a) Below is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).
@@ -89,7 +99,78 @@ units.)
 forget to specify units.)
 
 
-# Problem 3: TBA Wed
+# Problem 3: Grizzlies
 
-# Problem 4: TBA Wed
+The data below are length and girth measurements (in inches) for a sample of Grizzly bears. 
 
+```{webr}
+grizzly <- read.csv(here(here(), "data/grizzly.csv"))
+```
+
+(a) Plot the bear's girth (response variable) against its length (predictor variable) and show the linear regression line. Describe the relationship.
+
+
+```{webr}
+#| min-lines: 5
+```
+
+
+(b) Compute and report the correlation coefficient
+
+
+```{webr}
+#| min-lines: 5
+```
+
+(c) Fit the linear regression model and report the fitted regression equation
+
+```{webr}
+#| min-lines: 5
+```
+
+(d) What is the interpretation of the intercept coefficient, in context? Does it make sense to perform this interpretation?
+
+```{webr}
+#| min-lines: 5
+```
+
+(e) A new bear was observed with a length of 148 inches. What would the model predict for its girth?
+
+```{webr}
+#| min-lines: 5
+```
+
+# Problem 4: The Hubble Constant
+
+> Edwin Hubble used the power of the Mount Wilson Observatory telescopes to meaure features of nebulae outside the Milky WAy. He was surprised to find a relationship between a nebula's distance from earth and the velocity with which it was going away from the earth.... The apparent statistical relationship between distance and velocity led scientists to consider how such a relatinoship could arise. It was proposed that the universe came into being with a Big Bang, a long time ago. If this were true, then $Y = TX$, where $Y$ is Distance and $X$ is velocity, and $T$ gives the time elapsed since the Big Bang (that is, the age of the universe). 
+
+The `ex0725` data points below are measured distances and recession velocities for 10 clusters of nebulae, much farther from earth than Hubble's data. 
+
+```{webr}
+library(Sleuth3)
+ex0725
+```
+
+(a) Make a scatterplot with `Velocity` as the response and `Distance` as the predictor and describe the relationship
+
+```{webr}
+#| min-lines: 5
+```
+
+(b) Are the data consistent with Hubble's theory (that the intercept is zero?)
+
+```{webr}
+#| min-lines: 5
+```
+
+(c) Regardless of your answer to the previous question, fit a simple linear regression model through the origin (i.e., forcing $\beta_0 = 0$) by running the following code. Use this model to provide an estimate of the Hubble constant (the age of the universe)
+
+```{webr}
+hub_mod <- lm(Velocity ~ 0 + Distance, data = ex0725)
+```
+
+(d) Find a 95% confidence interval for this estimate
+
+```{webr}
+#| min-lines: 5
+```
