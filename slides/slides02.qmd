@@ -35,6 +35,38 @@ notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
 theme_set(notes_theme)
 ```
 
+## Data for today {.smaller}
+
+*Capital Bikeshare* is a bike sharing service in the Washington, D.C. area. To best serve its registered members, the company must understand the demand for its service. To help them out, we can analyze the number of rides taken on a random sample of *n* days. 
+
+
+::::: columns
+::: {.column width="60%"}
+<br>
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 6
+#| fig.align: center
+#| out.width: 100%
+#| echo: false
+gf_histogram(~rides, data = bikes, xlab = "No. Rides", fill = "#003300", col = "white", bins = 25) 
+```
+:::
+
+::: {.column width="40%"}
+
+<br>
+The data also has information about: 
+
+- Weekend/holiday/etc
+- Day of the measurement
+- Weather information
+
+:::
+:::::
+
+For our first analysis, we'll investigate the relationship between **temperature** and **daily ridership**
 
 # Regression in Intro
 
@@ -139,6 +171,73 @@ The high temperature forecast tomorrow is 72 degrees F. What does the model pred
 
 
 # Regression in Stat230
+
+## Overview: The Normal Distribution
+
+::::: columns
+::: {.column width="50%"}
+<br>
+
+```{r echo=FALSE, normal, message=FALSE, fig.width=12}
+
+# Set up gamma data
+mu <- c(0)
+sigma  <- c(1)
+sigma.sq<-sigma^2
+normals <- data.frame(
+                    x = rep(seq(-5, 5, length = 500), 1),
+                    mu = rep(mu, each = 500), 
+                    sigma = rep(sigma, each = 500))
+
+normals <- normals %>% 
+    mutate(y = dnorm(x, mean = mu, sd = sigma))
+
+ggplot(normals, aes(x = x, y = y)) + 
+  geom_line(linewidth = 2) + 
+  #facet_wrap(~ setting) + 
+  labs(x = "y", y = "f(y)") 
+  
+``` 
+
+:::
+
+::: {.column width="50%"}
+
+<br>
+If Y is: 
+
+-   **numeric**
+-   **unimodal**
+-  and **symmetric**, 
+
+we might use a Normal model
+:::
+:::::
+
+## $Y \sim N(\mu, \sigma^2)$
+
+```{r echo=FALSE, normal-tuning, message=FALSE, fig.width=12}
+
+# Set up gamma data
+mu <- c(2,2,4)
+sigma  <- c(.5,1,2)
+sigma.sq<-sigma^2
+normals <- data.frame(setting = factor(rep(1:3, each = 500)), 
+                    x = rep(seq(-2, 10, length = 500), 3),
+                    mu = rep(mu, each = 500), 
+                    sigma = rep(sigma, each = 500))
+normals <- normals %>% 
+    mutate(y = dnorm(x, mean = mu, sd = sigma))
+levels(normals$setting) <- paste0("N(",mu,",",sigma.sq,")")
+g <- ggplot(normals, aes(x = x, y = y)) + 
+  geom_line() + 
+  facet_wrap(~ setting) + 
+  labs(x = "y", y = "f(y)") + 
+  scale_y_continuous(breaks = c(0,2,4,6,8,10)) + 
+  lims(y = c(0,0.8)) 
+  
+g 
+``` 
 
 ## Simple Linear Regression Model
 

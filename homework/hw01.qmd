@@ -1,6 +1,7 @@
 ---
 title: "hw01"
 format: html
+navbar: false
 execute: 
   echo: true
   message: false
