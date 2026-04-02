@@ -1,0 +1,371 @@
+---
+title: Inference for SLR
+subtitle: Day 03
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
+theme_set(notes_theme)
+```
+
+## Data for today 
+
+*Capital Bikeshare* is a bike sharing service in the Washington, D.C. area. We're interested in analyzing the relationship between *number of rides taken* and *temperature*
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 6
+#| fig.align: center
+#| out.width: 100%
+#| echo: false
+gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No. rides", color = "#003300", size = 1) |>
+  gf_lm(rides ~ temp_actual, linewidth = 1.5, color = "#f15a31") 
+```
+
+## Last Time
+
+1. Scatterplots + correlation
+
+2. Fit the regression line in R and find a `summary()`
+
+```{r}
+#| echo: true
+bikes_lm <- lm(rides ~ temp_actual, data = bikes)
+```
+
+3. Making confidence intervals using `confint`
+
+. . . 
+
+### Today: moving from descriptive to inferential
+
+## `lm()` Summary
+
+```{r}
+summary(bikes_lm)
+```
+
+## Let's take a step back: Sampling Variability
+
+```{r}
+#| echo: false
+
+set.seed(1234)
+
+boots <- bootstraps(bikes, times = 20, apparent = TRUE)
+
+fit_lm_on_bootstrap <- function(split) {
+    lm(rides ~ temp_actual, data = analysis(split))
+}
+
+boot_models <-
+  boots |>
+  mutate(model = map(splits, fit_lm_on_bootstrap),
+         coef_info = map(model, tidy))
+
+boot_coefs <- 
+  boot_models %>% 
+  unnest(coef_info) |>
+  select(-std.error, -statistic, -p.value) |>
+  pivot_wider(names_from = term, values_from = estimate)
+
+boot_aug3 <- 
+  boot_models %>% 
+  slice(1:3) %>% 
+  mutate(augmented = map(model, augment)) %>% 
+  unnest(augmented)
+
+labels <- c("Bootstrap01" = "Sample 1", "Bootstrap02" = "Sample 2", "Bootstrap03" = "Sample 3")
+```
+
+```{r}
+#| echo: false
+#| fig.height: 3
+#| fig.width: 5
+hop <- 
+  ggplot(data = boot_coefs) +
+  geom_abline(aes(slope = temp_actual, intercept = `(Intercept)`, group = id), color = "#00aeef", size = 0.5) +
+  geom_point(data = bikes, aes(temp_actual, rides), color = "grey60", inherit.aes = FALSE) +
+  labs(x = "Temperature", y = "No. rides") +
+  theme(
+    strip.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.ticks.length = unit(0, "pt"),
+    # plot.margin = margin(7, 1.5, 3.5, 1.5)
+  ) +
+  # panel_border() +
+  transition_states(id, 0, 1) +
+  shadow_mark(future = TRUE, color = "gray50", alpha = 1/20)
+
+animate(hop)
+```
+
+## Sampling distribution 
+
+```{r}
+#| echo: false
+#| fig.height: 3
+#| fig.width: 6
+
+boots1k <- bootstraps(bikes, times = 1000, apparent = TRUE)
+
+
+boot_models_1k <-
+  boots1k |>
+  mutate(model = map(splits, fit_lm_on_bootstrap),
+         coef_info = map(model, tidy))
+
+boot_coefs <- 
+  boot_models_1k %>% 
+  unnest(coef_info) |>
+  select(-std.error, -statistic, -p.value) |>
+  pivot_wider(names_from = term, values_from = estimate) |>
+  rename(
+    intercept = `(Intercept)`,
+    slope = temp_actual
+  )
+
+slope_dist <- ggplot(boot_coefs) +
+   ggdist::stat_dotsinterval(aes(x = slope), quantiles = 500, scale = 0.6, position = position_nudge(y = 0.175)) +
+  labs(y = "Density")
+
+intercept_dist <- ggplot(boot_coefs) +
+  ggdist::stat_dotsinterval(aes(x = intercept), quantiles = 500, scale = 0.6, position = position_nudge(y = 0.175))  +
+  labs(y = "Density")
+
+slope_dist + intercept_dist 
+```
+
+
+## Sampling distribution
+
+We use the t distribution with df =  n - 2 to model the sampling distribution of a regression coefficient
+
+```{r}
+#| echo: false
+#| fig.height: 3
+#| fig.width: 6
+
+mod <- bikes_lm
+
+sdsn_df <- tibble(
+  term = c("slope", "intercept"),
+  mean = c(mean(boot_coefs$slope), mean(boot_coefs$intercept)),
+  df = c(62, 62),
+  sd = diag(vcov(mod)) |> sqrt() |> unname() |> rev()
+)
+
+
+
+slope_slab <- 
+  sdsn_df |> 
+  filter(term == "slope") |>
+  ggplot() +
+  ggdist::stat_dotsinterval(data = boot_coefs, aes(x = slope), quantiles = 500, scale = 0.6, position = position_nudge(y = 0), inherit.aes = FALSE) +
+  ggdist::stat_slab(aes(xdist = distributional::dist_student_t(df = df, mu = mean, sigma = sd)), 
+                    slab_size = 0.5, 
+                    fill = "#0072B2",
+                    alpha = 0.4) +
+  xlab("Slope")
+
+intercept_slab <- 
+  sdsn_df |> 
+  filter(term == "intercept") |>
+  ggplot() +
+  ggdist::stat_dotsinterval(data = boot_coefs, aes(x = intercept), quantiles = 500, scale = 0.6, position = position_nudge(y = 0), inherit.aes = FALSE) +
+  ggdist::stat_slab(aes(xdist = distributional::dist_student_t(df = df, mu = mean, sigma = sd)), 
+                    slab_size = 0.5, 
+                    fill = "#0072B2",
+                    alpha = 0.4) +
+  xlab("Intercept")
+
+slope_slab + intercept_slab
+```
+
+## Sampling distribution
+
+- t distribution with $df =  n - 2$
+
+. . .
+
+- Mean = $\beta_i$
+
+. . .
+
+- Standard deviation = $SE(\widehat{\beta}_1) = \widehat{\sigma} / \sqrt{\sum (x_i - \overline{x} )^2}$
+
+
+## Confidence interval
+
+::::{.columns}
+::: {.column width="15%"}
+statistic
+:::
+::: {.column width="7%"}
+±
+:::
+::: {.column width="70%"}
+critical value × standard error
+:::
+::::
+
+<br>
+
+::::{.columns}
+::: {.column width="15%"}
+$\widehat{\beta}_i$
+:::
+::: {.column width="7%"}
+±
+:::
+::: {.column width="33%"}
+$t^* \cdot SE(\widehat{\beta}_i)$
+:::
+::::
+
+
+## Critical Value
+
+::::{.columns}
+::: {.column width="33%"}
+
+```{r}
+#| echo: true
+
+qt(.025, df = 30)
+```
+
+```{r}
+my_p = .025
+my_q = qt(my_p, df = 30)
+
+gf_dist("t", df = 30, color = "black", linewidth = 1) |>
+  gf_dist("t", df = 30, geom = "area", fill = "#0072B2", alpha = 0.5, 
+          xlim = c(-4, my_q)) |>
+  gf_vline(xintercept = ~my_q, color = "#f15a31", linetype = "dashed", linewidth = 1) |>
+  gf_point(0 ~ my_q, color = "#f15a31", size = 3)
+```
+
+:::
+::: {.column width="33%"}
+
+
+```{r}
+#| echo: true
+
+qt(.1, df = 30)
+```
+
+```{r}
+my_p = .025
+my_q = qt(my_p, df = 30)
+
+gf_dist("t", df = 30, color = "black", linewidth = 1) |>
+  gf_dist("t", df = 30, geom = "area", fill = "#0072B2", alpha = 0.5, 
+          xlim = c(-4, my_q)) |>
+  gf_vline(xintercept = ~my_q, color = "#f15a31", linetype = "dashed", linewidth = 1) |>
+  gf_point(0 ~ my_q, color = "#f15a31", size = 3)
+```
+
+:::
+::: {.column width="33%"}
+
+```{r}
+#| echo: true
+
+qt(.25, df = 30)
+```
+
+```{r}
+my_p = .025
+my_q = qt(my_p, df = 30, lower.tail = FALSE)
+
+gf_dist("t", df = 30, color = "black", linewidth = 1) |>
+  gf_dist("t", df = 30, geom = "area", fill = "#0072B2", alpha = 0.5, 
+          xlim = c(-4, my_q)) |>
+  gf_vline(xintercept = ~my_q, color = "#f15a31", linetype = "dashed", linewidth = 1) |>
+  gf_point(0 ~ my_q, color = "#f15a31", size = 3)
+```
+
+:::
+::::
+
+## Hypothesis test {.scrollable}
+
+
+
+$H_0: \beta_i = \#$ vs. $H_a:$ choose one of $\begin{array}{c} \beta_i \ne \#\\ \beta_i <\#  \\ \beta_i >\# \end{array}$ 
+
+<br>
+
+. . .
+
+::::{.columns}
+::: {.column width="30%"}
+test statistic
+:::
+::: {.column width="70%"}
+$= \dfrac{\text{estimate} - \text{null value}}{\text{SE}}$
+:::
+::::
+
+::::{.columns}
+::: {.column width="30%"}
+
+:::
+::: {.column width="70%"}
+$=\dfrac{\widehat{\beta}_i - \text{null value}}{SE(\widehat{\beta}_i)}$
+:::
+::::
+
+. . .
+
+Find appropriate tail areas under the  t-distribution with $df = n - 2$
+
+
+## Coefficient table
+
+Standard output for a regression model includes a coefficient table
+
+```{r}
+#| echo: true
+library(broom)
+tidy(mod)
+```
+
+
+## Example: 90% confidence interval for $\beta_1$
+
+# Your turn: on paper
+
+# Intro to maize/RStudio
+
+
