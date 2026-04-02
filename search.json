@@ -277,7 +277,7 @@
     "href": "homework/hw01.html",
     "title": "Homework 01",
     "section": "",
-    "text": "Due: Friday of Week 1 at start of class\n\n\n\n\n\n\nImportantImportant!\n\n\n\nI will add problems after each class day. Be sure to check back here after each class meeting for new problems.\n\n\n\nProblem 1: Intro Stat review\nA 2021 article in Pediatrics (“Baby’s First Years: Design of a Randomized Controlled Trial of Poverty Reduction in the United States”) describes the design of a study to measure the impact of poverty reduction on children’s early development:\n\nA total of 1000 low-income mothers of newborns were enrolled in the study and began receiving a monthly unconditional cash gift for the first several years of their children’s lives. Mothers were randomly assigned to receive either a large monthly cash gift ($333) or a nominal monthly cash gift ($20). All monthly gifts are administered via debit card and can be freely spent with no restrictions. Baby’s First Years aims to answer whether poverty reduction in early childhood (1) improves children’s developmental outcomes and promotes healthier brain functioning, and (2) improves family functioning and better enables parents to support child development.\n\n\nWhy was it important to randomize amount of the cash gift in the study?\nSuppose the outcome variable \\(Y\\) in a statistical analysis is a quantitative measure of child brain functioning. We then calculate the mean of the large gift group (\\(\\bar{Y}_{large}\\)) and the small gift group (\\(\\bar{Y}_{small}\\)). What would an appropriate hypothesis test be? (You only need to set up the hypotheses statements)\nIf the researchers fail to reject the null hypothesis from (b), what type of error might they have made?\nHow could the researchers decrease the probability that they make the type of error in (c)?\n\n\n\nProblem 2: Regression\nOne factor affecting water availability in Southern California is stream runoff from snowfall. If runoff could be predicted, engineers, planners, and policy makers could do their jobs more effectively because they would have an estimate as to how much water is entering the area.\nWe have access to a data set compares the stream runoff (in acre-feet) of a river near Bishop, California (due east of San Jose) with snowfall (in inches) at a site in the Sierra Nevada mountains. For each of the following questions, assume that your audience is city water planners with moderate statistical training.\n\nBelow is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).\n\n\n\n\n\n\n\n\n\n\n\nBelow is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.\n\n\nlm(Runoff ~ Precip, data = runoff) |&gt; tidy()\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)   27015.     3219.      8.39 1.93e-10\n2 Precip         3752.      216.     17.4  1.56e-20\n\n\n\nInterpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\nInterpret the intercept in the context of the problem. (Don’t forget to specify units.)\nIf one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t forget to specify units.)\n\n\n\nProblem 3: Grizzlies\nThe data below are length and girth measurements (in inches) for a sample of Grizzly bears.\n\n\n\n\n\n\n\n\n\nPlot the bear’s girth (response variable) against its length (predictor variable) and show the linear regression line. Describe the relationship.\n\n\n\n\n\n\n\n\n\n\nCompute and report the correlation coefficient\n\n\n\n\n\n\n\n\n\n\nFit the linear regression model and report the fitted regression equation\n\n\n\n\n\n\n\n\n\n\nWhat is the interpretation of the intercept coefficient, in context? Does it make sense to perform this interpretation?\n\n\n\n\n\n\n\n\n\n\nA new bear was observed with a length of 148 inches. What would the model predict for its girth?\n\n\n\n\n\n\n\n\n\n\n\nProblem 4: The Hubble Constant\n\nEdwin Hubble used the power of the Mount Wilson Observatory telescopes to meaure features of nebulae outside the Milky WAy. He was surprised to find a relationship between a nebula’s distance from earth and the velocity with which it was going away from the earth…. The apparent statistical relationship between distance and velocity led scientists to consider how such a relatinoship could arise. It was proposed that the universe came into being with a Big Bang, a long time ago. If this were true, then \\(Y = TX\\), where \\(Y\\) is Distance and \\(X\\) is velocity, and \\(T\\) gives the time elapsed since the Big Bang (that is, the age of the universe).\n\nThe ex0725 data points below are measured distances and recession velocities for 10 clusters of nebulae, much farther from earth than Hubble’s data.\n\n\n\n\n\n\n\n\n\nMake a scatterplot with Velocity as the response and Distance as the predictor and describe the relationship\n\n\n\n\n\n\n\n\n\n\nAre the data consistent with Hubble’s theory (that the intercept is zero?)\n\n\n\n\n\n\n\n\n\n\nRegardless of your answer to the previous question, fit a simple linear regression model through the origin (i.e., forcing \\(\\beta_0 = 0\\)) by running the following code. Use this model to provide an estimate of the Hubble constant (the age of the universe)\n\n\n\n\n\n\n\n\n\n\nFind a 95% confidence interval for this estimate"
+    "text": "Due: Friday of Week 1 at start of class\n\n\n\n\n\n\nImportantImportant!\n\n\n\nI will add problems after each class day. Be sure to check back here after each class meeting for new problems.\n\n\n\nProblem 1: Intro Stat review\nA 2021 article in Pediatrics (“Baby’s First Years: Design of a Randomized Controlled Trial of Poverty Reduction in the United States”) describes the design of a study to measure the impact of poverty reduction on children’s early development:\n\nA total of 1000 low-income mothers of newborns were enrolled in the study and began receiving a monthly unconditional cash gift for the first several years of their children’s lives. Mothers were randomly assigned to receive either a large monthly cash gift ($333) or a nominal monthly cash gift ($20). All monthly gifts are administered via debit card and can be freely spent with no restrictions. Baby’s First Years aims to answer whether poverty reduction in early childhood (1) improves children’s developmental outcomes and promotes healthier brain functioning, and (2) improves family functioning and better enables parents to support child development.\n\n\nWhy was it important to randomize amount of the cash gift in the study?\nSuppose the outcome variable \\(Y\\) in a statistical analysis is a quantitative measure of child brain functioning. We then calculate the mean of the large gift group (\\(\\bar{Y}_{large}\\)) and the small gift group (\\(\\bar{Y}_{small}\\)). What would an appropriate hypothesis test be? (You only need to set up the hypotheses statements)\nIf the researchers fail to reject the null hypothesis from (b), what type of error might they have made?\nHow could the researchers decrease the probability that they make the type of error in (c)?\n\n\n\nProblem 2: Regression\nOne factor affecting water availability in Southern California is stream runoff from snowfall. If runoff could be predicted, engineers, planners, and policy makers could do their jobs more effectively because they would have an estimate as to how much water is entering the area.\nWe have access to a data set compares the stream runoff (in acre-feet) of a river near Bishop, California (due east of San Jose) with snowfall (in inches) at a site in the Sierra Nevada mountains. For each of the following questions, assume that your audience is city water planners with moderate statistical training.\n\nBelow is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).\n\n\n\n\n\n\n\n\n\n\n\nBelow is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.\n\n\nlm(Runoff ~ Precip, data = runoff) |&gt; tidy()\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)   27015.     3219.      8.39 1.93e-10\n2 Precip         3752.      216.     17.4  1.56e-20\n\n\n\nInterpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\nInterpret the intercept in the context of the problem. (Don’t forget to specify units.)\nIf one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t forget to specify units.)\n\n\n\nProblem 3: Grizzlies\n\n\n\n\n\n\nTip\n\n\n\nThis problem asks you to write R code. You can use the fill-in-the-blank boxes here, or maize or RStudio if you are comfortable. For this homework, we will grade your written answers, so you only need to include sentences for each part. Your answers should reference the specific numbers you found.\n\n\nThe data below are length and girth measurements (in inches) for a sample of Grizzly bears.\n\n\n\n\n\n\n\n\n\nPlot the bear’s girth (response variable) against its length (predictor variable) and show the linear regression line. Describe the relationship.\n\n\n\n\n\n\n\n\n\n\nCompute and report the correlation coefficient\n\n\n\n\n\n\n\n\n\n\nFit the linear regression model and report the fitted regression equation\n\n\n\n\n\n\n\n\n\n\nWhat is the interpretation of the intercept coefficient, in context? Does it make sense to perform this interpretation?\n\n\n\n\n\n\n\n\n\n\nA new bear was observed with a length of 148 inches. What would the model predict for its girth?\n\n\n\n\n\n\n\n\n\n\n\nProblem 4: The Hubble Constant\n\n\n\n\n\n\nTip\n\n\n\nThis problem asks you to write R code. You can use the fill-in-the-blank boxes here, or maize or RStudio if you are comfortable. For this homework, we will grade your written answers, so you only need to include sentences for each part. Your answers should reference the specific numbers you found.\n\n\n\nEdwin Hubble used the power of the Mount Wilson Observatory telescopes to meaure features of nebulae outside the Milky WAy. He was surprised to find a relationship between a nebula’s distance from earth and the velocity with which it was going away from the earth…. The apparent statistical relationship between distance and velocity led scientists to consider how such a relatinoship could arise. It was proposed that the universe came into being with a Big Bang, a long time ago. If this were true, then \\(Y = TX\\), where \\(Y\\) is Distance and \\(X\\) is velocity, and \\(T\\) gives the time elapsed since the Big Bang (that is, the age of the universe).\n\nThe ex0725 data points below are measured distances and recession velocities for 10 clusters of nebulae, much farther from earth than Hubble’s data.\n\n\n\n\n\n\n\n\n\nMake a scatterplot with Velocity as the response and Distance as the predictor and describe the relationship\n\n\n\n\n\n\n\n\n\n\nAre the data consistent with Hubble’s theory (that the intercept is zero?)\n\n\n\n\n\n\n\n\n\n\nRegardless of your answer to the previous question, fit a simple linear regression model through the origin (i.e., forcing \\(\\beta_0 = 0\\)) by running the following code. Use this model to provide an estimate of the Hubble constant (the age of the universe)\n\n\n\n\n\n\n\n\n\n\nFind a 95% confidence interval for this estimate"
   },
   {
     "objectID": "slides/slides01.html#im-amanda-sheher",
@@ -404,97 +404,6 @@
     "title": "Welcome to Stat230!",
     "section": "Before next class:",
     "text": "Before next class:\n\n\nReview solutions to activity on Moodle\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials\nSkim textbook chapters and come prepared for some simple linear regression next time!"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#columns",
-    "href": "slides/slides-cheat-sheet.html#columns",
-    "title": "Slides Cheat Sheet",
-    "section": "Columns",
-    "text": "Columns\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#only-graph-from-code",
-    "href": "slides/slides-cheat-sheet.html#only-graph-from-code",
-    "title": "Slides Cheat Sheet",
-    "section": "Only graph from code",
-    "text": "Only graph from code"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#background-image-half",
-    "href": "slides/slides-cheat-sheet.html#background-image-half",
-    "title": "Slides Cheat Sheet",
-    "section": "Background Image (half)",
-    "text": "Background Image (half)\n\n\nWhat skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#full-size-image",
-    "href": "slides/slides-cheat-sheet.html#full-size-image",
-    "title": "Slides Cheat Sheet",
-    "section": "Full size image",
-    "text": "Full size image\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#background-image-full-size",
-    "href": "slides/slides-cheat-sheet.html#background-image-full-size",
-    "title": "Slides Cheat Sheet",
-    "section": "Background image (full size)",
-    "text": "Background image (full size)"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#countdown",
-    "href": "slides/slides-cheat-sheet.html#countdown",
-    "title": "Slides Cheat Sheet",
-    "section": "Countdown",
-    "text": "Countdown\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#table-column-widths",
-    "href": "slides/slides-cheat-sheet.html#table-column-widths",
-    "title": "Slides Cheat Sheet",
-    "section": "table column widths",
-    "text": "table column widths\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
-    "href": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
-    "title": "Slides Cheat Sheet",
-    "section": "Use of generative artificial intelligence (AI)",
-    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#linktask",
-    "href": "slides/slides-cheat-sheet.html#linktask",
-    "title": "Slides Cheat Sheet",
-    "section": "Link/task",
-    "text": "Link/task\n\nhttps://github.com/stat220-w25\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
-  },
-  {
-    "objectID": "slides/slides-cheat-sheet.html#handwriting-font",
-    "href": "slides/slides-cheat-sheet.html#handwriting-font",
-    "title": "Slides Cheat Sheet",
-    "section": "handwriting font",
-    "text": "handwriting font\n\nin case you don’t yet have a GitHub account…"
-  },
-  {
-    "objectID": "slides.html",
-    "href": "slides.html",
-    "title": "Slides",
-    "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "readings.html",
-    "href": "readings.html",
-    "title": "Readings",
-    "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nIntro Stat Review\n\n\n \n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stat 230: Applied Regression Analysis",
-    "section": "",
-    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
   },
   {
     "objectID": "slides/slides02.html#data-for-today",
@@ -628,6 +537,181 @@
     "title": "Simple Linear Regression (SLR)",
     "section": "Rest of today",
     "text": "Rest of today\n\n\nOpen the SLR in R activity on Moodle and complete in your groups\nMake note of any questions\nChoose someone responsible for reporting out your answers"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 230: Applied Regression Analysis",
+    "section": "",
+    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
+  },
+  {
+    "objectID": "readings.html",
+    "href": "readings.html",
+    "title": "Readings",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nIntro Stat Review\n\n\n \n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "slides.html",
+    "href": "slides.html",
+    "title": "Slides",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nInference for SLR\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#columns",
+    "href": "slides/slides-cheat-sheet.html#columns",
+    "title": "Slides Cheat Sheet",
+    "section": "Columns",
+    "text": "Columns\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#only-graph-from-code",
+    "href": "slides/slides-cheat-sheet.html#only-graph-from-code",
+    "title": "Slides Cheat Sheet",
+    "section": "Only graph from code",
+    "text": "Only graph from code"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#background-image-half",
+    "href": "slides/slides-cheat-sheet.html#background-image-half",
+    "title": "Slides Cheat Sheet",
+    "section": "Background Image (half)",
+    "text": "Background Image (half)\n\n\nWhat skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#full-size-image",
+    "href": "slides/slides-cheat-sheet.html#full-size-image",
+    "title": "Slides Cheat Sheet",
+    "section": "Full size image",
+    "text": "Full size image\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#background-image-full-size",
+    "href": "slides/slides-cheat-sheet.html#background-image-full-size",
+    "title": "Slides Cheat Sheet",
+    "section": "Background image (full size)",
+    "text": "Background image (full size)"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#countdown",
+    "href": "slides/slides-cheat-sheet.html#countdown",
+    "title": "Slides Cheat Sheet",
+    "section": "Countdown",
+    "text": "Countdown\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#table-column-widths",
+    "href": "slides/slides-cheat-sheet.html#table-column-widths",
+    "title": "Slides Cheat Sheet",
+    "section": "table column widths",
+    "text": "table column widths\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
+    "href": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
+    "title": "Slides Cheat Sheet",
+    "section": "Use of generative artificial intelligence (AI)",
+    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#linktask",
+    "href": "slides/slides-cheat-sheet.html#linktask",
+    "title": "Slides Cheat Sheet",
+    "section": "Link/task",
+    "text": "Link/task\n\nhttps://github.com/stat220-w25\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
+  },
+  {
+    "objectID": "slides/slides-cheat-sheet.html#handwriting-font",
+    "href": "slides/slides-cheat-sheet.html#handwriting-font",
+    "title": "Slides Cheat Sheet",
+    "section": "handwriting font",
+    "text": "handwriting font\n\nin case you don’t yet have a GitHub account…"
+  },
+  {
+    "objectID": "slides/slides03.html#data-for-today",
+    "href": "slides/slides03.html#data-for-today",
+    "title": "Inference for SLR",
+    "section": "Data for today",
+    "text": "Data for today\nCapital Bikeshare is a bike sharing service in the Washington, D.C. area. We’re interested in analyzing the relationship between number of rides taken and temperature"
+  },
+  {
+    "objectID": "slides/slides03.html#last-time",
+    "href": "slides/slides03.html#last-time",
+    "title": "Inference for SLR",
+    "section": "Last Time",
+    "text": "Last Time\n\nScatterplots + correlation\nFit the regression line in R and find a summary()\n\n\nbikes_lm &lt;- lm(rides ~ temp_actual, data = bikes)\n\n\nMaking confidence intervals using confint\n\n\nToday: moving from descriptive to inferential"
+  },
+  {
+    "objectID": "slides/slides03.html#lm-summary",
+    "href": "slides/slides03.html#lm-summary",
+    "title": "Inference for SLR",
+    "section": "lm() Summary",
+    "text": "lm() Summary\n\n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-3564.3 -1009.3  -116.4   959.1  3184.6 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -2168.77     363.64  -5.964 4.67e-09 ***\ntemp_actual    89.23       5.67  15.739  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1288 on 498 degrees of freedom\nMultiple R-squared:  0.3322,    Adjusted R-squared:  0.3308 \nF-statistic: 247.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16"
+  },
+  {
+    "objectID": "slides/slides03.html#lets-take-a-step-back-sampling-variability",
+    "href": "slides/slides03.html#lets-take-a-step-back-sampling-variability",
+    "title": "Inference for SLR",
+    "section": "Let’s take a step back: Sampling Variability",
+    "text": "Let’s take a step back: Sampling Variability"
+  },
+  {
+    "objectID": "slides/slides03.html#sampling-distribution",
+    "href": "slides/slides03.html#sampling-distribution",
+    "title": "Inference for SLR",
+    "section": "Sampling distribution",
+    "text": "Sampling distribution"
+  },
+  {
+    "objectID": "slides/slides03.html#sampling-distribution-1",
+    "href": "slides/slides03.html#sampling-distribution-1",
+    "title": "Inference for SLR",
+    "section": "Sampling distribution",
+    "text": "Sampling distribution\nWe use the t distribution with df = n - 2 to model the sampling distribution of a regression coefficient"
+  },
+  {
+    "objectID": "slides/slides03.html#sampling-distribution-2",
+    "href": "slides/slides03.html#sampling-distribution-2",
+    "title": "Inference for SLR",
+    "section": "Sampling distribution",
+    "text": "Sampling distribution\n\nt distribution with \\(df =  n - 2\\)\n\n\n\nMean = \\(\\beta_i\\)\n\n\n\n\nStandard deviation = \\(SE(\\widehat{\\beta}_1) = \\widehat{\\sigma} / \\sqrt{\\sum (x_i - \\overline{x} )^2}\\)"
+  },
+  {
+    "objectID": "slides/slides03.html#confidence-interval",
+    "href": "slides/slides03.html#confidence-interval",
+    "title": "Inference for SLR",
+    "section": "Confidence interval",
+    "text": "Confidence interval\n\n\nstatistic\n\n±\n\ncritical value × standard error\n\n\n\n\n\\(\\widehat{\\beta}_i\\)\n\n±\n\n\\(t^* \\cdot SE(\\widehat{\\beta}_i)\\)"
+  },
+  {
+    "objectID": "slides/slides03.html#critical-value",
+    "href": "slides/slides03.html#critical-value",
+    "title": "Inference for SLR",
+    "section": "Critical Value",
+    "text": "Critical Value\n\n\n\nqt(.025, df = 30)\n\n[1] -2.042272\n\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.1, df = 30)\n\n[1] -1.310415\n\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.25, df = 30)\n\n[1] -0.6827557"
+  },
+  {
+    "objectID": "slides/slides03.html#hypothesis-test",
+    "href": "slides/slides03.html#hypothesis-test",
+    "title": "Inference for SLR",
+    "section": "Hypothesis test",
+    "text": "Hypothesis test\n\\(H_0: \\beta_i = \\#\\) vs. \\(H_a:\\) choose one of \\(\\begin{array}{c} \\beta_i \\ne \\#\\\\ \\beta_i &lt;\\#  \\\\ \\beta_i &gt;\\# \\end{array}\\)\n\n\n\n\ntest statistic\n\n\\(= \\dfrac{\\text{estimate} - \\text{null value}}{\\text{SE}}\\)\n\n\n\n\n\n\\(=\\dfrac{\\widehat{\\beta}_i - \\text{null value}}{SE(\\widehat{\\beta}_i)}\\)\n\n\n\nFind appropriate tail areas under the t-distribution with \\(df = n - 2\\)"
+  },
+  {
+    "objectID": "slides/slides03.html#coefficient-table",
+    "href": "slides/slides03.html#coefficient-table",
+    "title": "Inference for SLR",
+    "section": "Coefficient table",
+    "text": "Coefficient table\nStandard output for a regression model includes a coefficient table\n\nlibrary(broom)\ntidy(mod)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)  -2169.     364.       -5.96 4.67e- 9\n2 temp_actual     89.2      5.67     15.7  1.35e-45"
+  },
+  {
+    "objectID": "slides/slides03.html#example-90-confidence-interval-for-beta_1",
+    "href": "slides/slides03.html#example-90-confidence-interval-for-beta_1",
+    "title": "Inference for SLR",
+    "section": "Example: 90% confidence interval for \\(\\beta_1\\)",
+    "text": "Example: 90% confidence interval for \\(\\beta_1\\)"
   },
   {
     "objectID": "case-studies/stat-writing.html",
