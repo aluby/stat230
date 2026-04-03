@@ -4,7 +4,8 @@
     "items": [
       "/activities/01-intro.html",
       "/activities/02-SLR.html",
-      "/activities/03-r.html",
+      "/activities/03a-inference.html",
+      "/activities/03b-r-inference.html",
       "/activities/04-prediction.html",
       "/activities/05-diagnostics.html",
       "/activities/06-transformations.html",
@@ -31,7 +32,8 @@
   {
     "listing": "/readings.html",
     "items": [
-      "/readings/intro-review.html"
+      "/readings/intro-review.html",
+      "/readings/r-for-stat230.html"
     ]
   },
   {

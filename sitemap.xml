@@ -9,16 +9,16 @@
     <lastmod>2026-03-30T13:47:02.526Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/11-tbd.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/05-diagnostics.html</loc>
     <lastmod>2026-03-25T13:01:22.005Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/19-binary-logistic.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/13-tbd.html</loc>
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/08-polynomial.html</loc>
-    <lastmod>2026-03-25T13:01:22.005Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/23-binomial-logistic.html</loc>
+    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/activities/04-prediction.html</loc>
@@ -37,28 +37,28 @@
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/21-r-logistic.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/03a-inference.html</loc>
+    <lastmod>2026-04-03T14:07:20.482Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/22-diagnostic-logistic.html</loc>
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/09-mlr.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/14-tbd.html</loc>
+    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/10-cat-predictors.html</loc>
     <lastmod>2026-03-25T13:01:22.005Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/28-quasibinomial.html</loc>
-    <lastmod>2026-03-25T13:01:22.007Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/02-r-live.html</loc>
-    <lastmod>2026-04-01T18:21:05.798Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/02-SLR.html</loc>
-    <lastmod>2026-04-01T18:21:05.798Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/27-poisson.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/15-tbd.html</loc>
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/readings/intro-review.html</loc>
+    <lastmod>2026-03-30T20:21:19.505Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/homework/hw01.html</loc>
@@ -90,30 +90,38 @@
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/slides/slides03.html</loc>
-    <lastmod>2026-04-02T20:20:06.186Z</lastmod>
+    <lastmod>2026-04-03T14:06:56.001Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/case-studies/stat-writing.html</loc>
     <lastmod>2026-03-25T15:10:51.580Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/readings/intro-review.html</loc>
-    <lastmod>2026-03-30T20:21:19.505Z</lastmod>
+    <loc>https://aluby.github.io/stat230/readings/r-for-stat230.html</loc>
+    <lastmod>2026-04-03T14:18:38.003Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/15-tbd.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/27-poisson.html</loc>
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/10-cat-predictors.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/02-SLR.html</loc>
+    <lastmod>2026-04-01T18:21:05.798Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/02-r-live.html</loc>
+    <lastmod>2026-04-01T18:21:05.798Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/28-quasibinomial.html</loc>
+    <lastmod>2026-03-25T13:01:22.007Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/09-mlr.html</loc>
     <lastmod>2026-03-25T13:01:22.005Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/14-tbd.html</loc>
-    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/22-diagnostic-logistic.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/21-r-logistic.html</loc>
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
@@ -133,20 +141,20 @@
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/23-binomial-logistic.html</loc>
-    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/03b-r-inference.html</loc>
+    <lastmod>2026-04-03T14:24:33.832Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/13-tbd.html</loc>
-    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/05-diagnostics.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/08-polynomial.html</loc>
     <lastmod>2026-03-25T13:01:22.005Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/03-r.html</loc>
-    <lastmod>2026-03-30T13:43:36.865Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/19-binary-logistic.html</loc>
+    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/11-tbd.html</loc>
+    <lastmod>2026-03-25T13:01:22.005Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/schedule.html</loc>
