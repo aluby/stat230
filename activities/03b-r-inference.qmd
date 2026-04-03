@@ -1,7 +1,5 @@
 ---
 title: "03: Inference for SLR"
-format: 
-  html: default
 ---
 
 ```{r}
@@ -9,11 +7,7 @@ library(tidyverse)
 library(broom)
 ```
 
-# Part 2: In R[^1]
-
-[^1]: Adapted from *Stat 2: Modeling with Regression and ANOVA*
-
-First, skim working in R for Stat230. Then, follow these directions: 
+First, skim [working in R for Stat230](../readings/r-for-stat230.qmd). Then, follow these directions: 
 
 1. Either open your local RStudio program or navigate to <https://maize.mathcs.carleton.edu> in your browser and log in.
 
@@ -27,19 +21,17 @@ First, skim working in R for Stat230. Then, follow these directions:
 
 4. You should now be able to see this document in your own session, and you can run code and edit it as you need to! Make sure to save it in a "Stat230" folder
 
+# Part 2: In R[^1]
+
+[^1]: Adapted from *Stat 2: Modeling with Regression and ANOVA*
+
 
 ## Load the data
-
-Load package where data lives
-
-```{r}
-library(Stat2Data)
-```
 
 Load data into your session (it should show up in the "Environment" pane)
 
 ```{r}
-data("LeafWidth")  
+LeafWidth <- read_csv(here::here(here::here(), "data/LeafWidth.csv"))
 ```
 
 
@@ -51,7 +43,7 @@ LeafWidth
 
 ## Exploratory Data Analysis
 
-First, make a scatterplot of `Width` (response variable) against `Year` (explanatory variable)
+First, make a scatterplot of `Width` (response variable) against `Year` (explanatory variable). Overlay the linear regression line. Describe your findings.
 
 ```{r}
 
@@ -59,7 +51,7 @@ First, make a scatterplot of `Width` (response variable) against `Year` (explana
 
 ## Linear Regression Model
 
-Find the linear regression equation using `lm()`. Use `tidy()` to print the coefficient table of the regression model
+Find the linear regression equation using `lm()`. Use `tidy()` to print the coefficient table of the regression model. Make sure you get the same answer as the paper printout! 
 
 
 ```{r}

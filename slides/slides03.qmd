@@ -463,7 +463,7 @@ qt(.05, df = 30)
 ::: callout-tip
 ## CI Interpretation
 
-We are _______% confident that for every 1 _________ increase in __________________________, _____________________________ also increases by between ____________ and _____________
+We are _______% confident that for every 1 _________ increase in __________________________, __________________________________________________________  also ________________ by between ____________ and _____________
 
 :::
 
