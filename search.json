@@ -557,7 +557,7 @@
     "href": "slides/slides03.html#critical-value",
     "title": "Inference for SLR",
     "section": "Critical Value",
-    "text": "Critical Value\n\n\n\nqt(.025, df = 30)\n\n[1] -2.042272\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.025, df = 30, \n   lower.tail = FALSE)\n\n[1] 2.042272\n\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.1, df = 30)\n\n[1] -1.310415\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.1, df = 30,\n   lower.tail = FALSE)\n\n[1] 1.310415\n\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.25, df = 30)\n\n[1] -0.6827557\n\n\n\n\n\n\n\n\n\n\n\n\nqt(my_p, df = 30, \n   lower.tail = FALSE)\n\n[1] 0.6827557"
+    "text": "Critical Value\n\n\n\nqt(.025, df = 30)\n\n[1] -2.042272\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.025, df = 30, \n   lower.tail = FALSE)\n\n[1] 2.042272\n\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.1, df = 30)\n\n[1] -1.310415\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.1, df = 30,\n   lower.tail = FALSE)\n\n[1] 1.310415\n\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.25, df = 30)\n\n[1] -0.6827557\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.25, df = 30, \n   lower.tail = FALSE)\n\n[1] 0.6827557"
   },
   {
     "objectID": "slides/slides03.html#hypothesis-test",
@@ -578,7 +578,7 @@
     "href": "slides/slides03.html#example-90-confidence-interval-for-beta_1",
     "title": "Inference for SLR",
     "section": "Example: 90% confidence interval for \\(\\beta_1\\)",
-    "text": "Example: 90% confidence interval for \\(\\beta_1\\)\n\n\nstatistic\n\n±\n\ncritical value × standard error\n\n\n\n\n\\(\\widehat{\\beta}_i\\)\n\n±\n\n\\(t^* \\cdot SE(\\widehat{\\beta}_i)\\)\n\n\n\nqt(.05, df = 30)\n\n[1] -1.697261\n\n\n\n\n\n\n\n\n\n\nCI Interpretation\n\n\nWe are _______% confident that for every 1 _________ increase in __________________________, __________________________________________________________ also ________________ by between ____________ and _____________"
+    "text": "Example: 90% confidence interval for \\(\\beta_1\\)\n\n\nstatistic\n\n±\n\ncritical value × standard error\n\n\n\n\\(\\widehat{\\beta}_i\\)\n\n±\n\n\\(t^* \\cdot SE(\\widehat{\\beta}_i)\\)\n\n\n\nqt(.05, df = 30)\n\n[1] -1.697261\n\n\n\n\n\n\n\n\n\n\n\n\nCI Interpretation\n\n\n\nWe are _______% confident that for every 1 _________ increase in ____________________,\n_____________________________________________________ also ________________\nby between ____________ and _____________"
   },
   {
     "objectID": "case-studies/stat-writing.html",
@@ -788,7 +788,7 @@
     "href": "activities/03b-r-inference.html#load-the-data",
     "title": "03: Inference for SLR",
     "section": "Load the data",
-    "text": "Load the data\nLoad data into your session (it should show up in the “Environment” pane)\n\nLeafWidth &lt;- read_csv(here::here(here::here(), \"data/LeafWidth.csv\"))\n\n“Print” the data:\n\nLeafWidth\n\n# A tibble: 252 × 5\n   Width Length LWRatio  Area  Year\n   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 0.658   85.1   129.   70.3  1974\n 2 0.921   53.2    57.7  49.0  1918\n 3 0.921   59.9    65    57.7  1993\n 4 0.921   63.7    69.1  37.4  1946\n 5 0.921   64.2    69.7  62.6  1956\n 6 0.921   87.0    94.4  67.5  1964\n 7 1.05    61.3    58.2  63.9  1956\n 8 1.05    64.1    60.9  54.0  1980\n 9 1.18    41.2    34.8  40.9  1999\n10 1.18    41.7    35.2  34.6  1977\n# ℹ 242 more rows"
+    "text": "Load the data\nLoad data into your session (it should show up in the “Environment” pane)\n\nLeafWidth &lt;- read_csv(\"https://aluby.github.io/stat230/data/LeafWidth.csv\")\n\n“Print” the data:\n\nLeafWidth\n\n# A tibble: 252 × 5\n   Width Length LWRatio  Area  Year\n   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 0.658   85.1   129.   70.3  1974\n 2 0.921   53.2    57.7  49.0  1918\n 3 0.921   59.9    65    57.7  1993\n 4 0.921   63.7    69.1  37.4  1946\n 5 0.921   64.2    69.7  62.6  1956\n 6 0.921   87.0    94.4  67.5  1964\n 7 1.05    61.3    58.2  63.9  1956\n 8 1.05    64.1    60.9  54.0  1980\n 9 1.18    41.2    34.8  40.9  1999\n10 1.18    41.7    35.2  34.6  1977\n# ℹ 242 more rows"
   },
   {
     "objectID": "activities/03b-r-inference.html#exploratory-data-analysis",
