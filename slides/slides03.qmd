@@ -469,6 +469,10 @@ We are _______% confident that for every 1 _________ increase in _______________
 
 # Your turn: on paper
 
+```{r}
+countdown::countdown(10)
+```
+
 # Intro to maize/RStudio
 
 
