@@ -19,11 +19,14 @@ library(broom)
 
 Due: Friday of Week 2 at start of class
 
+There is a [homework template](hw-template.qmd) available if you'd like to use that as a starter file, and copy and paste the code as needed. 
+
 ::: callout-important
 ## Important! 
 
 I will add problems after each class day. Be sure to check back here after each class meeting for new problems.
 :::
+
 
 
 # Problem 1: Runoff (again)
