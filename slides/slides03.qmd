@@ -358,7 +358,7 @@ gf_dist("t", df = 30, color = "black", linewidth = 1) |>
 ```{r}
 #| echo: true
 
-qt(my_p, df = 30, 
+qt(.25, df = 30, 
    lower.tail = FALSE)
 ```
 
@@ -434,8 +434,6 @@ critical value × standard error
 :::
 ::::
 
-<br>
-
 ::::{.columns}
 ::: {.column width="15%"}
 $\widehat{\beta}_i$
@@ -460,10 +458,14 @@ qt(.05, df = 30)
 
 <br>
 
+. . . 
+
 ::: callout-tip
 ## CI Interpretation
 
-We are _______% confident that for every 1 _________ increase in __________________________, __________________________________________________________  also ________________ by between ____________ and _____________
+- We are _______% confident that for every 1 _________ increase in ____________________, 
+- _____________________________________________________  also ________________ 
+- by between ____________ and _____________
 
 :::
 

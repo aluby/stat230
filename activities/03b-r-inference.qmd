@@ -31,7 +31,7 @@ First, skim [working in R for Stat230](../readings/r-for-stat230.qmd). Then, fol
 Load data into your session (it should show up in the "Environment" pane)
 
 ```{r}
-LeafWidth <- read_csv(here::here(here::here(), "data/LeafWidth.csv"))
+LeafWidth <- read_csv("https://aluby.github.io/stat230/data/LeafWidth.csv")
 ```
 
 
