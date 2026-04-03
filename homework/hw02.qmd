@@ -1,0 +1,117 @@
+---
+title: "Homework 02"
+format: html
+engine: knitr
+editor: source
+navbar: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(ggplot2)
+library(ggformula)
+library(here)
+library(broom)
+```
+
+Due: Friday of Week 2 at start of class
+
+::: callout-important
+## Important! 
+
+I will add problems after each class day. Be sure to check back here after each class meeting for new problems.
+:::
+
+
+# Problem 1: Runoff (again)
+
+```{r}
+#| echo: false
+#| fig-width: 4
+#| fig-height: 3
+
+
+runoff <- read.csv(here(here(), "data/runoff.csv"))
+
+ggplot(runoff, aes(x = Precip, y = Runoff)) + 
+  geom_point() + 
+  theme_minimal() +
+  labs(
+    x = "Snowfall (inches)",
+    y = "Runoff (acre-feet)"
+  )
+```
+
+Below is the summary table produced when I fit the regression of the expected runoff given snowfall.
+
+```{r}
+lm(Runoff ~ Precip, data = runoff) |> summary()
+```
+
+(a) Calculate a 80% confidence interval for the slope coefficient. Show your work.
+
+(b) Interpret the confidence interval you calculated in part (b) in the context of the problem
+
+(c) Based on your confidence interval in (b), is there convincing evidence of a relationship between snowfall and runoff? Explain. 
+
+(d) The first data point in the dataset $(x_1, y_1)$ has `Precip = 6.47` and `Runoff = 54235`. Find $\hat{y}_1$ and $\epsilon_1$
+
+# Problem 2: Hubble (again) 
+
+The `ex0725` data points below are measured distances and recession velocities for 10 clusters of nebulae, much farther from earth than Hubble's data. 
+
+```{r}
+library(Sleuth3)
+ex0725
+```
+
+(a) Fit a linear regression model to this data and report the fitted equation
+
+(b) Perform a formal hypothesis test to assess whether the data is consistent with Hubble's theory (that the intercept is zero)
+
+
+# Problem 3: Baby birth weights vs father's age
+
+US Department of Health and Human Services, Centers for Disease Control and Prevention collect information on births recorded in the country. The data used here are a random sample of 1000 births from 2014. Here, we study the relationship between the father's age and the weight of the baby. 
+
+```{r}
+births14 <- openintro::births14
+```
+
+::: callout-tip
+This code is shorthand for: look in the {openintro} R package for an object called `births14`
+:::
+
+(a) Make a scatterplot of birth weight (`weight`) as the response variable and father's age (`fage`) as the explanatory variable. Overlay a linear regression line and describe the relationship you see.
+
+```{r}
+# your code here
+```
+
+(b) Find and report the linear regression equation
+
+```{r}
+# your code here
+```
+
+(c) Do the data provide convincing evidence that there is a relationship between father's age and baby's birth weight? State the null and alternative hypotheses, report the p-value, and state your conclusion.
+
+```{r}
+# your code here
+```
+
+(d) Based on your conclusion, is father’s age a useful predictor of baby’s weight?
+
+
+# Problem 4: TBA Mon
+
+# Problem 5: TBA Mon
+
+# Problem 6: TBA Mon
+
+# Problem 7: TBA Wed
+
+# Problem 8: TBA Wed
