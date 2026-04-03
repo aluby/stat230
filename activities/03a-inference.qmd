@@ -1,0 +1,84 @@
+---
+title: "03: Inference for SLR"
+format: 
+  html: default
+---
+
+```{r}
+library(tidyverse)
+library(broom)
+```
+
+# Part 1: On paper[^1]
+
+[^1]: Adapted from *Stat 2: Modeling with Regression and ANOVA*
+
+Biologists know that the leaves on plants tend to get smaller as temperatures rise, and average temperatures have been getting hotter over time. A sample of 252 leaves from the species *Dodonaea viscosa* subspecies *angustissima* (broadleaf hopbush) have been collected in a certain region of South Australia. Is there an association between leaf width and year? Below is the coefficient table from a simple linear regression model.
+
+```{r}
+#| echo: false
+data("LeafWidth", package = "Stat2Data")
+mod <- lm(Width ~ Year, data = LeafWidth)
+tidy_coef <- broom::tidy(mod)
+
+
+tidy_coef |> 
+mutate(p.value = gtsummary::style_pvalue(p.value)) |>
+gt::gt() |> 
+gt::fmt_number(columns = c(estimate, std.error, statistic), decimals = 3) |>
+gt::fmt_number(columns = p.value, decimals = 4)
+```
+
+Note: The width is the average width, in mm, of leaves, taken at their widest points, that were collected in a given year. 
+
+a. Report the fitted regression equation.
+
+:::{.callout-tip collapse="true"}
+### Solution
+$\hat{y} = 37.723 - 0.018x$
+:::
+
+
+b. Interpret the slope of the regression line in context of the data.
+
+:::{.callout-tip collapse="true"}
+### Solution
+As year increases by 1 (i.e., from one year to the next), we expect the average leaf width of this species to decrease by 0.018 mm.
+:::
+
+
+c. Calculate a 95% confidence interval for the slope of the regression line. (Use the slides to find the appropriate critical value). Interpret this interval in context of the data. 
+
+:::{.callout-tip collapse="true"}
+### Solution
+
+To find the critical value, we need 2.5% on either side: 
+
+```{r}
+qt(.025, df = 250)
+```
+
+The 95% confidence interval for the slope is given by:
+
+$$
+-0.018 \pm 1.97(0.004) = (-0.02588, -0.01012)
+$$
+
+:::
+
+
+d. What hypotheses are being tested with the statistic and associated p-value in the `(Intercept)` row of the table? What conclusion can you draw?
+
+:::{.callout-tip collapse="true"}
+### Solution
+
+The summary output provided by R always conducts a two-tailed hypothesis test of whether a regression coefficient is equal to 0. In other words it tests
+
+$H_0: \beta_0=0$ vs. $H_a: \beta_0 \ne 0$
+
+Based on a test statistic of $t=4.399$, df = 250, and a p-value < 0.001, we find very strong evidence that the intercept is not zero. (This is outside the range of the observed data, so I won't interpret it in context.)
+
+:::
+
+
+

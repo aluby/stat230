@@ -1,0 +1,80 @@
+---
+title: "03: Inference for SLR"
+format: 
+  html: default
+---
+
+```{r}
+library(tidyverse)
+library(broom)
+```
+
+# Part 2: In R[^1]
+
+[^1]: Adapted from *Stat 2: Modeling with Regression and ANOVA*
+
+First, skim working in R for Stat230. Then, follow these directions: 
+
+1. Either open your local RStudio program or navigate to <https://maize.mathcs.carleton.edu> in your browser and log in.
+
+2. Go to file –> New file –> Quarto document … –> “Create empty document”. This should open a new .qmd file in your Rstudio session. Delete everything in this file so that you have a totally blank document.
+
+3. Next, we need to copy this template into your new quarto file. 
+
+  - come back to this page and click the “code” button at the top of the page.
+  - Click the “copy” symbol in the upper right corner of the popup file
+  - Navigate back to your empty .qmd file and “paste” the text there
+
+4. You should now be able to see this document in your own session, and you can run code and edit it as you need to! Make sure to save it in a "Stat230" folder
+
+
+## Load the data
+
+Load package where data lives
+
+```{r}
+library(Stat2Data)
+```
+
+Load data into your session (it should show up in the "Environment" pane)
+
+```{r}
+data("LeafWidth")  
+```
+
+
+"Print" the data: 
+
+```{r}
+LeafWidth
+```
+
+## Exploratory Data Analysis
+
+First, make a scatterplot of `Width` (response variable) against `Year` (explanatory variable)
+
+```{r}
+
+```
+
+## Linear Regression Model
+
+Find the linear regression equation using `lm()`. Use `tidy()` to print the coefficient table of the regression model
+
+
+```{r}
+
+```
+
+## CI for Slope
+
+Calculate a 95% confidence interval for the slope of the regression line using `confint`. 
+
+```{r}
+
+```
+
+
+
+
+

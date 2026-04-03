@@ -1,6 +1,0 @@
----
-title: "03: Inference for SLR"
-format: 
-  html: default
----
-

@@ -52,22 +52,24 @@ gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No
 
 ## Last Time
 
-1. Scatterplots + correlation
+1. $Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)$
 
-2. Fit the regression line in R and find a `summary()`
+2. Scatterplots + correlation
+
+3. Fit the regression line in R and find a `summary()`
 
 ```{r}
 #| echo: true
 bikes_lm <- lm(rides ~ temp_actual, data = bikes)
 ```
 
-3. Making confidence intervals using `confint`
+4. Making confidence intervals using `confint`
 
 . . . 
 
 ### Today: moving from *descriptive* to *inferential*
 
-## `lm()` Summary
+## `lm()` Summary {.smaller}
 
 ```{r}
 summary(bikes_lm)
@@ -378,7 +380,7 @@ gf_dist("t", df = 30, color = "black", linewidth = 1) |>
 
 
 
-$H_0: \beta_i = \#$ vs. $H_a:$ choose one of $\begin{array}{c} \beta_i \ne \#\\ \beta_i <\#  \\ \beta_i >\# \end{array}$ 
+$H_0: \beta_i = \text{null value}$ vs. $H_a:$ choose one of $\begin{array}{c} \beta_i \ne  \text{null value}\\ \beta_i < \text{null value}  \\ \beta_i > \text{null value} \end{array}$ 
 
 <br>
 
@@ -419,6 +421,51 @@ tidy(mod)
 
 
 ## Example: 90% confidence interval for $\beta_1$
+
+::::{.columns}
+::: {.column width="15%"}
+statistic
+:::
+::: {.column width="7%"}
+±
+:::
+::: {.column width="70%"}
+critical value × standard error
+:::
+::::
+
+<br>
+
+::::{.columns}
+::: {.column width="15%"}
+$\widehat{\beta}_i$
+:::
+::: {.column width="7%"}
+±
+:::
+::: {.column width="33%"}
+$t^* \cdot SE(\widehat{\beta}_i)$
+:::
+::::
+
+. . . 
+
+```{r}
+#| echo: true
+
+qt(.05, df = 30)
+```
+
+<br>
+
+<br>
+
+::: callout-tip
+## CI Interpretation
+
+We are _______% confident that for every 1 _________ increase in __________________________, _____________________________ also increases by between ____________ and _____________
+
+:::
 
 # Your turn: on paper
 
