@@ -30,19 +30,19 @@
     ]
   },
   {
+    "listing": "/readings.html",
+    "items": [
+      "/readings/intro-review.html",
+      "/readings/r-for-stat230.html"
+    ]
+  },
+  {
     "listing": "/slides.html",
     "items": [
       "/slides/slides03.html",
       "/slides/slides02.html",
       "/slides/slides-cheat-sheet.html",
       "/slides/slides01.html"
-    ]
-  },
-  {
-    "listing": "/readings.html",
-    "items": [
-      "/readings/intro-review.html",
-      "/readings/r-for-stat230.html"
     ]
   }
 ]
