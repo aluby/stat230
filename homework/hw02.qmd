@@ -141,7 +141,7 @@ res[-1]
 The data set below was collected by Educational Testing Services (ETS) and consists of 1,000 randomly selected students at an unnamed college. We are interested in predicting first year GPA (`FYGPA`) from the sum of the verbal and math percentiles (`SATSum`). Load the data with the following code: 
 
 ```{r}
-sat_gpa <- read.csv("http://aloy.rbind.io/data/satGPA.csv")
+sat_gpa <- read.csv("http://aluby.github.io/stat230/data/satGPA.csv")
 ```
 
 (a) Fit the simple linear regression model predicting first year GPA from the sum of the verbal and math SAT percentiles. Report the fitted regression equation. 
