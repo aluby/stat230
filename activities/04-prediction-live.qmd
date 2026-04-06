@@ -17,7 +17,7 @@ execute:
 {{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
 
 ::: callout-note
-You can access the .qmd for this activity by clicking the "code" button above and then opening in maize/Rstudio. If you prefer to follow the tutorial version in the browser, you can use <https://aluby.github.io/stat230/activities/04-prediction-tutorial>
+This is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use <https://aluby.github.io/stat230/activities/04R-prediction>
 :::
 
 ## Loading data

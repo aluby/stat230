@@ -114,7 +114,7 @@ knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
 ::: {.callout-tip}
 The R code for the following questions is found at <br>
 
-<https://aluby.github.io/stat230/activities/04-prediction-r>
+<https://aluby.github.io/stat230/activities/04R-prediction>
 
 The URL is also posted on Moodle.
 :::

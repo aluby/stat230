@@ -186,12 +186,18 @@ bikes_lm <- lm(rides ~ temp_actual, data = bikes)
 predict(bikes_lm, newdata = data.frame(temp_actual = 52))
 ```
 
+```{r}
+#| echo: true
+predict(bikes_lm, newdata = data.frame(temp_actual = c(52, 62, 72, 82)))
+```
+
 ## R: Intervals
 
 The `interval` argument allows you to specify the type of interval you want
 
 ```{r}
 #| echo: true
+#| code-line-numbers: "2"
 predict(bikes_lm, newdata = data.frame(temp_actual = 52), 
         interval = "confidence")
 ```
@@ -200,8 +206,33 @@ predict(bikes_lm, newdata = data.frame(temp_actual = 52),
 
 ```{r}
 #| echo: true
+#| code-line-numbers: "2"
 predict(bikes_lm, newdata = data.frame(temp_actual = 52), 
         interval = "prediction")
+```
+
+## R: Intervals
+
+The `level` argument allows you to specify the confidence level (0.95 is the default)
+
+```{r}
+#| echo: true
+#| code-line-numbers: "3"
+
+predict(bikes_lm, newdata = data.frame(temp_actual = 52), 
+        interval = "confidence", 
+        level = .95)
+```
+
+<br>
+
+```{r}
+#| echo: true
+#| code-line-numbers: "3"
+
+predict(bikes_lm, newdata = data.frame(temp_actual = 52), 
+        interval = "prediction", 
+        level = .99)
 ```
 
 ## R: SEs
@@ -210,6 +241,7 @@ Adding `se.fit = TRUE` returns the necessary standard errors for "by hand" calcu
 
 ```{r}
 #| echo: true 
+#| code-line-numbers: "2"
 
 predict(bikes_lm, newdata = data.frame(temp_actual = 52), 
         se.fit = TRUE)
@@ -218,9 +250,13 @@ predict(bikes_lm, newdata = data.frame(temp_actual = 52),
 
 ## Activity
 
+::: task
+
 -   Work with your group
 
 -   Work through the Prediction and Confidence example on the worksheet
 
 -   You can choose to work in Quarto/Rstudio or an R Tutorial (linked on moodle)
+
+:::
 
