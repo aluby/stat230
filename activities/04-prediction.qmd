@@ -2,3 +2,201 @@
 title: "04: Prediction for SLR"
 ---
 
+## Warm-up questions
+
+Is education level associated with income? Researchers collected education level (in years) and income (in thousands of dollars) for a random sample of 32 employees working for the city of Riverview.
+
+```{r}
+#| include: false
+city <- readr::read_csv(file = "https://raw.githubusercontent.com/zief0002/modeling/main/data/riverview.csv")
+lm.a = lm(income ~ 1 + education, data = city)
+```
+
+The researchers fit a simple linear regression of income on education and obtained the following output:
+
+```{r}
+#| echo: false
+#| tbl-align: center
+broom::tidy(lm.a) |>
+dplyr::mutate(p.value = gtsummary::style_pvalue(p.value)) |>
+knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
+```
+
+**Q1.** Write the fitted regression equation.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q2.** Interpret the slope coefficient in the context of the problem. (Don't forget to specify units.)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q3.** Interpret the intercept in the context of the problem. (Don't forget to specify units.)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+A new researcher joined the team and decided that education should be standardized (to have mean 0 and SD 1) before fitting the regression model. The output from this regression is shown below:
+
+```{r}
+#| echo: false
+lm.b <- lm(income ~ 1 + scale(education), data = city)
+broom::tidy(lm.b) |>
+dplyr::mutate(p.value = gtsummary::style_pvalue(p.value)) |>
+knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
+```
+
+**Q4.** Write the fitted regression equation for this new model.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q5.** Interpret the slope coefficient in the context of the problem. (Don't forget to specify units.)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q6.** Interpret the intercept in the context of the problem. (Don't forget to specify units.)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q7.** Compare the two models. What's the same? What's different?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+## Prediction and confidence intervals
+
+::: {.callout-tip}
+The R code for the following questions is found at <br>
+
+<https://aluby.github.io/stat230/activities/04-prediction-r>
+
+The URL is also posted on Moodle.
+:::
+
+Now, we'll explore the `city` data using R.
+
+
+**Q1.** Make a plot of `income` against `education`  and overlay the linear regression equation. Does it look like what you expected?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q2.** Make a plot of `income` against `scale(education)` and overlay the linear regression equation. Does it look like what you expected?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q3.** Find the linear regression equation from Q1. Confirm that it matches the table at the beginning of this worksheet.
+
+**Q4.** The first person in this dataset has `education = 8`. Calculate the expected income of this person using the first regression equation.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q5.** If we want to predict the price of **this** person, should we use a confidence interval or a prediction interval?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q6.** Use R to construct the appropriate 89% interval for this person's income. Record this interval below.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q7.** Interpret the interval in context.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}
+
+**Q8.** Run the code to produce a scatterplot, regression line, and both types of intervals. Which is the prediction interval and which is the confidence interval? How can you tell?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+:::
+:::
+
+\vspace{1in}

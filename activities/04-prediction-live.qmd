@@ -1,0 +1,111 @@
+---
+title: "04T: Prediction for SLR"
+webr:
+  packages:
+    - ggformula
+format: 
+  live-html:
+    toc: true
+    output-file: "04-prediction-tutorial"
+engine: knitr
+editor: source
+execute:
+  message: false
+  warning: false
+---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
+
+::: callout-note
+You can access the .qmd for this activity by clicking the "code" button above and then opening in maize/Rstudio. If you prefer to follow the tutorial version in the browser, you can use <https://aluby.github.io/stat230/activities/04-prediction-tutorial>
+:::
+
+## Loading data
+
+The data set is loaded by running the following code chunk:
+
+```{webr}
+city <- readr::read_csv(url("https://raw.githubusercontent.com/zief0002/modeling/main/data/riverview.csv"))
+```
+
+The columns of interest are `education` and `income`.
+
+## Making plots
+
+**Q1.** Make a plot of `income` against `education`  and overlay the linear regression equation. Does it look like what you expected? (I've started the code for you; you will need to overlay the linear regression equation)
+
+```{webr}
+#| min-lines: 3
+gf_point(income ~ education, data = city)
+```
+
+**Q2.** Make a plot of `income` against `scale(education)` and overlay the linear regression equation. Does it look like what you expected?
+
+```{webr}
+#| min-lines: 3
+# Write your graph code here
+```
+
+
+## Fitting a simple linear regression model
+
+**Q3.** Use the `lm()` command to fit the simple linear regression
+model where `education` is used to predict `income`. 
+Make sure your output matches the output on the worksheet.
+
+```{webr}
+#| min-lines: 3
+# Write your lm() command here
+```
+
+
+
+## Making predictions
+
+The first person in this dataset has `education = 8`. 
+
+**Q4.** Calculate the expected income of this person using the first regression equation. (You may use R or do this by hand. There's a code chunk below for your convenience)
+
+```{webr}
+#| min-lines: 3
+# Write your code here
+```
+
+**Q5.** If we want to predict the income of **this** person, should we use a confidence interval or a prediction interval?
+
+**Q6.** Use R to construct the appropriate 89% interval for this person's income. 
+
+```{webr}
+#| min-lines: 3
+# Write your code here
+```
+
+**Q7.** Interpret the interval in context.
+
+## Plotting our intervals
+
+It can be useful to plot your confidence/prediction intervals to communicate your findings to a broader audience. The code below creates a scatterplot of the data, adds the fitted regression line, and then adds 89% prediction intervals.
+
+```{webr}
+gf_point(income ~ education, data = city) |> 
+  gf_lm(interval = "prediction", level = .89) |>
+  gf_lm(interval = "confidence", alpha = 0.6, level = .89)
+```
+
+**Q8.** Run the code to produce a scatterplot, regression line, and both types of intervals. Which is the prediction interval and which is the confidence interval? How can you tell?
+
+***
+
+## Function quick reference
+
+The following table summarizes the functions we learned today:
+
+| Function | Purpose |
+|----|-----------|
+| `lm(formula, data)` | Fit a linear model |
+| `predict(model, newdata, interval, level, se.fit)` | Make predictions and calculate intervals |
+| `gf_point(formula, data) |> gf_lm(interval = "confidence")` | Plot data and add confidence intervals for the mean response|
+| `gf_point(formula, data) |> gf_lm(interval = "prediction")` | Plot data and add prediction intervals for the mean response|
+
+
+
