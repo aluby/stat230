@@ -121,9 +121,14 @@ For each of the following questions, explain whether a confidence interval for a
 
 # Problem 5: Runoff (again again)
 
+::: callout-note
+You do not need R for this problem! You should compute the intervals "by hand" using the R output here and from Q1
+:::
+
 In Problem 1d on this homework, you found the prediction and residual for the first data point in the `runoff` dataset $(x_1, y_1)$: has `Precip = 6.47` and `Runoff = 54235`. Below is selected output from running `predict()` on that data point with `se.fit = TRUE`. 
 
 ```{r}
+#| echo: false 
 res <- lm(Runoff ~ Precip, data = runoff) |> 
   predict(newdata = runoff[1,], se.fit = TRUE) 
 
