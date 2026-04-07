@@ -3,7 +3,7 @@ title: "Stat230: Applied Regression Analysis"
 subtitle: "Tentative Calendar - Spring 2026"
 navbar: false
 execute:
-  freeze: true
+  freeze: false
 format: 
   html: default
   pdf: 

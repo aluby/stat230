@@ -1,0 +1,312 @@
+---
+title: Evaluating SLR models
+subtitle: Day 05
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
+theme_set(notes_theme)
+```
+
+## Topics for Exam I
+
+
+## Last Time
+
+1. Inference for predictions
+
+    - $\hat{\mu}(Y|X)$
+    - $\text{Pred}(Y|X)$
+    
+### Today: how "good" is our model?
+
+## Two definitions for "good"
+
+<br> 
+
+1. The model is appropriate and our inferences are valid
+
+<br> 
+
+2. The X variable does a good job at explaining the Y variable
+
+## Notation
+
+
+$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)$
+
+
+- residuals vs errors
+- parameters vs estimates
+- predictions vs observations
+ 
+## Conditions for inference 
+
+Our model must be valid in order for our p-values or confidence intervals to be valid: 
+
+$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)$
+
+<br>
+
+Conditions to check:
+
+-   Linear relationship is appropriate
+-   Errors are independent and identically distributed (iid)
+-   Errors are normally distributed
+-   Variance of the errors doesn't depend on $x$
+
+## LINE pneumonic
+
+- **L**inear relationship
+- **I**ndependent errors
+- **N**ormally distributed errors
+- **E**qual variance errors
+
+
+## Residuals
+
+
+**Definition**: $e_i =\widehat{\varepsilon}_i = y_i - \widehat{y}_i$
+
+<br>
+
+
+**Properties:**
+
+-  sum to zero $\Longrightarrow$ mean is 0
+
+-  **uncorrelated** with $x$ and $\widehat{y}$
+
+- normally distributed 
+ 
+- $SD(e_i) = \widehat{\sigma} \sqrt{1 - \dfrac{1}{n} - \dfrac{(x_i - \overline{x})^2}{\sum (x_i - \overline{x})^2}}$
+
+## Standardized residuals
+
+
+$$r_i = \frac{e_i}{\widehat{\sigma} \sqrt{1 - \dfrac{1}{n} - \dfrac{(x_i - \overline{x})^2}{\sum (x_i - \overline{x})^2}}}$$
+
+**Properties:**
+
+-  sum to zero $\Longrightarrow$ mean is 0
+
+-  **uncorrelated** with $x$ and $\widehat{y}$
+
+- normally distributed 
+
+- $SD(r_i) = 1$
+
+## What is a residual plot?
+
+
+
+## A "good" residual plot
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 5
+#| layout-ncol: 2
+set.seed(72384)
+x <- rnorm(100, mean = 10, sd = 3.5)
+y <- 1 + 1*x + rnorm(100, mean = 0, sd = 10)
+good_mod <- lm(y ~ x)
+
+gf_point(rstandard(good_mod) ~ fitted(good_mod), 
+         ylab = "Standardized Residual", xlab = "Fitted values") |>
+  gf_hline(yintercept = 0, color = "blue", linetype = 2) 
+
+gf_point(rstandard(good_mod) ~ x, 
+         ylab = "Standardized Residual", xlab = "x") |>
+  gf_hline(yintercept = 0, color = "blue", linetype = 2) 
+```
+
+## Your turn
+
+::: {.task}
+- Work in groups
+
+- On the whiteboards, sketch a plot of $y$ vs. $x$ and a corresponding residual plot that would indicate a violation of the
+
+  1. linearity condition
+
+  2. equal variance condition
+    
+:::
+
+## Assessing normality
+
+- histogram of residuals
+- normal Q-Q plot of residuals
+
+**Examples of "good" plots:**
+
+```{r}
+#| echo: false
+#| layout-ncol: 4
+#| fig.height: 3.5
+#| fig.width: 5
+x2 <- rnorm(30, mean = 10, sd = 3.5)
+y2a <- 1 + 1*x2 + rnorm(30, mean = 0, sd = 10)
+y2b <- 1 + 1*x2 + rnorm(30, mean = 0, sd = 10)
+good_mod2a <- lm(y2a ~ x2)
+good_mod2b <- lm(y2b ~ x2)
+
+gf_histogram(~rstandard(good_mod2a), color = "black", bins = 12, xlab = "Standardized Residual", ylab = "Count") +
+  theme_classic()
+
+gf_histogram(~rstandard(good_mod2b), color = "black", bins = 12, xlab = "Standardized Residual", ylab = "Count") +
+  theme_classic()
+
+gf_qq(~rstandard( good_mod2a), ylab = "Standardized Residual", xlab = "N(0, 1) quantiles") |>
+  gf_qqline() +
+  theme_classic()
+
+gf_qq(~rstandard( good_mod2b), ylab = "Standardized Residual", xlab = "N(0, 1) quantiles") |>
+  gf_qqline() +
+  theme_classic()
+```
+
+## Assessing independence
+
+- plot residuals vs. variable inducing dependence (e.g. time, location, subject ID)
+
+**Examples of "good" plots:**
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| fig.height: 3.5
+#| fig.width: 5
+
+
+gf_point(rstandard(good_mod2a) ~ 1:30, ylab = "Standardized Residual", xlab = "Order") |>
+  gf_line() |>
+  gf_hline(yintercept = 0) +
+  theme_classic()
+
+gf_point(rstandard(good_mod2b) ~ 1:30, ylab = "Standardized Residual", xlab = "Order") |>
+  gf_line() |>
+  gf_hline(yintercept = 0) +
+  theme_classic()
+```
+
+# Your turn
+
+Work through Example 1 on the worksheet
+
+
+## What happens the conditions aren't valid? 
+
+
+-   **Linearity:** if nonlinear, everything breaks!
+
+-   **Independence:** estimates are still unbiased (i.e. we fit the right line) but measures of the accuracy of those estimates (the SEs) are typically too small
+
+-   **Normality:** estimates are still unbiased (i.e. we fit the right line), SEs are correct BUT confidence/prediction intervals are wrong (we can't use t-distribution)
+
+-   **Constant error variance:** estimates are still unbiased but standard errors are wrong (and we don't know how wrong)
+
+
+## What do we do if our assumptions are violated?
+
+1. Change our assumptions (hard, need more stats)
+
+2. Transform $y$, $x$, or both
+
+3. Change the type of inference (remember the bootstrap?)
+
+## Is the X variable a "good" predictor of the Y variable? 
+
+[correlation] 
+
+[R2]
+
+## $R^2$
+
+\begin{align*}
+\sum(Y - \bar{Y})^2 &= \sum (\hat{Y} -\bar{Y})^2 &+ \sum e_i^2& \\
+\text{total variability} &= \text{variability of } \hat{Y}\text{'s} &+ \text{variability of residuals}&\\
+\end{align*}
+
+Then: 
+
+$$R^2 = \frac{\sum (\hat{Y} - \bar{Y})^2}{\sum (Y - \bar{Y})} = \frac{\text{variability of } \hat{Y}}{\text{variability of }Y} =$$
+
+
+::: callout-note
+## $R^2$
+
+The $R^2$ value gives the proportion of total variability in Y explained by the SLR model
+:::
+
+## SSNBATNT
+
+## Finding $R^2$ in R
+
+```{r}
+# lm
+# summary
+```
+
+## Properties of $R^2$
+
+- Between 0 and 1
+- Big when $\sigma$ is small relative to the overall variability
+    - big proportion of variability explained by the model
+- For SLR, $R^2 = r^2$ ($r$ = correlation coefficient between X and Y)
+
+## $R^2$ dangers
+
+
+```{r}
+#| echo: false
+
+set.seed(040726)
+
+fake_data <- tibble(
+  x = c(runif(50, 0, 200), 400),
+  y = c(.5*x^2 + c(rnorm(50, 0, 50)))
+)
+
+fake_data[51, 2] = 30000
+
+ggplot(fake_data, aes(x = x, y = y)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(
+    title = expression(R^2 == .968)
+  )
+
+cor(fake_data$x, fake_data$y)
+```
+
+
