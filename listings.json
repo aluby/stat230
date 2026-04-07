@@ -28,7 +28,19 @@
       "/activities/24-deviance.html",
       "/activities/26-overdispersion.html",
       "/activities/27-poisson.html",
-      "/activities/28-quasibinomial.html"
+      "/activities/28-quasibinomial.html",
+      "/activities/group-expectations.html"
+    ]
+  },
+  {
+    "listing": "/slides.html",
+    "items": [
+      "/slides/slides05.html",
+      "/slides/slides04.html",
+      "/slides/slides03.html",
+      "/slides/slides02.html",
+      "/slides/slides-cheat-sheet.html",
+      "/slides/slides01.html"
     ]
   },
   {
@@ -36,16 +48,6 @@
     "items": [
       "/readings/intro-review.html",
       "/readings/r-for-stat230.html"
-    ]
-  },
-  {
-    "listing": "/slides.html",
-    "items": [
-      "/slides/slides04.html",
-      "/slides/slides03.html",
-      "/slides/slides02.html",
-      "/slides/slides-cheat-sheet.html",
-      "/slides/slides01.html"
     ]
   }
 ]

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -316,12 +316,21 @@ Tip
 </section>
 <section id="problem-5-runoff-again-again" class="level1">
 <h1>Problem 5: Runoff (again again)</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You do not need R for this problem! You should compute the intervals “by hand” using the R output here and from Q1</p>
+</div>
+</div>
 <p>In Problem 1d on this homework, you found the prediction and residual for the first data point in the <code>runoff</code> dataset <span class="math inline">\((x_1, y_1)\)</span>: has <code>Precip = 6.47</code> and <code>Runoff = 54235</code>. Below is selected output from running <code>predict()</code> on that data point with <code>se.fit = TRUE</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">lm</span>(Runoff <span class="sc">~</span> Precip, <span class="at">data =</span> runoff) <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(<span class="at">newdata =</span> runoff[<span class="dv">1</span>,], <span class="at">se.fit =</span> <span class="cn">TRUE</span>) </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>res[<span class="sc">-</span><span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$se.fit
 [1] 2041.055
@@ -343,7 +352,7 @@ $residual.scale
 <h1>Problem 6</h1>
 <p>The data set below was collected by Educational Testing Services (ETS) and consists of 1,000 randomly selected students at an unnamed college. We are interested in predicting first year GPA (<code>FYGPA</code>) from the sum of the verbal and math percentiles (<code>SATSum</code>). Load the data with the following code:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sat_gpa <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"http://aluby.github.io/stat230/data/satGPA.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sat_gpa <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"http://aluby.github.io/stat230/data/satGPA.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="a">
 <li><p>Fit the simple linear regression model predicting first year GPA from the sum of the verbal and math SAT percentiles. Report the fitted regression equation.</p></li>
