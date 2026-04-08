@@ -300,8 +300,11 @@ gf_point(rstandard(good_mod2b) ~ 1:30, ylab = "Standardized Residual", xlab = "O
 
 # Your turn
 
+::: {.task}
+
 Work through Example 1 on the activity
 
+:::
 
 ## What happens the conditions aren't valid? 
 
@@ -341,7 +344,7 @@ p2 <- tibble(
   y = -2940 + 101*x + rnorm(50, sd = 3000)
 ) |>
   gf_point(y ~ x) |>
-  gf_lm() + 
+  gf_abline(slope = 101, intercept = -2940, col = "#3366FF", linewidth = 1) + 
   xlim(c(40, 85)) + 
   ylim(c(0, 7000))
 
@@ -376,6 +379,15 @@ The $R^2$ value gives the proportion of total variability in Y explained by the 
 :::
 
 ## SSNBATNT
+
+- $r$: correlation coefficient
+- R: statistical programming language
+- $R^2$: "coefficient of variation" 
+- $\rho$: population correlation coefficient
+- $p$: a population proportion
+- p-value: P(test stat | hypothesis)
+- P(A): probability of event A
+- $\widehat{p}$: sample proportion
 
 ## Finding $R^2$ in R {.smaller}
 
@@ -424,4 +436,10 @@ p1 + p2
 # cor(fake_data$x, fake_data$y)
 ```
 
+# Your turn
 
+::: {.task}
+
+Work through Example 2 on the activity
+
+:::
