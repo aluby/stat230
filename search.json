@@ -1061,7 +1061,7 @@
     "href": "slides/slides05.html#r2",
     "title": "Evaluating SLR models",
     "section": "\\(R^2\\)",
-    "text": "\\(R^2\\)\n\\[\\begin{align*}\n\\sum(Y - \\bar{Y})^2 &= \\sum (\\hat{Y} -\\bar{Y})^2  \\hspace{.9cm} + \\sum e_i^2 \\\\\n\\text{total variability} &= \\text{variability of } \\hat{Y}\\text{'s} + \\text{variability of residuals}\\\\\n\\end{align*}\\]\nThen:\n\\[R^2 = \\frac{\\sum (\\hat{Y} - \\bar{Y})^2}{\\sum (Y - \\bar{Y})} = \\frac{\\text{variability of } \\hat{Y}}{\\text{variability of }Y} \\]\n\n\n\n\n\n\n\\(R^2\\)\n\n\nThe \\(R^2\\) value gives the proportion of total variability in Y explained by the SLR model"
+    "text": "\\(R^2\\)\n\\[\\begin{align*}\n\\sum(Y - \\bar{Y})^2 &= \\sum (\\hat{Y} -\\bar{Y})^2  \\hspace{.9cm} + \\sum e_i^2 \\\\\n\\text{total variability} &= \\text{variability of } \\hat{Y}\\text{'s} + \\text{variability of residuals}\\\\\n\\end{align*}\\]\nThen:\n\\[R^2 = \\frac{\\sum (\\hat{Y} - \\bar{Y})^2}{\\sum (Y - \\bar{Y})} = \\frac{\\text{variability of } \\widehat{Y}}{\\text{variability of }Y} \\]\n\n\n\n\n\n\n\\(R^2\\)\n\n\nThe \\(R^2\\) value gives the proportion of total variability in Y explained by the SLR model"
   },
   {
     "objectID": "slides/slides05.html#ssnbatnt",
