@@ -6,11 +6,11 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
-  <title>stat230 – Conditions for Inference</title>
+  <title>stat230 – Evaluating SLR models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,6 +28,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #767676;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #767676;  padding-left: 4px; }
+    div.sourceCode
+      { color: #545454; background-color: #fefefe; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #545454; } /* Normal */
+    code span.al { color: #7928a1; } /* Alert */
+    code span.an { color: #696969; } /* Annotation */
+    code span.at { color: #a55a00; } /* Attribute */
+    code span.bn { color: #7928a1; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #d91e18; } /* ControlFlow */
+    code span.ch { color: #008000; } /* Char */
+    code span.cn { color: #d91e18; } /* Constant */
+    code span.co { color: #696969; } /* Comment */
+    code span.cv { color: #696969; font-style: italic; } /* CommentVar */
+    code span.do { color: #696969; font-style: italic; } /* Documentation */
+    code span.dt { color: #7928a1; } /* DataType */
+    code span.dv { color: #7928a1; } /* DecVal */
+    code span.er { color: #7928a1; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #a55a00; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #696969; } /* Information */
+    code span.kw { color: #d91e18; } /* Keyword */
+    code span.op { color: #00769e; } /* Operator */
+    code span.ot { color: #d91e18; } /* Other */
+    code span.pp { color: #7928a1; } /* Preprocessor */
+    code span.sc { color: #00769e; } /* SpecialChar */
+    code span.ss { color: #008000; } /* SpecialString */
+    code span.st { color: #008000; } /* String */
+    code span.va { color: #a55a00; } /* Variable */
+    code span.vs { color: #008000; } /* VerbatimString */
+    code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-4b8f244490ab824b6183a9146e95bcf1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -130,7 +196,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#003300" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Conditions for Inference</h1>
+  <h1 class="title">Evaluating SLR models</h1>
   <p class="subtitle">Day 05</p>
 
 <div class="quarto-title-authors">
@@ -145,8 +211,313 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section id="last-time" class="slide level2">
+<section id="topics-for-exam-i" class="slide level2">
+<h2>Topics for Exam I</h2>
+</section>
+<section id="last-time" class="slide level2 scrollable">
 <h2>Last Time</h2>
+<ol type="1">
+<li><p>Inference for predictions</p>
+<ul>
+<li><span class="math inline">\(\widehat{\mu}(Y|X)\)</span></li>
+<li><span class="math inline">\(\text{Pred}(Y|X)\)</span></li>
+</ul></li>
+</ol>
+<h3 id="today-how-good-is-our-model">Today: how “good” is our model?</h3>
+</section>
+<section id="two-definitions-for-good" class="slide level2 scrollable">
+<h2>Two definitions for “good”</h2>
+<p><br></p>
+<ol type="1">
+<li>The model is appropriate and our inferences are valid</li>
+</ol>
+<p><br></p>
+<ol start="2" type="1">
+<li>The X variable does a good job at explaining the Y variable</li>
+</ol>
+</section>
+<section id="notation" class="slide level2">
+<h2>Notation</h2>
+<p><br></p>
+<p>Theoretical model:</p>
+<p><span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
+<p><br></p>
+<p>Fitted model:</p>
+<p><span class="math inline">\(\widehat{y}_i = \widehat\beta_0 + \widehat\beta_1 x_i\)</span></p>
+<p><span class="math inline">\(y_i = \widehat{y}_i + \widehat{\varepsilon}_i\)</span></p>
+</section>
+<section id="bike-data-small-sample" class="slide level2">
+<h2>Bike Data (small sample)</h2>
+
+<img data-src="slides05_files/figure-html/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-left r-stretch" width="384"><div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rides ~ temp_actual, data = bike_sample)
+
+Coefficients:
+(Intercept)  temp_actual  
+      -2940          101  </code></pre>
+</div>
+</div>
+</section>
+<section id="conditions-for-inference" class="slide level2">
+<h2>Conditions for inference</h2>
+<p>Our model must be valid in order for our p-values or confidence intervals to be valid:</p>
+<p><span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
+<p><br></p>
+<p>Conditions to check:</p>
+<ul>
+<li><strong>L</strong>inear relationship is appropriate</li>
+<li><strong>I</strong>ndependent and identically distributed errors (iid)</li>
+<li><strong>N</strong>ormally distributed errors</li>
+<li>Errors have <strong>E</strong>qual variance</li>
+</ul>
+</section>
+<section id="residuals" class="slide level2">
+<h2>Residuals</h2>
+<p><strong>Definition</strong>: <span class="math inline">\(e_i =\widehat{\varepsilon}_i = y_i - \widehat{y}_i\)</span></p>
+<p><br></p>
+<p><strong>Properties:</strong></p>
+<ul>
+<li><p>sum to zero <span class="math inline">\(\Longrightarrow\)</span> mean is 0</p></li>
+<li><p><strong>uncorrelated</strong> with <span class="math inline">\(x\)</span> and <span class="math inline">\(\widehat{y}\)</span></p></li>
+<li><p>normally distributed</p></li>
+<li><p><span class="math inline">\(SD(e_i) = \widehat{\sigma} \sqrt{1 - \dfrac{1}{n} - \dfrac{(x_i - \overline{x})^2}{\sum (x_i - \overline{x})^2}}\)</span></p></li>
+</ul>
+</section>
+<section id="what-is-a-residual-plot" class="slide level2">
+<h2>What is a residual plot?</h2>
+
+<img data-src="slides05_files/figure-html/unnamed-chunk-4-1.png" width="672" class="r-stretch"></section>
+<section id="put-widehaty-on-the-y-axis-instead-of-x" class="slide level2">
+<h2>Put <span class="math inline">\(\widehat{y}\)</span> on the y axis instead of <span class="math inline">\(x\)</span></h2>
+
+<img data-src="slides05_files/figure-html/unnamed-chunk-5-1.png" width="672" class="r-stretch"></section>
+<section id="a-good-residual-plot" class="slide level2">
+<h2>A “good” residual plot</h2>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-6-1.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-6-2.png" width="480"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="your-turn" class="slide level2 scrollable">
+<h2>Your turn</h2>
+<div class="task">
+<ul>
+<li><p>Work in groups</p></li>
+<li><p>On the whiteboards, sketch a plot of <span class="math inline">\(y\)</span> vs.&nbsp;<span class="math inline">\(x\)</span> and a corresponding residual plot that would indicate a violation of the</p>
+<ol type="1">
+<li><p>linearity condition</p></li>
+<li><p>equal variance condition</p></li>
+</ol></li>
+</ul>
+</div>
+</section>
+<section id="assessing-linearity" class="slide level2">
+<h2>Assessing Linearity</h2>
+</section>
+<section id="assessing-equal-variance" class="slide level2">
+<h2>Assessing Equal Variance</h2>
+</section>
+<section id="assessing-normality" class="slide level2">
+<h2>Assessing Normality</h2>
+<ul>
+<li>histogram of residuals</li>
+<li>normal Q-Q plot of residuals</li>
+</ul>
+<p><strong>Examples of “good” plots:</strong></p>
+<div class="cell quarto-layout-panel" data-layout-ncol="4">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-7-1.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-7-2.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-7-3.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-7-4.png" width="480"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="harder-to-gauge-at-small-sample-sizes" class="slide level2">
+<h2>Harder to gauge at small sample sizes</h2>
+<p>All of these are random samples from normal distributions</p>
+<div class="cell quarto-layout-panel" data-layout-ncol="4">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-8-1.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-8-2.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-8-3.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-8-4.png" width="480"></p>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-8-5.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-8-6.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-8-7.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-8-8.png" width="480"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="assessing-independence" class="slide level2">
+<h2>Assessing independence</h2>
+<ul>
+<li>plot residuals vs.&nbsp;variable inducing dependence (e.g.&nbsp;time, location, subject ID)</li>
+</ul>
+<p><strong>Examples of “good” plots:</strong></p>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-9-1.png" width="480"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-html/unnamed-chunk-9-2.png" width="480"></p>
+</div>
+</div>
+</div>
+</section>
+<section>
+<section id="your-turn-1" class="title-slide slide level1 center">
+<h1>Your turn</h1>
+<div class="task">
+<p>Work through Example 1 on the activity</p>
+</div>
+</section>
+<section id="what-happens-the-conditions-arent-valid" class="slide level2">
+<h2>What happens the conditions aren’t valid?</h2>
+<ul>
+<li><p><strong>Linearity:</strong> if nonlinear, everything breaks!</p></li>
+<li><p><strong>Independence:</strong> estimates are still unbiased (i.e.&nbsp;we fit the right line) but measures of the accuracy of those estimates (the SEs) are typically too small</p></li>
+<li><p><strong>Normality:</strong> estimates are still unbiased (i.e.&nbsp;we fit the right line), SEs are correct BUT prediction intervals (which rely on the data points being normally distribued around the mean) are wrong</p></li>
+<li><p><strong>Equal variance:</strong> estimates are still unbiased but standard errors are wrong (and we don’t know how wrong)</p></li>
+</ul>
+</section>
+<section id="what-do-we-do-if-our-assumptions-are-violated" class="slide level2 scrollable">
+<h2>What do we do if our assumptions are violated?</h2>
+<ol type="1">
+<li><p>Change our assumptions (hard, need more stats)</p></li>
+<li><p>Transform <span class="math inline">\(y\)</span>, <span class="math inline">\(x\)</span>, or both</p></li>
+<li><p>Change the type of inference (remember the bootstrap?)</p></li>
+</ol>
+</section></section>
+<section>
+<section id="is-the-x-variable-a-good-predictor-of-the-y-variable" class="title-slide slide level1 center">
+<h1>Is the X variable a “good” predictor of the Y variable?</h1>
+
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+
+<img data-src="slides05_files/figure-html/unnamed-chunk-10-1.png" width="768" class="r-stretch"></section>
+<section id="r2" class="slide level2">
+<h2><span class="math inline">\(R^2\)</span></h2>
+<p><span class="math display">\[\begin{align*}
+\sum(Y - \bar{Y})^2 &amp;= \sum (\hat{Y} -\bar{Y})^2  \hspace{.9cm} + \sum e_i^2 \\
+\text{total variability} &amp;= \text{variability of } \hat{Y}\text{'s} + \text{variability of residuals}\\
+\end{align*}\]</span></p>
+<p>Then:</p>
+<p><span class="math display">\[R^2 = \frac{\sum (\hat{Y} - \bar{Y})^2}{\sum (Y - \bar{Y})} = \frac{\text{variability of } \hat{Y}}{\text{variability of }Y} \]</span></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong><span class="math inline">\(R^2\)</span></strong></p>
+</div>
+<div class="callout-content">
+<p>The <span class="math inline">\(R^2\)</span> value gives the proportion of total variability in Y explained by the SLR model</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ssnbatnt" class="slide level2">
+<h2>SSNBATNT</h2>
+<ul>
+<li><span class="math inline">\(r\)</span>: correlation coefficient</li>
+<li>R: statistical programming language</li>
+<li><span class="math inline">\(R^2\)</span>: “coefficient of variation”</li>
+<li><span class="math inline">\(\rho\)</span>: population correlation coefficient</li>
+<li><span class="math inline">\(p\)</span>: a population proportion</li>
+<li>p-value: P(test stat | hypothesis)</li>
+<li>P(A): probability of event A</li>
+<li><span class="math inline">\(\widehat{p}\)</span>: sample proportion</li>
+</ul>
+</section>
+<section id="finding-r2-in-r" class="slide level2 smaller">
+<h2>Finding <span class="math inline">\(R^2\)</span> in R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">summary</span>(bike_sm_lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rides ~ temp_actual, data = bike_sample)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3551.0  -885.8    90.6   784.2  2436.0 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -2940.40    1072.08  -2.743  0.00854 ** 
+temp_actual   101.00      16.57   6.096 1.79e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1252 on 48 degrees of freedom
+Multiple R-squared:  0.4364,    Adjusted R-squared:  0.4246 
+F-statistic: 37.16 on 1 and 48 DF,  p-value: 1.787e-07</code></pre>
+</div>
+</div>
+</section>
+<section id="properties-of-r2" class="slide level2">
+<h2>Properties of <span class="math inline">\(R^2\)</span></h2>
+<ul>
+<li>Between 0 and 1</li>
+<li>Big when <span class="math inline">\(\sigma\)</span> is small relative to the overall variability
+<ul>
+<li>big proportion of variability explained by the model</li>
+</ul></li>
+<li>For SLR, <span class="math inline">\(R^2 = r^2\)</span>
+<ul>
+<li>(<span class="math inline">\(r\)</span> = correlation coefficient between X and Y)</li>
+</ul></li>
+</ul>
+</section>
+<section id="r2-dangers" class="slide level2">
+<h2><span class="math inline">\(R^2\)</span> dangers</h2>
+
+<img data-src="slides05_files/figure-html/unnamed-chunk-12-1.png" width="672" class="r-stretch"></section></section>
+<section id="your-turn-2" class="title-slide slide level1 center">
+<h1>Your turn</h1>
+<div class="task">
+<p>Work through Example 2 on the activity</p>
+</div>
 
 
 </section>
@@ -367,44 +738,6 @@ Prof Amanda Luby
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

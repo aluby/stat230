@@ -4,7 +4,7 @@
     "href": "activities.html",
     "title": "Activities",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\n01: Intro Stats Review\n\n\n \n\n\n\n\n\n\n02: Intro to R for Regression\n\n\n \n\n\n\n\n\n\n03: Inference for SLR\n\n\n \n\n\n\n\n\n\n03: Inference for SLR\n\n\n \n\n\n\n\n\n\n04: Prediction for SLR\n\n\n \n\n\n\n\n\n\n04R: Prediction for SLR\n\n\n \n\n\n\n\n\n\n04T: Prediction for SLR\n\n\n \n\n\n\n\n\n\n05: Diagnostics\n\n\n \n\n\n\n\n\n\n06: Transformations and Interpretations\n\n\n \n\n\n\n\n\n\n08: Polynomial Regression\n\n\n \n\n\n\n\n\n\n09: Intro to Multiple Regression\n\n\n \n\n\n\n\n\n\n10: Categorical Predictors\n\n\n \n\n\n\n\n\n\n11: TBD\n\n\n \n\n\n\n\n\n\n12: TBD\n\n\n \n\n\n\n\n\n\n13: tbd\n\n\n \n\n\n\n\n\n\n14: TBD\n\n\n \n\n\n\n\n\n\n15: tbd\n\n\n \n\n\n\n\n\n\n18: Odds, Odds Ratio, Chi-square\n\n\n \n\n\n\n\n\n\n19: Binary Logistic Regression\n\n\n \n\n\n\n\n\n\n20: Inference for Logistic Regression\n\n\n \n\n\n\n\n\n\n21: R for Logistic Regression\n\n\n \n\n\n\n\n\n\n22: Diagnostics for Logistic Regression\n\n\n \n\n\n\n\n\n\n23: Binomial Logistic Regression\n\n\n \n\n\n\n\n\n\n24: Deviance Goodness of Fit Tests\n\n\n \n\n\n\n\n\n\n26: Overdispersion\n\n\n \n\n\n\n\n\n\n27: Intro to Poisson Regression\n\n\n \n\n\n\n\n\n\n28: Quasibinomial Logistic Regression\n\n\n \n\n\n\n\n\n\nGroup Expectations (Week 2-3)\n\n\n \n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\n01: Intro Stats Review\n\n\n \n\n\n\n\n\n\n02: Intro to R for Regression\n\n\n \n\n\n\n\n\n\n03: Inference for SLR\n\n\n \n\n\n\n\n\n\n03: Inference for SLR\n\n\n \n\n\n\n\n\n\n04: Prediction for SLR\n\n\n \n\n\n\n\n\n\n04R: Prediction for SLR\n\n\n \n\n\n\n\n\n\n04T: Prediction for SLR\n\n\n \n\n\n\n\n\n\n05: Diagnostics\n\n\n \n\n\n\n\n\n\n05: Diagnostics\n\n\n \n\n\n\n\n\n\n06: Transformations and Interpretations\n\n\n \n\n\n\n\n\n\n08: Polynomial Regression\n\n\n \n\n\n\n\n\n\n09: Intro to Multiple Regression\n\n\n \n\n\n\n\n\n\n10: Categorical Predictors\n\n\n \n\n\n\n\n\n\n11: TBD\n\n\n \n\n\n\n\n\n\n12: TBD\n\n\n \n\n\n\n\n\n\n13: tbd\n\n\n \n\n\n\n\n\n\n14: TBD\n\n\n \n\n\n\n\n\n\n15: tbd\n\n\n \n\n\n\n\n\n\n18: Odds, Odds Ratio, Chi-square\n\n\n \n\n\n\n\n\n\n19: Binary Logistic Regression\n\n\n \n\n\n\n\n\n\n20: Inference for Logistic Regression\n\n\n \n\n\n\n\n\n\n21: R for Logistic Regression\n\n\n \n\n\n\n\n\n\n22: Diagnostics for Logistic Regression\n\n\n \n\n\n\n\n\n\n23: Binomial Logistic Regression\n\n\n \n\n\n\n\n\n\n24: Deviance Goodness of Fit Tests\n\n\n \n\n\n\n\n\n\n26: Overdispersion\n\n\n \n\n\n\n\n\n\n27: Intro to Poisson Regression\n\n\n \n\n\n\n\n\n\n28: Quasibinomial Logistic Regression\n\n\n \n\n\n\n\n\n\nGroup Expectations (Week 2-3)\n\n\n \n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "syllabus.html",
@@ -235,7 +235,7 @@
     "href": "activities/04-prediction.html#prediction-and-confidence-intervals",
     "title": "04: Prediction for SLR",
     "section": "Prediction and confidence intervals",
-    "text": "Prediction and confidence intervals\n\n\n\n\n\n\nTip\n\n\n\nThe R code for the following questions is found at \nhttps://aluby.github.io/stat230/activities/04R-prediction\nThe URL is also posted on Moodle.\n\n\nNow, we’ll explore the city data using R.\nQ1. Make a plot of income against education and overlay the linear regression equation. Does it look like what you expected?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ2. Make a plot of income against scale(education) and overlay the linear regression equation. Does it look like what you expected?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ3. Find the linear regression equation from Q1. Confirm that it matches the table at the beginning of this worksheet.\nQ4. The first person in this dataset has education = 8. Calculate the expected income of this person using the first regression equation.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ5. If we want to predict the price of this person, should we use a confidence interval or a prediction interval?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ6. Use R to construct the appropriate 89% interval for this person’s income. Record this interval below.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ7. Interpret the interval in context.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ8. Run the code to produce a scatterplot, regression line, and both types of intervals. Which is the prediction interval and which is the confidence interval? How can you tell?\n\n\n\n\n\n\nTipSolution"
+    "text": "Prediction and confidence intervals\n\n\n\n\n\n\nTip\n\n\n\nThe R code for the following questions is found at \nhttps://aluby.github.io/stat230/activities/04R-prediction\nThe URL is also posted on Moodle.\n\n\nNow, we’ll explore the city data using R.\nQ1. Make a plot of income against education and overlay the linear regression equation. Does it look like what you expected?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ2. Make a plot of income against scale(education) and overlay the linear regression equation. Does it look like what you expected?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ3. Find the linear regression equation from Q1. Confirm that it matches the table at the beginning of this worksheet.\nQ4. The first person in this dataset has education = 8. Calculate the expected income of this person using the first regression equation.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ5. If we want to predict the income of this person, should we use a confidence interval or a prediction interval?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ6. Use R to construct the appropriate 89% interval for this person’s income. Record this interval below.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ7. Interpret the interval in context.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ8. Run the code to produce a scatterplot, regression line, and both types of intervals. Which is the prediction interval and which is the confidence interval? How can you tell?\n\n\n\n\n\n\nTipSolution"
   },
   {
     "objectID": "activities/04R-prediction.html",
@@ -448,32 +448,18 @@
     "text": "Acknowledgements\nThe movie example was adapted by Adam Loy from Maria Tackett’s draft of Introduction to Regression Analysis: A Data Science Approach."
   },
   {
-    "objectID": "readings/r-for-stat230.html",
-    "href": "readings/r-for-stat230.html",
-    "title": "Using R/RStudio for Stat230",
+    "objectID": "readings/intro-review.html",
+    "href": "readings/intro-review.html",
+    "title": "Intro Stat Review",
     "section": "",
-    "text": "In Stat230, I will distribute homework assignment templates in.qmd format. This is called a “quarto” file and allows you to use written text, code, and math in a single document. To work on our quarto files, we’ll use RStudio."
+    "text": "If you’re looking for review material from Intro Stat, I recommend the following\n\nStat Quest Videos (optional - as needed)\nIntuitive explanations of Inference\n\n\n\n\n\n\n\n\nIntro to Modern Statistics (optional - as needed)\n\nCategorical data: IMS Ch 4\nQuantitative data: IMS Ch 5\nRandomization tests: IMS Ch 11\nBootstrapping: IMS Ch 12\nCentral Limit Theorem: IMS Ch 13"
   },
   {
-    "objectID": "readings/r-for-stat230.html#uploading-files-to-maize",
-    "href": "readings/r-for-stat230.html#uploading-files-to-maize",
-    "title": "Using R/RStudio for Stat230",
-    "section": "Uploading files to maize",
-    "text": "Uploading files to maize\n\nClick the “upload” button in the files pane\nSelect the file from your local computer (likely in your Downloads folder if you downloaded from moodle)\nChoose the “Target Directory” – this is the folder on your maize account where the file will be saved. I recommend creating a separate folder for this class."
-  },
-  {
-    "objectID": "readings/r-for-stat230.html#accessing-maize-from-off-campus",
-    "href": "readings/r-for-stat230.html#accessing-maize-from-off-campus",
-    "title": "Using R/RStudio for Stat230",
-    "section": "Accessing maize from off campus",
-    "text": "Accessing maize from off campus\nIf you are using the maize server, you should be able to access it on campus with only your Carleton ID and password. If you plan to use the maize server and you plan to do any work off campus this term (e.g., while on a field trip, travel for athletics, or just sitting in Little Joy) you need to install Carleton’s VPN to have access.\nTo install the GlobalProtect VPN follow directions provided by ITS."
-  },
-  {
-    "objectID": "readings/r-for-stat230.html#installing-latex-not-needed-if-you-are-using-the-maize-server",
-    "href": "readings/r-for-stat230.html#installing-latex-not-needed-if-you-are-using-the-maize-server",
-    "title": "Using R/RStudio for Stat230",
-    "section": "Installing LaTeX (not needed if you are using the maize server)",
-    "text": "Installing LaTeX (not needed if you are using the maize server)\nIf you don’t already have a tex package installed on your computer, the easiest option to create pdf’s is to use the tinytex R package. This can be installed with the following R commands:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()  # install TinyTeX\n\nIf you’d like a standalone LaTeX package that will work with programs other than RStudio, you could install the basic installations of either:\nIf you’d like a stand alone LaTeX package, you could install the basic installations of either:\n\nMacTeX for Mac (3.2GB!)\nMiKTeX for Windows (190MB)"
+    "objectID": "homework/hw01-sols.html",
+    "href": "homework/hw01-sols.html",
+    "title": "Homework 01 Solutions",
+    "section": "",
+    "text": "Due: Friday of Week 1 at start of class\n\n\n\n\n\n\nImportantImportant!\n\n\n\nThese solutions are solely for use of grading in Amanda Luby’s Stat230 course in Spring 2026. Dissemination of this solution is not permitted and will be considered grounds for an Academic Dishonesty report for all individuals involved in the giving and receiving of the solution.\n\n\n\nProblem 1: Intro Stat review\nA 2021 article in Pediatrics (“Baby’s First Years: Design of a Randomized Controlled Trial of Poverty Reduction in the United States”) describes the design of a study to measure the impact of poverty reduction on children’s early development:\n\nA total of 1000 low-income mothers of newborns were enrolled in the study and began receiving a monthly unconditional cash gift for the first several years of their children’s lives. Mothers were randomly assigned to receive either a large monthly cash gift ($333) or a nominal monthly cash gift ($20). All monthly gifts are administered via debit card and can be freely spent with no restrictions. Baby’s First Years aims to answer whether poverty reduction in early childhood (1) improves children’s developmental outcomes and promotes healthier brain functioning, and (2) improves family functioning and better enables parents to support child development.\n\n\nWhy was it important to randomize amount of the cash gift in the study?\nSuppose the outcome variable \\(Y\\) in a statistical analysis is a quantitative measure of child brain functioning. We then calculate the mean of the large gift group (\\(\\bar{Y}_{large}\\)) and the small gift group (\\(\\bar{Y}_{small}\\)). What would an appropriate hypothesis test be? (You only need to set up the hypotheses statements)\nIf the researchers fail to reject the null hypothesis from (b), what type of error might they have made?\nHow could the researchers decrease the probability that they make the type of error in (c)?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\nTo account for confounding variables and allow the researchers to draw causal conclusions. Eg, that it was the cash gift, and not something else, that caused improvement in developmental outcomes or family functioning.\nI’m going to set this up as a one-sided test, since the researchers think the cash gift will improve outcomes\n\n\\[H_0: \\mu_L = \\mu_S\\] \\[H_A: \\mu_L &gt; \\mu_S\\]\n\nIf they fail to reject, they may have made a Type II error (false negative)\nIncrease the sample size or use a higher \\(\\alpha\\) threshold (make it easier to reject \\(H_0\\))\n\n\n\n\n\nProblem 2: Regression\nOne factor affecting water availability in Southern California is stream runoff from snowfall. If runoff could be predicted, engineers, planners, and policy makers could do their jobs more effectively because they would have an estimate as to how much water is entering the area.\nWe have access to a data set compares the stream runoff (in acre-feet) of a river near Bishop, California (due east of San Jose) with snowfall (in inches) at a site in the Sierra Nevada mountains. For each of the following questions, assume that your audience is city water planners with moderate statistical training.\n\nBelow is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).\n\n\n\n\n\n\n\n\n\n\n\nBelow is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.\n\n\nrunoff_mod &lt;- lm(Runoff ~ Precip, data = runoff) \ntidy(runoff_mod)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)   27015.     3219.      8.39 1.93e-10\n2 Precip         3752.      216.     17.4  1.56e-20\n\n\n\nInterpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\nInterpret the intercept in the context of the problem. (Don’t forget to specify units.)\nIf one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t forget to specify units.)\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\nThere is a moderately strong, positive, linear relationship betwteen snowfall and runoff\n\n\n\n\n\\[\n\\operatorname{\\widehat{Runoff}} = 27014.59 + 3752.49(\\operatorname{Precip})\n\\]\n\n\n\nWhen yearly snowfall increases by 1 inch, we expect the average runoff to also increase by 3752.49 2 acre-feet\nIn a year with 0 inches of snowfall, our model would predict an average of 2.7014587^{4} acre-feet of runoff\nFor a year with 10 inches of snowfall, we expect 6.4539443^{4} acre-feet of runoff\n\n\n\n\n\nProblem 3: Grizzlies\n\n\n\n\n\n\nTip\n\n\n\nThis problem asks you to write R code. You can use the fill-in-the-blank boxes here, or maize or RStudio if you are comfortable. For this homework, we will grade your written answers, so you only need to include sentences for each part. Your answers should reference the specific numbers you found.\n\n\nThe data below are length and girth measurements (in inches) for a sample of Grizzly bears.\n\ngrizzly &lt;- read.csv(\"https://aluby.github.io/stat230/data/grizzly.csv\")\n\n\nPlot the bear’s girth (response variable) against its length (predictor variable) and show the linear regression line. Describe the relationship.\nCompute and report the correlation coefficient\nFit the linear regression model and report the fitted regression equation\nWhat is the interpretation of the intercept coefficient, in context? Does it make sense to perform this interpretation?\nA new bear was observed with a length of 148 inches. What would the model predict for its girth?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\nThere is a moderate, positive, linear relationship between Girth and Length\n\n\ngf_point(Girth ~ Length, data = grizzly) |&gt;\n  gf_lm()\n\n\n\n\n\n\n\n\n\nThe correlation is 0.88\n\n\ncor(grizzly$Girth, grizzly$Length)\n\n[1] 0.8897853\n\n\n\n\n\n\ngrizzly_mod &lt;- lm(Girth ~ Length, data = grizzly)\ntidy(grizzly_mod)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic    p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n1 (Intercept)   32.7     10.7         3.06 0.00843   \n2 Length         0.546    0.0749      7.29 0.00000394\n\n\n\n\n\\[\n\\operatorname{\\widehat{Girth}} = 32.67 + 0.55(\\operatorname{Length})\n\\]\n\n\n\nFor a bear with 0 length, we’d expect an average of 32.66 inches girth. This does not make sense, since we cannot have a bear with 0 length\nWe’d expect a bear with length 148 inches to have an average girth of 113.5 inches\n\n\npredict(grizzly_mod, newdata = data.frame(Length = 148))\n\n       1 \n113.5024 \n\n\n\n\n\n\nProblem 4: The Hubble Constant\n\n\n\n\n\n\nTip\n\n\n\nThis problem asks you to write R code. You can use the fill-in-the-blank boxes here, or maize or RStudio if you are comfortable. For this homework, we will grade your written answers, so you only need to include sentences for each part. Your answers should reference the specific numbers you found.\n\n\n\nEdwin Hubble used the power of the Mount Wilson Observatory telescopes to meaure features of nebulae outside the Milky WAy. He was surprised to find a relationship between a nebula’s distance from earth and the velocity with which it was going away from the earth…. The apparent statistical relationship between distance and velocity led scientists to consider how such a relatinoship could arise. It was proposed that the universe came into being with a Big Bang, a long time ago. If this were true, then \\(Y = TX\\), where \\(Y\\) is Distance and \\(X\\) is velocity, and \\(T\\) gives the time elapsed since the Big Bang (that is, the age of the universe).\n\nThe ex0725 data points below are measured distances and recession velocities for 10 clusters of nebulae, much farther from earth than Hubble’s data.\n\nlibrary(Sleuth3)\nex0725\n\n   Distance Velocity\n1      1.80      890\n2      7.25     3810\n3      7.00     4638\n4      9.00     4820\n5     11.00     5230\n6     13.80     7500\n7     22.00    11800\n8     32.00    19600\n9      4.20     2350\n10     2.15      630\n\n\n\nMake a scatterplot with Velocity as the response and Distance as the predictor and describe the relationship\nAre the data consistent with Hubble’s theory (that the intercept is zero?)\nRegardless of your answer to the previous question, fit a simple linear regression model through the origin (i.e., forcing \\(\\beta_0 = 0\\)) by running the following code. Use this model to provide an estimate of the Hubble constant (the age of the universe)\nFind a 95% confidence interval for this estimate\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\nThere is a very strong, positive, linear relationship\n\n\ngf_point(Velocity ~ Distance, data = ex0725) |&gt;\n  gf_lm()\n\n\n\n\n\n\n\n\n\nIf we fit this model, the intercept is -500. This is “close” to zero relative to the observed data, but is not exactly zero.\n\n\nlm(Velocity ~ Distance, data = ex0725)\n\n\nCall:\nlm(formula = Velocity ~ Distance, data = ex0725)\n\nCoefficients:\n(Intercept)     Distance  \n     -500.0        601.3  \n\n\n\nThe estimate of the Hubble constant is 574.2\n\n\nlm(Velocity ~ 0 + Distance, data = ex0725)\n\n\nCall:\nlm(formula = Velocity ~ 0 + Distance, data = ex0725)\n\nCoefficients:\nDistance  \n   574.2  \n\n\n\nA 95% confidence interval for this estimate of the Hubble constant is (538.4, 610.0)\n\n\nlm(Velocity ~ 0 + Distance, data = ex0725) |&gt; confint()\n\n            2.5 %   97.5 %\nDistance 538.3564 609.9762"
   },
   {
     "objectID": "homework/hw01.html",
@@ -732,7 +718,7 @@
     "href": "slides.html",
     "title": "Slides",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nConditions for Inference\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Prediction\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for SLR\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nEvaluating SLR models\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Prediction\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for SLR\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "readings.html",
@@ -1008,11 +994,165 @@
     "text": "Before next class:\n\n\nReview solutions to activity on Moodle\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials\nSkim textbook chapters and come prepared for some simple linear regression next time!"
   },
   {
+    "objectID": "slides/slides05.html#topics-for-exam-i",
+    "href": "slides/slides05.html#topics-for-exam-i",
+    "title": "Evaluating SLR models",
+    "section": "Topics for Exam I",
+    "text": "Topics for Exam I"
+  },
+  {
     "objectID": "slides/slides05.html#last-time",
     "href": "slides/slides05.html#last-time",
-    "title": "Conditions for Inference",
+    "title": "Evaluating SLR models",
     "section": "Last Time",
-    "text": "Last Time"
+    "text": "Last Time\n\nInference for predictions\n\n\\(\\widehat{\\mu}(Y|X)\\)\n\\(\\text{Pred}(Y|X)\\)\n\n\nToday: how “good” is our model?"
+  },
+  {
+    "objectID": "slides/slides05.html#two-definitions-for-good",
+    "href": "slides/slides05.html#two-definitions-for-good",
+    "title": "Evaluating SLR models",
+    "section": "Two definitions for “good”",
+    "text": "Two definitions for “good”\n\n\nThe model is appropriate and our inferences are valid\n\n\n\nThe X variable does a good job at explaining the Y variable"
+  },
+  {
+    "objectID": "slides/slides05.html#notation",
+    "href": "slides/slides05.html#notation",
+    "title": "Evaluating SLR models",
+    "section": "Notation",
+    "text": "Notation\n\nTheoretical model:\n\\(y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)\n\nFitted model:\n\\(\\widehat{y}_i = \\widehat\\beta_0 + \\widehat\\beta_1 x_i\\)\n\\(y_i = \\widehat{y}_i + \\widehat{\\varepsilon}_i\\)"
+  },
+  {
+    "objectID": "slides/slides05.html#bike-data-small-sample",
+    "href": "slides/slides05.html#bike-data-small-sample",
+    "title": "Evaluating SLR models",
+    "section": "Bike Data (small sample)",
+    "text": "Bike Data (small sample)\n\n\n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bike_sample)\n\nCoefficients:\n(Intercept)  temp_actual  \n      -2940          101"
+  },
+  {
+    "objectID": "slides/slides05.html#conditions-for-inference",
+    "href": "slides/slides05.html#conditions-for-inference",
+    "title": "Evaluating SLR models",
+    "section": "Conditions for inference",
+    "text": "Conditions for inference\nOur model must be valid in order for our p-values or confidence intervals to be valid:\n\\(y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)\n\nConditions to check:\n\nLinear relationship is appropriate\nIndependent and identically distributed errors (iid)\nNormally distributed errors\nErrors have Equal variance"
+  },
+  {
+    "objectID": "slides/slides05.html#residuals",
+    "href": "slides/slides05.html#residuals",
+    "title": "Evaluating SLR models",
+    "section": "Residuals",
+    "text": "Residuals\nDefinition: \\(e_i =\\widehat{\\varepsilon}_i = y_i - \\widehat{y}_i\\)\n\nProperties:\n\nsum to zero \\(\\Longrightarrow\\) mean is 0\nuncorrelated with \\(x\\) and \\(\\widehat{y}\\)\nnormally distributed\n\\(SD(e_i) = \\widehat{\\sigma} \\sqrt{1 - \\dfrac{1}{n} - \\dfrac{(x_i - \\overline{x})^2}{\\sum (x_i - \\overline{x})^2}}\\)"
+  },
+  {
+    "objectID": "slides/slides05.html#what-is-a-residual-plot",
+    "href": "slides/slides05.html#what-is-a-residual-plot",
+    "title": "Evaluating SLR models",
+    "section": "What is a residual plot?",
+    "text": "What is a residual plot?"
+  },
+  {
+    "objectID": "slides/slides05.html#put-widehaty-on-the-y-axis-instead-of-x",
+    "href": "slides/slides05.html#put-widehaty-on-the-y-axis-instead-of-x",
+    "title": "Evaluating SLR models",
+    "section": "Put \\(\\widehat{y}\\) on the y axis instead of \\(x\\)",
+    "text": "Put \\(\\widehat{y}\\) on the y axis instead of \\(x\\)"
+  },
+  {
+    "objectID": "slides/slides05.html#a-good-residual-plot",
+    "href": "slides/slides05.html#a-good-residual-plot",
+    "title": "Evaluating SLR models",
+    "section": "A “good” residual plot",
+    "text": "A “good” residual plot"
+  },
+  {
+    "objectID": "slides/slides05.html#your-turn",
+    "href": "slides/slides05.html#your-turn",
+    "title": "Evaluating SLR models",
+    "section": "Your turn",
+    "text": "Your turn\n\n\nWork in groups\nOn the whiteboards, sketch a plot of \\(y\\) vs. \\(x\\) and a corresponding residual plot that would indicate a violation of the\n\nlinearity condition\nequal variance condition"
+  },
+  {
+    "objectID": "slides/slides05.html#assessing-linearity",
+    "href": "slides/slides05.html#assessing-linearity",
+    "title": "Evaluating SLR models",
+    "section": "Assessing Linearity",
+    "text": "Assessing Linearity"
+  },
+  {
+    "objectID": "slides/slides05.html#assessing-equal-variance",
+    "href": "slides/slides05.html#assessing-equal-variance",
+    "title": "Evaluating SLR models",
+    "section": "Assessing Equal Variance",
+    "text": "Assessing Equal Variance"
+  },
+  {
+    "objectID": "slides/slides05.html#assessing-normality",
+    "href": "slides/slides05.html#assessing-normality",
+    "title": "Evaluating SLR models",
+    "section": "Assessing Normality",
+    "text": "Assessing Normality\n\nhistogram of residuals\nnormal Q-Q plot of residuals\n\nExamples of “good” plots:"
+  },
+  {
+    "objectID": "slides/slides05.html#harder-to-gauge-at-small-sample-sizes",
+    "href": "slides/slides05.html#harder-to-gauge-at-small-sample-sizes",
+    "title": "Evaluating SLR models",
+    "section": "Harder to gauge at small sample sizes",
+    "text": "Harder to gauge at small sample sizes\nAll of these are random samples from normal distributions"
+  },
+  {
+    "objectID": "slides/slides05.html#assessing-independence",
+    "href": "slides/slides05.html#assessing-independence",
+    "title": "Evaluating SLR models",
+    "section": "Assessing independence",
+    "text": "Assessing independence\n\nplot residuals vs. variable inducing dependence (e.g. time, location, subject ID)\n\nExamples of “good” plots:"
+  },
+  {
+    "objectID": "slides/slides05.html#what-happens-the-conditions-arent-valid",
+    "href": "slides/slides05.html#what-happens-the-conditions-arent-valid",
+    "title": "Evaluating SLR models",
+    "section": "What happens the conditions aren’t valid?",
+    "text": "What happens the conditions aren’t valid?\n\nLinearity: if nonlinear, everything breaks!\nIndependence: estimates are still unbiased (i.e. we fit the right line) but measures of the accuracy of those estimates (the SEs) are typically too small\nNormality: estimates are still unbiased (i.e. we fit the right line), SEs are correct BUT prediction intervals (which rely on the data points being normally distribued around the mean) are wrong\nEqual variance: estimates are still unbiased but standard errors are wrong (and we don’t know how wrong)"
+  },
+  {
+    "objectID": "slides/slides05.html#what-do-we-do-if-our-assumptions-are-violated",
+    "href": "slides/slides05.html#what-do-we-do-if-our-assumptions-are-violated",
+    "title": "Evaluating SLR models",
+    "section": "What do we do if our assumptions are violated?",
+    "text": "What do we do if our assumptions are violated?\n\nChange our assumptions (hard, need more stats)\nTransform \\(y\\), \\(x\\), or both\nChange the type of inference (remember the bootstrap?)"
+  },
+  {
+    "objectID": "slides/slides05.html#r2",
+    "href": "slides/slides05.html#r2",
+    "title": "Evaluating SLR models",
+    "section": "\\(R^2\\)",
+    "text": "\\(R^2\\)\n\\[\\begin{align*}\n\\sum(Y - \\bar{Y})^2 &= \\sum (\\hat{Y} -\\bar{Y})^2  \\hspace{.9cm} + \\sum e_i^2 \\\\\n\\text{total variability} &= \\text{variability of } \\hat{Y}\\text{'s} + \\text{variability of residuals}\\\\\n\\end{align*}\\]\nThen:\n\\[R^2 = \\frac{\\sum (\\hat{Y} - \\bar{Y})^2}{\\sum (Y - \\bar{Y})} = \\frac{\\text{variability of } \\hat{Y}}{\\text{variability of }Y} \\]\n\n\n\n\n\n\n\\(R^2\\)\n\n\nThe \\(R^2\\) value gives the proportion of total variability in Y explained by the SLR model"
+  },
+  {
+    "objectID": "slides/slides05.html#ssnbatnt",
+    "href": "slides/slides05.html#ssnbatnt",
+    "title": "Evaluating SLR models",
+    "section": "SSNBATNT",
+    "text": "SSNBATNT\n\n\\(r\\): correlation coefficient\nR: statistical programming language\n\\(R^2\\): “coefficient of variation”\n\\(\\rho\\): population correlation coefficient\n\\(p\\): a population proportion\np-value: P(test stat | hypothesis)\nP(A): probability of event A\n\\(\\widehat{p}\\): sample proportion"
+  },
+  {
+    "objectID": "slides/slides05.html#finding-r2-in-r",
+    "href": "slides/slides05.html#finding-r2-in-r",
+    "title": "Evaluating SLR models",
+    "section": "Finding \\(R^2\\) in R",
+    "text": "Finding \\(R^2\\) in R\n\nsummary(bike_sm_lm)\n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bike_sample)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-3551.0  -885.8    90.6   784.2  2436.0 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -2940.40    1072.08  -2.743  0.00854 ** \ntemp_actual   101.00      16.57   6.096 1.79e-07 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1252 on 48 degrees of freedom\nMultiple R-squared:  0.4364,    Adjusted R-squared:  0.4246 \nF-statistic: 37.16 on 1 and 48 DF,  p-value: 1.787e-07"
+  },
+  {
+    "objectID": "slides/slides05.html#properties-of-r2",
+    "href": "slides/slides05.html#properties-of-r2",
+    "title": "Evaluating SLR models",
+    "section": "Properties of \\(R^2\\)",
+    "text": "Properties of \\(R^2\\)\n\nBetween 0 and 1\nBig when \\(\\sigma\\) is small relative to the overall variability\n\nbig proportion of variability explained by the model\n\nFor SLR, \\(R^2 = r^2\\)\n\n(\\(r\\) = correlation coefficient between X and Y)"
+  },
+  {
+    "objectID": "slides/slides05.html#r2-dangers",
+    "href": "slides/slides05.html#r2-dangers",
+    "title": "Evaluating SLR models",
+    "section": "\\(R^2\\) dangers",
+    "text": "\\(R^2\\) dangers"
   },
   {
     "objectID": "homework/hw02.html",
@@ -1029,11 +1169,116 @@
     "text": "library(tidyverse)\nlibrary(patchwork)\nlibrary(broom)\nlibrary(ggformula)\n\nTo submit your assignment,\n\nrender your file to pdf\ndownload the pdf to your computer (if using maize)\nsubmit your pdf to gradescope in the appropriate submission space\n\nMake sure to mark your pages through the gradescope system!\n\n\nGuidelines\n\nMake sure your PDF is “clean”:\n\necho: TRUE, warning: FALSE, message: FALSE\nDo not print long pages of output. Printing tibbles is OK\nAll questions should be answered with sentences written in text\n\nMake sure your .qmd is “clean”:\n\nremove unnecessary code\n\n\n\nProblem 1\n\nYour written answer hee\n\n\n# your code here\n\n\nYour written answer here\n\n\n# your code here\n\n\nYour code here\n\n\n# your code here\n\n\n\nProblem 2\n\nYour written answer hee\n\n\n# your code here\n\n\nYour written answer here\n\n\n# your code here\n\n\nYour code here\n\n\n# your code here\n\n\n\nProblem 3\n\nYour written answer hee\n\n\n# your code here\n\n\nYour written answer here\n\n\n# your code here\n\n\nYour code here\n\n\n# your code here"
   },
   {
-    "objectID": "readings/intro-review.html",
-    "href": "readings/intro-review.html",
-    "title": "Intro Stat Review",
+    "objectID": "readings/r-for-stat230.html",
+    "href": "readings/r-for-stat230.html",
+    "title": "Using R/RStudio for Stat230",
     "section": "",
-    "text": "If you’re looking for review material from Intro Stat, I recommend the following\n\nStat Quest Videos (optional - as needed)\nIntuitive explanations of Inference\n\n\n\n\n\n\n\n\nIntro to Modern Statistics (optional - as needed)\n\nCategorical data: IMS Ch 4\nQuantitative data: IMS Ch 5\nRandomization tests: IMS Ch 11\nBootstrapping: IMS Ch 12\nCentral Limit Theorem: IMS Ch 13"
+    "text": "In Stat230, I will distribute homework assignment templates in.qmd format. This is called a “quarto” file and allows you to use written text, code, and math in a single document. To work on our quarto files, we’ll use RStudio."
+  },
+  {
+    "objectID": "readings/r-for-stat230.html#uploading-files-to-maize",
+    "href": "readings/r-for-stat230.html#uploading-files-to-maize",
+    "title": "Using R/RStudio for Stat230",
+    "section": "Uploading files to maize",
+    "text": "Uploading files to maize\n\nClick the “upload” button in the files pane\nSelect the file from your local computer (likely in your Downloads folder if you downloaded from moodle)\nChoose the “Target Directory” – this is the folder on your maize account where the file will be saved. I recommend creating a separate folder for this class."
+  },
+  {
+    "objectID": "readings/r-for-stat230.html#accessing-maize-from-off-campus",
+    "href": "readings/r-for-stat230.html#accessing-maize-from-off-campus",
+    "title": "Using R/RStudio for Stat230",
+    "section": "Accessing maize from off campus",
+    "text": "Accessing maize from off campus\nIf you are using the maize server, you should be able to access it on campus with only your Carleton ID and password. If you plan to use the maize server and you plan to do any work off campus this term (e.g., while on a field trip, travel for athletics, or just sitting in Little Joy) you need to install Carleton’s VPN to have access.\nTo install the GlobalProtect VPN follow directions provided by ITS."
+  },
+  {
+    "objectID": "readings/r-for-stat230.html#installing-latex-not-needed-if-you-are-using-the-maize-server",
+    "href": "readings/r-for-stat230.html#installing-latex-not-needed-if-you-are-using-the-maize-server",
+    "title": "Using R/RStudio for Stat230",
+    "section": "Installing LaTeX (not needed if you are using the maize server)",
+    "text": "Installing LaTeX (not needed if you are using the maize server)\nIf you don’t already have a tex package installed on your computer, the easiest option to create pdf’s is to use the tinytex R package. This can be installed with the following R commands:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()  # install TinyTeX\n\nIf you’d like a standalone LaTeX package that will work with programs other than RStudio, you could install the basic installations of either:\nIf you’d like a stand alone LaTeX package, you could install the basic installations of either:\n\nMacTeX for Mac (3.2GB!)\nMiKTeX for Windows (190MB)"
+  },
+  {
+    "objectID": "activities/05-diagnostics-live.html",
+    "href": "activities/05-diagnostics-live.html",
+    "title": "05: Diagnostics",
+    "section": "",
+    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/05-diagnostics\nlibrary(ggformula)\ntheme_set(theme_minimal())"
+  },
+  {
+    "objectID": "activities/05-diagnostics-live.html#finding-residuals",
+    "href": "activities/05-diagnostics-live.html#finding-residuals",
+    "title": "05: Diagnostics",
+    "section": "Finding residuals",
+    "text": "Finding residuals\nIn order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for every single data point! Instead, we’ll use the augment() function from the {broom} R package to created an augmented movie dataset. This takes the original X and Y variables and adds the \\(\\hat{y}\\) values (.fitted) and residuals (.resid) (along with some other columns that we’ll use later)\nRun the following code chunk and take a peek at the movie_aug dataset. Can you find the:\n\noriginal X variable?\noriginal Y variable?\nPredictions?\nResiduals?\n\n\nlibrary(broom)\nmovie_aug &lt;- augment(movie_lm)\nmovie_aug"
+  },
+  {
+    "objectID": "activities/05-diagnostics-live.html#making-residual-plots",
+    "href": "activities/05-diagnostics-live.html#making-residual-plots",
+    "title": "05: Diagnostics",
+    "section": "Making residual plots",
+    "text": "Making residual plots\nThe code below makes a normal QQ plot and a histogram of the residuals. Do you think the normality assumption is satisfied?\n\n\n\n#| layout-ncol: 2\n\n\ngf_qq(~.resid, data = movie_aug) |&gt;\n  gf_qqline()\n\ngf_histogram(~.resid, data = movie_aug, col = \"white\")\n\n\n\n\nCheckpoint question\nUse the movie_aug dataset to make a scatterplot with .fitted on the x-axis and .resid on the y-axis. List the SLR conditions you can assess with this plot, and whether or not they appear to be satisfied.\n\n# your code here"
+  },
+  {
+    "objectID": "activities/05-diagnostics-live.html#a-shortcut",
+    "href": "activities/05-diagnostics-live.html#a-shortcut",
+    "title": "05: Diagnostics",
+    "section": "A shortcut",
+    "text": "A shortcut\nWe will make a ton of residual plots this term. A shortcut is to use the resid_panel function within the {ggResidpanel} package:\n\nlibrary(ggResidpanel)\nresid_panel(movie_lm)\n\n\nCheckpoint question\nWhich panel(s) would you look at for each of the following SLR conditions. List as many panels as possible, along with how you would identify any violations:\n\nLinearity:\nIndependence:\nNormality:\nEqual variance:"
+  },
+  {
+    "objectID": "activities/05-diagnostics-live.html#summary",
+    "href": "activities/05-diagnostics-live.html#summary",
+    "title": "05: Diagnostics",
+    "section": "Summary",
+    "text": "Summary\n\nCheckpoint question\nSuppose that we fit a linear regression model to a sample of 1,000 observations and we find evidence in the normal Q-Q plot of a violation of the normality assumption, but no evidence in the residual plot of violations of the linearity and constant variance assumptions and no reason to suspect a violation of the independence assumption. Which of the following inferences are valid, and which are not?:\n\np-value from the hypothesis test \\(H_0: \\beta_1 = 0\\) vs \\(H_A: \\beta_1 \\ne 0\\)\nConfidence interval for \\(\\beta_1\\)\nConfidence interval for the mean of Y at some X value\nPrediction interval for Y at some X value"
+  },
+  {
+    "objectID": "activities/05-diagnostics-live.html#function-quick-reference",
+    "href": "activities/05-diagnostics-live.html#function-quick-reference",
+    "title": "05: Diagnostics",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\naugment(model)\nCreate augmented dataset that includes predictions and residuals\n\n\ngf_qq(~variable, data)\nMake a qq plot\n\n\ngf_qq_line()\nOverlay a straight line on the qq plot\n\n\nresid_panel(model)\nShortcut for making a panel of residual plots"
+  },
+  {
+    "objectID": "activities/05-diagnostics-tutorial.html",
+    "href": "activities/05-diagnostics-tutorial.html",
+    "title": "05: Diagnostics",
+    "section": "",
+    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/05-diagnostics"
+  },
+  {
+    "objectID": "activities/05-diagnostics-tutorial.html#finding-residuals",
+    "href": "activities/05-diagnostics-tutorial.html#finding-residuals",
+    "title": "05: Diagnostics",
+    "section": "Finding residuals",
+    "text": "Finding residuals\nIn order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for every single data point! Instead, we’ll use the augment() function from the {broom} R package to created an augmented movie dataset. This takes the original X and Y variables and adds the \\(\\hat{y}\\) values (.fitted) and residuals (.resid) (along with some other columns that we’ll use later)\nRun the following code chunk and take a peek at the movie_aug dataset. Can you find the:\n\noriginal X variable?\noriginal Y variable?\nPredictions?\nResiduals?"
+  },
+  {
+    "objectID": "activities/05-diagnostics-tutorial.html#making-residual-plots",
+    "href": "activities/05-diagnostics-tutorial.html#making-residual-plots",
+    "title": "05: Diagnostics",
+    "section": "Making residual plots",
+    "text": "Making residual plots\nThe code below makes a normal QQ plot and a histogram of the residuals. Do you think the normality assumption is satisfied?\n\n\n\n\n\n\n\n\n\n\n\nCheckpoint question\nUse the movie_aug dataset to make a scatterplot with .fitted on the x-axis and .resid on the y-axis. List the SLR conditions you can assess with this plot, and whether or not they appear to be satisfied."
+  },
+  {
+    "objectID": "activities/05-diagnostics-tutorial.html#a-shortcut",
+    "href": "activities/05-diagnostics-tutorial.html#a-shortcut",
+    "title": "05: Diagnostics",
+    "section": "A shortcut",
+    "text": "A shortcut\nWe will make a ton of residual plots this term. A shortcut is to use the resid_panel function within the {ggResidpanel} package:\n\n\n\n\n\n\n\n\n\nCheckpoint question\nWhich panel(s) would you look at for each of the following SLR conditions. List as many panels as possible, along with how you would identify any violations:\n\nLinearity:\nIndependence:\nNormality:\nEqual variance:"
+  },
+  {
+    "objectID": "activities/05-diagnostics-tutorial.html#summary",
+    "href": "activities/05-diagnostics-tutorial.html#summary",
+    "title": "05: Diagnostics",
+    "section": "Summary",
+    "text": "Summary\n\nCheckpoint question\nSuppose that we fit a linear regression model to a sample of 1,000 observations and we find evidence in the normal Q-Q plot of a violation of the normality assumption, but no evidence in the residual plot of violations of the linearity and constant variance assumptions and no reason to suspect a violation of the independence assumption. Which of the following inferences are valid, and which are not?:\n\np-value from the hypothesis test \\(H_0: \\beta_1 = 0\\) vs \\(H_A: \\beta_1 \\ne 0\\)\nConfidence interval for \\(\\beta_1\\)\nConfidence interval for the mean of Y at some X value\nPrediction interval for Y at some X value"
+  },
+  {
+    "objectID": "activities/05-diagnostics-tutorial.html#function-quick-reference",
+    "href": "activities/05-diagnostics-tutorial.html#function-quick-reference",
+    "title": "05: Diagnostics",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\naugment(model)\nCreate augmented dataset that includes predictions and residuals\n\n\ngf_qq(~variable, data)\nMake a qq plot\n\n\ngf_qq_line()\nOverlay a straight line on the qq plot\n\n\nresid_panel(model)\nShortcut for making a panel of residual plots"
   },
   {
     "objectID": "activities/03a-inference.html",
@@ -1106,10 +1351,52 @@
     "text": "Group Members:\n\nWhat does ‘participation’ look like at a minimum? (i.e. what are the expectations for a “passing” participation grade?)\n\n\n\n\n\n\n\n\nWhat does “above and beyond” participation look like? (i.e. what are the expectations for an “A” participation grade?)\n\n\n\n\n\n\n\n\nI (Amanda) am a member of your team, too! Tell me what I can do in my role to help you perform yours."
   },
   {
+    "objectID": "activities/05-diagnostics.html",
+    "href": "activities/05-diagnostics.html",
+    "title": "05: Diagnostics",
+    "section": "",
+    "text": "Note\n\n\n\nThis is the quarto version of the R activity. If you prefer to use the tutorial version, you can use https://aluby.github.io/stat230/activities/05-diagnostics-tutorial\nlibrary(tidyverse)\nlibrary(ggformula)\ntheme_set(theme_minimal())"
+  },
+  {
+    "objectID": "activities/05-diagnostics.html#finding-residuals",
+    "href": "activities/05-diagnostics.html#finding-residuals",
+    "title": "05: Diagnostics",
+    "section": "Finding residuals",
+    "text": "Finding residuals\nIn order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for every single data point! Instead, we’ll use the augment() function from the {broom} R package to created an augmented movie dataset. This takes the original X and Y variables and adds the \\(\\hat{y}\\) values (.fitted) and residuals (.resid) (along with some other columns that we’ll use later)\nRun the following code chunk and take a peek at the movie_aug dataset. Can you find the:\n\noriginal X variable?\noriginal Y variable?\nPredictions?\nResiduals?\n\n\nlibrary(broom)\nmovie_aug &lt;- augment(movie_lm)\nmovie_aug\n\n# A tibble: 146 × 8\n   audience critics .fitted .resid    .hat .sigma   .cooksd .std.resid\n      &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n 1       86      74    70.7  15.3  0.00816   12.5 0.00618       1.23  \n 2       80      85    76.4   3.60 0.0113    12.6 0.000474      0.289 \n 3       90      80    73.8  16.2  0.00963   12.5 0.00818       1.30  \n 4       84      18    41.7  42.3  0.0208    12.1 0.123         3.41  \n 5       28      14    39.6 -11.6  0.0235    12.5 0.0105       -0.934 \n 6       62      63    65.0  -2.99 0.00688   12.6 0.000199     -0.239 \n 7       53      42    54.1  -1.10 0.00954   12.6 0.0000374    -0.0882\n 8       64      86    76.9 -12.9  0.0116    12.5 0.00633      -1.04  \n 9       82      99    83.7  -1.66 0.0179    12.6 0.000163     -0.134 \n10       87      89    78.5   8.52 0.0129    12.6 0.00305       0.684 \n# ℹ 136 more rows"
+  },
+  {
+    "objectID": "activities/05-diagnostics.html#making-residual-plots",
+    "href": "activities/05-diagnostics.html#making-residual-plots",
+    "title": "05: Diagnostics",
+    "section": "Making residual plots",
+    "text": "Making residual plots\nThe code below makes a normal QQ plot and a histogram of the residuals. Do you think the normality assumption is satisfied?\ngf_qq(~.resid, data = movie_aug) |&gt;\n  gf_qqline()\ngf_histogram(~.resid, data = movie_aug, col = \"white\")\n\n\n\n\n\n\n\n\n\n\n\nCheckpoint question\nUse the movie_aug dataset to make a scatterplot with .fitted on the x-axis and .resid on the y-axis. List the SLR conditions you can assess with this plot, and whether or not they appear to be satisfied.\n\n# your code here"
+  },
+  {
+    "objectID": "activities/05-diagnostics.html#a-shortcut",
+    "href": "activities/05-diagnostics.html#a-shortcut",
+    "title": "05: Diagnostics",
+    "section": "A shortcut",
+    "text": "A shortcut\nWe will make a ton of residual plots this term. A shortcut is to use the resid_panel function within the {ggResidpanel} package:\n\nlibrary(ggResidpanel)\nresid_panel(movie_lm)\n\n\n\n\n\n\n\n\n\nCheckpoint question\nWhich panel(s) would you look at for each of the following SLR conditions. List as many panels as possible, along with how you would identify any violations:\n\nLinearity:\nIndependence:\nNormality:\nEqual variance:"
+  },
+  {
+    "objectID": "activities/05-diagnostics.html#summary",
+    "href": "activities/05-diagnostics.html#summary",
+    "title": "05: Diagnostics",
+    "section": "Summary",
+    "text": "Summary\n\nCheckpoint question\nSuppose that we fit a linear regression model to a sample of 1,000 observations and we find evidence in the normal Q-Q plot of a violation of the normality assumption, but no evidence in the residual plot of violations of the linearity and constant variance assumptions and no reason to suspect a violation of the independence assumption. Which of the following inferences are valid, and which are not?:\n\np-value from the hypothesis test \\(H_0: \\beta_1 = 0\\) vs \\(H_A: \\beta_1 \\ne 0\\)\nConfidence interval for \\(\\beta_1\\)\nConfidence interval for the mean of Y at some X value\nPrediction interval for Y at some X value"
+  },
+  {
+    "objectID": "activities/05-diagnostics.html#function-quick-reference",
+    "href": "activities/05-diagnostics.html#function-quick-reference",
+    "title": "05: Diagnostics",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\naugment(model)\nCreate augmented dataset that includes predictions and residuals\n\n\ngf_qq(~variable, data)\nMake a qq plot\n\n\ngf_qq_line()\nOverlay a straight line on the qq plot\n\n\nresid_panel(model)\nShortcut for making a panel of residual plots"
+  },
+  {
     "objectID": "schedule.html",
     "href": "schedule.html",
     "title": "Stat230: Applied Regression Analysis",
     "section": "",
-    "text": "WEEK\nDOW\nDATE\nREFERENCE READING\nTOPIC\nDUE\n\n\n\n\n1\nM\nMar 30\n📚 RABE 1.4  📺 Intro Stat Review videos \nWelcome + Intro Stat Review\n\n\n\n\n1\nW\nApr 1\nRABE 2.1 - 2.5\nSLR; R for Regression Activity\n\n\n\n\n1\nF\nApr 3\nRABE 2.6 - 2.7 Intro to R\nInference for SLR; Quarto documents and RStudio\nHW 1\n\n\n2\nM\nApr 6\nRABE 2.8\nSLR prediction\n\n\n\n\n2\nW\nApr 8\nRABE 2.10-2.11\nFlavors of SLR\n\n\n\n\n2\nF\nApr 10\nRABE 2.9\nDiagnostic plots and R^2\nHW 2\n\n\n3\nM\nApr 13\n\n\nQuiz 1 (SLR)\n\n\n\n\n3\nW\nApr 15\nRABE 6.1-6.3\nDiagnostics, transformation, and interpretation\n\n\n\n\n3\nF\nApr 17\nRABE 3.1-3.5\nIntro to MLR\nHW 3 and Case Study draft\n\n\n4\nM\nApr 20\nRABE 5.1-5.3\nCategorical Predictors\nCase Study I due\n\n\n4\nW\nApr 22\nRABE 3.9\nMLR Inference\n\n\n\n\n4\nF\nApr 24\nRABE 3.10 - 3.11\nInference for Linear Combinations; F test\nHW 4\n\n\n5\nM\nApr 27\nRABE 4.1-4.9; 9.1-9.4\nMLR Diagnostics\n\n\n\n\n5\nW\nApr 29\nRABE 4.13\nMulticolinearity\n\n\n\n\n5\nF\nMay 1\nRABE 11.1-11.9\nVariable Selection\nHW 5\n\n\n6\nM\nMay 4\n\n\nMidterm Break: No class\n\n\n\n\n6\nW\nMay 6\n\n\nQuiz 2 (MLR)\n\n\n\n\n6\nF\nMay 8\n\n\nOdds, odds ratio, review proportions/chi square tests\nHW 6 and case study draft\n\n\n7\nM\nMay 11\nRABE 12.1-12.4\nBinary logistic regression\nCase Study II due\n\n\n7\nW\nMay 13\nRABE 12.1-12.4\nInference for logistic regression\n\n\n\n\n7\nF\nMay 15\n\n\nLogistic regression in R; Data presentations\nHW 7\n\n\n8\nM\nMay 18\nRABE 12.5-12.7\nDiagnostics for logistic regression; Data presentations\n\n\n\n\n8\nW\nMay 20\n\n\nBinomial logistic regression\n\n\n\n\n8\nF\nMay 22\n\n\nDeviance goodness of fit tests\nHW 8 and Case Study Draft\n\n\n9\nM\nMay 25\n\n\nQuiz 3 (Logistic Regression)\nCase Study III (final)\n\n\n9\nW\nMay 27\n\n\nOverdispersion\n\n\n\n\n9\nF\nMay 29\nBMLR 4.1-4.2\nIntro to Poisson regression\n\n\n\n\n10\nM\nJun 1\n\n\nPresentations (?)\nHW 9\n\n\n10\nW\nJun 3\n\n\nPresentations (?)\n\n\n\n\n\n\nM\nJun 5\n\n\n\n\n[Course evaluation (anonymous)]"
+    "text": "WEEK\nDOW\nDATE\nREFERENCE READING\nTOPIC\nDUE\n\n\n\n\n1\nM\nMar 30\n📚 RABE 1.4  📺 Intro Stat Review \nWelcome + Intro Stat Review\n\n\n\n\n1\nW\nApr 1\n📚 RABE 2.1 - 2.5\nSLR; R for Regression Activity\n\n\n\n\n1\nF\nApr 3\n📚 RABE 2.6 - 2.7 Intro to R\nInference for SLR; Quarto documents and RStudio\nHW 1\n\n\n2\nM\nApr 6\n📚 RABE 2.8\nSLR prediction\n\n\n\n\n2\nW\nApr 8\n📚 RABE 2.9\nDiagnostic plots and R2\n\n\n\n\n2\nF\nApr 10\n📚 RABE 2.10-2.11\nFlavors of SLR / Intro to transformation\nHW 2\n\n\n3\nM\nApr 13\n\n\nExam 1 (SLR)\n\n\n\n\n3\nW\nApr 15\n📚 RABE 6.1-6.3\nDiagnostics, transformation, and interpretation\n\n\n\n\n3\nF\nApr 17\n📚 RABE 3.1-3.5\nIntro to MLR\nHW 3 and Case Study analysis\n\n\n4\nM\nApr 20\n📚 RABE 5.1-5.3\nCategorical Predictors\nCase Study I due\n\n\n4\nW\nApr 22\n📚 RABE 3.9\nMLR Inference\n\n\n\n\n4\nF\nApr 24\n📚 RABE 3.10 - 3.11\nInference for Linear Combinations; F test\nHW 4\n\n\n5\nM\nApr 27\n📚 RABE 4.1-4.9; 9.1-9.4\nMLR Diagnostics\n\n\n\n\n5\nW\nApr 29\n📚 RABE 4.13\nMulticolinearity\n\n\n\n\n5\nF\nMay 1\n📚 RABE 11.1-11.9\nVariable Selection\nHW 5\n\n\n6\nM\nMay 4\n\n\nMidterm Break: No class\n\n\n\n\n6\nW\nMay 6\n\n\nQuiz 2 (MLR)\n\n\n\n\n6\nF\nMay 8\n\n\nOdds, odds ratio, review proportions/chi square tests\nHW 6 and case study analysis\n\n\n7\nM\nMay 11\n📚 RABE 12.1-12.4\nBinary logistic regression\nCase Study II due\n\n\n7\nW\nMay 13\n📚 RABE 12.1-12.4\nInference for logistic regression\n\n\n\n\n7\nF\nMay 15\n\n\nLogistic regression in R; Data presentations\nHW 7\n\n\n8\nM\nMay 18\n📚 RABE 12.5-12.7\nDiagnostics for logistic regression; Data presentations\n\n\n\n\n8\nW\nMay 20\n\n\nBinomial logistic regression\n\n\n\n\n8\nF\nMay 22\n\n\nDeviance goodness of fit tests\nHW 8 and Case Study analysis\n\n\n9\nM\nMay 25\n\n\nQuiz 3 (Logistic Regression)\nCase Study III (final)\n\n\n9\nW\nMay 27\n\n\nOverdispersion\n\n\n\n\n9\nF\nMay 29\nBMLR 4.1-4.2\nIntro to Poisson regression\n\n\n\n\n10\nM\nJun 1\n\n\nPresentations (?)\nHW 9\n\n\n10\nW\nJun 3\n\n\nPresentations (?)\n\n\n\n\n\n\nM\nJun 5\n\n\n\n\n[Course evaluation (anonymous)]"
   }
 ]
