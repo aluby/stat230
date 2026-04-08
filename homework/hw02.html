@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -155,8 +155,8 @@ window.Quarto = {
   <li><a href="#problem-4" id="toc-problem-4" class="nav-link" data-scroll-target="#problem-4">Problem 4</a></li>
   <li><a href="#problem-5-runoff-again-again" id="toc-problem-5-runoff-again-again" class="nav-link" data-scroll-target="#problem-5-runoff-again-again">Problem 5: Runoff (again again)</a></li>
   <li><a href="#problem-6" id="toc-problem-6" class="nav-link" data-scroll-target="#problem-6">Problem 6</a></li>
-  <li><a href="#problem-7-tba-wed" id="toc-problem-7-tba-wed" class="nav-link" data-scroll-target="#problem-7-tba-wed">Problem 7: TBA Wed</a></li>
-  <li><a href="#problem-8-tba-wed" id="toc-problem-8-tba-wed" class="nav-link" data-scroll-target="#problem-8-tba-wed">Problem 8: TBA Wed</a></li>
+  <li><a href="#problem-7-reading-residual-plots" id="toc-problem-7-reading-residual-plots" class="nav-link" data-scroll-target="#problem-7-reading-residual-plots">Problem 7: Reading residual plots</a></li>
+  <li><a href="#problem-8-animals-metabolic-rate" id="toc-problem-8-animals-metabolic-rate" class="nav-link" data-scroll-target="#problem-8-animals-metabolic-rate">Problem 8: Animals metabolic rate</a></li>
   </ul>
 </nav>
     </div>
@@ -361,11 +361,48 @@ $residual.scale
 <li><p>Make a plot that includes (1) the explanatory and response variables as a scatterplot, (2) the linear regression line, (3) the confidence interval for all points, and (4) the prediction interval for all points.</p></li>
 </ol>
 </section>
-<section id="problem-7-tba-wed" class="level1">
-<h1>Problem 7: TBA Wed</h1>
+<section id="problem-7-reading-residual-plots" class="level1">
+<h1>Problem 7: Reading residual plots</h1>
+<p>For each part of this question, use the provided residual plots to determine whether the conditions for inference appear to be valid. If you decide that a condition is violated, make sure to specify which one and how you can tell using the plots. Each model uses different data sets.</p>
+<ol type="a">
+<li></li>
+</ol>
+<p><img src="img/hw2q5a.png" class="img-fluid"></p>
+<ol start="2" type="a">
+<li></li>
+</ol>
+<p><img src="img/hw2q5b.png" class="img-fluid"></p>
+<ol start="3" type="a">
+<li></li>
+</ol>
+<p><img src="img/hw2q5c.png" class="img-fluid"></p>
+<ol start="4" type="a">
+<li></li>
+</ol>
+<p><img src="img/hw2q5d.png" class="img-fluid"></p>
 </section>
-<section id="problem-8-tba-wed" class="level1">
-<h1>Problem 8: TBA Wed</h1>
+<section id="problem-8-animals-metabolic-rate" class="level1">
+<h1>Problem 8: Animals metabolic rate</h1>
+<p>The following data comes from <em>Statistical Sleuth</em> Chapter 8. The data are the average mass, metabolic rate, and lifespan for 95 species of mammals. <a href="https://en.wikipedia.org/wiki/Kleiber%27s_law">Kleiber’s law</a> states that the metabolic rate of an animal species, on average, is proportional to its mass raised to the power of 3/4.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>animals <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex0826</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(animals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              CommonName                  Species   Mass Metab Life
+1                Echidna   Tachiglossus aculeatus  2.500   302   14
+2    Long-beaked echidna        Zaglossus bruijni 10.300   594   20
+3               Platypus Ornithorhynchus anatinus  1.300   229    9
+4                Opossum Lutreolina crassicaudata  0.812   196    5
+5 South American opossum    Didelphis marsupialis  1.330   299    6
+6       Virginia opossum     Didelphis virginiana  3.260   519    8</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Make a plot of average metabolic rate vs.&nbsp;mass for the 95 animals in this dataset. Make sure the axes are appropriately labeled. Comment on the relationship (shape, strength, direction of association).</p></li>
+<li><p>Fit the simple linear model of metabolic rate against mass and report the regression equation.</p></li>
+<li><p>Plot the residuals from the model in part (b) vs.&nbsp;the mass. To see what is going on more easily, also plot the residuals vs.&nbsp;the log(mass). Are the SLR conditions satisfied?</p></li>
+<li><p>Make a plot of the log(metablic rate) vs.&nbsp;the log(mass) with a regression line overlaid. Compare with the plot in (a). Do you think this scatterplot will be better or worse in terms of meeting the SLR conditions than the plot in (a)? (you do not need to fit this model)</p></li>
+</ol>
 
 
 </section>
