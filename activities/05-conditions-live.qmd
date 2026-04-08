@@ -1,13 +1,28 @@
 ---
-title: "05: Diagnostics"
+title: "05: Conditions - live"
+webr:
+  packages:
+    - ggformula
+    - broom
+    - ggResidpanel
+format: 
+  live-html:
+    toc: true
+    output-file: "05-conditions-tutorial"
+engine: knitr
+editor: source
+execute:
+  message: false
+  warning: false
 ---
 
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
+
 ::: callout-note
-This is the quarto version of the R activity. If you prefer to use the tutorial version, you can use <https://aluby.github.io/stat230/activities/05-diagnostics-tutorial>
+This is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use <https://aluby.github.io/stat230/activities/05-conditions>
 :::
 
-```{r}
-library(tidyverse)
+```{webr}
 library(ggformula)
 theme_set(theme_minimal())
 ```
@@ -16,21 +31,21 @@ theme_set(theme_minimal())
 
 Recall the `movies` dataset from the R activity we did on Day 02. (`head()` prints out the first few rows)
 
-```{r}
+```{webr}
 movies <- read.csv("https://aloy.github.io/stat230-materials/data/movie_scores.csv")
 head(movies)
 ```
 
 On that day, we made the following scatterplot: 
 
-```{r}
+```{webr}
 gf_point(audience ~ critics, data = movies) |>
   gf_lm()
 ```
 
 and fit this regression model: 
 
-```{r}
+```{webr}
 movie_lm <- lm(audience ~ critics, data = movies)
 movie_lm
 ```
@@ -46,7 +61,7 @@ Run the following code chunk and take a peek at the `movie_aug` dataset. Can you
 - Predictions?
 - Residuals?
 
-```{r}
+```{webr}
 library(broom)
 movie_aug <- augment(movie_lm)
 movie_aug
@@ -57,7 +72,7 @@ movie_aug
 
 The code below makes a normal QQ plot and a histogram of the residuals. Do you think the normality assumption is satisfied?
 
-```{r}
+```{webr}
 #| layout-ncol: 2
 
 
@@ -71,7 +86,7 @@ gf_histogram(~.resid, data = movie_aug, col = "white")
 
 Use the `movie_aug` dataset to make a scatterplot with `.fitted` on the x-axis and `.resid` on the y-axis. List the SLR conditions you can assess with this plot, and whether or not they appear to be satisfied. 
 
-```{r}
+```{webr}
 # your code here
 ```
 
@@ -79,7 +94,7 @@ Use the `movie_aug` dataset to make a scatterplot with `.fitted` on the x-axis a
 
 We will make a **ton** of residual plots this term. A shortcut is to use the `resid_panel` function within the {ggResidpanel} package: 
 
-```{r}
+```{webr}
 library(ggResidpanel)
 resid_panel(movie_lm)
 ```
@@ -103,7 +118,7 @@ Which panel(s) would you look at for each of the following SLR conditions. List 
 
 Find the $R^2$ value for the `movie_lm` model using `summary()`. Confirm that it is equal to $r^2$
 
-```{r}
+```{webr}
 # your code here
 ```
 
