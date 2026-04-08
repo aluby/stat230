@@ -2,3 +2,131 @@
 title: "05: Diagnostics"
 ---
 
+::: callout-note
+This is the quarto version of the R activity. If you prefer to use the tutorial version, you can use <https://aluby.github.io/stat230/activities/05-diagnostics-tutorial>
+:::
+
+```{r}
+library(tidyverse)
+library(ggformula)
+theme_set(theme_minimal())
+```
+
+# Example 1: Making residual plots in R 
+
+Recall the `movies` dataset from the R activity we did on Day 02. (`head()` prints out the first few rows)
+
+```{r}
+movies <- read.csv("https://aloy.github.io/stat230-materials/data/movie_scores.csv")
+head(movies)
+```
+
+On that day, we made the following scatterplot: 
+
+```{r}
+gf_point(audience ~ critics, data = movies) |>
+  gf_lm()
+```
+
+and fit this regression model: 
+
+```{r}
+movie_lm <- lm(audience ~ critics, data = movies)
+movie_lm
+```
+
+## Finding residuals 
+
+In order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for *every single data point*! Instead, we'll use the `augment()` function from the {broom} R package to created an augmented movie dataset. This takes the original X and Y variables and adds the $\hat{y}$ values (`.fitted`) and residuals (`.resid`) (along with some other columns that we'll use later) 
+
+Run the following code chunk and take a peek at the `movie_aug` dataset. Can you find the: 
+
+- original X variable?
+- original Y variable?
+- Predictions?
+- Residuals?
+
+```{r}
+library(broom)
+movie_aug <- augment(movie_lm)
+movie_aug
+```
+
+
+## Making residual plots
+
+The code below makes a normal QQ plot and a histogram of the residuals. Do you think the normality assumption is satisfied?
+
+```{r}
+#| layout-ncol: 2
+
+
+gf_qq(~.resid, data = movie_aug) |>
+  gf_qqline()
+
+gf_histogram(~.resid, data = movie_aug, col = "white")
+```
+
+### Checkpoint question
+
+Use the `movie_aug` dataset to make a scatterplot with `.fitted` on the x-axis and `.resid` on the y-axis. List the SLR conditions you can assess with this plot, and whether or not they appear to be satisfied. 
+
+```{r}
+# your code here
+```
+
+## A shortcut
+
+We will make a **ton** of residual plots this term. A shortcut is to use the `resid_panel` function within the {ggResidpanel} package: 
+
+```{r}
+library(ggResidpanel)
+resid_panel(movie_lm)
+```
+
+
+### Checkpoint question
+
+Which panel(s) would you look at for each of the following SLR conditions. List as many panels as possible, along with how you would identify any violations:
+
+ - Linearity: 
+ 
+ - Independence: 
+ 
+ - Normality: 
+ 
+ - Equal variance: 
+
+# Example 2: $R^2$ in R
+
+### Checkpoint question
+
+Find the $R^2$ value for the `movie_lm` model using `summary()`. Confirm that it is equal to $r^2$
+
+```{r}
+# your code here
+```
+
+## Summary
+
+### Checkpoint question
+
+Suppose that we fit a linear regression model to a sample of 1,000 observations and we find evidence in the normal Q-Q plot of a violation of the normality assumption, but no evidence in the residual plot of violations of the linearity and constant variance assumptions and no reason to suspect a violation of the independence assumption. Which of the following inferences are valid, and which are not?:
+
+- p-value from the hypothesis test $H_0: \beta_1 = 0$ vs $H_A: \beta_1 \ne 0$ 
+- Confidence interval for $\beta_1$
+- Confidence interval for the mean of Y at some X value
+- Prediction interval for Y at some X value
+
+## Function quick reference
+
+The following table summarizes the functions we learned today:
+
+| Function | Purpose |
+|----|-----------|
+| `augment(model)` | Create augmented dataset that includes predictions and residuals |
+| `gf_qq(~variable, data)` | Make a qq plot |
+| `gf_qq_line()` | Overlay a straight line on the qq plot|
+| `resid_panel(model)` | Shortcut for making a panel of residual plots|
+
+

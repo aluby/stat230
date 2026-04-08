@@ -313,7 +313,7 @@ Work through Example 1 on the activity
 
 -   **Independence:** estimates are still unbiased (i.e. we fit the right line) but measures of the accuracy of those estimates (the SEs) are typically too small
 
--   **Normality:** estimates are still unbiased (i.e. we fit the right line), SEs are correct BUT confidence/prediction intervals are wrong (we can't use t-distribution)
+-   **Normality:** estimates are still unbiased (i.e. we fit the right line), SEs are correct BUT prediction intervals (which rely on the data points being normally distribued around the mean) are wrong 
 
 -   **Equal variance:** estimates are still unbiased but standard errors are wrong (and we don't know how wrong)
 
