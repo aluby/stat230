@@ -157,6 +157,40 @@ sat_gpa <- read.csv("http://aluby.github.io/stat230/data/satGPA.csv")
 
 (d) Make a plot that includes (1) the explanatory and response variables as a scatterplot, (2) the linear regression line, (3) the confidence interval for all points, and (4) the prediction interval for all points. 
 
-# Problem 7: TBA Wed
+# Problem 7: Reading residual plots
 
-# Problem 8: TBA Wed
+For each part of this question, use the provided residual plots to determine whether the conditions for inference appear to be valid. If you decide that a condition is violated, make sure to specify which one and how you can tell using the plots. Each model uses different data sets. 
+
+(a) 
+
+![](img/hw2q5a.png)
+
+(b) 
+
+![](img/hw2q5b.png)
+
+(c) 
+
+![](img/hw2q5c.png)
+
+(d) 
+
+![](img/hw2q5d.png)
+
+# Problem 8: Animals metabolic rate
+
+The following data comes from *Statistical Sleuth* Chapter 8. The data are the average mass, metabolic rate, and lifespan for 95 species of mammals. [Kleiber’s law](https://en.wikipedia.org/wiki/Kleiber%27s_law) states that the metabolic rate of an animal species, on average, is proportional to its mass raised to the power of 3/4.
+
+```{r}
+animals <- Sleuth3::ex0826
+head(animals)
+```
+
+(a) Make a plot of average metabolic rate vs. mass for the 95 animals in this dataset. Make sure the axes are appropriately labeled. Comment on the relationship (shape, strength, direction of association).
+
+(b) Fit the simple linear model of metabolic rate against mass and report the regression equation. 
+
+(c)  Plot the residuals from the model in part (b) vs. the mass. To see what is going on more easily, also plot the residuals vs. the log(mass). Are the SLR conditions satisfied?
+
+(d) Make a plot of the log(metablic rate) vs. the log(mass) with a regression line overlaid. Compare with the plot in (a). Do you think this scatterplot will be better or worse in terms of meeting the SLR conditions than the plot in (a)? (you do not need to fit this model)
+
