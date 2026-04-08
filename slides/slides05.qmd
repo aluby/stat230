@@ -44,7 +44,7 @@ theme_set(notes_theme)
 
 1. Inference for predictions
 
-    - $\hat{\mu}(Y|X)$
+    - $\widehat{\mu}(Y|X)$
     - $\text{Pred}(Y|X)$
     
 ### Today: how "good" is our model?
@@ -61,14 +61,44 @@ theme_set(notes_theme)
 
 ## Notation
 
+<br> 
+
+Theoretical model: 
 
 $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)$
 
+<br> 
 
-- residuals vs errors
-- parameters vs estimates
-- predictions vs observations
+Fitted model: 
+
+$\widehat{y}_i = \widehat\beta_0 + \widehat\beta_1 x_i$
+
+$y_i = \widehat{y}_i + \widehat{\varepsilon}_i$
  
+
+## Bike Data (small sample) 
+
+```{r}
+#| fig-width: 4
+#| fig-height: 2.5
+#| fig-align: 'left'
+
+
+set.seed(040726)
+bike_sample <- bikes |> slice_sample(n = 50)
+
+gf_point(rides ~ temp_actual, data = bike_sample) |>
+  gf_lm() + 
+  geom_abline(intercept = -2168.77, slope = 89.23, col = "darkorange", linetype = "dashed", linewidth = 1.25)
+
+bike_sm_lm = lm(rides ~ temp_actual, data = bike_sample)
+```
+
+
+```{r}
+lm(rides ~ temp_actual, data = bike_sample)
+```
+
 ## Conditions for inference 
 
 Our model must be valid in order for our p-values or confidence intervals to be valid: 
@@ -79,17 +109,10 @@ $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm 
 
 Conditions to check:
 
--   Linear relationship is appropriate
--   Errors are independent and identically distributed (iid)
--   Errors are normally distributed
--   Variance of the errors doesn't depend on $x$
-
-## LINE pneumonic
-
-- **L**inear relationship
-- **I**ndependent errors
+- **L**inear relationship is appropriate
+- **I**ndependent and identically distributed errors (iid)
 - **N**ormally distributed errors
-- **E**qual variance errors
+- Errors have **E**qual variance
 
 
 ## Residuals
@@ -110,23 +133,40 @@ Conditions to check:
  
 - $SD(e_i) = \widehat{\sigma} \sqrt{1 - \dfrac{1}{n} - \dfrac{(x_i - \overline{x})^2}{\sum (x_i - \overline{x})^2}}$
 
-## Standardized residuals
-
-
-$$r_i = \frac{e_i}{\widehat{\sigma} \sqrt{1 - \dfrac{1}{n} - \dfrac{(x_i - \overline{x})^2}{\sum (x_i - \overline{x})^2}}}$$
-
-**Properties:**
-
--  sum to zero $\Longrightarrow$ mean is 0
-
--  **uncorrelated** with $x$ and $\widehat{y}$
-
-- normally distributed 
-
-- $SD(r_i) = 1$
 
 ## What is a residual plot?
 
+
+```{r}
+p1 <- ggplot(broom::augment(bike_sm_lm), aes(x = temp_actual, y = rides)) + 
+  geom_segment(aes(xend = temp_actual, yend = .fitted), col = "darkorange") + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, linewidth = 1.5)
+
+p2 <- ggplot(broom::augment(bike_sm_lm), aes(x = temp_actual, y = .resid)) + 
+  geom_segment(aes(xend = temp_actual, yend = 0), col = "darkorange") + 
+  geom_point() + 
+  geom_abline(slope = 0, intercept = 0, linewidth = 1.5, col = "blue")
+
+p1 + p2
+```
+
+## Put $\widehat{y}$ on the y axis instead of $x$
+
+
+```{r}
+p1 <- ggplot(broom::augment(bike_sm_lm), aes(x = temp_actual, y = .resid)) + 
+  geom_segment(aes(xend = temp_actual, yend = 0), col = "darkorange") + 
+  geom_point() + 
+  geom_abline(slope = 1, intercept = 0, linewidth = 1.5, col = "blue")
+
+p2 <- ggplot(broom::augment(bike_sm_lm), aes(x = .fitted, y = .resid)) + 
+  geom_segment(aes(xend = .fitted, yend = 0), col = "darkorange") + 
+  geom_point() + 
+  geom_abline(slope = 0, intercept = 0, linewidth = 1.5, col = "blue")
+
+p1 + p2
+```
 
 
 ## A "good" residual plot
@@ -140,12 +180,12 @@ x <- rnorm(100, mean = 10, sd = 3.5)
 y <- 1 + 1*x + rnorm(100, mean = 0, sd = 10)
 good_mod <- lm(y ~ x)
 
-gf_point(rstandard(good_mod) ~ fitted(good_mod), 
-         ylab = "Standardized Residual", xlab = "Fitted values") |>
+gf_point(residuals(good_mod) ~ fitted(good_mod), 
+         ylab = "Residual", xlab = "Fitted values") |>
   gf_hline(yintercept = 0, color = "blue", linetype = 2) 
 
-gf_point(rstandard(good_mod) ~ x, 
-         ylab = "Standardized Residual", xlab = "x") |>
+gf_point(residuals(good_mod) ~ x, 
+         ylab = "Residual", xlab = "x") |>
   gf_hline(yintercept = 0, color = "blue", linetype = 2) 
 ```
 
@@ -162,7 +202,11 @@ gf_point(rstandard(good_mod) ~ x,
     
 :::
 
-## Assessing normality
+## Assessing Linearity 
+
+## Assessing Equal Variance
+
+## Assessing Normality
 
 - histogram of residuals
 - normal Q-Q plot of residuals
@@ -180,19 +224,56 @@ y2b <- 1 + 1*x2 + rnorm(30, mean = 0, sd = 10)
 good_mod2a <- lm(y2a ~ x2)
 good_mod2b <- lm(y2b ~ x2)
 
-gf_histogram(~rstandard(good_mod2a), color = "black", bins = 12, xlab = "Standardized Residual", ylab = "Count") +
-  theme_classic()
+gf_histogram(~residuals(good_mod2a), color = "white", bins = 12, xlab = "Residual", ylab = "Count") 
 
-gf_histogram(~rstandard(good_mod2b), color = "black", bins = 12, xlab = "Standardized Residual", ylab = "Count") +
-  theme_classic()
+gf_histogram(~residuals(good_mod2b), color = "white", bins = 12, xlab = "Residual", ylab = "Count")
 
-gf_qq(~rstandard( good_mod2a), ylab = "Standardized Residual", xlab = "N(0, 1) quantiles") |>
-  gf_qqline() +
-  theme_classic()
+gf_qq(~residuals( good_mod2a), ylab = "Residual", xlab = "N(0, 1) quantiles") |>
+  gf_qqline() 
 
-gf_qq(~rstandard( good_mod2b), ylab = "Standardized Residual", xlab = "N(0, 1) quantiles") |>
-  gf_qqline() +
-  theme_classic()
+gf_qq(~residuals( good_mod2b), ylab = "Residual", xlab = "N(0, 1) quantiles") |>
+  gf_qqline()
+```
+
+## Harder to gauge at small sample sizes
+
+All of these are random samples from normal distributions
+
+```{r}
+#| echo: false
+#| layout-ncol: 4
+#| fig.height: 3.5
+#| fig.width: 5
+
+
+x1 <- rnorm(10, mean = 10, sd = 3.5)
+
+x2 <- rnorm(50, mean = 10, sd = 3.5)
+
+x3 <- rnorm(100, mean = 10, sd = 3.5)
+
+x4 <- rnorm(500, mean = 10, sd = 3.5)
+
+
+gf_histogram(~x1, color = "white", bins = 10, xlab = "Residual", ylab = "Count", title = "n = 10") 
+
+gf_histogram(~x2, color = "white", xlab = "Residual", ylab = "Count", title = "n = 50") 
+
+gf_histogram(~x3, color = "white", xlab = "Residual", ylab = "Count", title = "n = 100") 
+
+gf_histogram(~x4, color = "white", xlab = "Residual", ylab = "Count", title = "n = 500") 
+
+gf_qq(~x1, ylab = "Residual", xlab = "N(0, 1) quantiles") |>
+  gf_qqline() 
+
+gf_qq(~x2, ylab = "Residual", xlab = "N(0, 1) quantiles") |>
+  gf_qqline() 
+
+gf_qq(~x3, ylab = "Residual", xlab = "N(0, 1) quantiles") |>
+  gf_qqline() 
+
+gf_qq(~x4, ylab = "Residual", xlab = "N(0, 1) quantiles") |>
+  gf_qqline() 
 ```
 
 ## Assessing independence
@@ -210,18 +291,16 @@ gf_qq(~rstandard( good_mod2b), ylab = "Standardized Residual", xlab = "N(0, 1) q
 
 gf_point(rstandard(good_mod2a) ~ 1:30, ylab = "Standardized Residual", xlab = "Order") |>
   gf_line() |>
-  gf_hline(yintercept = 0) +
-  theme_classic()
+  gf_hline(yintercept = 0)
 
 gf_point(rstandard(good_mod2b) ~ 1:30, ylab = "Standardized Residual", xlab = "Order") |>
   gf_line() |>
-  gf_hline(yintercept = 0) +
-  theme_classic()
+  gf_hline(yintercept = 0) 
 ```
 
 # Your turn
 
-Work through Example 1 on the worksheet
+Work through Example 1 on the activity
 
 
 ## What happens the conditions aren't valid? 
@@ -233,7 +312,7 @@ Work through Example 1 on the worksheet
 
 -   **Normality:** estimates are still unbiased (i.e. we fit the right line), SEs are correct BUT confidence/prediction intervals are wrong (we can't use t-distribution)
 
--   **Constant error variance:** estimates are still unbiased but standard errors are wrong (and we don't know how wrong)
+-   **Equal variance:** estimates are still unbiased but standard errors are wrong (and we don't know how wrong)
 
 
 ## What do we do if our assumptions are violated?
@@ -244,22 +323,50 @@ Work through Example 1 on the worksheet
 
 3. Change the type of inference (remember the bootstrap?)
 
-## Is the X variable a "good" predictor of the Y variable? 
+# Is the X variable a "good" predictor of the Y variable? 
 
-[correlation] 
+## 
 
-[R2]
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+#| 
+p1 <- gf_point(rides ~ temp_actual, data = bike_sample) |>
+  gf_lm() + 
+  xlim(c(40, 85)) + 
+  ylim(c(0, 7000))
+
+p2 <- tibble(
+  x = rnorm(50, sd = 6) + 60, 
+  y = -2940 + 101*x + rnorm(50, sd = 3000)
+) |>
+  gf_point(y ~ x) |>
+  gf_lm() + 
+  xlim(c(40, 85)) + 
+  ylim(c(0, 7000))
+
+p3 <- tibble(
+  x = rnorm(50, sd = 6) + 60, 
+  y = -2940 + 101*x + rnorm(50, mean = 50, sd = 100)
+) |>
+  gf_point(y ~ x) |>
+  gf_lm() + 
+  xlim(c(40, 85)) + 
+  ylim(c(0, 7000))
+
+p1 + p2 + p3
+```
 
 ## $R^2$
 
 \begin{align*}
-\sum(Y - \bar{Y})^2 &= \sum (\hat{Y} -\bar{Y})^2 &+ \sum e_i^2& \\
-\text{total variability} &= \text{variability of } \hat{Y}\text{'s} &+ \text{variability of residuals}&\\
+\sum(Y - \bar{Y})^2 &= \sum (\hat{Y} -\bar{Y})^2  \hspace{.9cm} + \sum e_i^2 \\
+\text{total variability} &= \text{variability of } \hat{Y}\text{'s} + \text{variability of residuals}\\
 \end{align*}
 
 Then: 
 
-$$R^2 = \frac{\sum (\hat{Y} - \bar{Y})^2}{\sum (Y - \bar{Y})} = \frac{\text{variability of } \hat{Y}}{\text{variability of }Y} =$$
+$$R^2 = \frac{\sum (\hat{Y} - \bar{Y})^2}{\sum (Y - \bar{Y})} = \frac{\text{variability of } \hat{Y}}{\text{variability of }Y} $$
 
 
 ::: callout-note
@@ -270,11 +377,11 @@ The $R^2$ value gives the proportion of total variability in Y explained by the 
 
 ## SSNBATNT
 
-## Finding $R^2$ in R
+## Finding $R^2$ in R {.smaller}
 
 ```{r}
-# lm
-# summary
+#| echo: true
+summary(bike_sm_lm)
 ```
 
 ## Properties of $R^2$
@@ -282,7 +389,8 @@ The $R^2$ value gives the proportion of total variability in Y explained by the 
 - Between 0 and 1
 - Big when $\sigma$ is small relative to the overall variability
     - big proportion of variability explained by the model
-- For SLR, $R^2 = r^2$ ($r$ = correlation coefficient between X and Y)
+- For SLR, $R^2 = r^2$ 
+    - ($r$ = correlation coefficient between X and Y)
 
 ## $R^2$ dangers
 
@@ -299,14 +407,21 @@ fake_data <- tibble(
 
 fake_data[51, 2] = 30000
 
-ggplot(fake_data, aes(x = x, y = y)) +
+p1 <- ggplot(fake_data, aes(x = x, y = y)) +
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE) + 
   labs(
     title = expression(R^2 == .968)
   )
 
-cor(fake_data$x, fake_data$y)
+fake_lm <- lm(y ~ x, data = fake_data)
+
+p2 <- ggplot(broom::augment(fake_lm), aes(x = .fitted, y = .resid)) +
+  geom_point() 
+
+p1 + p2
+
+# cor(fake_data$x, fake_data$y)
 ```
 
 
