@@ -138,6 +138,10 @@ Conditions to check:
 
 
 ```{r}
+#| fig-width: 8
+#| fig-height: 3
+
+
 p1 <- ggplot(broom::augment(bike_sm_lm), aes(x = temp_actual, y = rides)) + 
   geom_segment(aes(xend = temp_actual, yend = .fitted), col = "darkorange") + 
   geom_point() + 
@@ -155,6 +159,10 @@ p1 + p2
 
 
 ```{r}
+#| fig-width: 8
+#| fig-height: 3
+
+
 p1 <- ggplot(broom::augment(bike_sm_lm), aes(x = temp_actual, y = .resid)) + 
   geom_segment(aes(xend = temp_actual, yend = 0), col = "darkorange") + 
   geom_point() + 
@@ -369,7 +377,7 @@ p1 + p2 + p3
 
 Then: 
 
-$$R^2 = \frac{\sum (\hat{Y} - \bar{Y})^2}{\sum (Y - \bar{Y})} = \frac{\text{variability of } \hat{Y}}{\text{variability of }Y} $$
+$$R^2 = \frac{\sum (\hat{Y} - \bar{Y})^2}{\sum (Y - \bar{Y})} = \frac{\text{variability of } \widehat{Y}}{\text{variability of }Y} $$
 
 
 ::: callout-note
@@ -377,6 +385,7 @@ $$R^2 = \frac{\sum (\hat{Y} - \bar{Y})^2}{\sum (Y - \bar{Y})} = \frac{\text{vari
 
 The $R^2$ value gives the proportion of total variability in Y explained by the SLR model
 :::
+
 
 ## SSNBATNT
 
