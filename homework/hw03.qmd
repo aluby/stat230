@@ -1,0 +1,95 @@
+---
+title: "Homework 02"
+format: html
+engine: knitr
+editor: source
+navbar: false
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(ggplot2)
+library(ggformula)
+library(here)
+library(broom)
+library(tidyverse)
+```
+
+Due: Friday of Week 3 at start of class
+
+There is a [homework template](hw-template.qmd) available if you'd like to use that as a starter file, and copy and paste the code as needed. 
+
+::: callout-important
+## Important! 
+
+I will add problems after each class day. Be sure to check back here after each class meeting for new problems.
+:::
+
+
+# Problem 1: Fri
+
+The `child_speaks`^[Source: *Stat2*] data are from a study about whether there is a relationship between the age at which a child first speaks (in months) and his/her score on the Gesell aptitude test taken later in childhood. Higher scores on this test indicate age appropriate levels of motor skills, language, social, and cognitive abilities; while lower scores identify children who may need extra support. 
+
+```{r}
+child_speaks <- read_csv(here(here(), "data/ChildSpeaks.csv"))
+#child_speaks <- read_csv("https://aluby.github.io/stat230/data/ChildSpeaks.csv"))
+```
+
+(a) *Before looking at the data*, do you expect to see a positive, negative, or no relationship between these variables? Justify your answer in 1 sentence. 
+(b) Produce a scatterplot of these data, and comment on whether age of first speaking appears to be a good explainer of Gesell aptitude score
+
+(c) Fit and report the linear regression equation and the value of $R^2$ (with an interpretation). 
+
+(d) Which child has the largest (in absolute value) residual? Explain what is unusual about that child
+
+(e) Remove the child you identified in (d) and repeat parts (b) and (c). Comment on how removing the one child has affected the line and the value of $R^2$
+  
+(f) Now, go back to the original dataset. Instead of removing the large residual child, remove the child who took 42 months to speak. Repeat parts (b) and (c) and comment on how removing the one child has affected the line and the value of $R^2$. 
+
+::: callout-note
+
+Here is some example code for creating a filtered dataset. This removes the 10th row from the dataset. You'll want to edit it to filter out the child you identified in (d).
+
+```{r}
+library(tidyverse)
+child_speaks_filtered <- child_speaks |> slice(-10)
+```
+:::
+
+# Problem 2: Fri
+
+Return to Problem 8's data on metabolic rate from HW 2:
+
+> The following data comes from *Statistical Sleuth* Chapter 8. The data are the average mass, metabolic rate, and lifespan for 95 species of mammals. [Kleiber’s law](https://en.wikipedia.org/wiki/Kleiber%27s_law) states that the metabolic rate of an animal species, on average, is proportional to its mass raised to the power of 3/4.
+
+```{r}
+animals <- Sleuth3::ex0826
+head(animals)
+```
+
+(a) Review the original SLR model for metabolic rate against mass you found in HW2, and find the $R^2$ value. 
+
+(b) Fit the SLR model for log(metabolic rate) against log(mass). Report the model equation and the $R^2$ value. 
+
+(c) Check the SLR conditions for the model in (b) 
+
+(d) Which model is better: the original model from HW 2 or the log-log model from part (b)? 
+
+# Problem 3: Wed
+
+# Problem 4: Wed
+
+# Problem 5/6: Case Study 
+
+*Note:* This problem is worth 16 points (4 points each) and will be graded individually but mostly on a good-faith effort. This is to help ensure you've made progress on the case study before the (group) due date on Sunday. 
+
+(a) EDA: include 1 graph
+(b) Fit and report a model
+(c) Inference for coefficients: hypothesis test or confidence interval
+(d) Inference for prediction(s)

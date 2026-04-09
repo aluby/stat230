@@ -1,0 +1,43 @@
+---
+title: "slr_casestudy"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(ggformula)
+```
+
+1. Palm Beach County
+
+2. Nascar driver ratings
+
+```{r}
+womensfigureskating <- read_csv("~/Downloads/womensFigureSkating.csv") |>
+  mutate(TP = as.numeric(TP))
+
+gf_point(FS ~ SP, data = womensfigureskating)
+fs_lm <- lm(FS ~ SP, data = womensfigureskating)
+ggResidpanel::resid_panel(fs_lm)
+
+gf_point(TP ~ SP, data = womensfigureskating)
+tp_lm <- lm(TP ~ SP, data = womensfigureskating)
+ggResidpanel::resid_panel(tp_lm)
+
+gf_point(TP ~ SP, data = womensfigureskating)
+tp_lm <- lm(TP ~ SP, data = womensfigureskating)
+ggResidpanel::resid_panel(tp_lm)
+```
+
+```{r}
+nascar <- read_csv("~/Downloads/nascar_driver_statistics.csv") 
+
+gf_point(DriverRating ~ AvgFinish, data = nascar)
+nascar_lm <- lm(DriverRating ~ AvgFinish, data = nascar)
+ggResidpanel::resid_panel(nascar_lm)
+
+gf_point(log(DriverRating) ~ AvgFinish, data = nascar)
+nascar_lm <- lm(log(DriverRating) ~ AvgFinish, data = nascar)
+ggResidpanel::resid_panel(nascar_lm)
+
+```
