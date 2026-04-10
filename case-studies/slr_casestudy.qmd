@@ -1,8 +1,9 @@
 ---
-title: "slr_casestudy"
+title: "Case Study 1: SLR"
 format: html
 execute:
   eval: false
+  echo: false
 ---
 
 ```{r}
@@ -10,26 +11,24 @@ library(tidyverse)
 library(ggformula)
 ```
 
-1. Palm Beach County
+You will submit your work to this case study in two parts: 
 
-2. Nascar driver ratings
+  (1) individual submission as part of HW3 (due Friday of Week 3 at beginning of class)
+      - It's OK with me if your group works on this together as long as you actually do it together. You should not send code back and forth to complete this portion of the project. 
+  (2) a group report (due Sunday before Week 4)
+      - Your groups are your in-class groups. If you are in a group of 3, you should all work together. If you are in a group of four, you should split into two groups of two. 
+ 
+The goals of this case study are twofold: 
 
-```{r}
-womensfigureskating <- read_csv("~/Downloads/womensFigureSkating.csv") |>
-  mutate(TP = as.numeric(TP))
+  (1) To practice writing about a sample
+  (2) To gain experience with the iterative practice of model fitting
+  
+There are two options for this short report: (a) county-level election results from Florida's 2000 presidential election OR (b) modeling Nascar driver ratings. You will need to do some background reading to give context to your study.
+  
 
-gf_point(FS ~ SP, data = womensfigureskating)
-fs_lm <- lm(FS ~ SP, data = womensfigureskating)
-ggResidpanel::resid_panel(fs_lm)
+### 2000 Presidential Election in Florida (county-level)
 
-gf_point(TP ~ SP, data = womensfigureskating)
-tp_lm <- lm(TP ~ SP, data = womensfigureskating)
-ggResidpanel::resid_panel(tp_lm)
-
-gf_point(TP ~ SP, data = womensfigureskating)
-tp_lm <- lm(TP ~ SP, data = womensfigureskating)
-ggResidpanel::resid_panel(tp_lm)
-```
+### Nascar driver ratings
 
 ```{r}
 nascar <- read_csv("~/Downloads/nascar_driver_statistics.csv") 
@@ -43,3 +42,36 @@ nascar_lm <- lm(log(DriverRating) ~ AvgFinish, data = nascar)
 ggResidpanel::resid_panel(nascar_lm)
 
 ```
+
+# Format
+
+ - 3 pages or less (including figures but not including references). You may include up to 2 pages of appendices that do not count towards this limit. 
+ - Introduction
+ - Results
+    - EDA
+    - Model
+ - Discussion
+ - Appendices
+ 
+# Best practices for small group work
+ 
+
+# Academic Integrity
+
+For this case study, you may use the following resources: 
+
+  - Your own course notes (from any class!) and any of my Stat230 materials
+  - Web searches/AI where your search/prompts are general questions about coding (e.g., how do I subset a data set in R where I want only certain numerical values?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty.
+  - Web searches/AI where your search/prompts are general questions about formatting (e.g., how do I make a table in GoogleDocs?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty
+  - The writing center for help editing your write up. You should get content-related help here.
+  - Your in-class group
+  - Amanda
+  - Noah
+  
+For this project you may NOT use the following resources:
+
+  - Other humans (including other folks in this class)
+  - Web searches/AI where your searches/prompts are the specific questions you are being asked in the project about coding (e.g., How do I fit a linear regression model in R with the sales price as the response variable and square footage as the predictor variable?).
+  - Web searches/AI where your search/prompts are the specific formatting questions you are being asked to do for the project (e.g., please write a caption for this table).
+  - AI to write or edit any portion of your original write-up or your final write-up. 
+
