@@ -1,5 +1,5 @@
 ---
-title: "Stat220 Homework XX"
+title: "Stat230 Homework XX"
 author: "Your Name"
 format:
   html: default

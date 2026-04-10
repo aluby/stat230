@@ -83,13 +83,11 @@ head(animals)
 
 # Problem 3: Wed
 
-# Problem 4: Wed
-
-# Problem 5/6: Case Study 
+# Problem 4/5: Case Study 
 
 *Note:* This problem is worth 16 points (4 points each) and will be graded individually but mostly on a good-faith effort. This is to help ensure you've made progress on the case study before the (group) due date on Sunday. 
 
 (a) EDA: include 1 graph
-(b) Fit and report a model
-(c) Inference for coefficients: hypothesis test or confidence interval
+(b) Fit and report an SLR model
+(c) One type of inference (for coefficient or prediction)
 (d) Inference for prediction(s)

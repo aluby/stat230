@@ -2,5 +2,10 @@
 title: "Slides"
 listing: 
   contents: slides 
+  sort: "subtitle desc"
+  fields: [title, subtitle, author]
   type: table      
+  field-display-names: 
+    title: "Topic" 
+    subtitle: "Course Day"
 ---

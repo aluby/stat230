@@ -70,6 +70,6 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
 
   - Using proper statistical notation, write down the simple linear regression model
   - You should be able to express either the theoretical model or the fitted model, and know the difference between the two.
-  - Interpret the regression coefficients correctly on the *transformed* scale 
+  - Understand the importance of backtransforming and recognize that the "usual" coefficient interpretations no longer hold
 
 *Example question:* Practice exam Q19/20
