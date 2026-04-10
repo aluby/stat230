@@ -196,7 +196,8 @@ Note
 <div class="cell">
 <pre class="{webr}"><code>library(ggformula)
 library(ggResidpanel)
-weight &lt;-  read.csv("https://aloy.github.io/stat230-materials/data/weights.csv")</code></pre>
+weight &lt;-  read.csv("https://aluby.github.io/stat230/data/weights.csv")
+head(weight)</code></pre>
 </div>
 <ol type="a">
 <li>Fit a simple linear regression model using body weight to predict brain weight.</li>
@@ -224,7 +225,7 @@ weight &lt;-  read.csv("https://aloy.github.io/stat230-materials/data/weights.cs
 <li>Start by creating a scatterplot on the original scale.</li>
 <li>Add a <code>gf_lm()</code> layer, specifying the transformations in the <code>formula</code> and <strong>if <span class="math inline">\(y\)</span> is transformed</strong> how to back-transform <span class="math inline">\(y\)</span> via the <code>backtrans</code> argument.</li>
 </ul>
-<p>For example, if we squared both <code>y</code>, then we pass <code>y^2 ~ x</code> in as the formula to <code>gf_lm()</code> and <code>backtrans = sqrt</code> to back-transform <code>y</code>. Below is the full call where <code>df</code> is the data set with columns <code>xvar</code> and <code>yvar</code>.</p>
+<p>For example, if we squared <code>y</code>, then we pass <code>y^2 ~ x</code> in as the formula to <code>gf_lm()</code> and <code>backtrans = sqrt</code> to back-transform <code>y</code>. Below is the full call where <code>df</code> is the data set with columns <code>xvar</code> and <code>yvar</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change variable names and data set name here</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(yvar<span class="sc">^</span><span class="dv">2</span> <span class="sc">~</span> xvar, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
@@ -719,56 +720,57 @@ weight &lt;-  read.csv("https://aloy.github.io/stat230-materials/data/weights.cs
 <span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
 <span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggformula)</span></span>
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggResidpanel)</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="in">weight &lt;-  read.csv("https://aloy.github.io/stat230-materials/data/weights.csv")</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>(a) Fit a simple linear regression model using body weight to predict brain weight.</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="in">#| min-lines: 3</span></span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="in">weight &lt;-  read.csv("https://aluby.github.io/stat230/data/weights.csv")</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="in">head(weight)</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>(a) Fit a simple linear regression model using body weight to predict brain weight.</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="in">#| min-lines: 3</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>(b) Create a scatterplot of $y$ versus $x$ with a regression line, a plot of the residuals vs. predicted (or "fitted") values ($\widehat{y}$), and either a normal Q-Q plot or a histogram of the residuals. (Remember that you can use the <span class="in">`resid_panel()`</span> command in the <span class="in">`ggResidpanel`</span> R package for residual plots.) Summarize what issues you see with the regression conditions.</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="in">#| min-lines: 8</span></span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>(b) Create a scatterplot of $y$ versus $x$ with a regression line, a plot of the residuals vs. predicted (or "fitted") values ($\widehat{y}$), and either a normal Q-Q plot or a histogram of the residuals. (Remember that you can use the <span class="in">`resid_panel()`</span> command in the <span class="in">`ggResidpanel`</span> R package for residual plots.) Summarize what issues you see with the regression conditions.</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="in">#| min-lines: 8</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>(b) Try various transformations of the explanatory and response variables to create a better linear regression model. (Hint: Notice that both the $x$ and $y$ variables are right skewed and have outliers, both may need a transformation.) What transformation(s) seem to remedy the issues you saw in part (b)?</span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="in">#| min-lines: 8</span></span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>(b) Try various transformations of the explanatory and response variables to create a better linear regression model. (Hint: Notice that both the $x$ and $y$ variables are right skewed and have outliers, both may need a transformation.) What transformation(s) seem to remedy the issues you saw in part (b)?</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="in">#| min-lines: 8</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## Back-transforming your model</span></span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>In Example 1 you selected transformation(s) to help "linearize" the relationship between brain weights and body weights. While this is helpful from a statistical perspective, it's often preferred to plot the fitted model on the **original scale** of the data. To do this, we need to back-transform the model using the following steps:</span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Back-transforming your model</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>In Example 1 you selected transformation(s) to help "linearize" the relationship between brain weights and body weights. While this is helpful from a statistical perspective, it's often preferred to plot the fitted model on the **original scale** of the data. To do this, we need to back-transform the model using the following steps:</span>
 <span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Start by creating a scatterplot on the original scale. </span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Add a <span class="in">`gf_lm()`</span> layer, specifying the transformations in the <span class="in">`formula`</span> and **if $y$ is transformed** how to back-transform $y$ via the <span class="in">`backtrans`</span> argument. </span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>For example, if we squared both <span class="in">`y`</span>, then we pass <span class="in">`y^2 ~ x`</span> in as the formula to <span class="in">`gf_lm()`</span> and <span class="in">`backtrans = sqrt`</span> to back-transform <span class="in">`y`</span>. Below is the full call where <span class="in">`df`</span> is the data set with columns <span class="in">`xvar`</span> and <span class="in">`yvar`</span>. </span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="co"># change variable names and data set name here</span></span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(yvar<span class="sc">^</span><span class="dv">2</span> <span class="sc">~</span> xvar, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>(<span class="at">formula =</span> y<span class="sc">^</span><span class="dv">2</span> <span class="sc">~</span> x , <span class="at">backtrans =</span> sqrt, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Start by creating a scatterplot on the original scale. </span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Add a <span class="in">`gf_lm()`</span> layer, specifying the transformations in the <span class="in">`formula`</span> and **if $y$ is transformed** how to back-transform $y$ via the <span class="in">`backtrans`</span> argument. </span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>For example, if we squared <span class="in">`y`</span>, then we pass <span class="in">`y^2 ~ x`</span> in as the formula to <span class="in">`gf_lm()`</span> and <span class="in">`backtrans = sqrt`</span> to back-transform <span class="in">`y`</span>. Below is the full call where <span class="in">`df`</span> is the data set with columns <span class="in">`xvar`</span> and <span class="in">`yvar`</span>. </span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="co"># change variable names and data set name here</span></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(yvar<span class="sc">^</span><span class="dv">2</span> <span class="sc">~</span> xvar, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>(<span class="at">formula =</span> y<span class="sc">^</span><span class="dv">2</span> <span class="sc">~</span> x , <span class="at">backtrans =</span> sqrt, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>Use this idea to plot the fitted model relating brain weights and body weights on the original scale.</span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="in">#| min-lines: 3</span></span>
-<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>Use this idea to plot the fitted model relating brain weights and body weights on the original scale.</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="in">#| min-lines: 3</span></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

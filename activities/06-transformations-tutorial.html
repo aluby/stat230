@@ -202,7 +202,7 @@ Note
 
 </div>
 <script type="webr-1-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGlicmFyeShnZ2Zvcm11bGEpXG5saWJyYXJ5KGdnUmVzaWRwYW5lbClcbndlaWdodCA8LSAgcmVhZC5jc3YoXCJodHRwczovL2Fsb3kuZ2l0aHViLmlvL3N0YXQyMzAtbWF0ZXJpYWxzL2RhdGEvd2VpZ2h0cy5jc3ZcIikifQ==
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGlicmFyeShnZ2Zvcm11bGEpXG5saWJyYXJ5KGdnUmVzaWRwYW5lbClcbndlaWdodCA8LSAgcmVhZC5jc3YoXCJodHRwczovL2FsdWJ5LmdpdGh1Yi5pby9zdGF0MjMwL2RhdGEvd2VpZ2h0cy5jc3ZcIilcbmhlYWQod2VpZ2h0KSJ9
 </script>
 </div>
 </div>
@@ -253,7 +253,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsIm1pbi1saW5lcyI6OH0sImNvZGUiOiIifQ==
 <li>Start by creating a scatterplot on the original scale.</li>
 <li>Add a <code>gf_lm()</code> layer, specifying the transformations in the <code>formula</code> and <strong>if <span class="math inline">\(y\)</span> is transformed</strong> how to back-transform <span class="math inline">\(y\)</span> via the <code>backtrans</code> argument.</li>
 </ul>
-<p>For example, if we squared both <code>y</code>, then we pass <code>y^2 ~ x</code> in as the formula to <code>gf_lm()</code> and <code>backtrans = sqrt</code> to back-transform <code>y</code>. Below is the full call where <code>df</code> is the data set with columns <code>xvar</code> and <code>yvar</code>.</p>
+<p>For example, if we squared <code>y</code>, then we pass <code>y^2 ~ x</code> in as the formula to <code>gf_lm()</code> and <code>backtrans = sqrt</code> to back-transform <code>y</code>. Below is the full call where <code>df</code> is the data set with columns <code>xvar</code> and <code>yvar</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change variable names and data set name here</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(yvar<span class="sc">^</span><span class="dv">2</span> <span class="sc">~</span> xvar, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
