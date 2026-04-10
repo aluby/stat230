@@ -25,7 +25,8 @@ Researchers wish to understand the relationship between the brain weights (y, in
 ```{webr}
 library(ggformula)
 library(ggResidpanel)
-weight <-  read.csv("https://aloy.github.io/stat230-materials/data/weights.csv")
+weight <-  read.csv("https://aluby.github.io/stat230/data/weights.csv")
+head(weight)
 ```
 
 (a) Fit a simple linear regression model using body weight to predict brain weight.
@@ -58,7 +59,7 @@ In Example 1 you selected transformation(s) to help "linearize" the relationship
 - Start by creating a scatterplot on the original scale. 
 - Add a `gf_lm()` layer, specifying the transformations in the `formula` and **if $y$ is transformed** how to back-transform $y$ via the `backtrans` argument. 
 
-For example, if we squared both `y`, then we pass `y^2 ~ x` in as the formula to `gf_lm()` and `backtrans = sqrt` to back-transform `y`. Below is the full call where `df` is the data set with columns `xvar` and `yvar`. 
+For example, if we squared `y`, then we pass `y^2 ~ x` in as the formula to `gf_lm()` and `backtrans = sqrt` to back-transform `y`. Below is the full call where `df` is the data set with columns `xvar` and `yvar`. 
 
 ```{r}
 #| eval: false

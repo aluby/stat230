@@ -13,7 +13,8 @@ Researchers wish to understand the relationship between the brain weights (y, in
 ```{r}
 library(ggformula)
 library(ggResidpanel)
-weight <-  read.csv("https://aloy.github.io/stat230-materials/data/weights.csv")
+weight <-  read.csv("https://aluby.github.io/stat230/data/weights.csv")
+head(weight)
 ```
 
 (a) Fit a simple linear regression model using body weight to predict brain weight.
