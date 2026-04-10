@@ -1,6 +1,8 @@
 ---
 title: "slr_casestudy"
 format: html
+execute:
+  eval: false
 ---
 
 ```{r}
