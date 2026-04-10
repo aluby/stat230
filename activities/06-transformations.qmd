@@ -3,7 +3,7 @@ title: "06: Transformations and Interpretations"
 ---
 
 ::: callout-note
-This is the quarto version of the R activity. If you prefer to use the tutorial version, you can use <https://aluby.github.io/stat230/activities/06-transformations>
+This is the quarto version of the R activity. If you prefer to use the tutorial version, you can use <https://aluby.github.io/stat230/activities/06-transformations-tutorial>
 :::
 
 ## Example: Mammal brain weights
