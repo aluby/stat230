@@ -37,12 +37,12 @@
   {
     "listing": "/slides.html",
     "items": [
+      "/slides/slides06.html",
       "/slides/slides05.html",
       "/slides/slides04.html",
       "/slides/slides03.html",
       "/slides/slides02.html",
       "/slides/slides-cheat-sheet.html",
-      "/slides/slides06.html",
       "/slides/slides01.html"
     ]
   },

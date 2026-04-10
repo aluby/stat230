@@ -80,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-title','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      valueNames: ['listing-title','listing-subtitle','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
       searchColumns: ["listing-title","listing-author"],
     };
@@ -224,7 +224,7 @@ window.Quarto = {
       <option value="" disabled="" selected="" hidden="">Order By</option>
       <option value="index" data-direction="asc">Default</option>
       <option value="listing-title-sort" data-direction="asc">
-        Title
+        Topic
       </option>
       <option value="listing-author" data-direction="asc">
         Author
@@ -241,7 +241,11 @@ window.Quarto = {
 <tr>
 
 <th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
+<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Topic</a>
+</th>
+
+<th>
+Course Day
 </th>
 
 <th>
@@ -252,59 +256,77 @@ window.Quarto = {
 </thead>
 <tbody class="list">
 
-<tr data-index="0" data-listing-file-modified-sort="1775672551337" data-listing-reading-time-sort="8" data-listing-word-count-sort="1405" data-listing-title-sort="Evaluating SLR models" data-listing-filename-sort="slides05.qmd">
+<tr data-index="0" data-listing-file-modified-sort="1775831945222" data-listing-reading-time-sort="7" data-listing-word-count-sort="1221" data-listing-title-sort="Transforming SLR models" data-listing-filename-sort="slides06.qmd">
+<td>
+<a href="./slides/slides06.html" class="title listing-title">Transforming SLR models</a>
+</td>
+<td>
+<span class="listing-subtitle">Day 06</span>
+</td>
+<td>
+<span class="listing-author">Prof Amanda Luby</span>
+</td>
+
+</tr>
+
+<tr data-index="1" data-listing-file-modified-sort="1775672551337" data-listing-reading-time-sort="8" data-listing-word-count-sort="1405" data-listing-title-sort="Evaluating SLR models" data-listing-filename-sort="slides05.qmd">
 <td>
 <a href="./slides/slides05.html" class="title listing-title">Evaluating SLR models</a>
 </td>
 <td>
+<span class="listing-subtitle">Day 05</span>
+</td>
+<td>
 <span class="listing-author">Prof Amanda Luby</span>
 </td>
 
 </tr>
 
-<tr data-index="1" data-listing-file-modified-sort="1775479206754" data-listing-reading-time-sort="3" data-listing-word-count-sort="570" data-listing-title-sort="Inference for Prediction" data-listing-filename-sort="slides04.qmd">
+<tr data-index="2" data-listing-file-modified-sort="1775479206754" data-listing-reading-time-sort="3" data-listing-word-count-sort="570" data-listing-title-sort="Inference for Prediction" data-listing-filename-sort="slides04.qmd">
 <td>
 <a href="./slides/slides04.html" class="title listing-title">Inference for Prediction</a>
 </td>
 <td>
+<span class="listing-subtitle">Day 04</span>
+</td>
+<td>
 <span class="listing-author">Prof Amanda Luby</span>
 </td>
 
 </tr>
 
-<tr data-index="2" data-listing-file-modified-sort="1775227354874" data-listing-reading-time-sort="8" data-listing-word-count-sort="1451" data-listing-title-sort="Inference for SLR" data-listing-filename-sort="slides03.qmd">
+<tr data-index="3" data-listing-file-modified-sort="1775227354874" data-listing-reading-time-sort="8" data-listing-word-count-sort="1451" data-listing-title-sort="Inference for SLR" data-listing-filename-sort="slides03.qmd">
 <td>
 <a href="./slides/slides03.html" class="title listing-title">Inference for SLR</a>
 </td>
 <td>
+<span class="listing-subtitle">Day 03</span>
+</td>
+<td>
 <span class="listing-author">Prof Amanda Luby</span>
 </td>
 
 </tr>
 
-<tr data-index="3" data-listing-file-modified-sort="1775064752262" data-listing-reading-time-sort="9" data-listing-word-count-sort="1728" data-listing-title-sort="Simple Linear Regression (SLR)" data-listing-filename-sort="slides02.qmd">
+<tr data-index="4" data-listing-file-modified-sort="1775064752262" data-listing-reading-time-sort="9" data-listing-word-count-sort="1728" data-listing-title-sort="Simple Linear Regression (SLR)" data-listing-filename-sort="slides02.qmd">
 <td>
 <a href="./slides/slides02.html" class="title listing-title">Simple Linear Regression (SLR)</a>
 </td>
 <td>
+<span class="listing-subtitle">Day 02</span>
+</td>
+<td>
 <span class="listing-author">Prof Amanda Luby</span>
 </td>
 
 </tr>
 
-<tr data-index="4" data-listing-file-modified-sort="1774443682008" data-listing-reading-time-sort="4" data-listing-word-count-sort="638" data-listing-title-sort="Slides Cheat Sheet" data-listing-filename-sort="slides-cheat-sheet.qmd">
+<tr data-index="5" data-listing-file-modified-sort="1774443682008" data-listing-reading-time-sort="4" data-listing-word-count-sort="638" data-listing-title-sort="Slides Cheat Sheet" data-listing-filename-sort="slides-cheat-sheet.qmd">
 <td>
 <a href="./slides/slides-cheat-sheet.html" class="title listing-title">Slides Cheat Sheet</a>
 </td>
 <td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1775831945222" data-listing-reading-time-sort="7" data-listing-word-count-sort="1221" data-listing-title-sort="Transforming SLR models" data-listing-filename-sort="slides06.qmd">
-<td>
-<a href="./slides/slides06.html" class="title listing-title">Transforming SLR models</a>
+<span class="listing-subtitle">Day 01</span>
 </td>
 <td>
 <span class="listing-author">Prof Amanda Luby</span>
@@ -315,6 +337,9 @@ window.Quarto = {
 <tr data-index="6" data-listing-file-modified-sort="1774878216868" data-listing-reading-time-sort="9" data-listing-word-count-sort="1724" data-listing-title-sort="Welcome to Stat230!" data-listing-filename-sort="slides01.qmd">
 <td>
 <a href="./slides/slides01.html" class="title listing-title">Welcome to Stat230!</a>
+</td>
+<td>
+<span class="listing-subtitle">Day 01</span>
 </td>
 <td>
 <span class="listing-author">Prof Amanda Luby</span>
