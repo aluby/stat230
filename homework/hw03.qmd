@@ -37,7 +37,7 @@ I will add problems after each class day. Be sure to check back here after each 
 The `child_speaks`^[Source: *Stat2*] data are from a study about whether there is a relationship between the age at which a child first speaks (in months) and his/her score on the Gesell aptitude test taken later in childhood. Higher scores on this test indicate age appropriate levels of motor skills, language, social, and cognitive abilities; while lower scores identify children who may need extra support. 
 
 ```{r}
-child_speaks <- read_csv("https://aluby.github.io/stat230/data/ChildSpeaks.csv"))
+child_speaks <- read_csv("https://aluby.github.io/stat230/data/ChildSpeaks.csv")
 ```
 
 (a) *Before looking at the data*, do you expect to see a positive, negative, or no relationship between these variables? Justify your answer in 1 sentence. 
