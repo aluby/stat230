@@ -1,0 +1,100 @@
+---
+title: "Stat230 Homework XX"
+author: "Your Name"
+format:
+  pdf: 
+    colorlinks: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(broom)
+library(ggformula)
+```
+
+To submit your assignment, 
+
+1. render your file to pdf
+2. download the pdf to your computer (if using maize)
+3. submit your pdf to gradescope in the appropriate submission space
+    + Make sure to mark your pages through the gradescope system!
+
+
+*Guidelines* 
+
+  + Make sure your PDF is "clean": 
+      - `echo: TRUE`, `warning: FALSE`, `message: FALSE`
+      - Do not print long pages of output. Printing tibbles is OK
+      - All questions should be answered with sentences written in text
+  + Make sure your .qmd is "clean":
+      - remove unnecessary code 
+
+# Problem 1 
+
+(a) Your written answer hee
+
+```{r}
+# your code here
+```
+
+(b) Your written answer here
+
+```{r}
+# your code here
+```
+
+(c) Your code here
+
+```{r}
+# your code here
+```
+
+# Problem 2
+
+(a) Your written answer hee
+
+```{r}
+# your code here
+```
+
+(b) Your written answer here
+
+```{r}
+# your code here
+```
+
+(c) Your code here
+
+```{r}
+# your code here
+```
+
+
+# Problem 3
+
+(a) Your written answer hee
+
+```{r}
+# your code here
+```
+
+(b) Your written answer here
+
+```{r}
+# your code here
+```
+
+(c) Your code here
+
+```{r}
+# your code here
+```
+
+
+
+
