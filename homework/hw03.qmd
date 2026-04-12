@@ -88,5 +88,5 @@ head(animals)
 
 (a) EDA: include 1 graph
 (b) Fit and report an SLR model
-(c) One type of inference (for coefficient or prediction)
-(d) Inference for prediction(s)
+(c) One type of inference for a regression coefficient and/or prediction
+(d) At least one model evaluation (residual plots and/or $R^2$) with an interpretation

@@ -2,14 +2,18 @@
 title: "Case Study 1: SLR"
 format: html
 execute:
-  eval: false
-  echo: false
+  echo: true
 ---
 
-```{r}
-library(tidyverse)
-library(ggformula)
-```
+# Overview
+
+The goals of this case study are twofold: 
+
+  (1) To practice writing about a sample
+  (2) To gain experience with the iterative practice of model fitting
+  
+There are two options for this short report: (a) county-level election results from **Florida's 2000 presidential election** OR (b) modeling **Nascar driver ratings**. You will need to do some background reading to give context to your study, and both options will require fitting more than one SLR model. 
+
 
 You will submit your work to this case study in two parts: 
 
@@ -17,56 +21,114 @@ You will submit your work to this case study in two parts:
       - It's OK with me if your group works on this together as long as you actually do it together. You should not send code back and forth to complete this portion of the project. 
   (2) a group report (due Sunday before Week 4)
       - Your groups are your in-class groups. If you are in a group of 3, you should all work together. If you are in a group of four, you should split into two groups of two. 
- 
-The goals of this case study are twofold: 
-
-  (1) To practice writing about a sample
-  (2) To gain experience with the iterative practice of model fitting
   
-There are two options for this short report: (a) county-level election results from Florida's 2000 presidential election OR (b) modeling Nascar driver ratings. You will need to do some background reading to give context to your study.
-  
+You should all do an equal amount of contribution to parts (1) and (2). Equal does not necessarily mean identical, but all group members should have a deep understanding of the statistical approaches used and have contributed to the writing of the report. 
 
-### 2000 Presidential Election in Florida (county-level)
+# Project Prompt
 
-### Nascar driver ratings
+## Option 1: 2000 Presidential Election in Florida (county-level)
+
+The outcome of the 2000 U.S. Presidential Election was determined in Florida amid much controversy. Even decades later, historians and statisticians continue to analyze the results from that night. The main race was between George W. Bush (republican) and Al Gore (democrat), but two minor candidates played a significant role. Pat Buchanan ran as the candidate for the Reform party, and Ralph Nader ran as the candidate for the Green party. 
+
+Since the Reform party and Republican party are right of center on the political spectrum, political scientists would expect there to be a relationship between the number of votes the Republican candidate received and the number of votes the reform candidate received in each county.
+
+For this case study, you'll look at results (at the county level) from the 2000 election in Florida.
 
 ```{r}
-nascar <- read_csv("~/Downloads/nascar_driver_statistics.csv") 
-
-gf_point(DriverRating ~ AvgFinish, data = nascar)
-nascar_lm <- lm(DriverRating ~ AvgFinish, data = nascar)
-ggResidpanel::resid_panel(nascar_lm)
-
-gf_point(log(DriverRating) ~ AvgFinish, data = nascar)
-nascar_lm <- lm(log(DriverRating) ~ AvgFinish, data = nascar)
-ggResidpanel::resid_panel(nascar_lm)
-
+florida <- read.csv("https://aluby.github.io/stat230/data/florida_2000.csv") 
+head(florida)
 ```
 
+As a statistical investigator, your goal is to model the relationship between the votes for Bush and the votes for Buchanan, and determine if any counties behaved abnormally.
+
+Your Results section should address the following phases of the investigation:
+
+1. EDA and first SLR model
+  
+  - Explore the relationship between Bush's votes and Buchanan's votes. What do you see? 
+  - Fit an SLR model and describe the fit. Do you trust the model?
+    
+2. Identify the outlier 
+  
+  - You should notice an extreme outlier. Identify this county in the data ([`gf_label`](https://www.mosaic-web.org/ggformula/reference/gf_text.html#ref-examples) might be helpful here!)
+  - Do a quick web search on this specific county and the 2000 election. What unique localized issue could have caused this statistical anomaly?
+    
+3. Sensitivity analysis/second SLR model 
+  
+  - In statistics, an influential point is an outlier that significantly alters the trajectory of the regression line. 
+  - To test if this county is an influential point, create a new dataset that excludes this anomalous county and fit a second linear regression model on this subset.
+  - Compare the two models. What do you conclude? 
+    
+    
+
+
+## Option 2: Nascar driver ratings
+
+In NASCAR, driver rating is a metric used to evaluate the performance of drivers in races. It provides a comprehensive assessment of a driver's overall competitiveness, efficiency, and consistency during a race. The driver rating is based on several key performance factors and is designed to offer a more objective view of a driver's abilities.
+
+The driver rating is calculated using a formula that combines these aspects such as wins, finish position, average running position, and multiple other components into a single numerical value. Although the exact formula for calculating driver rating has been tweaked over the years, and explanation and example using the 2006 structure is available at <https://www.driveraverages.com/drvavg/nascar-driverratings.php>. 
+
+Suppose that, given the complexity of the driver rating formula, you wish to build an approximation to this metric using a statistical model. To do so, you have access to data from the NASCAR website (<https://www.nascar.com/stats/>). This data shows the season statistics from 2007-2022 with variables such as wins, average start, average mid race, average finish, average position, pass difference, green flag passes, green flag passed, quality passes, percent of quality passes, number of fastest laps, laps in top 15, percent of laps in top 15, laps led, percent of laps led, total laps, driver rating, and points. 
+
+For this exercise, you will be examining the relationship between a driver’s average running position across all races they competed in (`AvgPos`), and their average driver rating (`DriverRating`) for a season. (Note that a separate driver’s rating is calculated for each race. The `DriverRating` variable represents the average of these values.)
+
+Load the NASCAR driver statistics dataset:
+
+```{r}
+#| eval: false
+nascar <- read.csv("https://aluby.github.io/stat230/data/nascar_driver_statistics.csv") 
+head(nascar)
+```
+
+Your Results section should address the following phases of the investigation:
+
+1. EDA and first SLR model
+
+  - Explore the relationship between AvgFinish and DriverRating. What do you see? 
+  - Fit an SLR model and describe the fit. Do you trust the model?
+
+2. Transform the data 
+
+  - Based on your diagnostic plots, explain why it would be mathematically inappropriate to use this standard model to draw conclusions. Which specific assumptions are violated, and what visual evidence shows it?
+  - Explore possible transformations and propose a new, transformed model. Discuss how the diagnostic plots have improved and if the SLR conditions are reasonably met. 
+
+3. Interpretation and conclusions
+
+  - Using the output from your transformed model, write down the estimated regression equation on the original scale. 
+  - Interpret the estimated coefficients in the context of the problem. Because your response variable is log-transformed, remember that your interpretation must involve back-transforming
+  - Summarize your overall conclusion about how a driver's average finish position impacts their holistic driver rating.
+    
 # Format
 
  - 3 pages or less (including figures but not including references). You may include up to 2 pages of appendices that do not count towards this limit. 
- - Introduction
- - Results
-    - EDA
-    - Model
- - Discussion
- - Appendices
+ - Introduction: this is where you introduce the problem and why it is important to study. This should focus on the data and the "real-world" questions. 
+ - Results: this is where you present your EDA (e.g. graphs) and any models you fit. You should explain your results both statistically and in context. 
+ - Discussion: this is a shorter section that summarizes the main points of your analysis and explains your answer to the research question.
+ - Appendices: this is an optional section where you can include graphs or results that you used, but aren't central to the point you are trying to make in the remainder of the report. 
  
 # Best practices for small group work
  
+Groups should work on this report together.
+
+  - If you are in an in-class group of 3, you should choose a single prompt and all work together. 
+  - If you are in an in-class group of 4, you should split into two groups of two. 
+  
+While you are permitted to do some work separately (e.g., the homework components, revising a section at a time when your schedules don’t permit meeting together), I discourage you from completing substantial portions of the final report individually. Each partner should contribute substantively to each component of the report, and each partner is assumed to be an equal contributor to the final product. You should be in regular contact with your partner(s) and should meet at least once outside of class. If you are having issues communicating with your partner(s), please email me as soon as possible.
+
 
 # Academic Integrity
 
 For this case study, you may use the following resources: 
 
-  - Your own course notes (from any class!) and any of my Stat230 materials
+  - Your own course notes (from any class!) and any Stat230 materials of your own or provided by Amanda
   - Web searches/AI where your search/prompts are general questions about coding (e.g., how do I subset a data set in R where I want only certain numerical values?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty.
+  - Web searches/AI where your search/prompts are background research about your project topic. If you use AI, you MUST provide a document shows your “conversation.” You must also find a real source (published by a reputable source, ideally peer-reviewed) and don't rely purely on AI. Failure to do so will be considered academic dishonesty.
   - Web searches/AI where your search/prompts are general questions about formatting (e.g., how do I make a table in GoogleDocs?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty
-  - The writing center for help editing your write up. You should get content-related help here.
+  - The writing center for help editing your write up. 
   - Your in-class group
   - Amanda
   - Noah
+  - StatLab / Math Skills Center for R coding help or help with statistical models
   
 For this project you may NOT use the following resources:
 
@@ -75,3 +137,43 @@ For this project you may NOT use the following resources:
   - Web searches/AI where your search/prompts are the specific formatting questions you are being asked to do for the project (e.g., please write a caption for this table).
   - AI to write or edit any portion of your original write-up or your final write-up. 
 
+# Rubric
+
+*Note:* I recommend going through this checklist as a team before your final submission
+
+- Title and authors (5%) 
+    - [ ] Has a title and lists the authors
+    - [ ] Informative and engaging
+- Introduction (15%)
+    - [ ] Introduces and motivates the topic being addressed
+    - [ ] Includes at least one reference for context/motivation for this study that are well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)
+    - [ ] Explains the questions addressed in the report
+    - [ ] Gives appropriate background information (and avoids making broad and unsubstantiated claims)
+- Results (50%) 
+    - [ ]  Focus is on conveying the results of the analysis and is not a step-by-step description
+    - [ ] For the option chosen, includes all components listed in the prompt (EDA, first model, etc.) 
+    - [ ] Statistical inference is appropriately performed
+      - A complete model statement is given (give the equation!)
+      - An appropriate model is chosen
+      - Model assumptions are assessed and satisfactory 
+      - Estimates and uncertainties (confidence intervals) of model coefficients
+are given and *both* are interpreted in context
+      - The model and estimates are interpreted correctly and in the context
+of the question being addressed
+      - Technical language is used correctly
+- Discussion (15%)
+    - [ ] Summarizes the main findings and answers the question posed in the introduction (no new results should appear here!)
+    - [ ] Describes any limitations of your analysis and any necessary caveats
+    - [ ] Describes any follow-up questions that would be interesting to investigate
+- Quarto appendix (separate file) (5%)
+    - [ ] R code used for the analysis is shown and implemented correctly, using general conventions from class
+    - [ ] R code is approximately ordered as the results are presented in the report
+- Overall presentation (10%) 
+  - [ ] A separate references section is included, with any standard citation style
+  - [ ] The report is structured according to the instructions
+  - [ ] The text is neatly presented, broken into readable paragraphs and laid out in a coherent manner
+  - [ ] Peer evaluations were completed for group members and satisfactory from group members
+
+# Questions?
+
+If you have questions, please post them on the Case Study 1 thread on our Ed discussion page!
