@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>slr_casestudy – stat230</title>
+<title>Case Study 1: SLR – stat230</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -162,15 +162,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#project-prompt" id="toc-project-prompt" class="nav-link" data-scroll-target="#project-prompt">Project Prompt</a>
+  <ul class="collapse">
+  <li><a href="#option-1-2000-presidential-election-in-florida-county-level" id="toc-option-1-2000-presidential-election-in-florida-county-level" class="nav-link" data-scroll-target="#option-1-2000-presidential-election-in-florida-county-level">Option 1: 2000 Presidential Election in Florida (county-level)</a></li>
+  <li><a href="#option-2-nascar-driver-ratings" id="toc-option-2-nascar-driver-ratings" class="nav-link" data-scroll-target="#option-2-nascar-driver-ratings">Option 2: Nascar driver ratings</a></li>
+  </ul></li>
+  <li><a href="#format" id="toc-format" class="nav-link" data-scroll-target="#format">Format</a></li>
+  <li><a href="#best-practices-for-small-group-work" id="toc-best-practices-for-small-group-work" class="nav-link" data-scroll-target="#best-practices-for-small-group-work">Best practices for small group work</a></li>
+  <li><a href="#academic-integrity" id="toc-academic-integrity" class="nav-link" data-scroll-target="#academic-integrity">Academic Integrity</a></li>
+  <li><a href="#rubric" id="toc-rubric" class="nav-link" data-scroll-target="#rubric">Rubric</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions?</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">slr_casestudy</h1>
+<h1 class="title">Case Study 1: SLR</h1>
 </div>
 
 
@@ -187,43 +203,212 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggformula)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>The goals of this case study are twofold:</p>
 <ol type="1">
-<li><p>Palm Beach County</p></li>
-<li><p>Nascar driver ratings</p></li>
+<li>To practice writing about a sample</li>
+<li>To gain experience with the iterative practice of model fitting</li>
 </ol>
+<p>There are two options for this short report: (a) county-level election results from <strong>Florida’s 2000 presidential election</strong> OR (b) modeling <strong>Nascar driver ratings</strong>. You will need to do some background reading to give context to your study, and both options will require fitting more than one SLR model.</p>
+<p>You will submit your work to this case study in two parts:</p>
+<ol type="1">
+<li>individual submission as part of HW3 (due Friday of Week 3 at beginning of class)
+<ul>
+<li>It’s OK with me if your group works on this together as long as you actually do it together. You should not send code back and forth to complete this portion of the project.</li>
+</ul></li>
+<li>a group report (due Sunday before Week 4)
+<ul>
+<li>Your groups are your in-class groups. If you are in a group of 3, you should all work together. If you are in a group of four, you should split into two groups of two.</li>
+</ul></li>
+</ol>
+<p>You should all do an equal amount of contribution to parts (1) and (2). Equal does not necessarily mean identical, but all group members should have a deep understanding of the statistical approaches used and have contributed to the writing of the report.</p>
+</section>
+<section id="project-prompt" class="level1">
+<h1>Project Prompt</h1>
+<section id="option-1-2000-presidential-election-in-florida-county-level" class="level2">
+<h2 class="anchored" data-anchor-id="option-1-2000-presidential-election-in-florida-county-level">Option 1: 2000 Presidential Election in Florida (county-level)</h2>
+<p>The outcome of the 2000 U.S. Presidential Election was determined in Florida amid much controversy. Even decades later, historians and statisticians continue to analyze the results from that night. The main race was between George W. Bush (republican) and Al Gore (democrat), but two minor candidates played a significant role. Pat Buchanan ran as the candidate for the Reform party, and Ralph Nader ran as the candidate for the Green party.</p>
+<p>Since the Reform party and Republican party are right of center on the political spectrum, political scientists would expect there to be a relationship between the number of votes the Republican candidate received and the number of votes the reform candidate received in each county.</p>
+<p>For this case study, you’ll look at results (at the county level) from the 2000 election in Florida.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>womensfigureskating <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Downloads/womensFigureSkating.csv"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TP =</span> <span class="fu">as.numeric</span>(TP))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(FS <span class="sc">~</span> SP, <span class="at">data =</span> womensfigureskating)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>fs_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(FS <span class="sc">~</span> SP, <span class="at">data =</span> womensfigureskating)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_panel</span>(fs_lm)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(TP <span class="sc">~</span> SP, <span class="at">data =</span> womensfigureskating)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>tp_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(TP <span class="sc">~</span> SP, <span class="at">data =</span> womensfigureskating)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_panel</span>(tp_lm)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(TP <span class="sc">~</span> SP, <span class="at">data =</span> womensfigureskating)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>tp_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(TP <span class="sc">~</span> SP, <span class="at">data =</span> womensfigureskating)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_panel</span>(tp_lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>florida <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/florida_2000.csv"</span>) </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(florida)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    County   GORE   BUSH BUCHANAN NADER BROWN HAGELIN HARRIS MCREYNOLDS
+1  ALACHUA  47300  34062      262  3215   658      42      4        658
+2    BAKER   2392   5610       73    53    17       3      0          0
+3      BAY  18850  38637      248   828   171      18      5          3
+4 BRADFORD   3072   5413       65    84    28       2      0          0
+5  BREVARD  97318 115185      570  4470   643      39     11         11
+6  BROWARD 386518 177279      789  7099  1212     128     49         35
+  MOOREHEAD PHILLIPS  Total
+1        21       20  86242
+2         3        3   8154
+3        37       18  58815
+4         3        2   8669
+5        76       72 218395
+6       123       74 573306</code></pre>
 </div>
+</div>
+<p>As a statistical investigator, your goal is to model the relationship between the votes for Bush and the votes for Buchanan, and determine if any counties behaved abnormally.</p>
+<p>Your Results section should address the following phases of the investigation:</p>
+<ol type="1">
+<li>EDA and first SLR model</li>
+</ol>
+<ul>
+<li>Explore the relationship between Bush’s votes and Buchanan’s votes. What do you see?</li>
+<li>Fit an SLR model and describe the fit. Do you trust the model?</li>
+</ul>
+<ol start="2" type="1">
+<li>Identify the outlier</li>
+</ol>
+<ul>
+<li>You should notice an extreme outlier. Identify this county in the data (<a href="https://www.mosaic-web.org/ggformula/reference/gf_text.html#ref-examples"><code>gf_label</code></a> might be helpful here!)</li>
+<li>Do a quick web search on this specific county and the 2000 election. What unique localized issue could have caused this statistical anomaly?</li>
+</ul>
+<ol start="3" type="1">
+<li>Sensitivity analysis/second SLR model</li>
+</ol>
+<ul>
+<li>In statistics, an influential point is an outlier that significantly alters the trajectory of the regression line.</li>
+<li>To test if this county is an influential point, create a new dataset that excludes this anomalous county and fit a second linear regression model on this subset.</li>
+<li>Compare the two models. What do you conclude?</li>
+</ul>
+</section>
+<section id="option-2-nascar-driver-ratings" class="level2">
+<h2 class="anchored" data-anchor-id="option-2-nascar-driver-ratings">Option 2: Nascar driver ratings</h2>
+<p>In NASCAR, driver rating is a metric used to evaluate the performance of drivers in races. It provides a comprehensive assessment of a driver’s overall competitiveness, efficiency, and consistency during a race. The driver rating is based on several key performance factors and is designed to offer a more objective view of a driver’s abilities.</p>
+<p>The driver rating is calculated using a formula that combines these aspects such as wins, finish position, average running position, and multiple other components into a single numerical value. Although the exact formula for calculating driver rating has been tweaked over the years, and explanation and example using the 2006 structure is available at <a href="https://www.driveraverages.com/drvavg/nascar-driverratings.php" class="uri">https://www.driveraverages.com/drvavg/nascar-driverratings.php</a>.</p>
+<p>Suppose that, given the complexity of the driver rating formula, you wish to build an approximation to this metric using a statistical model. To do so, you have access to data from the NASCAR website (<a href="https://www.nascar.com/stats/" class="uri">https://www.nascar.com/stats/</a>). This data shows the season statistics from 2007-2022 with variables such as wins, average start, average mid race, average finish, average position, pass difference, green flag passes, green flag passed, quality passes, percent of quality passes, number of fastest laps, laps in top 15, percent of laps in top 15, laps led, percent of laps led, total laps, driver rating, and points.</p>
+<p>For this exercise, you will be examining the relationship between a driver’s average running position across all races they competed in (<code>AvgPos</code>), and their average driver rating (<code>DriverRating</code>) for a season. (Note that a separate driver’s rating is calculated for each race. The <code>DriverRating</code> variable represents the average of these values.)</p>
+<p>Load the NASCAR driver statistics dataset:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nascar <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Downloads/nascar_driver_statistics.csv"</span>) </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(DriverRating <span class="sc">~</span> AvgFinish, <span class="at">data =</span> nascar)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>nascar_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(DriverRating <span class="sc">~</span> AvgFinish, <span class="at">data =</span> nascar)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_panel</span>(nascar_lm)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(<span class="fu">log</span>(DriverRating) <span class="sc">~</span> AvgFinish, <span class="at">data =</span> nascar)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>nascar_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(DriverRating) <span class="sc">~</span> AvgFinish, <span class="at">data =</span> nascar)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_panel</span>(nascar_lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nascar <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/nascar_driver_statistics.csv"</span>) </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nascar)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Your Results section should address the following phases of the investigation:</p>
+<ol type="1">
+<li>EDA and first SLR model</li>
+</ol>
+<ul>
+<li>Explore the relationship between AvgFinish and DriverRating. What do you see?</li>
+<li>Fit an SLR model and describe the fit. Do you trust the model?</li>
+</ul>
+<ol start="2" type="1">
+<li>Transform the data</li>
+</ol>
+<ul>
+<li>Based on your diagnostic plots, explain why it would be mathematically inappropriate to use this standard model to draw conclusions. Which specific assumptions are violated, and what visual evidence shows it?</li>
+<li>Explore possible transformations and propose a new, transformed model. Discuss how the diagnostic plots have improved and if the SLR conditions are reasonably met.</li>
+</ul>
+<ol start="3" type="1">
+<li>Interpretation and conclusions</li>
+</ol>
+<ul>
+<li>Using the output from your transformed model, write down the estimated regression equation on the original scale.</li>
+<li>Interpret the estimated coefficients in the context of the problem. Because your response variable is log-transformed, remember that your interpretation must involve back-transforming</li>
+<li>Summarize your overall conclusion about how a driver’s average finish position impacts their holistic driver rating.</li>
+</ul>
+</section>
+</section>
+<section id="format" class="level1">
+<h1>Format</h1>
+<ul>
+<li>3 pages or less (including figures but not including references). You may include up to 2 pages of appendices that do not count towards this limit.</li>
+<li>Introduction: this is where you introduce the problem and why it is important to study. This should focus on the data and the “real-world” questions.</li>
+<li>Results: this is where you present your EDA (e.g.&nbsp;graphs) and any models you fit. You should explain your results both statistically and in context.</li>
+<li>Discussion: this is a shorter section that summarizes the main points of your analysis and explains your answer to the research question.</li>
+<li>Appendices: this is an optional section where you can include graphs or results that you used, but aren’t central to the point you are trying to make in the remainder of the report.</li>
+</ul>
+</section>
+<section id="best-practices-for-small-group-work" class="level1">
+<h1>Best practices for small group work</h1>
+<p>Groups should work on this report together.</p>
+<ul>
+<li>If you are in an in-class group of 3, you should choose a single prompt and all work together.</li>
+<li>If you are in an in-class group of 4, you should split into two groups of two.</li>
+</ul>
+<p>While you are permitted to do some work separately (e.g., the homework components, revising a section at a time when your schedules don’t permit meeting together), I discourage you from completing substantial portions of the final report individually. Each partner should contribute substantively to each component of the report, and each partner is assumed to be an equal contributor to the final product. You should be in regular contact with your partner(s) and should meet at least once outside of class. If you are having issues communicating with your partner(s), please email me as soon as possible.</p>
+</section>
+<section id="academic-integrity" class="level1">
+<h1>Academic Integrity</h1>
+<p>For this case study, you may use the following resources:</p>
+<ul>
+<li>Your own course notes (from any class!) and any Stat230 materials of your own or provided by Amanda</li>
+<li>Web searches/AI where your search/prompts are general questions about coding (e.g., how do I subset a data set in R where I want only certain numerical values?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty.</li>
+<li>Web searches/AI where your search/prompts are background research about your project topic. If you use AI, you MUST provide a document shows your “conversation.” You must also find a real source (published by a reputable source, ideally peer-reviewed) and don’t rely purely on AI. Failure to do so will be considered academic dishonesty.</li>
+<li>Web searches/AI where your search/prompts are general questions about formatting (e.g., how do I make a table in GoogleDocs?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty</li>
+<li>The writing center for help editing your write up.</li>
+<li>Your in-class group</li>
+<li>Amanda</li>
+<li>Noah</li>
+<li>StatLab / Math Skills Center for R coding help or help with statistical models</li>
+</ul>
+<p>For this project you may NOT use the following resources:</p>
+<ul>
+<li>Other humans (including other folks in this class)</li>
+<li>Web searches/AI where your searches/prompts are the specific questions you are being asked in the project about coding (e.g., How do I fit a linear regression model in R with the sales price as the response variable and square footage as the predictor variable?).</li>
+<li>Web searches/AI where your search/prompts are the specific formatting questions you are being asked to do for the project (e.g., please write a caption for this table).</li>
+<li>AI to write or edit any portion of your original write-up or your final write-up.</li>
+</ul>
+</section>
+<section id="rubric" class="level1">
+<h1>Rubric</h1>
+<p><em>Note:</em> I recommend going through this checklist as a team before your final submission</p>
+<ul>
+<li>Title and authors (5%)
+<ul class="task-list">
+<li><label><input type="checkbox">Has a title and lists the authors</label></li>
+<li><label><input type="checkbox">Informative and engaging</label></li>
+</ul></li>
+<li>Introduction (15%)
+<ul class="task-list">
+<li><label><input type="checkbox">Introduces and motivates the topic being addressed</label></li>
+<li><label><input type="checkbox">Includes at least one reference for context/motivation for this study that are well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)</label></li>
+<li><label><input type="checkbox">Explains the questions addressed in the report</label></li>
+<li><label><input type="checkbox">Gives appropriate background information (and avoids making broad and unsubstantiated claims)</label></li>
+</ul></li>
+<li>Results (50%)
+<ul class="task-list">
+<li><label><input type="checkbox">Focus is on conveying the results of the analysis and is not a step-by-step description</label></li>
+<li><label><input type="checkbox">For the option chosen, includes all components listed in the prompt (EDA, first model, etc.)</label></li>
+<li><label><input type="checkbox">Statistical inference is appropriately performed</label>
+<ul>
+<li>A complete model statement is given (give the equation!)</li>
+<li>An appropriate model is chosen</li>
+<li>Model assumptions are assessed and satisfactory</li>
+<li>Estimates and uncertainties (confidence intervals) of model coefficients are given and <em>both</em> are interpreted in context</li>
+<li>The model and estimates are interpreted correctly and in the context of the question being addressed</li>
+<li>Technical language is used correctly</li>
+</ul></li>
+</ul></li>
+<li>Discussion (15%)
+<ul class="task-list">
+<li><label><input type="checkbox">Summarizes the main findings and answers the question posed in the introduction (no new results should appear here!)</label></li>
+<li><label><input type="checkbox">Describes any limitations of your analysis and any necessary caveats</label></li>
+<li><label><input type="checkbox">Describes any follow-up questions that would be interesting to investigate</label></li>
+</ul></li>
+<li>Quarto appendix (separate file) (5%)
+<ul class="task-list">
+<li><label><input type="checkbox">R code used for the analysis is shown and implemented correctly, using general conventions from class</label></li>
+<li><label><input type="checkbox">R code is approximately ordered as the results are presented in the report</label></li>
+</ul></li>
+<li>Overall presentation (10%)
+<ul class="task-list">
+<li><label><input type="checkbox">A separate references section is included, with any standard citation style</label></li>
+<li><label><input type="checkbox">The report is structured according to the instructions</label></li>
+<li><label><input type="checkbox">The text is neatly presented, broken into readable paragraphs and laid out in a coherent manner</label></li>
+<li><label><input type="checkbox">Peer evaluations were completed for group members and satisfactory from group members</label></li>
+</ul></li>
+</ul>
+</section>
+<section id="questions" class="level1">
+<h1>Questions?</h1>
+<p>If you have questions, please post them on the Case Study 1 thread on our Ed discussion page!</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
