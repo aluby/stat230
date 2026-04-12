@@ -75,7 +75,6 @@ For this exercise, you will be examining the relationship between a driver’s a
 Load the NASCAR driver statistics dataset:
 
 ```{r}
-#| eval: false
 nascar <- read.csv("https://aluby.github.io/stat230/data/nascar_driver_statistics.csv") 
 head(nascar)
 ```
