@@ -3,6 +3,7 @@ title: "Case Study 1: SLR"
 format: html
 execute:
   echo: true
+navbar: false
 ---
 
 # Overview
