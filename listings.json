@@ -14,6 +14,7 @@
       "/activities/06-transformations.html",
       "/activities/06T-transformations.html",
       "/activities/08T-polynomial.html",
+      "/activities/08-polynomial.html",
       "/activities/09-mlr.html",
       "/activities/10-cat-predictors.html",
       "/activities/11-tbd.html",
@@ -35,6 +36,14 @@
     ]
   },
   {
+    "listing": "/readings.html",
+    "items": [
+      "/readings/exam01-review.html",
+      "/readings/intro-review.html",
+      "/readings/r-for-stat230.html"
+    ]
+  },
+  {
     "listing": "/slides.html",
     "items": [
       "/slides/slides08.html",
@@ -45,14 +54,6 @@
       "/slides/slides02.html",
       "/slides/slides-cheat-sheet.html",
       "/slides/slides01.html"
-    ]
-  },
-  {
-    "listing": "/readings.html",
-    "items": [
-      "/readings/exam01-review.html",
-      "/readings/intro-review.html",
-      "/readings/r-for-stat230.html"
     ]
   }
 ]

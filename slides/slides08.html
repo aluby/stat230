@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Transformations and polynomial regression</title>
@@ -228,17 +228,50 @@ Prof Amanda Luby
 <li>Different types of response variables</li>
 </ul>
 </section>
-<section id="warm-up-transformations" class="slide level2 scrollable">
+<section id="warm-up-transformations" class="slide level2">
 <h2>Warm up: transformations</h2>
 <div class="task">
-<ol type="1">
-<li>Consider the following two models:</li>
-</ol>
-<p>Show that the two models have the same <span class="math inline">\(\hat y\)</span>’s</p>
+<p>Consider the following two models:</p>
+<ul>
+<li><span class="math inline">\(\log_{2} (y) = 1 + 2 \log_{2}(x) + \varepsilon, \varepsilon \sim N(0,1)\)</span></li>
+<li><span class="math inline">\(y = 2 x^2+ \varepsilon, \varepsilon \sim N(0,1)\)</span></li>
+</ul>
+<p>Show that the two models have the same <span class="math inline">\(\widehat y\)</span>’s</p>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Hint: log rules might be useful</strong></p>
+</div>
+<div class="callout-content">
+<div class="columns">
+<div class="column" style="width:45%;">
+<ul>
+<li><span class="math inline">\(\log(a + b) = \log(a) \log(b)\)</span></li>
+<li><span class="math inline">\(\log(a^b) = b \log (a)\)</span></li>
+</ul>
+</div><div class="column" style="width:10%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:45%;">
+<ul>
+<li><span class="math inline">\(\log(a - b) = \log(a) /\log(b)\)</span></li>
+<li><span class="math inline">\(\log_{b} b = 1\)</span> or <span class="math inline">\(\log e = 1\)</span></li>
+</ul>
+</div></div>
+</div>
+</div>
 </div>
 </section>
-<section id="two-models-plot" class="slide level2">
-<h2>Two models: plot</h2>
+<section id="section-1" class="slide level2">
+<h2></h2>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+
+<img data-src="slides08_files/figure-revealjs/unnamed-chunk-2-1.png" width="768" class="r-stretch"><p>Even though they give the same <strong>predictions</strong>, Model (2) has constant variance but Model (1) does not. If we use Model (2) to make prediction intervals for data that look like Model (1), our interval will be too wide for small x and too narrow for large x</p>
 </section>
 <section id="wildfires" class="slide level2">
 <h2>Wildfires</h2>
@@ -251,33 +284,33 @@ Prof Amanda Luby
 <p>Data source: https://www.nifc.gov/fireInfo/fireInfo_stats_totalFires.html</p>
 </div>
 </section>
-<section id="section-1" class="slide level2">
+<section id="section-3" class="slide level2">
 <h2></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">gf_point</span>(Acres <span class="sc">~</span> Year, <span class="at">data =</span> wildfires, <span class="at">color =</span> <span class="st">"#003069"</span>) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">gf_point</span>(Acres <span class="sc">~</span> Year, <span class="at">data =</span> wildfires) <span class="sc">%&gt;%</span></span>
 <span id="cb1-2"><a></a>  <span class="fu">gf_labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Acres burned"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb1-3"><a></a>  <span class="fu">gf_smooth</span>(<span class="at">size =</span> .<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="slides08_files/figure-revealjs/unnamed-chunk-2-1.png" width="800" class="r-stretch"></section>
+<img data-src="slides08_files/figure-revealjs/unnamed-chunk-3-1.png" width="800" class="r-stretch"></section>
 <section id="option-1-slr-model" class="slide level2">
 <h2>Option 1: SLR model</h2>
 <p><span class="math inline">\(\mu \lbrace y | x \rbrace = \beta_0 + \beta_1 x\)</span></p>
 <p>Is the fit reasonable?</p>
 
-<img data-src="slides08_files/figure-revealjs/unnamed-chunk-3-1.png" width="864" class="r-stretch"></section>
+<img data-src="slides08_files/figure-revealjs/unnamed-chunk-4-1.png" width="864" class="r-stretch"></section>
 <section id="option-2-transform-x" class="slide level2">
 <h2>Option 2: Transform X</h2>
 <p><span class="math inline">\(\mu \lbrace y | x \rbrace = \beta_0 + \beta_1 x^2\)</span></p>
 <p>Is the fit reasonable?</p>
 
-<img data-src="slides08_files/figure-revealjs/unnamed-chunk-4-1.png" width="864" class="r-stretch"></section>
+<img data-src="slides08_files/figure-revealjs/unnamed-chunk-5-1.png" width="864" class="r-stretch"></section>
 <section id="option-3-polynomial-model" class="slide level2">
 <h2>Option 3: Polynomial model</h2>
 <p><span class="math inline">\(\mu \lbrace y | x \rbrace = \beta_0 + \beta_1 x + \beta_2x^2\)</span></p>
 <p>Is the fit reasonable?</p>
 
-<img data-src="slides08_files/figure-revealjs/unnamed-chunk-5-1.png" width="864" class="r-stretch"></section>
+<img data-src="slides08_files/figure-revealjs/unnamed-chunk-6-1.png" width="864" class="r-stretch"></section>
 <section id="the-polynomial-regression-model" class="slide level2 scrollable">
 <h2>The polynomial regression model</h2>
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 x_{i} + \beta_2 x_{i}^2 + \cdots + \beta_k x_{i}^k + \varepsilon_i, \quad \varepsilon_i \overset{iid}{\sim} N(0, \sigma)\]</span></p>
@@ -297,7 +330,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-6-1.png" width="384"></p>
+<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-7-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -342,7 +375,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-7-1.png" width="850"></p>
+<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-8-1.png" width="850"></p>
 </figure>
 </div>
 </div>
@@ -395,9 +428,11 @@ Prof Amanda Luby
 </section>
 <section id="your-turn" class="slide level2">
 <h2>Your turn</h2>
+<div class="task">
 <p>Would a higher-order polynomial (e.g.&nbsp;cubic, quartic, quintic) provide a better fit to the wildfire data?</p>
 <p><br></p>
-<p>Work through that example on the handout with your neighbors</p>
+<p>Work through the R handout with your groups</p>
+</div>
 </section>
 <section id="a-warning-about-this-analysis" class="slide level2">
 <h2>A warning about this analysis</h2>
@@ -413,7 +448,7 @@ Prof Amanda Luby
 <h2>A warning about polynomials</h2>
 <p>High-order polynomial regression models will over-fit your data (i.e.&nbsp;pick up on peculiarities specific to your one sample from the population)</p>
 
-<img data-src="slides08_files/figure-revealjs/unnamed-chunk-9-1.png" width="850" class="r-stretch"></section>
+<img data-src="slides08_files/figure-revealjs/unnamed-chunk-10-1.png" width="850" class="r-stretch"></section>
 <section>
 <section id="explained-variance-aka-r2-again" class="title-slide slide level1 center">
 <h1>Explained variance (aka <span class="math inline">\(R^2\)</span> again)</h1>
@@ -432,7 +467,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
 </figure>
 </div>
 </div>
@@ -454,7 +489,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
 </figure>
 </div>
 </div>
@@ -474,7 +509,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" width="360"></p>
+<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="360"></p>
 </figure>
 </div>
 </div>
@@ -495,7 +530,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="360"></p>
+<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="360"></p>
 </figure>
 </div>
 </div>
@@ -512,7 +547,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-14-1.png" style="width:100.0%"></p>
+<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -533,7 +568,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:100.0%"></p>
+<p><img data-src="slides08_files/figure-revealjs/unnamed-chunk-16-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>

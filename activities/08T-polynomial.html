@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -197,7 +197,7 @@ Note
 <h2 class="anchored" data-anchor-id="loading-data">Loading data</h2>
 <p>To load the wildfires data set, run the following code chunk:</p>
 <div class="cell">
-<pre class="{webr}"><code>wildfires &lt;- read.csv("https://aloy.github.io/stat230-materials/data/wildfires.csv")</code></pre>
+<pre class="{webr}"><code>wildfires &lt;- read.csv("https://aluby.github.io/stat230/data/wildfires.csv")</code></pre>
 </div>
 </section>
 <section id="fitting-a-polynomial-regression-model" class="level2">
@@ -233,7 +233,7 @@ Note
 <p>In the <code>gf_lm()</code> layer we use the <code>poly(x, 3)</code> function to specify that we want to fit a cubic polynomial. You can use <code>poly()</code> to fit polynomials of any degree by changing the second argument, and you can also use this function within the <code>lm()</code> function to fit polynomial regression models if you’d like.</p>
 </div>
 </div>
-<p>Does the cubic model appear to be necessary? Use the <code>summary()</code> function to explore the fitted model adn run a hypothesis test for the cubic term. What do you conclude?</p>
+<p>Does the cubic model appear to be necessary? Use the <code>summary()</code> function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?</p>
 <p>What degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?</p>
 <p>Do you notice anything curious about the inferential results for the linear and quadratic terms?</p>
 <p>The issue here is that the polynomial terms for year are highly correlated with each other (i.e., year, year<span class="math inline">\(^2\)</span>, and year<span class="math inline">\(^3\)</span> are correlated). This can lead to numerical instability and make it difficult to interpret the coefficients. This is a situation called <strong>multicollinearity</strong>. We’ll talk more about this later. One way to remedy this issue in polynomial regression is to use orthogonal polynomials, which are uncorrelated with each other.</p>
@@ -768,7 +768,7 @@ Note
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>To load the wildfires data set, run the following code chunk:</span>
 <span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="in">wildfires &lt;- read.csv("https://aloy.github.io/stat230-materials/data/wildfires.csv")</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="in">wildfires &lt;- read.csv("https://aluby.github.io/stat230/data/wildfires.csv")</span></span>
 <span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
@@ -810,7 +810,7 @@ Note
 <span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>In the <span class="in">`gf_lm()`</span> layer we use the <span class="in">`poly(x, 3)`</span> function to specify that we want to fit a cubic polynomial. You can use <span class="in">`poly()`</span> to fit polynomials of any degree by changing the second argument, and you can also use this function within the <span class="in">`lm()`</span> function to fit polynomial regression models if you'd like.</span>
 <span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>Does the cubic model appear to be necessary? Use the <span class="in">`summary()`</span> function to explore the fitted model adn run a hypothesis test for the cubic term. What do you conclude?</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>Does the cubic model appear to be necessary? Use the <span class="in">`summary()`</span> function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?</span>
 <span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>What degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?</span>
