@@ -1,6 +1,6 @@
 ---
 title: Transformations and polynomial regression
-subtitle: Day 07
+subtitle: Day 08
 title-slide-attributes:
   data-background-color: "#003300"
   data-slide-number: none
@@ -72,13 +72,34 @@ wildfires <- filter(wildfires, Year >= 1960)
 
 ## 
 
-### Exam01
+<br> 
 
-  - SLR 
-  - Inference for SLR
-  - 
+### Exam01: SLR
+
+  - Inference 
+  - Conditions
+  - (Simple) Transformations
   
+<br> 
+
 ### Where we're going
+
+- More complicated transformations
+- Additional predictors
+- Different types of response variables
+
+
+## Warm up: transformations
+
+::: {.task}
+1. Consider the following two models: 
+
+
+Show that the two models have the same $\hat y$'s
+
+:::
+
+## Two models: plot
 
 
 
@@ -177,9 +198,9 @@ gf_point(Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned", c
 :::{.column width="50%"}
 Focus on the expected change in $y$ for a specific increase in $x$
 
-- e.g. change in acres burned from 1985 to 1990
+- e.g. change in acres burned from 1975 to 1976
     
-- e.g. change in acres burned from 2005 to 2010
+- e.g. change in acres burned from 2010 to 2011
 :::
 :::
 
@@ -339,7 +360,7 @@ p25 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
 ```
 
 
-# Explained variance
+# Explained variance (aka $R^2$ again)
 
 
 ## The "null" model
@@ -419,7 +440,7 @@ Measures the variability unexplained by the model
 
 <br>
 
-Equal to $\widehat \sigma$
+ $\widehat \sigma = \sqrt{\text{SSResidual}/\text{df}}$
 
 :::
 
