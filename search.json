@@ -840,11 +840,172 @@
     "text": "Rest of today\n\n\nOpen the SLR in R activity on Moodle and complete in your groups\nMake note of any questions\nChoose someone responsible for reporting out your answers"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stat 230: Applied Regression Analysis",
+    "objectID": "slides/slides08.html#section",
+    "href": "slides/slides08.html#section",
+    "title": "Transformations and polynomial regression",
     "section": "",
-    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
+    "text": "Exam01: SLR\n\nInference\nConditions\n(Simple) Transformations\n\n\nWhere we’re going\n\nMore complicated transformations\nAdditional predictors\nDifferent types of response variables"
+  },
+  {
+    "objectID": "slides/slides08.html#warm-up-transformations",
+    "href": "slides/slides08.html#warm-up-transformations",
+    "title": "Transformations and polynomial regression",
+    "section": "Warm up: transformations",
+    "text": "Warm up: transformations\n\n\nConsider the following two models:\n\nShow that the two models have the same \\(\\hat y\\)’s"
+  },
+  {
+    "objectID": "slides/slides08.html#two-models-plot",
+    "href": "slides/slides08.html#two-models-plot",
+    "title": "Transformations and polynomial regression",
+    "section": "Two models: plot",
+    "text": "Two models: plot"
+  },
+  {
+    "objectID": "slides/slides08.html#wildfires",
+    "href": "slides/slides08.html#wildfires",
+    "title": "Transformations and polynomial regression",
+    "section": "Wildfires",
+    "text": "Wildfires\n\nThe National Interagency Coordination Center at the National Interagency Coordination Center compiles annual wildland fire statistics for federal and state agencies.\nThis information is provided through Situation Reports, which have been in use for several decades.\nOur goal is to model the number of acres burned over the years\n\n\nData source: https://www.nifc.gov/fireInfo/fireInfo_stats_totalFires.html"
+  },
+  {
+    "objectID": "slides/slides08.html#section-1",
+    "href": "slides/slides08.html#section-1",
+    "title": "Transformations and polynomial regression",
+    "section": "",
+    "text": "gf_point(Acres ~ Year, data = wildfires, color = \"#003069\") %&gt;%\n  gf_labs(x = \"Year\", y = \"Acres burned\") %&gt;%\n  gf_smooth(size = .5)"
+  },
+  {
+    "objectID": "slides/slides08.html#option-1-slr-model",
+    "href": "slides/slides08.html#option-1-slr-model",
+    "title": "Transformations and polynomial regression",
+    "section": "Option 1: SLR model",
+    "text": "Option 1: SLR model\n\\(\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x\\)\nIs the fit reasonable?"
+  },
+  {
+    "objectID": "slides/slides08.html#option-2-transform-x",
+    "href": "slides/slides08.html#option-2-transform-x",
+    "title": "Transformations and polynomial regression",
+    "section": "Option 2: Transform X",
+    "text": "Option 2: Transform X\n\\(\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x^2\\)\nIs the fit reasonable?"
+  },
+  {
+    "objectID": "slides/slides08.html#option-3-polynomial-model",
+    "href": "slides/slides08.html#option-3-polynomial-model",
+    "title": "Transformations and polynomial regression",
+    "section": "Option 3: Polynomial model",
+    "text": "Option 3: Polynomial model\n\\(\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x + \\beta_2x^2\\)\nIs the fit reasonable?"
+  },
+  {
+    "objectID": "slides/slides08.html#the-polynomial-regression-model",
+    "href": "slides/slides08.html#the-polynomial-regression-model",
+    "title": "Transformations and polynomial regression",
+    "section": "The polynomial regression model",
+    "text": "The polynomial regression model\n\\[Y_i = \\beta_0 + \\beta_1 x_{i} + \\beta_2 x_{i}^2 + \\cdots + \\beta_k x_{i}^k + \\varepsilon_i, \\quad \\varepsilon_i \\overset{iid}{\\sim} N(0, \\sigma)\\]\nAssumptions — same as in SLR\n\n\\(\\mu\\{Y|x_i\\}\\), is a linear function\nFor each \\(x_i\\), the sub-population of responses is normally distributed\nThe standard deviation for each sub-population is \\(\\sigma\\)\nIndependent observations"
+  },
+  {
+    "objectID": "slides/slides08.html#interpreting-the-model",
+    "href": "slides/slides08.html#interpreting-the-model",
+    "title": "Transformations and polynomial regression",
+    "section": "Interpreting the model",
+    "text": "Interpreting the model\n\n\n\n\n\n\n\n\n\n\n\n\nFocus on the expected change in \\(y\\) for a specific increase in \\(x\\)\n\ne.g. change in acres burned from 1975 to 1976\ne.g. change in acres burned from 2010 to 2011\n\n\n\n\\[\\begin{aligned}\n\\mu\\{ y | x + 1 \\} - \\mu\\{ y | x \\}\n  &=  \\left[ \\beta_0 + \\beta_1 (x+1) + \\beta_2 (x+1)^2 \\right] - \\left[ \\beta_0 + \\beta_1 x + \\beta_2 x^2 \\right]\\\\\n  &= \\beta_1 + \\beta_2 \\left( 2x + 1 \\right)\n\\end{aligned}\\]"
+  },
+  {
+    "objectID": "slides/slides08.html#inferences-about-coefficients",
+    "href": "slides/slides08.html#inferences-about-coefficients",
+    "title": "Transformations and polynomial regression",
+    "section": "Inferences about coefficients",
+    "text": "Inferences about coefficients\nInference uses the same t-based tools as SLR, but with\n\\[\\widehat{\\sigma}  = \\sqrt{\\dfrac{{\\sum_{i=1}^n e_i^2}}{n - (k+1)}}\\]\ni.e. the degrees of freedom of the t-distribution change"
+  },
+  {
+    "objectID": "slides/slides08.html#testing-a-single-coefficient",
+    "href": "slides/slides08.html#testing-a-single-coefficient",
+    "title": "Transformations and polynomial regression",
+    "section": "Testing a single coefficient",
+    "text": "Testing a single coefficient\n\nHypotheses: \\(H_0: \\ \\beta_j = \\#\\) vs. \\(H_a: \\ \\beta_j \\underset{&gt;}{\\overset{&lt;}{\\ne}} \\#\\)\n\n\n\nTest statistic: \\(t = \\dfrac{\\hat{\\beta}_j - \\#}{SE(\\beta_j)}\\)\n\n\n\n\nReference distribution: \\(t\\) distribution with d.f. = \\(n-(k+1)\\)\np-value: Area in the tail(s) specified by \\(H_a\\)"
+  },
+  {
+    "objectID": "slides/slides08.html#cis-for-a-single-coefficient",
+    "href": "slides/slides08.html#cis-for-a-single-coefficient",
+    "title": "Transformations and polynomial regression",
+    "section": "CIs for a single coefficient",
+    "text": "CIs for a single coefficient\n\\(\\widehat{\\beta}_j \\pm t^*_{n-(k+1)} \\cdot SE(\\widehat{\\beta}_j )\\)\n\n\nWildfires example\n\n\n\n\nTerm\nEstimate\nSE\nLower\nUpper\n\n\n\n\n(Intercept)\n16109806404\n3793719340\n8510073345\n23709539462\n\n\nYear\n-16264428\n3814896\n-23906583\n-8622273\n\n\nI(Year^2)\n4106\n959\n2185\n6027"
+  },
+  {
+    "objectID": "slides/slides08.html#your-turn",
+    "href": "slides/slides08.html#your-turn",
+    "title": "Transformations and polynomial regression",
+    "section": "Your turn",
+    "text": "Your turn\nWould a higher-order polynomial (e.g. cubic, quartic, quintic) provide a better fit to the wildfire data?\n\nWork through that example on the handout with your neighbors"
+  },
+  {
+    "objectID": "slides/slides08.html#a-warning-about-this-analysis",
+    "href": "slides/slides08.html#a-warning-about-this-analysis",
+    "title": "Transformations and polynomial regression",
+    "section": "A warning about this analysis",
+    "text": "A warning about this analysis\n\nPrior to 1983, sources of these figures are not known, or cannot be confirmed, and were not derived from the current situation reporting process. As a result the figures prior to 1983 should not be compared to later data.\n— NIFC\n\n\nhttps://www.nifc.gov/fireInfo/fireInfo_stats_totalFires.html]"
+  },
+  {
+    "objectID": "slides/slides08.html#a-warning-about-polynomials",
+    "href": "slides/slides08.html#a-warning-about-polynomials",
+    "title": "Transformations and polynomial regression",
+    "section": "A warning about polynomials",
+    "text": "A warning about polynomials\nHigh-order polynomial regression models will over-fit your data (i.e. pick up on peculiarities specific to your one sample from the population)"
+  },
+  {
+    "objectID": "slides/slides08.html#the-null-model",
+    "href": "slides/slides08.html#the-null-model",
+    "title": "Transformations and polynomial regression",
+    "section": "The “null” model",
+    "text": "The “null” model\n\nUse the mean of Y as the prediction for all observations\n\\(\\mu \\lbrace Y | X \\rbrace = \\beta_0\\)\nLeaves a lot of variability unexplained\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(SD(Y) = 2.465548\\times 10^{6}\\) cm"
+  },
+  {
+    "objectID": "slides/slides08.html#polynomial-model",
+    "href": "slides/slides08.html#polynomial-model",
+    "title": "Transformations and polynomial regression",
+    "section": "Polynomial model",
+    "text": "Polynomial model\n\n\\(\\mu \\lbrace Y | X \\rbrace = \\beta_0 + \\beta_1x + \\beta_2 x^2\\)\nUsing a predictor explains more variability\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(SD(\\varepsilon) = 1.9098377\\times 10^{6}\\) cm"
+  },
+  {
+    "objectID": "slides/slides08.html#sstotal",
+    "href": "slides/slides08.html#sstotal",
+    "title": "Transformations and polynomial regression",
+    "section": "SSTotal",
+    "text": "SSTotal\n\n\n\\({\\rm SSTotal} = \\sum(Y_i - \\bar{Y})^2\\)\nMeasures the overall variability in \\(Y\\)"
+  },
+  {
+    "objectID": "slides/slides08.html#ssresidual-aka-sserror",
+    "href": "slides/slides08.html#ssresidual-aka-sserror",
+    "title": "Transformations and polynomial regression",
+    "section": "SSResidual (aka SSError)",
+    "text": "SSResidual (aka SSError)\n\n\n\\({\\rm SSResidual} = \\sum(Y_i - \\widehat{Y}_i)^2\\)\n\nMeasures the variability unexplained by the model\n\n\\(\\widehat \\sigma = \\sqrt{\\text{SSResidual}/\\text{df}}\\)"
+  },
+  {
+    "objectID": "slides/slides08.html#ssregression",
+    "href": "slides/slides08.html#ssregression",
+    "title": "Transformations and polynomial regression",
+    "section": "SSRegression",
+    "text": "SSRegression\nMeasures the variability explained by the model\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\({\\rm SSRegression} = SSTotal - SSError\\)"
+  },
+  {
+    "objectID": "slides/slides08.html#coefficient-of-determination-r2",
+    "href": "slides/slides08.html#coefficient-of-determination-r2",
+    "title": "Transformations and polynomial regression",
+    "section": "Coefficient of Determination: R2",
+    "text": "Coefficient of Determination: R2\nProportion of the total variation in \\(y\\) explained by the linear regression model\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\begin{split}\nR^2 &= 0.421\\\\\n&= \\dfrac{SSRegr}{SST} \\\\\n&= 1 - \\dfrac{SSE}{SST}\n\\end{split}\\)"
+  },
+  {
+    "objectID": "slides/slides08.html#caution",
+    "href": "slides/slides08.html#caution",
+    "title": "Transformations and polynomial regression",
+    "section": "⚠️ Caution",
+    "text": "⚠️ Caution\n\\(R^2\\) only addresses how close the fitted values are to the data, on average. It says nothing about the validity of the model."
+  },
+  {
+    "objectID": "slides.html",
+    "href": "slides.html",
+    "title": "Slides",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Topic\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTopic\n\n\n\nCourse Day\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nTransformations and polynomial regression\n\n\nDay 08\n\n\nProf Amanda Luby\n\n\n\n\n\n\nTransforming SLR models\n\n\nDay 06\n\n\nProf Amanda Luby\n\n\n\n\n\n\nEvaluating SLR models\n\n\nDay 05\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Prediction\n\n\nDay 04\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for SLR\n\n\nDay 03\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nDay 02\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "readings.html",
@@ -854,11 +1015,11 @@
     "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nExam01 Review\n\n\n \n\n\n\n\n\n\nIntro Stat Review\n\n\n \n\n\n\n\n\n\nUsing R/RStudio for Stat230\n\n\n \n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "slides.html",
-    "href": "slides.html",
-    "title": "Slides",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 230: Applied Regression Analysis",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Topic\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTopic\n\n\n\nCourse Day\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nTransforming SLR models\n\n\nDay 06\n\n\nProf Amanda Luby\n\n\n\n\n\n\nEvaluating SLR models\n\n\nDay 05\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Prediction\n\n\nDay 04\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for SLR\n\n\nDay 03\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nDay 02\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
+    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
   },
   {
     "objectID": "slides/slides-cheat-sheet.html#columns",
@@ -1456,6 +1617,90 @@
     "text": "Prediction and confidence intervals\n\n\n\n\n\n\nTip\n\n\n\nThe R code for the following questions is found at \nhttps://aluby.github.io/stat230/activities/04R-prediction\nThe URL is also posted on Moodle.\n\n\nNow, we’ll explore the city data using R.\nQ1. Make a plot of income against education and overlay the linear regression equation. Does it look like what you expected?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ2. Make a plot of income against scale(education) and overlay the linear regression equation. Does it look like what you expected?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ3. Find the linear regression equation from Q1. Confirm that it matches the table at the beginning of this worksheet.\nQ4. The first person in this dataset has education = 8. Calculate the expected income of this person using the first regression equation.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ5. If we want to predict the income of this person, should we use a confidence interval or a prediction interval?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ6. Use R to construct the appropriate 89% interval for this person’s income. Record this interval below.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ7. Interpret the interval in context.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ8. Run the code to produce a scatterplot, regression line, and both types of intervals. Which is the prediction interval and which is the confidence interval? How can you tell?\n\n\n\n\n\n\nTipSolution"
   },
   {
+    "objectID": "activities/08T-polynomial.html",
+    "href": "activities/08T-polynomial.html",
+    "title": "08: Polynomial Regression",
+    "section": "",
+    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/08-polynomial"
+  },
+  {
+    "objectID": "activities/08T-polynomial.html#loading-data",
+    "href": "activities/08T-polynomial.html#loading-data",
+    "title": "08: Polynomial Regression",
+    "section": "Loading data",
+    "text": "Loading data\nTo load the wildfires data set, run the following code chunk:\n\nwildfires &lt;- read.csv(\"https://aloy.github.io/stat230-materials/data/wildfires.csv\")"
+  },
+  {
+    "objectID": "activities/08T-polynomial.html#fitting-a-polynomial-regression-model",
+    "href": "activities/08T-polynomial.html#fitting-a-polynomial-regression-model",
+    "title": "08: Polynomial Regression",
+    "section": "Fitting a polynomial regression model",
+    "text": "Fitting a polynomial regression model\nTo fit a polynomial regression model we still use the lm() command, but we expand our formula to include polynomial terms. To include polynomial terms in a regression model, we need to use the I() function to indicate that we want to calculate a polynomial term. For example, to fit the quadratic model we have already discussed in class, we use the following code:\n\nquadratic_lm &lt;- lm(Acres ~ Year + I(Year^2), data = wildfires)\n\nOnce you have your fitted model, we can explore it like we have with simple linear regression models."
+  },
+  {
+    "objectID": "activities/08T-polynomial.html#exploring-a-cubic-model",
+    "href": "activities/08T-polynomial.html#exploring-a-cubic-model",
+    "title": "08: Polynomial Regression",
+    "section": "Exploring a cubic model",
+    "text": "Exploring a cubic model\nLet’s fit a cubic model to the wildfires data set. The cubic model has the form \\[\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x + \\beta_2x^2 + \\beta_3x^3.\\] Use the lm() command to fit the cubic model where Year is used to predict Acres.\n\n#| min-lines: 3\n# Write your lm() command here\n\nTo plot the fitted cubic model, you can use the gf_point() and gf_lm() functions from the ggformula package. The following code will create a scatter plot of the data and add the fitted cubic regression line:\n\ngf_point(Acres ~ Year, data = wildfires, xlab = \"Year\", ylab = \"Acres burned\") |&gt;\n  gf_lm(formula = y ~ poly(x, 3), linewidth = .5)\n\n\n\n\n\n\n\nNote\n\n\n\nIn the gf_lm() layer we use the poly(x, 3) function to specify that we want to fit a cubic polynomial. You can use poly() to fit polynomials of any degree by changing the second argument, and you can also use this function within the lm() function to fit polynomial regression models if you’d like.\n\n\nDoes the cubic model appear to be necessary? Use the summary() function to explore the fitted model adn run a hypothesis test for the cubic term. What do you conclude?\nWhat degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?\nDo you notice anything curious about the inferential results for the linear and quadratic terms?\nThe issue here is that the polynomial terms for year are highly correlated with each other (i.e., year, year\\(^2\\), and year\\(^3\\) are correlated). This can lead to numerical instability and make it difficult to interpret the coefficients. This is a situation called multicollinearity. We’ll talk more about this later. One way to remedy this issue in polynomial regression is to use orthogonal polynomials, which are uncorrelated with each other."
+  },
+  {
+    "objectID": "activities/08T-polynomial.html#an-alternative-way-to-fit-polynomials",
+    "href": "activities/08T-polynomial.html#an-alternative-way-to-fit-polynomials",
+    "title": "08: Polynomial Regression",
+    "section": "An alternative way to fit polynomials",
+    "text": "An alternative way to fit polynomials\nTo fit polynomial model with uncorrelated polynomial terms use the poly() function. For example, to fit a cubic model using orthogonal polynomials, we can run the following code:\n\ncubic_lm_ortho &lt;- lm(Acres ~ poly(Year, 3), data = wildfires)\n\nUse the summary() function to explore the fitted model. What do you notice about the inferential results for the linear, quadratic, and cubic terms? How does this compare to the previous cubic model we fit? How does it compare to the quadratic model?\n\n#| min-lines: 3\n# Write your lm() command here\n\n\nThe method of constructing the polynomial terms in our regression model does not change our predictions, but it can change the inferential results for the polynomial terms."
+  },
+  {
+    "objectID": "activities/08T-polynomial.html#function-quick-reference",
+    "href": "activities/08T-polynomial.html#function-quick-reference",
+    "title": "08: Polynomial Regression",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a linear model. For polynomial regression the formula should include polynomial terms or use poly().\n\n\nI()\nUsed to create polynomial terms in a regression model\n\n\npoly(x, degree)\nCreate orthogonal polynomial terms"
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html",
+    "href": "activities/08-polynomial-tutorial.html",
+    "title": "08: Polynomial Regression",
+    "section": "",
+    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/08-polynomial"
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html#loading-data",
+    "href": "activities/08-polynomial-tutorial.html#loading-data",
+    "title": "08: Polynomial Regression",
+    "section": "Loading data",
+    "text": "Loading data\nTo load the wildfires data set, run the following code chunk:"
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html#fitting-a-polynomial-regression-model",
+    "href": "activities/08-polynomial-tutorial.html#fitting-a-polynomial-regression-model",
+    "title": "08: Polynomial Regression",
+    "section": "Fitting a polynomial regression model",
+    "text": "Fitting a polynomial regression model\nTo fit a polynomial regression model we still use the lm() command, but we expand our formula to include polynomial terms. To include polynomial terms in a regression model, we need to use the I() function to indicate that we want to calculate a polynomial term. For example, to fit the quadratic model we have already discussed in class, we use the following code:\n\n\n\n\n\n\n\n\nOnce you have your fitted model, we can explore it like we have with simple linear regression models."
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html#exploring-a-cubic-model",
+    "href": "activities/08-polynomial-tutorial.html#exploring-a-cubic-model",
+    "title": "08: Polynomial Regression",
+    "section": "Exploring a cubic model",
+    "text": "Exploring a cubic model\nLet’s fit a cubic model to the wildfires data set. The cubic model has the form \\[\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x + \\beta_2x^2 + \\beta_3x^3.\\] Use the lm() command to fit the cubic model where Year is used to predict Acres.\n\n\n\n\n\n\n\n\nTo plot the fitted cubic model, you can use the gf_point() and gf_lm() functions from the ggformula package. The following code will create a scatter plot of the data and add the fitted cubic regression line:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nIn the gf_lm() layer we use the poly(x, 3) function to specify that we want to fit a cubic polynomial. You can use poly() to fit polynomials of any degree by changing the second argument, and you can also use this function within the lm() function to fit polynomial regression models if you’d like.\n\n\nDoes the cubic model appear to be necessary? Use the summary() function to explore the fitted model adn run a hypothesis test for the cubic term. What do you conclude?\nWhat degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?\nDo you notice anything curious about the inferential results for the linear and quadratic terms?\nThe issue here is that the polynomial terms for year are highly correlated with each other (i.e., year, year\\(^2\\), and year\\(^3\\) are correlated). This can lead to numerical instability and make it difficult to interpret the coefficients. This is a situation called multicollinearity. We’ll talk more about this later. One way to remedy this issue in polynomial regression is to use orthogonal polynomials, which are uncorrelated with each other."
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html#an-alternative-way-to-fit-polynomials",
+    "href": "activities/08-polynomial-tutorial.html#an-alternative-way-to-fit-polynomials",
+    "title": "08: Polynomial Regression",
+    "section": "An alternative way to fit polynomials",
+    "text": "An alternative way to fit polynomials\nTo fit polynomial model with uncorrelated polynomial terms use the poly() function. For example, to fit a cubic model using orthogonal polynomials, we can run the following code:\n\n\n\n\n\n\n\n\nUse the summary() function to explore the fitted model. What do you notice about the inferential results for the linear, quadratic, and cubic terms? How does this compare to the previous cubic model we fit? How does it compare to the quadratic model?\n\n\n\n\n\n\n\n\n\nThe method of constructing the polynomial terms in our regression model does not change our predictions, but it can change the inferential results for the polynomial terms."
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html#function-quick-reference",
+    "href": "activities/08-polynomial-tutorial.html#function-quick-reference",
+    "title": "08: Polynomial Regression",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a linear model. For polynomial regression the formula should include polynomial terms or use poly().\n\n\nI()\nUsed to create polynomial terms in a regression model\n\n\npoly(x, degree)\nCreate orthogonal polynomial terms"
+  },
+  {
     "objectID": "activities/group-expectations.html",
     "href": "activities/group-expectations.html",
     "title": "Group Expectations (Week 2-3)",
@@ -1607,6 +1852,6 @@
     "href": "schedule.html",
     "title": "Stat230: Applied Regression Analysis",
     "section": "",
-    "text": "WEEK\nDOW\nDATE\nREFERENCE READING\nTOPIC\nDUE\n\n\n\n\n1\nM\nMar 30\n📚 RABE 1.4  📺 Intro Stat Review \nWelcome + Intro Stat Review\n\n\n\n\n1\nW\nApr 1\n📚 RABE 2.1 - 2.5\nSLR; R for Regression Activity\n\n\n\n\n1\nF\nApr 3\n📚 RABE 2.6 - 2.7 Intro to R\nInference for SLR; Quarto documents and RStudio\nHW 1\n\n\n2\nM\nApr 6\n📚 RABE 2.8\nSLR prediction\n\n\n\n\n2\nW\nApr 8\n📚 RABE 2.9\nDiagnostic plots and R2\n\n\n\n\n2\nF\nApr 10\n📚 RABE 2.10-2.11\nFlavors of SLR / Intro to transformation\nHW 2\n\n\n3\nM\nApr 13\n\n\nExam 1 (SLR)\n\n\n\n\n3\nW\nApr 15\n📚 RABE 6.1-6.3\nDiagnostics, transformation, and interpretation\n\n\n\n\n3\nF\nApr 17\n📚 RABE 3.1-3.5\nIntro to MLR\nHW 3 and Case Study analysis\n\n\n4\nM\nApr 20\n📚 RABE 5.1-5.3\nCategorical Predictors\nCase Study I due\n\n\n4\nW\nApr 22\n📚 RABE 3.9\nMLR Inference\n\n\n\n\n4\nF\nApr 24\n📚 RABE 3.10 - 3.11\nInference for Linear Combinations; F test\nHW 4\n\n\n5\nM\nApr 27\n📚 RABE 4.1-4.9; 9.1-9.4\nMLR Diagnostics\n\n\n\n\n5\nW\nApr 29\n📚 RABE 4.13\nMulticolinearity\n\n\n\n\n5\nF\nMay 1\n📚 RABE 11.1-11.9\nVariable Selection\nHW 5\n\n\n6\nM\nMay 4\n\n\nMidterm Break: No class\n\n\n\n\n6\nW\nMay 6\n\n\nQuiz 2 (MLR)\n\n\n\n\n6\nF\nMay 8\n\n\nOdds, odds ratio, review proportions/chi square tests\nHW 6 and case study analysis\n\n\n7\nM\nMay 11\n📚 RABE 12.1-12.4\nBinary logistic regression\nCase Study II due\n\n\n7\nW\nMay 13\n📚 RABE 12.1-12.4\nInference for logistic regression\n\n\n\n\n7\nF\nMay 15\n\n\nLogistic regression in R; Data presentations\nHW 7\n\n\n8\nM\nMay 18\n📚 RABE 12.5-12.7\nDiagnostics for logistic regression; Data presentations\n\n\n\n\n8\nW\nMay 20\n\n\nBinomial logistic regression\n\n\n\n\n8\nF\nMay 22\n\n\nDeviance goodness of fit tests\nHW 8 and Case Study analysis\n\n\n9\nM\nMay 25\n\n\nQuiz 3 (Logistic Regression)\nCase Study III (final)\n\n\n9\nW\nMay 27\n\n\nOverdispersion\n\n\n\n\n9\nF\nMay 29\nBMLR 4.1-4.2\nIntro to Poisson regression\n\n\n\n\n10\nM\nJun 1\n\n\nPresentations (?)\nHW 9\n\n\n10\nW\nJun 3\n\n\nPresentations (?)\n\n\n\n\n\n\nM\nJun 5\n\n\n\n\n[Course evaluation (anonymous)]"
+    "text": "WEEK\nDOW\nDATE\nREFERENCE READING\nTOPIC\nDUE\n\n\n\n\n1\nM\nMar 30\n📚 RABE 1.4  📺 Intro Stat Review \nWelcome + Intro Stat Review\n\n\n\n\n1\nW\nApr 1\n📚 RABE 2.1 - 2.5\nSLR; R for Regression Activity\n\n\n\n\n1\nF\nApr 3\n📚 RABE 2.6 - 2.7 Intro to R\nInference for SLR; Quarto documents and RStudio\nHW 1\n\n\n2\nM\nApr 6\n📚 RABE 2.8\nSLR prediction\n\n\n\n\n2\nW\nApr 8\n📚 RABE 2.9\nDiagnostic plots and R2\n\n\n\n\n2\nF\nApr 10\n📚 RABE 2.10-2.11\nFlavors of SLR / Intro to transformation\nHW 2\n\n\n3\nM\nApr 13\n\n\nExam 1 (SLR)\n\n\n\n\n3\nW\nApr 15\n📚 RABE 6.1-6.3\nDiagnostics, transformation, and interpretation\n\n\n\n\n3\nF\nApr 17\n📚 RABE 3.1-3.5  📚 IRA 7.1-7.3.0, 7.4.1\nIntro to MLR\nHW 3 and Case Study analysis\n\n\n4\nM\nApr 20\n📚 RABE 5.1-5.3  📚 IRA 7.4.2\nCategorical Predictors\nCase Study I due\n\n\n4\nW\nApr 22\n📚 RABE 3.9  📚 IRA 8.4\nMLR Inference\n\n\n\n\n4\nF\nApr 24\n📚 RABE 3.10 - 3.11  📚 IRA 8.5\nInference for Linear Combinations; F test\nHW 4\n\n\n5\nM\nApr 27\n📚 RABE 4.1-4.9; 9.1-9.4\nMLR Diagnostics\n\n\n\n\n5\nW\nApr 29\n📚 RABE 4.13  📚 IRA 8.6\nMulticolinearity\n\n\n\n\n5\nF\nMay 1\n📚 RABE 11.1-11.9  📚 IRA 10\nVariable Selection\nHW 5\n\n\n6\nM\nMay 4\n\n\nMidterm Break: No class\n\n\n\n\n6\nW\nMay 6\n\n\nQuiz 2 (MLR)\n\n\n\n\n6\nF\nMay 8\n📚 IRA 11.2\nOdds, odds ratio, review proportions/chi square tests\nHW 6 and case study analysis\n\n\n7\nM\nMay 11\n📚 RABE 12.1-12.4 📚 IRA 11.3-11.4\nBinary logistic regression\nCase Study II due\n\n\n7\nW\nMay 13\n📚 RABE 12.1-12.4 📚 IRA 11.5\nInference for logistic regression\n\n\n\n\n7\nF\nMay 15\n📚 IRA 11.7\nLogistic regression in R; Data presentations\nHW 7\n\n\n8\nM\nMay 18\n📚 RABE 12.5-12.7  📚 IRA 11.6\nDiagnostics for logistic regression; Data presentations\n\n\n\n\n8\nW\nMay 20\n\n\nBinomial logistic regression\n\n\n\n\n8\nF\nMay 22\n\n\nDeviance goodness of fit tests\nHW 8 and Case Study analysis\n\n\n9\nM\nMay 25\n\n\nQuiz 3 (Logistic Regression)\nCase Study III (final)\n\n\n9\nW\nMay 27\n\n\nOverdispersion\n\n\n\n\n9\nF\nMay 29\nBMLR 4.1-4.2\nIntro to Poisson regression\n\n\n\n\n10\nM\nJun 1\n\n\nPresentations (?)\nHW 9\n\n\n10\nW\nJun 3\n\n\nPresentations (?)\n\n\n\n\n\n\nM\nJun 5\n\n\n\n\n[Course evaluation (anonymous)]"
   }
 ]
