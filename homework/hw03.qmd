@@ -85,7 +85,7 @@ head(animals)
 Statistics students completed a class project where they designed an experiment to explore the relationship between the wing length (in cm) and flight time (in seconds) of paper helicopters. One group collected data from six different wing lengths.
 
 ```{r}
-flights <- read.csv(here::here("data/winglengths2.csv"))
+flights <- read.csv("https://aluby.github.io/stat230/data/winglengths2.csv")
 ```
 
 (a) Create a scatterplot of flight time against wing length. Describe what you learn from this plot.
