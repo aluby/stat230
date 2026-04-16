@@ -14,6 +14,10 @@ editor: source
 
 {{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
 
+::: callout-note
+To follow the tutorial version in the browser, you can use <https://aluby.github.io/stat230/activities/02-r-live>
+:::
+
 ## Overview
 
 In Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files.

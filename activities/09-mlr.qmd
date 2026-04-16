@@ -2,3 +2,8 @@
 title: "09: Intro to Multiple Regression"
 ---
 
+<!-- https://sta210-fa23.netlify.app/labs/lab-04.html -->
+
+# Multiple Regression
+
+# Standardized Predictors

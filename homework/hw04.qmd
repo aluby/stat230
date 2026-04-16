@@ -1,0 +1,84 @@
+---
+title: "Homework 04"
+format: html
+engine: knitr
+editor: source
+navbar: false
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(ggplot2)
+library(ggformula)
+library(here)
+library(broom)
+library(tidyverse)
+```
+
+Due: Friday of Week 4 at start of class
+
+There is a [homework template](../files/hw-template.qmd) available if you'd like to use that as a starter file, and copy and paste the code as needed. 
+
+::: callout-important
+## Important! 
+
+I will add problems after each class day. Be sure to check back here after each class meeting for new problems.
+:::
+
+
+# Problem 1: Fri
+
+<!-- Math-y transformation problem (interpreting a log transform?)  -->
+
+
+# Problem 2: Fri
+
+Peterson and Ziegler (2021) scraped data on LEGO® sets from themes produced January 1, 2018 and September 11, 2020 from Brickset.com. In this problem, you will work with data on about 400 randomly selected LEGO sets produced during this time period. The data contains the following variables:
+
+- `pieces`: Number of pieces in the set from brickset.com.
+- `minifigures`: Number of minifigures (LEGO® people) in the set scraped from brickset.com. • - `amazon_price`: Price of the set on Amazon.com (in U.S. dollars)
+
+Below is output from the multiple regression model fit in R:
+
+```{r}
+#| echo: false
+
+lego <- read.csv("https://aloy.github.io/stat230-materials/data/lego1.csv")
+
+lego_lm <- lm(formula = amazon_price ~ pieces + minifigures, data = lego)
+
+summary(lego_lm)
+```
+
+a. Report the fitted regression equation.
+b. Interpret each slope coefficient in context.
+c. Explain why the intercept is not meaningful in this context.
+d. What proportion of the variability in the Amazon price of a LEGO set is explained by the number of pieces and the number of minifigures?
+e. Calculate a 90% confidence interval for the slope associated with pieces.
+f. Interpret your confidence interval from part (e) in context.
+
+# Problem 3: Fri
+
+<!-- multiple regression in R   -->
+
+# Problem 4: Mon
+
+<!-- categorical predictor (writing out equations)  -->
+
+# Problem 5: Mon
+
+<!--  categorical predictor (in R)  -->
+
+# Problem 6: Wed
+
+<!-- inference for MLR  -->
+
+# Problem 7: Wed
+
+<!-- inference for MLR  -->
