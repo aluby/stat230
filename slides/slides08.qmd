@@ -219,11 +219,11 @@ Assumptions — same as in SLR
 
 1. $\mu\{Y|x_i\}$, is a linear function
 
+1.  Independent observations
+
 1. For each $x_i$, the sub-population of responses is normally distributed 
 
 1. The standard deviation for each sub-population is $\sigma$
-
-1.  Independent observations
 
 
 ## Interpreting the model
@@ -415,13 +415,13 @@ p25 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
 - Leaves a lot of variability unexplained
 
 ::: columns
-:::{.column width="50%"}
+:::{.column width="45%"}
 ```{r echo=FALSE, fig.height = 3, fig.width = 3.5, out.width="90%", fig.align='center'}
 gf_point(Acres ~ Year, data = wildfires, ylab = "Acres burned", color = "#003069") %>%
   gf_hline(yintercept = mean(wildfires$Acres), color = "#f15a31")
 ```
 :::
-:::{.column width="50%"}
+:::{.column width="45%"}
 $SD(Y) = `r round(sd(wildfires[["Acres"]]), 2)`$ cm
 :::
 :::
@@ -436,13 +436,13 @@ $SD(Y) = `r round(sd(wildfires[["Acres"]]), 2)`$ cm
 
 
 ::: columns
-:::{.column width="50%"}
+:::{.column width="45%"}
 ```{r echo=FALSE, fig.height = 3, fig.width = 3.5, out.width="90%", fig.align='center'}
 gf_point(Acres ~ Year, data = wildfires, ylab = "Acres burned", color = "#003069") %>%
   gf_lm(formula = y ~ poly(x, 2), color = "#f15a31")
 ```
 :::
-:::{.column width="50%"}
+:::{.column width="45%"}
 $SD(\varepsilon) = `r round(sigma(quad_mod), 2)`$ cm
 :::
 :::
@@ -452,13 +452,13 @@ $SD(\varepsilon) = `r round(sigma(quad_mod), 2)`$ cm
 ## SSTotal
 
 ::: columns
-:::{.column width="50%"}
+:::{.column width="45%"}
 ${\rm SSTotal} = \sum(Y_i - \bar{Y})^2$
 
 Measures the overall variability in $Y$
 :::
 
-::: {.column width="50%"}
+::: {.column width="45%"}
 ```{r echo=FALSE, fig.height = 3.25, fig.width = 3.75, fig.align='center'}
 quad_aug <- augment(quad_mod)
 quad_aug <- mutate(quad_aug, mean.y = mean(Acres))
@@ -474,7 +474,7 @@ gf_point(Acres ~ Year, data = quad_aug, ylab = "Acres burned") %>%
 ## SSResidual (aka SSError)
 
 ::: columns
-::: {.column width="50%"}
+::: {.column width="45%"}
 ${\rm SSResidual} = \sum(Y_i - \widehat{Y}_i)^2$
 
 <br>
@@ -487,7 +487,7 @@ Measures the variability unexplained by the model
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="45%"}
 ```{r echo=FALSE, fig.height = 3.25, fig.width = 3.75, fig.align='center'}
 
 gf_point(Acres ~ Year, data = quad_aug, ylab = "Acres burned") %>%
@@ -536,7 +536,7 @@ decomp_plot <- ggplot(data = ssdf |> filter(Source != "Total"), aes(x = "", y = 
 sst_plot + decomp_plot
 ```
 :::
-:::{.column width="70%"}
+:::{.column width="60%"}
 <br>
 
 <br>
@@ -561,7 +561,7 @@ Proportion of the total variation in $y$ explained by the linear regression mode
 sst_plot + decomp_plot
 ```
 :::
-:::{.column width="70%"}
+:::{.column width="60%"}
 <br>
 
 <br>
