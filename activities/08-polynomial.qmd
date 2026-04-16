@@ -1,30 +1,22 @@
 ---
 title: "08: Polynomial Regression"
-webr:
-  packages:
-    - ggformula
-    - ggResidpanel
-format: 
-  live-html:
-    toc: true
-    output-file: "08-polynomial-tutorial"
-engine: knitr
-editor: source
-editor_options: 
-  chunk_output_type: console
 ---
 
-{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
+```{r}
+library(tidyverse)
+library(ggformula)
+library(broom)
+```
 
 ::: callout-note
-This is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use <https://aluby.github.io/stat230/activities/08-polynomial>
+This is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use <https://aluby.github.io/stat230/activities/08-polynomial-tutorial>
 :::
 
 ## Loading data
 
 To load the wildfires data set, run the following code chunk:
 
-```{webr}
+```{r}
 wildfires <- read.csv("https://aluby.github.io/stat230/data/wildfires.csv")
 ```
 
@@ -34,7 +26,7 @@ wildfires <- read.csv("https://aluby.github.io/stat230/data/wildfires.csv")
 
 To fit a polynomial regression model we still use the `lm()` command, but we expand our formula to include polynomial terms. To include polynomial terms in a regression model, we need to use the `I()` function to indicate that we want to calculate a polynomial term. For example, to fit the quadratic model we have already discussed in class, we use the following code:
 
-```{webr}
+```{r}
 quadratic_lm <- lm(Acres ~ Year + I(Year^2), data = wildfires)
 ```
 
@@ -51,14 +43,13 @@ Let's fit a cubic model to the wildfires data set. The cubic model has the form
 $$\mu \lbrace y | x \rbrace = \beta_0 + \beta_1 x + \beta_2x^2 + \beta_3x^3.$$
 Use the `lm()` command to fit the cubic model where `Year` is used to predict `Acres`.
 
-```{webr}
-#| min-lines: 3
+```{r}
 # Write your lm() command here
 ```
 
 To plot the fitted cubic model, you can use the `gf_point()` and `gf_lm()` functions from the `ggformula` package. The following code will create a scatter plot of the data and add the fitted cubic regression line:
 
-```{webr}
+```{r}
 gf_point(Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned") |>
   gf_lm(formula = y ~ poly(x, 3), linewidth = .5)
 ```
@@ -82,15 +73,14 @@ The issue here is that the polynomial terms for year are highly correlated with 
 
 To fit polynomial model with uncorrelated polynomial terms use the `poly()` function. For example, to fit a cubic model using orthogonal polynomials, we can run the following code:
 
-```{webr}
+```{r}
 cubic_lm_ortho <- lm(Acres ~ poly(Year, 3), data = wildfires)
 ```
 
 Use the `summary()` function to explore the fitted model. What do you notice about the inferential results for the linear, quadratic, and cubic terms? How does this compare to the previous cubic model we fit? How does it compare to the quadratic model?
 
 
-```{webr}
-#| min-lines: 3
+```{r}
 # Write your lm() command here
 ```
 

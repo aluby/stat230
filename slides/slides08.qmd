@@ -92,15 +92,56 @@ wildfires <- filter(wildfires, Year >= 1960)
 ## Warm up: transformations
 
 ::: {.task}
-1. Consider the following two models: 
+Consider the following two models: 
 
+- $\log_{2} (y) = 1 + 2 \log_{2}(x) + \varepsilon, \varepsilon \sim N(0,1)$
+- $y = 2 x^2+ \varepsilon, \varepsilon \sim N(0,1)$
 
-Show that the two models have the same $\hat y$'s
+Show that the two models have the same $\widehat y$'s
 
 :::
 
-## Two models: plot
+::: callout-tip
+## Hint: log rules might be useful
 
+:::: {.columns}
+
+::: {.column width="45%"}
+- $\log(a + b) = \log(a) \log(b)$
+- $\log(a^b) = b \log (a)$
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+- $\log(a - b) = \log(a) /\log(b)$
+- $\log_{b} b = 1$ or $\log e = 1$
+:::
+
+::::
+:::
+
+## 
+
+## 
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+set.seed(041526)
+tibble(x = seq(.1, 2, len = 100),
+       y1 = 2^(1 + 2 * log10(x) + rnorm(100)), 
+       y2 = 2*x^2 + rnorm(100)) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x = x, y = value), col = "#003300") + 
+  geom_point() + 
+  facet_grid(cols = vars(name)) + 
+  theme(legend.position = "none")
+```
+
+Even though they give the same **predictions**, Model (2) has constant variance but Model (1) does not. If we use Model (2) to make prediction intervals for data that look like Model (1), our interval will be too wide for small x and too narrow for large x
 
 
 ## Wildfires
@@ -118,11 +159,11 @@ Data source: https://www.nifc.gov/fireInfo/fireInfo_stats_totalFires.html
 
 ##
 
-```{r fig.height=4, fig.width=5, message=FALSE, echo=FALSE, out.width=800}
+```{r fig.height=4, fig.width=5, message=FALSE, out.width=800}
 #| echo: true
 
 
-gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
+gf_point(Acres ~ Year, data = wildfires) %>%
   gf_labs(x = "Year", y = "Acres burned") %>%
   gf_smooth(size = .5)
 ```
@@ -301,12 +342,14 @@ knitr::kable(coef_table, format = "pipe", digits = 0, booktabs = TRUE, col.names
 
 ## Your turn
 
+::: task 
+
 Would a higher-order polynomial (e.g. cubic, quartic, quintic) provide a better fit to the wildfire data?
 
 <br>
 
-Work through that example on the handout with your neighbors
-
+Work through the R handout with your groups
+:::
 
 ## A warning about this analysis
 
