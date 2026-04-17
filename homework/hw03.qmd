@@ -111,3 +111,9 @@ flights <- read.csv("https://aluby.github.io/stat230/data/winglengths2.csv")
 (b) Fit and report an SLR model
 (c) One type of inference for a regression coefficient and/or prediction
 (d) At least one model evaluation (residual plots and/or $R^2$) with an interpretation
+
+::: callout-warning
+## Warning!
+
+If your `resid_panel` code is taking a long time and/or booting you out of maize, try using `resid_panel(florida_lm, type = "standardized")` instead (this uses the standardized residuals)
+:::

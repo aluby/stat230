@@ -60,7 +60,11 @@ Your Results section should address the following phases of the investigation:
   - To test if this county is an influential point, create a new dataset that excludes this anomalous county and fit a second linear regression model on this subset.
   - Compare the two models. What do you conclude? 
     
-    
+::: callout-warning
+## Warning!
+
+If your `resid_panel` code is taking a long time and/or booting you out of maize, try using `resid_panel(florida_lm, type = "standardized")` instead (this uses the standardized residuals)
+:::
 
 
 ## Option 2: Nascar driver ratings
