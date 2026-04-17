@@ -8,8 +8,7 @@ library(dplyr)
 library(broom)
 library(GGally)
 
-supervisor <- read.csv(here::here("data/supervisor.csv"))
-# supervisor <- read.csv("http://aluby.github.io/stat230/data/supervisor.csv")
+supervisor <- read.csv("http://aluby.github.io/stat230/data/supervisor.csv")
 ```
 
 # Data
