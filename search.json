@@ -1838,7 +1838,7 @@
     "href": "activities/09-mlr.html",
     "title": "09: Intro to Multiple Regression",
     "section": "",
-    "text": "library(ggformula)\nlibrary(dplyr)\nlibrary(broom)\nlibrary(GGally)\n\nsupervisor &lt;- read.csv(here::here(\"data/supervisor.csv\"))\n# supervisor &lt;- read.csv(\"http://aluby.github.io/stat230/data/supervisor.csv\")"
+    "text": "library(ggformula)\nlibrary(dplyr)\nlibrary(broom)\nlibrary(GGally)\n\nsupervisor &lt;- read.csv(\"http://aluby.github.io/stat230/data/supervisor.csv\")"
   },
   {
     "objectID": "activities/09-mlr.html#eda-making-a-pairs-plot",
