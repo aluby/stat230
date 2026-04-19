@@ -32,19 +32,31 @@ I will add problems after each class day. Be sure to check back here after each 
 :::
 
 
-# Problem 1: Fri
+# Problem 1: Log transformed response
 
 <!-- Math-y transformation problem (interpreting a log transform?)  -->
 
+In class, we talked about how we must be careful about interpreting estimated $\beta$ coefficient when we've transformed the variables since the relationship is typically no longer constant for the entire range of the predictor variable.  (e.g. the [wildfires](https://aluby.github.io/stat230/slides/slides08.html#/interpreting-the-model) example, which *decreases* from 1960-1980-ish and then increases at a non-constant rate) One exception is log transformations, which we can usually "math-out" a reasonable interpretation on the original variable scale. 
 
-# Problem 2: Fri
+A data science team at a tech startup is analyzing the relationship between their weekly digital advertising budget and their weekly app downloads. Because both advertising budgets and user growth often scale multiplicatively rather than additively, the team decides to test models using the natural logarithm.
+
+- Let $Y$ = `Downloads` (in thousands of users)
+- Let $X$ = `Ad_Spend` (in thousands of dollars)
+
+(a) Show that, if we use the fitted regression equation $\widehat{ \log y_i} = \widehat{\beta_0} + \widehat{\beta_1} x$, then $\hat{y_i} = e^{\widehat{\beta_0}} e^{\widehat{\beta_1} x_i}$
+
+(b) Use part (a) to show or explain why this means that we can interpret $\widehat{\beta_1}$ as follows: "When $x$ increases by 1 unit, we expect $y$ to **multiply** by $\widehat{\beta_1}$"
+
+(c) If we find the following fitted equation $\widehat{\log y} = 2.4 + 0.08 x$, provide an interpretation of $\widehat{\beta_1}$ in terms of percentage change in raw downloads
+
+# Problem 2: Multiple regression (no R needed)
 
 Peterson and Ziegler (2021) scraped data on LEGO® sets from themes produced January 1, 2018 and September 11, 2020 from Brickset.com. In this problem, you will work with data on about 400 randomly selected LEGO sets produced during this time period. The data contains the following variables:
 
 - `pieces`: Number of pieces in the set from brickset.com.
 - `minifigures`: Number of minifigures (LEGO® people) in the set scraped from brickset.com. • - `amazon_price`: Price of the set on Amazon.com (in U.S. dollars)
 
-Below is output from the multiple regression model fit in R:
+Below is output from the multiple regression model fit in R: 
 
 ```{r}
 #| echo: false
@@ -56,6 +68,12 @@ lego_lm <- lm(formula = amazon_price ~ pieces + minifigures, data = lego)
 summary(lego_lm)
 ```
 
+::: callout-note
+## Note
+
+You do not need to do any R for this question, just use the output to answer the questions
+:::
+
 a. Report the fitted regression equation.
 b. Interpret each slope coefficient in context.
 c. Explain why the intercept is not meaningful in this context.
@@ -63,22 +81,19 @@ d. What proportion of the variability in the Amazon price of a LEGO set is expla
 e. Calculate a 90% confidence interval for the slope associated with pieces.
 f. Interpret your confidence interval from part (e) in context.
 
-# Problem 3: Fri
 
-<!-- multiple regression in R   -->
-
-# Problem 4: Mon
+# Problem 3: Mon
 
 <!-- categorical predictor (writing out equations)  -->
 
-# Problem 5: Mon
+# Problem 4: Mon
 
 <!--  categorical predictor (in R)  -->
 
-# Problem 6: Wed
+# Problem 5: Wed
 
 <!-- inference for MLR  -->
 
-# Problem 7: Wed
+# Problem 6: Wed
 
 <!-- inference for MLR  -->
