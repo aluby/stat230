@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,7 +37,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.scss">
 </head>
@@ -85,13 +114,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#problem-1-fri" id="toc-problem-1-fri" class="nav-link active" data-scroll-target="#problem-1-fri">Problem 1: Fri</a></li>
-  <li><a href="#problem-2-fri" id="toc-problem-2-fri" class="nav-link" data-scroll-target="#problem-2-fri">Problem 2: Fri</a></li>
-  <li><a href="#problem-3-fri" id="toc-problem-3-fri" class="nav-link" data-scroll-target="#problem-3-fri">Problem 3: Fri</a></li>
+  <li><a href="#problem-1-log-transformed-response" id="toc-problem-1-log-transformed-response" class="nav-link active" data-scroll-target="#problem-1-log-transformed-response">Problem 1: Log transformed response</a></li>
+  <li><a href="#problem-2-multiple-regression-no-r-needed" id="toc-problem-2-multiple-regression-no-r-needed" class="nav-link" data-scroll-target="#problem-2-multiple-regression-no-r-needed">Problem 2: Multiple regression (no R needed)</a></li>
+  <li><a href="#problem-3-mon" id="toc-problem-3-mon" class="nav-link" data-scroll-target="#problem-3-mon">Problem 3: Mon</a></li>
   <li><a href="#problem-4-mon" id="toc-problem-4-mon" class="nav-link" data-scroll-target="#problem-4-mon">Problem 4: Mon</a></li>
-  <li><a href="#problem-5-mon" id="toc-problem-5-mon" class="nav-link" data-scroll-target="#problem-5-mon">Problem 5: Mon</a></li>
+  <li><a href="#problem-5-wed" id="toc-problem-5-wed" class="nav-link" data-scroll-target="#problem-5-wed">Problem 5: Wed</a></li>
   <li><a href="#problem-6-wed" id="toc-problem-6-wed" class="nav-link" data-scroll-target="#problem-6-wed">Problem 6: Wed</a></li>
-  <li><a href="#problem-7-wed" id="toc-problem-7-wed" class="nav-link" data-scroll-target="#problem-7-wed">Problem 7: Wed</a></li>
   </ul>
 </nav>
     </div>
@@ -132,12 +160,23 @@ ul.task-list li input[type="checkbox"] {
 <p>I will add problems after each class day. Be sure to check back here after each class meeting for new problems.</p>
 </div>
 </div>
-<section id="problem-1-fri" class="level1">
-<h1>Problem 1: Fri</h1>
+<section id="problem-1-log-transformed-response" class="level1">
+<h1>Problem 1: Log transformed response</h1>
 <!-- Math-y transformation problem (interpreting a log transform?)  -->
+<p>In class, we talked about how we must be careful about interpreting estimated <span class="math inline">\(\beta\)</span> coefficient when we’ve transformed the variables since the relationship is typically no longer constant for the entire range of the predictor variable. (e.g.&nbsp;the <a href="https://aluby.github.io/stat230/slides/slides08.html#/interpreting-the-model">wildfires</a> example, which <em>decreases</em> from 1960-1980-ish and then increases at a non-constant rate) One exception is log transformations, which we can usually “math-out” a reasonable interpretation on the original variable scale.</p>
+<p>A data science team at a tech startup is analyzing the relationship between their weekly digital advertising budget and their weekly app downloads. Because both advertising budgets and user growth often scale multiplicatively rather than additively, the team decides to test models using the natural logarithm.</p>
+<ul>
+<li>Let <span class="math inline">\(Y\)</span> = <code>Downloads</code> (in thousands of users)</li>
+<li>Let <span class="math inline">\(X\)</span> = <code>Ad_Spend</code> (in thousands of dollars)</li>
+</ul>
+<ol type="a">
+<li><p>Show that, if we use the fitted regression equation <span class="math inline">\(\widehat{ \log y_i} = \widehat{\beta_0} + \widehat{\beta_1} x\)</span>, then <span class="math inline">\(\hat{y_i} = e^{\widehat{\beta_0}} e^{\widehat{\beta_1} x_i}\)</span></p></li>
+<li><p>Use part (a) to show or explain why this means that we can interpret <span class="math inline">\(\widehat{\beta_1}\)</span> as follows: “When <span class="math inline">\(x\)</span> increases by 1 unit, we expect <span class="math inline">\(y\)</span> to <strong>multiply</strong> by <span class="math inline">\(\widehat{\beta_1}\)</span>”</p></li>
+<li><p>If we find the following fitted equation <span class="math inline">\(\widehat{\log y} = 2.4 + 0.08 x\)</span>, provide an interpretation of <span class="math inline">\(\widehat{\beta_1}\)</span> in terms of percentage change in raw downloads</p></li>
+</ol>
 </section>
-<section id="problem-2-fri" class="level1">
-<h1>Problem 2: Fri</h1>
+<section id="problem-2-multiple-regression-no-r-needed" class="level1">
+<h1>Problem 2: Multiple regression (no R needed)</h1>
 <p>Peterson and Ziegler (2021) scraped data on LEGO® sets from themes produced January 1, 2018 and September 11, 2020 from Brickset.com. In this problem, you will work with data on about 400 randomly selected LEGO sets produced during this time period. The data contains the following variables:</p>
 <ul>
 <li><code>pieces</code>: Number of pieces in the set from brickset.com.</li>
@@ -167,6 +206,19 @@ Multiple R-squared:  0.7271,    Adjusted R-squared:  0.7215
 F-statistic: 129.2 on 2 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You do not need to do any R for this question, just use the output to answer the questions</p>
+</div>
+</div>
 <ol type="a">
 <li>Report the fitted regression equation.</li>
 <li>Interpret each slope coefficient in context.</li>
@@ -176,24 +228,20 @@ F-statistic: 129.2 on 2 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>Interpret your confidence interval from part (e) in context.</li>
 </ol>
 </section>
-<section id="problem-3-fri" class="level1">
-<h1>Problem 3: Fri</h1>
-<!-- multiple regression in R   -->
+<section id="problem-3-mon" class="level1">
+<h1>Problem 3: Mon</h1>
+<!-- categorical predictor (writing out equations)  -->
 </section>
 <section id="problem-4-mon" class="level1">
 <h1>Problem 4: Mon</h1>
-<!-- categorical predictor (writing out equations)  -->
-</section>
-<section id="problem-5-mon" class="level1">
-<h1>Problem 5: Mon</h1>
 <!--  categorical predictor (in R)  -->
+</section>
+<section id="problem-5-wed" class="level1">
+<h1>Problem 5: Wed</h1>
+<!-- inference for MLR  -->
 </section>
 <section id="problem-6-wed" class="level1">
 <h1>Problem 6: Wed</h1>
-<!-- inference for MLR  -->
-</section>
-<section id="problem-7-wed" class="level1">
-<h1>Problem 7: Wed</h1>
 <!-- inference for MLR  -->
 
 
