@@ -36,16 +36,9 @@
     ]
   },
   {
-    "listing": "/readings.html",
-    "items": [
-      "/readings/exam01-review.html",
-      "/readings/intro-review.html",
-      "/readings/r-for-stat230.html"
-    ]
-  },
-  {
     "listing": "/slides.html",
     "items": [
+      "/slides/slides10.html",
       "/slides/slides09.html",
       "/slides/slides08.html",
       "/slides/slides06.html",
@@ -55,6 +48,14 @@
       "/slides/slides02.html",
       "/slides/slides-cheat-sheet.html",
       "/slides/slides01.html"
+    ]
+  },
+  {
+    "listing": "/readings.html",
+    "items": [
+      "/readings/exam01-review.html",
+      "/readings/intro-review.html",
+      "/readings/r-for-stat230.html"
     ]
   }
 ]
