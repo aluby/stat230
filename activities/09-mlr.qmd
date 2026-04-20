@@ -97,8 +97,6 @@ predict(bikes_lm, newdata = data.frame(temp_actual = 90, windspeed = 6))
 
 ## Function quick reference
 
-The following table summarizes the functions we learned today:
-
 | Function | Purpose |
 |----|-----------|
 | `lm(formula, data)` | Fit a MLR model |

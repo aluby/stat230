@@ -2,3 +2,160 @@
 title: "10: Categorical Predictors"
 ---
 
+```{r}
+#| include: false
+library(ggformula)
+library(ggeffects)
+library(Sleuth3)
+
+graph_paper <- ggplot(data = data.frame(x = 0:20, y = 0:20), aes(x, y)) +
+  theme_classic() +
+  scale_x_continuous(name = "temp_actual", breaks = seq(0, 20, by = 2), expand = c(0, 0)) +
+  scale_y_continuous(name = "rides", breaks = seq(0, 20, by = 2), expand = c(0, 0)) +
+  theme(  
+    panel.grid.major = element_line(color = "gray30", size = 0.5), # Major grid lines
+    panel.grid.minor = element_line(color = "gray30", size = 0.25), # Minor grid lines
+    panel.background = element_rect(fill = "white") # White background
+  )
+  
+
+base <- ggplot(data = NULL) +
+  scale_x_continuous(limits = c(0, 10), expand = c(0, 0), breaks = seq(0, 10, by = 2)) +
+  scale_y_continuous(limits = c(0, 10), expand = c(0, 0), breaks = seq(0, 10, by = 2)) +
+  scale_color_manual("Education", breaks = c("College", "Some college", "HS")) +
+  theme_classic() +
+  labs(x = "Age", y = "Depression Score")
+
+model1 <- base + 
+    geom_abline(slope = 0.6, intercept = 1,  linetype = 3, linewidth = 1) +
+  geom_abline(slope = 0.6, intercept = 2,  linetype = 2, linewidth = 1) +
+  geom_abline(slope = 0.6, intercept = 3, linetype = 1, linewidth = 1, linewidth = 1) 
+
+model2 <- base + 
+    geom_abline(slope = 0.4, intercept = 1, linetype = 3, linewidth = 1) +
+  geom_abline(slope = 0.6, intercept = 1, linetype = 2, linewidth = 1) +
+  geom_abline(slope = 0.8, intercept = 1, linetype = 1, linewidth = 1, linewidth = 1) 
+
+
+model3 <- base + 
+    geom_abline(slope = 0.1, intercept = 1.5, linetype = 3, linewidth = 1) +
+  geom_abline(slope = 0.6, intercept = 2,  linetype = 2, linewidth = 1) +
+  geom_abline(slope = 0.4, intercept = 3, linetype = 1, linewidth = 1, linewidth = 1) 
+
+```
+
+
+## Example 1
+
+For each regression model, sketch the fitted model. To do this, first write the expression for the fitted model for weekdays and the fitted model for weekend (e.g., plug in 0 and 1 for the indicator variable). Once you have these two equations, use them to sketch the lines on the provided graph. (*Note:* fake equation alert! not estimates from the real data)
+
+
+**Model 1:** $\widehat{\mu}(y|x) = 10 +  1 \mathtt{age} -2 \mathtt{smoker}$
+
+Fitted equation for non-smokers:
+
+<br>
+
+Fitted equation for smokers:
+
+<br>
+
+```{r}
+#| echo: false
+#| fig-asp: 1
+#| fig-width: 3.75
+#| out-width: 60%
+graph_paper
+```
+
+
+\pagebreak 
+
+**Model 2:** $\widehat{\mu}(y|x) = 5 +  1 \mathtt{age} -0.5 \mathtt{age \times smoker}$
+
+Fitted equation for non-smokers:
+
+<br>
+
+Fitted equation for smokers:
+
+<br>
+
+
+```{r}
+#| echo: false
+#| fig-asp: 1
+#| fig-width: 3.75
+#| out-width: 60%
+graph_paper
+```
+
+
+**Model 3:** $\widehat{\mu}(y|x) = 4  +  0.5 \mathtt{age} + 3\mathtt{smoker} -0.5 \mathtt{age \times smoker}$
+
+Fitted equation for non-smokers:
+
+<br>
+
+Fitted equation for smokers:
+
+<br>
+
+```{r}
+#| echo: false
+#| fig-asp: 1
+#| fig-width: 3.75
+#| out-width: 60%
+graph_paper
+```
+
+
+
+## Example 2
+
+
+Researchers investigated the association of depression with age and education, based on a nationwide (U.S.) telephone survey of 2,031 adults aged 18 to 90. Of particular interest was their finding that the association of depression with education strengthens with increasing age---a phenomenon they called the "divergence hypothesis."
+
+The researchers constructed a depression score from responses to several related questions. Education was categorized as (i) college degree, (ii) high school degree plus some college, or (iii) high school degree only. 
+
+
+1. Define indicator variables that represents the `education` category. (Start by determining how many indicators do you need. Then define them.)
+
+\vspace{2in}
+
+2. Suppose that one researcher wants to fit a model that represents the below sketch (note that the line type represent education). Carefully write the mean function for the regression model that you should fit.
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-asp: 1
+#| fig-width: 3.75
+#| out-width: 60%
+model1
+```
+
+
+3. Suppose that one researcher wants to fit a model that represents the below sketch  (note that the line type represent education). Carefully write the mean function for the regression model that you should fit.
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-asp: 1
+#| fig-width: 3.75
+#| out-width: 60%
+model2
+```
+
+
+
+4. Suppose that one researcher wants to fit a model that represents the below sketch  (note that the line type represent education). Carefully write the mean function for the regression model that you should fit.
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-asp: 1
+#| fig-width: 3.75
+#| out-width: 60%
+model3
+```
+

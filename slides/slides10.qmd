@@ -63,6 +63,9 @@ regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
 }
 
 bikes <- bikes |> select(date, season, year, month, weekend, holiday, temp_actual, temp_feel, humidity, windspeed, rides)
+
+fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt", sep = "\t", header = TRUE)
+
 ```
 
 
@@ -100,55 +103,129 @@ gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No
 :::
 :::::
 
-## $R^2$ for MLR
-
-The $R^2$ for the original SLR model using only `temp_actual` was `r round(summary(bikes_slr)$r.squared, 3)`
-
-```{r}
-summary(bikes_mlr)
-```
-
-## $R^2$ Recap
-
-## Adjusted $R^2$
-
-<br> Adjusts for the **number of predictors** in a model: 
-
-$$R^2_{\text{adj}} =$$
-<br> 
-
-- $R^2$ (original) would **never decrease** if we add predictors
-- $R^2_{adj}$ could **decrease** if we add a "bad" predictor
-
-. . . 
-
-<br> &rarr; better to use **adjusted** $R^2$ for MLR
-
-## `bikes` data
+## `bikes` data {.smaller}
 
 ```{r}
 bikes |> 
+  slice_sample(n=10) |>
   knitr::kable()
 ```
 
 ## Plan for today: remove `windspeed` but add `weekend`
 
 ```{r}
-p1 <- gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) 
+p1 <- gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) + theme(legend.position = "none")
 
-p2 <- gf_boxplot(rides ~ weekend, fill = ~weekend, data = bikes)
+p2 <- gf_boxplot(rides ~ weekend, fill = ~weekend, data = bikes) + theme(legend.position = "none")
 
-p1 + p2 + plot_layout(widths = c(3, 1)) & theme(legend.position = "none")
+p1 + p2 + plot_layout(widths = c(3, 1))
+```
+
+## New data example {.smaller}
+
+:::: {.columns align=center}
+::: {.column width="20%"}
+**Goal:**
+
+:::
+
+::: {.column width="80%"}
+investigate the association between smoking and lung capacity using data from 345 adolescents between the ages of 10 and 19
+:::
+
+::::
+
+
+:::: {.columns align=center}
+::: {.column width="20%"}
+**Wrinkle:**
+:::
+
+::: {.column width="80%"}
+Lung function is expected to increase during adolescence, but smoking may slow it's progression
+
+:::
+
+::::
+
+<br>
+
+:::: {.columns align=center}
+::: {.column width="20%"}
+**Data:**
+:::
+
+::: {.column width="80%"}
+Variable | Description
+:---------|:---------------
+`FEV`    | forced expiratory volume (in liters per second)
+`Age`    | age in years
+`Smoke`  | `Smoker` or `Nonsmoker`
+
+:::
+
+::::
+
+
+
+
+
+:::{.footer}
+Source: Rosner (2006) 
+:::
+
+## EDA
+
+```{r echo=FALSE, fig.width = 5, fig.height = 3, fig.align='center', out.width = 800}
+ggplot(data = fev) +
+  geom_boxplot(aes(x = Smoke, y = FEV, fill = as.factor(Smoke)), alpha = 0.6) +
+  scale_fill_manual(values = c("#f15a31", "#000036")) +
+  theme(legend.position = "none") +
+  coord_flip() +
+  labs(x = "", y = "FEV (in L/s)")
+```
+
+## EDA
+
+```{r echo=FALSE, fig.width = 5, fig.height = 4, fig.align='center', out.width = 800}
+ggplot(data = fev) +
+  geom_point(aes(x = Age, y = FEV, color = as.factor(Smoke), shape = as.factor(Smoke)), alpha = 0.5) +
+  scale_color_manual(values = c("#f15a31", "#000036")) +
+  labs(y = "FEV (in L/s)",
+       col = "Smoke",
+       shape = "Smoke")
+```
+
+## EDA
+
+```{r echo=FALSE, fig.width = 6, fig.height = 3, fig.align='center', out.width = 800}
+ggplot(data = fev) +
+  geom_point(aes(x = Age, y = FEV, color = as.factor(Smoke), shape = as.factor(Smoke)), alpha = 0.5) + 
+  facet_wrap(~Smoke) +
+  scale_color_manual(values = c("#f15a31", "#000036")) +
+  labs(y = "FEV (in L/s)",
+       col = "Smoke",
+       shape = "Smoke")
 ```
 
 ## Indicator variables
 
 Regression requires a numeric representation of all variables, so we treat `TRUE = 1` and `FALSE = 0`
 
+<br>
+
+Create a `Smoker` indicator variable:
+
+- `Smoker` = 1
+
+- `Nonsmoker` = 0
+
 ::: task
+## Example 1
+
 For each regression model on the handout, sketch the fitted model on the whiteboard
 
-- Each fitted model will have two lines: one for weekends and one for weekdays
+- Each fitted model will have two lines: one for smokers and one for nonsmokers
 - Work with your groups (last day together!) 
 :::
 
@@ -222,7 +299,7 @@ $$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend} + \beta_
 - $\beta_1$: slope for weekdays
 - $\beta_1 + \beta_3$: slope for weekends
 
-## More than 2 categories
+# More than 2 categories
 
 What if we want to incorporate `season`? (fall, spring, summer, winter)
 
@@ -289,7 +366,7 @@ Create a set of indicator (dummy) variables to represent the four categories
 
 ::::
 
-## Indicator variables
+# Indicator variables
 
 For a categorical variable with $k$ levels, create $k-1$ indicator variables to fully represent the original variable
 
