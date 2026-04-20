@@ -1,0 +1,304 @@
+---
+title: Adding Categorical Predictors
+subtitle: Day 10
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+
+notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+bikes <- bikes |> select(date, season, year, month, weekend, holiday, temp_actual, temp_feel, humidity, windspeed, rides)
+```
+
+
+## Recap: `bikes` MLR
+
+```{r}
+bikes_slr <- lm(rides ~ temp_actual, data = bikes)
+
+bikes_mlr <- lm(rides ~ temp_actual + windspeed, data = bikes)
+
+equatiomatic::extract_eq(bikes_mlr, use_coefs = TRUE)
+```
+
+::::: columns
+::: {.column width="50%"}
+<br>
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 6
+#| fig.align: center
+#| out.width: 100%
+#| echo: false
+gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No. rides", color = "#003300", size = 1) |>
+  gf_lm(rides ~ temp_actual, size = 1.5, color = "#f15a31") 
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+<br> $R^2 =$ `r round(summary(bikes_mlr)$r.squared, 3)`
+
+:::
+:::::
+
+## $R^2$ for MLR
+
+The $R^2$ for the original SLR model using only `temp_actual` was `r round(summary(bikes_slr)$r.squared, 3)`
+
+```{r}
+summary(bikes_mlr)
+```
+
+## $R^2$ Recap
+
+## Adjusted $R^2$
+
+<br> Adjusts for the **number of predictors** in a model: 
+
+$$R^2_{\text{adj}} =$$
+<br> 
+
+- $R^2$ (original) would **never decrease** if we add predictors
+- $R^2_{adj}$ could **decrease** if we add a "bad" predictor
+
+. . . 
+
+<br> &rarr; better to use **adjusted** $R^2$ for MLR
+
+## `bikes` data
+
+```{r}
+bikes |> 
+  knitr::kable()
+```
+
+## Plan for today: remove `windspeed` but add `weekend`
+
+```{r}
+p1 <- gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) 
+
+p2 <- gf_boxplot(rides ~ weekend, fill = ~weekend, data = bikes)
+
+p1 + p2 + plot_layout(widths = c(3, 1)) & theme(legend.position = "none")
+```
+
+## Indicator variables
+
+Regression requires a numeric representation of all variables, so we treat `TRUE = 1` and `FALSE = 0`
+
+::: task
+For each regression model on the handout, sketch the fitted model on the whiteboard
+
+- Each fitted model will have two lines: one for weekends and one for weekdays
+- Work with your groups (last day together!) 
+:::
+
+
+## Model 1 
+
+## Model 2
+
+## Model 3
+
+## Parallel lines model
+
+The number of rides increases at the same rate, but always lower on weekends
+
+```{r}
+p1 |>
+  gf_lm()
+```
+
+## Different slopes model
+
+The number of rides starts at the same baseline, but the relationship between temperature and rides is different on weekends vs weekdays
+
+```{r}
+mod_same_int <- lm(rides ~ temp_actual:weekend, data = bikes)
+bikes_aug <- augment(mod_same_int, data = bikes)
+p1 |>
+ gf_line(.fitted ~ temp_actual, color = ~weekend, data = bikes_aug, linewidth = 1)
+```
+
+## Separate lines model
+
+Weekends/weekdays have different baselines and different relationships with the number of rides
+
+```{r}
+mod_sep_lines <- lm(rides ~ temp_actual + weekend + temp_actual*weekend, data = bikes)
+bikes_aug <- augment(mod_sep_lines, data = bikes)
+p1 |>
+ gf_line(.fitted ~ temp_actual, color = ~weekend, data = bikes_aug, linewidth = 1)
+```
+
+
+## Parallel lines model
+
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend}$$
+
+<br> 
+
+- $\beta_0$: intercept for weekdays
+- $\beta_0 + \beta_2$: intercept for weekends
+- $\beta_1$: slope for both groups
+
+## Different slopes model
+
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{temp} \times \texttt{weekend}$$
+
+<br> 
+
+- $\beta_0$: intercept for both groups
+- $\beta_1$: slope for weekdays
+- $\beta_1 + \beta_2$: slope for weekends
+
+## Separate lines model
+
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend} + \beta_3 \texttt{temp} \times \texttt{weekend}$$
+
+<br> 
+
+- $\beta_0$: intercept for weekdays
+- $\beta_0 + \beta_2$: intercept for weekends
+- $\beta_1$: slope for weekdays
+- $\beta_1 + \beta_3$: slope for weekends
+
+## More than 2 categories
+
+What if we want to incorporate `season`? (fall, spring, summer, winter)
+
+## A possibly bad idea
+
+Convert the column to numeric: 
+
+- Fall $\to$ 1
+- Winter $\to$ 2
+- Spring $\to$ 3
+- Summer $\to$ 4
+
+$$\mu(\text{rides} | \text{season}) = \beta_0 + \beta_1 \text{season}$$
+
+## A good idea
+
+Create a set of indicator (dummy) variables to represent the four categories
+
+:::: {.columns}
+
+::: {.column width="25%"}
+|Original|
+|--------|
+| winter |
+| fall |
+| spring  |
+| spring |
+| fall |
+| summer |
+:::
+
+::: {.column width="20%" .fragment}
+| winter |
+|--------|
+| 1|
+| 0|
+|0 |
+| 0|
+| 0|
+| 0|
+:::
+
+::: {.column width="20%" .fragment}
+| spring |
+|--------|
+| 0|
+| 0|
+| 1|
+| 1|
+| 0|
+| 0|
+:::
+
+::: {.column width="20%" .fragment}
+|summer|
+|--------|
+| 0|
+| 0|
+| 0|
+| 0|
+| 0|
+| 1|
+:::
+
+::::
+
+## Indicator variables
+
+For a categorical variable with $k$ levels, create $k-1$ indicator variables to fully represent the original variable
+
+## Example 2
+
+::: task
+For each sketched regression model, write the mean function for a regression model that matches on the whiteboard
+
+- Note that line type = season
+- Work with your groups
+
+:::
