@@ -1,0 +1,241 @@
+---
+title: "r-functions-reference"
+format: 
+  html:
+    fig-width: 4
+    fig-height: 2
+---
+
+```{r}
+#| include: false
+ggplot2::theme_set(ggplot2::theme_minimal())
+```
+
+*Note:* This is a bare-bones functions reference for R code in Stat230. All examples use the `bikes` dataset from class, which lives in the {bayesrules} package. Most plotting functions use the {ggformula} package.  
+
+```{r}
+library(ggformula)
+library(bayesrules)
+library(dplyr)
+library(ggplot2)
+```
+
+# Viewing data
+
+Prints the first few rows: 
+
+```{r}
+head(bikes)
+```
+
+Get a quick overview of a data set (from {dplyr} package)
+
+```{r}
+library(dplyr)
+glimpse(bikes)
+```
+
+# EDA
+
+## Graphs
+
+### Histogram
+
+I like to specify `col="white"` to draw white lines between the bars. You can also customize the color of the bars with `fill`
+
+```{r}
+gf_histogram(~temp_actual, data = bikes, col = "white", fill = "darkgreen")
+```
+
+### Boxplot
+
+One quantitative variable:
+
+```{r}
+gf_boxplot(~temp_actual, data = bikes, fill = "darkgreen")
+```
+
+One quantitative variable separated and colored by a categorical variable:
+
+```{r}
+gf_boxplot(temp_actual ~ weekend, data = bikes, fill = ~weekend)
+```
+
+### Scatterplot
+
+```{r}
+gf_point(rides ~ temp_actual, data = bikes)
+```
+
+Colored by a 3rd variable: 
+
+```{r}
+gf_point(rides ~ temp_actual, color = ~weekend, data = bikes)
+```
+
+### QQ plot
+
+```{r}
+gf_qq(~temp_actual, data = bikes) |>
+  gf_qqline()
+```
+
+## Numeric Summaries
+
+Syntax is `data$variable_name`. 
+
+Mean: 
+
+```{r}
+mean(bikes$temp_actual)
+```
+
+Standard deviation:
+
+```{r}
+sd(bikes$temp_actual)
+```
+
+Median: 
+
+```{r}
+median(bikes$temp_actual)
+```
+
+Variance
+
+```{r}
+var(bikes$temp_actual)
+```
+
+Correlation (2 quantitative variables)
+
+```{r}
+cor(bikes$temp_actual, bikes$temp_feel)
+```
+
+# SLR 
+
+## Fitting the model
+
+To get the slope and intercept, use `lm()`
+
+```{r}
+lm(rides ~ temp_actual, data = bikes)
+```
+
+To get the summary, first save the `lm` with `<-` and then call `summary`
+
+```{r}
+bikes_slr <- lm(rides ~ temp_actual, data = bikes)
+summary(bikes_slr)
+```
+
+If you want to access specific elements of the summary (like $R^2$ or $\sigma$) you can use: 
+
+```{r}
+summary(bikes_slr)$sigma
+summary(bikes_slr)$r.squared
+```
+
+## Plotting
+
+Overlay a regression line with a pipe (`|>`) and `gf_lm()`
+
+```{r}
+gf_point(rides ~ temp_actual, data = bikes) |>
+  gf_lm()
+```
+
+You can also specify a prediction or confidence interval in `gf_lm`:
+
+```{r}
+gf_point(rides ~ temp_actual, data = bikes) |>
+  gf_lm(interval = "confidence", level = .9)
+```
+
+```{r}
+gf_point(rides ~ temp_actual, data = bikes) |>
+  gf_lm(interval = "confidence", level = .9) |>
+  gf_lm(interval = "prediction", level = .9, fill = "goldenrod")
+```
+
+## Predictions
+
+Use `predict()` to get a point estimate for $\hat{y}_i$, a confidence interval or prediction interval. 
+
+```{r}
+predict(bikes_slr, newdata = data.frame(temp_actual = 75))
+```
+
+```{r}
+predict(bikes_slr, newdata = data.frame(temp_actual = 75),
+        interval = "confidence", 
+        level = .9)
+```
+
+```{r}
+predict(bikes_slr, newdata = data.frame(temp_actual = 75),
+        interval = "prediction", 
+        level = .9)
+```
+
+## Inference
+
+Confidence intervals:
+
+```{r}
+confint(bikes_slr)
+```
+
+Nice version of regression table:
+
+```{r}
+library(broom)
+tidy(bikes_slr)
+```
+
+## Conditions
+
+Use `augment` to create an augmented dataset with residuals and fitted values for all data points:
+
+```{r}
+bikes_slr_aug <- augment(bikes_slr)
+head(bikes_slr_aug)
+```
+
+You can then make a histogram or scatterplot with the usual {ggformula} tools: 
+
+```{r}
+gf_point(.resid ~ .fitted, data = bikes_slr_aug)
+gf_histogram(~.resid , data = bikes_slr_aug, col = "white")
+gf_qq(~.resid , data = bikes_slr_aug) |>
+  gf_qqline()
+```
+
+Alternatively, you can make a panel of residual plots with the `resid_panel` shortcut function in {ggResidpanel} package: 
+
+```{r}
+library(ggResidpanel)
+resid_panel(bikes_slr)
+```
+
+(If it takes a long time, try using standardized residuals instead)
+
+```{r}
+resid_panel(bikes_slr, type = "standardized")
+```
+
+# MLR
+
+
+# Other R 
+
+## Finding $t^*$
+
+Corresponds to the 2.5th percentile of a $t_{498}$ distribution:
+
+```{r}
+qt(.025, df = 498)
+```
+

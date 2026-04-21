@@ -1,0 +1,210 @@
+---
+title: Inference for MLR
+subtitle: Day 11
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+
+notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+bikes <- bikes |> select(date, season, year, month, weekend, holiday, temp_actual, temp_feel, humidity, windspeed, rides)
+
+fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt", sep = "\t", header = TRUE)
+
+```
+
+## Warm up: new groups!
+
+::: task
+
+- Introduce yourselves
+- Group expectations worksheet
+
+:::
+
+
+## `bikes`
+
+```{r}
+gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) 
+```
+
+## MLR model
+
+```{r}
+bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
+bikes_mlr
+```
+
+::: task
+Write out the theoretical and fitted regression model
+:::
+
+## 
+
+
+## Do we _need_ a different slopes model? 
+
+```{r}
+gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) |>
+  gf_lm()
+
+tidy(bikes_mlr) 
+```
+
+
+
+## Testing a single coefficient
+
+::: {style="font-size: 0.9em;"}
+**Hypotheses:** $H_0: \ \beta_j = \#$ vs. $H_a: \ \beta_j \underset{>}{\overset{<}{\ne}} \#$
+:::
+
+. . .
+
+::: {style="font-size: 0.9em;"}
+**Test statistic:** $t = \dfrac{\hat{\beta}_j - \#}{SE(\beta_j)}$
+:::
+. . .
+
+::: {style="font-size: 0.9em;"}
+**Reference distribution:** $t$ distribution with d.f. = $n-(k+1)$
+
+
+**p-value:** Area in the tail(s) specified by $H_a$
+:::
+
+
+```{r echo=FALSE, fig.height = 2, fig.width = 7.5, out.width=850}
+p1 <- ggplot(data = data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = .4) +
+  ggtitle(expression(H[a]: beta[j] < 0)) +
+  theme(axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank())
+
+p2 <- ggplot(data = data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = .4) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = .4) +
+  ggtitle(expression(H[a]: beta[j] != 0)) +
+  theme(axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank())
+
+p3 <- ggplot(data = data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = .4) +
+  ggtitle(expression(H[a]: beta[j] > 0)) +
+  theme(axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank())
+
+(p1 | p2 | p3)
+```
+
+## CIs for a single coefficient
+
+
+$\widehat{\beta}_j \pm t^*_{n-(k+1)} \cdot SE(\widehat{\beta}_j )$
+
+
+## Answer: Do we need a different slopes model? 
+
+
+## Do we need `weekend` at all?
+
+
+```{r}
+tidy(bikes_mlr) 
+```
+
+::: callout-caution
+## Caution!
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+:::
+
+## Do we need `weekend` at all?
+
+```{r}
+bikes_mlr2 <- lm(rides ~ temp_actual + weekend, data = bikes)
+tidy(bikes_mlr2)
+```
+
+
+## Sum of Squares (again)
+
+
+
+# Idea: is the proportion of variability explained by Model 1 significantly different than Model 2?
+
+## F Test
+
+
+
+
+
