@@ -308,8 +308,7 @@ F-statistic: 404.2 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>The <code>ames_houses</code> dataset contains data on sale prices of 232 houses in Ames, Iowa. It was compiled by the Ames Assessor’s Office and used for computing assessed values for individual residential properties sold in Ames, IA from 2006 to 2010.</p>
 <p>The original dataset included data on nearly 3000 houses and included 82 variables. For this problem, we’re going to focus on explaining <code>Sale_Price</code> using <code>Square_Feet</code>, <code>Lot_Area</code>, and <code>Fireplace</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ames_houses <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/ames_houses.csv"</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ames_houses = read_csv("https://aluby.github.io/stat230/data/ames_houses.csv)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ames_houses <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://aluby.github.io/stat230/data/ames_houses.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="a">
 <li><p>Make a scatterplot of <code>Sale_Price</code> against <code>Square_Feet</code> and report the fitted regression equation. Summarize your main result in 1 sentence</p></li>
