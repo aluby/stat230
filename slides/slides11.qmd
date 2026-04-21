@@ -199,6 +199,48 @@ tidy(bikes_mlr2)
 ## Explained Variability
 
 
+```{r}
+ssdf <- tribble(
+  ~Source, ~SS,
+  "Error",      6,
+  "Total",       10,
+  "Regression", 4
+)
+
+sst_plot <- ggplot(data = ssdf |> filter(Source == "Total"), aes(x = "", y = SS)) +
+  geom_bar(stat="identity", width=1) +
+  theme_void() +
+  labs(title = "SSTotal")
+
+
+decomp_plot <- ggplot(data = ssdf |> filter(Source != "Total"), aes(x = "", y = SS, fill = Source)) +
+  geom_bar(stat="identity", width=1) +
+  geom_text(aes(label = paste0(Source)), position = position_stack(vjust = 0.5), color = "white") +
+  theme_void() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("#f15a31", "#003069"))
+
+ssdf2 <- tribble(
+  ~Source, ~SS,
+  "Error",      5,
+  "Total",       10,
+  "Regression", 5
+)
+
+sst_plot2 <- ggplot(data = ssdf2 |> filter(Source == "Total"), aes(x = "", y = SS)) +
+  geom_bar(stat="identity", width=1) +
+  theme_void() +
+  labs(title = "SSTotal")
+
+
+decomp_plot2 <- ggplot(data = ssdf2 |> filter(Source != "Total"), aes(x = "", y = SS, fill = Source)) +
+  geom_bar(stat="identity", width=1) +
+  geom_text(aes(label = paste0(Source)), position = position_stack(vjust = 0.5), color = "white") +
+  theme_void() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("#f15a31", "#003069"))
+```
+
 ::: columns
 :::{.column width="30%"}
 ```{r}
@@ -210,17 +252,13 @@ sst_plot + decomp_plot
 ```
 :::
 :::{.column width="60%"}
-<br>
-
-<br>
-
-
-
-$\begin{split}
-R^2 &= `r round(glance(quad_mod)[["r.squared"]], 3)`\\
-&= \dfrac{SSRegr}{SST} \\
-&= 1 - \dfrac{SSE}{SST} 
-\end{split}$
+```{r}
+#| fig-width: 1.75
+#| fig-height: 3
+#| echo: FALSE
+#| out-width: 100%
+sst_plot2 + decomp_plot2
+```
 :::
 :::
 
