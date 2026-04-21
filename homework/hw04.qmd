@@ -116,8 +116,7 @@ The original dataset included data on nearly 3000 houses and included 82 variabl
 
 
 ```{r}
-ames_houses = read_csv(here("data/ames_houses.csv"))
-# ames_houses = read_csv("https://aluby.github.io/stat230/data/ames_houses.csv)
+ames_houses = read_csv("https://aluby.github.io/stat230/data/ames_houses.csv")
 ```
 
 (a) Make a scatterplot of `Sale_Price` against `Square_Feet` and report the fitted regression equation. Summarize your main result in 1 sentence
