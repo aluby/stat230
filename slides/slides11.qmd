@@ -196,9 +196,33 @@ tidy(bikes_mlr2)
 ```
 
 
-## Sum of Squares (again)
+## Explained Variability
 
 
+::: columns
+:::{.column width="30%"}
+```{r}
+#| fig-width: 1.75
+#| fig-height: 3
+#| echo: FALSE
+#| out-width: 100%
+sst_plot + decomp_plot
+```
+:::
+:::{.column width="60%"}
+<br>
+
+<br>
+
+
+
+$\begin{split}
+R^2 &= `r round(glance(quad_mod)[["r.squared"]], 3)`\\
+&= \dfrac{SSRegr}{SST} \\
+&= 1 - \dfrac{SSE}{SST} 
+\end{split}$
+:::
+:::
 
 # Idea: is the proportion of variability explained by Model 1 significantly different than Model 2?
 
