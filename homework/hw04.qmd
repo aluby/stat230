@@ -54,7 +54,7 @@ A data science team at a tech startup is analyzing the relationship between thei
 Peterson and Ziegler (2021) scraped data on LEGO® sets from themes produced January 1, 2018 and September 11, 2020 from Brickset.com. In this problem, you will work with data on about 400 randomly selected LEGO sets produced during this time period. The data contains the following variables:
 
 - `pieces`: Number of pieces in the set from brickset.com.
-- `minifigures`: Number of minifigures (LEGO® people) in the set scraped from brickset.com. • - `amazon_price`: Price of the set on Amazon.com (in U.S. dollars)
+- `minifigures`: Number of minifigures (LEGO® people) in the set scraped from brickset.com. - `amazon_price`: Price of the set on Amazon.com (in U.S. dollars)
 
 Below is output from the multiple regression model fit in R: 
 
@@ -84,11 +84,53 @@ f. Interpret your confidence interval from part (e) in context.
 
 # Problem 3: Mon
 
-<!-- categorical predictor (writing out equations)  -->
+The {palmerpenguins} data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. This data contains measurements of penguins' body mass, flipper length, and bill size; along with their sex and species. There are 3 penguin species included: Gentoo, Chinstrap, and Adelie. We are interested in building a model to predict flipper length using body mass for each of the 3 species. 
+
+![](https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png)
+Use the summary R output below to answer the questions (no R code needed)
+
+```{r}
+#| echo: false
+
+penguins_mlr <- lm(flipper_length_mm ~ body_mass_g + species + body_mass_g:species, data = palmerpenguins::penguins)
+
+summary(penguins_mlr)
+```
+
+(a) Write out the fitted regression equation for Chinstrap penguins
+
+(b) Write out the fitted regression equation for Gentoo penguins
+
+(c) Write out the fitted regression equation for Adelie penguins
+
+(d) Give a careful interpretation for the $\beta$ coefficient labeled `body_mass_g:speciesChinstrap` in the context of the problem
+
 
 # Problem 4: Mon
 
-<!--  categorical predictor (in R)  -->
+<!--  categorical predictor (in R)  -- Ames housing? -->
+
+The `ames_houses` dataset contains data on sale prices of 232 houses in Ames, Iowa. It was compiled by the Ames Assessor’s Office and used for computing assessed values for individual residential properties sold in Ames, IA from 2006 to 2010. 
+
+The original dataset included data on nearly 3000 houses and included 82 variables. For this problem, we’re going to focus on explaining `Sale_Price` using `Square_Feet`, `Lot_Area`, and `Fireplace`. 
+
+
+```{r}
+ames_houses = read_csv(here("data/ames_houses.csv"))
+# ames_houses = read_csv("https://aluby.github.io/stat230/data/ames_houses.csv)
+```
+
+(a) Make a scatterplot of `Sale_Price` against `Square_Feet` and report the fitted regression equation. Summarize your main result in 1 sentence
+
+(b) Check the SLR conditions and report your findings
+
+(c) There are additional predictors in this dataset. Make a pairs plot of `Sale_Price`, `Square_Feet`, `Lot_Area`, and `Fireplace`. Summarize the main results in 1 sentence.
+
+(d) Fit a parallel lines MLR model that uses all 3 predictors and report the fitted regression equation. 
+
+(e) How did $\beta_{\text{SquareFeet}}$ change from part (a)? 
+
+(f) Make a single EDA plot that shows the relationship between `Square_Feet`, `Fireplace`, and `Sale_Price`. Does your plot suggest a different slopes model is needed?
 
 # Problem 5: Wed
 
@@ -96,4 +138,4 @@ f. Interpret your confidence interval from part (e) in context.
 
 # Problem 6: Wed
 
-<!-- inference for MLR  -->
+<!-- inference for MLR: return to Ames housing data  -->
