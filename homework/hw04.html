@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -180,7 +215,7 @@ window.Quarto = {
 <p>Peterson and Ziegler (2021) scraped data on LEGO® sets from themes produced January 1, 2018 and September 11, 2020 from Brickset.com. In this problem, you will work with data on about 400 randomly selected LEGO sets produced during this time period. The data contains the following variables:</p>
 <ul>
 <li><code>pieces</code>: Number of pieces in the set from brickset.com.</li>
-<li><code>minifigures</code>: Number of minifigures (LEGO® people) in the set scraped from brickset.com. • - <code>amazon_price</code>: Price of the set on Amazon.com (in U.S. dollars)</li>
+<li><code>minifigures</code>: Number of minifigures (LEGO® people) in the set scraped from brickset.com. - <code>amazon_price</code>: Price of the set on Amazon.com (in U.S. dollars)</li>
 </ul>
 <p>Below is output from the multiple regression model fit in R:</p>
 <div class="cell">
@@ -230,11 +265,60 @@ F-statistic: 129.2 on 2 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="problem-3-mon" class="level1">
 <h1>Problem 3: Mon</h1>
-<!-- categorical predictor (writing out equations)  -->
+<p>The {palmerpenguins} data were collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. This data contains measurements of penguins’ body mass, flipper length, and bill size; along with their sex and species. There are 3 penguin species included: Gentoo, Chinstrap, and Adelie. We are interested in building a model to predict flipper length using body mass for each of the 3 species.</p>
+<p><img src="https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png" class="img-fluid"> Use the summary R output below to answer the questions (no R code needed)</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = flipper_length_mm ~ body_mass_g + species + body_mass_g:species, 
+    data = palmerpenguins::penguins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-14.4296  -3.3494   0.1719   3.3428  18.0477 
+
+Coefficients:
+                               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                   1.652e+02  3.551e+00  46.536  &lt; 2e-16 ***
+body_mass_g                   6.677e-03  9.523e-04   7.011  1.3e-11 ***
+speciesChinstrap             -1.386e+01  7.301e+00  -1.899  0.05844 .  
+speciesGentoo                 6.059e+00  6.051e+00   1.001  0.31735    
+body_mass_g:speciesChinstrap  5.228e-03  1.949e-03   2.683  0.00766 ** 
+body_mass_g:speciesGentoo     2.362e-03  1.353e-03   1.746  0.08164 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.348 on 336 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.8575,    Adjusted R-squared:  0.8553 
+F-statistic: 404.2 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Write out the fitted regression equation for Chinstrap penguins</p></li>
+<li><p>Write out the fitted regression equation for Gentoo penguins</p></li>
+<li><p>Write out the fitted regression equation for Adelie penguins</p></li>
+<li><p>Give a careful interpretation for the <span class="math inline">\(\beta\)</span> coefficient labeled <code>body_mass_g:speciesChinstrap</code> in the context of the problem</p></li>
+</ol>
 </section>
 <section id="problem-4-mon" class="level1">
 <h1>Problem 4: Mon</h1>
-<!--  categorical predictor (in R)  -->
+<!--  categorical predictor (in R)  -- Ames housing? -->
+<p>The <code>ames_houses</code> dataset contains data on sale prices of 232 houses in Ames, Iowa. It was compiled by the Ames Assessor’s Office and used for computing assessed values for individual residential properties sold in Ames, IA from 2006 to 2010.</p>
+<p>The original dataset included data on nearly 3000 houses and included 82 variables. For this problem, we’re going to focus on explaining <code>Sale_Price</code> using <code>Square_Feet</code>, <code>Lot_Area</code>, and <code>Fireplace</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ames_houses <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/ames_houses.csv"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ames_houses = read_csv("https://aluby.github.io/stat230/data/ames_houses.csv)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="a">
+<li><p>Make a scatterplot of <code>Sale_Price</code> against <code>Square_Feet</code> and report the fitted regression equation. Summarize your main result in 1 sentence</p></li>
+<li><p>Check the SLR conditions and report your findings</p></li>
+<li><p>There are additional predictors in this dataset. Make a pairs plot of <code>Sale_Price</code>, <code>Square_Feet</code>, <code>Lot_Area</code>, and <code>Fireplace</code>. Summarize the main results in 1 sentence.</p></li>
+<li><p>Fit a parallel lines MLR model that uses all 3 predictors and report the fitted regression equation.</p></li>
+<li><p>How did <span class="math inline">\(\beta_{\text{SquareFeet}}\)</span> change from part (a)?</p></li>
+<li><p>Make a single EDA plot that shows the relationship between <code>Square_Feet</code>, <code>Fireplace</code>, and <code>Sale_Price</code>. Does your plot suggest a different slopes model is needed?</p></li>
+</ol>
 </section>
 <section id="problem-5-wed" class="level1">
 <h1>Problem 5: Wed</h1>
@@ -242,7 +326,7 @@ F-statistic: 129.2 on 2 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="problem-6-wed" class="level1">
 <h1>Problem 6: Wed</h1>
-<!-- inference for MLR  -->
+<!-- inference for MLR: return to Ames housing data  -->
 
 
 </section>
