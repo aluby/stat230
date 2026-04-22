@@ -8,6 +8,9 @@ execute:
   warning: false
   message: false
 navbar: false
+knitr:
+  opts_chunk: 
+    dev: "ragg_png"
 ---
 
 ```{r}
