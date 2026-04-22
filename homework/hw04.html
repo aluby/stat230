@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -153,8 +153,8 @@ window.Quarto = {
   <li><a href="#problem-2-multiple-regression-no-r-needed" id="toc-problem-2-multiple-regression-no-r-needed" class="nav-link" data-scroll-target="#problem-2-multiple-regression-no-r-needed">Problem 2: Multiple regression (no R needed)</a></li>
   <li><a href="#problem-3-mon" id="toc-problem-3-mon" class="nav-link" data-scroll-target="#problem-3-mon">Problem 3: Mon</a></li>
   <li><a href="#problem-4-mon" id="toc-problem-4-mon" class="nav-link" data-scroll-target="#problem-4-mon">Problem 4: Mon</a></li>
-  <li><a href="#problem-5-wed" id="toc-problem-5-wed" class="nav-link" data-scroll-target="#problem-5-wed">Problem 5: Wed</a></li>
-  <li><a href="#problem-6-wed" id="toc-problem-6-wed" class="nav-link" data-scroll-target="#problem-6-wed">Problem 6: Wed</a></li>
+  <li><a href="#problem-5-f-statistic" id="toc-problem-5-f-statistic" class="nav-link" data-scroll-target="#problem-5-f-statistic">Problem 5: F statistic</a></li>
+  <li><a href="#problem-6-p-values-galore" id="toc-problem-6-p-values-galore" class="nav-link" data-scroll-target="#problem-6-p-values-galore">Problem 6: p-values galore</a></li>
   </ul>
 </nav>
     </div>
@@ -206,7 +206,7 @@ window.Quarto = {
 </ul>
 <ol type="a">
 <li><p>Show that, if we use the fitted regression equation <span class="math inline">\(\widehat{ \log y_i} = \widehat{\beta_0} + \widehat{\beta_1} x\)</span>, then <span class="math inline">\(\hat{y_i} = e^{\widehat{\beta_0}} e^{\widehat{\beta_1} x_i}\)</span></p></li>
-<li><p>Use part (a) to show or explain why this means that we can interpret <span class="math inline">\(\widehat{\beta_1}\)</span> as follows: “When <span class="math inline">\(x\)</span> increases by 1 unit, we expect <span class="math inline">\(y\)</span> to <strong>multiply</strong> by <span class="math inline">\(\widehat{\beta_1}\)</span>”</p></li>
+<li><p>Use part (a) to show or explain why this means that we can interpret <span class="math inline">\(\widehat{\beta_1}\)</span> as follows: “When <span class="math inline">\(x\)</span> increases by 1 unit, we expect <span class="math inline">\(y\)</span> to <strong>multiply</strong> by <span class="math inline">\(e^\widehat{\beta_1}\)</span>”</p></li>
 <li><p>If we find the following fitted equation <span class="math inline">\(\widehat{\log y} = 2.4 + 0.08 x\)</span>, provide an interpretation of <span class="math inline">\(\widehat{\beta_1}\)</span> in terms of percentage change in raw downloads</p></li>
 </ol>
 </section>
@@ -319,13 +319,47 @@ F-statistic: 404.2 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>Make a single EDA plot that shows the relationship between <code>Square_Feet</code>, <code>Fireplace</code>, and <code>Sale_Price</code>. Does your plot suggest a different slopes model is needed?</p></li>
 </ol>
 </section>
-<section id="problem-5-wed" class="level1">
-<h1>Problem 5: Wed</h1>
-<!-- inference for MLR  -->
+<section id="problem-5-f-statistic" class="level1">
+<h1>Problem 5: F statistic</h1>
+<p>A multiple regression analysis of a dataset with 82 observations was performed with 6 explanatory variables. <span class="math inline">\(SS_{regression} = 22.6\)</span> and <span class="math inline">\(SS_{total} = 123.1\)</span>.</p>
+<ol type="a">
+<li><p>Find the value of the <span class="math inline">\(F\)</span> statistic</p></li>
+<li><p>Write out the null hypothesis that corresponds to your statistic from (a)</p></li>
+<li><p>The F-statistic has two degrees of freedom, where <span class="math inline">\(df_1 = k\)</span> and <span class="math inline">\(df_2 = (n-k-1)\)</span>. Using R’s <code>pf</code> function, find the p-value that corresponds to the test in parts (a) and (b). Assuming all assumptions are met, what do you conclude? (It may be helpful to review <a href="https://openintro-ims.netlify.app/inference-many-means.html#sec-mathANOVA">Chapter 22.3 from IMS</a>, or check out this interactive <a href="https://gallery.shinyapps.io/dist_calc/">Distribution Calculator</a> for more information on the F distribution.)</p></li>
+<li><p>What proportion of variability in the response variable is explained by the explanatory variables?</p></li>
+</ol>
 </section>
-<section id="problem-6-wed" class="level1">
-<h1>Problem 6: Wed</h1>
-<!-- inference for MLR: return to Ames housing data  -->
+<section id="problem-6-p-values-galore" class="level1">
+<h1>Problem 6: p-values galore</h1>
+<p>Use the <code>penguins</code> summary output in Problem 4 for this question, along with the ANOVA output below.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(penguins_mlr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: flipper_length_mm
+                     Df Sum Sq Mean Sq   F value Pr(&gt;F)    
+body_mass_g           1  51176   51176 1789.0875 &lt;2e-16 ***
+species               2   6411    3206  112.0661 &lt;2e-16 ***
+body_mass_g:species   2    228     114    3.9837 0.0195 *  
+Residuals           336   9611      29                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Write out the null and alternative hypothesis that corresponds to the p-value of <code>0.05844</code> in the <code>summary</code> table. What do you conclude in the context of the data?</p></li>
+<li><p>Write out the null and alternative hypothesis that corresponds to the p-value of <code>0.00766</code> in the <code>summary</code> table. What do you conclude in the context of the data?</p></li>
+<li><p>Write out the null and alternative hypothesis that corresponds to: <code>F-statistic: 404.2 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code> in the <code>summary</code> table. What do you conclude in the context of the data?</p></li>
+<li><p>Write out the null and alternative hypothesis that corresponds to the first row in the ANOVA table:</p></li>
+</ol>
+<p><code>body_mass_g           1  51176   51176 1789.0875 &lt;2e-16 ***</code></p>
+<p>What do you conclude in the context of the data?</p>
+<ol start="5" type="a">
+<li>Write out the null and alternative hypothesis that corresponds to the third row in the ANOVA table:</li>
+</ol>
+<p><code>body_mass_g:species   2    228     114    3.9837 0.0195 *</code></p>
+<p>What do you conclude in the context of the data?</p>
 
 
 </section>
