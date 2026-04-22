@@ -45,7 +45,7 @@ A data science team at a tech startup is analyzing the relationship between thei
 
 (a) Show that, if we use the fitted regression equation $\widehat{ \log y_i} = \widehat{\beta_0} + \widehat{\beta_1} x$, then $\hat{y_i} = e^{\widehat{\beta_0}} e^{\widehat{\beta_1} x_i}$
 
-(b) Use part (a) to show or explain why this means that we can interpret $\widehat{\beta_1}$ as follows: "When $x$ increases by 1 unit, we expect $y$ to **multiply** by $\widehat{\beta_1}$"
+(b) Use part (a) to show or explain why this means that we can interpret $\widehat{\beta_1}$ as follows: "When $x$ increases by 1 unit, we expect $y$ to **multiply** by $e^\widehat{\beta_1}$"
 
 (c) If we find the following fitted equation $\widehat{\log y} = 2.4 + 0.08 x$, provide an interpretation of $\widehat{\beta_1}$ in terms of percentage change in raw downloads
 
