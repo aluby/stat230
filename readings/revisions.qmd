@@ -1,0 +1,36 @@
+---
+title: "Revisions for Stat230"
+format: html
+---
+
+In Stat230, you can [spend a token](https://forms.gle/MivjnJEbqHesQYnw9) to revise an exam or a case study. Both should be revised individually. 
+
+# Exam Revisions
+
+- To revise an exam, you must spend a token
+- If you submit exam revisions, you can earn up to 50% of your missed points back
+
+To submit exam revisions
+
+- Fill out the [spend a token](https://forms.gle/MivjnJEbqHesQYnw9) form
+- Print out a paper copy of your completed exam from gradescope
+- For any question where you missed points, you should write your corrected answer directly on the printout (if you need more space, you can write on a post-it note) 
+    - For open-ended questions, you only need to write the corrected answer
+    - For T/F or multiple choice questions, you should include an explanation/justification of why it is true or false. This could be a reference to slides/activity/hw from class, the book, an equation, a counterexample, a correction to the statement to make it true, etc. You will not earn points back for only marking the correct option.
+- Exam revisions should be handed to me directly in class or office hours
+- Exam revisions are due before the next exam. Revisions on the 3rd exam are due by 11:59 pm on the last day of class. 
+
+# Case Study Revisions
+
+- For an extension on the original submission of the case study, **all** group members must spend a token
+- For a revision on the case study, submit a token and complete the revision **individually**.
+    - If you do not sufficiently contribute to the original submission of a case study, you may not revise that case study. You may instead complete an individual case study on the option that you did not do on the original submission. 
+- Case study revisions must be submitted within a week of when feedback is returned to you. 
+
+To submit a revision:  
+
+- Fill out the [spend a token](https://forms.gle/MivjnJEbqHesQYnw9) form
+- Follow the same guidelines as the original case study, including submitting a separate quarto appendix to me 
+- In addition, you should write a 1 paragraph summary of the main changes that you made. This can be a paragraph at the beginning or end of your report and does not count towards the page limit 
+- There will be a separate submission space on gradescope for case study revisions
+- I **may** ask you to schedule a 5-10 minute meeting to discuss the case study with me in more detail. For this conversation, you should be prepared to discuss the data context, modeling choices, and conclusions that are made in your report. 

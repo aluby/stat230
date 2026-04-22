@@ -71,15 +71,6 @@ bikes_slr <- lm(rides ~ temp_actual, data = bikes)
 
 ```
 
-## Warm up: new groups!
-
-::: task
-
-- Introduce yourselves
-- Group expectations worksheet
-
-:::
-
 ## MLR model for `bikes` data {.smaller}
 
 ```{r}
@@ -88,6 +79,8 @@ bikes_mlr
 ```
 
 ::: task
+## Warm up: 
+
 Write out the theoretical and fitted regression model
 :::
 
