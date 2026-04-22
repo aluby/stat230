@@ -211,7 +211,7 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section id="mlr-model-for-bikes-data" class="slide level2 smaller">
+<section id="mlr-model-for-bikes-data" class="slide level2">
 <h2>MLR model for <code>bikes</code> data</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -226,10 +226,12 @@ temp_actual:weekendTRUE
                   0.411  </code></pre>
 </div>
 </div>
+<div class="task medium">
+<p><strong>Warm up:</strong> Write out the theoretical and fitted regression model (use blank space on next slide)</p>
+</div>
 </section>
-<section id="warm-up" class="slide level2 task">
-<h2>Warm up:</h2>
-<p>Write out the theoretical and fitted regression model</p>
+<section id="section" class="slide level2">
+<h2></h2>
 </section>
 <section id="do-we-need-a-different-slopes-model" class="slide level2">
 <h2>Do we <em>need</em> a different slopes model?</h2>
@@ -325,7 +327,7 @@ temp_actual:weekendTRUE
 <section id="explained-variability" class="slide level2">
 <h2>Explained Variability</h2>
 
-<img data-src="slides11_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
+<img data-src="slides11_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="672"></section>
 <section id="explained-variability-1" class="slide level2">
 <h2>Explained Variability</h2>
 <div class="columns">
@@ -352,16 +354,20 @@ temp_actual:weekendTRUE
 </div>
 </div>
 </div><div class="column fragment center" style="width:30%;">
+<p><br></p>
 <p><strong>Idea:</strong> Is the proportion of variability explained by Model 2 significantly better than Model 1?</p>
 </div></div>
 </section>
 <section id="can-we-just-use-r2" class="slide level2">
 <h2>Can we just use <span class="math inline">\(R^2\)</span>?</h2>
+<div class="medium">
 <ul>
 <li>About 33.22% of the variability in rides is explained by the regression model including temperature</li>
 <li>About 37.09% of the variability in rides is explained by the regression model including temperature and an indicator for weekend</li>
-<li>About 37.09% of the variability in rides is explained by the regression model including temperature and an indicator for weekend</li>
+<li>About 38.981% of the variability in rides is explained by the regression model including temperature, windspeed, and an indicator for weekend</li>
+<li>About 39.014% of the variability in rides is explained by the regression model including temperature, windspeed, an indicator for weekend, and an interaction between weekend and windspeed</li>
 </ul>
+</div>
 <p>What trend do you notice?</p>
 </section>
 <section id="r2-vs-adjusted-r2" class="slide level2">
@@ -378,8 +384,19 @@ temp_actual:weekendTRUE
 <li>Better to use <span class="math inline">\(R^2_{adj}\)</span> for multiple regression</li>
 </ul>
 </section>
-<section id="f-test-for-comparing-models" class="slide level2">
-<h2>F Test for comparing models</h2>
+<section id="adjusted-r2" class="slide level2">
+<h2>Adjusted <span class="math inline">\(R^2\)</span></h2>
+<div class="medium">
+<ul>
+<li>About 33.08% of the variability in rides is explained by the regression model including temperature</li>
+<li>About 36.83% of the variability in rides is explained by the regression model including temperature and an indicator for weekend</li>
+<li>About 38.612% of the variability in rides is explained by the regression model including temperature, windspeed, and an indicator for weekend</li>
+<li>About 38.522% of the variability in rides is explained by the regression model including temperature, windspeed, an indicator for weekend, and an interaction between weekend and windspeed</li>
+</ul>
+</div>
+</section>
+<section id="formal-test-for-comparing-models" class="slide level2">
+<h2>Formal test for comparing models</h2>
 <div class="columns" data-align="center">
 <div class="column" style="width:25%;">
 <p>Full model</p>
@@ -403,6 +420,7 @@ temp_actual:weekendTRUE
 </section>
 <section id="comparing-models-with-an-f-test" class="slide level2">
 <h2>Comparing models with an F-test</h2>
+<div class="medium">
 <p>Test statistic</p>
 <p><span class="math display">\[
 \begin{split}
@@ -411,7 +429,8 @@ F &amp;= \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{f
 &amp;= \frac{(\text{SSE}_{\text{reduced}} - \text{SSE}_{\text{full}}) / d}{\text{MSE}_{\text{full}}}
 \end{split}
 \]</span></p>
-<div class="xsmall">
+</div>
+<div class="small">
 <p>where</p>
 <ul>
 <li><span class="math inline">\(d = \text{df}_{full} - \text{df}_{reduced}\)</span> = # betas being tested</li>
@@ -424,11 +443,11 @@ F &amp;= \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{f
 <h2>F distribution</h2>
 <p>The F-statistics follows an <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(d\)</span> and <span class="math inline">\(n-p-1\)</span> d.f.</p>
 
-<img data-src="slides11_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="slides11_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="upper-tail-p-values" class="slide level2">
 <h2>Upper-tail p-values</h2>
 
-<img data-src="slides11_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>To obtain upper-tail areas: <code>1 - pf(stat, df1, df2)</code></p>
+<img data-src="slides11_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>To obtain upper-tail areas: <code>1 - pf(stat, df1, df2)</code></p>
 </section>
 <section id="putting-it-all-together" class="slide level2">
 <h2>Putting it all together</h2>

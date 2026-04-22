@@ -403,14 +403,7 @@
     "href": "slides/slides11.html#mlr-model-for-bikes-data",
     "title": "Inference for MLR",
     "section": "MLR model for bikes data",
-    "text": "MLR model for bikes data\n\n\n\nCall:\nlm(formula = rides ~ temp_actual * weekend, data = bikes)\n\nCoefficients:\n            (Intercept)              temp_actual              weekendTRUE  \n              -1843.867                   87.173                 -714.938  \ntemp_actual:weekendTRUE  \n                  0.411"
-  },
-  {
-    "objectID": "slides/slides11.html#warm-up",
-    "href": "slides/slides11.html#warm-up",
-    "title": "Inference for MLR",
-    "section": "Warm up:",
-    "text": "Warm up:\nWrite out the theoretical and fitted regression model"
+    "text": "MLR model for bikes data\n\n\n\nCall:\nlm(formula = rides ~ temp_actual * weekend, data = bikes)\n\nCoefficients:\n            (Intercept)              temp_actual              weekendTRUE  \n              -1843.867                   87.173                 -714.938  \ntemp_actual:weekendTRUE  \n                  0.411  \n\n\n\nWarm up: Write out the theoretical and fitted regression model (use blank space on next slide)"
   },
   {
     "objectID": "slides/slides11.html#do-we-need-a-different-slopes-model",
@@ -466,14 +459,14 @@
     "href": "slides/slides11.html#explained-variability-1",
     "title": "Inference for MLR",
     "section": "Explained Variability",
-    "text": "Explained Variability\n\n\n“Smaller” Model\n\n\n\n\n\n\n\n\n\n\n“Larger” Model\n\n\n\n\n\n\n\n\n\n\nIdea: Is the proportion of variability explained by Model 2 significantly better than Model 1?"
+    "text": "Explained Variability\n\n\n“Smaller” Model\n\n\n\n\n\n\n\n\n\n\n“Larger” Model\n\n\n\n\n\n\n\n\n\n\n\nIdea: Is the proportion of variability explained by Model 2 significantly better than Model 1?"
   },
   {
     "objectID": "slides/slides11.html#can-we-just-use-r2",
     "href": "slides/slides11.html#can-we-just-use-r2",
     "title": "Inference for MLR",
     "section": "Can we just use \\(R^2\\)?",
-    "text": "Can we just use \\(R^2\\)?\n\nAbout 33.22% of the variability in rides is explained by the regression model including temperature\nAbout 37.09% of the variability in rides is explained by the regression model including temperature and an indicator for weekend\nAbout 37.09% of the variability in rides is explained by the regression model including temperature and an indicator for weekend\n\nWhat trend do you notice?"
+    "text": "Can we just use \\(R^2\\)?\n\n\nAbout 33.22% of the variability in rides is explained by the regression model including temperature\nAbout 37.09% of the variability in rides is explained by the regression model including temperature and an indicator for weekend\nAbout 38.981% of the variability in rides is explained by the regression model including temperature, windspeed, and an indicator for weekend\nAbout 39.014% of the variability in rides is explained by the regression model including temperature, windspeed, an indicator for weekend, and an interaction between weekend and windspeed\n\n\nWhat trend do you notice?"
   },
   {
     "objectID": "slides/slides11.html#r2-vs-adjusted-r2",
@@ -483,18 +476,25 @@
     "text": "\\(R^2\\) vs adjusted \\(R^2\\)\n\n\n\\[R^2 = 1 - \\frac{SSE}{SST}\\]\n\n\\[R^2_{adj} = 1 - \\frac{SSE/(n-k)}{SST/(n-1)}\\] \\[R^2_{adj} = 1 - \\frac{MSE}{MST}\\]\n\n\n\\(R^2\\) always increases when predictors are added to the model\n\\(R^2_{adj}\\) could decrease if unnecessary predictors are added to the model\nBetter to use \\(R^2_{adj}\\) for multiple regression"
   },
   {
-    "objectID": "slides/slides11.html#f-test-for-comparing-models",
-    "href": "slides/slides11.html#f-test-for-comparing-models",
+    "objectID": "slides/slides11.html#adjusted-r2",
+    "href": "slides/slides11.html#adjusted-r2",
     "title": "Inference for MLR",
-    "section": "F Test for comparing models",
-    "text": "F Test for comparing models\n\n\nFull model\n\n\\(\\mu \\lbrace Y | X \\rbrace = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\beta_3 x_1 x_2\\)\n\nReduced model\n\n\\(\\mu \\lbrace Y | X \\rbrace = \\beta_0 + \\beta_1 x_1\\)\n\n\n\n\n\nHypotheses\n\n\\(H_0:\\ \\beta_{2} = \\beta_3 = 0\\)\n\\(H_a:\\) at least one \\(\\beta_j \\ne 0\\), \\(j=2,3\\)"
+    "section": "Adjusted \\(R^2\\)",
+    "text": "Adjusted \\(R^2\\)\n\n\nAbout 33.08% of the variability in rides is explained by the regression model including temperature\nAbout 36.83% of the variability in rides is explained by the regression model including temperature and an indicator for weekend\nAbout 38.612% of the variability in rides is explained by the regression model including temperature, windspeed, and an indicator for weekend\nAbout 38.522% of the variability in rides is explained by the regression model including temperature, windspeed, an indicator for weekend, and an interaction between weekend and windspeed"
+  },
+  {
+    "objectID": "slides/slides11.html#formal-test-for-comparing-models",
+    "href": "slides/slides11.html#formal-test-for-comparing-models",
+    "title": "Inference for MLR",
+    "section": "Formal test for comparing models",
+    "text": "Formal test for comparing models\n\n\nFull model\n\n\\(\\mu \\lbrace Y | X \\rbrace = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\beta_3 x_1 x_2\\)\n\nReduced model\n\n\\(\\mu \\lbrace Y | X \\rbrace = \\beta_0 + \\beta_1 x_1\\)\n\n\n\n\n\nHypotheses\n\n\\(H_0:\\ \\beta_{2} = \\beta_3 = 0\\)\n\\(H_a:\\) at least one \\(\\beta_j \\ne 0\\), \\(j=2,3\\)"
   },
   {
     "objectID": "slides/slides11.html#comparing-models-with-an-f-test",
     "href": "slides/slides11.html#comparing-models-with-an-f-test",
     "title": "Inference for MLR",
     "section": "Comparing models with an F-test",
-    "text": "Comparing models with an F-test\nTest statistic\n\\[\n\\begin{split}\nF &= \\frac{(R^2_{\\text{full}} - R^2_{\\text{reduced}}) / d}{(1 - R^2_{\\text{full}}) / df_{\\text{full}}}\\\\\n&= \\frac{(\\text{SSR}_{\\text{full}} - \\text{SSR}_{\\text{reduced}}) / d}{\\text{MSE}_{\\text{full}}}\\\\\n&= \\frac{(\\text{SSE}_{\\text{reduced}} - \\text{SSE}_{\\text{full}}) / d}{\\text{MSE}_{\\text{full}}}\n\\end{split}\n\\]\n\nwhere\n\n\\(d = \\text{df}_{full} - \\text{df}_{reduced}\\) = # betas being tested\n\\(\\text{df}_{i} = n - (p + 1)=\\) error d.f. for model \\(i\\)\n\\(\\text{MSE}_{\\text{full}} = \\dfrac{\\text{SSE}_{\\text{full}}}{\\text{df}_{\\text{full}}}\\)"
+    "text": "Comparing models with an F-test\n\nTest statistic\n\\[\n\\begin{split}\nF &= \\frac{(R^2_{\\text{full}} - R^2_{\\text{reduced}}) / d}{(1 - R^2_{\\text{full}}) / df_{\\text{full}}}\\\\\n&= \\frac{(\\text{SSR}_{\\text{full}} - \\text{SSR}_{\\text{reduced}}) / d}{\\text{MSE}_{\\text{full}}}\\\\\n&= \\frac{(\\text{SSE}_{\\text{reduced}} - \\text{SSE}_{\\text{full}}) / d}{\\text{MSE}_{\\text{full}}}\n\\end{split}\n\\]\n\n\nwhere\n\n\\(d = \\text{df}_{full} - \\text{df}_{reduced}\\) = # betas being tested\n\\(\\text{df}_{i} = n - (p + 1)=\\) error d.f. for model \\(i\\)\n\\(\\text{MSE}_{\\text{full}} = \\dfrac{\\text{SSE}_{\\text{full}}}{\\text{df}_{\\text{full}}}\\)"
   },
   {
     "objectID": "slides/slides11.html#f-distribution",
