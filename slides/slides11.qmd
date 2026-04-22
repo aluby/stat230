@@ -71,18 +71,18 @@ bikes_slr <- lm(rides ~ temp_actual, data = bikes)
 
 ```
 
-## MLR model for `bikes` data {.smaller}
+## MLR model for `bikes` data
 
 ```{r}
 bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 bikes_mlr
 ```
 
-::: task
-## Warm up: 
-
-Write out the theoretical and fitted regression model
+::: {.task .medium}
+**Warm up:** Write out the theoretical and fitted regression model (use blank space on next slide)
 :::
+
+## 
 
 ## Do we _need_ a different slopes model? 
 
@@ -183,7 +183,7 @@ tidy(bikes_mlr2)
 
 ## Explained Variability
 
-```{r echo=FALSE, fig.height = 3.25, fig.width = 6, fig.align='center'}
+```{r echo=FALSE, fig.height = 2.5, fig.width = 7, fig.align='center'}
 slr_aug <- augment(bikes_slr)
 slr_aug <- mutate(slr_aug, mean.y = mean(rides))
 
@@ -270,6 +270,8 @@ sst_plot2 + decomp_plot2
 :::
 
 :::{.column width="30%" .fragment .center}
+<br>
+
 **Idea:** Is the proportion of variability explained by Model 2 significantly better than Model 1?
 
 :::
@@ -277,9 +279,18 @@ sst_plot2 + decomp_plot2
 
 ## Can we just use $R^2$? 
 
+```{r}
+bikes_mlr_3var <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
+bikes_mlr_4var <- lm(rides ~ temp_actual + windspeed*weekend , data = bikes)
+
+```
+
+::: medium
 - About `r round(summary(bikes_slr)$r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature
 - About `r round(summary(bikes_mlr2)$r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature and an indicator for weekend
-- About `r round(summary(bikes_mlr)$r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature and an indicator for weekend
+- About `r round(summary(bikes_mlr_3var)$r.squared, 5)*100`% of the variability in rides is explained by the regression model including temperature, windspeed, and an indicator for weekend
+- About `r round(summary(bikes_mlr_4var)$r.squared, 5)*100`% of the variability in rides is explained by the regression model including temperature, windspeed, an indicator for weekend, and an interaction between weekend and windspeed
+:::
 
 What trend do you notice? 
 
@@ -302,7 +313,23 @@ $$R^2_{adj} = 1 - \frac{MSE}{MST}$$
 - $R^2_{adj}$ **could** decrease if unnecessary predictors are added to the model
 - Better to use $R^2_{adj}$ for multiple regression
 
-## F Test for comparing models
+## Adjusted $R^2$
+
+```{r}
+bikes_mlr_3var <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
+bikes_mlr_4var <- lm(rides ~ temp_actual + windspeed*weekend , data = bikes)
+
+```
+
+::: medium
+
+- About `r round(summary(bikes_slr)$adj.r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature
+- About `r round(summary(bikes_mlr2)$adj.r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature and an indicator for weekend
+- About `r round(summary(bikes_mlr_3var)$adj.r.squared, 5)*100`% of the variability in rides is explained by the regression model including temperature, windspeed, and an indicator for weekend
+- About `r round(summary(bikes_mlr_4var)$adj.r.squared, 5)*100`% of the variability in rides is explained by the regression model including temperature, windspeed, an indicator for weekend, and an interaction between weekend and windspeed
+:::
+
+## Formal test for comparing models
 
 :::: {.columns align=center}
 ::: {.column width="25%"}
@@ -344,6 +371,7 @@ $H_a:$ at least one $\beta_j \ne 0$, $j=2,3$
 ## Comparing models with an F-test
 
 
+::: medium
 
 Test statistic
 
@@ -356,7 +384,9 @@ F &= \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{full}
 \end{split}
 $$
 
-::: xsmall
+:::
+
+::: small
 
 where 
 
