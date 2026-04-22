@@ -74,7 +74,7 @@
     "href": "syllabus.html#exam-corrections",
     "title": "Stat230: Applied Regression Analysis",
     "section": "Exam corrections",
-    "text": "Exam corrections\nI offer the opportunity to submit exam corrections for two reasons: (1) to correct any major misunderstandings and have a chance to revisit material that you struggled with, (2) to mitigate the impact that a bad exam day can have on your final course grade. You can submit corrections to your exam to earn back 50% of your missed points. Corrected exam grades are capped at 90%. Exam revisions are due 1 week after graded exams are returned to you, or the last day of class at 11:59pm, whichever is earlier."
+    "text": "Exam corrections\nI offer the opportunity to submit exam corrections for two reasons: (1) to correct any major misunderstandings and have a chance to revisit material that you struggled with, (2) to mitigate the impact that a bad exam day can have on your final course grade. You can submit corrections to your exam to earn back 50% of your missed points. Corrected exam grades are capped at 90%. (no longer true – see revisions document) Exam revisions are due 1 week after graded exams are returned to you, or the last day of class at 11:59pm, whichever is earlier. before the next exam."
   },
   {
     "objectID": "syllabus.html#case-study-revisions",
@@ -2069,14 +2069,14 @@
     "href": "activities/11-mlr-inference.html",
     "title": "11: Inference for MLR",
     "section": "",
-    "text": "In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The cars data set loaded below contains information on used cars for sale, including their Price, Mileage, and Make (a categorical variable with six levels).\n\ncars &lt;- read.csv(here::here(\"data/Cars.csv\"), stringsAsFactors = TRUE)\n# cars &lt;- read.csv(\"https://aluby.github.io/stat230/data/Cars.csv\", stringsAsFactors = TRUE)"
+    "text": "In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The cars data set loaded below contains information on used cars for sale, including their Price, Mileage, and Make (a categorical variable with six levels).\n\ncars &lt;- read.csv(\"https://aluby.github.io/stat230/data/Cars.csv\", stringsAsFactors = TRUE)"
   },
   {
     "objectID": "activities/11-mlr-inference.html#overview",
     "href": "activities/11-mlr-inference.html#overview",
     "title": "11: Inference for MLR",
     "section": "",
-    "text": "In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The cars data set loaded below contains information on used cars for sale, including their Price, Mileage, and Make (a categorical variable with six levels).\n\ncars &lt;- read.csv(here::here(\"data/Cars.csv\"), stringsAsFactors = TRUE)\n# cars &lt;- read.csv(\"https://aluby.github.io/stat230/data/Cars.csv\", stringsAsFactors = TRUE)"
+    "text": "In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The cars data set loaded below contains information on used cars for sale, including their Price, Mileage, and Make (a categorical variable with six levels).\n\ncars &lt;- read.csv(\"https://aluby.github.io/stat230/data/Cars.csv\", stringsAsFactors = TRUE)"
   },
   {
     "objectID": "activities/11-mlr-inference.html#thinking-about-the-data",
