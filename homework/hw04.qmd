@@ -131,10 +131,43 @@ ames_houses = read_csv("https://aluby.github.io/stat230/data/ames_houses.csv")
 
 (f) Make a single EDA plot that shows the relationship between `Square_Feet`, `Fireplace`, and `Sale_Price`. Does your plot suggest a different slopes model is needed?
 
-# Problem 5: Wed
+# Problem 5: F statistic
 
-<!-- inference for MLR  -->
+A multiple regression analysis of a dataset with 82 observations was performed with 6 explanatory variables. $SS_{regression} = 22.6$ and $SS_{total} = 123.1$. 
 
-# Problem 6: Wed
+  (a) Find the value of the $F$ statistic
+  
+  (b) Write out the null hypothesis that corresponds to your statistic from (a) 
+  
+  (c) The F-statistic has two degrees of freedom, where $df_1 = k$ and $df_2 = (n-k-1)$. Using R's `pf` function, find the p-value that corresponds to the test in parts (a) and (b). Assuming all assumptions are met, what do you conclude? (It may be helpful to review [Chapter 22.3 from IMS](https://openintro-ims.netlify.app/inference-many-means.html#sec-mathANOVA), or check out this interactive [Distribution Calculator](https://gallery.shinyapps.io/dist_calc/) for more information on the F distribution.)
+  
+  (d) What proportion of variability in the response variable is explained by the explanatory variables?
 
-<!-- inference for MLR: return to Ames housing data  -->
+# Problem 6: p-values galore
+
+Use the `penguins` summary output in Problem 4 for this question, along with the ANOVA output below. 
+
+```{r}
+anova(penguins_mlr)
+```
+
+(a) Write out the null and alternative hypothesis that corresponds to the p-value of `0.05844` in the `summary` table. What do you conclude in the context of the data? 
+
+(b) Write out the null and alternative hypothesis that corresponds to the p-value of `0.00766`  in the `summary` table. What do you conclude in the context of the data? 
+
+(c) Write out the null and alternative hypothesis that corresponds to: `F-statistic: 404.2 on 5 and 336 DF,  p-value: < 2.2e-16`  in the `summary` table. What do you conclude in the context of the data? 
+
+(d) Write out the null and alternative hypothesis that corresponds to the first row in the ANOVA table: 
+
+`body_mass_g           1  51176   51176 1789.0875 <2e-16 ***`
+
+What do you conclude in the context of the data? 
+
+
+(e) Write out the null and alternative hypothesis that corresponds to the third row in the ANOVA table: 
+
+`body_mass_g:species   2    228     114    3.9837 0.0195 *  `
+
+What do you conclude in the context of the data? 
+
+
