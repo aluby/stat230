@@ -7,7 +7,7 @@ title: "11: Inference for MLR"
 In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The `cars` data set loaded below contains information on used cars for sale, including their `Price`, `Mileage`, and `Make` (a categorical variable with six levels).
  
 ```{r}
-cars <- read.csv(here("data/Cars.csv"), stringsAsFactors = TRUE)
+cars <- read.csv(here::here("data/Cars.csv"), stringsAsFactors = TRUE)
 # cars <- read.csv("https://aluby.github.io/stat230/data/Cars.csv", stringsAsFactors = TRUE)
 ```
 
