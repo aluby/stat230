@@ -1,0 +1,163 @@
+---
+title: "11: Inference for MLR"
+format: 
+  html: default
+  typst: default
+execute: 
+  echo: true
+  warning: false
+  message: false
+navbar: false
+---
+
+```{r}
+library(ggformula)
+```
+
+## Overview
+
+In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The `cars` data set loaded below contains information on used cars for sale, including their `Price`, `Mileage`, and `Make` (a categorical variable with six levels).
+ 
+```{r}
+cars <- read.csv("https://aloy.github.io/stat230-materials/data/Cars.csv", stringsAsFactors = TRUE)
+```
+
+## Thinking about the data
+
+To begin, create a scatterplot of `Price` versus `Mileage`. 
+
+```{r}
+#| fig-width: 4
+#| fig-height: 3
+
+gf_point(Price ~ Mileage, data = cars) 
+
+```
+
+**Q1.** What do you notice about the relationship between these two variables? Is a transformation necessary?
+
+> There appears to be negative correlation, and some outliers in the Y direction. There may be some curvature. A transformation may help.
+
+**Q2.** The `Make` variable is categorical with six levels: Buick, Cadillac, Chevrolet, Pontiac, SAAB, and Saturn. To include this variable in a regression model, we need use indicator (i.e., dummy) variables. How many do we need?
+
+> There are 6 levels so we need 5 indicator variables
+
+
+## Fitting an MLR model
+
+Build (fit) a multiple regression model using `log(Price)` as the response with `Mileage` and `Make` as the predictor variables. To do this, you use `+` to separate the predictor variable on the right side of the `~` in the model formula. R will automatically convert a categorical explanatory variable into a set of indicator variables. 
+
+```{r}
+car_lm <- lm(log(Price) ~ Mileage + Make, data = cars)
+summary(car_lm)
+```
+
+**Q3.** Report the fitted regression equation and the $R^2$ value. 
+
+> `r equatiomatic::extract_eq(car_lm, use_coefs = TRUE, wrap = TRUE, terms_per_line = 3)`
+
+**Q4.** Which level of `Make` is the baseline? The baseline level is represented by 0's across all of the indicator variables and won't have a coefficient in the output.
+
+> Buick (the category without an indicator variable)
+
+**Q5.** What strategy did R use to create the indicator variables for `Make`? In other words, how did R decide which level of `Make` to use as the baseline?
+
+> Alphabetical order!
+
+**Q6.** Which of the following models best describes the one just fit: parallel lines, different slopes, or separate lines?
+
+> Parallel lines
+
+## Plotting the fitted model
+
+To plot a fitted regression model, we can use the `ggpredict()` and `plot()` functions in the {ggeffects} package. The `ggpredict()` function creates a data frame of predicted values from the model for each `Make` across a range of `Mileage` values. The `plot()` function then creates a plot of these predicted values.
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+
+
+library(ggeffects)
+cars_pred <- ggpredict(car_lm, terms = ~Mileage + Make)
+plot(cars_pred)
+```
+
+**Q7.** Does this plot confirm your answer to the previous question?
+
+> It's kind of hard to tell, since the lines are on the original scale. Telling ggpredict to not back-transform makes it clear that yes, this is a parallel lines model.
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+
+cars_pred <- ggpredict(car_lm, terms = ~Mileage + Make, 
+                       back_transform = FALSE)
+plot(cars_pred)
+```
+
+
+## Fitting a model with interactions
+
+If we believe that the association between `Price` and `Mileage` differs by `Make`, then we can include an interaction term in our model. To do this, we use `*` instead of `+` to separate the predictor variables on the right side of the `~` in the model formula. This will include both main effects and the interaction term.
+
+```{r}
+car_lm2 <- lm(log(Price) ~ Mileage * Make, data = cars)
+
+
+summary(car_lm2)
+```
+
+**Q8`.** Report the fitted regression equation for Buicks and Cadillacs.
+
+**Q9.** What is the $R^2$ value for this model? Does this model appear to fit the data better than the previous model?
+
+
+## Plotting the fitted model with interactions
+
+To plot the interaction model, we again use the `ggpredict()` and `plot()` functions in the {ggeffects} package.
+
+```{r}
+cars_pred2 <- ggpredict(car_lm2, terms = ~Mileage + Make)
+
+# Now plot the predictions
+plot(cars_pred2)
+```
+
+
+## Calculating extra sums of squares F-tests
+
+Do we really need the interaction terms? To answer this question, we can use an extra sums of squares F-test to compare the model with interaction terms to the model without interaction terms.
+
+We have already seen how to use the `anova()` function to compare two nested models. Here, we will use it again to compare our two car models.
+
+**Q10.** Fill in the blanks to run the extra sums of squares F-test. What do you conclude about the interaction terms?
+
+```{r}
+anova(car_lm2, car_lm)
+```
+
+### Using only the full model
+
+We can also calculate the extra sums of squares F-test using only the full model. To do this, we need to extract the SSE and degrees of freedom for both models from the ANOVA table for the full model. 
+
+**Q11.** Run the below code and verify that the df, sums of squares, mean squares, F value, and p-value match what you got from the previous `anova()` command.
+
+```{r}
+anova(car_lm2)
+```
+
+
+***
+
+## Function quick reference
+
+The following table summarizes the functions we learned today:
+
+| Function | Purpose |
+|----|-----------|
+| `lm()` | Fit a linear model |
+| `summary()` | Display detailed results from a fitted model |
+| `ggpredict()` | Create a data frame of predicted values from a fitted model |
+| `plot()` | Create a plot of predicted values from a fitted model |
+| `anova()` | Create an ANOVA table for a fitted model or compare two nested models |
+

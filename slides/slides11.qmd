@@ -66,6 +66,9 @@ bikes <- bikes |> select(date, season, year, month, weekend, holiday, temp_actua
 
 fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt", sep = "\t", header = TRUE)
 
+bikes_slr <- lm(rides ~ temp_actual, data = bikes)
+
+
 ```
 
 ## Warm up: new groups!
@@ -77,14 +80,7 @@ fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to1
 
 :::
 
-
-## `bikes`
-
-```{r}
-gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) 
-```
-
-## MLR model
+## MLR model for `bikes` data {.smaller}
 
 ```{r}
 bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
@@ -94,9 +90,6 @@ bikes_mlr
 ::: task
 Write out the theoretical and fitted regression model
 :::
-
-## 
-
 
 ## Do we _need_ a different slopes model? 
 
@@ -118,7 +111,7 @@ tidy(bikes_mlr)
 . . .
 
 ::: {style="font-size: 0.9em;"}
-**Test statistic:** $t = \dfrac{\hat{\beta}_j - \#}{SE(\beta_j)}$
+**Test statistic:** $t = \dfrac{\widehat{\beta}_j - \#}{SE(\beta_j)}$
 :::
 . . .
 
@@ -195,6 +188,22 @@ bikes_mlr2 <- lm(rides ~ temp_actual + weekend, data = bikes)
 tidy(bikes_mlr2)
 ```
 
+## Explained Variability
+
+```{r echo=FALSE, fig.height = 3.25, fig.width = 6, fig.align='center'}
+slr_aug <- augment(bikes_slr)
+slr_aug <- mutate(slr_aug, mean.y = mean(rides))
+
+p1 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Total") %>%
+  gf_segment(mean.y + rides ~ temp_actual + temp_actual, color = "gray70", alpha = .4) %>%
+  gf_hline(yintercept = mean(slr_aug$rides), color = "#f15a31") 
+
+p2 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Error") %>%
+  gf_segment(.fitted + rides ~ temp_actual + temp_actual, color = "#003069", alpha = .4) %>%
+  gf_lm(color = "#f15a31") 
+
+p1 + p2
+```
 
 ## Explained Variability
 
@@ -243,6 +252,9 @@ decomp_plot2 <- ggplot(data = ssdf2 |> filter(Source != "Total"), aes(x = "", y 
 
 ::: columns
 :::{.column width="30%"}
+"Smaller" Model
+
+
 ```{r}
 #| fig-width: 1.75
 #| fig-height: 3
@@ -251,7 +263,10 @@ decomp_plot2 <- ggplot(data = ssdf2 |> filter(Source != "Total"), aes(x = "", y 
 sst_plot + decomp_plot
 ```
 :::
-:::{.column width="60%"}
+:::{.column width="30%"}
+"Larger" Model
+
+
 ```{r}
 #| fig-width: 1.75
 #| fig-height: 3
@@ -260,11 +275,224 @@ sst_plot + decomp_plot
 sst_plot2 + decomp_plot2
 ```
 :::
+
+:::{.column width="30%" .fragment .center}
+**Idea:** Is the proportion of variability explained by Model 2 significantly better than Model 1?
+
+:::
 :::
 
-# Idea: is the proportion of variability explained by Model 1 significantly different than Model 2?
+## Can we just use $R^2$? 
 
-## F Test
+- About `r round(summary(bikes_slr)$r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature
+- About `r round(summary(bikes_mlr2)$r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature and an indicator for weekend
+- About `r round(summary(bikes_mlr)$r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature and an indicator for weekend
+
+What trend do you notice? 
+
+## $R^2$ vs adjusted $R^2$
+
+::: columns
+:::{.column width="50%"}
+
+$$R^2 = 1 - \frac{SSE}{SST}$$
+
+:::
+:::{.column width="50%"}
+$$R^2_{adj} = 1 - \frac{SSE/(n-k)}{SST/(n-1)}$$
+$$R^2_{adj} = 1 - \frac{MSE}{MST}$$
+:::
+
+:::
+
+- $R^2$ **always** increases when predictors are added to the model
+- $R^2_{adj}$ **could** decrease if unnecessary predictors are added to the model
+- Better to use $R^2_{adj}$ for multiple regression
+
+## F Test for comparing models
+
+:::: {.columns align=center}
+::: {.column width="25%"}
+Full model
+:::
+
+::: {.column width="70%"}
+$\mu \lbrace Y | X \rbrace = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2$
+:::
+
+::: {.column width="25%"}
+Reduced model
+:::
+
+::: {.column width="70%"}
+$\mu \lbrace Y | X \rbrace = \beta_0 + \beta_1 x_1$
+:::
+
+::::
+
+. . .
+
+<br>
+
+
+:::: {.columns align=center}
+::: {.column width="25%"}
+Hypotheses
+:::
+
+::: {.column width="70%"}
+$H_0:\ \beta_{2} = \beta_3 = 0$
+
+$H_a:$ at least one $\beta_j \ne 0$, $j=2,3$
+:::
+
+::::
+
+## Comparing models with an F-test
+
+
+
+Test statistic
+
+
+$$
+\begin{split}
+F &= \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{full}}) / df_{\text{full}}}\\
+&= \frac{(\text{SSR}_{\text{full}} - \text{SSR}_{\text{reduced}}) / d}{\text{MSE}_{\text{full}}}\\
+&= \frac{(\text{SSE}_{\text{reduced}} - \text{SSE}_{\text{full}}) / d}{\text{MSE}_{\text{full}}}
+\end{split}
+$$
+
+::: xsmall
+
+where 
+
+- $d = \text{df}_{full} - \text{df}_{reduced}$ = \# betas being tested
+- $\text{df}_{i} = n - (p + 1)=$ error d.f. for model $i$
+- $\text{MSE}_{\text{full}} = \dfrac{\text{SSE}_{\text{full}}}{\text{df}_{\text{full}}}$
+
+:::
+
+
+## F distribution
+
+
+The F-statistics follows an $F$ distribution with $d$ and $n-p-1$ d.f.
+
+```{r fig.height=3, fig.width=5, echo=FALSE, message=FALSE, fig.align='center'}
+par(mar = c(2, .1, .1, .1))
+plot(c(0, 5), c(0, df(.01, 1, 1)), type = "n", axes = FALSE)
+at <- seq(0, 5, 1)
+axis(1, at)
+# axis(1, at, rep("", length(at)), tcl = -0.1)
+X <- seq(0, 5, 0.01)
+DF1 <- c(1, 2, 5, 10, 100)
+DF2 <- c(1, 1, 2, 1, 100)
+COL. <- RColorBrewer::brewer.pal(n = 7, name = "Blues")[-1]
+for (i in 1:5) {
+  Y <- df(X, as.numeric(DF1[i]), as.numeric(DF2[i]))
+  lines(X, Y, col = COL.[i])
+}
+legend(2.5, 3.25,
+       legend = c(paste('df1 = ', DF1[1:5], ', df2 = ', DF2[1:5], sep = '')),
+       col = COL.,
+       text.col = COL.,
+       lty = rep(1, 5))
+
+```
+
+```{r include=FALSE}
+dev.off
+```
+
+## Upper-tail p-values
+
+```{r fig.height=3, fig.width=5, echo=FALSE, message=FALSE, fig.align='center'}
+ ggplot(data = data.frame(x = c(.00001, 5.5)), aes(x)) +
+  stat_function(fun = df, args = list(df1=4, df2=23), color = "navy", size = 1) +
+  stat_function(fun = df, args = list(df1=4, df2=23), xlim = c(3, 5.5),
+                  geom = "area", fill = "navy", alpha = .4) +
+  labs(x = "F", y = "Density") +
+  scale_y_continuous(limits = c(0, 0.8), expand = c(0,0)) +
+   geom_curve(aes(x = 5, y = .22, xend = 4.25, yend = .03), arrow = arrow(length = unit(0.03, "npc")), curvature = .2, color = "navy") +
+  annotate("text", x = 5.26, y = .25, label = "p-value", color = "navy", size = 6) 
+```
+
+
+To obtain upper-tail areas: `1 - pf(stat, df1, df2)`
+
+
+## Putting it all together
+
+
+
+```{r}
+full_table <- glance(bikes_mlr) |> 
+  select(r.squared, df, df.residual, nobs) |>
+  mutate(model = "Full")
+
+reduced_table <- glance(bikes_slr) |> 
+  select(r.squared, df, df.residual, nobs) |>
+  mutate(model = "Reduced")
+
+bind_rows(full_table, reduced_table) |>
+  select(model, everything()) |>
+  knitr::kable(digits = 3)
+```
+
+. . .
+
+$$
+F = \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{full}}) / df_{\text{full}}} = \frac{(0.371 - 0.332) / 2}{(1 - 0.371) / 496} \approx 15.4
+$$
+
+. . .
+
+```{r}
+#| echo: true
+1 - pf(15.4, 2, 496)
+```
+
+
+
+
+## Reading R output
+
+```
+lm(formula = rides ~ temp_actual * weekend, data = bikes)
+
+Coefficients:
+                         Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             -1843.867    415.700  -4.436 1.13e-05 ***
+temp_actual                87.173      6.439  13.538  < 2e-16 ***
+weekendTRUE              -714.938    795.698  -0.899    0.369    
+temp_actual:weekendTRUE     0.411     12.539   0.033    0.974    
+
+Residual standard error: 1253 on 496 degrees of freedom
+Multiple R-squared:  0.3709,	Adjusted R-squared:  0.3671 
+F-statistic: 97.47 on 3 and 496 DF,  p-value: < 2.2e-16
+```
+
+
+::: footer
+Output was edited to fit on one slide
+:::
+
+
+## Extra sums of squares F-test in R
+
+```{r}
+#| echo: true
+full <- lm(formula = rides ~ temp_actual * weekend, data = bikes)    #<1>
+reduced <- lm(formula = rides ~ temp_actual, data = bikes) #<2>
+anova(reduced, full) #<3>
+```
+
+1. Fit the full model
+2. Fit the reduced model
+3. Use `anova()` to compare the two models. The first argument should be the reduced model.
+
+
 
 
 
