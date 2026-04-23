@@ -171,3 +171,6 @@ What do you conclude in the context of the data?
 What do you conclude in the context of the data? 
 
 
+# Problem 7
+
+*Optional* EC opportunity: if you attended the Math/Stat colloquium on Tues 4/21, include a sentence or two about the talk and how it relates to course content in your homework. 

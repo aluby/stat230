@@ -1,0 +1,286 @@
+---
+title: Inference for Linear Combinations
+subtitle: Day 12
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+  eval: false 
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+
+notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+bikes <- bikes |> select(date, season, year, month, weekend, holiday, temp_actual, temp_feel, humidity, windspeed, rides)
+
+fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt", sep = "\t", header = TRUE)
+
+bikes_slr <- lm(rides ~ temp_actual, data = bikes)
+```
+
+## Last Time
+
+full model/reduced model framework
+
+$H_0:$ reduced model is adequate compared to full model 
+
+Note: reduced model is *nested*
+
+## General F statistic
+
+# Linear Combinations
+
+
+## FEV example
+
+```{r echo=FALSE , fig.width = 4, fig.height = 3, fig.align='center', out.width = "60%"}
+#| warning: false
+nonsmoke.mean <- function(age) 0.7574802 + 0.2028886 * age
+smoke.mean <- function(age) (0.7574802 + 1.3071504) + (0.2028886 -0.1128448) * age
+ggplot(data = fev, mapping = aes(x = Age, y = FEV, color = Smoke, shape = Smoke)) +
+  geom_point( alpha = 0.5) +
+  geom_lm(aes(color = Smoke)) + 
+  scale_color_manual(values = c("#f15a31", "#000036")) +
+  labs(y = "FEV (in L/s)") +
+  theme(legend.position = "top")
+```
+
+## FEV example
+
+$${\rm E}(Y|X) = \beta_0 + \beta_1 {\tt age} + \beta_2 {\tt smoke} + \beta_3 {\tt age \times smoke}$$
+<br>
+
+. . .
+
+Mean functions for each group
+
+. . .
+
+:::columns
+:::{.column width="30%"}
+Smokers:
+:::
+:::{.column width="70%"}
+${\rm E}(Y|X) = (\beta_0 + \beta_2) + (\beta_1 + \beta_3) {\tt age}$
+:::
+:::
+
+
+. . .
+
+:::columns
+:::{.column width="30%"}
+Non-smokers:
+:::
+:::{.column width="70%"}
+${\rm E}(Y|X) = \beta_0 + \beta_1  {\tt age}$
+:::
+:::
+
+
+## SEs for linear combinations
+
+
+
+Estimate: 
+
+$$\widehat{\gamma} = c_1 \widehat{\beta}_i + c_2 \widehat{\beta}_j$$
+
+
+<br> 
+
+. . .
+
+Standard error:
+
+:::{style="font-size: 0.9em"}
+
+$$
+SE(\widehat{\gamma}) = \sqrt{c_1^2 \lbrace SE(\widehat{\beta}_i)\rbrace^2 + c_2^2 \lbrace SE(\widehat{\beta}_j) \rbrace^2 + 2c_1c_2 Cov(\widehat{\beta}_i, \widehat{\beta}_j)} 
+$$
+:::
+
+
+
+## FEV example
+
+:::{.callout-warning}
+Our standard table of coefficients doesn't contain the SEs we need to construct CIs or perform tests for these linear combinations.
+:::
+
+```{r}
+#| echo: false
+fev_lm <- lm(FEV ~ Age * Smoke, data = fev)
+fev_coefs <- fev_lm |> broom::tidy()
+
+
+fev_coefs |> 
+  mutate(p.value = style_pvalue(p.value)) |>
+  gt() |> 
+  fmt_number(columns = c(estimate, std.error, statistic), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_options(
+    table.font.size = px(28),
+    table.background.color = "#fffef5",
+    table.font.color = "#003069"
+  )
+```
+
+## Covariance matrix
+
+- The diagonal (top left to lower right) displays variances, $\lbrace SE(\widehat{\beta}_j) \rbrace^2$
+
+- The off-diagonals display covariances, $Cov(\widehat{\beta}_i, \widehat{\beta}_j)$
+
+- Covariance is like correlation, but not scaled to be between $-1$ and $1$
+
+```{r}
+#| echo: false
+vcov(fev_lm)
+```
+
+## SE for a linear combination
+
+:::{style="font-size: 0.9em;"}
+Smokers: ${\rm E}(Y|X) = (\beta_0 + \beta_2) + (\beta_1 + \beta_3) {\tt age}$
+
+Target: $\widehat{\gamma} = \widehat{\beta}_1 + \widehat{\beta}_3$
+:::
+```{r}
+#| echo: false
+vcov(fev_lm)
+```
+
+. . .
+
+:::{style="font-size: 0.8em;"}
+$$
+SE(\widehat{\gamma}) = \sqrt{c_1^2 \lbrace SE(\widehat{\beta}_1)\rbrace^2 + c_2^2 \lbrace SE(\widehat{\beta}_2) \rbrace^2 + 2c_1c_2 Cov(\widehat{\beta}_1, \widehat{\beta}_2)} 
+$$
+:::
+. . .
+
+:::{style="font-size: 0.8em;"}
+$c_1 = 1$, $c_2 = 1$
+:::
+
+. . .
+
+:::{style="font-size: 0.8em;"}
+:::columns
+:::{.column width="50%"}
+$SE(\widehat{\beta_1})^2 = 0.0004423$
+:::
+:::{.column width="50%"}
+$SE(\widehat{\beta_2})^2 = 0.0017798$
+:::
+:::
+:::
+
+. . .
+
+:::{style="font-size: 0.8em;"}
+$Cov(\widehat{\beta_1}, \widehat{\beta_2}) = -0.0004423$
+:::
+
+## CI for a linear combination
+
+Once we have $SE(\widehat{\gamma})$, we can construct a CI as usual:
+
+$$
+\widehat{\gamma} \pm t^*_{n - (p+1)} \cdot SE(\widehat{\gamma})
+$$
+
+. . .
+
+$\widehat{\gamma} = `r coef(fev_lm)[2] + coef(fev_lm)[4]`$
+
+. . . 
+
+```{r}
+#| include: false
+V <- vcov(fev_lm)
+SE_gamma <- sqrt(V[2,2] + V[4,4] + 2*V[2,4])
+```
+
+
+$SE(\widehat{\gamma}) = `r SE_gamma`$
+
+. . . 
+
+$df = n - (p+1) = 345 - 4 = 341$
+
+. . .
+
+$t^*_{341} \approx 1.649$ for a 90% CI
+
+
+## Test for a linear combination
+
+We can also test hypotheses about linear combinations of coefficients using a t-test:
+
+$H_0: \gamma = \gamma_0$ vs. $H_a: \gamma \underset{>}{\overset{<}{\ne}} \gamma_0$
+
+
+$t = \dfrac{\widehat{\gamma} - \gamma_0}{SE(\widehat{\gamma})}$
+
+Reference distribution: $t_{n-(p+1)}$
+
+
+## Example
+
+- Work through the example on the handout with your neighbors
+
+- Be prepared to share your strategy with the class
