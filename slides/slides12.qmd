@@ -90,7 +90,6 @@ fev_lm <- lm(FEV ~ Age * Smoke, data = fev)
 
 ```{r echo=FALSE , fig.width = 4, fig.height = 3, fig.align='center', out.width = "60%"}
 #| warning: false
-#| 
 
 age <- fev$Age
 nonsmoke.mean <- function(age) 0.7574802 + 0.2028886 * age
@@ -101,6 +100,17 @@ ggplot(data = fev, mapping = aes(x = Age, y = FEV, color = Smoke)) +
   scale_color_manual(values = c("#f15a31", "#000036")) +
   labs(y = "FEV (in L/s)") +
   theme(legend.position = "top")
+
+
+```
+
+## Coefficient table
+
+```{r}
+fev_coefs <- fev_lm |> broom::tidy()
+fev_coefs |> 
+  mutate(p.value = style_pvalue(p.value)) |>
+  knitr::kable()
 ```
 
 ## FEV example
@@ -134,6 +144,8 @@ Non-smokers:
 ${\rm E}(Y|X) = \beta_0 + \beta_1  {\tt age}$
 :::
 :::
+
+. . . 
 
 ::: task
 **Warm up:** How would I build a confidence interval for the slope of the smokers line? 
@@ -171,10 +183,6 @@ Our standard table of coefficients doesn't contain the SEs we need to construct 
 
 ```{r}
 #| echo: false
-fev_lm <- lm(FEV ~ Age * Smoke, data = fev)
-fev_coefs <- fev_lm |> broom::tidy()
-
-
 fev_coefs |> 
   mutate(p.value = style_pvalue(p.value)) |>
   knitr::kable()
@@ -288,7 +296,7 @@ Reference distribution: $t_{n-(p+1)}$
 ## Your turn
 
 ::: task
-Find the test statistic and p-value for the null hypothesis "the intercept for smokers is significantly different than zero"
+Find the test statistic and p-value for the null hypothesis "the intercept for smokers is equal to zero" against a two sided alternative
 :::
 
 

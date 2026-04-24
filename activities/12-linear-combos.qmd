@@ -1,0 +1,74 @@
+---
+title: "12: Inference for Linear Combinations"
+---
+
+```{r}
+library(ggformula)
+library(broom)
+```
+
+::: callout-note
+
+I recommend finishing the [Inference for MLR](11-mlr-inference.qmd) activity before starting. This activity will use the same data and it will be helpful to have worked through the equations for each category before starting! 
+:::
+
+
+## Overview
+
+The `cars` data set loaded below contains information on used cars for sale, including their `Price`, `Mileage`, and `Make` (a categorical variable with six levels).
+ 
+```{r}
+cars <- read.csv("https://aluby.github.io/stat230/data/Cars.csv", stringsAsFactors = TRUE)
+```
+
+We'll proceed with the `car_lm2` model: 
+
+```{r}
+car_lm2 <- lm(log(Price) ~ Mileage * Make, data = cars)
+
+tidy(car_lm2)
+```
+
+## Calculating CIs for linear combinations
+
+To calculate a confidence interval for a linear combination of coefficients, we must first calculate the estimate and standard error of the linear combination. 
+
+Let's calculate a 95% confidence interval for the slope of the Cadillac model. Refer to your notes/slides and determine the formulas for the estimate and standard error of this slope.
+
+Now that you know the formulas, you'll use R to implement them.  First, extract the coefficients and covariance matrix from the model object. Try printing the results to see what they look like and make note of where the Cadillac coefficients are located.
+
+```{r}
+car_coefs <- coef(car_lm2) #<1>
+car_vcov <- vcov(car_lm2)  #<2>
+```
+
+1. Extract the coefficients from the model object and store them in `car_coefs`.
+2. Extract the covariance matrix from the model object and store it in `car_vcov`.
+
+Next, calculate the estimate of the slope for Cadillacs.
+
+```{r}
+estimate <- car_coefs[2] + car_coefs[8] #<3>
+estimate
+```
+
+3. `car_coefs` is a vector, so we pull off the necessary coefficients using their position in square brackets. Here, `car_coefs[2]` pulls off the coefficient for `Mileage` and `car_coefs[8]` pulls off the coefficient for the interaction term `Mileage:MakeCadillac`. 
+
+Now, calculate the standard error of the slope for Cadillacs. 
+
+```{r}
+se <- sqrt(car_vcov[2,2] + car_vcov[8,8] + 2*car_vcov[2,8]) #<4>
+se
+```
+
+4. `car_vcov` is a matrix, so we pull off the necessary variances and covariances using their row and column positions in square brackets. Here, `car_vcov[2,2]` pulls off the variance for `Mileage`, `car_vcov[8,8]` pulls off the variance for the interaction term `Mileage:MakeCadillac`, and `car_vcov[2,8]` pulls off the covariance between these two coefficients.
+
+Finally, use the estimate and standard error to calculate a 95% confidence interval for the slope of the Cadillac model. You can use the `qt()` function to find the appropriate critical value.
+
+**Q1.** Calculate a 95% confidence interval for the slope of the Cadillac model.
+
+```{r}
+#| min-lines: 3
+# Calculate the 95% CI here
+```
+
