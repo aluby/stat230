@@ -285,5 +285,10 @@ $t = \dfrac{\widehat{\gamma} - \gamma_0}{SE(\widehat{\gamma})}$
 
 Reference distribution: $t_{n-(p+1)}$
 
+## Your turn
+
+::: task
+Find the test statistic and p-value for the null hypothesis "the intercept for smokers is significantly different than zero"
+:::
 
 
