@@ -80,7 +80,7 @@ According to the EPA, lake ice duration can be an indicator of climate change. T
 >  - `air_temp`: the average air temperature in degrees Celsius for the winter (Nov to April)
 
 - SLR model: $\mu(\operatorname{ice\_duration}|X) = \beta_0 + \beta_{1}(\operatorname{air\_temp})$
-- Parallel slopes model: $\mu(\operatorname{ice\_duration}|X)= \beta_0 + \beta_{1}(\operatorname{air\_temp}) + \beta_{2}(\operatorname{lake}_{\operatorname{Monona}}) $
+- Parallel slopes model: $\mu(\operatorname{ice\_duration}|X)= \beta_0 + \beta_{1}(\operatorname{air\_temp}) + \beta_{2}(\operatorname{lake}_{\operatorname{Monona}})$
 - Different lines model: $\mu(\operatorname{ice\_duration}|X)= \beta_0 + \beta_{1}(\operatorname{air\_temp}) + \beta_{2}(\operatorname{lake}_{\operatorname{Monona}}) + \beta_{3}(\operatorname{air\_temp} \times \operatorname{lake}_{\operatorname{Monona}})$
 
 ```{r}
