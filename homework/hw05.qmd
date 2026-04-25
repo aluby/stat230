@@ -1,0 +1,115 @@
+---
+title: "Homework 05"
+format: html
+engine: knitr
+editor: source
+navbar: false
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(ggplot2)
+library(ggformula)
+library(here)
+library(broom)
+library(tidyverse)
+
+theme_set(theme_minimal())
+```
+
+Due: Friday of Week 5 at start of class
+
+There is a [homework template](../files/hw-template.qmd) available if you'd like to use that as a starter file, and copy and paste the code as needed. 
+
+::: callout-important
+## Important! 
+
+I will add problems after each class day. Be sure to check back here after each class meeting for new problems.
+:::
+
+
+# Problem 1: Fri
+
+::: callout-note
+
+You do not need to load the data into R for this question
+:::
+
+An article was published that suggested that Lego Friends sets are less complex than other comparable Lego sets (https://momsla.com/why-my-daughters-wont-be-playing-with-lego-friends/). The author claimed that “it’s clear to see how these Friends are dumbed down.” Is there a difference in Lego Friends sets and Lego City sets regarding the Amazon price and the complexity? (We will use the number of pieces per set as a measure of complexity.)
+Below is a graph, summary output from the multiple regression model fit, and covariance matrix. 
+
+```{r}
+#| fig-width: 4
+#| fig-height: 3
+#| echo: false
+
+
+lego_friends <- read.csv(here::here("data/lego_city_friends.csv"))
+gf_point(amazon_price ~ pieces, color = ~theme, data = lego_friends) 
+```
+
+```{r}
+#| echo: false
+lego_lm <- lm(formula = amazon_price ~ pieces * theme, data = lego_friends)
+summary(lego_lm)
+```
+
+```{r}
+vcov(lego_lm)
+```
+
+(a) Do the slopes between these models differ? Use an appropriate hypothesis test to support your claim. State your hypotheses, test statistic, p-value, and conclusion.
+
+(b) Calculate a 90% confidence interval for the slope of the `City` theme LEGO sets and interpret your interval in context.
+
+(c) Calculate a 90% confidence interval for the slope of the `Friends` theme LEGO sets and interpret your interval in context.
+
+# Problem 2: Fri
+
+According to the EPA, lake ice duration can be an indicator of climate change. This is because lake ice is dependent on several environmental factors, so changes in these factors will influence the formation of ice on top of lakes. As a result, the study and analysis of lake ice formation and duration can inform scientists about how quickly the climate is changing, and are critical to minimizing disruptions to lake ecosystems. We can examine the ice duration of Lake Mendota and Lake Monona, two lakes in the Madison, WI area, over 152 years. It contains the following variables:
+
+>  - `year`
+>  - `lake`: whether the lake is Mendota or Monona
+>  - `ice_duration`: number of days that the lake was frozen, excluding periods where it thaws before refreezing again
+>  - `air_temp`: the average air temperature in degrees Celsius for the winter (Nov to April)
+
+- SLR model: $\mu(\operatorname{ice\_duration}|X) = \beta_0 + \beta_{1}(\operatorname{air\_temp})$
+- Parallel slopes model: $\mu(\operatorname{ice\_duration}|X)= \beta_0 + \beta_{1}(\operatorname{air\_temp}) + \beta_{2}(\operatorname{lake}_{\operatorname{Monona}}) $
+- Different lines model: $\mu(\operatorname{ice\_duration}|X)= \beta_0 + \beta_{1}(\operatorname{air\_temp}) + \beta_{2}(\operatorname{lake}_{\operatorname{Monona}}) + \beta_{3}(\operatorname{air\_temp} \times \operatorname{lake}_{\operatorname{Monona}})$
+
+```{r}
+#| echo: false
+ice_data <- read.csv(here::here("data/ice_data.csv"))
+```
+
+```{r}
+#| eval: false
+ice_data <- read.csv("https://aluby.github.io/stat230/data/ice_data.csv")
+```
+
+(a) Create an appropriate visualization of the data and describe the relationship between `ice_duration` and `air_temp` and `lake`. Based on your findings, which model do you think will be most appropriate? 
+
+(b) Fit the different lines model and report the coefficients and standard errors in your homework writeup. 
+
+(c) Find a 95% confidence interval for the difference in effects of `air_temp` between Lake Mendota and Lake Monona. Interpret the interval in context.
+
+(d) Fit the parallel lines model and report the coefficients and standard errors in your writeup. Comment on how the estimates and standard errors changed compared to the different lines model in context of the data.
+
+(e) Perform an appropriate test comparing the fit of the different lines model to the SLR model. What do you conclude? 
+
+# Problem 3: Mon
+
+# Problem 4: Mon
+
+# Problem 5: Mon
+
+# Problem 6: Wed
+
+# Problem 7: Wed
+
