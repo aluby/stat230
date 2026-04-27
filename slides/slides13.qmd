@@ -468,7 +468,7 @@ cookp <- gf_point(.cooksd ~ .rownames, data = aug, color = ~.outlier, group = ~m
 library(broom)
 augment(bikes_mlr) 
 ```
-## 
+## {.smaller}
 
 ```{r}
 augment(bikes_mlr) |> knitr::kable()
@@ -487,10 +487,36 @@ resid_panel(bigmac.lm, plots = c("resid", "lev", "cookd"),
             type = "standardized", nrow = 1)
 ```
 
-## Advice 
+## Advice
 
-![](img/sleuth_outlier_flowchart.png){fig-position="center"}
+```{mermaid}
+graph TD
+    %% Define the green color theme for all nodes
+    classDef default fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    A(["Do the conclusions change <br> when the case is deleted?"])
+    
+    B["Proceed with the case in-<br>cluded. Study it to see if<br>anything can be learned."]
+    
+    C(["Is there reason to believe<br>the case belongs to a popu-<br>lation other than the one<br>under investigation?"])
+    
+    D["Omit the case and proceed."]
+    
+    E(["Does the case have unusu-<br>ally 'distant' explanatory<br>variable values?"])
+    
+    F["Omit the case and proceed.<br>Report conclusions for the<br>reduced range of explana-<br>tory variables."]
+    
+    G["Not much can be said. More<br>data (or clarification of the<br>influential case) are need-<br>ed to resolve the questions."]
+
+    A -->|NO| B
+    A -->|YES| C
+    C -->|YES| D
+    C -->|NO| E
+    E -->|YES| F
+    E -->|NO| G
+```
 
 :::footer
 Source: Display 11.8 in *Sleuth* (3rd edition)
 :::
+
