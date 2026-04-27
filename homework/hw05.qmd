@@ -135,7 +135,9 @@ Another way to consider the influence of a point is to calculate the average abs
 $$\text{Mean absolute percent difference (MAPD)} = \frac{1}{n} \sum_{i=1}^{n} |\frac{\hat{y}_i - \hat{y}_{i(i)}}{\hat{y}_i}|$$
 
 ```{r}
-grocery_lm_del <- lm(total_labor ~ cases + indirect_costs + holiday, data = grocery, subset = -c(16)) # <1>
+grocery_lm_del <- lm(total_labor ~ cases + indirect_costs + holiday, 
+                     data = grocery,
+                     subset = -c(16)) # <1>
 yhat_full <- fitted(grocery_lm)  # <2>
 yhat_del <- predict(grocery_lm_del, newdata = grocery) # <3>
 abs_pct_change <- sum(abs((yhat_full - yhat_del)/yhat_full)) / nrow(grocery) * 100 # <4>
