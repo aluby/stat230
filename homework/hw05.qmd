@@ -103,9 +103,60 @@ ice_data <- read.csv("https://aluby.github.io/stat230/data/ice_data.csv")
 
 (e) Perform an appropriate test comparing the fit of the different lines model to the SLR model. What do you conclude? 
 
-# Problem 3: Mon
+# Problem 3: Influence Diagnostics in R
 
-# Problem 4: Mon
+A large, national grocery retailer tracks productivity and costs of its facilities closely. Data were obtained from a single distribution center for a one-year period. Each data point for each variable represents one week of activity. The variables included are
+
+- `cases`: the number of cases shipped
+- `indirect_costs`: the indirect costs of the total labor hours as a percentage
+- `holiday`: a qualitative predictor called holiday that is coded 1 if the week has a holiday and 0 otherwise,
+- `total_labor`: the total labor hours
+
+Before anything, run the code chunk below to load the data set, fit the multiple regression model, and create the augmented dataset. 
+
+```{r}
+# grocery <- read.csv("https://aluby.github.io/stat230/data/grocery.csv")
+grocery <- read.csv(here::here("data/grocery.csv"))
+grocery_lm <- lm(total_labor ~ cases + indirect_costs + holiday, data = grocery)
+grocery_aug <- augment(grocery_lm) |>
+  rownames_to_column(var = "index") 
+```
+
+a. Create plots of leverage, the standardized residuals, and Cook’s distance against the row index. (You will have to use the augmented dataset and `gf_point()`)
+b. Based on the index plot of the standardized residuals, are there any observations outlying in the Y direction? If so, identify them by their row number.
+c. Based on the index plot of the leverage, identify any outlying X observations (by row number).
+d. Suppose that management wishes to predict the total labor hours required to handle the next shipment containing 300,000 cases whose indirect costs of the total hours is 7.2 and it’s not a holiday week (`holiday = 0`). Construct a scatter plot of `cases` against `indirect_costs` and determine visually whether this prediction involves an extrapolation beyond the range of the data.
+e. Based on Cook’s distance, are any of the observations you identified in parts (b) and (c) influential? Explain.
+
+# Problem 4: A new diagnostic
+
+Another way to consider the influence of a point is to calculate the average absolute percent difference in the fitted value when the point is removed from the data set. This may be more interpretable to the “general public” than Cook’s distance. The average absolute percent difference is calculated as
+
+$$\text{Mean absolute percent difference (MAPD)} = \frac{1}{n} \sum_{i=1}^{n} |\frac{\hat{y}_i - \hat{y}_{i(i)}}{\hat{y}_i}|$$
+
+```{r}
+grocery_lm_del <- lm(total_labor ~ cases + indirect_costs + holiday, data = grocery, subset = -c(16)) # <1>
+yhat_full <- fitted(grocery_lm)  # <2>
+yhat_del <- predict(grocery_lm_del, newdata = grocery) # <3>
+abs_pct_change <- sum(abs((yhat_full - yhat_del)/yhat_full)) / nrow(grocery) * 100 # <4>
+```
+
+1. Fit the regression model to the data set with observation 16 removed (the number is the row number). You can also delete multiple observations at once, to see join influence, by entering multiple comma separated values.
+2. Obtain the fitted values for the full data set.
+3. Obtain the predicted values for every observation in the full data set using the model with observation 16 removed.
+4. Calculate the average absolute percent difference.
+
+
+The top four Cook’s distance values are associated with observations 16, 20, 32, 43, and 51 in Problem 7. Calculate the average absolute percent difference when each of these observations is removed from the data set. Fill in the following table with your results
+
+| Observation (row) | MAPD |
+|-------------------|------|
+| 16                |      |
+| 20                |      |
+| 32                |      |
+| 43                |      |
+
+Summarize what the mean absolute percent difference indicates about the influence of each of the cases? Does is agree with your assessment based on Cook’s distance in Problem 7?
 
 # Problem 5: Mon
 
