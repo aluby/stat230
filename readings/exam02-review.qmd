@@ -34,8 +34,10 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
 
   - Be able to state the assumptions/conditions necessary for valid inference from a MLR model.
   - Know how to assess each assumption
-  - Know how to read each type of diagnostic plot (residuals vs. fitted values, residuals vs. x, normal Q-Q plot, residuals vs. index)
-  - For a violation of each assumption/condition, are there any aspects of the model that we can trust? Or is everything about the model wrong?
+  - Know how to read each type of residual plot (residuals vs. fitted values, residuals vs. x, normal Q-Q plot, residuals vs. index)
+  - For a violation of each condition, are there any aspects of the model that we can trust? Or is everything about the model wrong?
+  - Know how to read each type of diagnostic plot (leverage, Cook's distance, standardized residuals, etc.) and identify possible problematic points
+  - Understand how leverage and influence relate to each other and the impact on the regression equation
   
 *Example question:* TBD
 

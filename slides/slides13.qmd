@@ -72,7 +72,7 @@ florida_lm <- lm(BUCHANAN ~ BUSH, data = florida)
 bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 ```
 
-## Warm Up 
+## Warm Up {.smaller}
 
 
 ::: task
@@ -86,8 +86,6 @@ bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 ## Regression is *not* resistant to outliers
 
 Solid line = with outliers; dashed line = without outliers
-
-(switch to Florida)
 
 ```{r fig.height=4, fig.width=4, echo=FALSE}
 resid_df <- augment(florida_lm)
@@ -266,7 +264,7 @@ p
 
 ## Leverage (aka "hat") {.smaller}
 
-Measures the **potential to influence** the SLR line
+Measures the **potential to influence** the least squares line
 
 :::{.columns}
 ::: {.column width="15%"}
@@ -299,7 +297,6 @@ I use p to denote the number of slope coefficients, so there are p+1
 regression coefficients
 :::
 
----
 
 ## Leverage
 
@@ -459,7 +456,7 @@ cookp <- gf_point(.cooksd ~ .rownames, data = aug, color = ~.outlier, group = ~m
 
   - `.hat`: Leverage
   - `.std.resid`: Standardized residuals
-  - `cooksd`: Cook's distance
+  - `.cooksd`: Cook's distance
 
 
 ```{r}
@@ -471,7 +468,7 @@ augment(bikes_mlr)
 ## {.smaller}
 
 ```{r}
-augment(bikes_mlr) |> knitr::kable()
+augment(bikes_mlr) |> select(-weekend) |> head(10) |> knitr::kable()
 ```
 
 ## Shortcut for plots using `resid_panel()`
