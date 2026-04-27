@@ -1,0 +1,496 @@
+---
+title: Diagnostics for MLR
+subtitle: Day 13
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+library(gt)
+library(gtsummary)
+library(carData)
+
+notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+UBSprices <- read.csv("http://aloy.rbind.io/data/UBSprices.csv")
+bigmac.lm <- lm(bigmac2009 ~ bigmac2003, data = UBSprices)
+florida <- read.csv("https://aluby.github.io/stat230/data/florida_2000.csv") 
+florida_lm <- lm(BUCHANAN ~ BUSH, data = florida)
+bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
+```
+
+## Warm Up 
+
+
+::: task
+
+- Recap SLR LINE conditions
+
+- Which ones do you think will apply to MLR? How would we check them? 
+
+:::
+
+## Regression is *not* resistant to outliers
+
+Solid line = with outliers; dashed line = without outliers
+
+(switch to Florida)
+
+```{r fig.height=4, fig.width=4, echo=FALSE}
+resid_df <- augment(florida_lm)
+resid_df <- mutate(resid_df, outlier = .std.resid > 3)
+
+gf_point(BUCHANAN ~ BUSH, data = filter(resid_df, outlier == TRUE), shape = 17, color = "darkorange") %>%
+gf_point(BUCHANAN ~ BUSH, data = filter(resid_df, outlier == FALSE), shape = 16) %>%
+  gf_lm(BUCHANAN ~ BUSH, data = resid_df, color = "darkorange") %>%
+  gf_lm(BUCHANAN ~ BUSH, data = resid_df[!resid_df$outlier,], linetype = 2) 
+```
+
+
+## SLR is *not* resistant to outliers
+
+<br>
+
+$$\widehat{\beta}_1 = r \cdot \dfrac{s_y}{s_x} \qquad \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1 \bar{x}$$
+
+<br>
+
+Why?
+
+- $r$ is not resistant
+- $s_y$, $s_x$ are not resistant
+- $\bar{x}$, $\bar{y}$ are not resistant
+
+
+## MLR is *not* resistant to outliers
+
+We're still choosing the $\widehat{\beta}_i$ to minimize the sum of squared residuals
+
+$$
+\begin{split}
+SSE &= \sum_{i=1}^n \left( y_i - \widehat{y}_i \right)^2\\ 
+&= \sum_{i=1}^n \left( y_i - \widehat{\beta}_0 - \widehat{\beta}_1 x_{i1} - \widehat{\beta}_2 x_{i2} - ... - \widehat{\beta}_p x_{ip} \right)^2
+\end{split}
+$$
+
+Sum's aren't resistant to outliers!
+
+
+## Types of outliers
+
+:::: {.columns}
+
+::: {.column width="80%"}
+
+```{r echo=FALSE, fig.width = 7, fig.height =5}
+N <- 25
+std.dev <- .5
+x <- rnorm(N)
+y <- x+rnorm(N,sd=std.dev)
+xnew <- c(0,10,10,10)
+ynew <- c(10,0,predict(lm(y~x),newdata=list(x=10))+rnorm(1, sd = std.dev),20)
+df <- data.frame(x = x, y = y)
+df.out <- data.frame(x = xnew, y = ynew, type = factor(1:4))
+p1 <- gf_point(y ~ x, data = df, title = "Outlier in Y", color = "black") |>
+  gf_point(y ~ x, data = filter(df.out, type == 1), color = "darkorange")
+inf1 <- p1 %>%
+  gf_lm(y ~ x, data = df, color = "black") %>%
+  gf_lm(y ~ x, data = rbind(df, c(x = xnew[1], y = ynew[1])), color = "darkorange")
+p2 <- gf_point(y ~ x, data = df, title = "Outlier in X") %>%
+  gf_point(y ~ x, data = filter(df.out, type == 2), color = "darkorange")
+inf2 <- p2 %>%
+  gf_lm(y ~ x, data = df, color = "black") %>%
+  gf_lm(y ~ x, data = rbind(df, c(x = xnew[2], y = ynew[2])), color = "darkorange")
+p3 <- gf_point(y ~ x, data = df, title = "Outlier in Y + X") %>%
+  gf_point(y ~ x, data = filter(df.out, type == 3), color = "darkorange")
+inf3 <- p3 %>%
+  gf_lm(y ~ x, data = df, color = "black") %>%
+  gf_lm(y ~ x, data = rbind(df, c(x = xnew[3], y = ynew[3])), color = "darkorange")
+p4 <- gf_point(y ~ x, data = df, title = "Outlier in Y + X") %>%
+  gf_point(y ~ x, data = filter(df.out, type == 4), color = "darkorange")
+inf4 <- p4 %>%
+  gf_lm(y ~ x, data = df, color = "black") %>%
+  gf_lm(y ~ x, data = rbind(df, c(x = xnew[4], y = ynew[4])), color = "darkorange")
+p1 + p2 + p3 + p4
+```
+
+:::
+
+::: {.column width="15%" .small}
+How is each outlier *influencing* the regression line?
+:::
+
+::::
+
+## Not all outliers are *influential*
+
+<font color="darkorange">Orange line</font> = SLR with outlier; Black line = SLR without outlier
+
+```{r}
+#| fig.width: 7
+#| fig.height: 5
+inf1 + inf2 + inf3 +inf4
+```
+
+
+## Influential points
+
+Points that are able to substantially change the fitted model ares **influential**
+
+<br>
+
+. . .
+
+How do we find outliers and determine if they are influential?
+
+- Plot the data
+- Plot the standardized residuals
+- Fit the model with/without the point(s)
+- Calculate *influence diagnostics*
+
+
+
+```{r, include=FALSE}
+lm0 <- lm(y~x)
+lm1 <- lm(c(y,ynew[1])~c(x,xnew[1]))
+lm2 <- lm(c(y,ynew[2])~c(x,xnew[2]))
+lm3 <- lm(c(y,ynew[3])~c(x,xnew[3]))
+lm4 <- lm(c(y,ynew[4])~c(x,xnew[4]))
+
+aug0 <- augment(lm0)
+aug0$model <- 0
+aug1 <- augment(lm1) %>%
+  rename(y = 2, x = 3) %>%
+  mutate(model = 1, .rownames = 1:26, .outlier = c( rep("no", 25),"yes"))
+aug2 <- augment(lm2) %>%
+  rename(y = 2, x = 3)  %>%
+  mutate(model = 2, .rownames = 1:26, .outlier = c( rep("no", 25),"yes"))
+aug3 <- augment(lm3)  %>%
+  rename(y = 2, x = 3)  %>%
+  mutate(model = 3, .rownames = 1:26, .outlier = c( rep("no", 25),"yes"))
+aug4 <- augment(lm4)  %>%
+  rename(y = 2, x = 3)  %>%
+  mutate(model = 4, .rownames = 1:26, .outlier = c( rep("no", 25),"yes"))
+
+aug <- rbind(aug1, aug2, aug3, aug4)
+```
+
+## Outliers
+
+```{r fig.height=3, fig.width=9, echo=FALSE, fig.align='center'}
+ell1 <- gf_point(prestige ~ education, data = Duncan, ylab = "Y", xlab = expression(X[1])) +
+  stat_ellipse(color = "blue", linetype = 2)
+
+ell2 <- gf_point(prestige ~ income, data = Duncan, ylab = "Y", xlab = expression(X[2]),
+                 title = "Outlier in Y") +
+  stat_ellipse(color = "blue", linetype = 2)
+
+ell3 <- gf_point(income ~ education, data = Duncan, ylab = expression(X[1]), xlab = expression(X[2]),
+                 title = "Possible outliers in 'X'") +
+  stat_ellipse(color = "blue", linetype = 2)
+
+(ell1 | ell2 | ell3)
+```
+
+- In higher dimensions, outliers can be tricky to detect
+
+- To detect outliers in X, you have to consider the multivariate relationships between all of the predictors
+
+## 3D version
+
+```{r}
+library(plotly)
+
+generic_data <- Duncan |>
+  select(y = prestige, 
+         x1 = education,
+         x2 = income)
+
+p <- plot_ly(generic_data, x = ~x1, y = ~x2, z = ~y, 
+             type = "scatter3d", mode = "markers", color = ~y)
+p
+```
+
+## Leverage (aka "hat") {.smaller}
+
+Measures the **potential to influence** the SLR line
+
+:::{.columns}
+::: {.column width="15%"}
+For SLR:
+:::
+::: {.column width="85%"}
+$$h_i = \frac{1}{n-1} \left[ \frac{x_i - \bar{x}}{s_x} \right]^2 + \frac{1}{n} = \dfrac{1}{n} + \frac{\left(x_i - \bar{x}\right)^2}{\sum \left(x_i - \bar{x}\right)^2}$$
+:::
+:::
+
+:::{.columns}
+::: {.column width="15%"}
+For MLR:
+:::
+::: {.column width="85%"}
+more complicated because we're looking at a distance of a case
+from the average of p predictors
+:::
+:::
+
+
+**Cutoff**
+
+- $2(p+1)/n$
+- $3(p+1)/n$
+- Also a good idea to examine a histogram/index plot
+
+::: footer
+I use p to denote the number of slope coefficients, so there are p+1
+regression coefficients
+:::
+
+---
+
+## Leverage
+
+"Flares up" when value of x is far from the mean. Indicates *potential* to be influential
+
+```{r}
+#| fig.height: 5.5
+#| fig.width: 10
+levp <- gf_point(.hat ~ .rownames, data = aug, color = ~.outlier, group = ~model) %>%
+  gf_hline(yintercept = (2*2)/26, linetype = 3) %>%
+  gf_hline(yintercept = (3*2)/26, linetype = 2) %>%
+  gf_facet_wrap(~model, ncol = 4) %>%
+  gf_refine(scale_color_manual(values = c("black", "darkorange")),
+            theme(legend.position = "none")) %>%
+  gf_labs(x = "Index", y = "Leverage")
+
+(p1 | p2 | p3 | p4) / levp
+```
+
+## Leverage
+
+In higher dimensions, leverage is focusing on the distance from the average of all of the predictors
+
+```{r fig.width = 9, fig.height = 3, echo=FALSE}
+duncan_lm <- lm(prestige ~ income + education, data = Duncan)
+duncan_aug <- augment(duncan_lm) %>%
+  mutate(lev.flag = .hat > (2*3)/ length(.hat),
+         cook.flag = .cooksd > 1)
+
+le1 <- gf_point(prestige ~ education, data = duncan_aug, color = ~factor(lev.flag)) %>%
+  gf_refine(scale_color_manual(values = c("black", "darkorange")),
+            theme(legend.position = "none")) %>%
+  gf_labs(x = expression(X[1]), y = "Y")
+
+le2 <- gf_point(prestige ~ income, data = duncan_aug, color = ~lev.flag) %>%
+  gf_refine(scale_color_manual(values = c("black", "darkorange")),
+            theme(legend.position = "none")) %>%
+  gf_labs(x = expression(X[2]), y = "Y")
+
+le3 <- gf_point(income ~ education, data = duncan_aug, color = ~lev.flag) %>%
+  gf_hline(yintercept = mean(Duncan$income), linetype = 2) %>%
+  gf_vline(xintercept = mean(Duncan$education), linetype = 2) %>%
+  gf_refine(scale_color_manual(values = c("black", "darkorange")),
+            theme(legend.position = "none")) %>%
+  gf_labs(x = expression(X[1]), y = expression(X[2]))
+
+(le1 | le2 | le3)
+```
+
+## Standardized residuals {.smaller}
+
+Standardized residuals are calculated by dividing the residuals by their standard deviation
+
+$$r_i = \frac{e_i}{\widehat{\sigma} \sqrt{1 - \dfrac{1}{n} - \dfrac{(x_i - \overline{x})^2}{\sum (x_i - \overline{x})^2}}} = \dfrac{e_i}{ \widehat{\sigma} \sqrt{1 - h_{i}}}$$
+
+<br> 
+
+*Idea:* Applies a "penalty" to high leverage points: accounts for the fact that if leverage is high, the line will be forced closer to the leverage point (making raw residual smaller).
+
+<br>
+
+**Guidelines**: 
+
+- $|r_i|>2$ for small data sets
+- $|r_i|>4$ for large data sets
+
+
+
+## Standardized residuals
+
+"Flare up" when value of y is far from $\widehat{y}$
+
+
+```{r}
+#| fig.height: 5.5
+#| fig.width: 10
+stdres <- gf_point(.std.resid ~ .rownames, data = aug, color = ~.outlier, group = ~model) %>%
+  gf_hline(yintercept = 2, linetype = 3) %>%
+  # gf_hline(yintercept = 3, linetype = 2) %>%
+  gf_hline(yintercept = -2, linetype = 3) %>%
+  # gf_hline(yintercept = -3, linetype = 2) %>%
+  gf_facet_wrap(~model, ncol = 4) %>%
+  gf_refine(scale_color_manual(values = c("black", "darkorange")),
+            theme(legend.position = "none")) %>%
+  gf_labs(x = "Index", y = "Standardized Residual")
+
+p11 <- p1 |>
+  gf_lm(y ~ x, data = rbind(df, c(x = xnew[1], y = ynew[1])), color = "darkorange")
+
+p22 <- p2 |>
+  gf_lm(y ~ x, data = rbind(df, c(x = xnew[2], y = ynew[2])), color = "darkorange")
+
+p33 <- p3 |>
+  gf_lm(y ~ x, data = rbind(df, c(x = xnew[3], y = ynew[3])), color = "darkorange")
+
+p44 <- p4 |>
+  gf_lm(y ~ x, data = rbind(df, c(x = xnew[1], y = ynew[4])), color = "darkorange")
+
+
+
+(p11 | p22 | p33 | p44 ) / stdres
+```
+
+## Less common: DFFITS {.smaller}
+
+Measures effect the i<sup>th</sup> case has on its **own** fitted value
+
+
+$$DFFITS_i = \frac{\widehat{y}_i - \widehat{y}_{i(i)}}{\widehat{\sigma}_{(i)} \sqrt{h_i}}$$
+where the subscript $(i)$ indicates that the value is based on a model when observation i is omitted
+
+<br>
+
+**Cutoff**
+
+- 1 for small/medium data sets
+- $2\sqrt{\dfrac{p+1}{n}}$ for large data sets
+
+
+## Cook's distance {.smaller}
+
+Measures effect the i<sup>th</sup> case has on **all** of the fitted values
+
+$$D_i= \sum_{j=1}^n\frac{ \left(\widehat{y}_{j(i)} - \widehat{y}_j \right)^2}{(p+1) \widehat{\sigma}} = \frac{r_i^2}{p+1} \left( \frac{h_i}{1-h_i} \right)$$
+
+where $\widehat{y}_{j(i)}$ is the fitted value for observation j based on a model when observation i is omitted (eg black line on next slide)
+
+
+<br>
+
+**Cutoff**
+
+- $D_i$ near or above 1 indicates large influence
+
+- Also can judge relative standing of  $D_i$ — make an index plot
+
+## Cook's distance
+
+```{r}
+#| fig.height: 5.5
+#| fig.width: 10
+cookp <- gf_point(.cooksd ~ .rownames, data = aug, color = ~.outlier, group = ~model) %>%
+  gf_hline(yintercept = 1, linetype = 2) %>%
+  gf_facet_wrap(~model, ncol = 4) %>%
+  gf_refine(scale_color_manual(values = c("black", "darkorange")),
+            theme(legend.position = "none")) %>%
+  gf_labs(x = "Index", y = "Cook's D")
+
+(inf1 | inf2 | inf3 | inf4) / cookp
+```
+
+## Do we calculate these by hand?
+
+**No!**
+
+`augment()`: lives in the {broom} package and computes: 
+
+  - `.hat`: Leverage
+  - `.std.resid`: Standardized residuals
+  - `cooksd`: Cook's distance
+
+
+```{r}
+#| eval: false
+#| echo: true
+library(broom)
+augment(bikes_mlr) 
+```
+## 
+
+```{r}
+augment(bikes_mlr) |> knitr::kable()
+```
+
+## Shortcut for plots using `resid_panel()`
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+#| echo: true
+
+
+library(ggResidpanel)
+resid_panel(bigmac.lm, plots = c("resid", "lev", "cookd"), 
+            type = "standardized", nrow = 1)
+```
+
+## Advice 
+
+![](img/sleuth_outlier_flowchart.png){fig-position="center"}
+
+:::footer
+Source: Display 11.8 in *Sleuth* (3rd edition)
+:::
