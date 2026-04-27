@@ -29,8 +29,7 @@ $$
 This model is fit using the below code:
 
 ```{r}
-surgical_data <- read.csv(here::here("data/surgical_example_data.csv"))
-# surgical_data <- read.csv("https://aluby.github.io/stat230/data/surgical_example_data.csv"))
+surgical_data <- read.csv("https://aluby.github.io/stat230/data/surgical_example_data.csv")
 
 surgical_lm <- lm(survival_time ~ blood_clot_score + prognostic_index + enzyme_test + alchohol_use_heavy, data = surgical_data)
 ```
@@ -106,6 +105,10 @@ Let's continue working with the log-transformed model.
 **Q5:** The `resid_interact` function makes an interactive version of the plots which allow you to hover on the points to identify which point (index) they correspond to. What are the observation number (index) of any points you noticed above?
 
 ```{r}
+#| fig-width: 8
+#| fig-height: 3
+
+
 resid_interact(log_surgical_lm, plots = c("cookd", "lev"))
 ```
 
