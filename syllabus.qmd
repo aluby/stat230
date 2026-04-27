@@ -235,7 +235,7 @@ office hours.
 
 ## Tokens
 
-You have 5 tokens to use throughout the term. Tokens can be used for:
+You have 4 tokens to use throughout the term. Tokens can be used for:
 
 -   a 48-hour extension on homework or case study due date
 -   revise a case study
