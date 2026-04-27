@@ -1,0 +1,88 @@
+---
+title: "Exam01 Review"
+format: html
+---
+
+This is an outline of things you should review for Exam01 scheduled for Monday of Week 3. 
+
+I recommend beginning by *carefully* reviewing your notes and activities from class and the homework questions. It's best to do this actively: by reading, thinking, solving problems, and asking questions. 
+
+# Materials
+
+ - You may bring **one side** of one 3x5 inch notecard of your own notes. 
+ - I will not ask you to write down any R code, but you should be comfortable reading R output. 
+ - I will bring basic calculators but you may not use other calculators
+
+# Skills
+
+**1. Express a MLR model using proper notation**
+
+  - Using proper statistical notation, write down the multiple linear regression model
+  - You should be able to express either the theoretical model or the fitted model, and know the difference between the two.
+  - Don’t forget the assumptions you place on the residuals in a theoretical model!
+  
+*Example question:* TBD
+
+**2. Interpret the coefficients and $R^2$ of a model in context.**
+
+  - Given a fitted linear model equation, be able to interpret the y-intercept and slope
+  - Your interpretations should always be given in context, so don’t just talk about “x” and “y.”
+  
+*Example question:* TBD
+
+**3. Check necessary conditions for a multiple regression model and discuss the implications of a model deficiency**
+
+  - Be able to state the assumptions/conditions necessary for valid inference from a MLR model.
+  - Know how to assess each assumption
+  - Know how to read each type of diagnostic plot (residuals vs. fitted values, residuals vs. x, normal Q-Q plot, residuals vs. index)
+  - For a violation of each assumption/condition, are there any aspects of the model that we can trust? Or is everything about the model wrong?
+  
+*Example question:* TBD
+
+**4. Perform a hypothesis test to draw inference about a single regression coefficient**
+  
+  - Given R output from a fitted regression model, conduct a t-test for the slope or intercept
+  - The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context
+  - Understand and explain where the test statistic and p value came from
+  - Given a research question, state the hypotheses for your test in both words and proper notation
+  - Know the difference between a one-sided and two-sided p-value, and know when each is required (or given by R)
+  
+*Example question:* TBD
+  
+**5.  Construct and interpret confidence intervals for regression coefficients**
+
+  - Given R output from a fitted regression model, identify a confidence interval for each regression coefficient.
+  - Know the equation for the confidence interval and how you could calculate it if you were given the estimate, standard error, and sample size.
+  - Be able to interpret a confidence interval for each regression coefficient in context
+  
+*Example question:* TBD
+
+**6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval**
+
+  - Be able to identify situations that are making predictions for group means vs. individual observations
+  - Select the correct interval (confidence or prediction) for the problem at hand
+  - Given a plot with both confidence intervals and prediction intervals, be able to identify which is which
+  - Which is wider, a confidence interval or prediction interval? Why does this make sense?
+  
+*Example question:* TBD
+
+**7. Conduct inference to compare nested regression models.** 
+
+  - Understand what it means for two models to be nested
+  - Be able to state the null and alternative hypotheses for the extra-sums-of-squares F-test in both words and using proper notation.
+  - Given the SSE or SSRegression from the full and reduced models and the MSE from the full model, compute the F-test statistic.
+  - Be able to specify the degrees of freedom for the extra-sums-of-squares F-test
+  - Understand where the p-value comes from in the extra-sums-of-squares F-test (What distribution? What tail?)
+  - The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context.
+
+*Example question:* TBD
+
+**8. Interpret the coefficients an MLR model when transformations have been used on the response and/or the explanatory variables**
+
+  - Given a transformation to the response variable, explanatory variable, or both, be able to identify if
+the back transformation is interpretable.
+  - Given a model with a log-transformed response variable, interpret the slope coefficient(s) in context.
+  - Given a model with a log-transformed explanatory variable, interpret the slope coefficient of the
+transformed variable.
+
+*Example question:* TBD
