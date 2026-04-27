@@ -151,8 +151,8 @@ window.Quarto = {
   <ul>
   <li><a href="#problem-1-fri" id="toc-problem-1-fri" class="nav-link active" data-scroll-target="#problem-1-fri">Problem 1: Fri</a></li>
   <li><a href="#problem-2-fri" id="toc-problem-2-fri" class="nav-link" data-scroll-target="#problem-2-fri">Problem 2: Fri</a></li>
-  <li><a href="#problem-3-mon" id="toc-problem-3-mon" class="nav-link" data-scroll-target="#problem-3-mon">Problem 3: Mon</a></li>
-  <li><a href="#problem-4-mon" id="toc-problem-4-mon" class="nav-link" data-scroll-target="#problem-4-mon">Problem 4: Mon</a></li>
+  <li><a href="#problem-3-influence-diagnostics-in-r" id="toc-problem-3-influence-diagnostics-in-r" class="nav-link" data-scroll-target="#problem-3-influence-diagnostics-in-r">Problem 3: Influence Diagnostics in R</a></li>
+  <li><a href="#problem-4-a-new-diagnostic" id="toc-problem-4-a-new-diagnostic" class="nav-link" data-scroll-target="#problem-4-a-new-diagnostic">Problem 4: A new diagnostic</a></li>
   <li><a href="#problem-5-mon" id="toc-problem-5-mon" class="nav-link" data-scroll-target="#problem-5-mon">Problem 5: Mon</a></li>
   <li><a href="#problem-6-wed" id="toc-problem-6-wed" class="nav-link" data-scroll-target="#problem-6-wed">Problem 6: Wed</a></li>
   <li><a href="#problem-7-wed" id="toc-problem-7-wed" class="nav-link" data-scroll-target="#problem-7-wed">Problem 7: Wed</a></li>
@@ -288,11 +288,89 @@ pieces:themeFriends   0.02636947 -8.146713e-05  -0.05706200        1.885430e-04<
 <li><p>Perform an appropriate test comparing the fit of the different lines model to the SLR model. What do you conclude?</p></li>
 </ol>
 </section>
-<section id="problem-3-mon" class="level1">
-<h1>Problem 3: Mon</h1>
+<section id="problem-3-influence-diagnostics-in-r" class="level1">
+<h1>Problem 3: Influence Diagnostics in R</h1>
+<p>A large, national grocery retailer tracks productivity and costs of its facilities closely. Data were obtained from a single distribution center for a one-year period. Each data point for each variable represents one week of activity. The variables included are</p>
+<ul>
+<li><code>cases</code>: the number of cases shipped</li>
+<li><code>indirect_costs</code>: the indirect costs of the total labor hours as a percentage</li>
+<li><code>holiday</code>: a qualitative predictor called holiday that is coded 1 if the week has a holiday and 0 otherwise,</li>
+<li><code>total_labor</code>: the total labor hours</li>
+</ul>
+<p>Before anything, run the code chunk below to load the data set, fit the multiple regression model, and create the augmented dataset.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grocery &lt;- read.csv("https://aluby.github.io/stat230/data/grocery.csv")</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>grocery <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/grocery.csv"</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>grocery_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(total_labor <span class="sc">~</span> cases <span class="sc">+</span> indirect_costs <span class="sc">+</span> holiday, <span class="at">data =</span> grocery)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>grocery_aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(grocery_lm) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">"index"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="a">
+<li>Create plots of leverage, the standardized residuals, and Cook’s distance against the row index. (You will have to use the augmented dataset and <code>gf_point()</code>)</li>
+<li>Based on the index plot of the standardized residuals, are there any observations outlying in the Y direction? If so, identify them by their row number.</li>
+<li>Based on the index plot of the leverage, identify any outlying X observations (by row number).</li>
+<li>Suppose that management wishes to predict the total labor hours required to handle the next shipment containing 300,000 cases whose indirect costs of the total hours is 7.2 and it’s not a holiday week (<code>holiday = 0</code>). Construct a scatter plot of <code>cases</code> against <code>indirect_costs</code> and determine visually whether this prediction involves an extrapolation beyond the range of the data.</li>
+<li>Based on Cook’s distance, are any of the observations you identified in parts (b) and (c) influential? Explain.</li>
+</ol>
 </section>
-<section id="problem-4-mon" class="level1">
-<h1>Problem 4: Mon</h1>
+<section id="problem-4-a-new-diagnostic" class="level1">
+<h1>Problem 4: A new diagnostic</h1>
+<p>Another way to consider the influence of a point is to calculate the average absolute percent difference in the fitted value when the point is removed from the data set. This may be more interpretable to the “general public” than Cook’s distance. The average absolute percent difference is calculated as</p>
+<p><span class="math display">\[\text{Mean absolute percent difference (MAPD)} = \frac{1}{n} \sum_{i=1}^{n} |\frac{\hat{y}_i - \hat{y}_{i(i)}}{\hat{y}_i}|\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>grocery_lm_del <span class="ot">&lt;-</span> <span class="fu">lm</span>(total_labor <span class="sc">~</span> cases <span class="sc">+</span> indirect_costs <span class="sc">+</span> holiday, <span class="at">data =</span> grocery, <span class="at">subset =</span> <span class="sc">-</span><span class="fu">c</span>(<span class="dv">16</span>))</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>yhat_full <span class="ot">&lt;-</span> <span class="fu">fitted</span>(grocery_lm)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>yhat_del <span class="ot">&lt;-</span> <span class="fu">predict</span>(grocery_lm_del, <span class="at">newdata =</span> grocery)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>abs_pct_change <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>((yhat_full <span class="sc">-</span> yhat_del)<span class="sc">/</span>yhat_full)) <span class="sc">/</span> <span class="fu">nrow</span>(grocery) <span class="sc">*</span> <span class="dv">100</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">Fit the regression model to the data set with observation 16 removed (the number is the row number). You can also delete multiple observations at once, to see join influence, by entering multiple comma separated values.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="2">Obtain the fitted values for the full data set.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="3">Obtain the predicted values for every observation in the full data set using the model with observation 16 removed.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="4">Calculate the average absolute percent difference.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>The top four Cook’s distance values are associated with observations 16, 20, 32, 43, and 51 in Problem 7. Calculate the average absolute percent difference when each of these observations is removed from the data set. Fill in the following table with your results</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Observation (row)</th>
+<th>MAPD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>16</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>32</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>43</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Summarize what the mean absolute percent difference indicates about the influence of each of the cases? Does is agree with your assessment based on Cook’s distance in Problem 7?</p>
 </section>
 <section id="problem-5-mon" class="level1">
 <h1>Problem 5: Mon</h1>
