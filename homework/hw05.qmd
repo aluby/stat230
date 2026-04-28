@@ -160,7 +160,21 @@ The top four Cook’s distance values are associated with observations 16, 20, 3
 
 Summarize what the mean absolute percent difference indicates about the influence of each of the cases? Does is agree with your assessment based on Cook’s distance in Problem 7?
 
-# Problem 5: Mon
+# Problem 5: Influence diagnostics
+
+The following statements regarding regression diagnostics contain conceptual or technical errors. Identify the error in each statement and provide a corrected statement.
+
+(a) A data point is considered to have high leverage if its response value ($Y$) is an extreme outlier compared to the rest of the sample.
+
+(b) Cook’s Distance measures the influence of an observation by calculating the specific change in the slope of the primary predictor ($\beta_1$) when that observation is removed from the model.
+
+(c) Any observation identified as an outlier (having a large standardized residual) is by definition an influential point that will significantly alter the regression coefficients.
+
+(d) Statisticians agree that a point is only truly influential if its Cook’s Distance ($D_i$) is greater than 1.0; any value smaller than this indicates the point has no impact on the model.
+
+(e) An influential point will always decrease the $R^2$ of a model because it adds unexplained noise to the regression line.
+
+(f) Once a diagnostic (like DFFITS or Cook’s Distance) flags a point as influential, the correct procedure is to immediately remove the observation from the dataset and rerun the regression.
 
 # Problem 6: Wed
 
