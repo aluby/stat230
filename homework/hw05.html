@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -153,7 +153,7 @@ window.Quarto = {
   <li><a href="#problem-2-fri" id="toc-problem-2-fri" class="nav-link" data-scroll-target="#problem-2-fri">Problem 2: Fri</a></li>
   <li><a href="#problem-3-influence-diagnostics-in-r" id="toc-problem-3-influence-diagnostics-in-r" class="nav-link" data-scroll-target="#problem-3-influence-diagnostics-in-r">Problem 3: Influence Diagnostics in R</a></li>
   <li><a href="#problem-4-a-new-diagnostic" id="toc-problem-4-a-new-diagnostic" class="nav-link" data-scroll-target="#problem-4-a-new-diagnostic">Problem 4: A new diagnostic</a></li>
-  <li><a href="#problem-5-mon" id="toc-problem-5-mon" class="nav-link" data-scroll-target="#problem-5-mon">Problem 5: Mon</a></li>
+  <li><a href="#problem-5-influence-diagnostics" id="toc-problem-5-influence-diagnostics" class="nav-link" data-scroll-target="#problem-5-influence-diagnostics">Problem 5: Influence diagnostics</a></li>
   <li><a href="#problem-6-wed" id="toc-problem-6-wed" class="nav-link" data-scroll-target="#problem-6-wed">Problem 6: Wed</a></li>
   <li><a href="#problem-7-wed" id="toc-problem-7-wed" class="nav-link" data-scroll-target="#problem-7-wed">Problem 7: Wed</a></li>
   </ul>
@@ -318,27 +318,29 @@ pieces:themeFriends   0.02636947 -8.146713e-05  -0.05706200        1.885430e-04<
 <p>Another way to consider the influence of a point is to calculate the average absolute percent difference in the fitted value when the point is removed from the data set. This may be more interpretable to the “general public” than Cook’s distance. The average absolute percent difference is calculated as</p>
 <p><span class="math display">\[\text{Mean absolute percent difference (MAPD)} = \frac{1}{n} \sum_{i=1}^{n} |\frac{\hat{y}_i - \hat{y}_{i(i)}}{\hat{y}_i}|\]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>grocery_lm_del <span class="ot">&lt;-</span> <span class="fu">lm</span>(total_labor <span class="sc">~</span> cases <span class="sc">+</span> indirect_costs <span class="sc">+</span> holiday, <span class="at">data =</span> grocery, <span class="at">subset =</span> <span class="sc">-</span><span class="fu">c</span>(<span class="dv">16</span>))</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>yhat_full <span class="ot">&lt;-</span> <span class="fu">fitted</span>(grocery_lm)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>yhat_del <span class="ot">&lt;-</span> <span class="fu">predict</span>(grocery_lm_del, <span class="at">newdata =</span> grocery)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>abs_pct_change <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>((yhat_full <span class="sc">-</span> yhat_del)<span class="sc">/</span>yhat_full)) <span class="sc">/</span> <span class="fu">nrow</span>(grocery) <span class="sc">*</span> <span class="dv">100</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>grocery_lm_del <span class="ot">&lt;-</span> <span class="fu">lm</span>(total_labor <span class="sc">~</span> cases <span class="sc">+</span> indirect_costs <span class="sc">+</span> holiday, </span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> grocery,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subset =</span> <span class="sc">-</span><span class="fu">c</span>(<span class="dv">16</span>))</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>yhat_full <span class="ot">&lt;-</span> <span class="fu">fitted</span>(grocery_lm)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-4-5" class="code-annotation-target"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>yhat_del <span class="ot">&lt;-</span> <span class="fu">predict</span>(grocery_lm_del, <span class="at">newdata =</span> grocery)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-4-6" class="code-annotation-target"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>abs_pct_change <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>((yhat_full <span class="sc">-</span> yhat_del)<span class="sc">/</span>yhat_full)) <span class="sc">/</span> <span class="fu">nrow</span>(grocery) <span class="sc">*</span> <span class="dv">100</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">Fit the regression model to the data set with observation 16 removed (the number is the row number). You can also delete multiple observations at once, to see join influence, by entering multiple comma separated values.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="1">Fit the regression model to the data set with observation 16 removed (the number is the row number). You can also delete multiple observations at once, to see join influence, by entering multiple comma separated values.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="2">Obtain the fitted values for the full data set.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="2">Obtain the fitted values for the full data set.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="3">Obtain the predicted values for every observation in the full data set using the model with observation 16 removed.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="5" data-code-annotation="3">Obtain the predicted values for every observation in the full data set using the model with observation 16 removed.</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="4">Calculate the average absolute percent difference.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="6" data-code-annotation="4">Calculate the average absolute percent difference.</span>
 </dd>
 </dl>
 </div>
@@ -372,8 +374,17 @@ pieces:themeFriends   0.02636947 -8.146713e-05  -0.05706200        1.885430e-04<
 </table>
 <p>Summarize what the mean absolute percent difference indicates about the influence of each of the cases? Does is agree with your assessment based on Cook’s distance in Problem 7?</p>
 </section>
-<section id="problem-5-mon" class="level1">
-<h1>Problem 5: Mon</h1>
+<section id="problem-5-influence-diagnostics" class="level1">
+<h1>Problem 5: Influence diagnostics</h1>
+<p>The following statements regarding regression diagnostics contain conceptual or technical errors. Identify the error in each statement and provide a corrected statement.</p>
+<ol type="a">
+<li><p>A data point is considered to have high leverage if its response value (<span class="math inline">\(Y\)</span>) is an extreme outlier compared to the rest of the sample.</p></li>
+<li><p>Cook’s Distance measures the influence of an observation by calculating the specific change in the slope of the primary predictor (<span class="math inline">\(\beta_1\)</span>) when that observation is removed from the model.</p></li>
+<li><p>Any observation identified as an outlier (having a large standardized residual) is by definition an influential point that will significantly alter the regression coefficients.</p></li>
+<li><p>Statisticians agree that a point is only truly influential if its Cook’s Distance (<span class="math inline">\(D_i\)</span>) is greater than 1.0; any value smaller than this indicates the point has no impact on the model.</p></li>
+<li><p>An influential point will always decrease the <span class="math inline">\(R^2\)</span> of a model because it adds unexplained noise to the regression line.</p></li>
+<li><p>Once a diagnostic (like DFFITS or Cook’s Distance) flags a point as influential, the correct procedure is to immediately remove the observation from the dataset and rerun the regression.</p></li>
+</ol>
 </section>
 <section id="problem-6-wed" class="level1">
 <h1>Problem 6: Wed</h1>
