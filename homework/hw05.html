@@ -388,9 +388,65 @@ pieces:themeFriends   0.02636947 -8.146713e-05  -0.05706200        1.885430e-04<
 </section>
 <section id="problem-6-wed" class="level1">
 <h1>Problem 6: Wed</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You do not need to load the data into R for this question</p>
+</div>
+</div>
+<p>Researchers designed a small-scale experiment to study how moisture content and sweetness are associated with consumer preference (a score between 0 and 100, where 100 is most preferred) for a new snack food.</p>
+<ol type="a">
+<li>Below a scatterplot matrix among all three variables. What does this reveal about the pairwise correlations between the variables?</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hw05_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li>The code below fits a multiple linear regression model with preference as the response and moisture and sweetness as predictors and calculate the VIFs for each predictor. Do you observe any problems with multicollinearity?</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>brand_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(preference <span class="sc">~</span> moisture <span class="sc">+</span> sweetness, <span class="at">data =</span> brand_preference)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">vif</span>(brand_lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> moisture sweetness 
+        1         1 </code></pre>
+</div>
+</div>
 </section>
 <section id="problem-7-wed" class="level1">
 <h1>Problem 7: Wed</h1>
+<p>An analyst in the district sales office of a national cosmetics firm obtained data on advertising expenditures and sales last year in the district’s 44 territories. The included:</p>
+<ul>
+<li>expenditures for point-of-sale displays in beauty salons and stores (in thousand dollars),</li>
+<li>expenditures for local media advertising,</li>
+<li>prorated share of national media advertising, and</li>
+<li>sales (in thousands of cases).</li>
+</ul>
+<p>The data can be loaded via:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cosmetics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/cosmetics.csv"</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cosmetics &lt;- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The analyst was told to investigate the impact of increasing expenditures for point-of-sale displays while holding local and national media advertising constant.</p>
+<ol type="a">
+<li><p>Fit the multiple regression model of sales on the three advertising expenditures.</p></li>
+<li><p>Calculate the VIFs for each predictor. Do you observe any problems with multicollinearity?</p></li>
+<li><p>Suppose the analyst decides to drop the local and national media advertising variables from the model to “clear up the picture”. Fit the revised model. Is the analyst now in a better position to achieve the stated objective?</p></li>
+<li><p>This is a situation where it would be possible to design an experiment to meet the research objective. Why would this be more effective in providing suitable data to achieve the objective? (Hint: think about the experimental data from Problem 1 and if they suffered from the same problem you saw here.)</p></li>
+</ol>
 
 
 </section>

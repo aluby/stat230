@@ -20,6 +20,7 @@
       "/activities/11-mlr-inference.html",
       "/activities/12-linear-combos.html",
       "/activities/13-mlr-diagnostics.html",
+      "/activities/14-multicollinearity.html",
       "/activities/15-tbd.html",
       "/activities/18-odds.html",
       "/activities/19-binary-logistic.html",
@@ -31,8 +32,7 @@
       "/activities/26-overdispersion.html",
       "/activities/27-poisson.html",
       "/activities/28-quasibinomial.html",
-      "/activities/group-expectations.html",
-      "/activities/14-multicollinearity.html"
+      "/activities/group-expectations.html"
     ]
   },
   {
