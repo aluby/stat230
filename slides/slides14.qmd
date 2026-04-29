@@ -156,7 +156,6 @@ car::vif(ex1_mod) |>
   gt() |>
   tab_options(
     table.font.size = px(28),
-    table.background.color = "#fffef5",
     table.font.color = "#003069"
   )
 ```
@@ -214,7 +213,6 @@ car::vif(bodyfat_mod) |>
   gt() |>
     tab_options(
     table.font.size = px(28),
-    table.background.color = "#fffef5",
     table.font.color = "#003069"
   )
 ```

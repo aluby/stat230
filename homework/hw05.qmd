@@ -176,7 +176,7 @@ The following statements regarding regression diagnostics contain conceptual or 
 
 (f) Once a diagnostic (like DFFITS or Cook’s Distance) flags a point as influential, the correct procedure is to immediately remove the observation from the dataset and rerun the regression.
 
-# Problem 6: Wed
+# Problem 6: Brand preference experiment
 
 ::: callout-note
 
@@ -209,7 +209,7 @@ brand_lm <- lm(preference ~ moisture + sweetness, data = brand_preference)
 car::vif(brand_lm)
 ```
 
-# Problem 7: Wed
+# Problem 7: `cosmetics`
 
 An analyst in the district sales office of a national cosmetics firm obtained data on advertising expenditures and sales last year in the district’s 44 territories. The included:
 
@@ -221,8 +221,7 @@ An analyst in the district sales office of a national cosmetics firm obtained da
 The data can be loaded via:
 
 ```{r}
-cosmetics <- read.csv(here::here("data/cosmetics.csv"))
-# cosmetics <- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")
+cosmetics <- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")
 ```
 
 The analyst was told to investigate the impact of increasing expenditures for point-of-sale displays while holding local and national media advertising constant.
