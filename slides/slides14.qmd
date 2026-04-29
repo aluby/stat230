@@ -270,9 +270,16 @@ Different polynomial models were used to predict the horizontal distance based o
 Imposes a **penalty for model complexity**, so it increases only if the improvement outweighs the cost of making the model more complex
 
 $$
+R^2_{\text{adj}} = 1 - \frac{MSE}{MST} = 1 - \frac{SSE/(n-p-1)}{SST/(n-1)}
+$$
+
+$$
 R^2_{\text{adj}} = 1 - \left( \frac{n-1}{n-p-1} \right)  \cdot \left(1 - R^2 \right)
 $$
 
+::: footnote
+Note: p is the number of predictors 
+:::
 
 ## Adjusted R<sup>2</sup> 
 

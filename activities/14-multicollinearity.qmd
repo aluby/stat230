@@ -15,7 +15,7 @@ bodyfat <- read.table("http://www.cnachtsheim-text.csom.umn.edu/Kutner/Chapter%2
 colnames(bodyfat) <- c("triceps_skinfold", "thigh_circumference", "midarm_circumference", "body_fat")
 ```
 
-In this activity you will explore what happens when you are using multiple predictors that are correlated with one another
+In this activity you will explore what happens when you are using multiple predictors that are correlated with one another. No computers needed until the very end! 
 
 ## Example 1: Uncorrelated Predictors
 
@@ -51,6 +51,11 @@ broom::tidy(mod3)
 
 Compare the model summaries from the three models. What do you observe about the coefficients when both predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?
 
+<br>
+
+<br>
+
+<br>
 
 ## Example 2: Perfectly Correlated Predictors
 
@@ -84,18 +89,30 @@ c. Discuss the following questions with your group:
     - Would you be willing to interpret the coefficients in either model? Why or why not?
     - Do you think the standard error of the slopes is reasonably small or large? Why?
 
+<br>
+
+<br>
+
+<br>
+
 ## Example 3: A more realistic example
 
 Let's consider a more realistic example where the predictor variables are correlated, but not perfectly correlated. The data set `bodyfat` contains measurements on 20 healthy adults between 25 and 34 years of age. We're interested in predicting body fat percentage using three body measurements: triceps skinfold thickness, thigh circumference, and midarm circumference. 
 
 **Task 5.** Below is the correlation matrix for the data set. What do you observe about the correlations between the predictor variables?
 
+<br>
+
 ```{r}
 #| echo: false
-cor(bodyfat) 
+round(cor(bodyfat),3)
 ```
 
 **Task 6.** There are numerous models that we could consider. Below are summary tables from several models. Compare the model summaries from the fitted models. What do you observe about the coefficients when different predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?
+
+<br>
+
+<br>
 
 
 Only triceps skinfold as a predictor:
@@ -148,6 +165,8 @@ Recall that the mean squared error (MSE) of a model measures the variability in 
 
 **Task 7.** Below are the MSE values for three of the models we considered in Task 6. What do you observe about the MSE values when different predictors are included in the model? 
 
+<br>
+
 | Predictors | MSE |
 |------------|-----|
 | triceps_skinfold |  7.95 |
@@ -157,6 +176,9 @@ Recall that the mean squared error (MSE) of a model measures the variability in 
 
 **Task 8.** Based on your observations, do you think we can use any of the models to make predictions for new observations? Why or why not?
 
+<br>
+
+<br> 
 
 <i class="bi bi-sign-stop-fill"></i> Let me know when you have reached this spot. We'll regroup as a class to discuss your observations.
 
