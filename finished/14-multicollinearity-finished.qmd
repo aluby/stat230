@@ -1,0 +1,195 @@
+---
+title: "Multicollinearity and R<sup>2</sup>"
+---
+
+
+```{r}
+#| include: false
+ex1 <- read.table("http://www.cnachtsheim-text.csom.umn.edu/Kutner/Chapter%20%207%20Data%20Sets/CH07TA06.txt")
+colnames(ex1) <- c("x1", "x2", "y")
+
+ex2 <- read.table("http://www.cnachtsheim-text.csom.umn.edu/Kutner/Chapter%20%207%20Data%20Sets/CH07TA08.txt")
+colnames(ex2) <- c("x1", "x2", "y")
+
+bodyfat <- read.table("http://www.cnachtsheim-text.csom.umn.edu/Kutner/Chapter%20%207%20Data%20Sets/CH07TA01.txt")
+colnames(bodyfat) <- c("triceps_skinfold", "thigh_circumference", "midarm_circumference", "body_fat")
+```
+
+
+## Overview
+
+In this activity you will learn how to calculate diagnostic measures and create diagnostic plots for multiple linear regression models in R. 
+
+
+## Example 1: Uncorrelated Predictors
+
+As a first example, let's consider a multiple linear regression model where the two predictor variables are uncorrelated.
+
+**Task 1.** Inspect the below correlation matrix and verify that the correlation between the two predictor variables (`x1` and `x2`) is 0.
+
+```{r}
+#| echo: false
+cor(ex1)
+```
+
+**Task 2.** The below code chunk fits a simple linear regression model with `y` as the response variable and `x1` as the predictor variables. The coefficients table was extracted using the `broom::tidy()`. (Feel free to use `broom::tidy()` in your work!)
+
+```{r}
+mod1 <- lm(y ~ x1, data = ex1)
+broom::tidy(mod1)
+```
+
+Similarly, here is the output for the simple linear regression model with `y` as the response variable and `x2` as the predictor variable.
+
+```{r}
+mod2 <- lm(y ~ x2, data = ex1)
+broom::tidy(mod2)
+```
+
+And finally, here is the output for the multiple linear regression model with `y` as the response variable and both `x1` and `x2` as the predictor variables.
+
+```{r}
+mod3 <- lm(y ~ x1 + x2, data = ex1)
+broom::tidy(mod3)
+```
+
+Compare the model summaries from the three models. What do you observe about the coefficients when both predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?
+
+
+## Example 2: Prefectly Correlated Predictors
+
+In many examples the predictor variables will be correlated. As an extreme example, let's consider a situation where the predictors are perfectly correlated. The data set for this small example is printed below.
+
+```{r}
+#| echo: false
+ex2
+```
+
+
+**Task 3.** Inspect the below correlation matrix and verify that the correlation between the two predictor variables (`x1` and `x2`) is 1.
+
+```{r}
+#| echo: false
+cor(ex2)
+```
+
+**Task 4.** From the previous task, you should have seen that the correlation between `x1` and `x2` is 1, as is the correlation between both predictors and `y`. This sounds like a great situation, right? We'll explore two models to unpack this.
+
+a. Consider the fitted regression equation: $\widehat{y} = -87 + x_1 + 18x_2$. Verify that the predicted values are exactly equal to the observed values.
+
+
+
+b. Consider the fitted regression equation: $\widehat{y} = -7 + 9x_1 + 2x_2$. Verify that the predicted values are exactly equal to the observed values.
+
+
+c. Discuss the following questions with your group:
+
+    - Would you be willing to use either model to make predictions for new observations? Why or why not?
+    - Would you be willing to interpret the coefficients in either model? Why or why not?
+    - Do you think the standard error of the slopes is reasonably small or large? Why?
+
+## Example 3: A more realistic example
+
+Let's consider a more realistic example where the predictor variables are correlated, but not perfectly correlated. The data set `bodyfat` contains measurements on 20 healthy adults between 25 and 34 years of age. We're interested in predicting body fat percentage using three body measurements: triceps skinfold thickness, thigh circumference, and midarm circumference. 
+
+**Task 5.** Below is the correlation matrix for the data set. What do you observe about the correlations between the predictor variables?
+
+```{r}
+#| echo: false
+cor(bodyfat)
+```
+
+**Task 6.** There are numerous models that we could consider. Below are summary tables from several models. Compare the model summaries from the fitted models. What do you observe about the coefficients when different predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?
+
+
+Only triceps skinfold as a predictor:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ triceps_skinfold, data = bodyfat))
+```
+
+Only thigh circumference as a predictor:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ thigh_circumference, data = bodyfat))
+```
+
+
+Only midarm circumference as a predictor:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ midarm_circumference, data = bodyfat))
+```
+
+
+Triceps skinfold and thigh circumference as predictors:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ triceps_skinfold + thigh_circumference, data = bodyfat))
+```
+
+Triceps skinfold and midarm circumference as predictors:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ midarm_circumference + thigh_circumference, data = bodyfat))
+```
+
+Thigh circumference and midarm circumference as predictors:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ ., data = bodyfat))
+```
+
+
+<i class="bi bi-sign-stop-fill"></i> Let me know when you have reached this spot. We'll regroup as a class to discuss your observations.
+
+
+## What about predictions?
+
+Now that we've discussed the issues revolving around interpreting coefficients and drawing inference on them in the presence of multicollinearity, let's consider how multicollinearity impacts predictions. 
+
+Recall that the mean squared error (MSE) of a model measures the variability in the error terms (residuals). In other words, it is measuring the variability unexplained by the model.
+
+**Task 7.** Below are the MSE values for three of the models we considered in Task 6. What do you observe about the MSE values when different predictors are included in the model? 
+
+| Predictors | MSE |
+|------------|-----|
+| triceps_skinfold |  7.95 |
+| triceps_skinfold, thigh_circumference |  6.47 |
+| triceps_skinfold, thigh_circumference, midarm_circumference |  6.15 |
+
+
+**Task 8.** Based on your observations, do you think we can use any of the models to make predictions for new observations? Why or why not?
+
+
+<i class="bi bi-sign-stop-fill"></i> Let me know when you have reached this spot. We'll regroup as a class to discuss your observations.
+
+
+## Be Wary of R<sup>2</sup> when comparing models
+
+We all love R<sup>2</sup> right? It is "easy" to interpret and is a popular metric of model fit to report in many fields. While I agree that  R<sup>2</sup> is a nice metric for describing a **single** model, it has an issue when it's used to compare models. In this example, you'll explore this issue.
+
+Case Study 10.1.1 in *The Statistical Sleuth* describes Galileo's experiment that led him to discover that the trajectory of a body falling with horizontal velocity is a parabola (see page 272). The `case1011` data set in the `Sleuth3` R package contains the results of Galileo's experiment. The data set contains seven observations on the following two variables: the horizontal distance traveled from the edge of the table to its landing spot, and the initial height of the object. Both measurements are in punti (1 punti = or 169/180 mm or about 0.037 in).
+
+
+**Task 9.** Fit each of the following models and report the R<sup>2</sup> value for each. Fill in the table below.
+
+Starter R code: 
+
+```{r}
+#| eval: false
+library(Sleuth3)
+mod <- lm(Distance ~ Height, data = case1001)
+summary(mod)
+```
+
+| Model | R<sup>2</sup> |
+|-------|---------|
+| $\text{distance} \sim \text{height}$ |  |
+| $\text{distance} \sim \text{height} + \text{height}^2$ |  |
+| $\text{distance} \sim \text{height} + \text{height}^2 + \text{height}^3$ |  | 
+| $\text{distance} \sim \text{height} + \text{height}^2 + \text{height}^3 + \text{height}^4$|  |
+| $\text{distance} \sim \text{height} + \text{height}^2 + \text{height}^3 + \text{height}^4 + \text{height}^5$ |  |
+| $\text{distance} \sim \text{height} + \text{height}^2 + \text{height}^3 + \text{height}^4 + \text{height}^5+ \text{height}^6$ |  |
+
+What do you observe about the R<sup>2</sup> values as you add more polynomial terms to the model? 
