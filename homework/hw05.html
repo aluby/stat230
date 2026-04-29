@@ -154,8 +154,8 @@ window.Quarto = {
   <li><a href="#problem-3-influence-diagnostics-in-r" id="toc-problem-3-influence-diagnostics-in-r" class="nav-link" data-scroll-target="#problem-3-influence-diagnostics-in-r">Problem 3: Influence Diagnostics in R</a></li>
   <li><a href="#problem-4-a-new-diagnostic" id="toc-problem-4-a-new-diagnostic" class="nav-link" data-scroll-target="#problem-4-a-new-diagnostic">Problem 4: A new diagnostic</a></li>
   <li><a href="#problem-5-influence-diagnostics" id="toc-problem-5-influence-diagnostics" class="nav-link" data-scroll-target="#problem-5-influence-diagnostics">Problem 5: Influence diagnostics</a></li>
-  <li><a href="#problem-6-wed" id="toc-problem-6-wed" class="nav-link" data-scroll-target="#problem-6-wed">Problem 6: Wed</a></li>
-  <li><a href="#problem-7-wed" id="toc-problem-7-wed" class="nav-link" data-scroll-target="#problem-7-wed">Problem 7: Wed</a></li>
+  <li><a href="#problem-6-brand-preference-experiment" id="toc-problem-6-brand-preference-experiment" class="nav-link" data-scroll-target="#problem-6-brand-preference-experiment">Problem 6: Brand preference experiment</a></li>
+  <li><a href="#problem-7-cosmetics" id="toc-problem-7-cosmetics" class="nav-link" data-scroll-target="#problem-7-cosmetics">Problem 7: <code>cosmetics</code></a></li>
   </ul>
 </nav>
     </div>
@@ -386,8 +386,8 @@ pieces:themeFriends   0.02636947 -8.146713e-05  -0.05706200        1.885430e-04<
 <li><p>Once a diagnostic (like DFFITS or Cook’s Distance) flags a point as influential, the correct procedure is to immediately remove the observation from the dataset and rerun the regression.</p></li>
 </ol>
 </section>
-<section id="problem-6-wed" class="level1">
-<h1>Problem 6: Wed</h1>
+<section id="problem-6-brand-preference-experiment" class="level1">
+<h1>Problem 6: Brand preference experiment</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -426,8 +426,8 @@ Note
 </div>
 </div>
 </section>
-<section id="problem-7-wed" class="level1">
-<h1>Problem 7: Wed</h1>
+<section id="problem-7-cosmetics" class="level1">
+<h1>Problem 7: <code>cosmetics</code></h1>
 <p>An analyst in the district sales office of a national cosmetics firm obtained data on advertising expenditures and sales last year in the district’s 44 territories. The included:</p>
 <ul>
 <li>expenditures for point-of-sale displays in beauty salons and stores (in thousand dollars),</li>
@@ -437,8 +437,7 @@ Note
 </ul>
 <p>The data can be loaded via:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cosmetics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/cosmetics.csv"</span>))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cosmetics &lt;- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cosmetics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/cosmetics.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The analyst was told to investigate the impact of increasing expenditures for point-of-sale displays while holding local and national media advertising constant.</p>
 <ol type="a">
