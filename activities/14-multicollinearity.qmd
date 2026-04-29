@@ -1,5 +1,5 @@
 ---
-title: "Multicollinearity and R<sup>2</sup>"
+title: "14: Multicollinearity and R<sup>2</sup>"
 ---
 
 

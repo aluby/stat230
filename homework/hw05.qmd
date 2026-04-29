@@ -178,5 +178,60 @@ The following statements regarding regression diagnostics contain conceptual or 
 
 # Problem 6: Wed
 
+::: callout-note
+
+You do not need to load the data into R for this question
+:::
+
+Researchers designed a small-scale experiment to study how moisture content and sweetness are associated with consumer preference (a score between 0 and 100, where 100 is most preferred) for a new snack food.
+
+a. Below a scatterplot matrix among all three variables. What does
+this reveal about the pairwise correlations between the variables?
+
+```{r}
+#| echo: false
+
+
+brand_preference <- read.csv("https://aloy.github.io/stat230-materials/data/brand_preference.csv")
+
+brand_preference |>
+  relocate(preference, .after = everything()) |>
+  GGally::ggpairs()
+```
+
+
+
+b. The code below fits a multiple linear regression model with preference as the response and moisture and sweetness as predictors and calculate the VIFs for each predictor. Do you observe any problems with multicollinearity?
+
+```{r}
+#| echo: true 
+brand_lm <- lm(preference ~ moisture + sweetness, data = brand_preference)
+car::vif(brand_lm)
+```
+
 # Problem 7: Wed
+
+An analyst in the district sales office of a national cosmetics firm obtained data on advertising expenditures and sales last year in the district’s 44 territories. The included:
+
+  - expenditures for point-of-sale displays in beauty salons and stores (in thousand dollars),
+  - expenditures for local media advertising,
+  - prorated share of national media advertising, and
+  - sales (in thousands of cases).
+  
+The data can be loaded via:
+
+```{r}
+cosmetics <- read.csv(here::here("data/cosmetics.csv"))
+# cosmetics <- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")
+```
+
+The analyst was told to investigate the impact of increasing expenditures for point-of-sale displays while holding local and national media advertising constant.
+
+a. Fit the multiple regression model of sales on the three advertising expenditures.
+
+b. Calculate the VIFs for each predictor. Do you observe any problems with multicollinearity?
+
+c. Suppose the analyst decides to drop the local and national media advertising variables from the model to “clear up the picture”. Fit the revised model. Is the analyst now in a better position to achieve the stated objective?
+
+d. This is a situation where it would be possible to design an experiment to meet the research objective. Why would this be more effective in providing suitable data to achieve the objective? (Hint: think about the experimental data from Problem 1 and if they suffered from the same problem you saw here.)
 
