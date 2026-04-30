@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Exam01 Review – stat230</title>
+<title>Exam02 Review – stat230</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -37,7 +37,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -116,6 +116,11 @@ window.Quarto = {
   <ul>
   <li><a href="#materials" id="toc-materials" class="nav-link active" data-scroll-target="#materials">Materials</a></li>
   <li><a href="#skills" id="toc-skills" class="nav-link" data-scroll-target="#skills">Skills</a></li>
+  <li><a href="#formulas" id="toc-formulas" class="nav-link" data-scroll-target="#formulas">Formulas</a>
+  <ul class="collapse">
+  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression">Simple Linear Regression</a></li>
+  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression">Multiple Linear Regression</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -124,7 +129,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exam01 Review</h1>
+<h1 class="title">Exam02 Review</h1>
 <p class="subtitle lead">Stat 230 - Spring 2026</p>
 </div>
 
@@ -142,12 +147,12 @@ window.Quarto = {
 </header>
 
 
-<p>This is an outline of things you should review for Exam01 scheduled for Monday of Week 3.</p>
+<p>This is an outline of things you should review for Exam02 scheduled for Wed of Week 6.</p>
 <p>I recommend beginning by <em>carefully</em> reviewing your notes and activities from class and the homework questions. It’s best to do this actively: by reading, thinking, solving problems, and asking questions.</p>
 <section id="materials" class="level1">
 <h1>Materials</h1>
 <ul>
-<li>You may bring <strong>one side</strong> of one 3x5 inch notecard of your own notes.</li>
+<li>You may bring <strong>both sides</strong> of one 3x5 inch notecard of your own notes.</li>
 <li>I will not ask you to write down any R code, but you should be comfortable reading R output.</li>
 <li>I will bring basic calculators but you may not use other calculators</li>
 </ul>
@@ -156,14 +161,15 @@ window.Quarto = {
 <h1>Skills</h1>
 <p><strong>1. Express a MLR model using proper notation</strong></p>
 <ul>
-<li>Using proper statistical notation, write down the multiple linear regression model</li>
+<li>Using proper statistical notation, write down the multiple linear regression model (including polynomial regression)</li>
 <li>You should be able to express either the theoretical model or the fitted model, and know the difference between the two.</li>
 <li>Don’t forget the assumptions you place on the residuals in a theoretical model!</li>
+<li>You should know how and when to use an indicator variable and interaction variable (eg parallel lines model vs different lines model)</li>
 </ul>
 <p><em>Example question:</em> TBD</p>
 <p><strong>2. Interpret the coefficients and <span class="math inline">\(R^2\)</span> of a model in context.</strong></p>
 <ul>
-<li>Given a fitted linear model equation, be able to interpret the y-intercept and slope</li>
+<li>Given a fitted linear model equation, be able to interpret the y-intercept and each slope term</li>
 <li>Your interpretations should always be given in context, so don’t just talk about “x” and “y.”</li>
 </ul>
 <p><em>Example question:</em> TBD</p>
@@ -177,20 +183,21 @@ window.Quarto = {
 <li>Understand how leverage and influence relate to each other and the impact on the regression equation</li>
 </ul>
 <p><em>Example question:</em> TBD</p>
-<p><strong>4. Perform a hypothesis test to draw inference about a single regression coefficient</strong></p>
+<p><strong>4. Perform hypothesis tests about a single regression coefficient</strong></p>
 <ul>
-<li>Given R output from a fitted regression model, conduct a t-test for the slope or intercept</li>
+<li>Given R output from a fitted regression model, conduct a t-test for a coefficient</li>
 <li>The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context</li>
 <li>Understand and explain where the test statistic and p value came from</li>
 <li>Given a research question, state the hypotheses for your test in both words and proper notation</li>
 <li>Know the difference between a one-sided and two-sided p-value, and know when each is required (or given by R)</li>
 </ul>
 <p><em>Example question:</em> TBD</p>
-<p><strong>5. Construct and interpret confidence intervals for regression coefficients</strong></p>
+<p><strong>5. Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients</strong></p>
 <ul>
 <li>Given R output from a fitted regression model, identify a confidence interval for each regression coefficient.</li>
 <li>Know the equation for the confidence interval and how you could calculate it if you were given the estimate, standard error, and sample size.</li>
 <li>Be able to interpret a confidence interval for each regression coefficient in context</li>
+<li>todo: linear combination</li>
 </ul>
 <p><em>Example question:</em> TBD</p>
 <p><strong>6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval</strong></p>
@@ -218,8 +225,43 @@ window.Quarto = {
 <li>Given a model with a log-transformed explanatory variable, interpret the slope coefficient of the transformed variable.</li>
 </ul>
 <p><em>Example question:</em> TBD</p>
+</section>
+<section id="formulas" class="level1">
+<h1>Formulas</h1>
+<p><strong>I will give you the following formulas on the exam; you do not need to write them on your notecard.</strong> However, I will not answer any questions about notation or formulas during the exam.</p>
+<section id="simple-linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="simple-linear-regression">Simple Linear Regression</h2>
+<ul>
+<li><span class="math inline">\(s_x = \sqrt{\frac{\sum(X_i - \bar{X})^2}{n-1}}\)</span></li>
+<li><span class="math inline">\(r = \frac{1}{n} \sum (\frac{X_i - \bar{X}}{s_x})(\frac{Y_i - \bar{Y}}{s_y})\)</span></li>
+<li><span class="math inline">\(\hat \beta_0 = \bar{Y} - \hat\beta_1 \bar{X}\)</span></li>
+<li><span class="math inline">\(\hat\beta_1 = r \frac{s_y}{s_x}\)</span></li>
+<li><span class="math inline">\(SE(\hat \beta_0) = \hat{\sigma} \sqrt{\frac{1}{n} + \frac{\bar{X}^2}{\sum (X_i - \bar{X})^2}}\)</span></li>
+<li><span class="math inline">\(SE(\hat \beta_1) = \frac{\hat{\sigma}}{\sum (X_i - \bar{X})^2}\)</span></li>
+<li><span class="math inline">\(\hat{\sigma}=\sqrt{\frac{\sum_{i=1}^{n}(Y_{i}-\hat{Y}_{i})^{2}}{n-2}}\)</span></li>
+<li><span class="math inline">\(SD(e_{i})=\hat{\sigma}\sqrt{1-h_{i}}\)</span></li>
+<li><span class="math inline">\(SE(\hat{\mu}(Y|X))=\hat{\sigma}\sqrt{\frac{1}{n}+\frac{(X_{0}-\overline{X})^{2}}{\sum(X_{i}-\overline{X})^{2}}}\)</span> -<span class="math inline">\(SE(\hat{Y})=\hat{\sigma}\sqrt{1+\frac{1}{n}+\frac{(X_{0}-\overline{X})^{2}}{\sum(X_{i}-\overline{X})^{2}}}\)</span></li>
+</ul>
+</section>
+<section id="multiple-linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-linear-regression">Multiple Linear Regression</h2>
+<ul>
+<li><span class="math inline">\(\hat{\gamma}=c_{1}\hat{\beta}_{i}+c_{2}\hat{\beta}_{j}\)</span></li>
+<li><span class="math inline">\(Var(\hat{\gamma})=c_{1}^{2}Var(\hat{\beta}_{i})+c_{2}^{2}Var(\hat{\beta}_{j})+2c_{1}c_{2}Cov(\hat{\beta}_{i},\hat{\beta}_{j})\)</span></li>
+<li><span class="math inline">\(R^{2}=\frac{SSReg}{SSTotal}=1-\frac{SSE}{SSTotal}\)</span></li>
+<li><span class="math inline">\(R_{adj}^{2}=\frac{SSTotal/(n-1)-SSE/(n-(p+1))}{SSTotal/(n-1)} = \frac{MST-MSE}{MST}\)</span></li>
+<li><span class="math inline">\(F=\frac{(SSE(reduced)-SSE(full))/(df_{reduced}-df_{full})}{SSE(full)/df_{full}}\)</span></li>
+<li><span class="math inline">\(F = \frac{MSReg}{MSE}\)</span></li>
+<li><span class="math inline">\(e_{i}=Y_{i}-\hat{Y_{i}}\)</span></li>
+<li><span class="math inline">\(r_{i}=\frac{\hat{e}_{i}}{\hat{\sigma}\sqrt{1-h_{i}}}\)</span></li>
+<li><span class="math inline">\(h_{i}=\frac{1}{n-1}\left[\frac{X_{i}-\overline{X}}{s_{X}}\right]^{2}+\frac{1}{n} = \frac{1}{n}+\frac{{(X_{i}-\overline{X})}^{2}}{\sum(X_{i}-\overline{X})^{2}}\)</span></li>
+<li><span class="math inline">\(\sum_{i}h_{i}=p+1\)</span></li>
+<li><span class="math inline">\(D_{i}=\sum_{j=1}^{n}\frac{(\hat{Y}_{j(i)}-\hat{Y}_{j})^{2}}{(p+1)\hat{\sigma}} = \frac{r_{i}^{2}}{p+1}\left(\frac{h_{i}}{1-h_{i}}\right)\)</span></li>
+<li><span class="math inline">\(VIF_i=1/(1-R_{i}^{2})\)</span></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
