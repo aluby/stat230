@@ -10,17 +10,17 @@ navbar: false
 
 The goals of this case study are twofold: 
 
-  (1) To practice writing about a sample
-  (2) To gain experience with the iterative practice of model fitting
+  (1) To gain experience with model selection for multiple regression
+  (2) To present complex results in an easy-to-digest manner
   
-There are two options for this short report: (a) county-level election results from **Florida's 2000 presidential election** OR (b) modeling **Nascar driver ratings**. You will need to do some background reading to give context to your study, and both options will require fitting more than one SLR model. 
+There are two options for this short report: (a) investigating the relationship between  **pollution and mortality** OR (b) modeling **Nascar driver ratings**. 
 
 
 You will submit your work to this case study in two parts: 
 
   (1) individual submission as part of HW6 (due Friday of Week 6 at beginning of class)
       - It's OK with me if your group works on this together as long as you actually do it together. You should not send code back and forth to complete this portion of the project. 
-      - You will have in-class time on Friday to work together, so I encourage you to get started on the analysis before class. 
+      - You will have in-class time on Friday to work together, so I encourage you to get started on the analysis before class to use your time effectively
   (2) a group report (due beginning of class on Wed of Week 7)
       - Your groups are your in-class groups. If you are in a group of 3, you should all work together. If you are in a group of four, you should split into two groups of two. 
   
@@ -28,8 +28,7 @@ You should all do an equal amount of contribution to parts (1) and (2). Equal do
 
 # Project Prompt
 
-## Option 1: Does pollution kill people?^[This data comes from an exercise from *The Statistical Sleuth*
-]
+## Option 1: Does pollution kill people?^[This data comes from an exercise from *The Statistical Sleuth*]
 
 
 The following dataset consists of 15 variables for each of 60 cities between the years 1959-1961. 
@@ -37,7 +36,7 @@ The following dataset consists of 15 variables for each of 60 cities between the
 - Response variable: Total age-adjusted mortality from all causes, in deaths per 100,000 population
 - Possible predictors include weather, pollution, and demographic features of each city (described in more detail below). 
 
-We wish to investigate the relationship between the pollution variables and mortality, after the other climate and socioeconomic variables are accounted for. (*Note:* these data suffer from some non-independence due to the spatial structure; you should note this in your report but do not need to "fix" it.)
+We wish to investigate the relationship between the pollution variables and mortality, after the other climate and socioeconomic variables are accounted for. (*Note:* these data may suffer from some spatial dependence. If you come across this, you should note it in your model but do not need to "fix" it)
 
 ```{r}
 library(Sleuth3)
@@ -82,21 +81,63 @@ A complete analysis will:
 - address the questions that are posed
 - consider transformations and check model assumptions prior to inference
 - consider outlier effects prior to inference and only remove cases that have a justifiable reason for removal
-    – if outliers are discussed, refer to them by city name and explain why they are unusual cases and,
-if applicable, why you chose to remove them from your model/data
+    – if outliers are discussed, refer to them by city name and explain why they are unusual cases and, if applicable, why you chose to remove them from your model/data
 - refine the model (i.e. reduce the number of model predictors) to address the questions of interest
 – use appropriate regression tools taught in class (tests, etc) to justify the remove of predictors
 
 
 ## Option 2: NASCAR driver ratings (again)
     
+In NASCAR, the Driver Rating is a composite metric used to evaluate overall performance. It provides a comprehensive assessment of a driver's competitiveness, efficiency, and consistency by combining multiple factors—such as wins, finish position, and average running position—into a single numerical value.
+
+The exact formula has evolved over time, but the goal of this project is to build a statistical approximation of this metric using season-level data from 2007–2022. While consistency (Average Position) is a major factor, we want to investigate how much "extra" value is added by aggressive performance metrics like leading laps or setting fastest laps, after accounting for a driver's typical finishing position.
+
+To load the NASCAR driver dataset:
+
+```{r}
+nascar <- read.csv("https://aluby.github.io/stat230/data/nascar_driver_statistics.csv") 
+```
+
+
+Variables of interest:
+
+- Response: `DriverRating` (The season average of race-by-race ratings)
+- Consistency Predictors: `AvgPos` (Average running position), `AvgFinish` (Average finishing position)
+- Performance Predictors: `Wins`, `LapsLed`, `FastestLaps`, `QualityPasses` (Passes of cars in the Top 15 while under green flag conditions)
+
+(*Note:* there are other predictors as well! I suggest doing a bit of background reading to understand what these variables mean.)
+
+Your report should address the following:
+
+- How are performance-based metrics—specifically `LapsLed` and `FastestLaps`—associated with a driver's holistic `DriverRating` after accounting for their consistency?   
+- Which specific performance variables have the strongest association with the rating once consistency is controlled for?
+- Given that many of these variables (like `AvgPos` and `AvgFinish`) measure similar things, how does multicollinearity affect the stability of your model?
+
+Things to watch out for: 
+
+- Consider transformations!
+- Many of the variables measure similar things. Be aware of multicollinearity.
+- It may be helpful to first find a model using only "consistency" variables, then add "performance" variables
+- consider outlier effects prior to inference and only remove cases that have a justifiable reason for removal
+    – if outliers are discussed, refer to them by city name and explain why they are unusual cases and, if applicable, why you chose to remove them from your model/data
+    
+A Complete Analysis Will:
+
+- Address the research questions 
+- Check MLR conditions and use transformations if necessary   
+- Evaluate leverage and influence: Identify specific drivers who are "unusual" cases. 
+    - Refer to them by name and explain why they might be exerting high leverage on your model.
+- Refine the model: Use model selection tools to reduce the number of predictors, ensuring you keep only those that provide explanatory power 
+- Interpret results in context: Provide a clear summary of how "aggressive" driving (leading laps/fastest laps) impacts a driver's rating compared to "safe" driving (consistent finishing).
+
 # Format
 
- - 3 pages or less (including figures but not including references). You may include up to 2 pages of appendices that do not count towards this limit. 
+ - 4 pages or less (including figures but not including references). You may include up to 2 pages of appendices that do not count towards this limit. 
  - Introduction: this is where you introduce the problem and why it is important to study. This should focus on the data and the "real-world" questions. 
- - Results: this is where you present your EDA (e.g. graphs) and any models you fit. You should explain your results both statistically and in context. 
+ - EDA: this is where you discuss the variables of interest and present your EDA (e.g. graphs) to motivate your model
+ - Results: this is where you present your model selection approach, final model, and interpret the results. You should explain your results both statistically and in context. 
  - Discussion: this is a shorter section that summarizes the main points of your analysis and explains your answer to the research question.
- - Appendices: this is an optional section where you can include graphs or results that you used, but aren't central to the point you are trying to make in the remainder of the report. 
+ - Appendices: this is an optional section where you can include graphs or results that you used, but aren't central to the point you are trying to make in the remainder of the report. (Eg residual plots that were "normal" or a list of transformations that you considered)
  
 # Best practices for small group work
  
@@ -133,14 +174,17 @@ For this project you may NOT use the following resources:
 - Title and authors (5%) 
     - [ ] Has a title and lists the authors
     - [ ] Informative and engaging
-- Introduction (15%)
+- Introduction (10%)
     - [ ] Introduces and motivates the topic being addressed
     - [ ] Includes at least one reference for context/motivation for this study that are well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)
     - [ ] Explains the questions addressed in the report
     - [ ] Gives appropriate background information (and avoids making broad and unsubstantiated claims)
-- Results (50%) 
+- EDA (10%)
+    - [ ] At least one visual summary that directly connects to the model
+    - [ ] Describes the data accurately and concisely 
+- Results (45%) 
     - [ ]  Focus is on conveying the results of the analysis and is not a step-by-step description
-    - [ ] For the option chosen, includes all components listed in the prompt (EDA, first model, etc.) 
+    - [ ] Model building process is appropriate and discussed
     - [ ] Statistical inference is appropriately performed
       - A complete model statement is given (give the equation!)
       - An appropriate model is chosen
