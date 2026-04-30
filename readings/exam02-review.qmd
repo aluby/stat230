@@ -1,15 +1,15 @@
 ---
-title: "Exam01 Review"
+title: "Exam02 Review"
 format: html
 ---
 
-This is an outline of things you should review for Exam01 scheduled for Monday of Week 3. 
+This is an outline of things you should review for Exam02 scheduled for Wed of Week 6.
 
 I recommend beginning by *carefully* reviewing your notes and activities from class and the homework questions. It's best to do this actively: by reading, thinking, solving problems, and asking questions. 
 
 # Materials
 
- - You may bring **one side** of one 3x5 inch notecard of your own notes. 
+ - You may bring **both sides** of one 3x5 inch notecard of your own notes. 
  - I will not ask you to write down any R code, but you should be comfortable reading R output. 
  - I will bring basic calculators but you may not use other calculators
 
@@ -17,15 +17,16 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
 
 **1. Express a MLR model using proper notation**
 
-  - Using proper statistical notation, write down the multiple linear regression model
+  - Using proper statistical notation, write down the multiple linear regression model (including polynomial regression)
   - You should be able to express either the theoretical model or the fitted model, and know the difference between the two.
   - Don’t forget the assumptions you place on the residuals in a theoretical model!
+  - You should know how and when to use an indicator variable and interaction variable (eg parallel lines model vs different lines model)
   
 *Example question:* TBD
 
 **2. Interpret the coefficients and $R^2$ of a model in context.**
 
-  - Given a fitted linear model equation, be able to interpret the y-intercept and slope
+  - Given a fitted linear model equation, be able to interpret the y-intercept and each slope term
   - Your interpretations should always be given in context, so don’t just talk about “x” and “y.”
   
 *Example question:* TBD
@@ -41,9 +42,9 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   
 *Example question:* TBD
 
-**4. Perform a hypothesis test to draw inference about a single regression coefficient**
+**4. Perform hypothesis tests about a single regression coefficient**
   
-  - Given R output from a fitted regression model, conduct a t-test for the slope or intercept
+  - Given R output from a fitted regression model, conduct a t-test for a coefficient
   - The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context
   - Understand and explain where the test statistic and p value came from
   - Given a research question, state the hypotheses for your test in both words and proper notation
@@ -51,11 +52,12 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   
 *Example question:* TBD
   
-**5.  Construct and interpret confidence intervals for regression coefficients**
+**5.  Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients**
 
   - Given R output from a fitted regression model, identify a confidence interval for each regression coefficient.
   - Know the equation for the confidence interval and how you could calculate it if you were given the estimate, standard error, and sample size.
   - Be able to interpret a confidence interval for each regression coefficient in context
+  - todo: linear combination
   
 *Example question:* TBD
 
@@ -88,3 +90,35 @@ the back transformation is interpretable.
 transformed variable.
 
 *Example question:* TBD
+
+# Formulas
+
+**I will give you the following formulas on the exam; you do not need to write them on your notecard.** However, I will not answer any questions about notation or formulas during the exam. 
+
+## Simple Linear Regression
+
+- $s_x = \sqrt{\frac{\sum(X_i - \bar{X})^2}{n-1}}$
+- $r = \frac{1}{n} \sum (\frac{X_i - \bar{X}}{s_x})(\frac{Y_i - \bar{Y}}{s_y})$
+- $\hat \beta_0 = \bar{Y} - \hat\beta_1 \bar{X}$
+- $\hat\beta_1 = r \frac{s_y}{s_x}$
+- $SE(\hat \beta_0) = \hat{\sigma} \sqrt{\frac{1}{n} + \frac{\bar{X}^2}{\sum (X_i - \bar{X})^2}}$
+- $SE(\hat \beta_1) = \frac{\hat{\sigma}}{\sum (X_i - \bar{X})^2}$
+- $\hat{\sigma}=\sqrt{\frac{\sum_{i=1}^{n}(Y_{i}-\hat{Y}_{i})^{2}}{n-2}}$
+- $SD(e_{i})=\hat{\sigma}\sqrt{1-h_{i}}$
+- $SE(\hat{\mu}(Y|X))=\hat{\sigma}\sqrt{\frac{1}{n}+\frac{(X_{0}-\overline{X})^{2}}{\sum(X_{i}-\overline{X})^{2}}}$
+ -$SE(\hat{Y})=\hat{\sigma}\sqrt{1+\frac{1}{n}+\frac{(X_{0}-\overline{X})^{2}}{\sum(X_{i}-\overline{X})^{2}}}$
+
+## Multiple Linear Regression
+
+- $\hat{\gamma}=c_{1}\hat{\beta}_{i}+c_{2}\hat{\beta}_{j}$
+- $Var(\hat{\gamma})=c_{1}^{2}Var(\hat{\beta}_{i})+c_{2}^{2}Var(\hat{\beta}_{j})+2c_{1}c_{2}Cov(\hat{\beta}_{i},\hat{\beta}_{j})$
+- $R^{2}=\frac{SSReg}{SSTotal}=1-\frac{SSE}{SSTotal}$
+- $R_{adj}^{2}=\frac{SSTotal/(n-1)-SSE/(n-(p+1))}{SSTotal/(n-1)} = \frac{MST-MSE}{MST}$
+- $F=\frac{(SSE(reduced)-SSE(full))/(df_{reduced}-df_{full})}{SSE(full)/df_{full}}$
+- $F = \frac{MSReg}{MSE}$
+- $e_{i}=Y_{i}-\hat{Y_{i}}$
+- $r_{i}=\frac{\hat{e}_{i}}{\hat{\sigma}\sqrt{1-h_{i}}}$
+- $h_{i}=\frac{1}{n-1}\left[\frac{X_{i}-\overline{X}}{s_{X}}\right]^{2}+\frac{1}{n} = \frac{1}{n}+\frac{{(X_{i}-\overline{X})}^{2}}{\sum(X_{i}-\overline{X})^{2}}$
+- $\sum_{i}h_{i}=p+1$
+- $D_{i}=\sum_{j=1}^{n}\frac{(\hat{Y}_{j(i)}-\hat{Y}_{j})^{2}}{(p+1)\hat{\sigma}} = \frac{r_{i}^{2}}{p+1}\left(\frac{h_{i}}{1-h_{i}}\right)$
+- $VIF_i=1/(1-R_{i}^{2})$

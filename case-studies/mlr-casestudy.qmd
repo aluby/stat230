@@ -1,0 +1,168 @@
+---
+title: "Case Study 2: MLR"
+format: html
+execute:
+  echo: true
+navbar: false
+---
+
+# Overview
+
+The goals of this case study are twofold: 
+
+  (1) To practice writing about a sample
+  (2) To gain experience with the iterative practice of model fitting
+  
+There are two options for this short report: (a) county-level election results from **Florida's 2000 presidential election** OR (b) modeling **Nascar driver ratings**. You will need to do some background reading to give context to your study, and both options will require fitting more than one SLR model. 
+
+
+You will submit your work to this case study in two parts: 
+
+  (1) individual submission as part of HW6 (due Friday of Week 6 at beginning of class)
+      - It's OK with me if your group works on this together as long as you actually do it together. You should not send code back and forth to complete this portion of the project. 
+      - You will have in-class time on Friday to work together, so I encourage you to get started on the analysis before class. 
+  (2) a group report (due beginning of class on Wed of Week 7)
+      - Your groups are your in-class groups. If you are in a group of 3, you should all work together. If you are in a group of four, you should split into two groups of two. 
+  
+You should all do an equal amount of contribution to parts (1) and (2). Equal does not necessarily mean identical, but all group members should have a deep understanding of the statistical approaches used and have contributed to the writing of the report. 
+
+# Project Prompt
+
+## Option 1: Does pollution kill people?^[This data comes from an exercise from *The Statistical Sleuth*
+]
+
+
+The following dataset consists of 15 variables for each of 60 cities between the years 1959-1961. 
+
+- Response variable: Total age-adjusted mortality from all causes, in deaths per 100,000 population
+- Possible predictors include weather, pollution, and demographic features of each city (described in more detail below). 
+
+We wish to investigate the relationship between the pollution variables and mortality, after the other climate and socioeconomic variables are accounted for. (*Note:* these data suffer from some non-independence due to the spatial structure; you should note this in your report but do not need to "fix" it.)
+
+```{r}
+library(Sleuth3)
+
+pollution <- ex1217
+```
+
+Variables: 
+
+- `CITY` a character vector indicating the city
+- `Mortality` total age-adjusted mortality from all causes
+- `Precip` mean annual precipitation (inches)
+-  `Humidity` percent relative humidity (annual average at 1:00pm)
+- `JanTemp` mean January temperature (degrees F)
+- `JulyTemp` mean July temperature (degrees F)
+- `Over65` percentage of the population aged 65 years or over
+- `House` population per household
+- `Educ` median number of school years completed for persons 25 years or older
+- `Sound` percentage of the housing that is sound with all facilities
+- `Density` population density (in persons per square mile of urbanized area)
+- `NonWhite` percentage of population that is nonwhite
+- `WhiteCol` percentage of employment in white collar occupations
+- `Poor` percentage of households with annual income under $3,000 in 1960
+- `HC` relative pollution potential of hydrocarbons
+- `NOX` relative pollution potential of oxides of nitrogen
+- `SO2` relative pollution potential of sulfur dioxide
+
+Some questions your report should address: 
+
+- How is pollution, or potential pollution as measured by `NOX`, `SO2`, and `HC`, associated with mortality after accoutning for weather and socioeconomic/demographic factors? 
+- Which, if any, pollution variables have the strongest association with mortality after accounting for wetaher and other socioeconomic factors? 
+- Does your model suggest that stronger regulations on potential pollutants could reduce mortality? 
+
+Things to watch out for: 
+
+- Consider transformations 
+- It may be helpful to *first* find a model for mortality that only uses weather and demographic facotrs, adn then add in the pollution variables and perform fruther checks and refinement
+- Watch out for outliers! 
+
+A complete analysis will: 
+
+- address the questions that are posed
+- consider transformations and check model assumptions prior to inference
+- consider outlier effects prior to inference and only remove cases that have a justifiable reason for removal
+    – if outliers are discussed, refer to them by city name and explain why they are unusual cases and,
+if applicable, why you chose to remove them from your model/data
+- refine the model (i.e. reduce the number of model predictors) to address the questions of interest
+– use appropriate regression tools taught in class (tests, etc) to justify the remove of predictors
+
+
+## Option 2: NASCAR driver ratings (again)
+    
+# Format
+
+ - 3 pages or less (including figures but not including references). You may include up to 2 pages of appendices that do not count towards this limit. 
+ - Introduction: this is where you introduce the problem and why it is important to study. This should focus on the data and the "real-world" questions. 
+ - Results: this is where you present your EDA (e.g. graphs) and any models you fit. You should explain your results both statistically and in context. 
+ - Discussion: this is a shorter section that summarizes the main points of your analysis and explains your answer to the research question.
+ - Appendices: this is an optional section where you can include graphs or results that you used, but aren't central to the point you are trying to make in the remainder of the report. 
+ 
+# Best practices for small group work
+ 
+You will work in groups of two for this project. 
+  
+While you are permitted to do some work separately (e.g., the homework components, revising a section at a time when your schedules don’t permit meeting together), I discourage you from completing substantial portions of the final report individually. Each partner should contribute substantively to each component of the report, and each partner is assumed to be an equal contributor to the final product. You should be in regular contact with your partner(s) and should meet at least once outside of class. If you are having issues communicating with your partner(s), please email me as soon as possible.
+
+
+# Academic Integrity
+
+For this case study, you may use the following resources: 
+
+  - Your own course notes (from any class!) and any Stat230 materials of your own or provided by Amanda
+  - Web searches/AI where your search/prompts are general questions about coding (e.g., how do I subset a data set in R where I want only certain numerical values?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty.
+  - Web searches/AI where your search/prompts are background research about your project topic. If you use AI, you MUST provide a document shows your “conversation.” You must also find a real source (published by a reputable source, ideally peer-reviewed) and don't rely purely on AI. Failure to do so will be considered academic dishonesty.
+  - Web searches/AI where your search/prompts are general questions about formatting (e.g., how do I make a table in GoogleDocs?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty
+  - The writing center for help editing your write up. 
+  - Your in-class group
+  - Amanda
+  - Noah
+  - StatLab / Math Skills Center for R coding help or help with statistical models
+  
+For this project you may NOT use the following resources:
+
+  - Other humans (including other folks in this class)
+  - Web searches/AI where your searches/prompts are the specific questions you are being asked in the project about coding (e.g., How do I fit a linear regression model in R with the sales price as the response variable and square footage as the predictor variable?).
+  - Web searches/AI where your search/prompts are the specific formatting questions you are being asked to do for the project (e.g., please write a caption for this table).
+  - AI to write or edit any portion of your original write-up or your final write-up. 
+
+# Rubric
+
+*Note:* I recommend going through this checklist as a team before your final submission
+
+- Title and authors (5%) 
+    - [ ] Has a title and lists the authors
+    - [ ] Informative and engaging
+- Introduction (15%)
+    - [ ] Introduces and motivates the topic being addressed
+    - [ ] Includes at least one reference for context/motivation for this study that are well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)
+    - [ ] Explains the questions addressed in the report
+    - [ ] Gives appropriate background information (and avoids making broad and unsubstantiated claims)
+- Results (50%) 
+    - [ ]  Focus is on conveying the results of the analysis and is not a step-by-step description
+    - [ ] For the option chosen, includes all components listed in the prompt (EDA, first model, etc.) 
+    - [ ] Statistical inference is appropriately performed
+      - A complete model statement is given (give the equation!)
+      - An appropriate model is chosen
+      - Model assumptions are assessed and satisfactory 
+      - Estimates and uncertainties (confidence intervals) of model coefficients
+are given and *both* are interpreted in context
+      - The model and estimates are interpreted correctly and in the context
+of the question being addressed
+      - Technical language is used correctly
+- Discussion (15%)
+    - [ ] Summarizes the main findings and answers the question posed in the introduction (no new results should appear here!)
+    - [ ] Describes any limitations of your analysis and any necessary caveats
+    - [ ] Describes any follow-up questions that would be interesting to investigate
+- Quarto appendix (separate file) (5%)
+    - [ ] R code used for the analysis is shown and implemented correctly, using general conventions from class
+    - [ ] R code is approximately ordered as the results are presented in the report
+- Overall presentation (10%) 
+  - [ ] A separate references section is included, with any standard citation style
+  - [ ] The report is structured according to the instructions
+  - [ ] The text is neatly presented, broken into readable paragraphs and laid out in a coherent manner
+  - [ ] Peer evaluations were completed for group members and satisfactory from group members
+
+# Questions?
+
+If you have questions, please post them on the Case Study 1 thread on our Ed discussion page!

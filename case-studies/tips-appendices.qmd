@@ -1,0 +1,16 @@
+---
+title: "Tips on writing appendices"
+format: html
+execute:
+  echo: true
+navbar: false
+---
+
+Appendices allow you to include **supporting details** that are relevant to your analysis but would interrupt the flow of your main report if included there. Appendices should be concised, organized, and directly relevant to your analysis. 
+
+In a regression report, appendices often include: 
+
+- Technical details (diagnostics, full regression output)
+- Supporting visualizations that back up your findings
+- Data and variable documentation
+
