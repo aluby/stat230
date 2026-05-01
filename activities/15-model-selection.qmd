@@ -1,0 +1,21 @@
+---
+title: "15: Model Selection"
+---
+
+```{r}
+library(ggformula)
+library(bayesrules) # data library
+library(broom)
+```
+
+Your in-class activity today is simple. Using the `bikes` data, build:
+
+  1. A model that prioritizes **understanding**
+  
+  2. A model that prioritizes **prediction**
+  
+You can use as many predictors as you like! 
+
+```{r}
+head(bikes)
+```
