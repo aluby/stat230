@@ -4,7 +4,7 @@
     "href": "activities.html",
     "title": "Activities",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\n01: Intro Stats Review\n\n\n \n\n\n\n\n\n\n02: Intro to R for Regression\n\n\n \n\n\n\n\n\n\n03: Inference for SLR\n\n\n \n\n\n\n\n\n\n03: Inference for SLR\n\n\n \n\n\n\n\n\n\n04: Prediction for SLR\n\n\n \n\n\n\n\n\n\n04R: Prediction for SLR\n\n\n \n\n\n\n\n\n\n04T: Prediction for SLR\n\n\n \n\n\n\n\n\n\n05: Conditions\n\n\n \n\n\n\n\n\n\n05: Conditions - live\n\n\n \n\n\n\n\n\n\n06: Transformations and Interpretations\n\n\n \n\n\n\n\n\n\n06T: Transformations\n\n\n \n\n\n\n\n\n\n08: Polynomial Regression\n\n\n \n\n\n\n\n\n\n08: Polynomial Regression\n\n\n \n\n\n\n\n\n\n09: Intro to Multiple Regression\n\n\n \n\n\n\n\n\n\n10: Categorical Predictors\n\n\n \n\n\n\n\n\n\n11: Inference for MLR\n\n\n \n\n\n\n\n\n\n12: Inference for Linear Combinations\n\n\n \n\n\n\n\n\n\n13: Diagnostic plots for MLR\n\n\n \n\n\n\n\n\n\n14: Multicollinearity and R2\n\n\n \n\n\n\n\n\n\n15: tbd\n\n\n \n\n\n\n\n\n\n18: Odds, Odds Ratio, Chi-square\n\n\n \n\n\n\n\n\n\n19: Binary Logistic Regression\n\n\n \n\n\n\n\n\n\n20: Inference for Logistic Regression\n\n\n \n\n\n\n\n\n\n21: R for Logistic Regression\n\n\n \n\n\n\n\n\n\n22: Diagnostics for Logistic Regression\n\n\n \n\n\n\n\n\n\n23: Binomial Logistic Regression\n\n\n \n\n\n\n\n\n\n24: Deviance Goodness of Fit Tests\n\n\n \n\n\n\n\n\n\n26: Overdispersion\n\n\n \n\n\n\n\n\n\n27: Intro to Poisson Regression\n\n\n \n\n\n\n\n\n\n28: Quasibinomial Logistic Regression\n\n\n \n\n\n\n\n\n\nGroup Expectations\n\n\n \n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\n01: Intro Stats Review\n\n\n \n\n\n\n\n\n\n02: Intro to R for Regression\n\n\n \n\n\n\n\n\n\n03: Inference for SLR\n\n\n \n\n\n\n\n\n\n03: Inference for SLR\n\n\n \n\n\n\n\n\n\n04: Prediction for SLR\n\n\n \n\n\n\n\n\n\n04R: Prediction for SLR\n\n\n \n\n\n\n\n\n\n04T: Prediction for SLR\n\n\n \n\n\n\n\n\n\n05: Conditions\n\n\n \n\n\n\n\n\n\n05: Conditions - live\n\n\n \n\n\n\n\n\n\n06: Transformations and Interpretations\n\n\n \n\n\n\n\n\n\n06T: Transformations\n\n\n \n\n\n\n\n\n\n08: Polynomial Regression\n\n\n \n\n\n\n\n\n\n08: Polynomial Regression\n\n\n \n\n\n\n\n\n\n09: Intro to Multiple Regression\n\n\n \n\n\n\n\n\n\n10: Categorical Predictors\n\n\n \n\n\n\n\n\n\n11: Inference for MLR\n\n\n \n\n\n\n\n\n\n12: Inference for Linear Combinations\n\n\n \n\n\n\n\n\n\n13: Diagnostic plots for MLR\n\n\n \n\n\n\n\n\n\n14: Multicollinearity and R2\n\n\n \n\n\n\n\n\n\n15: Model Selection\n\n\n \n\n\n\n\n\n\n18: Odds, Odds Ratio, Chi-square\n\n\n \n\n\n\n\n\n\n19: Binary Logistic Regression\n\n\n \n\n\n\n\n\n\n20: Inference for Logistic Regression\n\n\n \n\n\n\n\n\n\n21: R for Logistic Regression\n\n\n \n\n\n\n\n\n\n22: Diagnostics for Logistic Regression\n\n\n \n\n\n\n\n\n\n23: Binomial Logistic Regression\n\n\n \n\n\n\n\n\n\n24: Deviance Goodness of Fit Tests\n\n\n \n\n\n\n\n\n\n26: Overdispersion\n\n\n \n\n\n\n\n\n\n27: Intro to Poisson Regression\n\n\n \n\n\n\n\n\n\n28: Quasibinomial Logistic Regression\n\n\n \n\n\n\n\n\n\nGroup Expectations\n\n\n \n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "syllabus.html",
@@ -266,347 +266,312 @@
     "text": "Group Members:\n\nWhat does ‘participation’ look like at a minimum? (i.e. what are the expectations for a “passing” participation grade?)\n\n\n\n\n\n\n\n\nWhat does “above and beyond” participation look like? (i.e. what are the expectations for an “A” participation grade?)\n\n\n\n\n\n\n\n\nI (Amanda) am a member of your team, too! Tell me what I can do in my role to help you perform yours."
   },
   {
-    "objectID": "activities/08-polynomial.html",
-    "href": "activities/08-polynomial.html",
-    "title": "08: Polynomial Regression",
+    "objectID": "activities/15-model-selection.html",
+    "href": "activities/15-model-selection.html",
+    "title": "15: Model Selection",
     "section": "",
-    "text": "library(tidyverse)\nlibrary(ggformula)\nlibrary(broom)"
+    "text": "library(ggformula)\nlibrary(bayesrules) # data library\nlibrary(broom)\n\nYour in-class activity today is simple. Using the bikes data, build:\n\nA model that prioritizes understanding\nA model that prioritizes prediction\n\nYou can use as many predictors as you like!\n\nhead(bikes)\n\n        date season year month day_of_week weekend holiday temp_actual\n1 2011-01-01 winter 2011   Jan         Sat    TRUE      no    57.39952\n2 2011-01-03 winter 2011   Jan         Mon   FALSE      no    46.49166\n3 2011-01-04 winter 2011   Jan         Tue   FALSE      no    46.76000\n4 2011-01-05 winter 2011   Jan         Wed   FALSE      no    48.74943\n5 2011-01-07 winter 2011   Jan         Fri   FALSE      no    46.50332\n6 2011-01-08 winter 2011   Jan         Sat    TRUE      no    44.17700\n  temp_feel humidity windspeed weather_cat rides\n1  64.72625  80.5833  10.74988      categ2   654\n2  49.04645  43.7273  16.63670      categ1  1229\n3  51.09098  59.0435  10.73983      categ1  1454\n4  52.63430  43.6957  12.52230      categ1  1518\n5  50.79551  49.8696  11.30464      categ2  1362\n6  46.60286  53.5833  17.87587      categ2   891"
   },
   {
-    "objectID": "activities/08-polynomial.html#loading-data",
-    "href": "activities/08-polynomial.html#loading-data",
-    "title": "08: Polynomial Regression",
-    "section": "Loading data",
-    "text": "Loading data\nTo load the wildfires data set, run the following code chunk:\n\nwildfires &lt;- read.csv(\"https://aluby.github.io/stat230/data/wildfires.csv\")"
-  },
-  {
-    "objectID": "activities/08-polynomial.html#fitting-a-polynomial-regression-model",
-    "href": "activities/08-polynomial.html#fitting-a-polynomial-regression-model",
-    "title": "08: Polynomial Regression",
-    "section": "Fitting a polynomial regression model",
-    "text": "Fitting a polynomial regression model\nTo fit a polynomial regression model we still use the lm() command, but we expand our formula to include polynomial terms. To include polynomial terms in a regression model, we need to use the I() function to indicate that we want to calculate a polynomial term. For example, to fit the quadratic model we have already discussed in class, we use the following code:\n\nquadratic_lm &lt;- lm(Acres ~ Year + I(Year^2), data = wildfires)\n\nOnce you have your fitted model, we can explore it like we have with simple linear regression models."
-  },
-  {
-    "objectID": "activities/08-polynomial.html#exploring-a-cubic-model",
-    "href": "activities/08-polynomial.html#exploring-a-cubic-model",
-    "title": "08: Polynomial Regression",
-    "section": "Exploring a cubic model",
-    "text": "Exploring a cubic model\nLet’s fit a cubic model to the wildfires data set. The cubic model has the form \\[\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x + \\beta_2x^2 + \\beta_3x^3.\\] Use the lm() command to fit the cubic model where Year is used to predict Acres.\n\n# Write your lm() command here\n\nTo plot the fitted cubic model, you can use the gf_point() and gf_lm() functions from the ggformula package. The following code will create a scatter plot of the data and add the fitted cubic regression line:\n\ngf_point(Acres ~ Year, data = wildfires, xlab = \"Year\", ylab = \"Acres burned\") |&gt;\n  gf_lm(formula = y ~ poly(x, 3), linewidth = .5)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nIn the gf_lm() layer we use the poly(x, 3) function to specify that we want to fit a cubic polynomial. You can use poly() to fit polynomials of any degree by changing the second argument, and you can also use this function within the lm() function to fit polynomial regression models if you’d like.\n\n\nDoes the cubic model appear to be necessary? Use the summary() function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?\nWhat degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?\nDo you notice anything curious about the inferential results for the linear and quadratic terms?\nThe issue here is that the polynomial terms for year are highly correlated with each other (i.e., year, year\\(^2\\), and year\\(^3\\) are correlated). This can lead to numerical instability and make it difficult to interpret the coefficients. This is a situation called multicollinearity. We’ll talk more about this later. One way to remedy this issue in polynomial regression is to use orthogonal polynomials, which are uncorrelated with each other."
-  },
-  {
-    "objectID": "activities/08-polynomial.html#an-alternative-way-to-fit-polynomials",
-    "href": "activities/08-polynomial.html#an-alternative-way-to-fit-polynomials",
-    "title": "08: Polynomial Regression",
-    "section": "An alternative way to fit polynomials",
-    "text": "An alternative way to fit polynomials\nTo fit polynomial model with uncorrelated polynomial terms use the poly() function. For example, to fit a cubic model using orthogonal polynomials, we can run the following code:\n\ncubic_lm_ortho &lt;- lm(Acres ~ poly(Year, 3), data = wildfires)\n\nUse the summary() function to explore the fitted model. What do you notice about the inferential results for the linear, quadratic, and cubic terms? How does this compare to the previous cubic model we fit? How does it compare to the quadratic model?\n\n# Write your lm() command here\n\n\nThe method of constructing the polynomial terms in our regression model does not change our predictions, but it can change the inferential results for the polynomial terms."
-  },
-  {
-    "objectID": "activities/08-polynomial.html#function-quick-reference",
-    "href": "activities/08-polynomial.html#function-quick-reference",
-    "title": "08: Polynomial Regression",
-    "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a linear model. For polynomial regression the formula should include polynomial terms or use poly().\n\n\nI()\nUsed to create polynomial terms in a regression model\n\n\npoly(x, degree)\nCreate orthogonal polynomial terms"
-  },
-  {
-    "objectID": "activities/08-polynomial-tutorial.html",
-    "href": "activities/08-polynomial-tutorial.html",
-    "title": "08: Polynomial Regression",
-    "section": "",
-    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/08-polynomial"
-  },
-  {
-    "objectID": "activities/08-polynomial-tutorial.html#loading-data",
-    "href": "activities/08-polynomial-tutorial.html#loading-data",
-    "title": "08: Polynomial Regression",
-    "section": "Loading data",
-    "text": "Loading data\nTo load the wildfires data set, run the following code chunk:"
-  },
-  {
-    "objectID": "activities/08-polynomial-tutorial.html#fitting-a-polynomial-regression-model",
-    "href": "activities/08-polynomial-tutorial.html#fitting-a-polynomial-regression-model",
-    "title": "08: Polynomial Regression",
-    "section": "Fitting a polynomial regression model",
-    "text": "Fitting a polynomial regression model\nTo fit a polynomial regression model we still use the lm() command, but we expand our formula to include polynomial terms. To include polynomial terms in a regression model, we need to use the I() function to indicate that we want to calculate a polynomial term. For example, to fit the quadratic model we have already discussed in class, we use the following code:\n\n\n\n\n\n\n\n\nOnce you have your fitted model, we can explore it like we have with simple linear regression models."
-  },
-  {
-    "objectID": "activities/08-polynomial-tutorial.html#exploring-a-cubic-model",
-    "href": "activities/08-polynomial-tutorial.html#exploring-a-cubic-model",
-    "title": "08: Polynomial Regression",
-    "section": "Exploring a cubic model",
-    "text": "Exploring a cubic model\nLet’s fit a cubic model to the wildfires data set. The cubic model has the form \\[\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x + \\beta_2x^2 + \\beta_3x^3.\\] Use the lm() command to fit the cubic model where Year is used to predict Acres.\n\n\n\n\n\n\n\n\nTo plot the fitted cubic model, you can use the gf_point() and gf_lm() functions from the ggformula package. The following code will create a scatter plot of the data and add the fitted cubic regression line:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nIn the gf_lm() layer we use the poly(x, 3) function to specify that we want to fit a cubic polynomial. You can use poly() to fit polynomials of any degree by changing the second argument, and you can also use this function within the lm() function to fit polynomial regression models if you’d like.\n\n\nDoes the cubic model appear to be necessary? Use the summary() function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?\nWhat degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?\nDo you notice anything curious about the inferential results for the linear and quadratic terms?\nThe issue here is that the polynomial terms for year are highly correlated with each other (i.e., year, year\\(^2\\), and year\\(^3\\) are correlated). This can lead to numerical instability and make it difficult to interpret the coefficients. This is a situation called multicollinearity. We’ll talk more about this later. One way to remedy this issue in polynomial regression is to use orthogonal polynomials, which are uncorrelated with each other."
-  },
-  {
-    "objectID": "activities/08-polynomial-tutorial.html#an-alternative-way-to-fit-polynomials",
-    "href": "activities/08-polynomial-tutorial.html#an-alternative-way-to-fit-polynomials",
-    "title": "08: Polynomial Regression",
-    "section": "An alternative way to fit polynomials",
-    "text": "An alternative way to fit polynomials\nTo fit polynomial model with uncorrelated polynomial terms use the poly() function. For example, to fit a cubic model using orthogonal polynomials, we can run the following code:\n\n\n\n\n\n\n\n\nUse the summary() function to explore the fitted model. What do you notice about the inferential results for the linear, quadratic, and cubic terms? How does this compare to the previous cubic model we fit? How does it compare to the quadratic model?\n\n\n\n\n\n\n\n\n\nThe method of constructing the polynomial terms in our regression model does not change our predictions, but it can change the inferential results for the polynomial terms."
-  },
-  {
-    "objectID": "activities/08-polynomial-tutorial.html#function-quick-reference",
-    "href": "activities/08-polynomial-tutorial.html#function-quick-reference",
-    "title": "08: Polynomial Regression",
-    "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a linear model. For polynomial regression the formula should include polynomial terms or use poly().\n\n\nI()\nUsed to create polynomial terms in a regression model\n\n\npoly(x, degree)\nCreate orthogonal polynomial terms"
-  },
-  {
-    "objectID": "activities/08T-polynomial.html",
-    "href": "activities/08T-polynomial.html",
-    "title": "08: Polynomial Regression",
-    "section": "",
-    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/08-polynomial"
-  },
-  {
-    "objectID": "activities/08T-polynomial.html#loading-data",
-    "href": "activities/08T-polynomial.html#loading-data",
-    "title": "08: Polynomial Regression",
-    "section": "Loading data",
-    "text": "Loading data\nTo load the wildfires data set, run the following code chunk:\n\nwildfires &lt;- read.csv(\"https://aluby.github.io/stat230/data/wildfires.csv\")"
-  },
-  {
-    "objectID": "activities/08T-polynomial.html#fitting-a-polynomial-regression-model",
-    "href": "activities/08T-polynomial.html#fitting-a-polynomial-regression-model",
-    "title": "08: Polynomial Regression",
-    "section": "Fitting a polynomial regression model",
-    "text": "Fitting a polynomial regression model\nTo fit a polynomial regression model we still use the lm() command, but we expand our formula to include polynomial terms. To include polynomial terms in a regression model, we need to use the I() function to indicate that we want to calculate a polynomial term. For example, to fit the quadratic model we have already discussed in class, we use the following code:\n\nquadratic_lm &lt;- lm(Acres ~ Year + I(Year^2), data = wildfires)\n\nOnce you have your fitted model, we can explore it like we have with simple linear regression models."
-  },
-  {
-    "objectID": "activities/08T-polynomial.html#exploring-a-cubic-model",
-    "href": "activities/08T-polynomial.html#exploring-a-cubic-model",
-    "title": "08: Polynomial Regression",
-    "section": "Exploring a cubic model",
-    "text": "Exploring a cubic model\nLet’s fit a cubic model to the wildfires data set. The cubic model has the form \\[\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x + \\beta_2x^2 + \\beta_3x^3.\\] Use the lm() command to fit the cubic model where Year is used to predict Acres.\n\n#| min-lines: 3\n# Write your lm() command here\n\nTo plot the fitted cubic model, you can use the gf_point() and gf_lm() functions from the ggformula package. The following code will create a scatter plot of the data and add the fitted cubic regression line:\n\ngf_point(Acres ~ Year, data = wildfires, xlab = \"Year\", ylab = \"Acres burned\") |&gt;\n  gf_lm(formula = y ~ poly(x, 3), linewidth = .5)\n\n\n\n\n\n\n\nNote\n\n\n\nIn the gf_lm() layer we use the poly(x, 3) function to specify that we want to fit a cubic polynomial. You can use poly() to fit polynomials of any degree by changing the second argument, and you can also use this function within the lm() function to fit polynomial regression models if you’d like.\n\n\nDoes the cubic model appear to be necessary? Use the summary() function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?\nWhat degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?\nDo you notice anything curious about the inferential results for the linear and quadratic terms?\nThe issue here is that the polynomial terms for year are highly correlated with each other (i.e., year, year\\(^2\\), and year\\(^3\\) are correlated). This can lead to numerical instability and make it difficult to interpret the coefficients. This is a situation called multicollinearity. We’ll talk more about this later. One way to remedy this issue in polynomial regression is to use orthogonal polynomials, which are uncorrelated with each other."
-  },
-  {
-    "objectID": "activities/08T-polynomial.html#an-alternative-way-to-fit-polynomials",
-    "href": "activities/08T-polynomial.html#an-alternative-way-to-fit-polynomials",
-    "title": "08: Polynomial Regression",
-    "section": "An alternative way to fit polynomials",
-    "text": "An alternative way to fit polynomials\nTo fit polynomial model with uncorrelated polynomial terms use the poly() function. For example, to fit a cubic model using orthogonal polynomials, we can run the following code:\n\ncubic_lm_ortho &lt;- lm(Acres ~ poly(Year, 3), data = wildfires)\n\nUse the summary() function to explore the fitted model. What do you notice about the inferential results for the linear, quadratic, and cubic terms? How does this compare to the previous cubic model we fit? How does it compare to the quadratic model?\n\n#| min-lines: 3\n# Write your lm() command here\n\n\nThe method of constructing the polynomial terms in our regression model does not change our predictions, but it can change the inferential results for the polynomial terms."
-  },
-  {
-    "objectID": "activities/08T-polynomial.html#function-quick-reference",
-    "href": "activities/08T-polynomial.html#function-quick-reference",
-    "title": "08: Polynomial Regression",
-    "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a linear model. For polynomial regression the formula should include polynomial terms or use poly().\n\n\nI()\nUsed to create polynomial terms in a regression model\n\n\npoly(x, degree)\nCreate orthogonal polynomial terms"
-  },
-  {
-    "objectID": "activities/04-prediction.html",
-    "href": "activities/04-prediction.html",
-    "title": "04: Prediction for SLR",
-    "section": "",
-    "text": "Is education level associated with income? Researchers collected education level (in years) and income (in thousands of dollars) for a random sample of 32 employees working for the city of Riverview.\nThe researchers fit a simple linear regression of income on education and obtained the following output:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n11.321\n6.123\n1.849\n0.074\n\n\neducation\n2.651\n0.370\n7.173\n&lt;0.001\n\n\n\n\n\nQ1. Write the fitted regression equation.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ2. Interpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ3. Interpret the intercept in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nA new researcher joined the team and decided that education should be standardized (to have mean 0 and SD 1) before fitting the regression model. The output from this regression is shown below:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n53.742\n1.587\n33.861\n&lt;0.001\n\n\nscale(education)\n11.567\n1.613\n7.173\n&lt;0.001\n\n\n\n\n\nQ4. Write the fitted regression equation for this new model.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ5. Interpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ6. Interpret the intercept in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ7. Compare the two models. What’s the same? What’s different?\n\n\n\n\n\n\nTipSolution"
-  },
-  {
-    "objectID": "activities/04-prediction.html#warm-up-questions",
-    "href": "activities/04-prediction.html#warm-up-questions",
-    "title": "04: Prediction for SLR",
-    "section": "",
-    "text": "Is education level associated with income? Researchers collected education level (in years) and income (in thousands of dollars) for a random sample of 32 employees working for the city of Riverview.\nThe researchers fit a simple linear regression of income on education and obtained the following output:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n11.321\n6.123\n1.849\n0.074\n\n\neducation\n2.651\n0.370\n7.173\n&lt;0.001\n\n\n\n\n\nQ1. Write the fitted regression equation.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ2. Interpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ3. Interpret the intercept in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nA new researcher joined the team and decided that education should be standardized (to have mean 0 and SD 1) before fitting the regression model. The output from this regression is shown below:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n53.742\n1.587\n33.861\n&lt;0.001\n\n\nscale(education)\n11.567\n1.613\n7.173\n&lt;0.001\n\n\n\n\n\nQ4. Write the fitted regression equation for this new model.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ5. Interpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ6. Interpret the intercept in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ7. Compare the two models. What’s the same? What’s different?\n\n\n\n\n\n\nTipSolution"
-  },
-  {
-    "objectID": "activities/04-prediction.html#prediction-and-confidence-intervals",
-    "href": "activities/04-prediction.html#prediction-and-confidence-intervals",
-    "title": "04: Prediction for SLR",
-    "section": "Prediction and confidence intervals",
-    "text": "Prediction and confidence intervals\n\n\n\n\n\n\nTip\n\n\n\nThe R code for the following questions is found at \nhttps://aluby.github.io/stat230/activities/04R-prediction\nThe URL is also posted on Moodle.\n\n\nNow, we’ll explore the city data using R.\nQ1. Make a plot of income against education and overlay the linear regression equation. Does it look like what you expected?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ2. Make a plot of income against scale(education) and overlay the linear regression equation. Does it look like what you expected?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ3. Find the linear regression equation from Q1. Confirm that it matches the table at the beginning of this worksheet.\nQ4. The first person in this dataset has education = 8. Calculate the expected income of this person using the first regression equation.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ5. If we want to predict the income of this person, should we use a confidence interval or a prediction interval?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ6. Use R to construct the appropriate 89% interval for this person’s income. Record this interval below.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ7. Interpret the interval in context.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ8. Run the code to produce a scatterplot, regression line, and both types of intervals. Which is the prediction interval and which is the confidence interval? How can you tell?\n\n\n\n\n\n\nTipSolution"
-  },
-  {
-    "objectID": "activities/01-intro.html",
-    "href": "activities/01-intro.html",
-    "title": "01: Intro Stats Review",
-    "section": "",
-    "text": "Researchers examined the relationship between sleep duration and simple reaction time performance in healthy young adults in a controlled laboratory setting.\nSixty-five college-aged participants (ages 18-25) were recruited and randomly assigned to sleep either 4 hours per night (low sleep) or 8 hours per night (high sleep) over a one-week period. Each morning, participants completed a computerized simple reaction time task where they responded to visual stimuli as quickly as possible, with reaction times measured in milliseconds. The researchers are interested in whether there is a difference in reaction time for the low sleep vs the high sleep group.\n\n\n\n\nSample size (\\(n\\))\nSample mean (\\(\\bar{x}\\))\nSample SD (\\(s\\))\n\n\n\n\nLow Sleep\n33\n390 ms\n45 ms\n\n\nHigh Sleep\n32\n360 ms\n40 ms\n\n\n\n\nWhat is the null hypothesis for this test?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(H_0: \\mu_1 = \\mu_2\\) (or \\(H_0: \\mu_1 - \\mu_2 = 0\\))\n\n\n\n\nWhat is the alternative hypothesis for this test?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(H_A: \\mu_1 \\neq \\mu_2\\) (two-sided)\n\n\n\n\nThe researchers conduct a two-sample t-test and report a test statistic of \\(t=2.84\\). Below is a plot of the appropriate t-distribution for this test. Sketch how you would calculate the p-value for this situation.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nThe p-value is equal to the area in the two tails beyond \\(2.84\\) and \\(-2.84\\).\n\n\n\n\n\n\n\n\n\n\n\n\n\nHow did you calculate this p-value in your last statistics course?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nAnswers will vary based on where you took intro stats. You may have used StatKey or a similar online app/calculator, you may have used R’s pt() command, or you may have used a t-distribution table (we won’t use tables in this class).\n\n\n\n\nIf the p-value you calculated was 0.02, what would you conclude about the null hypothesis?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nA p-value of 0.02 provides evidence against the null hypothesis. In other words, there is statistically discernible evidence of a difference in means between the two groups (\\(t=2.5\\), p-value = 0.02).\n\n\n\n\nWhy did researchers randomly assign participants to a sleep condition?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nRandom assignment helps to ensure that any confounding variables are evenly distributed across the different sleep conditions. This allows the researchers to make a causal conclusion about the effect of sleep duration on reaction time.\n\n\n\n\nCan you generalize these results to all young adults in the U.S.? Why or why not?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nNo, we cannot generalize these results to all young adults in the U.S. because it may not be representative of all young adults in the U.S. It we truly wanted to generalize to the entire population, then we should draw a random sample from the population of interest."
-  },
-  {
-    "objectID": "activities/03a-inference.html",
-    "href": "activities/03a-inference.html",
+    "objectID": "activities/03b-r-inference.html",
+    "href": "activities/03b-r-inference.html",
     "title": "03: Inference for SLR",
     "section": "",
-    "text": "Biologists know that the leaves on plants tend to get smaller as temperatures rise, and average temperatures have been getting hotter over time. A sample of 252 leaves from the species Dodonaea viscosa subspecies angustissima (broadleaf hopbush) have been collected in a certain region of South Australia. Is there an association between leaf width and year? Below is the coefficient table from a simple linear regression model.\n\n\n\n\n\n\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n37.723\n8.575\n4.399\n&lt;0.001\n\n\nYear\n−0.018\n0.004\n−4.029\n&lt;0.001\n\n\n\n\n\n\n\n\nTable 1: lm output\n\n\n\n\nNote: The width is the average width, in mm, of leaves, taken at their widest points, that were collected in a given year.\n\nReport the fitted regression equation.\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(\\hat{y} = 37.723 - 0.018x\\)\n\n\n\n\nInterpret the slope of the regression line in context of the data.\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nAs year increases by 1 (i.e., from one year to the next), we expect the average leaf width of this species to decrease by 0.018 mm.\n\n\n\n\nCalculate a 95% confidence interval for the slope of the regression line. (Use the slides to find the appropriate critical value). Interpret this interval in context of the data.\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nTo find the critical value, we need 2.5% on either side:\n\nqt(.025, df = 250)\n\n[1] -1.969498\n\n\nThe 95% confidence interval for the slope is given by:\n\\[\n-0.018 \\pm 1.97(0.004) = (-0.02588, -0.01012)\n\\]\n\n\n\n\nWhat hypotheses are being tested with the statistic and associated p-value in the (Intercept) row of the table? What conclusion can you draw?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nThe summary output provided by R always conducts a two-tailed hypothesis test of whether a regression coefficient is equal to 0. In other words it tests\n\\(H_0: \\beta_0=0\\) vs. \\(H_a: \\beta_0 \\ne 0\\)\nBased on a test statistic of \\(t=4.399\\), df = 250, and a p-value &lt; 0.001, we find very strong evidence that the intercept is not zero. (This is outside the range of the observed data, so I won’t interpret it in context.)"
+    "text": "library(tidyverse)\nlibrary(broom)\nFirst, skim working in R for Stat230. Then, follow these directions:"
   },
   {
-    "objectID": "activities/03a-inference.html#footnotes",
-    "href": "activities/03a-inference.html#footnotes",
+    "objectID": "activities/03b-r-inference.html#load-the-data",
+    "href": "activities/03b-r-inference.html#load-the-data",
+    "title": "03: Inference for SLR",
+    "section": "Load the data",
+    "text": "Load the data\nLoad data into your session (it should show up in the “Environment” pane)\n\nLeafWidth &lt;- read_csv(\"https://aluby.github.io/stat230/data/LeafWidth.csv\")\n\n“Print” the data:\n\nLeafWidth\n\n# A tibble: 252 × 5\n   Width Length LWRatio  Area  Year\n   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 0.658   85.1   129.   70.3  1974\n 2 0.921   53.2    57.7  49.0  1918\n 3 0.921   59.9    65    57.7  1993\n 4 0.921   63.7    69.1  37.4  1946\n 5 0.921   64.2    69.7  62.6  1956\n 6 0.921   87.0    94.4  67.5  1964\n 7 1.05    61.3    58.2  63.9  1956\n 8 1.05    64.1    60.9  54.0  1980\n 9 1.18    41.2    34.8  40.9  1999\n10 1.18    41.7    35.2  34.6  1977\n# ℹ 242 more rows"
+  },
+  {
+    "objectID": "activities/03b-r-inference.html#exploratory-data-analysis",
+    "href": "activities/03b-r-inference.html#exploratory-data-analysis",
+    "title": "03: Inference for SLR",
+    "section": "Exploratory Data Analysis",
+    "text": "Exploratory Data Analysis\nFirst, make a scatterplot of Width (response variable) against Year (explanatory variable). Overlay the linear regression line. Describe your findings."
+  },
+  {
+    "objectID": "activities/03b-r-inference.html#linear-regression-model",
+    "href": "activities/03b-r-inference.html#linear-regression-model",
+    "title": "03: Inference for SLR",
+    "section": "Linear Regression Model",
+    "text": "Linear Regression Model\nFind the linear regression equation using lm(). Use tidy() to print the coefficient table of the regression model. Make sure you get the same answer as the paper printout!"
+  },
+  {
+    "objectID": "activities/03b-r-inference.html#ci-for-slope",
+    "href": "activities/03b-r-inference.html#ci-for-slope",
+    "title": "03: Inference for SLR",
+    "section": "CI for Slope",
+    "text": "CI for Slope\nCalculate a 95% confidence interval for the slope of the regression line using confint."
+  },
+  {
+    "objectID": "activities/03b-r-inference.html#footnotes",
+    "href": "activities/03b-r-inference.html#footnotes",
     "title": "03: Inference for SLR",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nAdapted from Stat 2: Modeling with Regression and ANOVA↩︎"
   },
   {
-    "objectID": "activities/09-mlr.html",
-    "href": "activities/09-mlr.html",
-    "title": "09: Intro to Multiple Regression",
+    "objectID": "activities/06-transformations.html",
+    "href": "activities/06-transformations.html",
+    "title": "06: Transformations and Interpretations",
     "section": "",
-    "text": "library(ggformula)\nlibrary(dplyr)\nlibrary(broom)\nlibrary(GGally)\n\nsupervisor &lt;- read.csv(\"http://aluby.github.io/stat230/data/supervisor.csv\")"
+    "text": "Note\n\n\n\nThis is the quarto version of the R activity. If you prefer to use the tutorial version, you can use https://aluby.github.io/stat230/activities/06-transformations-tutorial"
   },
   {
-    "objectID": "activities/09-mlr.html#eda-making-a-pairs-plot",
-    "href": "activities/09-mlr.html#eda-making-a-pairs-plot",
-    "title": "09: Intro to Multiple Regression",
-    "section": "EDA: Making a pairs plot",
-    "text": "EDA: Making a pairs plot\nWe will use the ggpairs() function in the {GGally} package to make the pairs plot. By default, it will include every variable in the dataset. The code below firsts select()s the columns we want to include (all of them). I have also moved the response variable to be the last in the list, so that it shows up on the Y axis.\n\nsupervisor |&gt;\n  select(complaints, privileges, learn, raises, critical, advance, overall) |&gt;\n  ggpairs()\n\n\n\n\n\n\n\n\n\nWhich predictor variables appear to be most closely related to overall?\nWhich predictor variables appear to be most closely related to each other?"
+    "objectID": "activities/06-transformations.html#example-mammal-brain-weights",
+    "href": "activities/06-transformations.html#example-mammal-brain-weights",
+    "title": "06: Transformations and Interpretations",
+    "section": "Example: Mammal brain weights",
+    "text": "Example: Mammal brain weights\nResearchers wish to understand the relationship between the brain weights (y, in grams) and body weights (x, in kilograms) of mammals. They have data on a sample of 30 species of mammals, which can be loaded using the code shown below:\n\nlibrary(ggformula)\nlibrary(ggResidpanel)\nweight &lt;-  read.csv(\"https://aluby.github.io/stat230/data/weights.csv\")\nhead(weight)\n\n           species bodyweight brainweight maximumlifespan gestationtime\n1 African elephant   6654.000      5712.0            38.6           645\n2       Arctic Fox      3.385        44.5            14.0            60\n3  Asian elephant    2547.000      4603.0            69.0           624\n4          Baboon      10.550       179.5            27.0           180\n5   Big brown bat       0.023         0.3            19.0            35\n6              Cat      3.300        25.6            28.0            63\n  totalsleep\n1        3.3\n2       12.5\n3        3.9\n4        9.8\n5       19.7\n6       14.5\n\n\n\nFit a simple linear regression model using body weight to predict brain weight.\n\n\n# your code here\n\n\nCreate a scatterplot of \\(y\\) versus \\(x\\) with a regression line, a plot of the residuals vs. predicted (or “fitted”) values (\\(\\widehat{y}\\)), and either a normal Q-Q plot or a histogram of the residuals. (Remember that you can use the resid_panel() command in the ggResidpanel R package for residual plots.) Summarize what issues you see with the regression conditions.\n\n\n# your code here\n\n\nTry various transformations of the explanatory and response variables to create a better linear regression model. (Hint: Notice that both the \\(x\\) and \\(y\\) variables are right skewed and have outliers, both may need a transformation.) What transformation(s) seem to remedy the issues you saw in part (b)?\n\n\n# your code here"
   },
   {
-    "objectID": "activities/09-mlr.html#function-quick-reference",
-    "href": "activities/09-mlr.html#function-quick-reference",
-    "title": "09: Intro to Multiple Regression",
-    "section": "Function quick reference",
-    "text": "Function quick reference\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a MLR model\n\n\npredict(model, newdata, interval, level, se.fit)\nMake predictions and calculate intervals\n\n\ndata |&gt; select(vars) |&gt; ggpairs()\nMake pairs plot for selected variables"
+    "objectID": "activities/06-transformations.html#back-transforming-your-model",
+    "href": "activities/06-transformations.html#back-transforming-your-model",
+    "title": "06: Transformations and Interpretations",
+    "section": "Back-transforming your model",
+    "text": "Back-transforming your model\nIn Example 1 you selected transformation(s) to help “linearize” the relationship between brain weights and body weights. While this is helpful from a statistical perspective, it’s often preferred to plot the fitted model on the original scale of the data. To do this, we need to back-transform the model using the following steps:\n\nStart by creating a scatterplot on the original scale.\nAdd a gf_lm() layer, specifying the transformations in the formula and if \\(y\\) is transformed how to back-transform \\(y\\) via the backtrans argument.\n\nFor example, if we squared both y, then we pass y^2 ~ x in as the formula to gf_lm() and backtrans = sqrt to back-transform y. Below is the full call where df is the data set with columns xvar and yvar.\n\n# change variable names and data set name here\ngf_point(yvar^2 ~ xvar, data = df) |&gt; \n  gf_lm(formula = y^2 ~ x , backtrans = sqrt, interval = \"confidence\")\n\nUse this idea to plot the fitted model relating brain weights and body weights on the original scale.\n\n# your code here"
   },
   {
-    "objectID": "activities/02-r-live.html",
-    "href": "activities/02-r-live.html",
-    "title": "02: Intro to R for Regression",
+    "objectID": "activities/04R-prediction.html",
+    "href": "activities/04R-prediction.html",
+    "title": "04R: Prediction for SLR",
     "section": "",
-    "text": "Note\n\n\n\nTo follow the tutorial version in the browser, you can use https://aluby.github.io/stat230/activities/02-r-live"
+    "text": "Note\n\n\n\nYou can access the .qmd for this activity by clicking the “code” button above and then opening in maize/Rstudio. If you prefer to follow the tutorial version in the browser, you can use https://aluby.github.io/stat230/activities/04-prediction-tutorial"
   },
   {
-    "objectID": "activities/02-r-live.html#overview",
-    "href": "activities/02-r-live.html#overview",
-    "title": "02: Intro to R for Regression",
-    "section": "Overview",
-    "text": "Overview\nIn Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
+    "objectID": "activities/04R-prediction.html#loading-packages",
+    "href": "activities/04R-prediction.html#loading-packages",
+    "title": "04R: Prediction for SLR",
+    "section": "Loading packages",
+    "text": "Loading packages\nThe code chunk below loads the R packages that contain functions we’ll use. Make sure to run it before the rest of the code!\n\nlibrary(tidyverse)\nlibrary(ggformula)"
   },
   {
-    "objectID": "activities/02-r-live.html#loading-data",
-    "href": "activities/02-r-live.html#loading-data",
-    "title": "02: Intro to R for Regression",
+    "objectID": "activities/04R-prediction.html#loading-data",
+    "href": "activities/04R-prediction.html#loading-data",
+    "title": "04R: Prediction for SLR",
     "section": "Loading data",
-    "text": "Loading data\nToday we will work with the movies data set. The data set contains the critic’s score and the audience score for movie released in 2014-2015. The critic’s score is the percentage of critics who had a favorable view of the movie. Similarly, the audience score is the percentage of users who had a favorable view of the movie. Today, you’ll explore the relationship between the audience and critic scores.\nTo load data into R, we use the read.csv() command and pass in either a file path or URL in quotes. Below, the data are being loaded from the web. Click “Run code” to load the data.\n\n\n\n\n\n\n\n\nNotice that we use parentheses with functions and place the arguments for that function inside those parentheses.\n\n\n\n\n\n\nNote\n\n\n\nYou should notice that R did not appear to do anything when you ran the above code. That’s because everything was done in the background and R will only show you what is requested. So don’t panic if you don’t see any output!"
+    "text": "Loading data\nThe data set is loaded by running the following code chunk:\n\ncity &lt;- readr::read_csv(url(\"https://raw.githubusercontent.com/zief0002/modeling/main/data/riverview.csv\"))\n\nThe columns of interest are education and income."
   },
   {
-    "objectID": "activities/02-r-live.html#getting-a-glimpse-of-the-data-set",
-    "href": "activities/02-r-live.html#getting-a-glimpse-of-the-data-set",
-    "title": "02: Intro to R for Regression",
-    "section": "Getting a glimpse of the data set",
-    "text": "Getting a glimpse of the data set\nThroughout the term I’ll refer to small pieces of code as “code chunks.” This is both descriptive and will be what RStudio (our interface) calls them later on. For today, we’ll focus on how to write small code chunks to accomplish specific tasks for simple linear regression.\nFor example, we might wish to get an overview of the data set by printing the first few rows via head()\n\n\n\n\n\n\n\n\nI prefer to use a different function, glimpse(), which is in the {dplyr} package. To load a package we first must run the library() command. The below code chunk loads this package and gives a “glimpse” of the movies data set:\n\n\n\n\n\n\n\n\n\nCheckpoint questions:\nUsing the output from the above code chunk, answer the following questions in the code box below:\n\nHow many rows are in the movies data set?\nHow many variables are in the movies data set? Are any categorical? Are any quantitative?"
+    "objectID": "activities/04R-prediction.html#making-plots",
+    "href": "activities/04R-prediction.html#making-plots",
+    "title": "04R: Prediction for SLR",
+    "section": "Making plots",
+    "text": "Making plots\nQ1. Make a plot of income against education and overlay the linear regression equation. Does it look like what you expected? (I’ve started the code for you; you will need to overlay the linear regression equation)\n\ngf_point(income ~ education, data = city)\n\n\n\n\n\n\n\n\nQ2. Make a plot of income against scale(education) and overlay the linear regression equation. Does it look like what you expected?\n\n# Write your graph code here"
   },
   {
-    "objectID": "activities/02-r-live.html#univariate-exploration",
-    "href": "activities/02-r-live.html#univariate-exploration",
-    "title": "02: Intro to R for Regression",
-    "section": "Univariate exploration",
-    "text": "Univariate exploration\nBefore jumping into a regression model, it can be useful to understand more about each variable. This can be accomplished using intro stat tools such as histograms and summary statistics.\nThe fastest way to get started is using the summary() function, which returns a brief set of summary statistics for each variable in the data set.\n\n\n\n\n\n\n\n\nR also has built-in functions to compute summary statistics one by one for a specific column. To “extract” a variable from the data set, we use a $. For example, we can extract the critics column from the movies data frame and calculate the standard deviation:\n\n\n\n\n\n\n\n\nOther useful summary statistics for quantitative variables include (here x denotes an extracted column):\n\n\n\nFunction\nSummary statistic\n\n\n\n\nmedian(x)\nmedian\n\n\nmean(x)\nmean\n\n\nvar(x)\nvariance\n\n\nIQR(x)\ninterquartile range\n\n\n\n\nTo create graphics in this course, I’ll often use the {ggformula} R package. All of the functions will begin with gf_ and have similar syntax. If you’re familiar with the {ggplot2} package, feel free to use it for this class, but many students like the “one-liners” that {ggformula} allows.\nTo begin, load the {ggformula} package using the library command:\n\n\n\n\n\n\n\n\nFor example, to create a histogram of the critic’s score we can run\n\n\n\n\n\n\n\n\nHere we use the ~ to tell R that critics is a variable in the data set. We must also specify data and adjust the number of bins as needed.\nSimilar syntax is used to create a boxplot\n\n\n\n\n\n\n\n\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nCalculate the mean audience score using the mean() function.\nCreate a histogram of the audience score and describe what you see.\nChange the number of bins for a histogram of audience. What number of bins seems “about right” in your opinion?"
+    "objectID": "activities/04R-prediction.html#fitting-a-simple-linear-regression-model",
+    "href": "activities/04R-prediction.html#fitting-a-simple-linear-regression-model",
+    "title": "04R: Prediction for SLR",
+    "section": "Fitting a simple linear regression model",
+    "text": "Fitting a simple linear regression model\nQ3. Use the lm() command to fit the simple linear regression model where education is used to predict income. Make sure your output matches the output on the worksheet.\n\n# Write your lm() command here"
   },
   {
-    "objectID": "activities/02-r-live.html#bivariate-exploration",
-    "href": "activities/02-r-live.html#bivariate-exploration",
-    "title": "02: Intro to R for Regression",
-    "section": "Bivariate exploration",
-    "text": "Bivariate exploration\n\nScatterplots\nIn this course we are interested in exploring relationships between variables. If we have two quantitative variables, then a scatterplot is a natural way to visually explore this relationship. To create a scatterplot we can use the gf_point() function (since scatterplots are just points):\n\n\n\n\n\n\n\n\nNotice that we put the response variable on the left of the ~ and the explanatory variable on the right.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nCreate a scatterplot where critics score is the response variable and audience score is the explanatory variable.\nYou can adjust the axis labels by adding an xlab or ylab argument. Add xlab = \"Your axis label\" and ylab = \"Your other axis label\" to your scatterplot and give more verbose axis labels.\n\n\n\n\nScatterplots with regression lines\nYou can also add a simple linear regression line to your scatterplot by adding a layer. To add a layer, we append the |&gt; pipe operator to the end of our gf_point() code and use the gf_lm() command to add a line:\n\n\n\n\n\n\n\n\n\n\nCorrelation\nIf you want a numeric summary of the strength of the linear association between two quantitative variables, then you can calculate the correlation. In R, you do this using the cor() function. Similar to calculating the mean, you need to extract the columns using $ as shown below:\n\n\n\n\n\n\n\n\n\nCheckpoint questions\nUse the below code box for the checkpoint question:\n\n\n\n\n\n\n\n\n\nSwap the order of the variables in the cor() command. Does the correlation change? Is this what you expected?"
-  },
-  {
-    "objectID": "activities/02-r-live.html#fitting-a-regression-model",
-    "href": "activities/02-r-live.html#fitting-a-regression-model",
-    "title": "02: Intro to R for Regression",
-    "section": "Fitting a regression model",
-    "text": "Fitting a regression model\nFinally, lets fit a simple linear regression model. To do this we use the lm() command (which stands for linear model). Here, we use the same syntax as when creating a scatterplot:\n\n\n\n\n\n\n\n\nWhen you run this command, R prints some very basic information about the SLR model.\nCheckpoint: What information do you get when you run the above command?\nOften, you will want to obtain more information than you get from simply printing the fitted model. The summary() function provides much more information. I recommend storing your fitted model as a named object (such as movie_lm) and then running the summary():\n\n\n\n\n\n\n\n\n\nCheckpoint question\nWhat information do you get when you run the above summary() command? If you’re not sure what something means, discuss it with your group and then ask about it in our debrief."
-  },
-  {
-    "objectID": "activities/02-r-live.html#constructing-confidence-intervals",
-    "href": "activities/02-r-live.html#constructing-confidence-intervals",
-    "title": "02: Intro to R for Regression",
-    "section": "Constructing confidence intervals",
-    "text": "Constructing confidence intervals\nThe table obtained by summary() contains all of the necessary information to conduct hypothesis tests for regression coefficients; however, it does not provide confidence intervals. To instruct R to construct a confidence interval for a regression coefficient, we can use the confint() function:\n\n\n\n\n\n\n\n\n\nCheckpoint questions\n\nWhat information do you get when you run the above confint() command?\nChange the level argument to construct a 90% confidence interval. How does the interval change?"
-  },
-  {
-    "objectID": "activities/02-r-live.html#making-predictions",
-    "href": "activities/02-r-live.html#making-predictions",
-    "title": "02: Intro to R for Regression",
+    "objectID": "activities/04R-prediction.html#making-predictions",
+    "href": "activities/04R-prediction.html#making-predictions",
+    "title": "04R: Prediction for SLR",
     "section": "Making predictions",
-    "text": "Making predictions\nTo make predictions, we use our fitted regression equation. While you can (and should be able to) do this by hand, you can also use R as your calculator.\nSuppose we can use our model to predict the audience score for more recent movies. Then we could predict the audience score for the Barbie Movie by running:\n\n\n\n\n\n\n\n\nHere, we first need to create a new data set with a column named identically to the original data set. Here we have a single column named critics with the value of the explanatory variable we want to use. Next, we use the predict() function, passing in the name of our model and the new data set we want to make predictions for.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nThe critics score for Asteroid City was 75. What is the expected audience score for this movie?\nThe actual (observed) value for Asteroid City was 62. Did the mode over- or under-predict the audience score?\nDo you think it’s reasonable to use our model to predict the audience score for movies released in 2023? Why or why not?\n\n\n\nMaking multiple predictions\nIf you want to make multiple predictions, then you can create a new data frame with multiple values for the explanatory variable. For example, we can use c(88, 75) to make a data frame with two values in the critics column:"
+    "text": "Making predictions\nThe first person in this dataset has education = 8.\nQ4. Calculate the expected income of this person using the first regression equation. (You may use R or do this by hand. There’s a code chunk below for your convenience)\n\n# Write your code here\n\nQ5. If we want to predict the income of this person, should we use a confidence interval or a prediction interval?\nQ6. Use R to construct the appropriate 89% interval for this person’s income.\n\n# Write your code here\n\nQ7. Interpret the interval in context."
   },
   {
-    "objectID": "activities/02-r-live.html#function-quick-reference",
-    "href": "activities/02-r-live.html#function-quick-reference",
-    "title": "02: Intro to R for Regression",
+    "objectID": "activities/04R-prediction.html#plotting-our-intervals",
+    "href": "activities/04R-prediction.html#plotting-our-intervals",
+    "title": "04R: Prediction for SLR",
+    "section": "Plotting our intervals",
+    "text": "Plotting our intervals\nIt can be useful to plot your confidence/prediction intervals to communicate your findings to a broader audience. The code below creates a scatterplot of the data, adds the fitted regression line, and then adds 89% prediction intervals.\n\ngf_point(income ~ education, data = city) |&gt; \n  gf_lm(interval = \"prediction\", level = .89) |&gt;\n  gf_lm(interval = \"confidence\", alpha = 0.6, level = .89)\n\n\n\n\n\n\n\n\nQ8. Run the code to produce a scatterplot, regression line, and both types of intervals. Which is the prediction interval and which is the confidence interval? How can you tell?"
+  },
+  {
+    "objectID": "activities/04R-prediction.html#function-quick-reference",
+    "href": "activities/04R-prediction.html#function-quick-reference",
+    "title": "04R: Prediction for SLR",
     "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nread.csv(\"file_path_or_URL\")\nLoad a CSV data set from a file or the web\n\n\nhead(data)\nPrint the first few rows of a data set\n\n\nglimpse(data)\nGet a quick overview of a data set (from {dplyr} package)\n\n\nsummary(data)\nGet summary statistics for each variable in a data set\n\n\nmean(x)\nCalculate the mean of a quantitative variable\n\n\nmedian(x)\nCalculate the median of a quantitative variable\n\n\nsd(x)\nCalculate the standard deviation of a quantitative variable\n\n\nvar(x)\nCalculate the variance of a quantitative variable\n\n\ngf_histogram(~x, data = data, bins = n)\nCreate a histogram of a quantitative variable (from {ggformula} package)\n\n\ngf_boxplot(~x, data = data)\nCreate a boxplot of a quantitative variable (from {ggformula} package)\n\n\ngf_point(y ~ x, data = data)\nCreate a scatterplot of two quantitative variables (from {ggformula} package)\n\n\ngf_lm()\nAdd a simple linear regression line to a scatterplot (from {ggformula} package)\n\n\ncor(x, y)\nCalculate the correlation between two quantitative variables\n\n\nlm(y ~ x, data = data)\nFit a simple linear regression model\n\n\nsummary(model)\nGet detailed information about a fitted regression model\n\n\nconfint(model, level = 0.95)\nConstruct a confidence interval for regression coefficients\n\n\npredict(model, newdata = new_data)\nMake predictions using a fitted regression model for new data"
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a linear model\n\n\npredict(model, newdata, interval, level, se.fit)\nMake predictions and calculate intervals\n\n\ngf_point(formula, data) |&gt; gf_lm(interval = \"confidence\")\nPlot data and add confidence intervals for the mean response\n\n\ngf_point(formula, data) |&gt; gf_lm(interval = \"prediction\")\nPlot data and add prediction intervals for the mean response"
   },
   {
-    "objectID": "activities/02-r-live.html#acknowledgements",
-    "href": "activities/02-r-live.html#acknowledgements",
-    "title": "02: Intro to R for Regression",
-    "section": "Acknowledgements",
-    "text": "Acknowledgements\nThe movie example was adapted by Adam Loy from Maria Tackett’s draft of Introduction to Regression Analysis: A Data Science Approach."
-  },
-  {
-    "objectID": "activities/02-SLR.html",
-    "href": "activities/02-SLR.html",
-    "title": "02: Intro to R for Regression",
+    "objectID": "activities/05-conditions-tutorial.html",
+    "href": "activities/05-conditions-tutorial.html",
+    "title": "05: Conditions - live",
     "section": "",
-    "text": "Note\n\n\n\nTo follow the tutorial version in the browser, you can use https://aluby.github.io/stat230/activities/02-r-live"
+    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/05-conditions"
   },
   {
-    "objectID": "activities/02-SLR.html#overview",
-    "href": "activities/02-SLR.html#overview",
-    "title": "02: Intro to R for Regression",
-    "section": "Overview",
-    "text": "Overview\nIn Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
+    "objectID": "activities/05-conditions-tutorial.html#finding-residuals",
+    "href": "activities/05-conditions-tutorial.html#finding-residuals",
+    "title": "05: Conditions - live",
+    "section": "Finding residuals",
+    "text": "Finding residuals\nIn order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for every single data point! Instead, we’ll use the augment() function from the {broom} R package to created an augmented movie dataset. This takes the original X and Y variables and adds the \\(\\hat{y}\\) values (.fitted) and residuals (.resid) (along with some other columns that we’ll use later)\nRun the following code chunk and take a peek at the movie_aug dataset. Can you find the:\n\noriginal X variable?\noriginal Y variable?\nPredictions?\nResiduals?"
   },
   {
-    "objectID": "activities/02-SLR.html#loading-data",
-    "href": "activities/02-SLR.html#loading-data",
-    "title": "02: Intro to R for Regression",
-    "section": "Loading data",
-    "text": "Loading data\nToday we will work with the movies data set. The data set contains the critic’s score and the audience score for movie released in 2014-2015. The critic’s score is the percentage of critics who had a favorable view of the movie. Similarly, the audience score is the percentage of users who had a favorable view of the movie. Today, you’ll explore the relationship between the audience and critic scores.\nTo load data into R, we use the read.csv() command and pass in either a file path or URL in quotes. Below, the data are being loaded from the web. Click “Run code” to load the data.\n\nmovies &lt;- read.csv(\"https://aloy.github.io/stat230-materials/data/movie_scores.csv\")\n\nNotice that we use parentheses with functions and place the arguments for that function inside those parentheses.\n\n\n\n\n\n\nNote\n\n\n\nYou should notice that R did not appear to do anything when you ran the above code. That’s because everything was done in the background and R will only show you what is requested. So don’t panic if you don’t see any output!"
+    "objectID": "activities/05-conditions-tutorial.html#making-residual-plots",
+    "href": "activities/05-conditions-tutorial.html#making-residual-plots",
+    "title": "05: Conditions - live",
+    "section": "Making residual plots",
+    "text": "Making residual plots\nThe code below makes a normal QQ plot and a histogram of the residuals. Do you think the normality assumption is satisfied?\n\n\n\n\n\n\n\n\n\n\n\nCheckpoint question\nUse the movie_aug dataset to make a scatterplot with .fitted on the x-axis and .resid on the y-axis. List the SLR conditions you can assess with this plot, and whether or not they appear to be satisfied."
   },
   {
-    "objectID": "activities/02-SLR.html#getting-a-glimpse-of-the-data-set",
-    "href": "activities/02-SLR.html#getting-a-glimpse-of-the-data-set",
-    "title": "02: Intro to R for Regression",
-    "section": "Getting a glimpse of the data set",
-    "text": "Getting a glimpse of the data set\nThroughout the term I’ll refer to small pieces of code as “code chunks.” This is both descriptive and will be what RStudio (our interface) calls them later on. For today, we’ll focus on how to write small code chunks to accomplish specific tasks for simple linear regression.\nFor example, we might wish to get an overview of the data set by printing the first few rows via head()\n\nhead(movies)\n\nI prefer to use a different function, glimpse(), which is in the {dplyr} package. To load a package we first must run the library() command. The below code chunk loads this package and gives a “glimpse” of the movies data set:\n\nlibrary(dplyr)\nglimpse(movies)\n\n\nCheckpoint questions:\nUsing the output from the above code chunk, answer the following questions in the code box below:\n\nHow many rows are in the movies data set?\nHow many variables are in the movies data set? Are any categorical? Are any quantitative?"
+    "objectID": "activities/05-conditions-tutorial.html#a-shortcut",
+    "href": "activities/05-conditions-tutorial.html#a-shortcut",
+    "title": "05: Conditions - live",
+    "section": "A shortcut",
+    "text": "A shortcut\nWe will make a ton of residual plots this term. A shortcut is to use the resid_panel function within the {ggResidpanel} package:\n\n\n\n\n\n\n\n\n\nCheckpoint question\nWhich panel(s) would you look at for each of the following SLR conditions. List as many panels as possible, along with how you would identify any violations:\n\nLinearity:\nIndependence:\nNormality:\nEqual variance:"
   },
   {
-    "objectID": "activities/02-SLR.html#univariate-exploration",
-    "href": "activities/02-SLR.html#univariate-exploration",
-    "title": "02: Intro to R for Regression",
-    "section": "Univariate exploration",
-    "text": "Univariate exploration\nBefore jumping into a regression model, it can be useful to understand more about each variable. This can be accomplished using intro stat tools such as histograms and summary statistics.\nThe fastest way to get started is using the summary() function, which returns a brief set of summary statistics for each variable in the data set.\n\nsummary(movies)\n\nR also has built-in functions to compute summary statistics one by one for a specific column. To “extract” a variable from the data set, we use a $. For example, we can extract the critics column from the movies data frame and calculate the standard deviation:\n\nsd(movies$critics)\n\nOther useful summary statistics for quantitative variables include (here x denotes an extracted column):\n\n\n\nFunction\nSummary statistic\n\n\n\n\nmedian(x)\nmedian\n\n\nmean(x)\nmean\n\n\nvar(x)\nvariance\n\n\nIQR(x)\ninterquartile range\n\n\n\n\nTo create graphics in this course, I’ll often use the {ggformula} R package. All of the functions will begin with gf_ and have similar syntax. If you’re familiar with the {ggplot2} package, feel free to use it for this class, but many students like the “one-liners” that {ggformula} allows.\nTo begin, load the {ggformula} package using the library command:\n\nlibrary(ggformula)\n\nFor example, to create a histogram of the critic’s score we can run\n\ngf_histogram(~critics, data = movies, bins = 10)\n\nHere we use the ~ to tell R that critics is a variable in the data set. We must also specify data and adjust the number of bins as needed.\nSimilar syntax is used to create a boxplot\n\ngf_boxplot(~critics, data = movies)\n\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nCalculate the mean audience score using the mean() function.\nCreate a histogram of the audience score and describe what you see.\nChange the number of bins for a histogram of audience. What number of bins seems “about right” in your opinion?"
+    "objectID": "activities/05-conditions-tutorial.html#summary",
+    "href": "activities/05-conditions-tutorial.html#summary",
+    "title": "05: Conditions - live",
+    "section": "Summary",
+    "text": "Summary\n\nCheckpoint question\nSuppose that we fit a linear regression model to a sample of 1,000 observations and we find evidence in the normal Q-Q plot of a violation of the normality assumption, but no evidence in the residual plot of violations of the linearity and constant variance assumptions and no reason to suspect a violation of the independence assumption. Which of the following inferences are valid, and which are not?:\n\np-value from the hypothesis test \\(H_0: \\beta_1 = 0\\) vs \\(H_A: \\beta_1 \\ne 0\\)\nConfidence interval for \\(\\beta_1\\)\nConfidence interval for the mean of Y at some X value\nPrediction interval for Y at some X value"
   },
   {
-    "objectID": "activities/02-SLR.html#bivariate-exploration",
-    "href": "activities/02-SLR.html#bivariate-exploration",
-    "title": "02: Intro to R for Regression",
-    "section": "Bivariate exploration",
-    "text": "Bivariate exploration\n\nScatterplots\nIn this course we are interested in exploring relationships between variables. If we have two quantitative variables, then a scatterplot is a natural way to visually explore this relationship. To create a scatterplot we can use the gf_point() function (since scatterplots are just points):\n\ngf_point(audience ~ critics, data = movies)\n\nNotice that we put the response variable on the left of the ~ and the explanatory variable on the right.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nCreate a scatterplot where critics score is the response variable and audience score is the explanatory variable.\nYou can adjust the axis labels by adding an xlab or ylab argument. Add xlab = \"Your axis label\" and ylab = \"Your other axis label\" to your scatterplot and give more verbose axis labels.\n\n\n\n\nScatterplots with regression lines\nYou can also add a simple linear regression line to your scatterplot by adding a layer. To add a layer, we append the |&gt; pipe operator to the end of our gf_point() code and use the gf_lm() command to add a line:\n\ngf_point(audience ~ critics, data = movies) |&gt;\n  gf_lm()\n\n\n\nCorrelation\nIf you want a numeric summary of the strength of the linear association between two quantitative variables, then you can calculate the correlation. In R, you do this using the cor() function. Similar to calculating the mean, you need to extract the columns using $ as shown below:\n\ncor(movies$audience, movies$critics)\n\n\nCheckpoint questions\nUse the below code box for the checkpoint question:\n\n#| min-lines: 5\n\n\nSwap the order of the variables in the cor() command. Does the correlation change? Is this what you expected?"
-  },
-  {
-    "objectID": "activities/02-SLR.html#fitting-a-regression-model",
-    "href": "activities/02-SLR.html#fitting-a-regression-model",
-    "title": "02: Intro to R for Regression",
-    "section": "Fitting a regression model",
-    "text": "Fitting a regression model\nFinally, lets fit a simple linear regression model. To do this we use the lm() command (which stands for linear model). Here, we use the same syntax as when creating a scatterplot:\n\nlm(audience ~ critics, data = movies)\n\nWhen you run this command, R prints some very basic information about the SLR model.\nCheckpoint: What information do you get when you run the above command?\nOften, you will want to obtain more information than you get from simply printing the fitted model. The summary() function provides much more information. I recommend storing your fitted model as a named object (such as movie_lm) and then running the summary():\n\nmovie_lm &lt;- lm(audience ~ critics, data = movies)\nsummary(movie_lm)\n\n\nCheckpoint question\nWhat information do you get when you run the above summary() command? If you’re not sure what something means, discuss it with your group and then ask about it in our debrief."
-  },
-  {
-    "objectID": "activities/02-SLR.html#constructing-confidence-intervals",
-    "href": "activities/02-SLR.html#constructing-confidence-intervals",
-    "title": "02: Intro to R for Regression",
-    "section": "Constructing confidence intervals",
-    "text": "Constructing confidence intervals\nThe table obtained by summary() contains all of the necessary information to conduct hypothesis tests for regression coefficients; however, it does not provide confidence intervals. To instruct R to construct a confidence interval for a regression coefficient, we can use the confint() function:\n\nconfint(movie_lm, level = 0.95)\n\n\nCheckpoint questions\n\nWhat information do you get when you run the above confint() command?\nChange the level argument to construct a 90% confidence interval. How does the interval change?"
-  },
-  {
-    "objectID": "activities/02-SLR.html#making-predictions",
-    "href": "activities/02-SLR.html#making-predictions",
-    "title": "02: Intro to R for Regression",
-    "section": "Making predictions",
-    "text": "Making predictions\nTo make predictions, we use our fitted regression equation. While you can (and should be able to) do this by hand, you can also use R as your calculator.\nSuppose we can use our model to predict the audience score for more recent movies. Then we could predict the audience score for the Barbie Movie by running:\n\nbarbie_movie &lt;- data.frame(critics = 88)\npredict(movie_lm, newdata = barbie_movie)\n\nHere, we first need to create a new data set with a column named identically to the original data set. Here we have a single column named critics with the value of the explanatory variable we want to use. Next, we use the predict() function, passing in the name of our model and the new data set we want to make predictions for.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nThe critics score for Asteroid City was 75. What is the expected audience score for this movie?\nThe actual (observed) value for Asteroid City was 62. Did the mode over- or under-predict the audience score?\nDo you think it’s reasonable to use our model to predict the audience score for movies released in 2023? Why or why not?\n\n\n\nMaking multiple predictions\nIf you want to make multiple predictions, then you can create a new data frame with multiple values for the explanatory variable. For example, we can use c(88, 75) to make a data frame with two values in the critics column:\n\nnew_movies &lt;- data.frame(critics = c(88, 75))\npredict(movie_lm, newdata = new_movies)"
-  },
-  {
-    "objectID": "activities/02-SLR.html#function-quick-reference",
-    "href": "activities/02-SLR.html#function-quick-reference",
-    "title": "02: Intro to R for Regression",
+    "objectID": "activities/05-conditions-tutorial.html#function-quick-reference",
+    "href": "activities/05-conditions-tutorial.html#function-quick-reference",
+    "title": "05: Conditions - live",
     "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nread.csv(\"file_path_or_URL\")\nLoad a CSV data set from a file or the web\n\n\nhead(data)\nPrint the first few rows of a data set\n\n\nglimpse(data)\nGet a quick overview of a data set (from {dplyr} package)\n\n\nsummary(data)\nGet summary statistics for each variable in a data set\n\n\nmean(x)\nCalculate the mean of a quantitative variable\n\n\nmedian(x)\nCalculate the median of a quantitative variable\n\n\nsd(x)\nCalculate the standard deviation of a quantitative variable\n\n\nvar(x)\nCalculate the variance of a quantitative variable\n\n\ngf_histogram(~x, data = data, bins = n)\nCreate a histogram of a quantitative variable (from {ggformula} package)\n\n\ngf_boxplot(~x, data = data)\nCreate a boxplot of a quantitative variable (from {ggformula} package)\n\n\ngf_point(y ~ x, data = data)\nCreate a scatterplot of two quantitative variables (from {ggformula} package)\n\n\ngf_lm()\nAdd a simple linear regression line to a scatterplot (from {ggformula} package)\n\n\ncor(x, y)\nCalculate the correlation between two quantitative variables\n\n\nlm(y ~ x, data = data)\nFit a simple linear regression model\n\n\nsummary(model)\nGet detailed information about a fitted regression model\n\n\nconfint(model, level = 0.95)\nConstruct a confidence interval for regression coefficients\n\n\npredict(model, newdata = new_data)\nMake predictions using a fitted regression model for new data"
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\naugment(model)\nCreate augmented dataset that includes predictions and residuals\n\n\ngf_qq(~variable, data)\nMake a qq plot\n\n\ngf_qq_line()\nOverlay a straight line on the qq plot\n\n\nresid_panel(model)\nShortcut for making a panel of residual plots"
   },
   {
-    "objectID": "activities/02-SLR.html#acknowledgements",
-    "href": "activities/02-SLR.html#acknowledgements",
-    "title": "02: Intro to R for Regression",
-    "section": "Acknowledgements",
-    "text": "Acknowledgements\nThe movie example was adapted by Adam Loy from Maria Tackett’s draft of Introduction to Regression Analysis: A Data Science Approach."
+    "objectID": "activities/05-conditions-live.html",
+    "href": "activities/05-conditions-live.html",
+    "title": "05: Conditions - live",
+    "section": "",
+    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/05-conditions\nlibrary(ggformula)\ntheme_set(theme_minimal())"
+  },
+  {
+    "objectID": "activities/05-conditions-live.html#finding-residuals",
+    "href": "activities/05-conditions-live.html#finding-residuals",
+    "title": "05: Conditions - live",
+    "section": "Finding residuals",
+    "text": "Finding residuals\nIn order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for every single data point! Instead, we’ll use the augment() function from the {broom} R package to created an augmented movie dataset. This takes the original X and Y variables and adds the \\(\\hat{y}\\) values (.fitted) and residuals (.resid) (along with some other columns that we’ll use later)\nRun the following code chunk and take a peek at the movie_aug dataset. Can you find the:\n\noriginal X variable?\noriginal Y variable?\nPredictions?\nResiduals?\n\n\nlibrary(broom)\nmovie_aug &lt;- augment(movie_lm)\nmovie_aug"
+  },
+  {
+    "objectID": "activities/05-conditions-live.html#making-residual-plots",
+    "href": "activities/05-conditions-live.html#making-residual-plots",
+    "title": "05: Conditions - live",
+    "section": "Making residual plots",
+    "text": "Making residual plots\nThe code below makes a normal QQ plot and a histogram of the residuals. Do you think the normality assumption is satisfied?\n\n\n\n#| layout-ncol: 2\n\n\ngf_qq(~.resid, data = movie_aug) |&gt;\n  gf_qqline()\n\ngf_histogram(~.resid, data = movie_aug, col = \"white\")\n\n\n\n\nCheckpoint question\nUse the movie_aug dataset to make a scatterplot with .fitted on the x-axis and .resid on the y-axis. List the SLR conditions you can assess with this plot, and whether or not they appear to be satisfied.\n\n# your code here"
+  },
+  {
+    "objectID": "activities/05-conditions-live.html#a-shortcut",
+    "href": "activities/05-conditions-live.html#a-shortcut",
+    "title": "05: Conditions - live",
+    "section": "A shortcut",
+    "text": "A shortcut\nWe will make a ton of residual plots this term. A shortcut is to use the resid_panel function within the {ggResidpanel} package:\n\nlibrary(ggResidpanel)\nresid_panel(movie_lm)\n\n\nCheckpoint question\nWhich panel(s) would you look at for each of the following SLR conditions. List as many panels as possible, along with how you would identify any violations:\n\nLinearity:\nIndependence:\nNormality:\nEqual variance:"
+  },
+  {
+    "objectID": "activities/05-conditions-live.html#summary",
+    "href": "activities/05-conditions-live.html#summary",
+    "title": "05: Conditions - live",
+    "section": "Summary",
+    "text": "Summary\n\nCheckpoint question\nSuppose that we fit a linear regression model to a sample of 1,000 observations and we find evidence in the normal Q-Q plot of a violation of the normality assumption, but no evidence in the residual plot of violations of the linearity and constant variance assumptions and no reason to suspect a violation of the independence assumption. Which of the following inferences are valid, and which are not?:\n\np-value from the hypothesis test \\(H_0: \\beta_1 = 0\\) vs \\(H_A: \\beta_1 \\ne 0\\)\nConfidence interval for \\(\\beta_1\\)\nConfidence interval for the mean of Y at some X value\nPrediction interval for Y at some X value"
+  },
+  {
+    "objectID": "activities/05-conditions-live.html#function-quick-reference",
+    "href": "activities/05-conditions-live.html#function-quick-reference",
+    "title": "05: Conditions - live",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\naugment(model)\nCreate augmented dataset that includes predictions and residuals\n\n\ngf_qq(~variable, data)\nMake a qq plot\n\n\ngf_qq_line()\nOverlay a straight line on the qq plot\n\n\nresid_panel(model)\nShortcut for making a panel of residual plots"
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html",
+    "href": "activities/11-mlr-inference.html",
+    "title": "11: Inference for MLR",
+    "section": "",
+    "text": "In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The cars data set loaded below contains information on used cars for sale, including their Price, Mileage, and Make (a categorical variable with six levels).\n\ncars &lt;- read.csv(\"https://aluby.github.io/stat230/data/Cars.csv\", stringsAsFactors = TRUE)"
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html#overview",
+    "href": "activities/11-mlr-inference.html#overview",
+    "title": "11: Inference for MLR",
+    "section": "",
+    "text": "In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The cars data set loaded below contains information on used cars for sale, including their Price, Mileage, and Make (a categorical variable with six levels).\n\ncars &lt;- read.csv(\"https://aluby.github.io/stat230/data/Cars.csv\", stringsAsFactors = TRUE)"
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html#thinking-about-the-data",
+    "href": "activities/11-mlr-inference.html#thinking-about-the-data",
+    "title": "11: Inference for MLR",
+    "section": "Thinking about the data",
+    "text": "Thinking about the data\nTo begin, create a scatterplot of Price versus Mileage.\n\n# put your code here\n\nQ1. What do you notice about the relationship between these two variables? Is a transformation necessary?\nQ2. The Make variable is categorical with six levels: Buick, Cadillac, Chevrolet, Pontiac, SAAB, and Saturn. To include this variable in a regression model, we need use indicator (i.e., dummy) variables. How many do we need?"
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html#fitting-an-mlr-model",
+    "href": "activities/11-mlr-inference.html#fitting-an-mlr-model",
+    "title": "11: Inference for MLR",
+    "section": "Fitting an MLR model",
+    "text": "Fitting an MLR model\nBuild (fit) a multiple regression model using log(Price) as the response with Mileage and Make as the predictor variables. To do this, you use + to separate the predictor variable on the right side of the ~ in the model formula. R will automatically convert a categorical explanatory variable into a set of indicator variables.\n\n# Fill in the blanks to fit the MLR model\ncar_lm &lt;- lm(___ ~ ___ + ___, data = ___)\n\nsummary(car_lm)\n\nQ3. Report the fitted regression equation and the \\(R^2\\) value.\nQ4. Which level of Make is the baseline? The baseline level is represented by 0’s across all of the indicator variables and won’t have a coefficient in the output.\nQ5. What strategy did R use to create the indicator variables for Make? In other words, how did R decide which level of Make to use as the baseline?\nQ6. Which of the following models best describes the one just fit: parallel lines, different slopes, or separate lines?"
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html#plotting-the-fitted-model",
+    "href": "activities/11-mlr-inference.html#plotting-the-fitted-model",
+    "title": "11: Inference for MLR",
+    "section": "Plotting the fitted model",
+    "text": "Plotting the fitted model\nTo plot a fitted regression model, we can use the ggpredict() and plot() functions in the {ggeffects} package. The ggpredict() function creates a data frame of predicted values from the model for each Make across a range of Mileage values. The plot() function then creates a plot of these predicted values.\n\n# Be sure to load ggeffects!\nlibrary(ggeffects)\n\n# First, make predictions from the model\n# Fill in the blank with your model name\ncars_pred &lt;- ggpredict(___, terms = ~Mileage + Make)\n\n\n# Now plot the predictions\nplot(cars_pred)\n\nQ7. Does this plot confirm your answer to the previous question?\n\n\n\n\n\n\nNoteTips on plotting the model\n\n\n\n\nHolding other variables at “typical” values\nIf you have more predictor variables in your model, then variables not specified in the terms argument the ggpredict() function are set to a specific value. Quantitative variables are set to their mean. Categorical variables are set to the mode (the level with the most observations).\n\n\nLabels\nIf you need to adjust your axis labels or title, then you will need to add a labs() layer to your plot. For example,\n\nplot(cars_pred) +\n  labs(x = \"My new x label\", y = \"My new y label\",\n       title = \"My new title\")"
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html#holding-other-variables-at-typical-values",
+    "href": "activities/11-mlr-inference.html#holding-other-variables-at-typical-values",
+    "title": "11: Inference for MLR",
+    "section": "Holding other variables at “typical” values",
+    "text": "Holding other variables at “typical” values\nIf you have more predictor variables in your model, then variables not specified in the terms argument the ggpredict() function are set to a specific value. Quantitative variables are set to their mean. Categorical variables are set to the mode (the level with the most observations)."
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html#labels",
+    "href": "activities/11-mlr-inference.html#labels",
+    "title": "11: Inference for MLR",
+    "section": "Labels",
+    "text": "Labels\nIf you need to adjust your axis labels or title, then you will need to add a labs() layer to your plot. For example,\n\nplot(cars_pred) +\n  labs(x = \"My new x label\", y = \"My new y label\",\n       title = \"My new title\")"
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html#fitting-a-model-with-interactions",
+    "href": "activities/11-mlr-inference.html#fitting-a-model-with-interactions",
+    "title": "11: Inference for MLR",
+    "section": "Fitting a model with interactions",
+    "text": "Fitting a model with interactions\nIf we believe that the association between Price and Mileage differs by Make, then we can include an interaction term in our model. To do this, we use * instead of + to separate the predictor variables on the right side of the ~ in the model formula. This will include both main effects and the interaction term.\n\n# Fill in the blanks to fit the MLR model with interaction\ncar_lm2 &lt;- lm(___ ~ ___ * ___, data = ___)\n\nsummary(car_lm2)\n\nQ8. Report the fitted regression equation for Buicks and Cadillacs.\nQ9. What is the \\(R^2\\) value for this model? Does this model appear to fit the data better than the previous model?"
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html#plotting-the-fitted-model-with-interactions",
+    "href": "activities/11-mlr-inference.html#plotting-the-fitted-model-with-interactions",
+    "title": "11: Inference for MLR",
+    "section": "Plotting the fitted model with interactions",
+    "text": "Plotting the fitted model with interactions\nTo plot the interaction model, we again use the ggpredict() and plot() functions in the {ggeffects} package.\n\n# Fill in the blank with your model name\ncars_pred2 &lt;- ggpredict(___, terms = ~Mileage + Make)\n\n# Now plot the predictions\nplot(cars_pred2)"
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html#calculating-extra-sums-of-squares-f-tests",
+    "href": "activities/11-mlr-inference.html#calculating-extra-sums-of-squares-f-tests",
+    "title": "11: Inference for MLR",
+    "section": "Calculating extra sums of squares F-tests",
+    "text": "Calculating extra sums of squares F-tests\nDo we really need the interaction terms? To answer this question, we can use an extra sums of squares F-test to compare the model with interaction terms to the model without interaction terms.\nWe have already seen how to use the anova() function to compare two nested models. Here, we will use it again to compare our two car models.\nQ10. Fill in the blanks to run the extra sums of squares F-test. What do you conclude about the interaction terms?\n\n# Fill in the blanks to run the extra sums of squares F-test\nanova(___, ___)\n\n\nUsing only the full model\nWe can also calculate the extra sums of squares F-test using only the full model. To do this, we need to extract the SSE and degrees of freedom for both models from the ANOVA table for the full model.\nQ11. Run the below code and verify that the df, sums of squares, mean squares, F value, and p-value match what you got from the previous anova() command.\n\nanova(car_lm2)"
+  },
+  {
+    "objectID": "activities/11-mlr-inference.html#function-quick-reference",
+    "href": "activities/11-mlr-inference.html#function-quick-reference",
+    "title": "11: Inference for MLR",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm()\nFit a linear model\n\n\nsummary()\nDisplay detailed results from a fitted model\n\n\nggpredict()\nCreate a data frame of predicted values from a fitted model\n\n\nplot()\nCreate a plot of predicted values from a fitted model\n\n\nanova()\nCreate an ANOVA table for a fitted model or compare two nested models"
+  },
+  {
+    "objectID": "activities/10-cat-predictors.html",
+    "href": "activities/10-cat-predictors.html",
+    "title": "10: Categorical Predictors",
+    "section": "",
+    "text": "For each regression model, sketch the fitted model. To do this, first write the expression for the fitted model for weekdays and the fitted model for weekend (e.g., plug in 0 and 1 for the indicator variable). Once you have these two equations, use them to sketch the lines on the provided graph. (Note: fake equation alert! not estimates from the real data)\nModel 1: \\(\\widehat{\\mu}(y|x) = 10 +  1 \\mathtt{age} -2 \\mathtt{smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:\n\n\n\n\n\n\n\n\n\n\n\nModel 2: \\(\\widehat{\\mu}(y|x) = 5 +  1 \\mathtt{age} -0.5 \\mathtt{age \\times smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:\n\n\n\n\n\n\n\n\n\n\nModel 3: \\(\\widehat{\\mu}(y|x) = 4  +  0.5 \\mathtt{age} + 3\\mathtt{smoker} -0.5 \\mathtt{age \\times smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:"
+  },
+  {
+    "objectID": "activities/10-cat-predictors.html#example-1",
+    "href": "activities/10-cat-predictors.html#example-1",
+    "title": "10: Categorical Predictors",
+    "section": "",
+    "text": "For each regression model, sketch the fitted model. To do this, first write the expression for the fitted model for weekdays and the fitted model for weekend (e.g., plug in 0 and 1 for the indicator variable). Once you have these two equations, use them to sketch the lines on the provided graph. (Note: fake equation alert! not estimates from the real data)\nModel 1: \\(\\widehat{\\mu}(y|x) = 10 +  1 \\mathtt{age} -2 \\mathtt{smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:\n\n\n\n\n\n\n\n\n\n\n\nModel 2: \\(\\widehat{\\mu}(y|x) = 5 +  1 \\mathtt{age} -0.5 \\mathtt{age \\times smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:\n\n\n\n\n\n\n\n\n\n\nModel 3: \\(\\widehat{\\mu}(y|x) = 4  +  0.5 \\mathtt{age} + 3\\mathtt{smoker} -0.5 \\mathtt{age \\times smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:"
+  },
+  {
+    "objectID": "activities/10-cat-predictors.html#example-2",
+    "href": "activities/10-cat-predictors.html#example-2",
+    "title": "10: Categorical Predictors",
+    "section": "Example 2",
+    "text": "Example 2\nResearchers investigated the association of depression with age and education, based on a nationwide (U.S.) telephone survey of 2,031 adults aged 18 to 90. Of particular interest was their finding that the association of depression with education strengthens with increasing age—a phenomenon they called the “divergence hypothesis.”\nThe researchers constructed a depression score from responses to several related questions. Education was categorized as (i) college degree, (ii) high school degree plus some college, or (iii) high school degree only.\n\nDefine indicator variables that represents the education category. (Start by determining how many indicators do you need. Then define them.)\n\n\nSuppose that one researcher wants to fit a model that represents the below sketch (note that the line type represent education). Carefully write the mean function for the regression model that you should fit.\n\n\n\n\n\n\n\n\n\n\n\nSuppose that one researcher wants to fit a model that represents the below sketch (note that the line type represent education). Carefully write the mean function for the regression model that you should fit.\n\n\n\n\n\n\n\n\n\n\n\nSuppose that one researcher wants to fit a model that represents the below sketch (note that the line type represent education). Carefully write the mean function for the regression model that you should fit."
   },
   {
     "objectID": "readings/r-functions-reference.html",
@@ -2800,305 +2765,347 @@
     "text": "Checking conditions\nWhen we have multiple predictors, we can still use residual plots to assess the conditions of the linear regression model. You can still use the resid_panel(model, type = \"standardized\") function in the ggResidpanel package to create a panel of residual plots that includes a plot of the residuals vs. fitted values, a histogram of the residuals, and a Q-Q plot of the residuals.\n\nlibrary(ggResidpanel)\nresid_panel(surgical_lm, type = \"standardized\")\n\n\n\n\n\n\n\n\nWe should also check the relationship of the standardized residuals against each of the predictor variables. To do, I recommend using the augment() function from the {broom} package to create the augmented dataset, and then making the scatterplots with the graphing code of your choice.\nQ1: Use the augmented dataset below to make scatterplots of the standardized residuals against (1) blood_clot_score, (2) prognostic_index, (3) enzyme_test, (4) alchohol_use_heavy\n\nsurgical_aug &lt;- augment(surgical_lm)\n\n# your code here\n\nQ2: Based on the residual plots, do you think the current multiple linear regression model is appropriate for this data? Why or why not?\nQ3: Regardless of your answer, apply a log transformation to the response variable and refit the model using the code below. Then, create the same residual plots for the new model. Do you think the log transformation improved the model fit? Why or why not?\n\nlog_surgical_lm &lt;- lm(log(survival_time) ~ blood_clot_score + prognostic_index + enzyme_test + alchohol_use_heavy, data = surgical_data)\n\n# Put your residual plot code here"
   },
   {
-    "objectID": "activities/10-cat-predictors.html",
-    "href": "activities/10-cat-predictors.html",
-    "title": "10: Categorical Predictors",
+    "objectID": "activities/02-SLR.html",
+    "href": "activities/02-SLR.html",
+    "title": "02: Intro to R for Regression",
     "section": "",
-    "text": "For each regression model, sketch the fitted model. To do this, first write the expression for the fitted model for weekdays and the fitted model for weekend (e.g., plug in 0 and 1 for the indicator variable). Once you have these two equations, use them to sketch the lines on the provided graph. (Note: fake equation alert! not estimates from the real data)\nModel 1: \\(\\widehat{\\mu}(y|x) = 10 +  1 \\mathtt{age} -2 \\mathtt{smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:\n\n\n\n\n\n\n\n\n\n\n\nModel 2: \\(\\widehat{\\mu}(y|x) = 5 +  1 \\mathtt{age} -0.5 \\mathtt{age \\times smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:\n\n\n\n\n\n\n\n\n\n\nModel 3: \\(\\widehat{\\mu}(y|x) = 4  +  0.5 \\mathtt{age} + 3\\mathtt{smoker} -0.5 \\mathtt{age \\times smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:"
+    "text": "Note\n\n\n\nTo follow the tutorial version in the browser, you can use https://aluby.github.io/stat230/activities/02-r-live"
   },
   {
-    "objectID": "activities/10-cat-predictors.html#example-1",
-    "href": "activities/10-cat-predictors.html#example-1",
-    "title": "10: Categorical Predictors",
-    "section": "",
-    "text": "For each regression model, sketch the fitted model. To do this, first write the expression for the fitted model for weekdays and the fitted model for weekend (e.g., plug in 0 and 1 for the indicator variable). Once you have these two equations, use them to sketch the lines on the provided graph. (Note: fake equation alert! not estimates from the real data)\nModel 1: \\(\\widehat{\\mu}(y|x) = 10 +  1 \\mathtt{age} -2 \\mathtt{smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:\n\n\n\n\n\n\n\n\n\n\n\nModel 2: \\(\\widehat{\\mu}(y|x) = 5 +  1 \\mathtt{age} -0.5 \\mathtt{age \\times smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:\n\n\n\n\n\n\n\n\n\n\nModel 3: \\(\\widehat{\\mu}(y|x) = 4  +  0.5 \\mathtt{age} + 3\\mathtt{smoker} -0.5 \\mathtt{age \\times smoker}\\)\nFitted equation for non-smokers:\n\nFitted equation for smokers:"
+    "objectID": "activities/02-SLR.html#overview",
+    "href": "activities/02-SLR.html#overview",
+    "title": "02: Intro to R for Regression",
+    "section": "Overview",
+    "text": "Overview\nIn Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
   },
   {
-    "objectID": "activities/10-cat-predictors.html#example-2",
-    "href": "activities/10-cat-predictors.html#example-2",
-    "title": "10: Categorical Predictors",
-    "section": "Example 2",
-    "text": "Example 2\nResearchers investigated the association of depression with age and education, based on a nationwide (U.S.) telephone survey of 2,031 adults aged 18 to 90. Of particular interest was their finding that the association of depression with education strengthens with increasing age—a phenomenon they called the “divergence hypothesis.”\nThe researchers constructed a depression score from responses to several related questions. Education was categorized as (i) college degree, (ii) high school degree plus some college, or (iii) high school degree only.\n\nDefine indicator variables that represents the education category. (Start by determining how many indicators do you need. Then define them.)\n\n\nSuppose that one researcher wants to fit a model that represents the below sketch (note that the line type represent education). Carefully write the mean function for the regression model that you should fit.\n\n\n\n\n\n\n\n\n\n\n\nSuppose that one researcher wants to fit a model that represents the below sketch (note that the line type represent education). Carefully write the mean function for the regression model that you should fit.\n\n\n\n\n\n\n\n\n\n\n\nSuppose that one researcher wants to fit a model that represents the below sketch (note that the line type represent education). Carefully write the mean function for the regression model that you should fit."
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html",
-    "href": "activities/11-mlr-inference.html",
-    "title": "11: Inference for MLR",
-    "section": "",
-    "text": "In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The cars data set loaded below contains information on used cars for sale, including their Price, Mileage, and Make (a categorical variable with six levels).\n\ncars &lt;- read.csv(\"https://aluby.github.io/stat230/data/Cars.csv\", stringsAsFactors = TRUE)"
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html#overview",
-    "href": "activities/11-mlr-inference.html#overview",
-    "title": "11: Inference for MLR",
-    "section": "",
-    "text": "In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The cars data set loaded below contains information on used cars for sale, including their Price, Mileage, and Make (a categorical variable with six levels).\n\ncars &lt;- read.csv(\"https://aluby.github.io/stat230/data/Cars.csv\", stringsAsFactors = TRUE)"
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html#thinking-about-the-data",
-    "href": "activities/11-mlr-inference.html#thinking-about-the-data",
-    "title": "11: Inference for MLR",
-    "section": "Thinking about the data",
-    "text": "Thinking about the data\nTo begin, create a scatterplot of Price versus Mileage.\n\n# put your code here\n\nQ1. What do you notice about the relationship between these two variables? Is a transformation necessary?\nQ2. The Make variable is categorical with six levels: Buick, Cadillac, Chevrolet, Pontiac, SAAB, and Saturn. To include this variable in a regression model, we need use indicator (i.e., dummy) variables. How many do we need?"
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html#fitting-an-mlr-model",
-    "href": "activities/11-mlr-inference.html#fitting-an-mlr-model",
-    "title": "11: Inference for MLR",
-    "section": "Fitting an MLR model",
-    "text": "Fitting an MLR model\nBuild (fit) a multiple regression model using log(Price) as the response with Mileage and Make as the predictor variables. To do this, you use + to separate the predictor variable on the right side of the ~ in the model formula. R will automatically convert a categorical explanatory variable into a set of indicator variables.\n\n# Fill in the blanks to fit the MLR model\ncar_lm &lt;- lm(___ ~ ___ + ___, data = ___)\n\nsummary(car_lm)\n\nQ3. Report the fitted regression equation and the \\(R^2\\) value.\nQ4. Which level of Make is the baseline? The baseline level is represented by 0’s across all of the indicator variables and won’t have a coefficient in the output.\nQ5. What strategy did R use to create the indicator variables for Make? In other words, how did R decide which level of Make to use as the baseline?\nQ6. Which of the following models best describes the one just fit: parallel lines, different slopes, or separate lines?"
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html#plotting-the-fitted-model",
-    "href": "activities/11-mlr-inference.html#plotting-the-fitted-model",
-    "title": "11: Inference for MLR",
-    "section": "Plotting the fitted model",
-    "text": "Plotting the fitted model\nTo plot a fitted regression model, we can use the ggpredict() and plot() functions in the {ggeffects} package. The ggpredict() function creates a data frame of predicted values from the model for each Make across a range of Mileage values. The plot() function then creates a plot of these predicted values.\n\n# Be sure to load ggeffects!\nlibrary(ggeffects)\n\n# First, make predictions from the model\n# Fill in the blank with your model name\ncars_pred &lt;- ggpredict(___, terms = ~Mileage + Make)\n\n\n# Now plot the predictions\nplot(cars_pred)\n\nQ7. Does this plot confirm your answer to the previous question?\n\n\n\n\n\n\nNoteTips on plotting the model\n\n\n\n\nHolding other variables at “typical” values\nIf you have more predictor variables in your model, then variables not specified in the terms argument the ggpredict() function are set to a specific value. Quantitative variables are set to their mean. Categorical variables are set to the mode (the level with the most observations).\n\n\nLabels\nIf you need to adjust your axis labels or title, then you will need to add a labs() layer to your plot. For example,\n\nplot(cars_pred) +\n  labs(x = \"My new x label\", y = \"My new y label\",\n       title = \"My new title\")"
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html#holding-other-variables-at-typical-values",
-    "href": "activities/11-mlr-inference.html#holding-other-variables-at-typical-values",
-    "title": "11: Inference for MLR",
-    "section": "Holding other variables at “typical” values",
-    "text": "Holding other variables at “typical” values\nIf you have more predictor variables in your model, then variables not specified in the terms argument the ggpredict() function are set to a specific value. Quantitative variables are set to their mean. Categorical variables are set to the mode (the level with the most observations)."
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html#labels",
-    "href": "activities/11-mlr-inference.html#labels",
-    "title": "11: Inference for MLR",
-    "section": "Labels",
-    "text": "Labels\nIf you need to adjust your axis labels or title, then you will need to add a labs() layer to your plot. For example,\n\nplot(cars_pred) +\n  labs(x = \"My new x label\", y = \"My new y label\",\n       title = \"My new title\")"
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html#fitting-a-model-with-interactions",
-    "href": "activities/11-mlr-inference.html#fitting-a-model-with-interactions",
-    "title": "11: Inference for MLR",
-    "section": "Fitting a model with interactions",
-    "text": "Fitting a model with interactions\nIf we believe that the association between Price and Mileage differs by Make, then we can include an interaction term in our model. To do this, we use * instead of + to separate the predictor variables on the right side of the ~ in the model formula. This will include both main effects and the interaction term.\n\n# Fill in the blanks to fit the MLR model with interaction\ncar_lm2 &lt;- lm(___ ~ ___ * ___, data = ___)\n\nsummary(car_lm2)\n\nQ8. Report the fitted regression equation for Buicks and Cadillacs.\nQ9. What is the \\(R^2\\) value for this model? Does this model appear to fit the data better than the previous model?"
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html#plotting-the-fitted-model-with-interactions",
-    "href": "activities/11-mlr-inference.html#plotting-the-fitted-model-with-interactions",
-    "title": "11: Inference for MLR",
-    "section": "Plotting the fitted model with interactions",
-    "text": "Plotting the fitted model with interactions\nTo plot the interaction model, we again use the ggpredict() and plot() functions in the {ggeffects} package.\n\n# Fill in the blank with your model name\ncars_pred2 &lt;- ggpredict(___, terms = ~Mileage + Make)\n\n# Now plot the predictions\nplot(cars_pred2)"
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html#calculating-extra-sums-of-squares-f-tests",
-    "href": "activities/11-mlr-inference.html#calculating-extra-sums-of-squares-f-tests",
-    "title": "11: Inference for MLR",
-    "section": "Calculating extra sums of squares F-tests",
-    "text": "Calculating extra sums of squares F-tests\nDo we really need the interaction terms? To answer this question, we can use an extra sums of squares F-test to compare the model with interaction terms to the model without interaction terms.\nWe have already seen how to use the anova() function to compare two nested models. Here, we will use it again to compare our two car models.\nQ10. Fill in the blanks to run the extra sums of squares F-test. What do you conclude about the interaction terms?\n\n# Fill in the blanks to run the extra sums of squares F-test\nanova(___, ___)\n\n\nUsing only the full model\nWe can also calculate the extra sums of squares F-test using only the full model. To do this, we need to extract the SSE and degrees of freedom for both models from the ANOVA table for the full model.\nQ11. Run the below code and verify that the df, sums of squares, mean squares, F value, and p-value match what you got from the previous anova() command.\n\nanova(car_lm2)"
-  },
-  {
-    "objectID": "activities/11-mlr-inference.html#function-quick-reference",
-    "href": "activities/11-mlr-inference.html#function-quick-reference",
-    "title": "11: Inference for MLR",
-    "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm()\nFit a linear model\n\n\nsummary()\nDisplay detailed results from a fitted model\n\n\nggpredict()\nCreate a data frame of predicted values from a fitted model\n\n\nplot()\nCreate a plot of predicted values from a fitted model\n\n\nanova()\nCreate an ANOVA table for a fitted model or compare two nested models"
-  },
-  {
-    "objectID": "activities/05-conditions-live.html",
-    "href": "activities/05-conditions-live.html",
-    "title": "05: Conditions - live",
-    "section": "",
-    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/05-conditions\nlibrary(ggformula)\ntheme_set(theme_minimal())"
-  },
-  {
-    "objectID": "activities/05-conditions-live.html#finding-residuals",
-    "href": "activities/05-conditions-live.html#finding-residuals",
-    "title": "05: Conditions - live",
-    "section": "Finding residuals",
-    "text": "Finding residuals\nIn order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for every single data point! Instead, we’ll use the augment() function from the {broom} R package to created an augmented movie dataset. This takes the original X and Y variables and adds the \\(\\hat{y}\\) values (.fitted) and residuals (.resid) (along with some other columns that we’ll use later)\nRun the following code chunk and take a peek at the movie_aug dataset. Can you find the:\n\noriginal X variable?\noriginal Y variable?\nPredictions?\nResiduals?\n\n\nlibrary(broom)\nmovie_aug &lt;- augment(movie_lm)\nmovie_aug"
-  },
-  {
-    "objectID": "activities/05-conditions-live.html#making-residual-plots",
-    "href": "activities/05-conditions-live.html#making-residual-plots",
-    "title": "05: Conditions - live",
-    "section": "Making residual plots",
-    "text": "Making residual plots\nThe code below makes a normal QQ plot and a histogram of the residuals. Do you think the normality assumption is satisfied?\n\n\n\n#| layout-ncol: 2\n\n\ngf_qq(~.resid, data = movie_aug) |&gt;\n  gf_qqline()\n\ngf_histogram(~.resid, data = movie_aug, col = \"white\")\n\n\n\n\nCheckpoint question\nUse the movie_aug dataset to make a scatterplot with .fitted on the x-axis and .resid on the y-axis. List the SLR conditions you can assess with this plot, and whether or not they appear to be satisfied.\n\n# your code here"
-  },
-  {
-    "objectID": "activities/05-conditions-live.html#a-shortcut",
-    "href": "activities/05-conditions-live.html#a-shortcut",
-    "title": "05: Conditions - live",
-    "section": "A shortcut",
-    "text": "A shortcut\nWe will make a ton of residual plots this term. A shortcut is to use the resid_panel function within the {ggResidpanel} package:\n\nlibrary(ggResidpanel)\nresid_panel(movie_lm)\n\n\nCheckpoint question\nWhich panel(s) would you look at for each of the following SLR conditions. List as many panels as possible, along with how you would identify any violations:\n\nLinearity:\nIndependence:\nNormality:\nEqual variance:"
-  },
-  {
-    "objectID": "activities/05-conditions-live.html#summary",
-    "href": "activities/05-conditions-live.html#summary",
-    "title": "05: Conditions - live",
-    "section": "Summary",
-    "text": "Summary\n\nCheckpoint question\nSuppose that we fit a linear regression model to a sample of 1,000 observations and we find evidence in the normal Q-Q plot of a violation of the normality assumption, but no evidence in the residual plot of violations of the linearity and constant variance assumptions and no reason to suspect a violation of the independence assumption. Which of the following inferences are valid, and which are not?:\n\np-value from the hypothesis test \\(H_0: \\beta_1 = 0\\) vs \\(H_A: \\beta_1 \\ne 0\\)\nConfidence interval for \\(\\beta_1\\)\nConfidence interval for the mean of Y at some X value\nPrediction interval for Y at some X value"
-  },
-  {
-    "objectID": "activities/05-conditions-live.html#function-quick-reference",
-    "href": "activities/05-conditions-live.html#function-quick-reference",
-    "title": "05: Conditions - live",
-    "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\naugment(model)\nCreate augmented dataset that includes predictions and residuals\n\n\ngf_qq(~variable, data)\nMake a qq plot\n\n\ngf_qq_line()\nOverlay a straight line on the qq plot\n\n\nresid_panel(model)\nShortcut for making a panel of residual plots"
-  },
-  {
-    "objectID": "activities/05-conditions-tutorial.html",
-    "href": "activities/05-conditions-tutorial.html",
-    "title": "05: Conditions - live",
-    "section": "",
-    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/05-conditions"
-  },
-  {
-    "objectID": "activities/05-conditions-tutorial.html#finding-residuals",
-    "href": "activities/05-conditions-tutorial.html#finding-residuals",
-    "title": "05: Conditions - live",
-    "section": "Finding residuals",
-    "text": "Finding residuals\nIn order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for every single data point! Instead, we’ll use the augment() function from the {broom} R package to created an augmented movie dataset. This takes the original X and Y variables and adds the \\(\\hat{y}\\) values (.fitted) and residuals (.resid) (along with some other columns that we’ll use later)\nRun the following code chunk and take a peek at the movie_aug dataset. Can you find the:\n\noriginal X variable?\noriginal Y variable?\nPredictions?\nResiduals?"
-  },
-  {
-    "objectID": "activities/05-conditions-tutorial.html#making-residual-plots",
-    "href": "activities/05-conditions-tutorial.html#making-residual-plots",
-    "title": "05: Conditions - live",
-    "section": "Making residual plots",
-    "text": "Making residual plots\nThe code below makes a normal QQ plot and a histogram of the residuals. Do you think the normality assumption is satisfied?\n\n\n\n\n\n\n\n\n\n\n\nCheckpoint question\nUse the movie_aug dataset to make a scatterplot with .fitted on the x-axis and .resid on the y-axis. List the SLR conditions you can assess with this plot, and whether or not they appear to be satisfied."
-  },
-  {
-    "objectID": "activities/05-conditions-tutorial.html#a-shortcut",
-    "href": "activities/05-conditions-tutorial.html#a-shortcut",
-    "title": "05: Conditions - live",
-    "section": "A shortcut",
-    "text": "A shortcut\nWe will make a ton of residual plots this term. A shortcut is to use the resid_panel function within the {ggResidpanel} package:\n\n\n\n\n\n\n\n\n\nCheckpoint question\nWhich panel(s) would you look at for each of the following SLR conditions. List as many panels as possible, along with how you would identify any violations:\n\nLinearity:\nIndependence:\nNormality:\nEqual variance:"
-  },
-  {
-    "objectID": "activities/05-conditions-tutorial.html#summary",
-    "href": "activities/05-conditions-tutorial.html#summary",
-    "title": "05: Conditions - live",
-    "section": "Summary",
-    "text": "Summary\n\nCheckpoint question\nSuppose that we fit a linear regression model to a sample of 1,000 observations and we find evidence in the normal Q-Q plot of a violation of the normality assumption, but no evidence in the residual plot of violations of the linearity and constant variance assumptions and no reason to suspect a violation of the independence assumption. Which of the following inferences are valid, and which are not?:\n\np-value from the hypothesis test \\(H_0: \\beta_1 = 0\\) vs \\(H_A: \\beta_1 \\ne 0\\)\nConfidence interval for \\(\\beta_1\\)\nConfidence interval for the mean of Y at some X value\nPrediction interval for Y at some X value"
-  },
-  {
-    "objectID": "activities/05-conditions-tutorial.html#function-quick-reference",
-    "href": "activities/05-conditions-tutorial.html#function-quick-reference",
-    "title": "05: Conditions - live",
-    "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\naugment(model)\nCreate augmented dataset that includes predictions and residuals\n\n\ngf_qq(~variable, data)\nMake a qq plot\n\n\ngf_qq_line()\nOverlay a straight line on the qq plot\n\n\nresid_panel(model)\nShortcut for making a panel of residual plots"
-  },
-  {
-    "objectID": "activities/04R-prediction.html",
-    "href": "activities/04R-prediction.html",
-    "title": "04R: Prediction for SLR",
-    "section": "",
-    "text": "Note\n\n\n\nYou can access the .qmd for this activity by clicking the “code” button above and then opening in maize/Rstudio. If you prefer to follow the tutorial version in the browser, you can use https://aluby.github.io/stat230/activities/04-prediction-tutorial"
-  },
-  {
-    "objectID": "activities/04R-prediction.html#loading-packages",
-    "href": "activities/04R-prediction.html#loading-packages",
-    "title": "04R: Prediction for SLR",
-    "section": "Loading packages",
-    "text": "Loading packages\nThe code chunk below loads the R packages that contain functions we’ll use. Make sure to run it before the rest of the code!\n\nlibrary(tidyverse)\nlibrary(ggformula)"
-  },
-  {
-    "objectID": "activities/04R-prediction.html#loading-data",
-    "href": "activities/04R-prediction.html#loading-data",
-    "title": "04R: Prediction for SLR",
+    "objectID": "activities/02-SLR.html#loading-data",
+    "href": "activities/02-SLR.html#loading-data",
+    "title": "02: Intro to R for Regression",
     "section": "Loading data",
-    "text": "Loading data\nThe data set is loaded by running the following code chunk:\n\ncity &lt;- readr::read_csv(url(\"https://raw.githubusercontent.com/zief0002/modeling/main/data/riverview.csv\"))\n\nThe columns of interest are education and income."
+    "text": "Loading data\nToday we will work with the movies data set. The data set contains the critic’s score and the audience score for movie released in 2014-2015. The critic’s score is the percentage of critics who had a favorable view of the movie. Similarly, the audience score is the percentage of users who had a favorable view of the movie. Today, you’ll explore the relationship between the audience and critic scores.\nTo load data into R, we use the read.csv() command and pass in either a file path or URL in quotes. Below, the data are being loaded from the web. Click “Run code” to load the data.\n\nmovies &lt;- read.csv(\"https://aloy.github.io/stat230-materials/data/movie_scores.csv\")\n\nNotice that we use parentheses with functions and place the arguments for that function inside those parentheses.\n\n\n\n\n\n\nNote\n\n\n\nYou should notice that R did not appear to do anything when you ran the above code. That’s because everything was done in the background and R will only show you what is requested. So don’t panic if you don’t see any output!"
   },
   {
-    "objectID": "activities/04R-prediction.html#making-plots",
-    "href": "activities/04R-prediction.html#making-plots",
-    "title": "04R: Prediction for SLR",
-    "section": "Making plots",
-    "text": "Making plots\nQ1. Make a plot of income against education and overlay the linear regression equation. Does it look like what you expected? (I’ve started the code for you; you will need to overlay the linear regression equation)\n\ngf_point(income ~ education, data = city)\n\n\n\n\n\n\n\n\nQ2. Make a plot of income against scale(education) and overlay the linear regression equation. Does it look like what you expected?\n\n# Write your graph code here"
+    "objectID": "activities/02-SLR.html#getting-a-glimpse-of-the-data-set",
+    "href": "activities/02-SLR.html#getting-a-glimpse-of-the-data-set",
+    "title": "02: Intro to R for Regression",
+    "section": "Getting a glimpse of the data set",
+    "text": "Getting a glimpse of the data set\nThroughout the term I’ll refer to small pieces of code as “code chunks.” This is both descriptive and will be what RStudio (our interface) calls them later on. For today, we’ll focus on how to write small code chunks to accomplish specific tasks for simple linear regression.\nFor example, we might wish to get an overview of the data set by printing the first few rows via head()\n\nhead(movies)\n\nI prefer to use a different function, glimpse(), which is in the {dplyr} package. To load a package we first must run the library() command. The below code chunk loads this package and gives a “glimpse” of the movies data set:\n\nlibrary(dplyr)\nglimpse(movies)\n\n\nCheckpoint questions:\nUsing the output from the above code chunk, answer the following questions in the code box below:\n\nHow many rows are in the movies data set?\nHow many variables are in the movies data set? Are any categorical? Are any quantitative?"
   },
   {
-    "objectID": "activities/04R-prediction.html#fitting-a-simple-linear-regression-model",
-    "href": "activities/04R-prediction.html#fitting-a-simple-linear-regression-model",
-    "title": "04R: Prediction for SLR",
-    "section": "Fitting a simple linear regression model",
-    "text": "Fitting a simple linear regression model\nQ3. Use the lm() command to fit the simple linear regression model where education is used to predict income. Make sure your output matches the output on the worksheet.\n\n# Write your lm() command here"
+    "objectID": "activities/02-SLR.html#univariate-exploration",
+    "href": "activities/02-SLR.html#univariate-exploration",
+    "title": "02: Intro to R for Regression",
+    "section": "Univariate exploration",
+    "text": "Univariate exploration\nBefore jumping into a regression model, it can be useful to understand more about each variable. This can be accomplished using intro stat tools such as histograms and summary statistics.\nThe fastest way to get started is using the summary() function, which returns a brief set of summary statistics for each variable in the data set.\n\nsummary(movies)\n\nR also has built-in functions to compute summary statistics one by one for a specific column. To “extract” a variable from the data set, we use a $. For example, we can extract the critics column from the movies data frame and calculate the standard deviation:\n\nsd(movies$critics)\n\nOther useful summary statistics for quantitative variables include (here x denotes an extracted column):\n\n\n\nFunction\nSummary statistic\n\n\n\n\nmedian(x)\nmedian\n\n\nmean(x)\nmean\n\n\nvar(x)\nvariance\n\n\nIQR(x)\ninterquartile range\n\n\n\n\nTo create graphics in this course, I’ll often use the {ggformula} R package. All of the functions will begin with gf_ and have similar syntax. If you’re familiar with the {ggplot2} package, feel free to use it for this class, but many students like the “one-liners” that {ggformula} allows.\nTo begin, load the {ggformula} package using the library command:\n\nlibrary(ggformula)\n\nFor example, to create a histogram of the critic’s score we can run\n\ngf_histogram(~critics, data = movies, bins = 10)\n\nHere we use the ~ to tell R that critics is a variable in the data set. We must also specify data and adjust the number of bins as needed.\nSimilar syntax is used to create a boxplot\n\ngf_boxplot(~critics, data = movies)\n\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nCalculate the mean audience score using the mean() function.\nCreate a histogram of the audience score and describe what you see.\nChange the number of bins for a histogram of audience. What number of bins seems “about right” in your opinion?"
   },
   {
-    "objectID": "activities/04R-prediction.html#making-predictions",
-    "href": "activities/04R-prediction.html#making-predictions",
-    "title": "04R: Prediction for SLR",
+    "objectID": "activities/02-SLR.html#bivariate-exploration",
+    "href": "activities/02-SLR.html#bivariate-exploration",
+    "title": "02: Intro to R for Regression",
+    "section": "Bivariate exploration",
+    "text": "Bivariate exploration\n\nScatterplots\nIn this course we are interested in exploring relationships between variables. If we have two quantitative variables, then a scatterplot is a natural way to visually explore this relationship. To create a scatterplot we can use the gf_point() function (since scatterplots are just points):\n\ngf_point(audience ~ critics, data = movies)\n\nNotice that we put the response variable on the left of the ~ and the explanatory variable on the right.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nCreate a scatterplot where critics score is the response variable and audience score is the explanatory variable.\nYou can adjust the axis labels by adding an xlab or ylab argument. Add xlab = \"Your axis label\" and ylab = \"Your other axis label\" to your scatterplot and give more verbose axis labels.\n\n\n\n\nScatterplots with regression lines\nYou can also add a simple linear regression line to your scatterplot by adding a layer. To add a layer, we append the |&gt; pipe operator to the end of our gf_point() code and use the gf_lm() command to add a line:\n\ngf_point(audience ~ critics, data = movies) |&gt;\n  gf_lm()\n\n\n\nCorrelation\nIf you want a numeric summary of the strength of the linear association between two quantitative variables, then you can calculate the correlation. In R, you do this using the cor() function. Similar to calculating the mean, you need to extract the columns using $ as shown below:\n\ncor(movies$audience, movies$critics)\n\n\nCheckpoint questions\nUse the below code box for the checkpoint question:\n\n#| min-lines: 5\n\n\nSwap the order of the variables in the cor() command. Does the correlation change? Is this what you expected?"
+  },
+  {
+    "objectID": "activities/02-SLR.html#fitting-a-regression-model",
+    "href": "activities/02-SLR.html#fitting-a-regression-model",
+    "title": "02: Intro to R for Regression",
+    "section": "Fitting a regression model",
+    "text": "Fitting a regression model\nFinally, lets fit a simple linear regression model. To do this we use the lm() command (which stands for linear model). Here, we use the same syntax as when creating a scatterplot:\n\nlm(audience ~ critics, data = movies)\n\nWhen you run this command, R prints some very basic information about the SLR model.\nCheckpoint: What information do you get when you run the above command?\nOften, you will want to obtain more information than you get from simply printing the fitted model. The summary() function provides much more information. I recommend storing your fitted model as a named object (such as movie_lm) and then running the summary():\n\nmovie_lm &lt;- lm(audience ~ critics, data = movies)\nsummary(movie_lm)\n\n\nCheckpoint question\nWhat information do you get when you run the above summary() command? If you’re not sure what something means, discuss it with your group and then ask about it in our debrief."
+  },
+  {
+    "objectID": "activities/02-SLR.html#constructing-confidence-intervals",
+    "href": "activities/02-SLR.html#constructing-confidence-intervals",
+    "title": "02: Intro to R for Regression",
+    "section": "Constructing confidence intervals",
+    "text": "Constructing confidence intervals\nThe table obtained by summary() contains all of the necessary information to conduct hypothesis tests for regression coefficients; however, it does not provide confidence intervals. To instruct R to construct a confidence interval for a regression coefficient, we can use the confint() function:\n\nconfint(movie_lm, level = 0.95)\n\n\nCheckpoint questions\n\nWhat information do you get when you run the above confint() command?\nChange the level argument to construct a 90% confidence interval. How does the interval change?"
+  },
+  {
+    "objectID": "activities/02-SLR.html#making-predictions",
+    "href": "activities/02-SLR.html#making-predictions",
+    "title": "02: Intro to R for Regression",
     "section": "Making predictions",
-    "text": "Making predictions\nThe first person in this dataset has education = 8.\nQ4. Calculate the expected income of this person using the first regression equation. (You may use R or do this by hand. There’s a code chunk below for your convenience)\n\n# Write your code here\n\nQ5. If we want to predict the income of this person, should we use a confidence interval or a prediction interval?\nQ6. Use R to construct the appropriate 89% interval for this person’s income.\n\n# Write your code here\n\nQ7. Interpret the interval in context."
+    "text": "Making predictions\nTo make predictions, we use our fitted regression equation. While you can (and should be able to) do this by hand, you can also use R as your calculator.\nSuppose we can use our model to predict the audience score for more recent movies. Then we could predict the audience score for the Barbie Movie by running:\n\nbarbie_movie &lt;- data.frame(critics = 88)\npredict(movie_lm, newdata = barbie_movie)\n\nHere, we first need to create a new data set with a column named identically to the original data set. Here we have a single column named critics with the value of the explanatory variable we want to use. Next, we use the predict() function, passing in the name of our model and the new data set we want to make predictions for.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n#| min-lines: 5\n\n\nThe critics score for Asteroid City was 75. What is the expected audience score for this movie?\nThe actual (observed) value for Asteroid City was 62. Did the mode over- or under-predict the audience score?\nDo you think it’s reasonable to use our model to predict the audience score for movies released in 2023? Why or why not?\n\n\n\nMaking multiple predictions\nIf you want to make multiple predictions, then you can create a new data frame with multiple values for the explanatory variable. For example, we can use c(88, 75) to make a data frame with two values in the critics column:\n\nnew_movies &lt;- data.frame(critics = c(88, 75))\npredict(movie_lm, newdata = new_movies)"
   },
   {
-    "objectID": "activities/04R-prediction.html#plotting-our-intervals",
-    "href": "activities/04R-prediction.html#plotting-our-intervals",
-    "title": "04R: Prediction for SLR",
-    "section": "Plotting our intervals",
-    "text": "Plotting our intervals\nIt can be useful to plot your confidence/prediction intervals to communicate your findings to a broader audience. The code below creates a scatterplot of the data, adds the fitted regression line, and then adds 89% prediction intervals.\n\ngf_point(income ~ education, data = city) |&gt; \n  gf_lm(interval = \"prediction\", level = .89) |&gt;\n  gf_lm(interval = \"confidence\", alpha = 0.6, level = .89)\n\n\n\n\n\n\n\n\nQ8. Run the code to produce a scatterplot, regression line, and both types of intervals. Which is the prediction interval and which is the confidence interval? How can you tell?"
-  },
-  {
-    "objectID": "activities/04R-prediction.html#function-quick-reference",
-    "href": "activities/04R-prediction.html#function-quick-reference",
-    "title": "04R: Prediction for SLR",
+    "objectID": "activities/02-SLR.html#function-quick-reference",
+    "href": "activities/02-SLR.html#function-quick-reference",
+    "title": "02: Intro to R for Regression",
     "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a linear model\n\n\npredict(model, newdata, interval, level, se.fit)\nMake predictions and calculate intervals\n\n\ngf_point(formula, data) |&gt; gf_lm(interval = \"confidence\")\nPlot data and add confidence intervals for the mean response\n\n\ngf_point(formula, data) |&gt; gf_lm(interval = \"prediction\")\nPlot data and add prediction intervals for the mean response"
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nread.csv(\"file_path_or_URL\")\nLoad a CSV data set from a file or the web\n\n\nhead(data)\nPrint the first few rows of a data set\n\n\nglimpse(data)\nGet a quick overview of a data set (from {dplyr} package)\n\n\nsummary(data)\nGet summary statistics for each variable in a data set\n\n\nmean(x)\nCalculate the mean of a quantitative variable\n\n\nmedian(x)\nCalculate the median of a quantitative variable\n\n\nsd(x)\nCalculate the standard deviation of a quantitative variable\n\n\nvar(x)\nCalculate the variance of a quantitative variable\n\n\ngf_histogram(~x, data = data, bins = n)\nCreate a histogram of a quantitative variable (from {ggformula} package)\n\n\ngf_boxplot(~x, data = data)\nCreate a boxplot of a quantitative variable (from {ggformula} package)\n\n\ngf_point(y ~ x, data = data)\nCreate a scatterplot of two quantitative variables (from {ggformula} package)\n\n\ngf_lm()\nAdd a simple linear regression line to a scatterplot (from {ggformula} package)\n\n\ncor(x, y)\nCalculate the correlation between two quantitative variables\n\n\nlm(y ~ x, data = data)\nFit a simple linear regression model\n\n\nsummary(model)\nGet detailed information about a fitted regression model\n\n\nconfint(model, level = 0.95)\nConstruct a confidence interval for regression coefficients\n\n\npredict(model, newdata = new_data)\nMake predictions using a fitted regression model for new data"
   },
   {
-    "objectID": "activities/06-transformations.html",
-    "href": "activities/06-transformations.html",
-    "title": "06: Transformations and Interpretations",
+    "objectID": "activities/02-SLR.html#acknowledgements",
+    "href": "activities/02-SLR.html#acknowledgements",
+    "title": "02: Intro to R for Regression",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThe movie example was adapted by Adam Loy from Maria Tackett’s draft of Introduction to Regression Analysis: A Data Science Approach."
+  },
+  {
+    "objectID": "activities/02-r-live.html",
+    "href": "activities/02-r-live.html",
+    "title": "02: Intro to R for Regression",
     "section": "",
-    "text": "Note\n\n\n\nThis is the quarto version of the R activity. If you prefer to use the tutorial version, you can use https://aluby.github.io/stat230/activities/06-transformations-tutorial"
+    "text": "Note\n\n\n\nTo follow the tutorial version in the browser, you can use https://aluby.github.io/stat230/activities/02-r-live"
   },
   {
-    "objectID": "activities/06-transformations.html#example-mammal-brain-weights",
-    "href": "activities/06-transformations.html#example-mammal-brain-weights",
-    "title": "06: Transformations and Interpretations",
-    "section": "Example: Mammal brain weights",
-    "text": "Example: Mammal brain weights\nResearchers wish to understand the relationship between the brain weights (y, in grams) and body weights (x, in kilograms) of mammals. They have data on a sample of 30 species of mammals, which can be loaded using the code shown below:\n\nlibrary(ggformula)\nlibrary(ggResidpanel)\nweight &lt;-  read.csv(\"https://aluby.github.io/stat230/data/weights.csv\")\nhead(weight)\n\n           species bodyweight brainweight maximumlifespan gestationtime\n1 African elephant   6654.000      5712.0            38.6           645\n2       Arctic Fox      3.385        44.5            14.0            60\n3  Asian elephant    2547.000      4603.0            69.0           624\n4          Baboon      10.550       179.5            27.0           180\n5   Big brown bat       0.023         0.3            19.0            35\n6              Cat      3.300        25.6            28.0            63\n  totalsleep\n1        3.3\n2       12.5\n3        3.9\n4        9.8\n5       19.7\n6       14.5\n\n\n\nFit a simple linear regression model using body weight to predict brain weight.\n\n\n# your code here\n\n\nCreate a scatterplot of \\(y\\) versus \\(x\\) with a regression line, a plot of the residuals vs. predicted (or “fitted”) values (\\(\\widehat{y}\\)), and either a normal Q-Q plot or a histogram of the residuals. (Remember that you can use the resid_panel() command in the ggResidpanel R package for residual plots.) Summarize what issues you see with the regression conditions.\n\n\n# your code here\n\n\nTry various transformations of the explanatory and response variables to create a better linear regression model. (Hint: Notice that both the \\(x\\) and \\(y\\) variables are right skewed and have outliers, both may need a transformation.) What transformation(s) seem to remedy the issues you saw in part (b)?\n\n\n# your code here"
+    "objectID": "activities/02-r-live.html#overview",
+    "href": "activities/02-r-live.html#overview",
+    "title": "02: Intro to R for Regression",
+    "section": "Overview",
+    "text": "Overview\nIn Stat 230 we will use the R statistical programming language to visualize our data and fit our regression models. Many of you have seen R before, but if you are coming straight from AP statistics this might be your first time using R. Today our goal it to learn the basics of writing and running code in R. To do this, we’ll run our code in a tutorial webpage. Next class I’ll introduce you to the RStudio server and how to create R Markdown files."
   },
   {
-    "objectID": "activities/06-transformations.html#back-transforming-your-model",
-    "href": "activities/06-transformations.html#back-transforming-your-model",
-    "title": "06: Transformations and Interpretations",
-    "section": "Back-transforming your model",
-    "text": "Back-transforming your model\nIn Example 1 you selected transformation(s) to help “linearize” the relationship between brain weights and body weights. While this is helpful from a statistical perspective, it’s often preferred to plot the fitted model on the original scale of the data. To do this, we need to back-transform the model using the following steps:\n\nStart by creating a scatterplot on the original scale.\nAdd a gf_lm() layer, specifying the transformations in the formula and if \\(y\\) is transformed how to back-transform \\(y\\) via the backtrans argument.\n\nFor example, if we squared both y, then we pass y^2 ~ x in as the formula to gf_lm() and backtrans = sqrt to back-transform y. Below is the full call where df is the data set with columns xvar and yvar.\n\n# change variable names and data set name here\ngf_point(yvar^2 ~ xvar, data = df) |&gt; \n  gf_lm(formula = y^2 ~ x , backtrans = sqrt, interval = \"confidence\")\n\nUse this idea to plot the fitted model relating brain weights and body weights on the original scale.\n\n# your code here"
+    "objectID": "activities/02-r-live.html#loading-data",
+    "href": "activities/02-r-live.html#loading-data",
+    "title": "02: Intro to R for Regression",
+    "section": "Loading data",
+    "text": "Loading data\nToday we will work with the movies data set. The data set contains the critic’s score and the audience score for movie released in 2014-2015. The critic’s score is the percentage of critics who had a favorable view of the movie. Similarly, the audience score is the percentage of users who had a favorable view of the movie. Today, you’ll explore the relationship between the audience and critic scores.\nTo load data into R, we use the read.csv() command and pass in either a file path or URL in quotes. Below, the data are being loaded from the web. Click “Run code” to load the data.\n\n\n\n\n\n\n\n\nNotice that we use parentheses with functions and place the arguments for that function inside those parentheses.\n\n\n\n\n\n\nNote\n\n\n\nYou should notice that R did not appear to do anything when you ran the above code. That’s because everything was done in the background and R will only show you what is requested. So don’t panic if you don’t see any output!"
   },
   {
-    "objectID": "activities/03b-r-inference.html",
-    "href": "activities/03b-r-inference.html",
+    "objectID": "activities/02-r-live.html#getting-a-glimpse-of-the-data-set",
+    "href": "activities/02-r-live.html#getting-a-glimpse-of-the-data-set",
+    "title": "02: Intro to R for Regression",
+    "section": "Getting a glimpse of the data set",
+    "text": "Getting a glimpse of the data set\nThroughout the term I’ll refer to small pieces of code as “code chunks.” This is both descriptive and will be what RStudio (our interface) calls them later on. For today, we’ll focus on how to write small code chunks to accomplish specific tasks for simple linear regression.\nFor example, we might wish to get an overview of the data set by printing the first few rows via head()\n\n\n\n\n\n\n\n\nI prefer to use a different function, glimpse(), which is in the {dplyr} package. To load a package we first must run the library() command. The below code chunk loads this package and gives a “glimpse” of the movies data set:\n\n\n\n\n\n\n\n\n\nCheckpoint questions:\nUsing the output from the above code chunk, answer the following questions in the code box below:\n\nHow many rows are in the movies data set?\nHow many variables are in the movies data set? Are any categorical? Are any quantitative?"
+  },
+  {
+    "objectID": "activities/02-r-live.html#univariate-exploration",
+    "href": "activities/02-r-live.html#univariate-exploration",
+    "title": "02: Intro to R for Regression",
+    "section": "Univariate exploration",
+    "text": "Univariate exploration\nBefore jumping into a regression model, it can be useful to understand more about each variable. This can be accomplished using intro stat tools such as histograms and summary statistics.\nThe fastest way to get started is using the summary() function, which returns a brief set of summary statistics for each variable in the data set.\n\n\n\n\n\n\n\n\nR also has built-in functions to compute summary statistics one by one for a specific column. To “extract” a variable from the data set, we use a $. For example, we can extract the critics column from the movies data frame and calculate the standard deviation:\n\n\n\n\n\n\n\n\nOther useful summary statistics for quantitative variables include (here x denotes an extracted column):\n\n\n\nFunction\nSummary statistic\n\n\n\n\nmedian(x)\nmedian\n\n\nmean(x)\nmean\n\n\nvar(x)\nvariance\n\n\nIQR(x)\ninterquartile range\n\n\n\n\nTo create graphics in this course, I’ll often use the {ggformula} R package. All of the functions will begin with gf_ and have similar syntax. If you’re familiar with the {ggplot2} package, feel free to use it for this class, but many students like the “one-liners” that {ggformula} allows.\nTo begin, load the {ggformula} package using the library command:\n\n\n\n\n\n\n\n\nFor example, to create a histogram of the critic’s score we can run\n\n\n\n\n\n\n\n\nHere we use the ~ to tell R that critics is a variable in the data set. We must also specify data and adjust the number of bins as needed.\nSimilar syntax is used to create a boxplot\n\n\n\n\n\n\n\n\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nCalculate the mean audience score using the mean() function.\nCreate a histogram of the audience score and describe what you see.\nChange the number of bins for a histogram of audience. What number of bins seems “about right” in your opinion?"
+  },
+  {
+    "objectID": "activities/02-r-live.html#bivariate-exploration",
+    "href": "activities/02-r-live.html#bivariate-exploration",
+    "title": "02: Intro to R for Regression",
+    "section": "Bivariate exploration",
+    "text": "Bivariate exploration\n\nScatterplots\nIn this course we are interested in exploring relationships between variables. If we have two quantitative variables, then a scatterplot is a natural way to visually explore this relationship. To create a scatterplot we can use the gf_point() function (since scatterplots are just points):\n\n\n\n\n\n\n\n\nNotice that we put the response variable on the left of the ~ and the explanatory variable on the right.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nCreate a scatterplot where critics score is the response variable and audience score is the explanatory variable.\nYou can adjust the axis labels by adding an xlab or ylab argument. Add xlab = \"Your axis label\" and ylab = \"Your other axis label\" to your scatterplot and give more verbose axis labels.\n\n\n\n\nScatterplots with regression lines\nYou can also add a simple linear regression line to your scatterplot by adding a layer. To add a layer, we append the |&gt; pipe operator to the end of our gf_point() code and use the gf_lm() command to add a line:\n\n\n\n\n\n\n\n\n\n\nCorrelation\nIf you want a numeric summary of the strength of the linear association between two quantitative variables, then you can calculate the correlation. In R, you do this using the cor() function. Similar to calculating the mean, you need to extract the columns using $ as shown below:\n\n\n\n\n\n\n\n\n\nCheckpoint questions\nUse the below code box for the checkpoint question:\n\n\n\n\n\n\n\n\n\nSwap the order of the variables in the cor() command. Does the correlation change? Is this what you expected?"
+  },
+  {
+    "objectID": "activities/02-r-live.html#fitting-a-regression-model",
+    "href": "activities/02-r-live.html#fitting-a-regression-model",
+    "title": "02: Intro to R for Regression",
+    "section": "Fitting a regression model",
+    "text": "Fitting a regression model\nFinally, lets fit a simple linear regression model. To do this we use the lm() command (which stands for linear model). Here, we use the same syntax as when creating a scatterplot:\n\n\n\n\n\n\n\n\nWhen you run this command, R prints some very basic information about the SLR model.\nCheckpoint: What information do you get when you run the above command?\nOften, you will want to obtain more information than you get from simply printing the fitted model. The summary() function provides much more information. I recommend storing your fitted model as a named object (such as movie_lm) and then running the summary():\n\n\n\n\n\n\n\n\n\nCheckpoint question\nWhat information do you get when you run the above summary() command? If you’re not sure what something means, discuss it with your group and then ask about it in our debrief."
+  },
+  {
+    "objectID": "activities/02-r-live.html#constructing-confidence-intervals",
+    "href": "activities/02-r-live.html#constructing-confidence-intervals",
+    "title": "02: Intro to R for Regression",
+    "section": "Constructing confidence intervals",
+    "text": "Constructing confidence intervals\nThe table obtained by summary() contains all of the necessary information to conduct hypothesis tests for regression coefficients; however, it does not provide confidence intervals. To instruct R to construct a confidence interval for a regression coefficient, we can use the confint() function:\n\n\n\n\n\n\n\n\n\nCheckpoint questions\n\nWhat information do you get when you run the above confint() command?\nChange the level argument to construct a 90% confidence interval. How does the interval change?"
+  },
+  {
+    "objectID": "activities/02-r-live.html#making-predictions",
+    "href": "activities/02-r-live.html#making-predictions",
+    "title": "02: Intro to R for Regression",
+    "section": "Making predictions",
+    "text": "Making predictions\nTo make predictions, we use our fitted regression equation. While you can (and should be able to) do this by hand, you can also use R as your calculator.\nSuppose we can use our model to predict the audience score for more recent movies. Then we could predict the audience score for the Barbie Movie by running:\n\n\n\n\n\n\n\n\nHere, we first need to create a new data set with a column named identically to the original data set. Here we have a single column named critics with the value of the explanatory variable we want to use. Next, we use the predict() function, passing in the name of our model and the new data set we want to make predictions for.\n\nCheckpoint questions\nUse the below code box for the checkpoint questions:\n\n\n\n\n\n\n\n\n\nThe critics score for Asteroid City was 75. What is the expected audience score for this movie?\nThe actual (observed) value for Asteroid City was 62. Did the mode over- or under-predict the audience score?\nDo you think it’s reasonable to use our model to predict the audience score for movies released in 2023? Why or why not?\n\n\n\nMaking multiple predictions\nIf you want to make multiple predictions, then you can create a new data frame with multiple values for the explanatory variable. For example, we can use c(88, 75) to make a data frame with two values in the critics column:"
+  },
+  {
+    "objectID": "activities/02-r-live.html#function-quick-reference",
+    "href": "activities/02-r-live.html#function-quick-reference",
+    "title": "02: Intro to R for Regression",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nread.csv(\"file_path_or_URL\")\nLoad a CSV data set from a file or the web\n\n\nhead(data)\nPrint the first few rows of a data set\n\n\nglimpse(data)\nGet a quick overview of a data set (from {dplyr} package)\n\n\nsummary(data)\nGet summary statistics for each variable in a data set\n\n\nmean(x)\nCalculate the mean of a quantitative variable\n\n\nmedian(x)\nCalculate the median of a quantitative variable\n\n\nsd(x)\nCalculate the standard deviation of a quantitative variable\n\n\nvar(x)\nCalculate the variance of a quantitative variable\n\n\ngf_histogram(~x, data = data, bins = n)\nCreate a histogram of a quantitative variable (from {ggformula} package)\n\n\ngf_boxplot(~x, data = data)\nCreate a boxplot of a quantitative variable (from {ggformula} package)\n\n\ngf_point(y ~ x, data = data)\nCreate a scatterplot of two quantitative variables (from {ggformula} package)\n\n\ngf_lm()\nAdd a simple linear regression line to a scatterplot (from {ggformula} package)\n\n\ncor(x, y)\nCalculate the correlation between two quantitative variables\n\n\nlm(y ~ x, data = data)\nFit a simple linear regression model\n\n\nsummary(model)\nGet detailed information about a fitted regression model\n\n\nconfint(model, level = 0.95)\nConstruct a confidence interval for regression coefficients\n\n\npredict(model, newdata = new_data)\nMake predictions using a fitted regression model for new data"
+  },
+  {
+    "objectID": "activities/02-r-live.html#acknowledgements",
+    "href": "activities/02-r-live.html#acknowledgements",
+    "title": "02: Intro to R for Regression",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThe movie example was adapted by Adam Loy from Maria Tackett’s draft of Introduction to Regression Analysis: A Data Science Approach."
+  },
+  {
+    "objectID": "activities/09-mlr.html",
+    "href": "activities/09-mlr.html",
+    "title": "09: Intro to Multiple Regression",
+    "section": "",
+    "text": "library(ggformula)\nlibrary(dplyr)\nlibrary(broom)\nlibrary(GGally)\n\nsupervisor &lt;- read.csv(\"http://aluby.github.io/stat230/data/supervisor.csv\")"
+  },
+  {
+    "objectID": "activities/09-mlr.html#eda-making-a-pairs-plot",
+    "href": "activities/09-mlr.html#eda-making-a-pairs-plot",
+    "title": "09: Intro to Multiple Regression",
+    "section": "EDA: Making a pairs plot",
+    "text": "EDA: Making a pairs plot\nWe will use the ggpairs() function in the {GGally} package to make the pairs plot. By default, it will include every variable in the dataset. The code below firsts select()s the columns we want to include (all of them). I have also moved the response variable to be the last in the list, so that it shows up on the Y axis.\n\nsupervisor |&gt;\n  select(complaints, privileges, learn, raises, critical, advance, overall) |&gt;\n  ggpairs()\n\n\n\n\n\n\n\n\n\nWhich predictor variables appear to be most closely related to overall?\nWhich predictor variables appear to be most closely related to each other?"
+  },
+  {
+    "objectID": "activities/09-mlr.html#function-quick-reference",
+    "href": "activities/09-mlr.html#function-quick-reference",
+    "title": "09: Intro to Multiple Regression",
+    "section": "Function quick reference",
+    "text": "Function quick reference\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a MLR model\n\n\npredict(model, newdata, interval, level, se.fit)\nMake predictions and calculate intervals\n\n\ndata |&gt; select(vars) |&gt; ggpairs()\nMake pairs plot for selected variables"
+  },
+  {
+    "objectID": "activities/03a-inference.html",
+    "href": "activities/03a-inference.html",
     "title": "03: Inference for SLR",
     "section": "",
-    "text": "library(tidyverse)\nlibrary(broom)\nFirst, skim working in R for Stat230. Then, follow these directions:"
+    "text": "Biologists know that the leaves on plants tend to get smaller as temperatures rise, and average temperatures have been getting hotter over time. A sample of 252 leaves from the species Dodonaea viscosa subspecies angustissima (broadleaf hopbush) have been collected in a certain region of South Australia. Is there an association between leaf width and year? Below is the coefficient table from a simple linear regression model.\n\n\n\n\n\n\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n37.723\n8.575\n4.399\n&lt;0.001\n\n\nYear\n−0.018\n0.004\n−4.029\n&lt;0.001\n\n\n\n\n\n\n\n\nTable 1: lm output\n\n\n\n\nNote: The width is the average width, in mm, of leaves, taken at their widest points, that were collected in a given year.\n\nReport the fitted regression equation.\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(\\hat{y} = 37.723 - 0.018x\\)\n\n\n\n\nInterpret the slope of the regression line in context of the data.\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nAs year increases by 1 (i.e., from one year to the next), we expect the average leaf width of this species to decrease by 0.018 mm.\n\n\n\n\nCalculate a 95% confidence interval for the slope of the regression line. (Use the slides to find the appropriate critical value). Interpret this interval in context of the data.\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nTo find the critical value, we need 2.5% on either side:\n\nqt(.025, df = 250)\n\n[1] -1.969498\n\n\nThe 95% confidence interval for the slope is given by:\n\\[\n-0.018 \\pm 1.97(0.004) = (-0.02588, -0.01012)\n\\]\n\n\n\n\nWhat hypotheses are being tested with the statistic and associated p-value in the (Intercept) row of the table? What conclusion can you draw?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nThe summary output provided by R always conducts a two-tailed hypothesis test of whether a regression coefficient is equal to 0. In other words it tests\n\\(H_0: \\beta_0=0\\) vs. \\(H_a: \\beta_0 \\ne 0\\)\nBased on a test statistic of \\(t=4.399\\), df = 250, and a p-value &lt; 0.001, we find very strong evidence that the intercept is not zero. (This is outside the range of the observed data, so I won’t interpret it in context.)"
   },
   {
-    "objectID": "activities/03b-r-inference.html#load-the-data",
-    "href": "activities/03b-r-inference.html#load-the-data",
-    "title": "03: Inference for SLR",
-    "section": "Load the data",
-    "text": "Load the data\nLoad data into your session (it should show up in the “Environment” pane)\n\nLeafWidth &lt;- read_csv(\"https://aluby.github.io/stat230/data/LeafWidth.csv\")\n\n“Print” the data:\n\nLeafWidth\n\n# A tibble: 252 × 5\n   Width Length LWRatio  Area  Year\n   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 0.658   85.1   129.   70.3  1974\n 2 0.921   53.2    57.7  49.0  1918\n 3 0.921   59.9    65    57.7  1993\n 4 0.921   63.7    69.1  37.4  1946\n 5 0.921   64.2    69.7  62.6  1956\n 6 0.921   87.0    94.4  67.5  1964\n 7 1.05    61.3    58.2  63.9  1956\n 8 1.05    64.1    60.9  54.0  1980\n 9 1.18    41.2    34.8  40.9  1999\n10 1.18    41.7    35.2  34.6  1977\n# ℹ 242 more rows"
-  },
-  {
-    "objectID": "activities/03b-r-inference.html#exploratory-data-analysis",
-    "href": "activities/03b-r-inference.html#exploratory-data-analysis",
-    "title": "03: Inference for SLR",
-    "section": "Exploratory Data Analysis",
-    "text": "Exploratory Data Analysis\nFirst, make a scatterplot of Width (response variable) against Year (explanatory variable). Overlay the linear regression line. Describe your findings."
-  },
-  {
-    "objectID": "activities/03b-r-inference.html#linear-regression-model",
-    "href": "activities/03b-r-inference.html#linear-regression-model",
-    "title": "03: Inference for SLR",
-    "section": "Linear Regression Model",
-    "text": "Linear Regression Model\nFind the linear regression equation using lm(). Use tidy() to print the coefficient table of the regression model. Make sure you get the same answer as the paper printout!"
-  },
-  {
-    "objectID": "activities/03b-r-inference.html#ci-for-slope",
-    "href": "activities/03b-r-inference.html#ci-for-slope",
-    "title": "03: Inference for SLR",
-    "section": "CI for Slope",
-    "text": "CI for Slope\nCalculate a 95% confidence interval for the slope of the regression line using confint."
-  },
-  {
-    "objectID": "activities/03b-r-inference.html#footnotes",
-    "href": "activities/03b-r-inference.html#footnotes",
+    "objectID": "activities/03a-inference.html#footnotes",
+    "href": "activities/03a-inference.html#footnotes",
     "title": "03: Inference for SLR",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nAdapted from Stat 2: Modeling with Regression and ANOVA↩︎"
+  },
+  {
+    "objectID": "activities/01-intro.html",
+    "href": "activities/01-intro.html",
+    "title": "01: Intro Stats Review",
+    "section": "",
+    "text": "Researchers examined the relationship between sleep duration and simple reaction time performance in healthy young adults in a controlled laboratory setting.\nSixty-five college-aged participants (ages 18-25) were recruited and randomly assigned to sleep either 4 hours per night (low sleep) or 8 hours per night (high sleep) over a one-week period. Each morning, participants completed a computerized simple reaction time task where they responded to visual stimuli as quickly as possible, with reaction times measured in milliseconds. The researchers are interested in whether there is a difference in reaction time for the low sleep vs the high sleep group.\n\n\n\n\nSample size (\\(n\\))\nSample mean (\\(\\bar{x}\\))\nSample SD (\\(s\\))\n\n\n\n\nLow Sleep\n33\n390 ms\n45 ms\n\n\nHigh Sleep\n32\n360 ms\n40 ms\n\n\n\n\nWhat is the null hypothesis for this test?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(H_0: \\mu_1 = \\mu_2\\) (or \\(H_0: \\mu_1 - \\mu_2 = 0\\))\n\n\n\n\nWhat is the alternative hypothesis for this test?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(H_A: \\mu_1 \\neq \\mu_2\\) (two-sided)\n\n\n\n\nThe researchers conduct a two-sample t-test and report a test statistic of \\(t=2.84\\). Below is a plot of the appropriate t-distribution for this test. Sketch how you would calculate the p-value for this situation.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nThe p-value is equal to the area in the two tails beyond \\(2.84\\) and \\(-2.84\\).\n\n\n\n\n\n\n\n\n\n\n\n\n\nHow did you calculate this p-value in your last statistics course?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nAnswers will vary based on where you took intro stats. You may have used StatKey or a similar online app/calculator, you may have used R’s pt() command, or you may have used a t-distribution table (we won’t use tables in this class).\n\n\n\n\nIf the p-value you calculated was 0.02, what would you conclude about the null hypothesis?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nA p-value of 0.02 provides evidence against the null hypothesis. In other words, there is statistically discernible evidence of a difference in means between the two groups (\\(t=2.5\\), p-value = 0.02).\n\n\n\n\nWhy did researchers randomly assign participants to a sleep condition?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nRandom assignment helps to ensure that any confounding variables are evenly distributed across the different sleep conditions. This allows the researchers to make a causal conclusion about the effect of sleep duration on reaction time.\n\n\n\n\nCan you generalize these results to all young adults in the U.S.? Why or why not?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nNo, we cannot generalize these results to all young adults in the U.S. because it may not be representative of all young adults in the U.S. It we truly wanted to generalize to the entire population, then we should draw a random sample from the population of interest."
+  },
+  {
+    "objectID": "activities/04-prediction.html",
+    "href": "activities/04-prediction.html",
+    "title": "04: Prediction for SLR",
+    "section": "",
+    "text": "Is education level associated with income? Researchers collected education level (in years) and income (in thousands of dollars) for a random sample of 32 employees working for the city of Riverview.\nThe researchers fit a simple linear regression of income on education and obtained the following output:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n11.321\n6.123\n1.849\n0.074\n\n\neducation\n2.651\n0.370\n7.173\n&lt;0.001\n\n\n\n\n\nQ1. Write the fitted regression equation.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ2. Interpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ3. Interpret the intercept in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nA new researcher joined the team and decided that education should be standardized (to have mean 0 and SD 1) before fitting the regression model. The output from this regression is shown below:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n53.742\n1.587\n33.861\n&lt;0.001\n\n\nscale(education)\n11.567\n1.613\n7.173\n&lt;0.001\n\n\n\n\n\nQ4. Write the fitted regression equation for this new model.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ5. Interpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ6. Interpret the intercept in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ7. Compare the two models. What’s the same? What’s different?\n\n\n\n\n\n\nTipSolution"
+  },
+  {
+    "objectID": "activities/04-prediction.html#warm-up-questions",
+    "href": "activities/04-prediction.html#warm-up-questions",
+    "title": "04: Prediction for SLR",
+    "section": "",
+    "text": "Is education level associated with income? Researchers collected education level (in years) and income (in thousands of dollars) for a random sample of 32 employees working for the city of Riverview.\nThe researchers fit a simple linear regression of income on education and obtained the following output:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n11.321\n6.123\n1.849\n0.074\n\n\neducation\n2.651\n0.370\n7.173\n&lt;0.001\n\n\n\n\n\nQ1. Write the fitted regression equation.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ2. Interpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ3. Interpret the intercept in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nA new researcher joined the team and decided that education should be standardized (to have mean 0 and SD 1) before fitting the regression model. The output from this regression is shown below:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n53.742\n1.587\n33.861\n&lt;0.001\n\n\nscale(education)\n11.567\n1.613\n7.173\n&lt;0.001\n\n\n\n\n\nQ4. Write the fitted regression equation for this new model.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ5. Interpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ6. Interpret the intercept in the context of the problem. (Don’t forget to specify units.)\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ7. Compare the two models. What’s the same? What’s different?\n\n\n\n\n\n\nTipSolution"
+  },
+  {
+    "objectID": "activities/04-prediction.html#prediction-and-confidence-intervals",
+    "href": "activities/04-prediction.html#prediction-and-confidence-intervals",
+    "title": "04: Prediction for SLR",
+    "section": "Prediction and confidence intervals",
+    "text": "Prediction and confidence intervals\n\n\n\n\n\n\nTip\n\n\n\nThe R code for the following questions is found at \nhttps://aluby.github.io/stat230/activities/04R-prediction\nThe URL is also posted on Moodle.\n\n\nNow, we’ll explore the city data using R.\nQ1. Make a plot of income against education and overlay the linear regression equation. Does it look like what you expected?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ2. Make a plot of income against scale(education) and overlay the linear regression equation. Does it look like what you expected?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ3. Find the linear regression equation from Q1. Confirm that it matches the table at the beginning of this worksheet.\nQ4. The first person in this dataset has education = 8. Calculate the expected income of this person using the first regression equation.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ5. If we want to predict the income of this person, should we use a confidence interval or a prediction interval?\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ6. Use R to construct the appropriate 89% interval for this person’s income. Record this interval below.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ7. Interpret the interval in context.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\nQ8. Run the code to produce a scatterplot, regression line, and both types of intervals. Which is the prediction interval and which is the confidence interval? How can you tell?\n\n\n\n\n\n\nTipSolution"
+  },
+  {
+    "objectID": "activities/08T-polynomial.html",
+    "href": "activities/08T-polynomial.html",
+    "title": "08: Polynomial Regression",
+    "section": "",
+    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/08-polynomial"
+  },
+  {
+    "objectID": "activities/08T-polynomial.html#loading-data",
+    "href": "activities/08T-polynomial.html#loading-data",
+    "title": "08: Polynomial Regression",
+    "section": "Loading data",
+    "text": "Loading data\nTo load the wildfires data set, run the following code chunk:\n\nwildfires &lt;- read.csv(\"https://aluby.github.io/stat230/data/wildfires.csv\")"
+  },
+  {
+    "objectID": "activities/08T-polynomial.html#fitting-a-polynomial-regression-model",
+    "href": "activities/08T-polynomial.html#fitting-a-polynomial-regression-model",
+    "title": "08: Polynomial Regression",
+    "section": "Fitting a polynomial regression model",
+    "text": "Fitting a polynomial regression model\nTo fit a polynomial regression model we still use the lm() command, but we expand our formula to include polynomial terms. To include polynomial terms in a regression model, we need to use the I() function to indicate that we want to calculate a polynomial term. For example, to fit the quadratic model we have already discussed in class, we use the following code:\n\nquadratic_lm &lt;- lm(Acres ~ Year + I(Year^2), data = wildfires)\n\nOnce you have your fitted model, we can explore it like we have with simple linear regression models."
+  },
+  {
+    "objectID": "activities/08T-polynomial.html#exploring-a-cubic-model",
+    "href": "activities/08T-polynomial.html#exploring-a-cubic-model",
+    "title": "08: Polynomial Regression",
+    "section": "Exploring a cubic model",
+    "text": "Exploring a cubic model\nLet’s fit a cubic model to the wildfires data set. The cubic model has the form \\[\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x + \\beta_2x^2 + \\beta_3x^3.\\] Use the lm() command to fit the cubic model where Year is used to predict Acres.\n\n#| min-lines: 3\n# Write your lm() command here\n\nTo plot the fitted cubic model, you can use the gf_point() and gf_lm() functions from the ggformula package. The following code will create a scatter plot of the data and add the fitted cubic regression line:\n\ngf_point(Acres ~ Year, data = wildfires, xlab = \"Year\", ylab = \"Acres burned\") |&gt;\n  gf_lm(formula = y ~ poly(x, 3), linewidth = .5)\n\n\n\n\n\n\n\nNote\n\n\n\nIn the gf_lm() layer we use the poly(x, 3) function to specify that we want to fit a cubic polynomial. You can use poly() to fit polynomials of any degree by changing the second argument, and you can also use this function within the lm() function to fit polynomial regression models if you’d like.\n\n\nDoes the cubic model appear to be necessary? Use the summary() function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?\nWhat degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?\nDo you notice anything curious about the inferential results for the linear and quadratic terms?\nThe issue here is that the polynomial terms for year are highly correlated with each other (i.e., year, year\\(^2\\), and year\\(^3\\) are correlated). This can lead to numerical instability and make it difficult to interpret the coefficients. This is a situation called multicollinearity. We’ll talk more about this later. One way to remedy this issue in polynomial regression is to use orthogonal polynomials, which are uncorrelated with each other."
+  },
+  {
+    "objectID": "activities/08T-polynomial.html#an-alternative-way-to-fit-polynomials",
+    "href": "activities/08T-polynomial.html#an-alternative-way-to-fit-polynomials",
+    "title": "08: Polynomial Regression",
+    "section": "An alternative way to fit polynomials",
+    "text": "An alternative way to fit polynomials\nTo fit polynomial model with uncorrelated polynomial terms use the poly() function. For example, to fit a cubic model using orthogonal polynomials, we can run the following code:\n\ncubic_lm_ortho &lt;- lm(Acres ~ poly(Year, 3), data = wildfires)\n\nUse the summary() function to explore the fitted model. What do you notice about the inferential results for the linear, quadratic, and cubic terms? How does this compare to the previous cubic model we fit? How does it compare to the quadratic model?\n\n#| min-lines: 3\n# Write your lm() command here\n\n\nThe method of constructing the polynomial terms in our regression model does not change our predictions, but it can change the inferential results for the polynomial terms."
+  },
+  {
+    "objectID": "activities/08T-polynomial.html#function-quick-reference",
+    "href": "activities/08T-polynomial.html#function-quick-reference",
+    "title": "08: Polynomial Regression",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a linear model. For polynomial regression the formula should include polynomial terms or use poly().\n\n\nI()\nUsed to create polynomial terms in a regression model\n\n\npoly(x, degree)\nCreate orthogonal polynomial terms"
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html",
+    "href": "activities/08-polynomial-tutorial.html",
+    "title": "08: Polynomial Regression",
+    "section": "",
+    "text": "Note\n\n\n\nThis is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use https://aluby.github.io/stat230/activities/08-polynomial"
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html#loading-data",
+    "href": "activities/08-polynomial-tutorial.html#loading-data",
+    "title": "08: Polynomial Regression",
+    "section": "Loading data",
+    "text": "Loading data\nTo load the wildfires data set, run the following code chunk:"
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html#fitting-a-polynomial-regression-model",
+    "href": "activities/08-polynomial-tutorial.html#fitting-a-polynomial-regression-model",
+    "title": "08: Polynomial Regression",
+    "section": "Fitting a polynomial regression model",
+    "text": "Fitting a polynomial regression model\nTo fit a polynomial regression model we still use the lm() command, but we expand our formula to include polynomial terms. To include polynomial terms in a regression model, we need to use the I() function to indicate that we want to calculate a polynomial term. For example, to fit the quadratic model we have already discussed in class, we use the following code:\n\n\n\n\n\n\n\n\nOnce you have your fitted model, we can explore it like we have with simple linear regression models."
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html#exploring-a-cubic-model",
+    "href": "activities/08-polynomial-tutorial.html#exploring-a-cubic-model",
+    "title": "08: Polynomial Regression",
+    "section": "Exploring a cubic model",
+    "text": "Exploring a cubic model\nLet’s fit a cubic model to the wildfires data set. The cubic model has the form \\[\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x + \\beta_2x^2 + \\beta_3x^3.\\] Use the lm() command to fit the cubic model where Year is used to predict Acres.\n\n\n\n\n\n\n\n\nTo plot the fitted cubic model, you can use the gf_point() and gf_lm() functions from the ggformula package. The following code will create a scatter plot of the data and add the fitted cubic regression line:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nIn the gf_lm() layer we use the poly(x, 3) function to specify that we want to fit a cubic polynomial. You can use poly() to fit polynomials of any degree by changing the second argument, and you can also use this function within the lm() function to fit polynomial regression models if you’d like.\n\n\nDoes the cubic model appear to be necessary? Use the summary() function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?\nWhat degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?\nDo you notice anything curious about the inferential results for the linear and quadratic terms?\nThe issue here is that the polynomial terms for year are highly correlated with each other (i.e., year, year\\(^2\\), and year\\(^3\\) are correlated). This can lead to numerical instability and make it difficult to interpret the coefficients. This is a situation called multicollinearity. We’ll talk more about this later. One way to remedy this issue in polynomial regression is to use orthogonal polynomials, which are uncorrelated with each other."
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html#an-alternative-way-to-fit-polynomials",
+    "href": "activities/08-polynomial-tutorial.html#an-alternative-way-to-fit-polynomials",
+    "title": "08: Polynomial Regression",
+    "section": "An alternative way to fit polynomials",
+    "text": "An alternative way to fit polynomials\nTo fit polynomial model with uncorrelated polynomial terms use the poly() function. For example, to fit a cubic model using orthogonal polynomials, we can run the following code:\n\n\n\n\n\n\n\n\nUse the summary() function to explore the fitted model. What do you notice about the inferential results for the linear, quadratic, and cubic terms? How does this compare to the previous cubic model we fit? How does it compare to the quadratic model?\n\n\n\n\n\n\n\n\n\nThe method of constructing the polynomial terms in our regression model does not change our predictions, but it can change the inferential results for the polynomial terms."
+  },
+  {
+    "objectID": "activities/08-polynomial-tutorial.html#function-quick-reference",
+    "href": "activities/08-polynomial-tutorial.html#function-quick-reference",
+    "title": "08: Polynomial Regression",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a linear model. For polynomial regression the formula should include polynomial terms or use poly().\n\n\nI()\nUsed to create polynomial terms in a regression model\n\n\npoly(x, degree)\nCreate orthogonal polynomial terms"
+  },
+  {
+    "objectID": "activities/08-polynomial.html",
+    "href": "activities/08-polynomial.html",
+    "title": "08: Polynomial Regression",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(ggformula)\nlibrary(broom)"
+  },
+  {
+    "objectID": "activities/08-polynomial.html#loading-data",
+    "href": "activities/08-polynomial.html#loading-data",
+    "title": "08: Polynomial Regression",
+    "section": "Loading data",
+    "text": "Loading data\nTo load the wildfires data set, run the following code chunk:\n\nwildfires &lt;- read.csv(\"https://aluby.github.io/stat230/data/wildfires.csv\")"
+  },
+  {
+    "objectID": "activities/08-polynomial.html#fitting-a-polynomial-regression-model",
+    "href": "activities/08-polynomial.html#fitting-a-polynomial-regression-model",
+    "title": "08: Polynomial Regression",
+    "section": "Fitting a polynomial regression model",
+    "text": "Fitting a polynomial regression model\nTo fit a polynomial regression model we still use the lm() command, but we expand our formula to include polynomial terms. To include polynomial terms in a regression model, we need to use the I() function to indicate that we want to calculate a polynomial term. For example, to fit the quadratic model we have already discussed in class, we use the following code:\n\nquadratic_lm &lt;- lm(Acres ~ Year + I(Year^2), data = wildfires)\n\nOnce you have your fitted model, we can explore it like we have with simple linear regression models."
+  },
+  {
+    "objectID": "activities/08-polynomial.html#exploring-a-cubic-model",
+    "href": "activities/08-polynomial.html#exploring-a-cubic-model",
+    "title": "08: Polynomial Regression",
+    "section": "Exploring a cubic model",
+    "text": "Exploring a cubic model\nLet’s fit a cubic model to the wildfires data set. The cubic model has the form \\[\\mu \\lbrace y | x \\rbrace = \\beta_0 + \\beta_1 x + \\beta_2x^2 + \\beta_3x^3.\\] Use the lm() command to fit the cubic model where Year is used to predict Acres.\n\n# Write your lm() command here\n\nTo plot the fitted cubic model, you can use the gf_point() and gf_lm() functions from the ggformula package. The following code will create a scatter plot of the data and add the fitted cubic regression line:\n\ngf_point(Acres ~ Year, data = wildfires, xlab = \"Year\", ylab = \"Acres burned\") |&gt;\n  gf_lm(formula = y ~ poly(x, 3), linewidth = .5)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nIn the gf_lm() layer we use the poly(x, 3) function to specify that we want to fit a cubic polynomial. You can use poly() to fit polynomials of any degree by changing the second argument, and you can also use this function within the lm() function to fit polynomial regression models if you’d like.\n\n\nDoes the cubic model appear to be necessary? Use the summary() function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?\nWhat degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?\nDo you notice anything curious about the inferential results for the linear and quadratic terms?\nThe issue here is that the polynomial terms for year are highly correlated with each other (i.e., year, year\\(^2\\), and year\\(^3\\) are correlated). This can lead to numerical instability and make it difficult to interpret the coefficients. This is a situation called multicollinearity. We’ll talk more about this later. One way to remedy this issue in polynomial regression is to use orthogonal polynomials, which are uncorrelated with each other."
+  },
+  {
+    "objectID": "activities/08-polynomial.html#an-alternative-way-to-fit-polynomials",
+    "href": "activities/08-polynomial.html#an-alternative-way-to-fit-polynomials",
+    "title": "08: Polynomial Regression",
+    "section": "An alternative way to fit polynomials",
+    "text": "An alternative way to fit polynomials\nTo fit polynomial model with uncorrelated polynomial terms use the poly() function. For example, to fit a cubic model using orthogonal polynomials, we can run the following code:\n\ncubic_lm_ortho &lt;- lm(Acres ~ poly(Year, 3), data = wildfires)\n\nUse the summary() function to explore the fitted model. What do you notice about the inferential results for the linear, quadratic, and cubic terms? How does this compare to the previous cubic model we fit? How does it compare to the quadratic model?\n\n# Write your lm() command here\n\n\nThe method of constructing the polynomial terms in our regression model does not change our predictions, but it can change the inferential results for the polynomial terms."
+  },
+  {
+    "objectID": "activities/08-polynomial.html#function-quick-reference",
+    "href": "activities/08-polynomial.html#function-quick-reference",
+    "title": "08: Polynomial Regression",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm(formula, data)\nFit a linear model. For polynomial regression the formula should include polynomial terms or use poly().\n\n\nI()\nUsed to create polynomial terms in a regression model\n\n\npoly(x, degree)\nCreate orthogonal polynomial terms"
   },
   {
     "objectID": "activities/05-conditions.html",
