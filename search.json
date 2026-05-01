@@ -620,7 +620,7 @@
     "href": "readings/r-functions-reference.html#graphs",
     "title": "r-functions-reference",
     "section": "Graphs",
-    "text": "Graphs\n\nHistogram\nI like to specify col=\"white\" to draw white lines between the bars. You can also customize the color of the bars with fill\n\ngf_histogram(~temp_actual, data = bikes, col = \"white\", fill = \"darkgreen\")\n\n\n\n\n\n\n\n\n\n\nBoxplot\nOne quantitative variable:\n\ngf_boxplot(~temp_actual, data = bikes, fill = \"darkgreen\")\n\n\n\n\n\n\n\n\nOne quantitative variable separated and colored by a categorical variable:\n\ngf_boxplot(temp_actual ~ weekend, data = bikes, fill = ~weekend)\n\n\n\n\n\n\n\n\n\n\nScatterplot\n\ngf_point(rides ~ temp_actual, data = bikes)\n\n\n\n\n\n\n\n\nColored by a 3rd variable:\n\ngf_point(rides ~ temp_actual, color = ~weekend, data = bikes)\n\n\n\n\n\n\n\n\n\n\nQQ plot\n\ngf_qq(~temp_actual, data = bikes) |&gt;\n  gf_qqline()"
+    "text": "Graphs\n\nHistogram\nI like to specify col=\"white\" to draw white lines between the bars. You can also customize the color of the bars with fill\n\ngf_histogram(~temp_actual, data = bikes, col = \"white\", fill = \"darkgreen\")\n\n\n\n\n\n\n\n\n\n\nBoxplot\nOne quantitative variable:\n\ngf_boxplot(~temp_actual, data = bikes, fill = \"darkgreen\")\n\n\n\n\n\n\n\n\nOne quantitative variable separated and colored by a categorical variable:\n\ngf_boxplot(temp_actual ~ weekend, data = bikes, fill = ~weekend)\n\n\n\n\n\n\n\n\n\n\nScatterplot\n\ngf_point(rides ~ temp_actual, data = bikes)\n\n\n\n\n\n\n\n\nColored by a 3rd variable:\n\ngf_point(rides ~ temp_actual, color = ~weekend, data = bikes)"
   },
   {
     "objectID": "readings/r-functions-reference.html#numeric-summaries",
@@ -628,48 +628,6 @@
     "title": "r-functions-reference",
     "section": "Numeric Summaries",
     "text": "Numeric Summaries\nSyntax is data$variable_name.\nMean:\n\nmean(bikes$temp_actual)\n\n[1] 63.32782\n\n\nStandard deviation:\n\nsd(bikes$temp_actual)\n\n[1] 10.17069\n\n\nMedian:\n\nmedian(bikes$temp_actual)\n\n[1] 62.90375\n\n\nVariance\n\nvar(bikes$temp_actual)\n\n[1] 103.443\n\n\nCorrelation (2 quantitative variables)\n\ncor(bikes$temp_actual, bikes$temp_feel)\n\n[1] 0.9823728"
-  },
-  {
-    "objectID": "readings/r-functions-reference.html#fitting-the-model",
-    "href": "readings/r-functions-reference.html#fitting-the-model",
-    "title": "r-functions-reference",
-    "section": "Fitting the model",
-    "text": "Fitting the model\nTo get the slope and intercept, use lm()\n\nlm(rides ~ temp_actual, data = bikes)\n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nCoefficients:\n(Intercept)  temp_actual  \n   -2168.77        89.23  \n\n\nTo get the summary, first save the lm with &lt;- and then call summary\n\nbikes_slr &lt;- lm(rides ~ temp_actual, data = bikes)\nsummary(bikes_slr)\n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-3564.3 -1009.3  -116.4   959.1  3184.6 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -2168.77     363.64  -5.964 4.67e-09 ***\ntemp_actual    89.23       5.67  15.739  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1288 on 498 degrees of freedom\nMultiple R-squared:  0.3322,    Adjusted R-squared:  0.3308 \nF-statistic: 247.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16\n\n\nIf you want to access specific elements of the summary (like \\(R^2\\) or \\(\\sigma\\)) you can use:\n\nsummary(bikes_slr)$sigma\n\n[1] 1288.134\n\nsummary(bikes_slr)$r.squared\n\n[1] 0.3321778"
-  },
-  {
-    "objectID": "readings/r-functions-reference.html#plotting",
-    "href": "readings/r-functions-reference.html#plotting",
-    "title": "r-functions-reference",
-    "section": "Plotting",
-    "text": "Plotting\nOverlay a regression line with a pipe (|&gt;) and gf_lm()\n\ngf_point(rides ~ temp_actual, data = bikes) |&gt;\n  gf_lm()\n\n\n\n\n\n\n\n\nYou can also specify a prediction or confidence interval in gf_lm:\n\ngf_point(rides ~ temp_actual, data = bikes) |&gt;\n  gf_lm(interval = \"confidence\", level = .9)\n\n\n\n\n\n\n\n\n\ngf_point(rides ~ temp_actual, data = bikes) |&gt;\n  gf_lm(interval = \"confidence\", level = .9) |&gt;\n  gf_lm(interval = \"prediction\", level = .9, fill = \"goldenrod\")"
-  },
-  {
-    "objectID": "readings/r-functions-reference.html#predictions",
-    "href": "readings/r-functions-reference.html#predictions",
-    "title": "r-functions-reference",
-    "section": "Predictions",
-    "text": "Predictions\nUse predict() to get a point estimate for \\(\\hat{y}_i\\), a confidence interval or prediction interval.\n\npredict(bikes_slr, newdata = data.frame(temp_actual = 75))\n\n       1 \n4523.768 \n\n\n\npredict(bikes_slr, newdata = data.frame(temp_actual = 75),\n        interval = \"confidence\", \n        level = .9)\n\n       fit      lwr      upr\n1 4523.768 4379.182 4668.354\n\n\n\npredict(bikes_slr, newdata = data.frame(temp_actual = 75),\n        interval = \"prediction\", \n        level = .9)\n\n       fit      lwr      upr\n1 4523.768 2396.109 6651.427"
-  },
-  {
-    "objectID": "readings/r-functions-reference.html#inference",
-    "href": "readings/r-functions-reference.html#inference",
-    "title": "r-functions-reference",
-    "section": "Inference",
-    "text": "Inference\nConfidence intervals:\n\nconfint(bikes_slr)\n\n                 2.5 %     97.5 %\n(Intercept) -2883.2350 -1454.3122\ntemp_actual    78.0944   100.3734\n\n\nNice version of regression table:\n\nlibrary(broom)\ntidy(bikes_slr)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)  -2169.     364.       -5.96 4.67e- 9\n2 temp_actual     89.2      5.67     15.7  1.35e-45"
-  },
-  {
-    "objectID": "readings/r-functions-reference.html#conditions",
-    "href": "readings/r-functions-reference.html#conditions",
-    "title": "r-functions-reference",
-    "section": "Conditions",
-    "text": "Conditions\nUse augment to create an augmented dataset with residuals and fitted values for all data points:\n\nbikes_slr_aug &lt;- augment(bikes_slr)\nhead(bikes_slr_aug)\n\n# A tibble: 6 × 8\n  rides temp_actual .fitted .resid    .hat .sigma  .cooksd .std.resid\n  &lt;int&gt;       &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;\n1   654        57.4   2953. -2299. 0.00268  1285. 0.00429      -1.79 \n2  1229        46.5   1980.  -751. 0.00749  1289. 0.00129      -0.585\n3  1454        46.8   2004.  -550. 0.00732  1289. 0.000676     -0.428\n4  1518        48.7   2181.  -663. 0.00612  1289. 0.000821     -0.517\n5  1362        46.5   1981.  -619. 0.00748  1289. 0.000877     -0.482\n6   891        44.2   1773.  -882. 0.00911  1289. 0.00218      -0.688\n\n\nYou can then make a histogram or scatterplot with the usual {ggformula} tools:\n\ngf_point(.resid ~ .fitted, data = bikes_slr_aug)\n\n\n\n\n\n\n\ngf_histogram(~.resid , data = bikes_slr_aug, col = \"white\")\n\n\n\n\n\n\n\ngf_qq(~.resid , data = bikes_slr_aug) |&gt;\n  gf_qqline()\n\n\n\n\n\n\n\n\nAlternatively, you can make a panel of residual plots with the resid_panel shortcut function in {ggResidpanel} package:\n\nlibrary(ggResidpanel)\nresid_panel(bikes_slr)\n\n\n\n\n\n\n\n\n(If it takes a long time, try using standardized residuals instead)\n\nresid_panel(bikes_slr, type = \"standardized\")"
-  },
-  {
-    "objectID": "readings/r-functions-reference.html#finding-t",
-    "href": "readings/r-functions-reference.html#finding-t",
-    "title": "r-functions-reference",
-    "section": "Finding \\(t^*\\)",
-    "text": "Finding \\(t^*\\)\nCorresponds to the 2.5th percentile of a \\(t_{498}\\) distribution:\n\nqt(.025, df = 498)\n\n[1] -1.964739"
   },
   {
     "objectID": "readings/revisions.html",
@@ -684,6 +642,13 @@
     "title": "Exam01 Review",
     "section": "",
     "text": "This is an outline of things you should review for Exam01 scheduled for Monday of Week 3.\nI recommend beginning by carefully reviewing your notes and activities from class and the homework questions. It’s best to do this actively: by reading, thinking, solving problems, and asking questions.\n\nMaterials\n\nYou may bring one side of one 3x5 inch notecard of your own notes.\nI will not ask you to write down any R code, but you should be comfortable reading R output.\nI will bring basic calculators but you may not use other calculators\n\n\n\nSkills\n1. Express a SLR model using proper notation\n\nUsing proper statistical notation, write down the simple linear regression model\nYou should be able to express either the theoretical model or the fitted model, and know the difference between the two.\nDon’t forget the assumptions you place on the residuals in a theoretical model!\n\nExample question: Practice exam Q2/3\n2. Interpret the coefficients and \\(R^2\\) of a model in context.\n\nGiven a fitted linear model equation, be able to interpret the y-intercept and slope\nYour interpretations should always be given in context, so don’t just talk about “x” and “y.”\n\nExample question: Practice exam Q4/5\n3. Check necessary conditions for a regression model and discuss the implications of a model deficiency\n\nBe able to state the assumptions/conditions necessary for valid inference from a linear regression model.\nKnow how to assess each assumption\nKnow how to read each type of diagnostic plot (residuals vs. fitted values, residuals vs. x, normal Q-Q plot, residuals vs. index)\nFor a violation of each assumption/condition, are there any aspects of the model that we can trust? Or is everything about the model wrong?\n\nExample question: Practice exam Q11/Q16/Q32\n4. Perform a hypothesis test to draw inference about a single regression coefficient\n\nGiven R output from a fitted regression model, conduct a t-test for the slope or intercept\nThe steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context\nUnderstand and explain where the test statistic and p value came from\nGiven a research question, state the hypotheses for your test in both words and proper notation\nKnow the difference between a one-sided and two-sided p-value, and know when each is required (or given by R)\n\nExample question: Practice exam Q6/7\n5. Construct and interpret confidence intervals for regression coefficients\n\nGiven R output from a fitted regression model, identify a confidence interval for each regression coefficient.\nKnow the equation for the confidence interval and how you could calculate it if you were given the estimate, standard error, and sample size.\nBe able to interpret a confidence interval for each regression coefficient in context\n\nExample question: Practice exam Q8\n6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval\n\nBe able to identify situations that are making predictions for group means vs. individual observations\nSelect the correct interval (confidence or prediction) for the problem at hand\nGiven a plot with both confidence intervals and prediction intervals, be able to identify which is which\nWhich is wider, a confidence interval or prediction interval? Why does this make sense?\n\nExample question: Practice exam Q9/10\n7. Express an SLR model when transformations have been used on the response and/or the explanatory variables\n\nUsing proper statistical notation, write down the simple linear regression model\nYou should be able to express either the theoretical model or the fitted model, and know the difference between the two.\nUnderstand the importance of backtransforming and recognize that the “usual” coefficient interpretations no longer hold\n\nExample question: Practice exam Q19/20"
+  },
+  {
+    "objectID": "homework/hw-template.html",
+    "href": "homework/hw-template.html",
+    "title": "Stat230 Homework XX",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(patchwork)\nlibrary(broom)\nlibrary(ggformula)\n\nTo submit your assignment,\n\nrender your file to pdf\ndownload the pdf to your computer (if using maize)\nsubmit your pdf to gradescope in the appropriate submission space\n\nMake sure to mark your pages through the gradescope system!\n\n\nGuidelines\n\nMake sure your PDF is “clean”:\n\necho: TRUE, warning: FALSE, message: FALSE\nDo not print long pages of output. Printing tibbles is OK\nAll questions should be answered with sentences written in text\n\nMake sure your .qmd is “clean”:\n\nremove unnecessary code\n\n\n\nProblem 1\n\nYour written answer hee\n\n\n# your code here\n\n\nYour written answer here\n\n\n# your code here\n\n\nYour code here\n\n\n# your code here\n\n\n\nProblem 2\n\nYour written answer hee\n\n\n# your code here\n\n\nYour written answer here\n\n\n# your code here\n\n\nYour code here\n\n\n# your code here\n\n\n\nProblem 3\n\nYour written answer hee\n\n\n# your code here\n\n\nYour written answer here\n\n\n# your code here\n\n\nYour code here\n\n\n# your code here"
   },
   {
     "objectID": "homework/hw01.html",
@@ -1075,7 +1040,7 @@
     "href": "slides/slides14.html#vifs-for-example-2",
     "title": "Multicollinearity",
     "section": "VIFs for Example 2",
-    "text": "VIFs for Example 2\n\nex2_mod &lt;- lm(y ~ x1 + x2, data = ex2)\ncar::vif(ex2_mod)\n\nError in `vif.default()`:\n! there are aliased coefficients in the model\n\n\ncar::vif() throws an error! Why?\n\n\\(\\text{VIF} = \\dfrac{1}{1 - R^2_i}\\)\n\nSince \\(x_1\\) and \\(x_2\\) are perfectly correlated, \\(R^2_i = 1\\)\nThis makes the denominator \\(1 - R^2_i = 0\\)\nSo, \\(\\text{VIF} = \\dfrac{1}{0}\\) is undefined"
+    "text": "VIFs for Example 2\n\nex2_mod &lt;- lm(y ~ x1 + x2, data = ex2)\ncar::vif(ex2_mod)\n\nError in vif.default(ex2_mod): there are aliased coefficients in the model\n\n\ncar::vif() throws an error! Why?\n\n\\(\\text{VIF} = \\dfrac{1}{1 - R^2_i}\\)\n\nSince \\(x_1\\) and \\(x_2\\) are perfectly correlated, \\(R^2_i = 1\\)\nThis makes the denominator \\(1 - R^2_i = 0\\)\nSo, \\(\\text{VIF} = \\dfrac{1}{0}\\) is undefined"
   },
   {
     "objectID": "slides/slides14.html#vifs-for-example-3",
@@ -1120,158 +1085,571 @@
     "text": "Adjusted R2\n\n\n\nOrder\nR2\nR2adj\n\n\n\n\n1\n0.9264\n0.9116\n\n\n2\n0.9903\n0.9855\n\n\n3\n0.9994\n0.9988\n\n\n4\n0.9998\n0.9995\n\n\n5\n0.99996\n0.9998\n\n\n6\n1.0000\nundefined\n\n\n\n\nRecall that there are only n = 7 observations in this data set"
   },
   {
-    "objectID": "slides/slides03.html#data-for-today",
-    "href": "slides/slides03.html#data-for-today",
-    "title": "Inference for SLR",
+    "objectID": "slides/slides15.html#mlr-so-far",
+    "href": "slides/slides15.html#mlr-so-far",
+    "title": "Model Selection",
+    "section": "MLR so far",
+    "text": "MLR so far\n\nInterpreting coefficients\nWriting lines for different groups (categorical predictors)\nInference for a single coefficient\nInference for linear combinations of coefficients\nF tests\nInfluential points and diagnostics (leverage, standardized residuals, cook’s distance)\nMulticollinearity\n\n\nToday → putting it all together to compare models"
+  },
+  {
+    "objectID": "slides/slides15.html#idea-how-do-we-decide-what-variables-to-include",
+    "href": "slides/slides15.html#idea-how-do-we-decide-what-variables-to-include",
+    "title": "Model Selection",
+    "section": "Idea: how do we decide what variables to include?",
+    "text": "Idea: how do we decide what variables to include?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndate\nseason\nyear\nmonth\nday_of_week\nweekend\nholiday\ntemp_actual\ntemp_feel\nhumidity\nwindspeed\nweather_cat\nrides\n\n\n\n\n2011-01-01\nwinter\n2011\nJan\nSat\nTRUE\nno\n57.39952\n64.72625\n80.5833\n10.749882\ncateg2\n654\n\n\n2011-01-03\nwinter\n2011\nJan\nMon\nFALSE\nno\n46.49166\n49.04645\n43.7273\n16.636703\ncateg1\n1229\n\n\n2011-01-04\nwinter\n2011\nJan\nTue\nFALSE\nno\n46.76000\n51.09098\n59.0435\n10.739832\ncateg1\n1454\n\n\n2011-01-05\nwinter\n2011\nJan\nWed\nFALSE\nno\n48.74943\n52.63430\n43.6957\n12.522300\ncateg1\n1518\n\n\n2011-01-07\nwinter\n2011\nJan\nFri\nFALSE\nno\n46.50332\n50.79551\n49.8696\n11.304642\ncateg2\n1362\n\n\n2011-01-08\nwinter\n2011\nJan\nSat\nTRUE\nno\n44.17700\n46.60286\n53.5833\n17.875868\ncateg2\n891\n\n\n2011-01-10\nwinter\n2011\nJan\nMon\nFALSE\nno\n43.13148\n45.57992\n48.2917\n14.958889\ncateg1\n1280\n\n\n2011-01-11\nwinter\n2011\nJan\nTue\nFALSE\nno\n44.47892\n49.23176\n68.6364\n8.182844\ncateg2\n1220\n\n\n2011-01-12\nwinter\n2011\nJan\nWed\nFALSE\nno\n44.74725\n46.44257\n59.9545\n20.410009\ncateg1\n1137\n\n\n2011-01-13\nwinter\n2011\nJan\nThu\nFALSE\nno\n44.17700\n45.57947\n47.0417\n20.167000\ncateg1\n1368"
+  },
+  {
+    "objectID": "slides/slides15.html#review-sstssregsse",
+    "href": "slides/slides15.html#review-sstssregsse",
+    "title": "Model Selection",
+    "section": "Review: SST/SSReg/SSE",
+    "text": "Review: SST/SSReg/SSE"
+  },
+  {
+    "objectID": "slides/slides15.html#but-we-work-with-sum-of-squares",
+    "href": "slides/slides15.html#but-we-work-with-sum-of-squares",
+    "title": "Model Selection",
+    "section": "But, we work with sum of squares",
+    "text": "But, we work with sum of squares"
+  },
+  {
+    "objectID": "slides/slides15.html#section",
+    "href": "slides/slides15.html#section",
+    "title": "Model Selection",
+    "section": "",
+    "text": "Linear Regression tilt and shifts the line until the total area of the red squares are as small as possible (“least squares”)\n\\(R^2\\): proportion of the blue area (SSTotal) that is successfully covered by the green squares (SSRegr)\n\\(h_i\\): a point becomes more influential as it moves further away from \\(\\bar{x}\\) because the corresponding red square grows quadratically\nOverall F test: \\(F = \\frac{MSReg}{MSE}\\)\n\nis the “average” green square significantly larger than the “average” red square?\n\nSequential sum-of-squares F test: \\(F=\\frac{(SSE(reduced)-SSE(full))/(df_{reduced}-df_{full})}{SSE(full)/df_{full}}\\)\n\nare the red squares for a “larger” model significantly smaller than the red squares for a “smaller” model?"
+  },
+  {
+    "objectID": "slides/slides15.html#sequential-anova-the-anova-function",
+    "href": "slides/slides15.html#sequential-anova-the-anova-function",
+    "title": "Model Selection",
+    "section": "Sequential ANOVA (the anova() function)",
+    "text": "Sequential ANOVA (the anova() function)\n\nWhen you use anova() on a single model, R provides a table of extra Sum of Squares (SS) for terms added sequentially\n\nmodel_1 &lt;- lm(rides ~ temp_actual + windspeed + weekend + temp_actual:weekend + \n                windspeed:weekend, data = bikes)\nanova(model_1)\n\nAnalysis of Variance Table\n\nResponse: rides\n                     Df    Sum Sq   Mean Sq  F value    Pr(&gt;F)    \ntemp_actual           1 411018312 411018312 269.0759 &lt; 2.2e-16 ***\nwindspeed             1  22504757  22504757  14.7329   0.00014 ***\nweekend               1  48801976  48801976  31.9485  2.68e-08 ***\ntemp_actual:weekend   1       110       110   0.0001   0.99323    \nwindspeed:weekend     1    425250    425250   0.2784   0.59799    \nResiduals           494 754594085   1527518                       \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "slides/slides15.html#breaking-down-the-anova-table",
+    "href": "slides/slides15.html#breaking-down-the-anova-table",
+    "title": "Model Selection",
+    "section": "Breaking down the anova() table",
+    "text": "Breaking down the anova() table\n\nThe First Row: temp_actual\n\nDf: Including this variable adds 1 term to the model.\n\nSum Sq: \\(SSE(\\text{null}) - SSE(\\text{temp_actual})\\).\n\nThe Second Row: windspeed\n\nSum Sq: Represents the extra SS for adding windspeed to a model already containing temp_actual.\n\n\\(SSE(\\text{temp_actual}) - SSE(\\text{temp_actual, windspeed})\\)\n\nThe Third Row: weekend\n\nSum Sq: Represents the extra SS for adding weekend to a model already containing temp_actual and windspeed.\n\n\\(SSE(\\text{temp_actual, windspeed}) - SSE(\\text{temp_actual, windspeed, weekend})\\)"
+  },
+  {
+    "objectID": "slides/slides15.html#confirm-results-with-a-nested-f-test",
+    "href": "slides/slides15.html#confirm-results-with-a-nested-f-test",
+    "title": "Model Selection",
+    "section": "Confirm results with a nested F test",
+    "text": "Confirm results with a nested F test\n“intermediate” p values in the table may not be valid; confirm proposed and full model with a nested F test:\n\nmodel_2 &lt;- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)\n\nanova(model_1, model_2)\n\nAnalysis of Variance Table\n\nModel 1: rides ~ temp_actual + windspeed + weekend + temp_actual:weekend + \n    windspeed:weekend\nModel 2: rides ~ temp_actual + windspeed + weekend\n  Res.Df       RSS Df Sum of Sq      F Pr(&gt;F)\n1    494 754594085                           \n2    496 755019445 -2   -425360 0.1392 0.8701"
+  },
+  {
+    "objectID": "slides/slides15.html#comparing-non-nested-models",
+    "href": "slides/slides15.html#comparing-non-nested-models",
+    "title": "Model Selection",
+    "section": "Comparing non-nested models",
+    "text": "Comparing non-nested models\nWhat if I want to compare:\n\nmodel_2 &lt;- lm(rides ~ temp_actual + windspeed + weekend, \n              data = bikes)\n\n\nmodel_3 &lt;- lm(rides ~ temp_actual + windspeed*weekend + \n                holiday + temp_feel , \n              data = bikes)"
+  },
+  {
+    "objectID": "slides/slides15.html#comparing-non-nested-models-1",
+    "href": "slides/slides15.html#comparing-non-nested-models-1",
+    "title": "Model Selection",
+    "section": "Comparing non-nested models",
+    "text": "Comparing non-nested models\nAdjusted \\(R^2\\)\n\ncan be used for nested and non-nested models\nno formal test/rules for “better enough”\n\n\nsummary(model_2)$adj.r.squared\n\n[1] 0.3861159\n\nsummary(model_3)$adj.r.squared\n\n[1] 0.3962171"
+  },
+  {
+    "objectID": "slides/slides15.html#information-criteria",
+    "href": "slides/slides15.html#information-criteria",
+    "title": "Model Selection",
+    "section": "Information criteria",
+    "text": "Information criteria\nThe following “information criteria” can be used to compare nested or non-nested models (smaller values are better)\n\\[IC = \\text{Measure of Fit} + \\text{Penalty}\\]\n\n\\[AIC = n \\log(SSE/n) + 2p\\]\n\n\\[BIC =  n \\log(SSE/n) + \\log(n) \\cdot p\\]"
+  },
+  {
+    "objectID": "slides/slides15.html#aic-in-r",
+    "href": "slides/slides15.html#aic-in-r",
+    "title": "Model Selection",
+    "section": "AIC in R",
+    "text": "AIC in R\n\nAIC(model_2)\n\n[1] 8542.762\n\nAIC(model_3)\n\n[1] 8537.432\n\n\n\nsuggests more complicated model is worth the added complexity"
+  },
+  {
+    "objectID": "slides/slides15.html#bic-in-r",
+    "href": "slides/slides15.html#bic-in-r",
+    "title": "Model Selection",
+    "section": "BIC in R",
+    "text": "BIC in R\n\nBIC(model_2)\n\n[1] 8563.835\n\nBIC(model_3)\n\n[1] 8571.149\n\n\n\nBIC imposes a larger complexity penalty, so prefers the simpler model"
+  },
+  {
+    "objectID": "slides/slides15.html#variable-selection-prediction-vs-understanding",
+    "href": "slides/slides15.html#variable-selection-prediction-vs-understanding",
+    "title": "Model Selection",
+    "section": "Variable selection: prediction vs understanding",
+    "text": "Variable selection: prediction vs understanding\n\n\nPrediction:\n\nMore complex models might be okay if you have a lot of data.\nThe model doesn’t need to “make sense” as much if it predicts well.\nWatch out for overfitting!\nStat270\n\n\n\n\nUnderstanding:\n\nComplexity can hurt our ability to interpret results meaningfully.\nKeep effects you are interested in, even if they are insignificant, to “control” for them."
+  },
+  {
+    "objectID": "slides/slides15.html#aic-vs-bic",
+    "href": "slides/slides15.html#aic-vs-bic",
+    "title": "Model Selection",
+    "section": "AIC vs BIC",
+    "text": "AIC vs BIC\n\nAIC: for large \\(n\\), gives an estimate of out-of-sample predictive performance (i.e. better model for prediction)\n\nBIC: for large \\(n\\), will pick the “true” model if it is one of the candidates (i.e. better model for understanding)"
+  },
+  {
+    "objectID": "slides/slides15.html#overfitting",
+    "href": "slides/slides15.html#overfitting",
+    "title": "Model Selection",
+    "section": "Overfitting",
+    "text": "Overfitting\n\nThe goal when building a model is to capture the trends in the data while still making something that can applied to new data. When a model is overfit, a model will perform very well on the data used to fit it but perform very poorly on any new data.\n\n\n\nModel building is like making a suit that can generally fit everyone around a given size, not making a custom-tailored suit that can only fit one person perfectly."
+  },
+  {
+    "objectID": "slides/slides15.html#prediction-training-test-datasets",
+    "href": "slides/slides15.html#prediction-training-test-datasets",
+    "title": "Model Selection",
+    "section": "Prediction: Training & Test Datasets",
+    "text": "Prediction: Training & Test Datasets\nIf the goal is prediction, we test the model on data it hasn’t seen:\n\nTraining dataset: Used to estimate (“train”) your model.\n\nTest dataset: The data held out to test your predictions.\n\nRMSE: Root Mean Squared Error measures the average size of error (squared residuals).\n\n\\[RMSE = \\sqrt{\\frac{1}{n} \\sum_{i=1}^{n} (y_i - \\hat{y}_i)^2}\\]"
+  },
+  {
+    "objectID": "slides/slides15.html#code-make-training-and-testing-data",
+    "href": "slides/slides15.html#code-make-training-and-testing-data",
+    "title": "Model Selection",
+    "section": "Code: make training and testing data",
+    "text": "Code: make training and testing data\n\nset.seed(050726)\n\nbikes_split &lt;- initial_split(bikes, prop = .8)\nbikes_split\n\n&lt;Training/Testing/Total&gt;\n&lt;400/100/500&gt;\n\nbikes_train &lt;- training(bikes_split)\nbikes_test &lt;- testing(bikes_split)"
+  },
+  {
+    "objectID": "slides/slides15.html#code-fit-both-models-on-training-data",
+    "href": "slides/slides15.html#code-fit-both-models-on-training-data",
+    "title": "Model Selection",
+    "section": "Code: fit both models on training data",
+    "text": "Code: fit both models on training data\n\nmodel_1_train &lt;- lm(rides ~ temp_actual + windspeed + weekend + \n                      temp_actual:weekend +  windspeed:weekend,\n                     data = bikes_train)\nmodel_3_train &lt;- lm(rides ~ temp_actual + windspeed * weekend + \n                      holiday + temp_feel,\n                      data = bikes_train)"
+  },
+  {
+    "objectID": "slides/slides15.html#code-find-widehaty-for-both-models-then-rmse",
+    "href": "slides/slides15.html#code-find-widehaty-for-both-models-then-rmse",
+    "title": "Model Selection",
+    "section": "Code: find \\(\\widehat{y}\\) for both models, then RMSE",
+    "text": "Code: find \\(\\widehat{y}\\) for both models, then RMSE\n\nmodel_1_test &lt;- predict(model_1_train, newdata = bikes_test)\nmodel_3_test &lt;- predict(model_3_train, newdata = bikes_test)\n\nsqrt(mean((bikes_test$rides - model_1_test)^2))\n\n[1] 1260.845\n\nsqrt(mean((bikes_test$rides - model_3_test)^2))\n\n[1] 1483.219"
+  },
+  {
+    "objectID": "slides/slides15.html#code-find-rmse-for-training-data",
+    "href": "slides/slides15.html#code-find-rmse-for-training-data",
+    "title": "Model Selection",
+    "section": "Code: find RMSE for training data",
+    "text": "Code: find RMSE for training data\n\nsqrt(mean(model_1_train$residuals^2))\n\n[1] 1221.714\n\nsqrt(mean(model_3_train$residuals^2))\n\n[1] 1195.609\n\n\n\n\nRMSE is smaller on the model 3 for training data (predicting better)\nRMSE is bigger using the model 3 for testing data (predicting worse)\n\nwhen the model is used on data it hasn’t seen before, it’s doing worse\nthis is what it means to overfit"
+  },
+  {
+    "objectID": "slides/slides15.html#tools-for-model-comparison",
+    "href": "slides/slides15.html#tools-for-model-comparison",
+    "title": "Model Selection",
+    "section": "Tools for Model Comparison",
+    "text": "Tools for Model Comparison\n\n\nANOVA F-tests: Used for nested models to test if coefficients equal zero.\n\nAdjusted \\(R^2\\): Can be used for non-nested models; penalizes adding unnecessary predictors.\nAIC or BIC\n\nSmaller values are better.\n\nPenalizes high numbers of coefficients to prevent over-complexity\n\n\nUse on the full data if you are building an explanatory model, or on the training data only if you are building a predictive model"
+  },
+  {
+    "objectID": "slides/slides15.html#inference-after-selection",
+    "href": "slides/slides15.html#inference-after-selection",
+    "title": "Model Selection",
+    "section": "Inference after selection",
+    "text": "Inference after selection\n\nModel selection results in keeping terms with smaller p-values\nActual Type I error may be much bigger than than “expected” \\(\\alpha = .05\\)\nThis is an active area of research!\n\n→ if you rely on AIC/BIC/RMSE and compare lots of models, your p-values and confidence intervals might not be valid"
+  },
+  {
+    "objectID": "slides/slides15.html#a-note-on-automatic-selection",
+    "href": "slides/slides15.html#a-note-on-automatic-selection",
+    "title": "Model Selection",
+    "section": "A Note on Automatic Selection",
+    "text": "A Note on Automatic Selection\nI do not recommend using automated “Stepwise” (Forward/Backward) selection.\n\nWhy? They are easily abused and ignore domain knowledge, outliers, and collinearity.\n\nBetter Approach:\n\n“The single most important tool in selecting a subset of variables is the analyst’s knowledge of the area under study.” — Sandy Weisberg."
+  },
+  {
+    "objectID": "slides/slides15.html#summary-of-variable-selection",
+    "href": "slides/slides15.html#summary-of-variable-selection",
+    "title": "Model Selection",
+    "section": "Summary of Variable Selection",
+    "text": "Summary of Variable Selection\n\nIdentify research goals and use domain knowledge.\n\nPerform EDA and consider transformations.\n\nCompare models using ANOVA/Adj \\(R^2\\)/BIC (for nested) or AIC/RMSE (for prediction).\n\nJustify your model choice!"
+  },
+  {
+    "objectID": "slides/slides02.html#data-for-today",
+    "href": "slides/slides02.html#data-for-today",
+    "title": "Simple Linear Regression (SLR)",
     "section": "Data for today",
-    "text": "Data for today\nCapital Bikeshare is a bike sharing service in the Washington, D.C. area. We’re interested in analyzing the relationship between number of rides taken and temperature"
+    "text": "Data for today\nCapital Bikeshare is a bike sharing service in the Washington, D.C. area. To best serve its registered members, the company must understand the demand for its service. To help them out, we can analyze the number of rides taken on a random sample of n days.\n\n\n\n\n\n\n\n\n\n\n\n\n\n The data also has information about:\n\nWeekend/holiday/etc\nDay of the measurement\nWeather information\n\n\nFor our first analysis, we’ll investigate the relationship between temperature and daily ridership"
   },
   {
-    "objectID": "slides/slides03.html#last-time",
-    "href": "slides/slides03.html#last-time",
-    "title": "Inference for SLR",
-    "section": "Last Time",
-    "text": "Last Time\n\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)\nScatterplots + correlation\nFit the regression line in R and find a summary()\n\n\nbikes_lm &lt;- lm(rides ~ temp_actual, data = bikes)\n\n\nMaking confidence intervals using confint\n\n\nToday: moving from descriptive to inferential"
+    "objectID": "slides/slides02.html#section",
+    "href": "slides/slides02.html#section",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "",
+    "text": "Describe the scatterplot\nWrite the equation of the regression line\nInterpret the slope and intercept\nMake a prediction"
   },
   {
-    "objectID": "slides/slides03.html#lm-summary",
-    "href": "slides/slides03.html#lm-summary",
-    "title": "Inference for SLR",
-    "section": "lm() Summary",
-    "text": "lm() Summary\n\n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-3564.3 -1009.3  -116.4   959.1  3184.6 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -2168.77     363.64  -5.964 4.67e-09 ***\ntemp_actual    89.23       5.67  15.739  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1288 on 498 degrees of freedom\nMultiple R-squared:  0.3322,    Adjusted R-squared:  0.3308 \nF-statistic: 247.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16"
+    "objectID": "slides/slides02.html#q-describe-the-scatterplot",
+    "href": "slides/slides02.html#q-describe-the-scatterplot",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Describe the scatterplot",
+    "text": "Q: Describe the scatterplot\n\n\n\n\n\n\nThere is a strong, positive, linear association between temperature and number of rides.\nThere is a moderate, positive, linear association between temperature and number of rides.\n\n\n\n\n\n\n\nThere is a moderate, positive, non-linear association between temperature and number of rides.\nThere is a moderate, positive, linear association between temperature and number of rides, but there are a few extreme outliers."
   },
   {
-    "objectID": "slides/slides03.html#lets-take-a-step-back-sampling-variability",
-    "href": "slides/slides03.html#lets-take-a-step-back-sampling-variability",
-    "title": "Inference for SLR",
-    "section": "Let’s take a step back: Sampling Variability",
-    "text": "Let’s take a step back: Sampling Variability"
+    "objectID": "slides/slides02.html#q-write-the-equation-of-the-regression-line",
+    "href": "slides/slides02.html#q-write-the-equation-of-the-regression-line",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Write the equation of the regression line",
+    "text": "Q: Write the equation of the regression line\n\nlm(rides ~ temp_actual, data = bikes) \n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nCoefficients:\n(Intercept)  temp_actual  \n   -2168.77        89.23  \n\n\nWhat is the equation of the regression line?"
   },
   {
-    "objectID": "slides/slides03.html#sampling-distribution",
-    "href": "slides/slides03.html#sampling-distribution",
-    "title": "Inference for SLR",
-    "section": "Sampling distribution",
-    "text": "Sampling distribution"
+    "objectID": "slides/slides02.html#q-interpret-the-slope-in-context",
+    "href": "slides/slides02.html#q-interpret-the-slope-in-context",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Interpret the slope in context",
+    "text": "Q: Interpret the slope in context\n\n\nFor every one degree increase in temperature, the model predicts an average decrease of 89.23 rides\nFor every one-degree decrease in temperature, the model predicts an average increase of 89.23 rides\nIf the daily temperature is 0, we’d expect 89.23 rides\nIf the temperature increases by one degree, it will cause an increase of 89.23 rides every day"
   },
   {
-    "objectID": "slides/slides03.html#sampling-distribution-1",
-    "href": "slides/slides03.html#sampling-distribution-1",
-    "title": "Inference for SLR",
-    "section": "Sampling distribution",
-    "text": "Sampling distribution\nWe use the t distribution with df = n - 2 to model the sampling distribution of a regression coefficient"
+    "objectID": "slides/slides02.html#q-make-a-prediction",
+    "href": "slides/slides02.html#q-make-a-prediction",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Q: Make a prediction",
+    "text": "Q: Make a prediction\nThe high temperature forecast tomorrow is 72 degrees F. What does the model predict for ridership?"
   },
   {
-    "objectID": "slides/slides03.html#sampling-distribution-2",
-    "href": "slides/slides03.html#sampling-distribution-2",
-    "title": "Inference for SLR",
-    "section": "Sampling distribution",
-    "text": "Sampling distribution\n\nt distribution with \\(df =  n - 2\\)\n\n\n\nMean = \\(\\beta_i\\)\n\n\n\n\nStandard deviation = \\(SE(\\widehat{\\beta}_1) = \\widehat{\\sigma} / \\sqrt{\\sum (x_i - \\overline{x} )^2}\\)"
+    "objectID": "slides/slides02.html#overview-the-normal-distribution",
+    "href": "slides/slides02.html#overview-the-normal-distribution",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Overview: The Normal Distribution",
+    "text": "Overview: The Normal Distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\n If Y is:\n\nnumeric\nunimodal\nand symmetric,\n\nwe might use a Normal model"
   },
   {
-    "objectID": "slides/slides03.html#confidence-interval",
-    "href": "slides/slides03.html#confidence-interval",
-    "title": "Inference for SLR",
-    "section": "Confidence interval",
-    "text": "Confidence interval\n\n\nstatistic\n\n±\n\ncritical value × standard error\n\n\n\n\n\\(\\widehat{\\beta}_i\\)\n\n±\n\n\\(t^* \\cdot SE(\\widehat{\\beta}_i)\\)"
+    "objectID": "slides/slides02.html#y-sim-nmu-sigma2",
+    "href": "slides/slides02.html#y-sim-nmu-sigma2",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "\\(Y \\sim N(\\mu, \\sigma^2)\\)",
+    "text": "\\(Y \\sim N(\\mu, \\sigma^2)\\)"
   },
   {
-    "objectID": "slides/slides03.html#critical-value",
-    "href": "slides/slides03.html#critical-value",
-    "title": "Inference for SLR",
-    "section": "Critical Value",
-    "text": "Critical Value\n\n\n\nqt(.025, df = 30)\n\n[1] -2.042272\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.025, df = 30, \n   lower.tail = FALSE)\n\n[1] 2.042272\n\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.1, df = 30)\n\n[1] -1.310415\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.1, df = 30,\n   lower.tail = FALSE)\n\n[1] 1.310415\n\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.25, df = 30)\n\n[1] -0.6827557\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.25, df = 30, \n   lower.tail = FALSE)\n\n[1] 0.6827557"
+    "objectID": "slides/slides02.html#simple-linear-regression-model",
+    "href": "slides/slides02.html#simple-linear-regression-model",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Simple Linear Regression Model",
+    "text": "Simple Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
   },
   {
-    "objectID": "slides/slides03.html#hypothesis-test",
-    "href": "slides/slides03.html#hypothesis-test",
-    "title": "Inference for SLR",
-    "section": "Hypothesis test",
-    "text": "Hypothesis test\n\\(H_0: \\beta_i = \\text{null value}\\) vs. \\(H_a:\\) choose one of \\(\\begin{array}{c} \\beta_i \\ne  \\text{null value}\\\\ \\beta_i &lt; \\text{null value}  \\\\ \\beta_i &gt; \\text{null value} \\end{array}\\)\n\n\n\n\ntest statistic\n\n\\(= \\dfrac{\\text{estimate} - \\text{null value}}{\\text{SE}}\\)\n\n\n\n\n\n\\(=\\dfrac{\\widehat{\\beta}_i - \\text{null value}}{SE(\\widehat{\\beta}_i)}\\)\n\n\n\nFind appropriate tail areas under the t-distribution with \\(df = n - 2\\)"
+    "objectID": "slides/slides02.html#a-deterministic-model",
+    "href": "slides/slides02.html#a-deterministic-model",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "A deterministic model",
+    "text": "A deterministic model\n\n\\(Y_i = \\beta_0 + \\beta_1 x_i\\)\nNo uncertainty!"
   },
   {
-    "objectID": "slides/slides03.html#coefficient-table",
-    "href": "slides/slides03.html#coefficient-table",
-    "title": "Inference for SLR",
-    "section": "Coefficient table",
-    "text": "Coefficient table\nStandard output for a regression model includes a coefficient table\n\nlibrary(broom)\ntidy(mod)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)  -2169.     364.       -5.96 4.67e- 9\n2 temp_actual     89.2      5.67     15.7  1.35e-45"
+    "objectID": "slides/slides02.html#linear-regression-model",
+    "href": "slides/slides02.html#linear-regression-model",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Linear Regression Model",
+    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
   },
   {
-    "objectID": "slides/slides03.html#example-90-confidence-interval-for-beta_1",
-    "href": "slides/slides03.html#example-90-confidence-interval-for-beta_1",
-    "title": "Inference for SLR",
-    "section": "Example: 90% confidence interval for \\(\\beta_1\\)",
-    "text": "Example: 90% confidence interval for \\(\\beta_1\\)\n\n\nstatistic\n\n±\n\ncritical value × standard error\n\n\n\n\\(\\widehat{\\beta}_i\\)\n\n±\n\n\\(t^* \\cdot SE(\\widehat{\\beta}_i)\\)\n\n\n\nqt(.05, df = 30)\n\n[1] -1.697261\n\n\n\n\n\n\n\n\n\n\n\n\nCI Interpretation\n\n\n\nWe are _______% confident that for every 1 _________ increase in ____________________,\n_____________________________________________________ also ________________\nby between ____________ and _____________"
+    "objectID": "slides/slides02.html#linear-regression-model-1",
+    "href": "slides/slides02.html#linear-regression-model-1",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Linear Regression Model",
+    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
   },
   {
-    "objectID": "slides/slides-cheat-sheet.html#columns",
-    "href": "slides/slides-cheat-sheet.html#columns",
-    "title": "Slides Cheat Sheet",
-    "section": "Columns",
-    "text": "Columns\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
+    "objectID": "slides/slides02.html#linear-regression-model-2",
+    "href": "slides/slides02.html#linear-regression-model-2",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Linear Regression Model",
+    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
   },
   {
-    "objectID": "slides/slides-cheat-sheet.html#only-graph-from-code",
-    "href": "slides/slides-cheat-sheet.html#only-graph-from-code",
-    "title": "Slides Cheat Sheet",
-    "section": "Only graph from code",
-    "text": "Only graph from code"
+    "objectID": "slides/slides02.html#simple-linear-regression-model-1",
+    "href": "slides/slides02.html#simple-linear-regression-model-1",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Simple Linear Regression Model",
+    "text": "Simple Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)\n\n\nLinear relationship between \\(x\\) and \\(y\\)\nErrors are independent and identically distributed (iid)\nErrors are normally distributed\nErrors have mean 0\nVariance of the errors doesn’t depend on \\(x\\)"
   },
   {
-    "objectID": "slides/slides-cheat-sheet.html#background-image-half",
-    "href": "slides/slides-cheat-sheet.html#background-image-half",
-    "title": "Slides Cheat Sheet",
-    "section": "Background Image (half)",
-    "text": "Background Image (half)\n\n\nWhat skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
+    "objectID": "slides/slides02.html#notation",
+    "href": "slides/slides02.html#notation",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Notation",
+    "text": "Notation\nMean function:\n\\(\\quad E(Y|X)=\\mu\\{Y|X\\} = \\beta_0 + \\beta_1 x_i\\)\n\nFitted model equation:\n\\(\\quad \\widehat{Y}_i = \\widehat{\\mu}\\{Y|X\\} = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x_i\\)"
   },
   {
-    "objectID": "slides/slides-cheat-sheet.html#full-size-image",
-    "href": "slides/slides-cheat-sheet.html#full-size-image",
-    "title": "Slides Cheat Sheet",
-    "section": "Full size image",
-    "text": "Full size image\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
+    "objectID": "slides/slides02.html#uncertainty-in-the-parameters",
+    "href": "slides/slides02.html#uncertainty-in-the-parameters",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Uncertainty in the parameters",
+    "text": "Uncertainty in the parameters"
   },
   {
-    "objectID": "slides/slides-cheat-sheet.html#background-image-full-size",
-    "href": "slides/slides-cheat-sheet.html#background-image-full-size",
-    "title": "Slides Cheat Sheet",
-    "section": "Background image (full size)",
-    "text": "Background image (full size)"
+    "objectID": "slides/slides02.html#uncertainty-in-the-parameters-1",
+    "href": "slides/slides02.html#uncertainty-in-the-parameters-1",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Uncertainty in the parameters",
+    "text": "Uncertainty in the parameters"
   },
   {
-    "objectID": "slides/slides-cheat-sheet.html#countdown",
-    "href": "slides/slides-cheat-sheet.html#countdown",
-    "title": "Slides Cheat Sheet",
-    "section": "Countdown",
-    "text": "Countdown\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
+    "objectID": "slides/slides02.html#uncertainty-in-the-parameters-2",
+    "href": "slides/slides02.html#uncertainty-in-the-parameters-2",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Uncertainty in the parameters",
+    "text": "Uncertainty in the parameters"
   },
   {
-    "objectID": "slides/slides-cheat-sheet.html#table-column-widths",
-    "href": "slides/slides-cheat-sheet.html#table-column-widths",
-    "title": "Slides Cheat Sheet",
-    "section": "table column widths",
-    "text": "table column widths\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
+    "objectID": "slides/slides02.html#rest-of-today",
+    "href": "slides/slides02.html#rest-of-today",
+    "title": "Simple Linear Regression (SLR)",
+    "section": "Rest of today",
+    "text": "Rest of today\n\n\nOpen the SLR in R activity on Moodle and complete in your groups\nMake note of any questions\nChoose someone responsible for reporting out your answers"
   },
   {
-    "objectID": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
-    "href": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
-    "title": "Slides Cheat Sheet",
-    "section": "Use of generative artificial intelligence (AI)",
-    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
+    "objectID": "slides/slides09.html#bikes-again",
+    "href": "slides/slides09.html#bikes-again",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "bikes again",
+    "text": "bikes again\n\n\n\\[\n\\operatorname{\\widehat{rides}} = -2168.77 + 89.23(\\operatorname{temp\\_actual})\n\\]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \\(R^2 =\\) 0.332"
   },
   {
-    "objectID": "slides/slides-cheat-sheet.html#linktask",
-    "href": "slides/slides-cheat-sheet.html#linktask",
-    "title": "Slides Cheat Sheet",
-    "section": "Link/task",
-    "text": "Link/task\n\nhttps://github.com/stat220-w25\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
+    "objectID": "slides/slides09.html#pairs-plot",
+    "href": "slides/slides09.html#pairs-plot",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Pairs plot",
+    "text": "Pairs plot"
   },
   {
-    "objectID": "slides/slides-cheat-sheet.html#handwriting-font",
-    "href": "slides/slides-cheat-sheet.html#handwriting-font",
-    "title": "Slides Cheat Sheet",
-    "section": "handwriting font",
-    "text": "handwriting font\n\nin case you don’t yet have a GitHub account…"
+    "objectID": "slides/slides09.html#correlation-matrix",
+    "href": "slides/slides09.html#correlation-matrix",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Correlation matrix",
+    "text": "Correlation matrix\n\nbikes |&gt; \n  select(temp_actual, windspeed, rides) |&gt;\n  cor()\n\n            temp_actual  windspeed      rides\ntemp_actual   1.0000000 -0.1055362  0.5763486\nwindspeed    -0.1055362  1.0000000 -0.1949352\nrides         0.5763486 -0.1949352  1.0000000"
+  },
+  {
+    "objectID": "slides/slides09.html#multiple-linear-regression-mlr",
+    "href": "slides/slides09.html#multiple-linear-regression-mlr",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Multiple Linear Regression (MLR)",
+    "text": "Multiple Linear Regression (MLR)\n\\[Y_i = \\beta_0 + \\beta_1 x_{i1} + \\beta_2 x_{i2} + \\cdots + \\beta_p x_{ip} + \\varepsilon_i, \\quad \\varepsilon_i \\overset{iid}{\\sim} N(0, \\sigma^2)\\]\n\n\nThis model requires that…\n\n\\(\\mu\\{Y|x_1, x_2, \\ldots, x_p\\}\\) is a linear function\nThe error terms are independent\nThe error terms follow a normal distribution with mean 0 and variance \\(\\sigma^2\\)"
+  },
+  {
+    "objectID": "slides/slides09.html#fitting-the-model",
+    "href": "slides/slides09.html#fitting-the-model",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Fitting the model",
+    "text": "Fitting the model\nProcedure:\nLeast squares estimation: choose the coefficients to minimize \\[\\text{SSE} = \\sum_{i=1}^n \\left(Y_i - \\widehat{Y}_i \\right)^2\\] Then use \\(\\widehat{\\sigma} = \\sqrt{\\frac{\\text{SSE}}{n-(p+1)}}\\)"
+  },
+  {
+    "objectID": "slides/slides09.html#fitting-the-model-1",
+    "href": "slides/slides09.html#fitting-the-model-1",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Fitting the model",
+    "text": "Fitting the model\nR:\n\nbikes_mlr &lt;- lm(rides ~ temp_actual + windspeed, data = bikes)\ncoef(bikes_mlr)\n\n(Intercept) temp_actual   windspeed \n-1525.53822    87.01789   -38.62817"
+  },
+  {
+    "objectID": "slides/slides09.html#interpreting-widehatbeta_0",
+    "href": "slides/slides09.html#interpreting-widehatbeta_0",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Interpreting \\(\\widehat{\\beta}_0\\)",
+    "text": "Interpreting \\(\\widehat{\\beta}_0\\)\n\n\n(Intercept) temp_actual   windspeed \n  -1525.538      87.018     -38.628 \n\n\n\nThe expected value of the response variable when all explanatory variables are 0\nThe expected overall number of rides is about -1525.538 when temperature = 0 and windspeed = 0 🫠"
+  },
+  {
+    "objectID": "slides/slides09.html#interpreting-widehatbeta_j",
+    "href": "slides/slides09.html#interpreting-widehatbeta_j",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Interpreting \\(\\widehat{\\beta}_j\\)",
+    "text": "Interpreting \\(\\widehat{\\beta}_j\\)\n\n\n(Intercept) temp_actual   windspeed \n  -1525.538      87.018     -38.628 \n\n\n\nThe expected change in the response for a 1-unit increase in \\(x_j\\), when all other variables are held constant.\nWe expect 87.02 additional rides for every 1 degree increase in actual temperature, assuming constant windspeed\nWe expect 38.63 fewer rides for every 1 MPH increase in windspeed, assuming constant temperature"
+  },
+  {
+    "objectID": "slides/slides09.html#geometric-interpretation",
+    "href": "slides/slides09.html#geometric-interpretation",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Geometric interpretation:",
+    "text": "Geometric interpretation:\nMLR “line” is actually a plane"
+  },
+  {
+    "objectID": "slides/slides09.html#geometric-interpretation-1",
+    "href": "slides/slides09.html#geometric-interpretation-1",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Geometric interpretation:",
+    "text": "Geometric interpretation:\nMLR “line” is actually a plane"
+  },
+  {
+    "objectID": "slides/slides09.html#centering-predictor-variables",
+    "href": "slides/slides09.html#centering-predictor-variables",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Centering predictor variables",
+    "text": "Centering predictor variables\nIdea: make intercept more interpretable"
+  },
+  {
+    "objectID": "slides/slides09.html#making-centered-variables",
+    "href": "slides/slides09.html#making-centered-variables",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Making centered variables",
+    "text": "Making centered variables\n\nbikes &lt;- bikes |&gt;\n  mutate(\n    temp_centered = temp_actual - mean(temp_actual, na.rm = TRUE), \n    wind_centered = windspeed - mean(windspeed, na.rm = TRUE)\n  )\n\nMean shifts, standard deviation stays the same:\n\n\n  mean_orig mean_centered sd_orig sd_centered\n1     63.33             0   10.17       10.17"
+  },
+  {
+    "objectID": "slides/slides09.html#interpreting-widehatbeta_0-for-centered-predictors",
+    "href": "slides/slides09.html#interpreting-widehatbeta_0-for-centered-predictors",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Interpreting \\(\\widehat{\\beta}_0\\) for centered predictors",
+    "text": "Interpreting \\(\\widehat{\\beta}_0\\) for centered predictors\n\n\n  (Intercept) temp_centered wind_centered \n     3482.214        87.018       -38.628 \n\n\n\nThe expected value of the response variable when all explanatory variables are 0\nThe expected overall number of rides is about 3,482 on an average temperature and windspeed day 😌"
+  },
+  {
+    "objectID": "slides/slides09.html#interpreting-widehatbeta_j-doesnt-change",
+    "href": "slides/slides09.html#interpreting-widehatbeta_j-doesnt-change",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Interpreting \\(\\widehat{\\beta}_j\\) (doesn’t change)",
+    "text": "Interpreting \\(\\widehat{\\beta}_j\\) (doesn’t change)\n\n\n  (Intercept) temp_centered wind_centered \n     3482.214        87.018       -38.628 \n\n\n\nThe expected change in the response for a 1-unit increase in \\(x_j\\), when all other variables are held constant.\nWe expect 87.02 additional rides for every 1 degree increase in actual temperature, assuming constant windspeed\nWe expect 38.63 fewer rides for every 1 MPH increase in windspeed, assuming constant temperature"
+  },
+  {
+    "objectID": "slides/slides09.html#standardizing-predictor-variables",
+    "href": "slides/slides09.html#standardizing-predictor-variables",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Standardizing predictor variables",
+    "text": "Standardizing predictor variables\nIdea: 1 MPH in windspeed is different than 1 degree temp change"
+  },
+  {
+    "objectID": "slides/slides09.html#making-standardized-variables",
+    "href": "slides/slides09.html#making-standardized-variables",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Making standardized variables",
+    "text": "Making standardized variables\n\nbikes &lt;- bikes |&gt;\n  mutate(\n    temp_std = (temp_actual - mean(temp_actual, na.rm = TRUE))/sd(temp_actual, na.rm = TRUE), \n    wind_std = (windspeed - mean(windspeed, na.rm = TRUE))/sd(windspeed, na.rm = TRUE)\n  )\n\nNow, mean = 0 and sd = 1\n\n\n  mean_orig mean_std sd_orig sd_std\n1     63.33        0   10.17      1"
+  },
+  {
+    "objectID": "slides/slides09.html#interpreting-widehatbeta_0-for-standardized-predictors",
+    "href": "slides/slides09.html#interpreting-widehatbeta_0-for-standardized-predictors",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Interpreting \\(\\widehat{\\beta}_0\\) for standardized predictors",
+    "text": "Interpreting \\(\\widehat{\\beta}_0\\) for standardized predictors\n\n\n(Intercept)    temp_std    wind_std \n   3482.214     885.032    -213.560 \n\n\n\nThe expected value of the response variable when all explanatory variables are 0\nThe expected overall number of rides is about 3,482 on an average temperature and windspeed day"
+  },
+  {
+    "objectID": "slides/slides09.html#interpreting-widehatbeta_j-for-standardized-predictors",
+    "href": "slides/slides09.html#interpreting-widehatbeta_j-for-standardized-predictors",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "Interpreting \\(\\widehat{\\beta}_j\\) for standardized predictors",
+    "text": "Interpreting \\(\\widehat{\\beta}_j\\) for standardized predictors\n\n\n(Intercept)    temp_std    wind_std \n   3482.214     885.032    -213.560 \n\n\n\nThe expected change in the response for a 1 standard deviation increase in \\(x_j\\), when all other variables are held constant.\nWe expect 885 additional rides for every 1 SD increase in actual temperature (10.2 degrees), assuming constant windspeed\nWe expect 213 fewer rides for every 1 SD increase in windspeed (5.5 MPH), assuming constant temperature"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 230: Applied Regression Analysis",
+    "section": "",
+    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
+  },
+  {
+    "objectID": "finished/11-mlr-inference-finished.html",
+    "href": "finished/11-mlr-inference-finished.html",
+    "title": "11: Inference for MLR",
+    "section": "",
+    "text": "library(ggformula)"
+  },
+  {
+    "objectID": "finished/11-mlr-inference-finished.html#overview",
+    "href": "finished/11-mlr-inference-finished.html#overview",
+    "title": "11: Inference for MLR",
+    "section": "Overview",
+    "text": "Overview\nIn this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The cars data set loaded below contains information on used cars for sale, including their Price, Mileage, and Make (a categorical variable with six levels).\n\ncars &lt;- read.csv(\"https://aloy.github.io/stat230-materials/data/Cars.csv\", stringsAsFactors = TRUE)"
+  },
+  {
+    "objectID": "finished/11-mlr-inference-finished.html#thinking-about-the-data",
+    "href": "finished/11-mlr-inference-finished.html#thinking-about-the-data",
+    "title": "11: Inference for MLR",
+    "section": "Thinking about the data",
+    "text": "Thinking about the data\nTo begin, create a scatterplot of Price versus Mileage.\n\ngf_point(Price ~ Mileage, data = cars) \n\n\n\n\n\n\n\n\nQ1. What do you notice about the relationship between these two variables? Is a transformation necessary?\n\nThere appears to be negative correlation, and some outliers in the Y direction. There may be some curvature. A transformation may help.\n\nQ2. The Make variable is categorical with six levels: Buick, Cadillac, Chevrolet, Pontiac, SAAB, and Saturn. To include this variable in a regression model, we need use indicator (i.e., dummy) variables. How many do we need?\n\nThere are 6 levels so we need 5 indicator variables"
+  },
+  {
+    "objectID": "finished/11-mlr-inference-finished.html#fitting-an-mlr-model",
+    "href": "finished/11-mlr-inference-finished.html#fitting-an-mlr-model",
+    "title": "11: Inference for MLR",
+    "section": "Fitting an MLR model",
+    "text": "Fitting an MLR model\nBuild (fit) a multiple regression model using log(Price) as the response with Mileage and Make as the predictor variables. To do this, you use + to separate the predictor variable on the right side of the ~ in the model formula. R will automatically convert a categorical explanatory variable into a set of indicator variables.\n\ncar_lm &lt;- lm(log(Price) ~ Mileage + Make, data = cars)\nsummary(car_lm)\n\n\nCall:\nlm(formula = log(Price) ~ Mileage + Make, data = cars)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-0.53728 -0.14506 -0.02741  0.10750  1.00719 \n\nCoefficients:\n                Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)    1.009e+01  3.432e-02 293.975  &lt; 2e-16 ***\nMileage       -7.659e-06  1.041e-06  -7.359 4.61e-13 ***\nMakeCadillac   6.490e-01  3.814e-02  17.016  &lt; 2e-16 ***\nMakeChevrolet -2.956e-01  3.014e-02  -9.809  &lt; 2e-16 ***\nMakePontiac   -1.435e-01  3.339e-02  -4.299 1.93e-05 ***\nMakeSAAB       3.554e-01  3.516e-02  10.108  &lt; 2e-16 ***\nMakeSaturn    -3.972e-01  4.116e-02  -9.650  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.241 on 797 degrees of freedom\nMultiple R-squared:  0.6572,    Adjusted R-squared:  0.6546 \nF-statistic: 254.7 on 6 and 797 DF,  p-value: &lt; 2.2e-16\n\n\nQ3. Report the fitted regression equation and the \\(R^2\\) value.\n\n\\[\n\\begin{aligned}\n\\operatorname{\\widehat{log(Price)}} &= 10.09 + 0(\\operatorname{Mileage}) + 0.65(\\operatorname{Make}_{\\operatorname{Cadillac}})\\ - \\\\\n&\\quad 0.3(\\operatorname{Make}_{\\operatorname{Chevrolet}}) - 0.14(\\operatorname{Make}_{\\operatorname{Pontiac}}) + 0.36(\\operatorname{Make}_{\\operatorname{SAAB}})\\ - \\\\\n&\\quad 0.4(\\operatorname{Make}_{\\operatorname{Saturn}})\n\\end{aligned}\n\\]\n\nQ4. Which level of Make is the baseline? The baseline level is represented by 0’s across all of the indicator variables and won’t have a coefficient in the output.\n\nBuick (the category without an indicator variable)\n\nQ5. What strategy did R use to create the indicator variables for Make? In other words, how did R decide which level of Make to use as the baseline?\n\nAlphabetical order!\n\nQ6. Which of the following models best describes the one just fit: parallel lines, different slopes, or separate lines?\n\nParallel lines"
+  },
+  {
+    "objectID": "finished/11-mlr-inference-finished.html#plotting-the-fitted-model",
+    "href": "finished/11-mlr-inference-finished.html#plotting-the-fitted-model",
+    "title": "11: Inference for MLR",
+    "section": "Plotting the fitted model",
+    "text": "Plotting the fitted model\nTo plot a fitted regression model, we can use the ggpredict() and plot() functions in the {ggeffects} package. The ggpredict() function creates a data frame of predicted values from the model for each Make across a range of Mileage values. The plot() function then creates a plot of these predicted values.\n\nlibrary(ggeffects)\ncars_pred &lt;- ggpredict(car_lm, terms = ~Mileage + Make)\nplot(cars_pred)\n\n\n\n\n\n\n\n\nQ7. Does this plot confirm your answer to the previous question?\n\nIt’s kind of hard to tell, since the lines are on the original scale. Telling ggpredict to not back-transform makes it clear that yes, this is a parallel lines model.\n\n\ncars_pred &lt;- ggpredict(car_lm, terms = ~Mileage + Make, \n                       back_transform = FALSE)\nplot(cars_pred)"
+  },
+  {
+    "objectID": "finished/11-mlr-inference-finished.html#fitting-a-model-with-interactions",
+    "href": "finished/11-mlr-inference-finished.html#fitting-a-model-with-interactions",
+    "title": "11: Inference for MLR",
+    "section": "Fitting a model with interactions",
+    "text": "Fitting a model with interactions\nIf we believe that the association between Price and Mileage differs by Make, then we can include an interaction term in our model. To do this, we use * instead of + to separate the predictor variables on the right side of the ~ in the model formula. This will include both main effects and the interaction term.\n\ncar_lm2 &lt;- lm(log(Price) ~ Mileage * Make, data = cars)\n\n\nsummary(car_lm2)\n\n\nCall:\nlm(formula = log(Price) ~ Mileage * Make, data = cars)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-0.53137 -0.14306 -0.02311  0.10811  0.99917 \n\nCoefficients:\n                        Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)            1.008e+01  8.447e-02 119.315  &lt; 2e-16 ***\nMileage               -7.099e-06  3.918e-06  -1.812 0.070409 .  \nMakeCadillac           6.469e-01  1.056e-01   6.127 1.41e-09 ***\nMakeChevrolet         -2.633e-01  9.147e-02  -2.878 0.004106 ** \nMakePontiac           -1.819e-01  9.871e-02  -1.843 0.065680 .  \nMakeSAAB               3.561e-01  1.042e-01   3.418 0.000664 ***\nMakeSaturn            -3.225e-01  1.174e-01  -2.746 0.006166 ** \nMileage:MakeCadillac   1.578e-07  4.953e-06   0.032 0.974593    \nMileage:MakeChevrolet -1.623e-06  4.251e-06  -0.382 0.702655    \nMileage:MakePontiac    2.019e-06  4.615e-06   0.438 0.661826    \nMileage:MakeSAAB      -4.921e-08  4.760e-06  -0.010 0.991754    \nMileage:MakeSaturn    -3.673e-06  5.393e-06  -0.681 0.496041    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.2414 on 792 degrees of freedom\nMultiple R-squared:  0.6582,    Adjusted R-squared:  0.6535 \nF-statistic: 138.7 on 11 and 792 DF,  p-value: &lt; 2.2e-16\n\n\nQ8`. Report the fitted regression equation for Buicks and Cadillacs.\nQ9. What is the \\(R^2\\) value for this model? Does this model appear to fit the data better than the previous model?"
+  },
+  {
+    "objectID": "finished/11-mlr-inference-finished.html#plotting-the-fitted-model-with-interactions",
+    "href": "finished/11-mlr-inference-finished.html#plotting-the-fitted-model-with-interactions",
+    "title": "11: Inference for MLR",
+    "section": "Plotting the fitted model with interactions",
+    "text": "Plotting the fitted model with interactions\nTo plot the interaction model, we again use the ggpredict() and plot() functions in the {ggeffects} package.\n\ncars_pred2 &lt;- ggpredict(car_lm2, terms = ~Mileage + Make)\n\n# Now plot the predictions\nplot(cars_pred2)"
+  },
+  {
+    "objectID": "finished/11-mlr-inference-finished.html#calculating-extra-sums-of-squares-f-tests",
+    "href": "finished/11-mlr-inference-finished.html#calculating-extra-sums-of-squares-f-tests",
+    "title": "11: Inference for MLR",
+    "section": "Calculating extra sums of squares F-tests",
+    "text": "Calculating extra sums of squares F-tests\nDo we really need the interaction terms? To answer this question, we can use an extra sums of squares F-test to compare the model with interaction terms to the model without interaction terms.\nWe have already seen how to use the anova() function to compare two nested models. Here, we will use it again to compare our two car models.\nQ10. Fill in the blanks to run the extra sums of squares F-test. What do you conclude about the interaction terms?\n\nanova(car_lm2, car_lm)\n\nAnalysis of Variance Table\n\nModel 1: log(Price) ~ Mileage * Make\nModel 2: log(Price) ~ Mileage + Make\n  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)\n1    792 46.160                           \n2    797 46.297 -5  -0.13714 0.4706 0.7983\n\n\n\nUsing only the full model\nWe can also calculate the extra sums of squares F-test using only the full model. To do this, we need to extract the SSE and degrees of freedom for both models from the ANOVA table for the full model.\nQ11. Run the below code and verify that the df, sums of squares, mean squares, F value, and p-value match what you got from the previous anova() command.\n\nanova(car_lm2)\n\nAnalysis of Variance Table\n\nResponse: log(Price)\n              Df Sum Sq Mean Sq  F value    Pr(&gt;F)    \nMileage        1  2.959  2.9591  50.7715 2.336e-12 ***\nMake           5 85.802 17.1603 294.4325 &lt; 2.2e-16 ***\nMileage:Make   5  0.137  0.0274   0.4706    0.7983    \nResiduals    792 46.160  0.0583                       \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "finished/11-mlr-inference-finished.html#function-quick-reference",
+    "href": "finished/11-mlr-inference-finished.html#function-quick-reference",
+    "title": "11: Inference for MLR",
+    "section": "Function quick reference",
+    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm()\nFit a linear model\n\n\nsummary()\nDisplay detailed results from a fitted model\n\n\nggpredict()\nCreate a data frame of predicted values from a fitted model\n\n\nplot()\nCreate a plot of predicted values from a fitted model\n\n\nanova()\nCreate an ANOVA table for a fitted model or compare two nested models"
+  },
+  {
+    "objectID": "readings.html",
+    "href": "readings.html",
+    "title": "Readings",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nExam01 Review\n\n\n \n\n\n\n\n\n\nExam02 Review\n\n\n \n\n\n\n\n\n\nIntro Stat Review\n\n\n \n\n\n\n\n\n\nRevisions for Stat230\n\n\n \n\n\n\n\n\n\nUsing R/RStudio for Stat230\n\n\n \n\n\n\n\n\n\nr-functions-reference\n\n\n \n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "slides.html",
+    "href": "slides.html",
+    "title": "Slides",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Topic\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTopic\n\n\n\nCourse Day\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nModel Selection\n\n\nDay 15\n\n\nProf Amanda Luby\n\n\n\n\n\n\nMulticollinearity\n\n\nDay 14\n\n\nProf Amanda Luby\n\n\n\n\n\n\nDiagnostics for MLR\n\n\nDay 13\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Linear Combinations\n\n\nDay 12\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for MLR\n\n\nDay 11\n\n\nProf Amanda Luby\n\n\n\n\n\n\nAdding Categorical Predictors\n\n\nDay 10\n\n\nProf Amanda Luby\n\n\n\n\n\n\nIntro to Multiple Linear Regression\n\n\nDay 09\n\n\nProf Amanda Luby\n\n\n\n\n\n\nTransformations and polynomial regression\n\n\nDay 08\n\n\nProf Amanda Luby\n\n\n\n\n\n\nTransforming SLR models\n\n\nDay 06\n\n\nProf Amanda Luby\n\n\n\n\n\n\nEvaluating SLR models\n\n\nDay 05\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Prediction\n\n\nDay 04\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for SLR\n\n\nDay 03\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nDay 02\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html",
+    "href": "finished/14-multicollinearity-finished.html",
+    "title": "Multicollinearity and R2",
+    "section": "",
+    "text": "In this activity you will learn how to calculate diagnostic measures and create diagnostic plots for multiple linear regression models in R."
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#overview",
+    "href": "finished/14-multicollinearity-finished.html#overview",
+    "title": "Multicollinearity and R2",
+    "section": "",
+    "text": "In this activity you will learn how to calculate diagnostic measures and create diagnostic plots for multiple linear regression models in R."
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#example-1-uncorrelated-predictors",
+    "href": "finished/14-multicollinearity-finished.html#example-1-uncorrelated-predictors",
+    "title": "Multicollinearity and R2",
+    "section": "Example 1: Uncorrelated Predictors",
+    "text": "Example 1: Uncorrelated Predictors\nAs a first example, let’s consider a multiple linear regression model where the two predictor variables are uncorrelated.\nTask 1. Inspect the below correlation matrix and verify that the correlation between the two predictor variables (x1 and x2) is 0.\n\n\n          x1        x2         y\nx1 1.0000000 0.0000000 0.7419309\nx2 0.0000000 1.0000000 0.6384057\ny  0.7419309 0.6384057 1.0000000\n\n\nTask 2. The below code chunk fits a simple linear regression model with y as the response variable and x1 as the predictor variables. The coefficients table was extracted using the broom::tidy(). (Feel free to use broom::tidy() in your work!)\n\nmod1 &lt;- lm(y ~ x1, data = ex1)\nbroom::tidy(mod1)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)    23.5      10.1       2.32  0.0591\n2 x1              5.37      1.98      2.71  0.0351\n\n\nSimilarly, here is the output for the simple linear regression model with y as the response variable and x2 as the predictor variable.\n\nmod2 &lt;- lm(y ~ x2, data = ex1)\nbroom::tidy(mod2)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)    27.3      11.6       2.35  0.0572\n2 x2              9.25      4.55      2.03  0.0885\n\n\nAnd finally, here is the output for the multiple linear regression model with y as the response variable and both x1 and x2 as the predictor variables.\n\nmod3 &lt;- lm(y ~ x1 + x2, data = ex1)\nbroom::tidy(mod3)\n\n# A tibble: 3 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)    0.375     4.74     0.0791 0.940   \n2 x1             5.37      0.664    8.10   0.000466\n3 x2             9.25      1.33     6.97   0.000937\n\n\nCompare the model summaries from the three models. What do you observe about the coefficients when both predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?"
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#example-2-prefectly-correlated-predictors",
+    "href": "finished/14-multicollinearity-finished.html#example-2-prefectly-correlated-predictors",
+    "title": "Multicollinearity and R2",
+    "section": "Example 2: Prefectly Correlated Predictors",
+    "text": "Example 2: Prefectly Correlated Predictors\nIn many examples the predictor variables will be correlated. As an extreme example, let’s consider a situation where the predictors are perfectly correlated. The data set for this small example is printed below.\n\n\n  x1 x2   y\n1  2  6  23\n2  8  9  83\n3  6  8  63\n4 10 10 103\n\n\nTask 3. Inspect the below correlation matrix and verify that the correlation between the two predictor variables (x1 and x2) is 1.\n\n\n   x1 x2 y\nx1  1  1 1\nx2  1  1 1\ny   1  1 1\n\n\nTask 4. From the previous task, you should have seen that the correlation between x1 and x2 is 1, as is the correlation between both predictors and y. This sounds like a great situation, right? We’ll explore two models to unpack this.\n\nConsider the fitted regression equation: \\(\\widehat{y} = -87 + x_1 + 18x_2\\). Verify that the predicted values are exactly equal to the observed values.\nConsider the fitted regression equation: \\(\\widehat{y} = -7 + 9x_1 + 2x_2\\). Verify that the predicted values are exactly equal to the observed values.\nDiscuss the following questions with your group:\n\nWould you be willing to use either model to make predictions for new observations? Why or why not?\nWould you be willing to interpret the coefficients in either model? Why or why not?\nDo you think the standard error of the slopes is reasonably small or large? Why?"
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#example-3-a-more-realistic-example",
+    "href": "finished/14-multicollinearity-finished.html#example-3-a-more-realistic-example",
+    "title": "Multicollinearity and R2",
+    "section": "Example 3: A more realistic example",
+    "text": "Example 3: A more realistic example\nLet’s consider a more realistic example where the predictor variables are correlated, but not perfectly correlated. The data set bodyfat contains measurements on 20 healthy adults between 25 and 34 years of age. We’re interested in predicting body fat percentage using three body measurements: triceps skinfold thickness, thigh circumference, and midarm circumference.\nTask 5. Below is the correlation matrix for the data set. What do you observe about the correlations between the predictor variables?\n\n\n                     triceps_skinfold thigh_circumference midarm_circumference\ntriceps_skinfold            1.0000000           0.9238425            0.4577772\nthigh_circumference         0.9238425           1.0000000            0.0846675\nmidarm_circumference        0.4577772           0.0846675            1.0000000\nbody_fat                    0.8432654           0.8780896            0.1424440\n                      body_fat\ntriceps_skinfold     0.8432654\nthigh_circumference  0.8780896\nmidarm_circumference 0.1424440\nbody_fat             1.0000000\n\n\nTask 6. There are numerous models that we could consider. Below are summary tables from several models. Compare the model summaries from the fitted models. What do you observe about the coefficients when different predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?\nOnly triceps skinfold as a predictor:\n\n\n# A tibble: 2 × 5\n  term             estimate std.error statistic    p.value\n  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n1 (Intercept)        -1.50      3.32     -0.451 0.658     \n2 triceps_skinfold    0.857     0.129     6.66  0.00000302\n\n\nOnly thigh circumference as a predictor:\n\n\n# A tibble: 2 × 5\n  term                estimate std.error statistic     p.value\n  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;\n1 (Intercept)          -23.6       5.66      -4.18 0.000566   \n2 thigh_circumference    0.857     0.110      7.79 0.000000360\n\n\nOnly midarm circumference as a predictor:\n\n\n# A tibble: 2 × 5\n  term                 estimate std.error statistic p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)            14.7       9.10      1.61    0.124\n2 midarm_circumference    0.199     0.327     0.611   0.549\n\n\nTriceps skinfold and thigh circumference as predictors:\n\n\n# A tibble: 3 × 5\n  term                estimate std.error statistic p.value\n  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)          -19.2       8.36     -2.29   0.0348\n2 triceps_skinfold       0.222     0.303     0.733  0.474 \n3 thigh_circumference    0.659     0.291     2.26   0.0369\n\n\nTriceps skinfold and midarm circumference as predictors:\n\n\n# A tibble: 3 × 5\n  term                 estimate std.error statistic     p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;\n1 (Intercept)          -26.0        7.00     -3.72  0.00172    \n2 midarm_circumference   0.0960     0.161     0.595 0.560      \n3 thigh_circumference    0.851      0.112     7.57  0.000000772\n\n\nThigh circumference and midarm circumference as predictors:\n\n\n# A tibble: 4 × 5\n  term                 estimate std.error statistic p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)            117.       99.8       1.17   0.258\n2 triceps_skinfold         4.33      3.02      1.44   0.170\n3 thigh_circumference     -2.86      2.58     -1.11   0.285\n4 midarm_circumference    -2.19      1.60     -1.37   0.190\n\n\n Let me know when you have reached this spot. We’ll regroup as a class to discuss your observations."
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#what-about-predictions",
+    "href": "finished/14-multicollinearity-finished.html#what-about-predictions",
+    "title": "Multicollinearity and R2",
+    "section": "What about predictions?",
+    "text": "What about predictions?\nNow that we’ve discussed the issues revolving around interpreting coefficients and drawing inference on them in the presence of multicollinearity, let’s consider how multicollinearity impacts predictions.\nRecall that the mean squared error (MSE) of a model measures the variability in the error terms (residuals). In other words, it is measuring the variability unexplained by the model.\nTask 7. Below are the MSE values for three of the models we considered in Task 6. What do you observe about the MSE values when different predictors are included in the model?\n\n\n\nPredictors\nMSE\n\n\n\n\ntriceps_skinfold\n7.95\n\n\ntriceps_skinfold, thigh_circumference\n6.47\n\n\ntriceps_skinfold, thigh_circumference, midarm_circumference\n6.15\n\n\n\nTask 8. Based on your observations, do you think we can use any of the models to make predictions for new observations? Why or why not?\n Let me know when you have reached this spot. We’ll regroup as a class to discuss your observations."
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#be-wary-of-r2-when-comparing-models",
+    "href": "finished/14-multicollinearity-finished.html#be-wary-of-r2-when-comparing-models",
+    "title": "Multicollinearity and R2",
+    "section": "Be Wary of R2 when comparing models",
+    "text": "Be Wary of R2 when comparing models\nWe all love R2 right? It is “easy” to interpret and is a popular metric of model fit to report in many fields. While I agree that R2 is a nice metric for describing a single model, it has an issue when it’s used to compare models. In this example, you’ll explore this issue.\nCase Study 10.1.1 in The Statistical Sleuth describes Galileo’s experiment that led him to discover that the trajectory of a body falling with horizontal velocity is a parabola (see page 272). The case1011 data set in the Sleuth3 R package contains the results of Galileo’s experiment. The data set contains seven observations on the following two variables: the horizontal distance traveled from the edge of the table to its landing spot, and the initial height of the object. Both measurements are in punti (1 punti = or 169/180 mm or about 0.037 in).\nTask 9. Fit each of the following models and report the R2 value for each. Fill in the table below.\nStarter R code:\n\nlibrary(Sleuth3)\nmod &lt;- lm(Distance ~ Height, data = case1001)\nsummary(mod)\n\n\n\n\n\n\n\n\nModel\nR2\n\n\n\n\n\\(\\text{distance} \\sim \\text{height}\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4 + \\text{height}^5\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4 + \\text{height}^5+ \\text{height}^6\\)\n\n\n\n\nWhat do you observe about the R2 values as you add more polynomial terms to the model?"
   },
   {
     "objectID": "slides/slides08.html#section",
@@ -1435,396 +1813,158 @@
     "text": "⚠️ Caution\n\\(R^2\\) only addresses how close the fitted values are to the data, on average. It says nothing about the validity of the model."
   },
   {
-    "objectID": "finished/14-multicollinearity-finished.html",
-    "href": "finished/14-multicollinearity-finished.html",
-    "title": "Multicollinearity and R2",
-    "section": "",
-    "text": "In this activity you will learn how to calculate diagnostic measures and create diagnostic plots for multiple linear regression models in R."
+    "objectID": "slides/slides-cheat-sheet.html#columns",
+    "href": "slides/slides-cheat-sheet.html#columns",
+    "title": "Slides Cheat Sheet",
+    "section": "Columns",
+    "text": "Columns\n\n\n\nFirst year at Carleton!\nTaught at Swarthmore for 5 years before moving here this fall\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad"
   },
   {
-    "objectID": "finished/14-multicollinearity-finished.html#overview",
-    "href": "finished/14-multicollinearity-finished.html#overview",
-    "title": "Multicollinearity and R2",
-    "section": "",
-    "text": "In this activity you will learn how to calculate diagnostic measures and create diagnostic plots for multiple linear regression models in R."
+    "objectID": "slides/slides-cheat-sheet.html#only-graph-from-code",
+    "href": "slides/slides-cheat-sheet.html#only-graph-from-code",
+    "title": "Slides Cheat Sheet",
+    "section": "Only graph from code",
+    "text": "Only graph from code"
   },
   {
-    "objectID": "finished/14-multicollinearity-finished.html#example-1-uncorrelated-predictors",
-    "href": "finished/14-multicollinearity-finished.html#example-1-uncorrelated-predictors",
-    "title": "Multicollinearity and R2",
-    "section": "Example 1: Uncorrelated Predictors",
-    "text": "Example 1: Uncorrelated Predictors\nAs a first example, let’s consider a multiple linear regression model where the two predictor variables are uncorrelated.\nTask 1. Inspect the below correlation matrix and verify that the correlation between the two predictor variables (x1 and x2) is 0.\n\n\n          x1        x2         y\nx1 1.0000000 0.0000000 0.7419309\nx2 0.0000000 1.0000000 0.6384057\ny  0.7419309 0.6384057 1.0000000\n\n\nTask 2. The below code chunk fits a simple linear regression model with y as the response variable and x1 as the predictor variables. The coefficients table was extracted using the broom::tidy(). (Feel free to use broom::tidy() in your work!)\n\nmod1 &lt;- lm(y ~ x1, data = ex1)\nbroom::tidy(mod1)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)    23.5      10.1       2.32  0.0591\n2 x1              5.37      1.98      2.71  0.0351\n\n\nSimilarly, here is the output for the simple linear regression model with y as the response variable and x2 as the predictor variable.\n\nmod2 &lt;- lm(y ~ x2, data = ex1)\nbroom::tidy(mod2)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)    27.3      11.6       2.35  0.0572\n2 x2              9.25      4.55      2.03  0.0885\n\n\nAnd finally, here is the output for the multiple linear regression model with y as the response variable and both x1 and x2 as the predictor variables.\n\nmod3 &lt;- lm(y ~ x1 + x2, data = ex1)\nbroom::tidy(mod3)\n\n# A tibble: 3 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)    0.375     4.74     0.0791 0.940   \n2 x1             5.37      0.664    8.10   0.000466\n3 x2             9.25      1.33     6.97   0.000937\n\n\nCompare the model summaries from the three models. What do you observe about the coefficients when both predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?"
+    "objectID": "slides/slides-cheat-sheet.html#background-image-half",
+    "href": "slides/slides-cheat-sheet.html#background-image-half",
+    "title": "Slides Cheat Sheet",
+    "section": "Background Image (half)",
+    "text": "Background Image (half)\n\n\nWhat skills do you need?\n\nprogramming with data\nstatistical modeling\ndomain knowledge\ncommunication"
   },
   {
-    "objectID": "finished/14-multicollinearity-finished.html#example-2-prefectly-correlated-predictors",
-    "href": "finished/14-multicollinearity-finished.html#example-2-prefectly-correlated-predictors",
-    "title": "Multicollinearity and R2",
-    "section": "Example 2: Prefectly Correlated Predictors",
-    "text": "Example 2: Prefectly Correlated Predictors\nIn many examples the predictor variables will be correlated. As an extreme example, let’s consider a situation where the predictors are perfectly correlated. The data set for this small example is printed below.\n\n\n  x1 x2   y\n1  2  6  23\n2  8  9  83\n3  6  8  63\n4 10 10 103\n\n\nTask 3. Inspect the below correlation matrix and verify that the correlation between the two predictor variables (x1 and x2) is 1.\n\n\n   x1 x2 y\nx1  1  1 1\nx2  1  1 1\ny   1  1 1\n\n\nTask 4. From the previous task, you should have seen that the correlation between x1 and x2 is 1, as is the correlation between both predictors and y. This sounds like a great situation, right? We’ll explore two models to unpack this.\n\nConsider the fitted regression equation: \\(\\widehat{y} = -87 + x_1 + 18x_2\\). Verify that the predicted values are exactly equal to the observed values.\nConsider the fitted regression equation: \\(\\widehat{y} = -7 + 9x_1 + 2x_2\\). Verify that the predicted values are exactly equal to the observed values.\nDiscuss the following questions with your group:\n\nWould you be willing to use either model to make predictions for new observations? Why or why not?\nWould you be willing to interpret the coefficients in either model? Why or why not?\nDo you think the standard error of the slopes is reasonably small or large? Why?"
+    "objectID": "slides/slides-cheat-sheet.html#full-size-image",
+    "href": "slides/slides-cheat-sheet.html#full-size-image",
+    "title": "Slides Cheat Sheet",
+    "section": "Full size image",
+    "text": "Full size image\n\n\n\nImage by Adam Loy  adapted from work of Joe Blitzstein, Hanspeter Pfister, and Hadley Wickham"
   },
   {
-    "objectID": "finished/14-multicollinearity-finished.html#example-3-a-more-realistic-example",
-    "href": "finished/14-multicollinearity-finished.html#example-3-a-more-realistic-example",
-    "title": "Multicollinearity and R2",
-    "section": "Example 3: A more realistic example",
-    "text": "Example 3: A more realistic example\nLet’s consider a more realistic example where the predictor variables are correlated, but not perfectly correlated. The data set bodyfat contains measurements on 20 healthy adults between 25 and 34 years of age. We’re interested in predicting body fat percentage using three body measurements: triceps skinfold thickness, thigh circumference, and midarm circumference.\nTask 5. Below is the correlation matrix for the data set. What do you observe about the correlations between the predictor variables?\n\n\n                     triceps_skinfold thigh_circumference midarm_circumference\ntriceps_skinfold            1.0000000           0.9238425            0.4577772\nthigh_circumference         0.9238425           1.0000000            0.0846675\nmidarm_circumference        0.4577772           0.0846675            1.0000000\nbody_fat                    0.8432654           0.8780896            0.1424440\n                      body_fat\ntriceps_skinfold     0.8432654\nthigh_circumference  0.8780896\nmidarm_circumference 0.1424440\nbody_fat             1.0000000\n\n\nTask 6. There are numerous models that we could consider. Below are summary tables from several models. Compare the model summaries from the fitted models. What do you observe about the coefficients when different predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?\nOnly triceps skinfold as a predictor:\n\n\n# A tibble: 2 × 5\n  term             estimate std.error statistic    p.value\n  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n1 (Intercept)        -1.50      3.32     -0.451 0.658     \n2 triceps_skinfold    0.857     0.129     6.66  0.00000302\n\n\nOnly thigh circumference as a predictor:\n\n\n# A tibble: 2 × 5\n  term                estimate std.error statistic     p.value\n  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;\n1 (Intercept)          -23.6       5.66      -4.18 0.000566   \n2 thigh_circumference    0.857     0.110      7.79 0.000000360\n\n\nOnly midarm circumference as a predictor:\n\n\n# A tibble: 2 × 5\n  term                 estimate std.error statistic p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)            14.7       9.10      1.61    0.124\n2 midarm_circumference    0.199     0.327     0.611   0.549\n\n\nTriceps skinfold and thigh circumference as predictors:\n\n\n# A tibble: 3 × 5\n  term                estimate std.error statistic p.value\n  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)          -19.2       8.36     -2.29   0.0348\n2 triceps_skinfold       0.222     0.303     0.733  0.474 \n3 thigh_circumference    0.659     0.291     2.26   0.0369\n\n\nTriceps skinfold and midarm circumference as predictors:\n\n\n# A tibble: 3 × 5\n  term                 estimate std.error statistic     p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;\n1 (Intercept)          -26.0        7.00     -3.72  0.00172    \n2 midarm_circumference   0.0960     0.161     0.595 0.560      \n3 thigh_circumference    0.851      0.112     7.57  0.000000772\n\n\nThigh circumference and midarm circumference as predictors:\n\n\n# A tibble: 4 × 5\n  term                 estimate std.error statistic p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)            117.       99.8       1.17   0.258\n2 triceps_skinfold         4.33      3.02      1.44   0.170\n3 thigh_circumference     -2.86      2.58     -1.11   0.285\n4 midarm_circumference    -2.19      1.60     -1.37   0.190\n\n\n Let me know when you have reached this spot. We’ll regroup as a class to discuss your observations."
+    "objectID": "slides/slides-cheat-sheet.html#background-image-full-size",
+    "href": "slides/slides-cheat-sheet.html#background-image-full-size",
+    "title": "Slides Cheat Sheet",
+    "section": "Background image (full size)",
+    "text": "Background image (full size)"
   },
   {
-    "objectID": "finished/14-multicollinearity-finished.html#what-about-predictions",
-    "href": "finished/14-multicollinearity-finished.html#what-about-predictions",
-    "title": "Multicollinearity and R2",
-    "section": "What about predictions?",
-    "text": "What about predictions?\nNow that we’ve discussed the issues revolving around interpreting coefficients and drawing inference on them in the presence of multicollinearity, let’s consider how multicollinearity impacts predictions.\nRecall that the mean squared error (MSE) of a model measures the variability in the error terms (residuals). In other words, it is measuring the variability unexplained by the model.\nTask 7. Below are the MSE values for three of the models we considered in Task 6. What do you observe about the MSE values when different predictors are included in the model?\n\n\n\nPredictors\nMSE\n\n\n\n\ntriceps_skinfold\n7.95\n\n\ntriceps_skinfold, thigh_circumference\n6.47\n\n\ntriceps_skinfold, thigh_circumference, midarm_circumference\n6.15\n\n\n\nTask 8. Based on your observations, do you think we can use any of the models to make predictions for new observations? Why or why not?\n Let me know when you have reached this spot. We’ll regroup as a class to discuss your observations."
+    "objectID": "slides/slides-cheat-sheet.html#countdown",
+    "href": "slides/slides-cheat-sheet.html#countdown",
+    "title": "Slides Cheat Sheet",
+    "section": "Countdown",
+    "text": "Countdown\n\nWith your neighbor(s):\nChoose two countries to compare to the U.S. voting record in the U.N. over the years.\nWhat did you learn?\n\n\n\n\n−+\n04:00"
   },
   {
-    "objectID": "finished/14-multicollinearity-finished.html#be-wary-of-r2-when-comparing-models",
-    "href": "finished/14-multicollinearity-finished.html#be-wary-of-r2-when-comparing-models",
-    "title": "Multicollinearity and R2",
-    "section": "Be Wary of R2 when comparing models",
-    "text": "Be Wary of R2 when comparing models\nWe all love R2 right? It is “easy” to interpret and is a popular metric of model fit to report in many fields. While I agree that R2 is a nice metric for describing a single model, it has an issue when it’s used to compare models. In this example, you’ll explore this issue.\nCase Study 10.1.1 in The Statistical Sleuth describes Galileo’s experiment that led him to discover that the trajectory of a body falling with horizontal velocity is a parabola (see page 272). The case1011 data set in the Sleuth3 R package contains the results of Galileo’s experiment. The data set contains seven observations on the following two variables: the horizontal distance traveled from the edge of the table to its landing spot, and the initial height of the object. Both measurements are in punti (1 punti = or 169/180 mm or about 0.037 in).\nTask 9. Fit each of the following models and report the R2 value for each. Fill in the table below.\nStarter R code:\n\nlibrary(Sleuth3)\nmod &lt;- lm(Distance ~ Height, data = case1001)\nsummary(mod)\n\n\n\n\n\n\n\n\nModel\nR2\n\n\n\n\n\\(\\text{distance} \\sim \\text{height}\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4 + \\text{height}^5\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4 + \\text{height}^5+ \\text{height}^6\\)\n\n\n\n\nWhat do you observe about the R2 values as you add more polynomial terms to the model?"
+    "objectID": "slides/slides-cheat-sheet.html#table-column-widths",
+    "href": "slides/slides-cheat-sheet.html#table-column-widths",
+    "title": "Slides Cheat Sheet",
+    "section": "table column widths",
+    "text": "table column widths\n\n\n\n\n\n\n\n\nCollaboration Allowed\n\n\n\n\nHomework Problems\nYou are allowed and encouraged to collaborate on homework. You may also use outside resources, but your submitted work must be your own and reflect your own understanding .\n\n\nLab Quiz Problems\nNo collaboration is allowed at all . You may use your own notes for resubmissions, but should not use outside resources.\n\n\nPortfolio Projects\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Getting answers on significant parts of solutions from outside resources is not allowed.\n\n\nFinal Project\nYou are expected to collaborate with your group, but cannot rely on external sources other than to help motivate the questions or provide other background information. Any outside resources should be properly cited."
   },
   {
-    "objectID": "slides.html",
-    "href": "slides.html",
-    "title": "Slides",
-    "section": "",
-    "text": "Order By\n      Default\n      \n        Topic\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTopic\n\n\n\nCourse Day\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nMulticollinearity\n\n\nDay 14\n\n\nProf Amanda Luby\n\n\n\n\n\n\nDiagnostics for MLR\n\n\nDay 13\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Linear Combinations\n\n\nDay 12\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for MLR\n\n\nDay 11\n\n\nProf Amanda Luby\n\n\n\n\n\n\nAdding Categorical Predictors\n\n\nDay 10\n\n\nProf Amanda Luby\n\n\n\n\n\n\nIntro to Multiple Linear Regression\n\n\nDay 09\n\n\nProf Amanda Luby\n\n\n\n\n\n\nTransformations and polynomial regression\n\n\nDay 08\n\n\nProf Amanda Luby\n\n\n\n\n\n\nTransforming SLR models\n\n\nDay 06\n\n\nProf Amanda Luby\n\n\n\n\n\n\nEvaluating SLR models\n\n\nDay 05\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Prediction\n\n\nDay 04\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for SLR\n\n\nDay 03\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nDay 02\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
+    "objectID": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
+    "href": "slides/slides-cheat-sheet.html#use-of-generative-artificial-intelligence-ai",
+    "title": "Slides Cheat Sheet",
+    "section": "Use of generative artificial intelligence (AI)",
+    "text": "Use of generative artificial intelligence (AI)\n\nTreat generative AI, such as ChatGPT or Gemini, the same as other online resources.\nGuiding principles:\n\n(1) Cognitive dimension: Working with AI should not reduce your ability to think clearly. AI should facilitate—rather than hinder—learning.\n(2) Ethical dimension: Students using AI should be transparent about their use and make sure it aligns with academic integrity.\n\n❌ AI tools for writing code: You may not use generative AI to take a “first pass” at a coding task. Do not type coursework prompts directly into AI tools.\n✅ AI tools for debugging code: You may make use of the technology to get help with error messages or trying to fix issues\n❌ AI tools for narrative: Unless instructed otherwise, you may not use generative AI to write narrative on assignments. In general, you may use generative AI as a resource as you complete assignments but not to answer the exercises for you.\n\n\n\nAdapted from Mine Çetinkaya-Rundel"
   },
   {
-    "objectID": "readings.html",
-    "href": "readings.html",
-    "title": "Readings",
-    "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nExam01 Review\n\n\n \n\n\n\n\n\n\nExam02 Review\n\n\n \n\n\n\n\n\n\nIntro Stat Review\n\n\n \n\n\n\n\n\n\nRevisions for Stat230\n\n\n \n\n\n\n\n\n\nUsing R/RStudio for Stat230\n\n\n \n\n\n\n\n\n\nr-functions-reference\n\n\n \n\n\n\n\n\n\nNo matching items"
+    "objectID": "slides/slides-cheat-sheet.html#linktask",
+    "href": "slides/slides-cheat-sheet.html#linktask",
+    "title": "Slides Cheat Sheet",
+    "section": "Link/task",
+    "text": "Link/task\n\nhttps://github.com/stat220-w25\n\n\nFill out the Welcome Survey for collection of your account names, later this week you will be invited to the course organization."
   },
   {
-    "objectID": "finished/11-mlr-inference-finished.html",
-    "href": "finished/11-mlr-inference-finished.html",
-    "title": "11: Inference for MLR",
-    "section": "",
-    "text": "library(ggformula)"
+    "objectID": "slides/slides-cheat-sheet.html#handwriting-font",
+    "href": "slides/slides-cheat-sheet.html#handwriting-font",
+    "title": "Slides Cheat Sheet",
+    "section": "handwriting font",
+    "text": "handwriting font\n\nin case you don’t yet have a GitHub account…"
   },
   {
-    "objectID": "finished/11-mlr-inference-finished.html#overview",
-    "href": "finished/11-mlr-inference-finished.html#overview",
-    "title": "11: Inference for MLR",
-    "section": "Overview",
-    "text": "Overview\nIn this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The cars data set loaded below contains information on used cars for sale, including their Price, Mileage, and Make (a categorical variable with six levels).\n\ncars &lt;- read.csv(\"https://aloy.github.io/stat230-materials/data/Cars.csv\", stringsAsFactors = TRUE)"
-  },
-  {
-    "objectID": "finished/11-mlr-inference-finished.html#thinking-about-the-data",
-    "href": "finished/11-mlr-inference-finished.html#thinking-about-the-data",
-    "title": "11: Inference for MLR",
-    "section": "Thinking about the data",
-    "text": "Thinking about the data\nTo begin, create a scatterplot of Price versus Mileage.\n\ngf_point(Price ~ Mileage, data = cars) \n\n\n\n\n\n\n\n\nQ1. What do you notice about the relationship between these two variables? Is a transformation necessary?\n\nThere appears to be negative correlation, and some outliers in the Y direction. There may be some curvature. A transformation may help.\n\nQ2. The Make variable is categorical with six levels: Buick, Cadillac, Chevrolet, Pontiac, SAAB, and Saturn. To include this variable in a regression model, we need use indicator (i.e., dummy) variables. How many do we need?\n\nThere are 6 levels so we need 5 indicator variables"
-  },
-  {
-    "objectID": "finished/11-mlr-inference-finished.html#fitting-an-mlr-model",
-    "href": "finished/11-mlr-inference-finished.html#fitting-an-mlr-model",
-    "title": "11: Inference for MLR",
-    "section": "Fitting an MLR model",
-    "text": "Fitting an MLR model\nBuild (fit) a multiple regression model using log(Price) as the response with Mileage and Make as the predictor variables. To do this, you use + to separate the predictor variable on the right side of the ~ in the model formula. R will automatically convert a categorical explanatory variable into a set of indicator variables.\n\ncar_lm &lt;- lm(log(Price) ~ Mileage + Make, data = cars)\nsummary(car_lm)\n\n\nCall:\nlm(formula = log(Price) ~ Mileage + Make, data = cars)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-0.53728 -0.14506 -0.02741  0.10750  1.00719 \n\nCoefficients:\n                Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)    1.009e+01  3.432e-02 293.975  &lt; 2e-16 ***\nMileage       -7.659e-06  1.041e-06  -7.359 4.61e-13 ***\nMakeCadillac   6.490e-01  3.814e-02  17.016  &lt; 2e-16 ***\nMakeChevrolet -2.956e-01  3.014e-02  -9.809  &lt; 2e-16 ***\nMakePontiac   -1.435e-01  3.339e-02  -4.299 1.93e-05 ***\nMakeSAAB       3.554e-01  3.516e-02  10.108  &lt; 2e-16 ***\nMakeSaturn    -3.972e-01  4.116e-02  -9.650  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.241 on 797 degrees of freedom\nMultiple R-squared:  0.6572,    Adjusted R-squared:  0.6546 \nF-statistic: 254.7 on 6 and 797 DF,  p-value: &lt; 2.2e-16\n\n\nQ3. Report the fitted regression equation and the \\(R^2\\) value.\n\n\\[\n\\begin{aligned}\n\\operatorname{\\widehat{log(Price)}} &= 10.09 + 0(\\operatorname{Mileage}) + 0.65(\\operatorname{Make}_{\\operatorname{Cadillac}})\\ - \\\\\n&\\quad 0.3(\\operatorname{Make}_{\\operatorname{Chevrolet}}) - 0.14(\\operatorname{Make}_{\\operatorname{Pontiac}}) + 0.36(\\operatorname{Make}_{\\operatorname{SAAB}})\\ - \\\\\n&\\quad 0.4(\\operatorname{Make}_{\\operatorname{Saturn}})\n\\end{aligned}\n\\]\n\nQ4. Which level of Make is the baseline? The baseline level is represented by 0’s across all of the indicator variables and won’t have a coefficient in the output.\n\nBuick (the category without an indicator variable)\n\nQ5. What strategy did R use to create the indicator variables for Make? In other words, how did R decide which level of Make to use as the baseline?\n\nAlphabetical order!\n\nQ6. Which of the following models best describes the one just fit: parallel lines, different slopes, or separate lines?\n\nParallel lines"
-  },
-  {
-    "objectID": "finished/11-mlr-inference-finished.html#plotting-the-fitted-model",
-    "href": "finished/11-mlr-inference-finished.html#plotting-the-fitted-model",
-    "title": "11: Inference for MLR",
-    "section": "Plotting the fitted model",
-    "text": "Plotting the fitted model\nTo plot a fitted regression model, we can use the ggpredict() and plot() functions in the {ggeffects} package. The ggpredict() function creates a data frame of predicted values from the model for each Make across a range of Mileage values. The plot() function then creates a plot of these predicted values.\n\nlibrary(ggeffects)\ncars_pred &lt;- ggpredict(car_lm, terms = ~Mileage + Make)\nplot(cars_pred)\n\n\n\n\n\n\n\n\nQ7. Does this plot confirm your answer to the previous question?\n\nIt’s kind of hard to tell, since the lines are on the original scale. Telling ggpredict to not back-transform makes it clear that yes, this is a parallel lines model.\n\n\ncars_pred &lt;- ggpredict(car_lm, terms = ~Mileage + Make, \n                       back_transform = FALSE)\nplot(cars_pred)"
-  },
-  {
-    "objectID": "finished/11-mlr-inference-finished.html#fitting-a-model-with-interactions",
-    "href": "finished/11-mlr-inference-finished.html#fitting-a-model-with-interactions",
-    "title": "11: Inference for MLR",
-    "section": "Fitting a model with interactions",
-    "text": "Fitting a model with interactions\nIf we believe that the association between Price and Mileage differs by Make, then we can include an interaction term in our model. To do this, we use * instead of + to separate the predictor variables on the right side of the ~ in the model formula. This will include both main effects and the interaction term.\n\ncar_lm2 &lt;- lm(log(Price) ~ Mileage * Make, data = cars)\n\n\nsummary(car_lm2)\n\n\nCall:\nlm(formula = log(Price) ~ Mileage * Make, data = cars)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-0.53137 -0.14306 -0.02311  0.10811  0.99917 \n\nCoefficients:\n                        Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)            1.008e+01  8.447e-02 119.315  &lt; 2e-16 ***\nMileage               -7.099e-06  3.918e-06  -1.812 0.070409 .  \nMakeCadillac           6.469e-01  1.056e-01   6.127 1.41e-09 ***\nMakeChevrolet         -2.633e-01  9.147e-02  -2.878 0.004106 ** \nMakePontiac           -1.819e-01  9.871e-02  -1.843 0.065680 .  \nMakeSAAB               3.561e-01  1.042e-01   3.418 0.000664 ***\nMakeSaturn            -3.225e-01  1.174e-01  -2.746 0.006166 ** \nMileage:MakeCadillac   1.578e-07  4.953e-06   0.032 0.974593    \nMileage:MakeChevrolet -1.623e-06  4.251e-06  -0.382 0.702655    \nMileage:MakePontiac    2.019e-06  4.615e-06   0.438 0.661826    \nMileage:MakeSAAB      -4.921e-08  4.760e-06  -0.010 0.991754    \nMileage:MakeSaturn    -3.673e-06  5.393e-06  -0.681 0.496041    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.2414 on 792 degrees of freedom\nMultiple R-squared:  0.6582,    Adjusted R-squared:  0.6535 \nF-statistic: 138.7 on 11 and 792 DF,  p-value: &lt; 2.2e-16\n\n\nQ8`. Report the fitted regression equation for Buicks and Cadillacs.\nQ9. What is the \\(R^2\\) value for this model? Does this model appear to fit the data better than the previous model?"
-  },
-  {
-    "objectID": "finished/11-mlr-inference-finished.html#plotting-the-fitted-model-with-interactions",
-    "href": "finished/11-mlr-inference-finished.html#plotting-the-fitted-model-with-interactions",
-    "title": "11: Inference for MLR",
-    "section": "Plotting the fitted model with interactions",
-    "text": "Plotting the fitted model with interactions\nTo plot the interaction model, we again use the ggpredict() and plot() functions in the {ggeffects} package.\n\ncars_pred2 &lt;- ggpredict(car_lm2, terms = ~Mileage + Make)\n\n# Now plot the predictions\nplot(cars_pred2)"
-  },
-  {
-    "objectID": "finished/11-mlr-inference-finished.html#calculating-extra-sums-of-squares-f-tests",
-    "href": "finished/11-mlr-inference-finished.html#calculating-extra-sums-of-squares-f-tests",
-    "title": "11: Inference for MLR",
-    "section": "Calculating extra sums of squares F-tests",
-    "text": "Calculating extra sums of squares F-tests\nDo we really need the interaction terms? To answer this question, we can use an extra sums of squares F-test to compare the model with interaction terms to the model without interaction terms.\nWe have already seen how to use the anova() function to compare two nested models. Here, we will use it again to compare our two car models.\nQ10. Fill in the blanks to run the extra sums of squares F-test. What do you conclude about the interaction terms?\n\nanova(car_lm2, car_lm)\n\nAnalysis of Variance Table\n\nModel 1: log(Price) ~ Mileage * Make\nModel 2: log(Price) ~ Mileage + Make\n  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)\n1    792 46.160                           \n2    797 46.297 -5  -0.13714 0.4706 0.7983\n\n\n\nUsing only the full model\nWe can also calculate the extra sums of squares F-test using only the full model. To do this, we need to extract the SSE and degrees of freedom for both models from the ANOVA table for the full model.\nQ11. Run the below code and verify that the df, sums of squares, mean squares, F value, and p-value match what you got from the previous anova() command.\n\nanova(car_lm2)\n\nAnalysis of Variance Table\n\nResponse: log(Price)\n              Df Sum Sq Mean Sq  F value    Pr(&gt;F)    \nMileage        1  2.959  2.9591  50.7715 2.336e-12 ***\nMake           5 85.802 17.1603 294.4325 &lt; 2.2e-16 ***\nMileage:Make   5  0.137  0.0274   0.4706    0.7983    \nResiduals    792 46.160  0.0583                       \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
-  },
-  {
-    "objectID": "finished/11-mlr-inference-finished.html#function-quick-reference",
-    "href": "finished/11-mlr-inference-finished.html#function-quick-reference",
-    "title": "11: Inference for MLR",
-    "section": "Function quick reference",
-    "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm()\nFit a linear model\n\n\nsummary()\nDisplay detailed results from a fitted model\n\n\nggpredict()\nCreate a data frame of predicted values from a fitted model\n\n\nplot()\nCreate a plot of predicted values from a fitted model\n\n\nanova()\nCreate an ANOVA table for a fitted model or compare two nested models"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stat 230: Applied Regression Analysis",
-    "section": "",
-    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
-  },
-  {
-    "objectID": "slides/slides09.html#bikes-again",
-    "href": "slides/slides09.html#bikes-again",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "bikes again",
-    "text": "bikes again\n\n\n\\[\n\\operatorname{\\widehat{rides}} = -2168.77 + 89.23(\\operatorname{temp\\_actual})\n\\]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \\(R^2 =\\) 0.332"
-  },
-  {
-    "objectID": "slides/slides09.html#pairs-plot",
-    "href": "slides/slides09.html#pairs-plot",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Pairs plot",
-    "text": "Pairs plot"
-  },
-  {
-    "objectID": "slides/slides09.html#correlation-matrix",
-    "href": "slides/slides09.html#correlation-matrix",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Correlation matrix",
-    "text": "Correlation matrix\n\nbikes |&gt; \n  select(temp_actual, windspeed, rides) |&gt;\n  cor()\n\n            temp_actual  windspeed      rides\ntemp_actual   1.0000000 -0.1055362  0.5763486\nwindspeed    -0.1055362  1.0000000 -0.1949352\nrides         0.5763486 -0.1949352  1.0000000"
-  },
-  {
-    "objectID": "slides/slides09.html#multiple-linear-regression-mlr",
-    "href": "slides/slides09.html#multiple-linear-regression-mlr",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Multiple Linear Regression (MLR)",
-    "text": "Multiple Linear Regression (MLR)\n\\[Y_i = \\beta_0 + \\beta_1 x_{i1} + \\beta_2 x_{i2} + \\cdots + \\beta_p x_{ip} + \\varepsilon_i, \\quad \\varepsilon_i \\overset{iid}{\\sim} N(0, \\sigma^2)\\]\n\n\nThis model requires that…\n\n\\(\\mu\\{Y|x_1, x_2, \\ldots, x_p\\}\\) is a linear function\nThe error terms are independent\nThe error terms follow a normal distribution with mean 0 and variance \\(\\sigma^2\\)"
-  },
-  {
-    "objectID": "slides/slides09.html#fitting-the-model",
-    "href": "slides/slides09.html#fitting-the-model",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Fitting the model",
-    "text": "Fitting the model\nProcedure:\nLeast squares estimation: choose the coefficients to minimize \\[\\text{SSE} = \\sum_{i=1}^n \\left(Y_i - \\widehat{Y}_i \\right)^2\\] Then use \\(\\widehat{\\sigma} = \\sqrt{\\frac{\\text{SSE}}{n-(p+1)}}\\)"
-  },
-  {
-    "objectID": "slides/slides09.html#fitting-the-model-1",
-    "href": "slides/slides09.html#fitting-the-model-1",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Fitting the model",
-    "text": "Fitting the model\nR:\n\nbikes_mlr &lt;- lm(rides ~ temp_actual + windspeed, data = bikes)\ncoef(bikes_mlr)\n\n(Intercept) temp_actual   windspeed \n-1525.53822    87.01789   -38.62817"
-  },
-  {
-    "objectID": "slides/slides09.html#interpreting-widehatbeta_0",
-    "href": "slides/slides09.html#interpreting-widehatbeta_0",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Interpreting \\(\\widehat{\\beta}_0\\)",
-    "text": "Interpreting \\(\\widehat{\\beta}_0\\)\n\n\n(Intercept) temp_actual   windspeed \n  -1525.538      87.018     -38.628 \n\n\n\nThe expected value of the response variable when all explanatory variables are 0\nThe expected overall number of rides is about -1525.538 when temperature = 0 and windspeed = 0 🫠"
-  },
-  {
-    "objectID": "slides/slides09.html#interpreting-widehatbeta_j",
-    "href": "slides/slides09.html#interpreting-widehatbeta_j",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Interpreting \\(\\widehat{\\beta}_j\\)",
-    "text": "Interpreting \\(\\widehat{\\beta}_j\\)\n\n\n(Intercept) temp_actual   windspeed \n  -1525.538      87.018     -38.628 \n\n\n\nThe expected change in the response for a 1-unit increase in \\(x_j\\), when all other variables are held constant.\nWe expect 87.02 additional rides for every 1 degree increase in actual temperature, assuming constant windspeed\nWe expect 38.63 fewer rides for every 1 MPH increase in windspeed, assuming constant temperature"
-  },
-  {
-    "objectID": "slides/slides09.html#geometric-interpretation",
-    "href": "slides/slides09.html#geometric-interpretation",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Geometric interpretation:",
-    "text": "Geometric interpretation:\nMLR “line” is actually a plane"
-  },
-  {
-    "objectID": "slides/slides09.html#geometric-interpretation-1",
-    "href": "slides/slides09.html#geometric-interpretation-1",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Geometric interpretation:",
-    "text": "Geometric interpretation:\nMLR “line” is actually a plane"
-  },
-  {
-    "objectID": "slides/slides09.html#centering-predictor-variables",
-    "href": "slides/slides09.html#centering-predictor-variables",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Centering predictor variables",
-    "text": "Centering predictor variables\nIdea: make intercept more interpretable"
-  },
-  {
-    "objectID": "slides/slides09.html#making-centered-variables",
-    "href": "slides/slides09.html#making-centered-variables",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Making centered variables",
-    "text": "Making centered variables\n\nbikes &lt;- bikes |&gt;\n  mutate(\n    temp_centered = temp_actual - mean(temp_actual, na.rm = TRUE), \n    wind_centered = windspeed - mean(windspeed, na.rm = TRUE)\n  )\n\nMean shifts, standard deviation stays the same:\n\n\n  mean_orig mean_centered sd_orig sd_centered\n1     63.33             0   10.17       10.17"
-  },
-  {
-    "objectID": "slides/slides09.html#interpreting-widehatbeta_0-for-centered-predictors",
-    "href": "slides/slides09.html#interpreting-widehatbeta_0-for-centered-predictors",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Interpreting \\(\\widehat{\\beta}_0\\) for centered predictors",
-    "text": "Interpreting \\(\\widehat{\\beta}_0\\) for centered predictors\n\n\n  (Intercept) temp_centered wind_centered \n     3482.214        87.018       -38.628 \n\n\n\nThe expected value of the response variable when all explanatory variables are 0\nThe expected overall number of rides is about 3,482 on an average temperature and windspeed day 😌"
-  },
-  {
-    "objectID": "slides/slides09.html#interpreting-widehatbeta_j-doesnt-change",
-    "href": "slides/slides09.html#interpreting-widehatbeta_j-doesnt-change",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Interpreting \\(\\widehat{\\beta}_j\\) (doesn’t change)",
-    "text": "Interpreting \\(\\widehat{\\beta}_j\\) (doesn’t change)\n\n\n  (Intercept) temp_centered wind_centered \n     3482.214        87.018       -38.628 \n\n\n\nThe expected change in the response for a 1-unit increase in \\(x_j\\), when all other variables are held constant.\nWe expect 87.02 additional rides for every 1 degree increase in actual temperature, assuming constant windspeed\nWe expect 38.63 fewer rides for every 1 MPH increase in windspeed, assuming constant temperature"
-  },
-  {
-    "objectID": "slides/slides09.html#standardizing-predictor-variables",
-    "href": "slides/slides09.html#standardizing-predictor-variables",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Standardizing predictor variables",
-    "text": "Standardizing predictor variables\nIdea: 1 MPH in windspeed is different than 1 degree temp change"
-  },
-  {
-    "objectID": "slides/slides09.html#making-standardized-variables",
-    "href": "slides/slides09.html#making-standardized-variables",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Making standardized variables",
-    "text": "Making standardized variables\n\nbikes &lt;- bikes |&gt;\n  mutate(\n    temp_std = (temp_actual - mean(temp_actual, na.rm = TRUE))/sd(temp_actual, na.rm = TRUE), \n    wind_std = (windspeed - mean(windspeed, na.rm = TRUE))/sd(windspeed, na.rm = TRUE)\n  )\n\nNow, mean = 0 and sd = 1\n\n\n  mean_orig mean_std sd_orig sd_std\n1     63.33        0   10.17      1"
-  },
-  {
-    "objectID": "slides/slides09.html#interpreting-widehatbeta_0-for-standardized-predictors",
-    "href": "slides/slides09.html#interpreting-widehatbeta_0-for-standardized-predictors",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Interpreting \\(\\widehat{\\beta}_0\\) for standardized predictors",
-    "text": "Interpreting \\(\\widehat{\\beta}_0\\) for standardized predictors\n\n\n(Intercept)    temp_std    wind_std \n   3482.214     885.032    -213.560 \n\n\n\nThe expected value of the response variable when all explanatory variables are 0\nThe expected overall number of rides is about 3,482 on an average temperature and windspeed day"
-  },
-  {
-    "objectID": "slides/slides09.html#interpreting-widehatbeta_j-for-standardized-predictors",
-    "href": "slides/slides09.html#interpreting-widehatbeta_j-for-standardized-predictors",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Interpreting \\(\\widehat{\\beta}_j\\) for standardized predictors",
-    "text": "Interpreting \\(\\widehat{\\beta}_j\\) for standardized predictors\n\n\n(Intercept)    temp_std    wind_std \n   3482.214     885.032    -213.560 \n\n\n\nThe expected change in the response for a 1 standard deviation increase in \\(x_j\\), when all other variables are held constant.\nWe expect 885 additional rides for every 1 SD increase in actual temperature (10.2 degrees), assuming constant windspeed\nWe expect 213 fewer rides for every 1 SD increase in windspeed (5.5 MPH), assuming constant temperature"
-  },
-  {
-    "objectID": "slides/slides02.html#data-for-today",
-    "href": "slides/slides02.html#data-for-today",
-    "title": "Simple Linear Regression (SLR)",
+    "objectID": "slides/slides03.html#data-for-today",
+    "href": "slides/slides03.html#data-for-today",
+    "title": "Inference for SLR",
     "section": "Data for today",
-    "text": "Data for today\nCapital Bikeshare is a bike sharing service in the Washington, D.C. area. To best serve its registered members, the company must understand the demand for its service. To help them out, we can analyze the number of rides taken on a random sample of n days.\n\n\n\n\n\n\n\n\n\n\n\n\n\n The data also has information about:\n\nWeekend/holiday/etc\nDay of the measurement\nWeather information\n\n\nFor our first analysis, we’ll investigate the relationship between temperature and daily ridership"
+    "text": "Data for today\nCapital Bikeshare is a bike sharing service in the Washington, D.C. area. We’re interested in analyzing the relationship between number of rides taken and temperature"
   },
   {
-    "objectID": "slides/slides02.html#section",
-    "href": "slides/slides02.html#section",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "",
-    "text": "Describe the scatterplot\nWrite the equation of the regression line\nInterpret the slope and intercept\nMake a prediction"
+    "objectID": "slides/slides03.html#last-time",
+    "href": "slides/slides03.html#last-time",
+    "title": "Inference for SLR",
+    "section": "Last Time",
+    "text": "Last Time\n\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)\nScatterplots + correlation\nFit the regression line in R and find a summary()\n\n\nbikes_lm &lt;- lm(rides ~ temp_actual, data = bikes)\n\n\nMaking confidence intervals using confint\n\n\nToday: moving from descriptive to inferential"
   },
   {
-    "objectID": "slides/slides02.html#q-describe-the-scatterplot",
-    "href": "slides/slides02.html#q-describe-the-scatterplot",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Q: Describe the scatterplot",
-    "text": "Q: Describe the scatterplot\n\n\n\n\n\n\nThere is a strong, positive, linear association between temperature and number of rides.\nThere is a moderate, positive, linear association between temperature and number of rides.\n\n\n\n\n\n\n\nThere is a moderate, positive, non-linear association between temperature and number of rides.\nThere is a moderate, positive, linear association between temperature and number of rides, but there are a few extreme outliers."
+    "objectID": "slides/slides03.html#lm-summary",
+    "href": "slides/slides03.html#lm-summary",
+    "title": "Inference for SLR",
+    "section": "lm() Summary",
+    "text": "lm() Summary\n\n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-3564.3 -1009.3  -116.4   959.1  3184.6 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -2168.77     363.64  -5.964 4.67e-09 ***\ntemp_actual    89.23       5.67  15.739  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1288 on 498 degrees of freedom\nMultiple R-squared:  0.3322,    Adjusted R-squared:  0.3308 \nF-statistic: 247.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16"
   },
   {
-    "objectID": "slides/slides02.html#q-write-the-equation-of-the-regression-line",
-    "href": "slides/slides02.html#q-write-the-equation-of-the-regression-line",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Q: Write the equation of the regression line",
-    "text": "Q: Write the equation of the regression line\n\nlm(rides ~ temp_actual, data = bikes) \n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nCoefficients:\n(Intercept)  temp_actual  \n   -2168.77        89.23  \n\n\nWhat is the equation of the regression line?"
+    "objectID": "slides/slides03.html#lets-take-a-step-back-sampling-variability",
+    "href": "slides/slides03.html#lets-take-a-step-back-sampling-variability",
+    "title": "Inference for SLR",
+    "section": "Let’s take a step back: Sampling Variability",
+    "text": "Let’s take a step back: Sampling Variability"
   },
   {
-    "objectID": "slides/slides02.html#q-interpret-the-slope-in-context",
-    "href": "slides/slides02.html#q-interpret-the-slope-in-context",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Q: Interpret the slope in context",
-    "text": "Q: Interpret the slope in context\n\n\nFor every one degree increase in temperature, the model predicts an average decrease of 89.23 rides\nFor every one-degree decrease in temperature, the model predicts an average increase of 89.23 rides\nIf the daily temperature is 0, we’d expect 89.23 rides\nIf the temperature increases by one degree, it will cause an increase of 89.23 rides every day"
+    "objectID": "slides/slides03.html#sampling-distribution",
+    "href": "slides/slides03.html#sampling-distribution",
+    "title": "Inference for SLR",
+    "section": "Sampling distribution",
+    "text": "Sampling distribution"
   },
   {
-    "objectID": "slides/slides02.html#q-make-a-prediction",
-    "href": "slides/slides02.html#q-make-a-prediction",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Q: Make a prediction",
-    "text": "Q: Make a prediction\nThe high temperature forecast tomorrow is 72 degrees F. What does the model predict for ridership?"
+    "objectID": "slides/slides03.html#sampling-distribution-1",
+    "href": "slides/slides03.html#sampling-distribution-1",
+    "title": "Inference for SLR",
+    "section": "Sampling distribution",
+    "text": "Sampling distribution\nWe use the t distribution with df = n - 2 to model the sampling distribution of a regression coefficient"
   },
   {
-    "objectID": "slides/slides02.html#overview-the-normal-distribution",
-    "href": "slides/slides02.html#overview-the-normal-distribution",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Overview: The Normal Distribution",
-    "text": "Overview: The Normal Distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\n If Y is:\n\nnumeric\nunimodal\nand symmetric,\n\nwe might use a Normal model"
+    "objectID": "slides/slides03.html#sampling-distribution-2",
+    "href": "slides/slides03.html#sampling-distribution-2",
+    "title": "Inference for SLR",
+    "section": "Sampling distribution",
+    "text": "Sampling distribution\n\nt distribution with \\(df =  n - 2\\)\n\n\n\nMean = \\(\\beta_i\\)\n\n\n\n\nStandard deviation = \\(SE(\\widehat{\\beta}_1) = \\widehat{\\sigma} / \\sqrt{\\sum (x_i - \\overline{x} )^2}\\)"
   },
   {
-    "objectID": "slides/slides02.html#y-sim-nmu-sigma2",
-    "href": "slides/slides02.html#y-sim-nmu-sigma2",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "\\(Y \\sim N(\\mu, \\sigma^2)\\)",
-    "text": "\\(Y \\sim N(\\mu, \\sigma^2)\\)"
+    "objectID": "slides/slides03.html#confidence-interval",
+    "href": "slides/slides03.html#confidence-interval",
+    "title": "Inference for SLR",
+    "section": "Confidence interval",
+    "text": "Confidence interval\n\n\nstatistic\n\n±\n\ncritical value × standard error\n\n\n\n\n\\(\\widehat{\\beta}_i\\)\n\n±\n\n\\(t^* \\cdot SE(\\widehat{\\beta}_i)\\)"
   },
   {
-    "objectID": "slides/slides02.html#simple-linear-regression-model",
-    "href": "slides/slides02.html#simple-linear-regression-model",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Simple Linear Regression Model",
-    "text": "Simple Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
+    "objectID": "slides/slides03.html#critical-value",
+    "href": "slides/slides03.html#critical-value",
+    "title": "Inference for SLR",
+    "section": "Critical Value",
+    "text": "Critical Value\n\n\n\nqt(.025, df = 30)\n\n[1] -2.042272\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.025, df = 30, \n   lower.tail = FALSE)\n\n[1] 2.042272\n\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.1, df = 30)\n\n[1] -1.310415\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.1, df = 30,\n   lower.tail = FALSE)\n\n[1] 1.310415\n\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.25, df = 30)\n\n[1] -0.6827557\n\n\n\n\n\n\n\n\n\n\n\n\nqt(.25, df = 30, \n   lower.tail = FALSE)\n\n[1] 0.6827557"
   },
   {
-    "objectID": "slides/slides02.html#a-deterministic-model",
-    "href": "slides/slides02.html#a-deterministic-model",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "A deterministic model",
-    "text": "A deterministic model\n\n\\(Y_i = \\beta_0 + \\beta_1 x_i\\)\nNo uncertainty!"
+    "objectID": "slides/slides03.html#hypothesis-test",
+    "href": "slides/slides03.html#hypothesis-test",
+    "title": "Inference for SLR",
+    "section": "Hypothesis test",
+    "text": "Hypothesis test\n\\(H_0: \\beta_i = \\text{null value}\\) vs. \\(H_a:\\) choose one of \\(\\begin{array}{c} \\beta_i \\ne  \\text{null value}\\\\ \\beta_i &lt; \\text{null value}  \\\\ \\beta_i &gt; \\text{null value} \\end{array}\\)\n\n\n\n\ntest statistic\n\n\\(= \\dfrac{\\text{estimate} - \\text{null value}}{\\text{SE}}\\)\n\n\n\n\n\n\\(=\\dfrac{\\widehat{\\beta}_i - \\text{null value}}{SE(\\widehat{\\beta}_i)}\\)\n\n\n\nFind appropriate tail areas under the t-distribution with \\(df = n - 2\\)"
   },
   {
-    "objectID": "slides/slides02.html#linear-regression-model",
-    "href": "slides/slides02.html#linear-regression-model",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Linear Regression Model",
-    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
+    "objectID": "slides/slides03.html#coefficient-table",
+    "href": "slides/slides03.html#coefficient-table",
+    "title": "Inference for SLR",
+    "section": "Coefficient table",
+    "text": "Coefficient table\nStandard output for a regression model includes a coefficient table\n\nlibrary(broom)\ntidy(mod)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)  -2169.     364.       -5.96 4.67e- 9\n2 temp_actual     89.2      5.67     15.7  1.35e-45"
   },
   {
-    "objectID": "slides/slides02.html#linear-regression-model-1",
-    "href": "slides/slides02.html#linear-regression-model-1",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Linear Regression Model",
-    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
-  },
-  {
-    "objectID": "slides/slides02.html#linear-regression-model-2",
-    "href": "slides/slides02.html#linear-regression-model-2",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Linear Regression Model",
-    "text": "Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)"
-  },
-  {
-    "objectID": "slides/slides02.html#simple-linear-regression-model-1",
-    "href": "slides/slides02.html#simple-linear-regression-model-1",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Simple Linear Regression Model",
-    "text": "Simple Linear Regression Model\n\\(Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\) where \\(\\varepsilon_i \\overset{\\rm iid}{\\sim} N (0, \\sigma^2)\\)\n\n\nLinear relationship between \\(x\\) and \\(y\\)\nErrors are independent and identically distributed (iid)\nErrors are normally distributed\nErrors have mean 0\nVariance of the errors doesn’t depend on \\(x\\)"
-  },
-  {
-    "objectID": "slides/slides02.html#notation",
-    "href": "slides/slides02.html#notation",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Notation",
-    "text": "Notation\nMean function:\n\\(\\quad E(Y|X)=\\mu\\{Y|X\\} = \\beta_0 + \\beta_1 x_i\\)\n\nFitted model equation:\n\\(\\quad \\widehat{Y}_i = \\widehat{\\mu}\\{Y|X\\} = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x_i\\)"
-  },
-  {
-    "objectID": "slides/slides02.html#uncertainty-in-the-parameters",
-    "href": "slides/slides02.html#uncertainty-in-the-parameters",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Uncertainty in the parameters",
-    "text": "Uncertainty in the parameters"
-  },
-  {
-    "objectID": "slides/slides02.html#uncertainty-in-the-parameters-1",
-    "href": "slides/slides02.html#uncertainty-in-the-parameters-1",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Uncertainty in the parameters",
-    "text": "Uncertainty in the parameters"
-  },
-  {
-    "objectID": "slides/slides02.html#uncertainty-in-the-parameters-2",
-    "href": "slides/slides02.html#uncertainty-in-the-parameters-2",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Uncertainty in the parameters",
-    "text": "Uncertainty in the parameters"
-  },
-  {
-    "objectID": "slides/slides02.html#rest-of-today",
-    "href": "slides/slides02.html#rest-of-today",
-    "title": "Simple Linear Regression (SLR)",
-    "section": "Rest of today",
-    "text": "Rest of today\n\n\nOpen the SLR in R activity on Moodle and complete in your groups\nMake note of any questions\nChoose someone responsible for reporting out your answers"
+    "objectID": "slides/slides03.html#example-90-confidence-interval-for-beta_1",
+    "href": "slides/slides03.html#example-90-confidence-interval-for-beta_1",
+    "title": "Inference for SLR",
+    "section": "Example: 90% confidence interval for \\(\\beta_1\\)",
+    "text": "Example: 90% confidence interval for \\(\\beta_1\\)\n\n\nstatistic\n\n±\n\ncritical value × standard error\n\n\n\n\\(\\widehat{\\beta}_i\\)\n\n±\n\n\\(t^* \\cdot SE(\\widehat{\\beta}_i)\\)\n\n\n\nqt(.05, df = 30)\n\n[1] -1.697261\n\n\n\n\n\n\n\n\n\n\n\n\nCI Interpretation\n\n\n\nWe are _______% confident that for every 1 _________ increase in ____________________,\n_____________________________________________________ also ________________\nby between ____________ and _____________"
   },
   {
     "objectID": "slides/slides01.html#im-amanda-sheher",
@@ -1964,7 +2104,7 @@
     "href": "slides/slides10.html#bikes-data",
     "title": "Adding Categorical Predictors",
     "section": "bikes data",
-    "text": "bikes data\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndate\nseason\nyear\nmonth\nweekend\nholiday\ntemp_actual\ntemp_feel\nhumidity\nwindspeed\nrides\n\n\n\n\n2012-02-11\nwinter\n2012\nFeb\nTRUE\nno\n48.54352\n50.97803\n73.1250\n19.416332\n1977\n\n\n2012-04-10\nspring\n2012\nApr\nFALSE\nno\n64.96402\n71.26097\n43.5000\n16.708125\n5099\n\n\n2011-02-25\nwinter\n2011\nFeb\nFALSE\nno\n58.88888\n63.54149\n71.2174\n23.218113\n1341\n\n\n2012-01-14\nwinter\n2012\nJan\nTRUE\nno\n45.28400\n48.47783\n45.7500\n12.541261\n2160\n\n\n2012-06-18\nspring\n2012\nJun\nFALSE\nno\n73.94298\n81.03578\n77.7917\n11.707982\n4446\n\n\n2012-05-20\nspring\n2012\nMay\nTRUE\nno\n77.81748\n84.55703\n53.0417\n17.042589\n4425\n\n\n2012-05-03\nspring\n2012\nMay\nFALSE\nno\n73.32800\n80.35178\n76.8333\n8.957632\n5657\n\n\n2011-01-20\nwinter\n2011\nJan\nFALSE\nno\n51.31102\n54.95450\n53.8333\n13.125568\n1844\n\n\n2011-02-17\nwinter\n2011\nFeb\nFALSE\nno\n64.16448\n70.57922\n50.5000\n15.416968\n2216\n\n\n2011-12-23\nwinter\n2011\nDec\nFALSE\nno\n59.55198\n65.97617\n68.6250\n18.374482\n2046"
+    "text": "bikes data\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndate\nseason\nyear\nmonth\nweekend\nholiday\ntemp_actual\ntemp_feel\nhumidity\nwindspeed\nrides\n\n\n\n\n2011-03-04\nwinter\n2011\nMar\nFALSE\nno\n51.31102\n55.01111\n61.0417\n13.624182\n1730\n\n\n2012-12-18\nfall\n2012\nDec\nFALSE\nno\n62.31948\n68.87372\n66.6250\n14.834068\n5124\n\n\n2011-09-07\nsummer\n2011\nSep\nFALSE\nno\n76.21852\n80.98061\n91.7083\n6.500394\n1878\n\n\n2012-12-23\nwinter\n2012\nDec\nTRUE\nno\n50.14248\n55.35239\n51.5417\n8.916561\n1379\n\n\n2012-11-27\nfall\n2012\nNov\nFALSE\nno\n53.52502\n57.34022\n78.6667\n15.916654\n3836\n\n\n2012-03-22\nspring\n2012\nMar\nFALSE\nno\n72.89752\n79.84103\n83.1250\n7.876654\n5537\n\n\n2011-04-20\nspring\n2011\nApr\nFALSE\nno\n75.91100\n82.79528\n61.4167\n16.208975\n3331\n\n\n2011-11-29\nfall\n2011\nNov\nFALSE\nno\n65.82498\n72.62375\n83.0833\n17.292164\n2818\n\n\n2012-09-23\nfall\n2012\nSep\nTRUE\nno\n71.05252\n78.70397\n46.7083\n14.958286\n5453\n\n\n2011-06-16\nspring\n2011\nJun\nFALSE\nno\n78.37098\n85.58114\n68.8333\n13.833557\n3222"
   },
   {
     "objectID": "slides/slides10.html#plan-for-today-remove-windspeed-but-add-weekend",
@@ -2562,11 +2702,25 @@
     "text": "Due: Friday of Week 2 at start of class\nThere is a homework template available if you’d like to use that as a starter file, and copy and paste the code as needed.\n\n\n\n\n\n\nImportantImportant!\n\n\n\nI will add problems after each class day. Be sure to check back here after each class meeting for new problems.\n\n\n\nProblem 1: Runoff (again)\n\n\n\n\n\n\n\n\n\nBelow is the summary table produced when I fit the regression of the expected runoff given snowfall.\n\nlm(Runoff ~ Precip, data = runoff) |&gt; summary()\n\n\nCall:\nlm(formula = Runoff ~ Precip, data = runoff)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-17603.8  -5338.0    332.1   3410.6  20875.6 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)  27014.6     3218.9   8.393 1.93e-10 ***\nPrecip        3752.5      215.7  17.394  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 8922 on 41 degrees of freedom\nMultiple R-squared:  0.8807,    Adjusted R-squared:  0.8778 \nF-statistic: 302.6 on 1 and 41 DF,  p-value: &lt; 2.2e-16\n\n\n\nCalculate a 80% confidence interval for the slope coefficient. Show your work.\nInterpret the confidence interval you calculated in part (b) in the context of the problem\nBased on your confidence interval in (b), is there convincing evidence of a relationship between snowfall and runoff? Explain.\nThe first data point in the dataset \\((x_1, y_1)\\) has Precip = 6.47 and Runoff = 54235. Find \\(\\hat{y}_1\\) and \\(\\epsilon_1\\)\n\n\n\nProblem 2: Hubble (again)\nThe ex0725 data points below are measured distances and recession velocities for 10 clusters of nebulae, much farther from earth than Hubble’s data.\n\nlibrary(Sleuth3)\nex0725\n\n   Distance Velocity\n1      1.80      890\n2      7.25     3810\n3      7.00     4638\n4      9.00     4820\n5     11.00     5230\n6     13.80     7500\n7     22.00    11800\n8     32.00    19600\n9      4.20     2350\n10     2.15      630\n\n\n\nFit a linear regression model to this data and report the fitted equation\nPerform a formal hypothesis test to assess whether the data is consistent with Hubble’s theory (that the intercept is zero)\n\n\n\nProblem 3: Baby birth weights vs father’s age\nUS Department of Health and Human Services, Centers for Disease Control and Prevention collect information on births recorded in the country. The data used here are a random sample of 1000 births from 2014. Here, we study the relationship between the father’s age and the weight of the baby.\n\nbirths14 &lt;- openintro::births14\n\n\n\n\n\n\n\nTip\n\n\n\nThis code is shorthand for: look in the {openintro} R package for an object called births14\n\n\n\nMake a scatterplot of birth weight (weight) as the response variable and father’s age (fage) as the explanatory variable. Overlay a linear regression line and describe the relationship you see.\n\n\n# your code here\n\n\nFind and report the linear regression equation\n\n\n# your code here\n\n\nDo the data provide convincing evidence that there is a relationship between father’s age and baby’s birth weight? State the null and alternative hypotheses, report the p-value, and state your conclusion.\n\n\n# your code here\n\n\nBased on your conclusion, is father’s age a useful predictor of baby’s weight?\n\n\n\nProblem 4\nFor each of the following questions, explain whether a confidence interval for a mean response or a prediction interval for a new observation is appropriate.\n\nWhat will be the humidity level in this greenhouse tomorrow when we set the temperature level at 31 degrees F?\nHow much do families whose disposable income is $23,500 spend, on average, for meals away from home?\nHow much kilowatt-hours of electricity will be consumed next month by commerical and industrial users in the Twin Cities service area, given that the index of business activity for the area remains at its present level?\n\n\n\nProblem 5: Runoff (again again)\n\n\n\n\n\n\nNote\n\n\n\nYou do not need R for this problem! You should compute the intervals “by hand” using the R output here and from Q1\n\n\nIn Problem 1d on this homework, you found the prediction and residual for the first data point in the runoff dataset \\((x_1, y_1)\\): has Precip = 6.47 and Runoff = 54235. Below is selected output from running predict() on that data point with se.fit = TRUE.\n\n\n$se.fit\n[1] 2041.055\n\n$df\n[1] 41\n\n$residual.scale\n[1] 8922.444\n\n\n\nUsing the output above, obtain a 95% interval for the average runoff for winters with 6.47 inches of snowfall. Provide a 1-2 sentence interpretation of your interval in context.\nSuppose the projected snowfall total for Winter 2025/2026 is 6.47. Obtain a 95% interval for this year’s runoff. Provide a 1-2 sentence interpretation of your interval in context.\nIf we instead considered a data point with Precip = 12.5, would you expect the two intervals to be wider or narrower? Explain using both the mathematical formula for creating the intervals and using the intuition given by what we’ve seen in class of the variability of the line.\n\n\n\nProblem 6\nThe data set below was collected by Educational Testing Services (ETS) and consists of 1,000 randomly selected students at an unnamed college. We are interested in predicting first year GPA (FYGPA) from the sum of the verbal and math percentiles (SATSum). Load the data with the following code:\n\nsat_gpa &lt;- read.csv(\"http://aluby.github.io/stat230/data/satGPA.csv\")\n\n\nFit the simple linear regression model predicting first year GPA from the sum of the verbal and math SAT percentiles. Report the fitted regression equation.\nObtain a 95% interval for the average first year GPA for students whose SAT percentiles sum to 120. Interpret your interval.\nObtain a 95% interval for the first year GPA of Veronica Davis who who scored an SAT sum of 120. Interpret your interval.\nMake a plot that includes (1) the explanatory and response variables as a scatterplot, (2) the linear regression line, (3) the confidence interval for all points, and (4) the prediction interval for all points.\n\n\n\nProblem 7: Reading residual plots\nFor each part of this question, use the provided residual plots to determine whether the conditions for inference appear to be valid. If you decide that a condition is violated, make sure to specify which one and how you can tell using the plots. Each model uses different data sets.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProblem 8: Animals metabolic rate\nThe following data comes from Statistical Sleuth Chapter 8. The data are the average mass, metabolic rate, and lifespan for 95 species of mammals. Kleiber’s law states that the metabolic rate of an animal species, on average, is proportional to its mass raised to the power of 3/4.\n\nanimals &lt;- Sleuth3::ex0826\nhead(animals)\n\n              CommonName                  Species   Mass Metab Life\n1                Echidna   Tachiglossus aculeatus  2.500   302   14\n2    Long-beaked echidna        Zaglossus bruijni 10.300   594   20\n3               Platypus Ornithorhynchus anatinus  1.300   229    9\n4                Opossum Lutreolina crassicaudata  0.812   196    5\n5 South American opossum    Didelphis marsupialis  1.330   299    6\n6       Virginia opossum     Didelphis virginiana  3.260   519    8\n\n\n\nMake a plot of average metabolic rate vs. mass for the 95 animals in this dataset. Make sure the axes are appropriately labeled. Comment on the relationship (shape, strength, direction of association).\nFit the simple linear model of metabolic rate against mass and report the regression equation.\nPlot the residuals from the model in part (b) vs. the mass. To see what is going on more easily, also plot the residuals vs. the log(mass). Are the SLR conditions satisfied?\nMake a plot of the log(metablic rate) vs. the log(mass) with a regression line overlaid. Compare with the plot in (a). Do you think this scatterplot will be better or worse in terms of meeting the SLR conditions than the plot in (a)? (you do not need to fit this model)"
   },
   {
-    "objectID": "homework/hw-template.html",
-    "href": "homework/hw-template.html",
-    "title": "Stat230 Homework XX",
+    "objectID": "homework/hw03-sols.html",
+    "href": "homework/hw03-sols.html",
+    "title": "Homework 02",
     "section": "",
-    "text": "library(tidyverse)\nlibrary(patchwork)\nlibrary(broom)\nlibrary(ggformula)\n\nTo submit your assignment,\n\nrender your file to pdf\ndownload the pdf to your computer (if using maize)\nsubmit your pdf to gradescope in the appropriate submission space\n\nMake sure to mark your pages through the gradescope system!\n\n\nGuidelines\n\nMake sure your PDF is “clean”:\n\necho: TRUE, warning: FALSE, message: FALSE\nDo not print long pages of output. Printing tibbles is OK\nAll questions should be answered with sentences written in text\n\nMake sure your .qmd is “clean”:\n\nremove unnecessary code\n\n\n\nProblem 1\n\nYour written answer hee\n\n\n# your code here\n\n\nYour written answer here\n\n\n# your code here\n\n\nYour code here\n\n\n# your code here\n\n\n\nProblem 2\n\nYour written answer hee\n\n\n# your code here\n\n\nYour written answer here\n\n\n# your code here\n\n\nYour code here\n\n\n# your code here\n\n\n\nProblem 3\n\nYour written answer hee\n\n\n# your code here\n\n\nYour written answer here\n\n\n# your code here\n\n\nYour code here\n\n\n# your code here"
+    "text": "Due: Friday of Week 3 at start of class\nThere is a homework template available if you’d like to use that as a starter file, and copy and paste the code as needed."
+  },
+  {
+    "objectID": "homework/hw03-sols.html#footnotes",
+    "href": "homework/hw03-sols.html#footnotes",
+    "title": "Homework 02",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nSource: Stat2↩︎"
+  },
+  {
+    "objectID": "homework/hw01-sols.html",
+    "href": "homework/hw01-sols.html",
+    "title": "Homework 01 Solutions",
+    "section": "",
+    "text": "Due: Friday of Week 1 at start of class\n\n\n\n\n\n\nImportantImportant!\n\n\n\nThese solutions are solely for use of grading in Amanda Luby’s Stat230 course in Spring 2026. Dissemination of this solution is not permitted and will be considered grounds for an Academic Dishonesty report for all individuals involved in the giving and receiving of the solution.\n\n\n\nProblem 1: Intro Stat review\nA 2021 article in Pediatrics (“Baby’s First Years: Design of a Randomized Controlled Trial of Poverty Reduction in the United States”) describes the design of a study to measure the impact of poverty reduction on children’s early development:\n\nA total of 1000 low-income mothers of newborns were enrolled in the study and began receiving a monthly unconditional cash gift for the first several years of their children’s lives. Mothers were randomly assigned to receive either a large monthly cash gift ($333) or a nominal monthly cash gift ($20). All monthly gifts are administered via debit card and can be freely spent with no restrictions. Baby’s First Years aims to answer whether poverty reduction in early childhood (1) improves children’s developmental outcomes and promotes healthier brain functioning, and (2) improves family functioning and better enables parents to support child development.\n\n\nWhy was it important to randomize amount of the cash gift in the study?\nSuppose the outcome variable \\(Y\\) in a statistical analysis is a quantitative measure of child brain functioning. We then calculate the mean of the large gift group (\\(\\bar{Y}_{large}\\)) and the small gift group (\\(\\bar{Y}_{small}\\)). What would an appropriate hypothesis test be? (You only need to set up the hypotheses statements)\nIf the researchers fail to reject the null hypothesis from (b), what type of error might they have made?\nHow could the researchers decrease the probability that they make the type of error in (c)?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\nTo account for confounding variables and allow the researchers to draw causal conclusions. Eg, that it was the cash gift, and not something else, that caused improvement in developmental outcomes or family functioning.\nI’m going to set this up as a one-sided test, since the researchers think the cash gift will improve outcomes\n\n\\[H_0: \\mu_L = \\mu_S\\] \\[H_A: \\mu_L &gt; \\mu_S\\]\n\nIf they fail to reject, they may have made a Type II error (false negative)\nIncrease the sample size or use a higher \\(\\alpha\\) threshold (make it easier to reject \\(H_0\\))\n\n\n\n\n\nProblem 2: Regression\nOne factor affecting water availability in Southern California is stream runoff from snowfall. If runoff could be predicted, engineers, planners, and policy makers could do their jobs more effectively because they would have an estimate as to how much water is entering the area.\nWe have access to a data set compares the stream runoff (in acre-feet) of a river near Bishop, California (due east of San Jose) with snowfall (in inches) at a site in the Sierra Nevada mountains. For each of the following questions, assume that your audience is city water planners with moderate statistical training.\n\nBelow is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).\n\n\n\n\n\n\n\n\n\n\n\nBelow is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.\n\n\nrunoff_mod &lt;- lm(Runoff ~ Precip, data = runoff) \ntidy(runoff_mod)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)   27015.     3219.      8.39 1.93e-10\n2 Precip         3752.      216.     17.4  1.56e-20\n\n\n\nInterpret the slope coefficient in the context of the problem. (Don’t forget to specify units.)\nInterpret the intercept in the context of the problem. (Don’t forget to specify units.)\nIf one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t forget to specify units.)\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\nThere is a moderately strong, positive, linear relationship betwteen snowfall and runoff\n\n\n\n\n\\[\n\\operatorname{\\widehat{Runoff}} = 27014.59 + 3752.49(\\operatorname{Precip})\n\\]\n\n\n\nWhen yearly snowfall increases by 1 inch, we expect the average runoff to also increase by 3752.49 2 acre-feet\nIn a year with 0 inches of snowfall, our model would predict an average of 2.7014587^{4} acre-feet of runoff\nFor a year with 10 inches of snowfall, we expect 6.4539443^{4} acre-feet of runoff\n\n\n\n\n\nProblem 3: Grizzlies\n\n\n\n\n\n\nTip\n\n\n\nThis problem asks you to write R code. You can use the fill-in-the-blank boxes here, or maize or RStudio if you are comfortable. For this homework, we will grade your written answers, so you only need to include sentences for each part. Your answers should reference the specific numbers you found.\n\n\nThe data below are length and girth measurements (in inches) for a sample of Grizzly bears.\n\ngrizzly &lt;- read.csv(\"https://aluby.github.io/stat230/data/grizzly.csv\")\n\n\nPlot the bear’s girth (response variable) against its length (predictor variable) and show the linear regression line. Describe the relationship.\nCompute and report the correlation coefficient\nFit the linear regression model and report the fitted regression equation\nWhat is the interpretation of the intercept coefficient, in context? Does it make sense to perform this interpretation?\nA new bear was observed with a length of 148 inches. What would the model predict for its girth?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\nThere is a moderate, positive, linear relationship between Girth and Length\n\n\ngf_point(Girth ~ Length, data = grizzly) |&gt;\n  gf_lm()\n\n\n\n\n\n\n\n\n\nThe correlation is 0.88\n\n\ncor(grizzly$Girth, grizzly$Length)\n\n[1] 0.8897853\n\n\n\n\n\n\ngrizzly_mod &lt;- lm(Girth ~ Length, data = grizzly)\ntidy(grizzly_mod)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic    p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n1 (Intercept)   32.7     10.7         3.06 0.00843   \n2 Length         0.546    0.0749      7.29 0.00000394\n\n\n\n\n\\[\n\\operatorname{\\widehat{Girth}} = 32.67 + 0.55(\\operatorname{Length})\n\\]\n\n\n\nFor a bear with 0 length, we’d expect an average of 32.66 inches girth. This does not make sense, since we cannot have a bear with 0 length\nWe’d expect a bear with length 148 inches to have an average girth of 113.5 inches\n\n\npredict(grizzly_mod, newdata = data.frame(Length = 148))\n\n       1 \n113.5024 \n\n\n\n\n\n\nProblem 4: The Hubble Constant\n\n\n\n\n\n\nTip\n\n\n\nThis problem asks you to write R code. You can use the fill-in-the-blank boxes here, or maize or RStudio if you are comfortable. For this homework, we will grade your written answers, so you only need to include sentences for each part. Your answers should reference the specific numbers you found.\n\n\n\nEdwin Hubble used the power of the Mount Wilson Observatory telescopes to meaure features of nebulae outside the Milky WAy. He was surprised to find a relationship between a nebula’s distance from earth and the velocity with which it was going away from the earth…. The apparent statistical relationship between distance and velocity led scientists to consider how such a relatinoship could arise. It was proposed that the universe came into being with a Big Bang, a long time ago. If this were true, then \\(Y = TX\\), where \\(Y\\) is Distance and \\(X\\) is velocity, and \\(T\\) gives the time elapsed since the Big Bang (that is, the age of the universe).\n\nThe ex0725 data points below are measured distances and recession velocities for 10 clusters of nebulae, much farther from earth than Hubble’s data.\n\nlibrary(Sleuth3)\nex0725\n\n   Distance Velocity\n1      1.80      890\n2      7.25     3810\n3      7.00     4638\n4      9.00     4820\n5     11.00     5230\n6     13.80     7500\n7     22.00    11800\n8     32.00    19600\n9      4.20     2350\n10     2.15      630\n\n\n\nMake a scatterplot with Velocity as the response and Distance as the predictor and describe the relationship\nAre the data consistent with Hubble’s theory (that the intercept is zero?)\nRegardless of your answer to the previous question, fit a simple linear regression model through the origin (i.e., forcing \\(\\beta_0 = 0\\)) by running the following code. Use this model to provide an estimate of the Hubble constant (the age of the universe)\nFind a 95% confidence interval for this estimate\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\nThere is a very strong, positive, linear relationship\n\n\ngf_point(Velocity ~ Distance, data = ex0725) |&gt;\n  gf_lm()\n\n\n\n\n\n\n\n\n\nIf we fit this model, the intercept is -500. This is “close” to zero relative to the observed data, but is not exactly zero.\n\n\nlm(Velocity ~ Distance, data = ex0725)\n\n\nCall:\nlm(formula = Velocity ~ Distance, data = ex0725)\n\nCoefficients:\n(Intercept)     Distance  \n     -500.0        601.3  \n\n\n\nThe estimate of the Hubble constant is 574.2\n\n\nlm(Velocity ~ 0 + Distance, data = ex0725)\n\n\nCall:\nlm(formula = Velocity ~ 0 + Distance, data = ex0725)\n\nCoefficients:\nDistance  \n   574.2  \n\n\n\nA 95% confidence interval for this estimate of the Hubble constant is (538.4, 610.0)\n\n\nlm(Velocity ~ 0 + Distance, data = ex0725) |&gt; confint()\n\n            2.5 %   97.5 %\nDistance 538.3564 609.9762"
   },
   {
     "objectID": "readings/exam02-review.html",
