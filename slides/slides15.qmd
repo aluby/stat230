@@ -1,0 +1,378 @@
+---
+title: Model Selection
+subtitle: Day 15
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+library(gt)
+library(gtsummary)
+library(carData)
+
+notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+
+bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
+
+```
+
+## MLR so far
+
+- Interpreting coefficients
+- Writing lines for different groups (categorical predictors) 
+- Inference for a single coefficient
+- Inference for linear combinations of coefficients
+- F tests
+- Influential points and diagnostics (leverage, standardized residuals, cook's distance)
+- Multicollinearity 
+
+. . . 
+
+Today &rarr; putting it all together
+
+## Idea: how do we decide what variables to include? {.smaller}
+
+```{r}
+bikes |> head(10) |> knitr::kable()
+```
+
+## Review: F test and sum of squares
+
+
+ 
+## Sequential ANOVA (the `anova()` function)
+
+::: medium
+
+When you use `anova(my_lm)` on a single model, R provides a table of **extra Sum of Squares (SS)** for terms added sequentially
+
+
+```{r}
+#| echo: true
+model_1 <- lm(rides ~ temp_actual + windspeed + weekend + temp_actual:weekend + windspeed:weekend, data = bikes)
+
+anova(model_1)
+```
+
+:::
+
+## Breaking down the `anova()` table
+
+::: {.medium .nonincremental}
+
+The First Row: `temp_actual`  
+
+  - Df: Including this variable adds 1 term to the model.  
+  - Sum Sq: $SS_{reg}(\text{temp_actual})$.  
+  
+The Second Row: `windspeed` 
+
+  - Sum Sq: Represents the extra SS for adding `windspeed` to a model already containing `temp_actual`.  
+  - $SS_{reg}(\text{temp_actual, windspeed}) - SS_{reg}(\text{temp\actual})$  
+
+
+The Third Row: `weekend`   
+
+  - Sum Sq: Represents the extra SS for adding `weekend` to a model already containing `temp_actual` and `windspeed`.  
+  - $SS_{reg}(\text{temp_actual, windspeed, weekend}) - SS_{reg}(\text{temp_actual, windspeed})$  
+  
+:::
+
+## Confirm results with a nested F test
+
+"intermediate" p values in the table may not be valid; confirm proposed and full model with a nested F test:
+
+```{r}
+#| echo: true
+
+
+model_2 <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
+
+anova(model_1, model_2)
+```
+
+
+## Variable selection: prediction vs understanding 
+
+:::: {.columns}
+
+::: {.column width="45%"}
+**Prediction:**
+
+- More complex models might be okay if you have a lot of data.  
+
+- The model doesn't need to "make sense" as much if it predicts well.  
+
+- Watch out for overfitting!
+
+- Stat270
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+**Understanding:**
+
+- Complexity can hurt our ability to interpret results meaningfully.
+
+- Keep effects you are interested in, even if they are insignificant, to "control" for them.
+:::
+
+::::
+
+## Comparing non-nested models
+
+What if I want to compare:
+
+```{r}
+#| echo: true
+
+
+model_2 <- lm(rides ~ temp_actual + windspeed + weekend, 
+              data = bikes)
+```
+
+```{r}
+#| echo: true
+
+
+model_3 <- lm(rides ~ temp_actual + windspeed*weekend + 
+                holiday + temp_feel , 
+              data = bikes)
+```
+
+## Comparing non-nested models
+
+Adjusted $R^2$
+
+  - can be used for nested and non-nested models
+  - no formal test/rules for "better enough" 
+    
+```{r}
+#| echo: true
+
+
+summary(model_2)$adj.r.squared
+summary(model_3)$adj.r.squared
+```
+
+## Information criteria
+
+The following "information criteria" can be used to compare nested or non-nested models (smaller values are better)
+
+<br>
+
+$$AIC =  n \log(SSE/n) + 2p$$
+
+<br>
+
+$$BIC =  n \log(SSE/n) + \log(n) \cdot p$$
+
+## AIC in R
+
+```{r}
+#| echo: TRUE
+
+AIC(model_2)
+AIC(model_3)
+```
+
+- suggests more complicated model is worth the added complexity
+
+## BIC in R
+
+```{r}
+#| echo: TRUE
+
+BIC(model_2)
+BIC(model_3)
+```
+
+- BIC imposes a larger complexity penalty, so prefers the simpler model 
+
+## AIC vs BIC
+
+<br>
+
+**AIC:** for large $n$, gives an estimate of out-of-sample predictive performance (i.e. better model for **prediction**)
+
+<br>
+
+**BIC:** for large $n$, will pick the "true" model if it is one of the candidates (i.e. better model for **understanding**)
+
+
+## Prediction: Overfitting 
+
+::: medium
+
+The goal when building a model is to capture the trends in the data while still making something that can applied to new data. When a model is **overfit**, a model will perform very well on the data used to fit it but perform very poorly on any new data.
+
+
+Model building is like making a suit that can generally fit everyone around a given size, not making a custom-tailored suit that can only fit one person perfectly.
+
+:::
+
+## Prediction: Training & Test Datasets   
+
+If the goal is prediction, we test the model on data it hasn't seen:
+
+  - Training dataset: Used to estimate ("train") your model.  
+  - Test dataset: The data held out to test your predictions.  
+  - RMSE: Root Mean Squared Error measures the average size of error (squared residuals).
+  
+$$RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$$
+
+## Code: make training and testing data
+
+```{r}
+#| echo: true
+
+set.seed(050726)
+
+bikes_split <- initial_split(bikes, prop = .8)
+bikes_split
+
+bikes_train <- training(bikes_split)
+bikes_test <- testing(bikes_split)
+```
+
+## Code: fit both models on training data
+
+```{r}
+#| echo: true
+
+
+model_1_train <- lm(rides ~ temp_actual + windspeed + weekend + 
+                      temp_actual:weekend +  windspeed:weekend,
+                     data = bikes_train)
+model_3_train <- lm(rides ~ temp_actual + windspeed * weekend + 
+                      holiday + temp_feel,
+                      data = bikes_train)
+```
+
+
+## Code: find $\widehat{y}$ for both models, then RMSE
+
+```{r}
+#| echo: true
+
+
+model_1_test <- predict(model_1_train, newdata = bikes_test)
+model_3_test <- predict(model_3_train, newdata = bikes_test)
+
+sqrt(mean((bikes_test$rides - model_1_test)^2))
+sqrt(mean((bikes_test$rides - model_3_test)^2))
+```
+
+## Code: find RMSE for **training data**
+
+```{r}
+#| echo: true
+
+
+sqrt(mean(model_1_train$residuals^2))
+sqrt(mean(model_3_train$residuals^2))
+```
+
+::: medium
+
+- RMSE is smaller on the model 3 for training data (predicting better)
+- RMSE is **bigger** using the model 3 for testing data (predicting worse)
+    - when the model is used on data it hasn't seen before, it's doing worse
+    - this is what it means to overfit
+:::
+
+
+## Tools for Model Comparison 
+
+::: medium
+
+1. ANOVA F-tests: Used for nested models to test if coefficients equal zero.  
+2. Adjusted $R^2$: Can be used for non-nested models; penalizes adding unnecessary predictors.
+3. AIC or BIC
+    - Smaller values are better.  
+    - Penalizes high numbers of coefficients to prevent over-complexity
+    
+Use on the full data if you are building an explanatory model, or on the training data *only* if you are building a predictive model 
+
+:::
+
+## Inference after selection
+
+- Model selection results in keeping terms with smaller p-values
+- Actual Type I error may be much bigger than than "expected" $\alpha = .05$
+- This is an active area of research! 
+
+
+
+## A Note on Automatic Selection
+
+I do **not** recommend using automated "Stepwise" (Forward/Backward) selection.  
+
+- Why? They are easily abused and ignore domain knowledge, outliers, and collinearity.  
+- Better Approach:
+
+   > "The single most important tool in selecting a subset of variables is the analyst’s knowledge of the area under study." — Sandy Weisberg. 
+  
+## Summary of Variable Selection
+
+- Identify research goals and use domain knowledge.  
+- Perform EDA and consider transformations.  
+- Compare models using ANOVA/Adj $R^2$/BIC (for nested) or AIC/RMSE (for prediction).  
+- **Justify your model choice!**
