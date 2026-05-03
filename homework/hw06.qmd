@@ -1,0 +1,112 @@
+---
+title: "Homework 06"
+format: html
+engine: knitr
+editor: source
+navbar: false
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(ggplot2)
+library(ggformula)
+library(here)
+library(broom)
+library(tidyverse)
+
+theme_set(theme_minimal())
+```
+
+Due: Friday of Week 5 at start of class
+
+There is a [homework template](../files/hw-template.qmd) available if you'd like to use that as a starter file, and copy and paste the code as needed.
+
+::: callout-important
+## Important!
+
+There are only three homework problems for this week. (two from Friday's material on model selection and some case study EDA). I recommend doing P1 before the exam on Wed and P3 (Case study EDA) before the exam on Friday. 
+:::
+
+# Problem 1: Model comparisons: hypothetical example[^1]
+
+[^1]: Adapted from *Statistical Sleuth 12.10*
+
+A, B, and C are three explanatory variables in a multiple linear regression with $n=28$ cases. Fill in the table for all models.
+
+| Model Variables | Residual SS | DF  | $\hat\sigma^2$ | $R^2_{adj}$ | AIC | BIC |
+|-----------------|-------------|-----|----------------|-------------|-----|-----|
+| None            | 8100        | 27  |                |             |     |     |
+| A               | 6240        | 26  |                |             |     |     |
+| B               | 5980        | 26  |                |             |     |     |
+| C               | 6760        | 26  |                |             |     |     |
+| AB              | 5500        | 25  |                |             |     |     |
+| AC              | 5250        | 25  |                |             |     |     |
+| BC              | 5750        | 25  |                |             |     |     |
+| ABC             | 5160        | 24  |                |             |     |     |
+
+(a) Which model is the best according to adjusted $R^2$?
+
+(b) Which model is the best according to AIC?
+
+(c) Which model is the best according to BIC?
+
+(d) Which model has the smallest $\hat\sigma^2$?
+
+# Problem 2: Model comparisons: data example[^2]
+
+[^2]: Adapted from *Statistical Sleuth 12.20*
+
+*Note:* this question asks you to propose a few different models to answer a research question. Multiple answers can be correct here!
+
+This data comes from a 1973 study on the number of species on different islands in the Galapagos Islands.
+
+The number of species on an island is known to be related to the island's area. Of interest is what other variables are also related to the number of species, after island area is accounted for, and whether the answer differs for native and non native species. (In other words, you will fit the same model with `NonNative` and `Native` as the response variable and check for differences). To see more information about each of the variables, run `?ex1220` in R to bring up the help page.
+
+```{r}
+library(Sleuth3)
+library(tidyverse)
+islands <- ex1220 |>
+  mutate(NonNative = Total - Native) |> # creates new "NonNative" variable
+  select(-Total) # Drops original "Total" variable
+```
+
+(a) The dataset only includes 30 variables; so we'll only consider a model with at most 5 predictors (to have at least 6 times the number of observations as predictors, somewhat arbitrarily). Create a scatterplot matrix of the numeric variables and create a pool of predictor variables that you want to include in your model. Also, be careful for collinearity!
+
+(b) Propose a candidate model to consider that can be used to answer the research question.
+
+(c) Check the validity of the regression assumptions. Make any transformations, etc. that are necessary.
+
+::: callout-note
+## Tip
+
+Stanta Cruz has a value of 0 for `DistSc`, so if you want to apply a log transformation, you’ll need to add some small value to it first. You can change the value as shown below:
+
+```{r}
+#| eval: false
+ex1220[ex1220$Island == "Santa Cruz", "DistSc"] <- 0.2 # where 0.2 is the small value
+```
+:::
+
+(d) Report the coefficient table (ie `broom::tidy()`) for both native and non-native species
+
+(e) Now, fit a "null model" that only includes `Area` (or a transformation) as a predictor. Compare this "null model" to your proposed model with an F test.
+
+(f) Summarize your findings to answer the original research question
+
+# Problem 3: Case Study EDA
+
+For your chosen case study option, answer the following questions with **EDA only** (that is, only graphs and summary statistics). You should not fit any models for this question.
+
+(a) Explore the relationship between the response variable and predictor variables. If you could only pick **one** predictor variable, which would you choose?
+
+(b) Which additional predictor variables do you think will be important to include in the final model?
+
+(c) Does your EDA suggest any transformations might be necessary? If so, try some transformations and comment on whether the linearity has improved.
+
+(d) Among the predictors you think might be important, do you see any worrisome collinearity?
