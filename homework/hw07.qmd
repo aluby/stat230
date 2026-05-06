@@ -1,0 +1,90 @@
+---
+title: "Homework 07"
+format: html
+engine: knitr
+editor: source
+navbar: false
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(ggplot2)
+library(ggformula)
+library(here)
+library(broom)
+library(tidyverse)
+
+theme_set(theme_minimal())
+```
+
+Due: Friday of Week 7 at start of class
+
+There is a [homework template](../files/hw-template.qmd) available if you'd like to use that as a starter file, and copy and paste the code as needed.
+
+::: callout-important
+## Important!
+
+Please attempt Problem 1 before class on Monday of Week 7. 
+:::
+
+# Problem 1: Empirical proportions, odds, and odds ratios
+
+::: callout-note
+
+If you'd like more review on probabilities, odds, and odds ratios, read Sec 11.1 and 11.2 of [Intro to Regression Analysis](https://introregression.netlify.app/11-logistic#sec-logistic-intro-gss) 
+
+:::
+
+| Group | Employed | Unemployed | Total |
+|:---:|:---:|:---:|:---:|
+| Training Program | 75 | 25 | 100 |
+| Control (No Training) | 40 | 60 | 100 |
+
+(a) Calculate the empirical probability of being employed for someone in the Training Program 
+
+(b) Calculate the empirical probability of being employed for someone in the Control Group 
+
+(c) If we think about how this data would be recorded in a "spreadsheet view", a sample of rows might look something like the following. If we think about this in a regression framework, what is our **response variable** and what is our **explanatory variable** for this scenario?
+
+```{r}
+#| echo: false 
+
+
+set.seed(050626)
+tibble(
+  group = c(rep("training", 100), rep("control", 100)),
+  employed = c(rep("yes", 75), rep("no", 25), rep("yes", 40), rep("no", 60))
+) |>
+  slice_sample(n = 10)
+```
+
+
+Probabilities can sometimes be difficult to interpret. If a probability changes from .01 to .02, the difference is .01 but the probability has also doubled. If a probability changes from .5 to .51, the difference is still .01 but this increase in probability is only a 2% increase. Because of this, we often report the **odds**: 
+
+$$\text{Odds}(Y=1) = \frac{P(Y=1)}{1-P(Y=1)} = \frac{P(Y=1)}{P(Y=0)}$$
+
+(e) Calculate the **odds** of being employed for those in the training group
+
+(f) Calculate the **odds** of being employed for those in the control group
+
+(g) The **odds ratio** tells us how much the odds of success change when we move from one group (eg the control) to the other (eg the training group). Calculate the odds ratio for comparing the training group to the control group.
+
+(h) Complete the following sentence:
+
+> "The odds of being employed for those who completed the training program are ________ times the odds of being employed for those in the control group."
+
+(i) If the Training Program had no effect at all on employment, what would you expect the Odds Ratio to be? Why?
+
+# Problem 3: Monday
+
+# Problem 4: Monday
+
+# Problem 5: Wed
+
+# Problem 6: Wed

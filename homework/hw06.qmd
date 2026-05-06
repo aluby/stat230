@@ -23,7 +23,7 @@ library(tidyverse)
 theme_set(theme_minimal())
 ```
 
-Due: Friday of Week 5 at start of class
+Due: Friday of Week 6 at start of class
 
 There is a [homework template](../files/hw-template.qmd) available if you'd like to use that as a starter file, and copy and paste the code as needed.
 
