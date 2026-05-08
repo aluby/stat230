@@ -29,31 +29,35 @@
     <lastmod>2026-04-24T18:49:07.190Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/15-model-selection.html</loc>
-    <lastmod>2026-05-01T18:44:18.227Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/05-conditions.html</loc>
+    <lastmod>2026-04-08T17:51:45.052Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/23-binomial-logistic.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/08-polynomial.html</loc>
+    <lastmod>2026-04-15T18:21:28.561Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/08-polynomial-tutorial.html</loc>
+    <lastmod>2026-04-15T18:21:12.303Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/08T-polynomial.html</loc>
+    <lastmod>2026-04-15T18:21:12.303Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/04-prediction.html</loc>
+    <lastmod>2026-04-07T16:00:01.308Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/20-logistic-inference.html</loc>
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/03b-r-inference.html</loc>
-    <lastmod>2026-04-03T15:11:01.732Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/01-intro.html</loc>
+    <lastmod>2026-03-30T20:31:05.187Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/24-deviance.html</loc>
-    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/06-transformations.html</loc>
-    <lastmod>2026-04-10T14:56:03.791Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/04R-prediction.html</loc>
-    <lastmod>2026-04-06T12:33:58.638Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/18-odds.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/26-overdispersion.html</loc>
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
@@ -269,36 +273,32 @@
     <lastmod>2026-04-03T14:07:20.482Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/26-overdispersion.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/04R-prediction.html</loc>
+    <lastmod>2026-04-06T12:33:58.638Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/06-transformations.html</loc>
+    <lastmod>2026-04-10T14:56:03.791Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/activities/24-deviance.html</loc>
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/01-intro.html</loc>
-    <lastmod>2026-03-30T20:31:05.187Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/03b-r-inference.html</loc>
+    <lastmod>2026-04-03T15:11:01.732Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/20-logistic-inference.html</loc>
+    <loc>https://aluby.github.io/stat230/activities/23-binomial-logistic.html</loc>
     <lastmod>2026-03-25T13:01:22.006Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/04-prediction.html</loc>
-    <lastmod>2026-04-07T16:00:01.308Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/15-model-selection.html</loc>
+    <lastmod>2026-05-01T18:44:18.227Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/08T-polynomial.html</loc>
-    <lastmod>2026-04-15T18:21:12.303Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/08-polynomial-tutorial.html</loc>
-    <lastmod>2026-04-15T18:21:12.303Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/08-polynomial.html</loc>
-    <lastmod>2026-04-15T18:21:28.561Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/05-conditions.html</loc>
-    <lastmod>2026-04-08T17:51:45.052Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/18-case-studies.html</loc>
+    <lastmod>2026-05-08T17:39:30.601Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/activities/19-binary-logistic.html</loc>
