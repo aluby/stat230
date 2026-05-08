@@ -1,0 +1,143 @@
+---
+title: "18: Tips for Case Studies"
+---
+
+```{r}
+library(tidyverse)
+library(ggformula)
+library(ggResidpanel)
+library(bayesrules)
+library(patchwork)
+```
+
+```{r}
+mod <- lm(rides ~ temp_actual, data = bikes)
+```
+
+
+# Figure size
+
+In the first few lines of your code chunks, you can specify figure output. 
+
+Default:
+
+```{r}
+gf_point(rides ~ temp_actual, data = bikes)
+```
+
+with 
+
+```
+#| fig-width: 4
+#| fig-height: 2
+
+```
+
+at top of chunk:
+
+```{r}
+#| fig-width: 4
+#| fig-height: 2
+gf_point(rides ~ temp_actual, data = bikes)
+```
+
+# Choosing a couple of residual plots
+
+Sometimes, you might want to include some residual plots instead of the full panel (For example, you want to mention a weird trend in the index plot but all other residual plots are uninteresting). Specify using `plots` argument. 
+
+```{r}
+resid_panel(mod)
+```
+
+vs
+
+```{r}
+resid_panel(mod, plots = "resid")
+```
+
+
+# Combining graphics
+
+Use the {patchwork} package to save individual plots and put them side by side
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+p1 <- gf_point(rides ~ temp_actual, data = bikes)
+p2 <- resid_panel(mod, plots = "resid")
+
+p1 + p2
+```
+
+
+
+
+# Customize theme
+
+Oh no! The plots above look terrible together because they use different `theme`s. *Note:* setting a theme is different with "regular plots" compared to resid panels
+
+```{r}
+p1 <- gf_point(rides ~ temp_actual, data = bikes) + theme_bw()
+p2 <- resid_panel(mod, plots = "resid", theme = "bw", title.opt = FALSE) 
+
+p1 + p2
+```
+
+Classic theme: 
+
+```{r}
+p1 <- gf_point(rides ~ temp_actual, data = bikes) + theme_classic()
+p2 <- resid_panel(mod, plots = "resid", theme = "classic", title.opt = FALSE) 
+
+p1 + p2
+```
+
+*Note:* I know they show up as different sizes. I am not aware of a workaround besides using `augment()` and making your own residual plots. 
+
+# Tables
+
+The default summary output takes up too much space in a case study report:
+
+```{r}
+summary(mod)
+```
+
+Instead, use `broom::tidy()` for a more compact output. 
+
+```{r}
+broom::tidy(mod)
+```
+
+You can also specify confidence intervals: 
+
+```{r}
+broom::tidy(mod, conf.int = TRUE)
+```
+
+And to make it look EVEN nicer, pass it into `knitr::kable()`:
+
+```{r}
+broom::tidy(mod, conf.int = TRUE) |>
+  knitr::kable()
+```
+
+which has a `digits` option:
+
+```{r}
+broom::tidy(mod, conf.int = TRUE) |>
+  knitr::kable(digits = 2)
+```
+
+# Equations
+
+If you are doing your report in .qmd, you might want to include some math! To include an inline equation, use single `$`: $y = \beta_0 + \beta_1 x_1 + \varepsilon, \varepsilon \sim N(0, \sigma^2)$. 
+
+To give an equation its own line, use double `$$`
+
+$$y = \beta_0 + \beta_1 x_1 + \varepsilon, \varepsilon \sim N(0, \sigma^2)$$
+
+(this typsetting language is called LaTeX and there are a bunch of resources available online) 
+
+- https://latexeditor.lagrida.com/ 
+- https://webdemo.myscript.com/views/math/index.html# 
+
