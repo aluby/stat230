@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Logistic Regression</title>
@@ -214,6 +214,18 @@ Prof Amanda Luby
 <section id="running-example" class="slide level2">
 <h2>Running Example</h2>
 <p>This dataset has information on 150 news articles, some that are real and some that are fake. Our goal is to build a statistical model to explain <code>type</code> based on features of the article</p>
+<ul>
+<li><code>type</code>: “real” or “fake” / <code>type_num</code>: 0 (real) or 1 (fake)</li>
+<li><code>title</code> and <code>url</code> of article</li>
+<li><code>title_words</code>: how many words in the title</li>
+<li><code>title_has_excl</code>: whether title has exclamation</li>
+<li><code>title_caps_percent</code>: percent of title in capital letters</li>
+<li><code>negative</code>: Percent of words that have negative sentiment</li>
+<li><code>positive</code>: Percent of words that have positive sentiment</li>
+</ul>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
 <div class="small">
 <div class="cell">
 <div class="cell-output-display">
@@ -330,13 +342,21 @@ Prof Amanda Luby
   Sum     60   90 150</code></pre>
 </div>
 </div>
+<div class="small">
 <ul>
-<li><p>P(fake | has exclamation) =</p></li>
-<li><p>Odds(fake | has exclamation) =</p></li>
-<li><p>P(fake | no exclamation) =</p></li>
-<li><p>Odds(fake | no exclamation) =</p></li>
-<li><p>Odds Ratio:</p></li>
+<li>P(fake | has exclamation) =</li>
+<li>Odds(fake | has exclamation) =</li>
 </ul>
+<p><br></p>
+<ul>
+<li>P(fake | no exclamation) =</li>
+<li>Odds(fake | no exclamation) =</li>
+</ul>
+<p><br></p>
+<ul>
+<li>Odds Ratio:</li>
+</ul>
+</div>
 </section>
 <section id="eda-ii" class="slide level2">
 <h2>EDA II</h2>
@@ -391,7 +411,7 @@ Residual Deviance: 183.3    AIC: 187.3</code></pre>
 </section>
 <section id="logistic-regression-fitted-model-and-interpreting-beta_1" class="slide level2">
 <h2>Logistic Regression: Fitted model and interpreting <span class="math inline">\(\beta_1\)</span></h2>
-<p><span class="math display">\[\hat\eta = \log(\frac{\hat\pi(x)}{1-\hat\pi(x)}) = -0.93 + 0.1 x\]</span></p>
+<p><span class="math display">\[\widehat\eta = \log(\frac{\widehat\pi(x)}{1-\widehat\pi(x)}) = \widehat{\beta_0} + \widehat{\beta_1}x = -0.93 + 0.1 x\]</span></p>
 <div class="fragment">
 <p><span class="math inline">\(\widehat \beta_1 = 0.1\)</span> is the expected change in the log odds associated with a 1-unit increase title cap percent…</p>
 </div>
