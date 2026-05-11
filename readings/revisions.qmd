@@ -17,6 +17,10 @@ To submit exam revisions
 - For any question where you missed points, you should write your corrected answer directly on the printout (if you need more space, you can write on a post-it note) 
     - For open-ended questions, you only need to write the corrected answer
     - For T/F or multiple choice questions, you should include an explanation/justification of why it is true or false. This could be a reference to slides/activity/hw from class, the book, an equation, a counterexample, a correction to the statement to make it true, etc. You will not earn points back for only marking the correct option.
+- If you scored 80% or less, please also include 1-2 sentence answers to the following questions
+    a) How did you study for this exam?
+    b) Did you have any major misunderstandings or knowledge gaps going into this exam? If so, what are they? 
+    c) What will you do differently to prepare for the next exam?
 - Exam revisions should be handed to me directly in class or office hours
 - Exam revisions are due before the next exam. Revisions on the 3rd exam are due by 11:59 pm on the last day of class. 
 
