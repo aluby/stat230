@@ -74,6 +74,16 @@ bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 
 This dataset has information on 150 news articles, some that are real and some that are fake. Our goal is to build a statistical model to explain `type` based on features of the article
 
+- `type`: "real" or "fake" / `type_num`: 0 (real) or 1 (fake)
+- `title` and `url` of article
+- `title_words`: how many words in the title
+- `title_has_excl`: whether title has exclamation
+- `title_caps_percent`: percent of title in capital letters
+- `negative`: Percent of words that have negative sentiment
+- `positive`: Percent of words that have positive sentiment
+
+## 
+
 ::: small
 
 ```{r}
@@ -104,13 +114,22 @@ table(news$title_has_excl, news$type) |>
   addmargins()
 ```
 
+::: small
+
 - P(fake | has exclamation) = 
 - Odds(fake | has exclamation) = 
+
+<br>
+
 
 - P(fake | no exclamation) = 
 - Odds(fake | no exclamation) = 
 
+<br>
+
 - Odds Ratio: 
+
+:::
 
 ## EDA II 
 
@@ -180,7 +199,7 @@ news_glm
 
 ## Logistic Regression: Fitted model and interpreting $\beta_1$
 
-$$\hat\eta = \log(\frac{\hat\pi(x)}{1-\hat\pi(x)}) = -0.93 + 0.1 x$$
+$$\widehat\eta = \log(\frac{\widehat\pi(x)}{1-\widehat\pi(x)}) = \widehat{\beta_0} + \widehat{\beta_1}x = -0.93 + 0.1 x$$
 
 . . . 
 

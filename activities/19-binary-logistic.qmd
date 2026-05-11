@@ -9,8 +9,7 @@ Fitting a binary logistic regression model in R is similar to fitting a linear r
 To load the data, run the following code chunk:
 
 ```{r}
-news <- read.csv(here::here("data/fake_news_bayesrules.csv"))
-# news <- read.csv("https://aluby.github.io/data/fake_news_bayesrules.csv")
+news <- read.csv("https://aluby.github.io/stat230/data/fake_news_bayesrules.csv")
 ```
 
 Binary logistic regression requires a binary response variable. In this case, we will use the `type_num` variable, which indicates whether the article was labeled as fake (1 = yes, 0 = no). Be sure to always check that your response variable is coded correctly before modeling. In this case, we want to make sure that `type` and `type_num` match up with our understanding of how the numeric variable is coded.
