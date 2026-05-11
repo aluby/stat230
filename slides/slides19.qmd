@@ -38,7 +38,7 @@ library(gt)
 library(gtsummary)
 library(carData)
 
-notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
+notes_theme = theme_minimal(base_size = 14, base_family = "Source Sans 3")
 theme_set(notes_theme)
 
 regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
@@ -72,6 +72,220 @@ bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 
 ## Running Example
 
-Fake news
+This dataset has information on 150 news articles, some that are real and some that are fake. Our goal is to build a statistical model to explain `type` based on features of the article
 
-## 
+::: small
+
+```{r}
+news <- bayesrules::fake_news |>
+  select(title, url, type, title_words, title_has_excl, title_caps_percent, negative, positive) |>
+  mutate(type_num = as.numeric(type == "fake"))
+
+write_csv(news, here("data/fake_news_bayesrules.csv"))
+
+knitr::kable(head(news))
+```
+
+:::
+
+## Exploratory Data Analysis
+
+```{r}
+ggplot(news, aes(y = type, fill = title_has_excl)) + 
+  geom_bar() + 
+  theme(legend.position = "bottom") + 
+  scale_fill_viridis_d(option = "plasma", end = .75)
+```
+
+## Empirical Probability and Odds
+
+```{r}
+table(news$title_has_excl, news$type) |>
+  addmargins()
+```
+
+- P(fake | has exclamation) = 
+- Odds(fake | has exclamation) = 
+
+- P(fake | no exclamation) = 
+- Odds(fake | no exclamation) = 
+
+- Odds Ratio: 
+
+## EDA II 
+
+```{r}
+#| fig-width: 12
+#| fig-height: 4
+
+
+p1 <- gf_density_ridges(type ~ title_caps_percent, data = news, scale = 2, fill = ~type, show.legend = FALSE) + 
+  scale_fill_viridis_d(option = "plasma", end = .75)
+
+p2 <- gf_jitter(type_num ~ title_caps_percent, width = 0.2, height = .05, data = news) + labs(y = "Fake = 1")
+
+p1 + p2
+```
+
+## SLR?
+
+```{r}
+#| fig-width: 5
+#| fig-height: 4
+
+
+p2 |>
+  gf_lm(color = "#f15a31")
+```
+
+```{r}
+lm(type_num ~ title_caps_percent, data = news) |> coef()
+```
+
+## Logistic Regression
+
+```{r}
+#| fig-width: 5
+#| fig-height: 4
+
+
+p2 |>
+  gf_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE, color = "#f15a31")
+```
+
+## Logistic Regression: Theoretical Model
+
+
+$$\log(\frac{\pi(x)}{1-\pi(x)}) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p$$
+
+- $\pi(x) = P(Y = 1 | x)$
+- $\log(\frac{\pi}{1-\pi})$ is called the **logit** function or the **log-odds**
+- Not constrained to be between 0 and 1 (like probabilities)
+- Not constrained to be between 0 and $\infty$ (like odds) 
+
+## Logistic Regression: R 
+
+```{r}
+#| echo: true 
+
+
+news_glm <- glm(type_num ~ title_caps_percent, 
+                data = news, 
+                family = "binomial")
+```
+
+```{r}
+news_glm
+```
+
+## Logistic Regression: Fitted model and interpreting $\beta_1$
+
+$$\hat\eta = \log(\frac{\hat\pi(x)}{1-\hat\pi(x)}) = -0.93 + 0.1 x$$
+
+. . . 
+
+$\widehat \beta_1 = 0.1$ is the expected change in the log odds associated with a 1-unit increase title cap percent...
+
+. . . 
+
+<br>
+
+but we don't "think" in terms of log odds 
+
+
+## Log-odds &rarr; odds
+
+$$\widehat\eta_i = \log(\frac{\widehat\pi(x)}{1-\widehat\pi(x)}) = -0.93 + 0.1 x$$
+
+. . . 
+
+
+$$\widehat{\text{odds}} = \frac{\widehat\pi(x)}{1-\widehat\pi(x)} = e^{-0.93 + 0.1 x} = e^{-.93}e^{.1x}$$
+
+. . . 
+
+if `title_caps_percent` increases by 1 unit: 
+
+$$\frac{\frac{\widehat\pi(x+1)}{1-\widehat\pi(x+1)}}{\frac{\widehat\pi(x)}{1-\widehat\pi(x)}} = \frac{e^{-.93}e^{.1(x+1)}}{e^{-.93}e^{.1x}} = e^{.1} \approx 1.105$$
+&rarr; the odds of fake news increases by a factor of 1.105
+
+## Estimating probabilities
+
+What's the probability a news article with 20% capitalization in the title is fake news? 
+
+$$\widehat \eta(20) = \log \frac{\widehat\pi(20)}{1-\widehat\pi(20)} = -0.93 + 0.1(20) = 1.07$$
+
+::: task
+How do we get from the estimated log odds to a probability?
+:::
+
+## Log odds &rarr; probability
+
+**Log odds:** 
+
+$\widehat{\eta} = \log \left( \dfrac{\widehat{\pi}(\mathtt{X})}{1-\widehat{\pi}(\mathtt{X})} \right) = \widehat{\beta}_0 + \widehat{\beta}_1 X_1 + \cdots + \widehat{\beta}_p X_p$
+
+<br>
+
+
+**Odds of success:** 
+
+$\widehat{\omega} = \dfrac{\widehat{\pi}(\mathtt{X})}{1-\widehat{\pi}(\mathtt{X})} = e^{\widehat{\beta}_0 + \widehat{\beta}_1 X_1 + \cdots + \widehat{\beta}_p X_p}$
+
+<br>
+
+. . .
+
+**Probability of success:** 
+
+
+$\widehat{\pi}(X) = \dfrac{e^{\widehat{\beta}_0 + \widehat{\beta}_1 X_1 + \cdots + \widehat{\beta}_p X_p}}{1+e^{\widehat{\beta}_0 + \widehat{\beta}_1 X_1 + \cdots + \widehat{\beta}_p X_p}}$
+
+## Estimating probabilities
+
+What's the probability a news article with 20% capitalization in the title is fake news? 
+
+$$\widehat \eta(20) = \log \frac{\widehat\pi(20)}{1-\widehat\pi(20)} = -0.93 + 0.1(20) = 1.07$$
+
+::: task
+How do we get from the estimated log odds to a probability?
+:::
+
+$$\widehat\pi(20) = \frac{e^{1.07}}{1+e^{1.07}} \approx 0.745$$
+
+## Fitted regression model 
+
+${\rm logistic}(\widehat{\eta}) = \dfrac{ \exp(\widehat{\eta}) }{ 1+  \exp(\widehat{\eta})}$ is the fitted curve on the probability scale
+
+## Fitted regression model: 3 scales
+
+
+:::: {.columns}
+::: {.column width="33%" .small}
+$\log(\frac{\widehat p}{1-\widehat p}) = \widehat\beta_0 + \widehat\beta_1 x$
+:::
+
+::: {.column width="33%" .small}
+$\text{odds}(x) = e^{\widehat\beta_0 + \widehat\beta_1 x}$
+:::
+
+::: {.column width="33%" .small}
+$P(Y = 1 | x) = \frac{e^{\widehat\beta_0 + \widehat\beta_1 x}}{1 + e^{\widehat\beta_0 + \widehat\beta_1 x}}$
+:::
+::::
+
+```{r}
+#| fig-width: 12
+#| fig-height: 4
+tibble(
+  x = seq(0, 60, by = .5),
+  log_odds = -0.9318 + 0.09772 * x,
+  odds = exp(log_odds),
+  prob = exp(log_odds)/(1 + exp(log_odds))
+) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x = x, y = value)) + 
+  geom_line(color = "#003300", linewidth = 1.5) + 
+  facet_wrap(vars(name), scales = "free_y") + 
+  labs(y = "")
+```
