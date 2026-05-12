@@ -1,0 +1,379 @@
+---
+title: Inference for Logistic Regression
+subtitle: Day 20
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+library(gt)
+library(gtsummary)
+library(carData)
+
+notes_theme = theme_minimal(base_size = 14, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+
+bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
+
+```
+
+## Running Example
+
+This dataset has information on 150 news articles, some that are real and some that are fake. Our goal is to build a statistical model to explain `type` based on features of the article
+
+- `type`: "real" or "fake" / `type_num`: 0 (real) or 1 (fake)
+- `title` and `url` of article
+- `title_words`: how many words in the title
+- `title_has_excl`: whether title has exclamation
+- `title_caps_percent`: percent of title in capital letters
+- `negative`: Percent of words that have negative sentiment
+- `positive`: Percent of words that have positive sentiment
+
+## 
+
+::: small
+
+```{r}
+news <- bayesrules::fake_news |>
+  select(title, url, type, title_words, title_has_excl, title_caps_percent, negative, positive) |>
+  mutate(type_num = as.numeric(type == "fake"))
+
+write_csv(news, here("data/fake_news_bayesrules.csv"))
+
+knitr::kable(head(news))
+```
+
+:::
+
+## Last Time
+
+- Intro to logistic regression
+- Moving between log odds &harr; odds &harr; probability scales
+- Interpreting coefficients
+
+### 
+
+- Generalized linear model
+- Inference for a single coefficient
+
+## Fitted regression model: 3 scales
+
+
+:::: {.columns}
+::: {.column width="33%" .small}
+$\log(\frac{\widehat p}{1-\widehat p}) = \widehat\beta_0 + \widehat\beta_1 x$
+:::
+
+::: {.column width="33%" .small}
+$\text{odds}(x) = e^{\widehat\beta_0 + \widehat\beta_1 x}$
+:::
+
+::: {.column width="33%" .small}
+$P(Y = 1 | x) = \frac{e^{\widehat\beta_0 + \widehat\beta_1 x}}{1 + e^{\widehat\beta_0 + \widehat\beta_1 x}}$
+:::
+::::
+
+```{r}
+#| fig-width: 12
+#| fig-height: 4
+tibble(
+  x = seq(0, 60, by = .5),
+  log_odds = -0.9318 + 0.09772 * x,
+  odds = exp(log_odds),
+  prob = exp(log_odds)/(1 + exp(log_odds))
+) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x = x, y = value)) + 
+  geom_line(color = "#003300", linewidth = 1.5) + 
+  facet_wrap(vars(name), scales = "free_y") + 
+  labs(y = "")
+```
+
+## Linear regression
+
+## Binary logistic regression
+
+If $Y$ follows a Bernoulli distribution
+
+$${\rm E}(Y | X) = \pi(X)$$
+
+We link this mean function to the explanatory variables using the logit link
+
+\begin{align*}
+\eta &= {\rm logit}(\pi(X))\\ 
+&= \log \left( \dfrac{\pi(X)}{1 - \pi(X)} \right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p
+\end{align*}
+
+## Fake news model (from activity)
+
+# Wald-based inference 
+
+## Maximum likelihood (ML) estimation {.smaller}
+
+The coefficients in logistic regression are estimated by finding the $\widehat{\beta}_0, \ldots, \widehat{\beta}_p$ that maximize the probability of the observed outcomes
+
+
+
+$$L(\beta) = P(Y_1 = y_1, \ldots Y_n = y_n | \beta, X) = \prod_{i=1}^{n} \pi(X)^{y_i} \Big[ 1 - \pi(X) \Big]^{1- y_i}$$
+
+
+where
+
+$$\pi(X) = \dfrac{e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}$$
+
+
+
+
+## Properties of ML estimators 
+
+If the sample is large and the model is correct, the ML estimator $\hat\beta_i$ is: 
+
+1. Essentially unbiased
+
+1. SEs can be computed and are about as small as any other unbiased estimator
+
+1. The sampling distributions for the estimators are approximately **normal**
+
+::: footnote
+For more, consider taking Stat250! 
+:::
+
+## Wald test for a coefficient 
+
+:::: {.columns}
+::: {.column width="25%"}
+**Hypotheses:**
+:::
+
+::: {.column width="75%"}
+::: {.fragment fragment-index=1}
+$H_0: \beta_i = 0 \quad$ vs. $\quad H_a: \beta_i \ne 0$
+:::
+:::
+
+::::
+
+:::: {.columns}
+::: {.column width="25%"}
+**Test statistic:**
+:::
+
+::: {.column width="75%"}
+::: {.fragment fragment-index=2}
+$z = \dfrac{\widehat{\beta}_i}{SE(\widehat{\beta}_i)}$
+:::
+:::
+
+::::
+
+<br>
+
+
+:::: {.columns}
+::: {.column width="25%"}
+**Reference distribution:**
+:::
+
+::: {.column width="75%"}
+::: {.fragment fragment-index=3}
+$N(0, 1)$
+:::
+:::
+
+::::
+
+
+```{r include=FALSE}
+news_mod <- glm(type_num ~ title_words + title_has_excl + title_caps_percent, 
+                data = news, family = "binomial")
+# tidy(heart_mod)
+```
+
+
+## CI for a coefficient 
+
+A normal-based confidence interval for ${\beta}_i$
+
+$$\widehat{\beta}_i \pm z^*_{1-\alpha/2} SE(\widehat{\beta}_i)$$
+
+. . .
+
+CI for the multiplicative effect on odds of success for a 1- unit change in $x$ (odds ratio of Success for $x+1$ vs. $x$):
+
+$$e^{\widehat{\beta}_i - z^*_{1-\alpha/2} SE(\widehat{\beta}_i)} \quad \text{to} \quad e^{\widehat{\beta}_i + z^*_{1-\alpha/2} SE(\widehat{\beta}_i)}$$
+
+. . .
+
+... for a $C$-unit change in $x$
+
+$$e^{C \cdot\widehat{\beta}_i - z^*_{1-\alpha/2} C \cdot SE(\widehat{\beta}_i)} \quad \text{to} \quad e^{C \cdot\widehat{\beta}_i + z^*_{1-\alpha/2} C \cdot SE(\widehat{\beta}_i)}$$
+
+
+## fake news example
+
+What impact does the *number of words in the title* have on the odds of being fake news?
+
+```{r echo=FALSE}
+tidy(news_mod, conf.int = TRUE) |> select(-statistic, -p.value)
+```
+
+::: {.fragment fragment-index=1}
+Let's construct a 95% confidence interval for $\beta_1$: $\quad \widehat{\beta}_1 \pm z^*_{1-\alpha/2} SE(\widehat{\beta}_1)$
+:::
+
+::: {.fragment fragment-index=2}
+$z^*_{1-0.05/2} = z^*_{0.975} =$ 0.975 quantile from $N(0, 1)$ 
+:::
+
+::::: {.fragment fragment-index=3}
+:::: {.columns}
+::: {.column width="35%"}
+```{r}
+qnorm(0.975)
+```
+:::
+::::
+:::::
+
+::: {.fragment fragment-index=4}
+$0.120 \pm 1.96 \cdot (0.058) = (0.008,\ 0.237)$
+:::
+
+
+## fake news example
+
+$0.120 \pm 1.96 \cdot (0.058) = (0.008,\ 0.237)$
+
+<br>
+
+::: {.fragment fragment-index=1}
+Exponentiating the endpoints to get the CI for the odds ratio for a one-word increase in title length:
+
+$$e^{0.008} = 1.008 \quad \text{to} \quad e^{0.0724} = 1.267$$
+:::
+<br>
+
+::: {.fragment fragment-index=2}
+We are 95% confident that a one-word increase in title length is associated with an increase in the odds of being fake news by between 0.8% (a 1.008 factor increase) and  26.7% (a 1.267 factor increase), holding all other variables constant. 
+:::
+
+
+## fake news example
+
+:::{style="font-size:0.9em"}
+How do the odds of being fake news change for an increase of 10 words in the title length?
+
+```{r echo=FALSE}
+tidy(news_mod, conf.int = TRUE) |> select(-statistic, -p.value)
+```
+:::
+
+::: {.fragment fragment-index=1}
+:::{style="font-size:0.9em"}
+95% CI: $\quad C \cdot \left[\widehat{\beta}_1 \pm z^*_{1-\alpha/2} SE(\widehat{\beta}_1)\right]$
+:::
+:::
+
+
+::: {.fragment fragment-index=2}
+:::{style="font-size:0.9em"}
+$\begin{split}
+10 \left[0.120 \pm 1.96 \cdot (0.058) \right] &= (10\cdot(0.008),10\cdot(0.237))\\ &= (0.08, \ 2.37)\end{split}$
+:::
+:::
+
+::: {.fragment fragment-index=3}
+:::{style="font-size:0.9em"}
+We are 95% confident that a 10-word increase in title length is associated with an increase in the odds of being fake news by between $e^{.08} = 1.08$ (an 8% increase) and a factor of $e^{2.37} = 10.69$ (a 1000% increase!), holding all other variables constant. 
+:::
+:::
+
+# Pause for the most dramatic logistic regression story I've ever heard
+
+# How can we tell if inference is correct?
+
+## Recall
+
+LINE conditions must be met for inference to be valid
+
+- If Linearity fails, the line doesn't actually describe the relationship and everything breaks
+
+- If INE fails, we can still interpret our coefficients (the geometry is still correct), but cannot trust inference
+    - Confidence intervals too narrow
+    - p-values too small
+
+## What are the conditions for logistic regression model? 
+
+1. **L**inear relationship between the log odds (logit) and the predictors
+
+2. **I**ndependence: no pairs, clusters, etc.
+
+3. **R**andomness: we have a random sample from the population or the data were collected from a randomized experiment
+
+## "Residuals"
+
+In logistic regression, we'll work with residuals on the response scale: 
+
+$$e_i = y_i - \widehat \pi_i = \begin{cases} 1 - \widehat \pi_i & \text{if } y_i = 1 \\ - \widehat \pi_i & \text{if } y_i = 0 \end{cases}$$
+
+What will residual plot look like? 
+
+```{r}
+# add graph of logistic curve
+```
+
+
+
