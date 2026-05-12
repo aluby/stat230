@@ -372,8 +372,81 @@ $$e_i = y_i - \widehat \pi_i = \begin{cases} 1 - \widehat \pi_i & \text{if } y_i
 What will residual plot look like? 
 
 ```{r}
-# add graph of logistic curve
+#| fig-width: 4
+#| fig-height: 2
+p1 <- tibble(
+  x = seq(0, 50, by = .5),
+  log_odds = -0.9318 + 0.09772 * x,
+  odds = exp(log_odds),
+  prob = exp(log_odds)/(1 + exp(log_odds))
+) |>
+  ggplot(aes(x = x, y = prob)) + 
+  geom_line(color = "#003300", linewidth = 1.5) +
+  geom_jitter(data = news, aes(x = title_caps_percent, y = type_num), height = .05, width = .1) +
+  labs(y = "Probability")
+
+p2 <- tibble(
+  x = seq(0, 50, by = .5),
+  log_odds = -0.9318 + 0.09772 * x,
+  odds = exp(log_odds),
+  prob = exp(log_odds)/(1 + exp(log_odds))
+) |>
+  ggplot(aes(x = x, y = prob)) + 
+  labs(y = "residual") +
+  ylim(c(-1,1))
+
+p1 + p2
 ```
 
+## Residual plot
+
+```{r}
+#| echo: true
+resid_panel(news_mod, plot = "resid", type = "response")
+```
+
+## Binned residuals
+
+Idea: **logits** should be linear
+
+$$\eta = \log(\frac{ \pi}{1- \pi}) = \beta_0 + \beta_1x$$
 
 
+## Create 
+
+```{r}
+
+```
+
+## In R
+
+
+## Pearson residual
+
+## Pearson residuals in R 
+
+```{r}
+#| echo: true
+#| layout-ncol: 2
+resid_panel(news_mod, plot = "resid", type = "pearson")
+resid_panel(news_mod, plot = "resid", type = "pearson", smoother = TRUE)
+```
+
+# Assessing linearity is hard! 
+
+## Independence
+
+- We conduct inference assuming we have $n$ pieces of independent information from the $n$ data points 
+- If the data points are dependent, we have *less* pieces of information than $n$ and our inference is overoptimistic
+- Best to assess based on description of the data: 
+    - Are they grouped in some way? 
+    - Measurements over time?
+    - Spatial component?
+
+## Independence: index plot
+
+```{r}
+#| echo: true
+#| layout-ncol: 2
+resid_panel(news_mod, plot = "index", type = "pearson")
+```
