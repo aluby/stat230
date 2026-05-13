@@ -81,7 +81,7 @@ $$\text{Odds}(Y=1) = \frac{P(Y=1)}{1-P(Y=1)} = \frac{P(Y=1)}{P(Y=0)}$$
 
 (i) If the Training Program had no effect at all on employment, what would you expect the Odds Ratio to be? Why?
 
-# Problem 3: Monday
+# Problem 3: Med School
 
 ::: callout-note
 You do not need to load data into R for this problem
@@ -90,8 +90,9 @@ You do not need to load data into R for this problem
 We have data on 55 medical school applicants from a liberal arts college in the Midwest. Below is R output from a binary logistic regression model where a student’s MCAT score is used to model their acceptance into a program (1 = accepted to medical school, 0 = not accepted).
 
 ```{r}
+#| echo: false
 medschool <- read.csv("http://aloy.rbind.io/data/medschool.csv")
-medschool_glm <- glm(Acceptance ~ MCAT, data = medschool)
+medschool_glm <- glm(Acceptance ~ MCAT, data = medschool, family = "binomial")
 broom::tidy(medschool_glm)
 ```
 
@@ -102,14 +103,13 @@ c. For somebody who scored 30 on the MCAT, find the odds of being accepted (to n
 d. Compare the odds of acceptance for somebody who scored a 35 to somebody who scored a 30 on the MCAT and give a sentence interpreting this number. (Hint: use the ratio.)
 e. Interpret the coefficient for MCAT in context.
 
-# Problem 4: Monday
+# Problem 4: Cars
 
 A marketing research firm was engaged by an automobile manufacturer to conduct a pilot study to examine the feasibility of using logistic regression for ascertaining the likelihood that a family will purchase a new car during the next year. A random sample of 33 suburban families was selected. Data on annual family income (in thousand dollars) and the current age of the oldest family automobile (in years) were obtained. A follow-up interview conducted 12 months later was used to determine whether the family actually purchased a new car (Y = 1) or did not purchase a new car (Y = 0) during the year.
 You can load the data into R via:
 
 ```{r}
-car_purchase <- read.csv(here("data/car_purchase.csv"))
-# car_purchase <- read.csv("https://aluby.github.io/stat230/data/car_purchase.csv")
+car_purchase <- read.csv("https://aluby.github.io/stat230/data/car_purchase.csv")
 ```
 
 a. Fit the logistic regression model that uses income and car_age to predict whether a family would purchase a new car in the next year (y). Report the fitted logit function (i.e., linear predictor).
@@ -117,6 +117,26 @@ b. Interpret the slope for income in terms of the odds of purchasing a new car.
 c. What is the estimated probability that a family with annual income $90 thousand and an oldest
 car of 3 years will purchase a new car in the next year?
 
-# Problem 5: Wed
+# Problem 5: Cars Inference
+
+Use the problem above for this question. 
+
+(a) Create three three residual plots of the Pearson residuals with a smoother to assess this model:
+
+  - residuals vs $\hat \eta$
+  - residuals vs `income`
+  - residuals vs `oldest_auto`
+  
+What do these plots suggest about the adequacy of the logistic regression model?
+
+(b) Create three binned residual plots to assess this model:
+
+  - residuals vs $\hat \eta$
+  - residuals vs `income`
+  - residuals vs `oldest_auto`
+
+What do these plots suggest about the adequacy of the logistic regression model?
+
 
 # Problem 6: Wed
+
