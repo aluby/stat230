@@ -91,12 +91,22 @@ We have data on 55 medical school applicants from a liberal arts college in the 
 
 ```{r}
 #| echo: false
+#| eval: false
 medschool <- read.csv("http://aloy.rbind.io/data/medschool.csv")
 medschool_glm <- glm(Acceptance ~ MCAT, data = medschool, family = "binomial")
 broom::tidy(medschool_glm)
 ```
 
- 
+<!-- Note: remove this table output next time!! forgot to add family = binomial to code -->
+
+```
+# A tibble: 2 × 5
+  term        estimate std.error statistic p.value
+  <chr>          <dbl>     <dbl>     <dbl>   <dbl>
+1 (Intercept)  -1.01      0.478      -2.12 0.0388 
+2 MCAT          0.0430    0.0131      3.29 0.00179
+```
+
 a. Report the fitted logistic regression model ($\text{logit}(\widehat\pi) = ...$).
 b. For somebody who scored 30 on the MCAT, find the probability they were accepted.
 c. For somebody who scored 30 on the MCAT, find the odds of being accepted (to not being accepted).
@@ -139,4 +149,6 @@ What do these plots suggest about the adequacy of the logistic regression model?
 
 
 # Problem 6: Wed
+
+
 
