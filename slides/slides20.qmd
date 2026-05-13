@@ -37,6 +37,7 @@ library(here)
 library(gt)
 library(gtsummary)
 library(carData)
+library(ggResidpanel)
 
 notes_theme = theme_minimal(base_size = 14, base_family = "Source Sans 3")
 theme_set(notes_theme)
@@ -104,7 +105,7 @@ knitr::kable(head(news))
 - Moving between log odds &harr; odds &harr; probability scales
 - Interpreting coefficients
 
-### 
+### Today
 
 - Generalized linear model
 - Inference for a single coefficient
@@ -142,7 +143,96 @@ tibble(
   labs(y = "")
 ```
 
-## Linear regression
+## Logistic regression: linear predictor with a logit link function
+
+:::: {.columns}
+::: {.column width="33%" .small}
+$\widehat \eta = \log(\frac{\widehat p}{1-\widehat p}) = \widehat\beta_0 + \widehat\beta_1 x$
+:::
+
+::: {.column width="33%" .small}
+Link function: logit
+
+$\widehat \eta \to P(Y=1)$
+:::
+
+::: {.column width="33%" .small}
+$P(Y = 1 | x) = \frac{e^{\widehat\beta_0 + \widehat\beta_1 x}}{1 + e^{\widehat\beta_0 + \widehat\beta_1 x}}$
+:::
+::::
+
+```{r}
+#| fig-width: 12
+#| fig-height: 4
+tibble(
+  x = seq(0, 60, by = .5),
+  log_odds = -0.9318 + 0.09772 * x,
+  #odds = exp(log_odds),
+  prob = exp(log_odds)/(1 + exp(log_odds))
+) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x = x, y = value)) + 
+  geom_line(color = "#003300", linewidth = 1.5) + 
+  facet_wrap(vars(name), scales = "free_y") + 
+  labs(y = "")
+```
+
+## Linear regression: linear predictor with an identity link function
+
+:::: {.columns}
+::: {.column width="33%" .small}
+$\widehat \eta = \widehat y = \widehat\beta_0 + \widehat\beta_1 x$
+:::
+
+::: {.column width="33%" .small}
+Link function: identity
+
+$f(\eta) = \eta$
+:::
+
+::: {.column width="33%" .small}
+$\widehat y= \widehat \beta_0 + \widehat \beta_1 x$
+:::
+::::
+
+```{r}
+#| fig-width: 12
+#| fig-height: 4
+tibble(
+  x = seq(0, 60, by = .5),
+  eta = -0.9318 + 0.09772 * x,
+  y_hat = eta,
+  #odds = exp(log_odds),
+  #prob = exp(log_odds)/(1 + exp(log_odds))
+) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x = x, y = value)) + 
+  geom_line(color = "#003300", linewidth = 1.5) + 
+  facet_wrap(vars(name), scales = "free_y") + 
+  labs(y = "")
+
+```
+
+
+## Generalized linear model
+
+<br>
+
+**Linear Predictor**
+
+$\eta = \beta_0 + \beta_1 x_1 + ... + \beta_p x_p$
+
+<br>
+
+**Link Function**
+
+$\theta = g(\eta)$
+
+<br>
+
+**Response distribution**
+
+$Y$ is a random variable with mean $\theta$
 
 ## Binary logistic regression
 
@@ -159,6 +249,26 @@ We link this mean function to the explanatory variables using the logit link
 
 ## Fake news model (from activity)
 
+
+```{r}
+news_mod <- glm(type_num ~ title_words + title_has_excl + title_caps_percent, 
+                data = news, family = "binomial")
+```
+
+::: small
+
+```{r}
+equatiomatic::extract_eq(news_mod, intercept = "beta", terms_per_line = 2,
+                         swap_var_names = c("type_num" = "type", "title_words" = "words",
+                                            "title_has_excl" = "excl", "title_caps_percent" = "pct_caps"))
+```
+
+:::
+
+```{r}
+tidy(news_mod)
+```
+
 # Wald-based inference 
 
 ## Maximum likelihood (ML) estimation {.smaller}
@@ -174,6 +284,9 @@ where
 
 $$\pi(X) = \dfrac{e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}$$
 
+::: footer
+For more, consider taking Stat250! 
+:::
 
 
 
@@ -187,7 +300,7 @@ If the sample is large and the model is correct, the ML estimator $\hat\beta_i$ 
 
 1. The sampling distributions for the estimators are approximately **normal**
 
-::: footnote
+::: footer
 For more, consider taking Stat250! 
 :::
 
@@ -236,11 +349,6 @@ $N(0, 1)$
 ::::
 
 
-```{r include=FALSE}
-news_mod <- glm(type_num ~ title_words + title_has_excl + title_caps_percent, 
-                data = news, family = "binomial")
-# tidy(heart_mod)
-```
 
 
 ## CI for a coefficient 
@@ -289,7 +397,7 @@ qnorm(0.975)
 :::::
 
 ::: {.fragment fragment-index=4}
-$0.120 \pm 1.96 \cdot (0.058) = (0.008,\ 0.237)$
+$0.120 \pm 1.96 \cdot (0.0581) = (0.008,\ 0.237)$
 :::
 
 
@@ -313,7 +421,7 @@ We are 95% confident that a one-word increase in title length is associated with
 
 ## fake news example
 
-:::{style="font-size:0.9em"}
+::: small
 How do the odds of being fake news change for an increase of 10 words in the title length?
 
 ```{r echo=FALSE}
@@ -372,8 +480,8 @@ $$e_i = y_i - \widehat \pi_i = \begin{cases} 1 - \widehat \pi_i & \text{if } y_i
 What will residual plot look like? 
 
 ```{r}
-#| fig-width: 4
-#| fig-height: 2
+#| fig-width: 12
+#| fig-height: 4
 p1 <- tibble(
   x = seq(0, 50, by = .5),
   log_odds = -0.9318 + 0.09772 * x,
@@ -402,37 +510,169 @@ p1 + p2
 
 ```{r}
 #| echo: true
+#| fig-width: 6
+#| fig-height: 4
 resid_panel(news_mod, plot = "resid", type = "response")
 ```
 
 ## Binned residuals
 
-Idea: **logits** should be linear
+Idea: If we group data points based on predictor, we can compute the mean response residual within each group and end up with something that looks more like an OLS residual plot
 
-$$\eta = \log(\frac{ \pi}{1- \pi}) = \beta_0 + \beta_1x$$
+::: incremental
+1. Calculate response residual
+2. Order observations either by the values of the predicted log odds/probabilities, or by quantitative predictor variable
+3. Use the ordered data to create g bins of approximately equal size. (Default: $g = \sqrt{n}$)
+4. Calculate average residual value in each bin
+5. Plot average residuals vs. average predicted log odds, probability, or predictor value
+:::
 
+## Binned residual plot 
 
-## Create 
+- Using 13 bins
+- You will recreate this during the R activity today
 
 ```{r}
+#| fig-width: 5
+#| fig-height: 3
+news_aug <- augment(news_mod, type.predict= "link", type.residuals = "pearson") |>
+  mutate(.resp.resid = resid(news_mod, type= "response"))
 
+binned_resids <- news_aug |> 
+  mutate(bin = ntile(news_mod$linear.predictors, 13)) |>
+  group_by(bin) |>
+  summarize(mean_linear_pred = mean(.fitted),
+            avg_resid = mean(.resp.resid),
+            .groups = "drop")
+
+gf_point(avg_resid ~ mean_linear_pred, data = binned_resids,
+         xlab = "Predicted log odds", ylab = "Average response residual") |>
+  gf_hline(yintercept = 0, linetype = 2) 
 ```
 
-## In R
+## Binned residual 
 
+- Nonlinear trend may be indication that squared term or log transformation of predictor variable required
+- If bins have large average residuals (in magnitude)
+  - Look at averages of other predictor variables across bins
+  - Interaction may be required if large magnitude residuals correspond to certain combinations of predictor variables
+
+## Check binned residuals against X variables
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+news_aug <- augment(news_mod, type.predict= "link", type.residuals = "pearson") |>
+  mutate(.resp.resid = resid(news_mod, type= "response"))
+
+p1 <- news_aug |> 
+  mutate(bin = ntile(title_words, 13)) |>
+  group_by(bin) |>
+  summarize(mean_x = mean(title_words),
+            avg_resid = mean(.resp.resid),
+            .groups = "drop") |>
+  gf_point(avg_resid ~ mean_x,
+         xlab = "title words", ylab = "Average response residual") |>
+  gf_hline(yintercept = 0, linetype = 2) 
+
+
+p2 <- news_aug |> 
+  mutate(bin = ntile(title_caps_percent, 13)) |>
+  group_by(bin) |>
+  summarize(mean_x = mean(title_caps_percent),
+            avg_resid = mean(.resp.resid),
+            .groups = "drop") |>
+  gf_point(avg_resid ~ mean_x,
+         xlab = "title words", ylab = "Average response residual") |>
+  gf_hline(yintercept = 0, linetype = 2) 
+
+
+p1 + p2
+```
+
+## Residuals vs categorical predictor
+
+- Calculate average residual for each level of the predictor
+- All of the means should be close to 0
+
+```{r}
+news_aug |>
+  group_by(title_has_excl) |>
+  summarize(`avg residual` = mean(.resp.resid))
+```
 
 ## Pearson residual
 
+Standardize the distance between the observation (0 or 1) and the expected value (probability)
+
+$$r_{p_i} = \frac{y_i - \widehat \pi_i}{\sqrt{\widehat{\pi_i}(1-\widehat \pi_i)}}$$
+
 ## Pearson residuals in R 
+
+- If the model is correct, then the expected (average) Pearson residual within each bin should be close to 0
+- A smoother should be approximately horizontal line at 0
 
 ```{r}
 #| echo: true
 #| layout-ncol: 2
+#| fig-width: 4
+#| fig-height: 2.5
 resid_panel(news_mod, plot = "resid", type = "pearson")
 resid_panel(news_mod, plot = "resid", type = "pearson", smoother = TRUE)
 ```
 
-# Assessing linearity is hard! 
+## 
+
+Smoothers can help draw attention to major flaws, but there will always be variation from the horizontal!
+
+```{r}
+#| cache: true
+#| echo: false
+#| fig-height: 6
+#| fig-width: 8
+#| fig-align: 'center'
+#| message: false
+library(nullabor) # lineup tools
+library(tidyverse)
+
+set.seed(051326)
+
+N <- 1000
+df <- tibble(
+  x1 = rnorm(N),
+  x2 = rnorm(N),
+  prob_y = exp(-1 + x1 + x2 + 0.7 * x1^2) / 
+    (1 + exp(-1 + x1 + x2 + 0.7 * x1^2)),
+  y = rbinom(N, size = 1, prob = prob_y)
+)
+
+no_quad <- glm(y ~ x1 + x2, data = df, family = "binomial")
+no_quad_aug <- augment(no_quad, type.residuals = "pearson")
+
+sim_ys <- simulate(no_quad, nsim = 19)
+sim_aug <- map_dfr(
+  sim_ys, 
+  ~augment(glm(.x ~ x1 + x2, data = df, family = binomial))
+)
+sim_aug$.n <- rep(1:19, each = nrow(df))
+
+no_quad_raw_lineup <- lineup(true = no_quad_aug, n = 19, samples = sim_aug) %>%
+    ggplot(aes(x = .fitted, y = .resid)) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  geom_point(shape = 1) +
+  geom_smooth(method = "loess", se = FALSE, color = "darkorange") +
+  facet_wrap(~.sample, ncol = 5) +
+  labs(x = "Linear predictor", y = "Pearson residuals") +
+  theme_bw()
+
+no_quad_raw_lineup
+```
+
+::: footer
+Only one of these datasets was simulated from the "wrong" distribution
+:::
+
+# Checking linearity is hard! 
 
 ## Independence
 
@@ -442,11 +682,19 @@ resid_panel(news_mod, plot = "resid", type = "pearson", smoother = TRUE)
     - Are they grouped in some way? 
     - Measurements over time?
     - Spatial component?
+- The reason we make an index plot is to see if our data is ordered in some way
 
 ## Independence: index plot
 
 ```{r}
 #| echo: true
-#| layout-ncol: 2
+#| fig-width: 4
+#| fig-height: 3
 resid_panel(news_mod, plot = "index", type = "pearson")
 ```
+
+## Randomness
+
+> A dataset containing data behind the study "FakeNewsNet: A Data Repository with News Content, Social Context and Spatialtemporal Information for Studying Fake News on Social Media" https://arxiv.org/abs/1809.01286. The news articles in this dataset were posted to Facebook in September 2016, in the run-up to the U.S. presidential election.
+
+
