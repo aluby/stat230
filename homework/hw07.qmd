@@ -148,7 +148,57 @@ What do these plots suggest about the adequacy of the logistic regression model?
 What do these plots suggest about the adequacy of the logistic regression model?
 
 
-# Problem 6: Wed
+# Problem 6: Moths
 
+An article in the *Journal of Animal Ecology* by [Bishop (1972)](https://doi.org/10.2307/3513) investigated whether moths provide evidence of "survival of the fittest" with their camouflage traits. Researchers glued equal numbers of light and dark morph moths in lifelike positions on tree trunks at 7 locations from 0 to 51.2 km from Liverpool. They then recorded the numbers of moths removed after 24 hours, presumably by predators. The hypothesis was that, since tree trunks near Liverpool were blackened by pollution, light morph moths would be more likely to be removed near Liverpool. The following variables are used in this analysis: 
 
+  - `morph` = light or dark
+  - `distance` = kilometers from Liverpool
+  - `placed` = number of moths of a specific morph glued to trees at that location
+  - `removed` = number of moths of a specific morph removed after 24 hours
+  - `log_odds_removed` = log odds of being removed
+
+The model with `log_odds_removed` as the response and `distance`, `morph`, the interaction `distance*morph` as the predictor variables is shown below. 
+
+```{r echo = F}
+moth <- read_csv(here("data/moths.csv"))
+moth <- mutate(moth, 
+               notremoved = Placed - Removed, 
+               log_odds_removed = log(Removed / notremoved),
+               prop_removed = Removed / Placed, 
+               dark = ifelse(Morph=="dark",1,0), 
+               distance = Distance, 
+               morph = Morph)
+```
+
+```{r echo=T}
+model1 <- lm(log_odds_removed ~ distance + morph + distance * morph, data = moth)
+```
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 3
+
+ggResidpanel::resid_xpanel(model1, yvar = "response")
+```
+
+```{r echo = F}
+knitr::kable(tidy(model1, conf.int = TRUE),format = "markdown", digits = 3)
+```
+
+(a) If you examine the R code that I used to fit this model, you'll see that I used `lm()` instead of `glm()`. Why is this approach OK in this case?
+ 
+(b) Write out the logistic regression equation (in terms of the log-odds) for *light* and *dark* moths (two separate equations)
+    
+(c) Use the model to interpret the following in terms of the **odds** of a moth being removed (you can assume all conditions are satisfactory)
+  
+  - 95% confidence interval for the coefficient of `distance` for a dark moth 
+  - 95% confidence interval for the coefficient of `morphlight` given the tree is in Liverpool (`distance = 0`)
+    
+(d) Now, report 80% confidence intervals for the same quantities as part (c). (You do not need to re-interpret)
+  
+(e) Use the model to calculate the predicted odds of being removed for a light moth that is glued to the trunk of a tree that is 6.2 km from Liverpool. 
+
+(f) Calculate the predicted probability that the moth described in the previous question is removed.
 
