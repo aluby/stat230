@@ -153,7 +153,7 @@ window.Quarto = {
   <li><a href="#problem-3-med-school" id="toc-problem-3-med-school" class="nav-link" data-scroll-target="#problem-3-med-school">Problem 3: Med School</a></li>
   <li><a href="#problem-4-cars" id="toc-problem-4-cars" class="nav-link" data-scroll-target="#problem-4-cars">Problem 4: Cars</a></li>
   <li><a href="#problem-5-cars-inference" id="toc-problem-5-cars-inference" class="nav-link" data-scroll-target="#problem-5-cars-inference">Problem 5: Cars Inference</a></li>
-  <li><a href="#problem-6-wed" id="toc-problem-6-wed" class="nav-link" data-scroll-target="#problem-6-wed">Problem 6: Wed</a></li>
+  <li><a href="#problem-6-moths" id="toc-problem-6-moths" class="nav-link" data-scroll-target="#problem-6-moths">Problem 6: Moths</a></li>
   </ul>
 </nav>
     </div>
@@ -334,8 +334,107 @@ Note
 </ul>
 <p>What do these plots suggest about the adequacy of the logistic regression model?</p>
 </section>
-<section id="problem-6-wed" class="level1">
-<h1>Problem 6: Wed</h1>
+<section id="problem-6-moths" class="level1">
+<h1>Problem 6: Moths</h1>
+<p>An article in the <em>Journal of Animal Ecology</em> by <a href="https://doi.org/10.2307/3513">Bishop (1972)</a> investigated whether moths provide evidence of “survival of the fittest” with their camouflage traits. Researchers glued equal numbers of light and dark morph moths in lifelike positions on tree trunks at 7 locations from 0 to 51.2 km from Liverpool. They then recorded the numbers of moths removed after 24 hours, presumably by predators. The hypothesis was that, since tree trunks near Liverpool were blackened by pollution, light morph moths would be more likely to be removed near Liverpool. The following variables are used in this analysis:</p>
+<ul>
+<li><code>morph</code> = light or dark</li>
+<li><code>distance</code> = kilometers from Liverpool</li>
+<li><code>placed</code> = number of moths of a specific morph glued to trees at that location</li>
+<li><code>removed</code> = number of moths of a specific morph removed after 24 hours</li>
+<li><code>log_odds_removed</code> = log odds of being removed</li>
+</ul>
+<p>The model with <code>log_odds_removed</code> as the response and <code>distance</code>, <code>morph</code>, the interaction <code>distance*morph</code> as the predictor variables is shown below.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_odds_removed <span class="sc">~</span> distance <span class="sc">+</span> morph <span class="sc">+</span> distance <span class="sc">*</span> morph, <span class="at">data =</span> moth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hw07_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-1.123</td>
+<td style="text-align: right;">0.240</td>
+<td style="text-align: right;">-4.687</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">-1.657</td>
+<td style="text-align: right;">-0.589</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">distance</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">2.437</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.035</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">morphlight</td>
+<td style="text-align: right;">0.374</td>
+<td style="text-align: right;">0.339</td>
+<td style="text-align: right;">1.103</td>
+<td style="text-align: right;">0.296</td>
+<td style="text-align: right;">-0.381</td>
+<td style="text-align: right;">1.129</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">distance:morphlight</td>
+<td style="text-align: right;">-0.028</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">-2.612</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">-0.051</td>
+<td style="text-align: right;">-0.004</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ol type="a">
+<li><p>If you examine the R code that I used to fit this model, you’ll see that I used <code>lm()</code> instead of <code>glm()</code>. Why is this approach OK in this case?</p></li>
+<li><p>Write out the logistic regression equation (in terms of the log-odds) for <em>light</em> and <em>dark</em> moths (two separate equations)</p></li>
+<li><p>Use the model to interpret the following in terms of the <strong>odds</strong> of a moth being removed (you can assume all conditions are satisfactory)</p></li>
+</ol>
+<ul>
+<li>95% confidence interval for the coefficient of <code>distance</code> for a dark moth</li>
+<li>95% confidence interval for the coefficient of <code>morphlight</code> given the tree is in Liverpool (<code>distance = 0</code>)</li>
+</ul>
+<ol start="4" type="a">
+<li><p>Now, report 80% confidence intervals for the same quantities as part (c). (You do not need to re-interpret)</p></li>
+<li><p>Use the model to calculate the predicted odds of being removed for a light moth that is glued to the trunk of a tree that is 6.2 km from Liverpool.</p></li>
+<li><p>Calculate the predicted probability that the moth described in the previous question is removed.</p></li>
+</ol>
 
 
 </section>
