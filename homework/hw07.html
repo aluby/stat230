@@ -150,9 +150,9 @@ window.Quarto = {
    
   <ul>
   <li><a href="#problem-1-empirical-proportions-odds-and-odds-ratios" id="toc-problem-1-empirical-proportions-odds-and-odds-ratios" class="nav-link active" data-scroll-target="#problem-1-empirical-proportions-odds-and-odds-ratios">Problem 1: Empirical proportions, odds, and odds ratios</a></li>
-  <li><a href="#problem-3-monday" id="toc-problem-3-monday" class="nav-link" data-scroll-target="#problem-3-monday">Problem 3: Monday</a></li>
-  <li><a href="#problem-4-monday" id="toc-problem-4-monday" class="nav-link" data-scroll-target="#problem-4-monday">Problem 4: Monday</a></li>
-  <li><a href="#problem-5-wed" id="toc-problem-5-wed" class="nav-link" data-scroll-target="#problem-5-wed">Problem 5: Wed</a></li>
+  <li><a href="#problem-3-med-school" id="toc-problem-3-med-school" class="nav-link" data-scroll-target="#problem-3-med-school">Problem 3: Med School</a></li>
+  <li><a href="#problem-4-cars" id="toc-problem-4-cars" class="nav-link" data-scroll-target="#problem-4-cars">Problem 4: Cars</a></li>
+  <li><a href="#problem-5-cars-inference" id="toc-problem-5-cars-inference" class="nav-link" data-scroll-target="#problem-5-cars-inference">Problem 5: Cars Inference</a></li>
   <li><a href="#problem-6-wed" id="toc-problem-6-wed" class="nav-link" data-scroll-target="#problem-6-wed">Problem 6: Wed</a></li>
   </ul>
 </nav>
@@ -270,8 +270,8 @@ Note
 <li>If the Training Program had no effect at all on employment, what would you expect the Odds Ratio to be? Why?</li>
 </ol>
 </section>
-<section id="problem-3-monday" class="level1">
-<h1>Problem 3: Monday</h1>
+<section id="problem-3-med-school" class="level1">
+<h1>Problem 3: Med School</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -286,18 +286,12 @@ Note
 </div>
 </div>
 <p>We have data on 55 medical school applicants from a liberal arts college in the Midwest. Below is R output from a binary logistic regression model where a student’s MCAT score is used to model their acceptance into a program (1 = accepted to medical school, 0 = not accepted).</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>medschool <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"http://aloy.rbind.io/data/medschool.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>medschool_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Acceptance <span class="sc">~</span> MCAT, <span class="at">data =</span> medschool)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(medschool_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
+<!-- Note: remove this table output next time!! forgot to add family = binomial to code -->
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic p.value
   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
 1 (Intercept)  -1.01      0.478      -2.12 0.0388 
 2 MCAT          0.0430    0.0131      3.29 0.00179</code></pre>
-</div>
-</div>
 <ol type="a">
 <li>Report the fitted logistic regression model (<span class="math inline">\(\text{logit}(\widehat\pi) = ...\)</span>).</li>
 <li>For somebody who scored 30 on the MCAT, find the probability they were accepted.</li>
@@ -306,12 +300,11 @@ Note
 <li>Interpret the coefficient for MCAT in context.</li>
 </ol>
 </section>
-<section id="problem-4-monday" class="level1">
-<h1>Problem 4: Monday</h1>
+<section id="problem-4-cars" class="level1">
+<h1>Problem 4: Cars</h1>
 <p>A marketing research firm was engaged by an automobile manufacturer to conduct a pilot study to examine the feasibility of using logistic regression for ascertaining the likelihood that a family will purchase a new car during the next year. A random sample of 33 suburban families was selected. Data on annual family income (in thousand dollars) and the current age of the oldest family automobile (in years) were obtained. A follow-up interview conducted 12 months later was used to determine whether the family actually purchased a new car (Y = 1) or did not purchase a new car (Y = 0) during the year. You can load the data into R via:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>car_purchase <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/car_purchase.csv"</span>))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># car_purchase &lt;- read.csv("https://aluby.github.io/stat230/data/car_purchase.csv")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>car_purchase <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/car_purchase.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="a">
 <li>Fit the logistic regression model that uses income and car_age to predict whether a family would purchase a new car in the next year (y). Report the fitted logit function (i.e., linear predictor).</li>
@@ -319,8 +312,27 @@ Note
 <li>What is the estimated probability that a family with annual income $90 thousand and an oldest car of 3 years will purchase a new car in the next year?</li>
 </ol>
 </section>
-<section id="problem-5-wed" class="level1">
-<h1>Problem 5: Wed</h1>
+<section id="problem-5-cars-inference" class="level1">
+<h1>Problem 5: Cars Inference</h1>
+<p>Use the problem above for this question.</p>
+<ol type="a">
+<li>Create three three residual plots of the Pearson residuals with a smoother to assess this model:</li>
+</ol>
+<ul>
+<li>residuals vs <span class="math inline">\(\hat \eta\)</span></li>
+<li>residuals vs <code>income</code></li>
+<li>residuals vs <code>oldest_auto</code></li>
+</ul>
+<p>What do these plots suggest about the adequacy of the logistic regression model?</p>
+<ol start="2" type="a">
+<li>Create three binned residual plots to assess this model:</li>
+</ol>
+<ul>
+<li>residuals vs <span class="math inline">\(\hat \eta\)</span></li>
+<li>residuals vs <code>income</code></li>
+<li>residuals vs <code>oldest_auto</code></li>
+</ul>
+<p>What do these plots suggest about the adequacy of the logistic regression model?</p>
 </section>
 <section id="problem-6-wed" class="level1">
 <h1>Problem 6: Wed</h1>
