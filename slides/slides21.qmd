@@ -1,0 +1,330 @@
+---
+title: Model Comparison for Logistic Regression
+subtitle: Day 21
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+library(gt)
+library(gtsummary)
+library(carData)
+library(ggResidpanel)
+
+notes_theme = theme_minimal(base_size = 14, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+
+bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
+
+news <- bayesrules::fake_news |>
+  mutate(has_excl = ifelse(title_has_excl | text_excl > 0, TRUE, FALSE)) |>
+  select(title, url, type, title_words, has_excl, title_caps_percent, negative, positive) |>
+  mutate(type_num = as.numeric(type == "fake"))
+
+news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent, 
+                data = news, family = "binomial")
+
+```
+
+## Model from last time 
+
+::: small
+```{r}
+equatiomatic::extract_eq(news_mod, intercept = "beta", terms_per_line = 2,
+                         swap_var_names = c("type_num" = "type", "title_words" = "words",
+                                            "title_has_excl" = "excl", "title_caps_percent" = "pct_caps"))
+```
+:::
+
+```{r}
+tidy(news_mod)
+```
+
+## Do we need an interaction term between `title_caps_percent` and `has_excl`? 
+
+ - EDA 
+ 
+ - Formal Test
+ 
+## EDA (original data)
+
+```{r}
+gf_jitter(type_num ~ title_caps_percent, color = ~has_excl, data = news, height = .25, width = 1, alpha = .5)
+```
+
+## EDA (aggregated data)
+
+First, make an "aggregated dataset" 
+
+```{r}
+#| output-location: slide
+#| echo: true
+news_agg <- news |>
+  mutate(tcp_bin = ntile(title_caps_percent, 13)) |>
+  group_by(tcp_bin, has_excl) |>
+  summarize(
+    prop_fake = mean(type_num),
+    log_odds = log(prop_fake/(1-prop_fake))
+  )
+
+news_agg
+```
+
+## Plot empirical log odds
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4
+gf_point(log_odds ~ tcp_bin, color = ~has_excl, data = news_agg) |>
+  gf_lm()
+```
+
+- Is there a nonlinear relationship? 
+- Should we try a different lines model?
+
+## Model with interaction
+
+```{r}
+#| echo: true
+news_mod2 <- glm(type_num ~ title_words + 
+                   has_excl*title_caps_percent, 
+                data = news, family = "binomial")
+```
+
+::: xsmall
+
+```{r}
+equatiomatic::extract_eq(news_mod2, intercept = "beta", terms_per_line = 2,
+                         swap_var_names = c("type_num" = "type", "title_words" = "words",
+                                            "title_has_excl" = "excl", "title_caps_percent" = "pct_caps"))
+```
+
+:::
+
+:::medium
+```{r}
+tidy(news_mod2)
+```
+:::
+
+## 
+
+::: task
+Write out regression model for each group separately
+:::
+
+
+## 
+
+::: task
+Do we need the interaction term? Write out null and alternative hypothesis. 
+:::
+
+## Solution: 
+
+## 
+::: task
+Do we need `has_excl` at all? Write out the null and alternative hypothesis for this question.
+:::
+
+## Likelihood Ratio Test
+
+In OLS, we used: 
+
+For logistic regression, we use a **likelihood ratio test**
+
+::: medium
+```{r}
+#| echo: true
+#| eval: false
+
+anova(reduced_model, full_model, test = "LRT")
+```
+
+
+```{r}
+#| echo: true
+
+reduced_model <- glm(type_num ~ title_words + title_caps_percent, 
+                data = news, family = "binomial")
+
+anova(reduced_model, news_mod2, test = "LRT")
+```
+
+:::
+
+## Likelihood Ratio Test
+
+:::: {.columns}
+::: {.column width="25%"}
+**Hypotheses:**
+:::
+
+::: {.column width="75%"}
+::: {.fragment fragment-index=1}
+$H_0: \beta_i = \beta_j = ... = 0 \quad$ vs. $\quad H_a: \text{at least 1 } \beta \ne 0$
+:::
+:::
+
+::::
+
+:::: {.columns}
+::: {.column width="25%"}
+**Test statistic:**
+:::
+
+::: {.column width="75%"}
+::: {.fragment fragment-index=2}
+
+$$\Lambda = 2 \log \frac{\text{max likelihood in full model}}{\text{max likelihood in reduced model}}$$
+:::
+:::
+
+::::
+
+<br>
+
+
+:::: {.columns}
+::: {.column width="25%"}
+**Reference distribution:**
+:::
+
+::: {.column width="75%"}
+::: {.fragment fragment-index=3}
+$\chi^2_{df}$ where $df=$ number of extra terms in the full model
+:::
+:::
+
+::::
+
+
+**Idea:** how much did the full model increase the likelihood over the small model? (High likelihood = good, low likelihood = less good)
+
+## `anova` table
+
+Deviance = $-2 \log L$
+
+::: small
+
+| Resid DF | Resid Dev | Df | Deviance | Pr(>Chi) |
+|:---:|:---:|:---:|---|---|
+| n - coefs(reduced)| -2 log L(reduced) |  |  |  |
+| n - coefs(full) | -2 log L(full) | # extra coefs | $\Lambda$ | p-value |
+
+:::
+
+## 
+
+::: xsmall
+
+```{r}
+#| echo: true
+
+
+summary(news_mod)
+```
+
+:::
+
+## 
+
+::: task
+Fill in the ANOVA table below for the test $H_0: \beta_1 = \beta_2 = \beta_3 = 0$ against $H_A$ at least 1 $\ne 0$
+:::
+
+|  | Resid DF | Resid Dev | Df | Deviance | Pr(>Chi) |
+|---|:---:|:---:|:---:|---|---|
+| 1 |  |  |  |  |  |
+| 2 |  |  |  |  |  |
+
+## Z-test vs LRT 
+
+Test for one coefficient $H_0: \beta_i = 0$ against $H_A: \beta_i \ne 0$: 
+
+- In OLS, the t-test and F-test give *exactly the same p-values* if you are comparing 1 coefficient
+- In logistic regression, the z-test and LRT are **not** equivalent
+    - Hopefully they are close
+    - If not, the LRT is usually more accurate
+
+## AIC and BIC for logistic regression
+
+The following "information criteria" can be used to compare nested or non-nested models (smaller values are better)
+
+$$IC = \text{Measure of Fit} + \text{Penalty}$$
+
+<br>
+
+$$AIC = n \log(L) + 2p$$
+
+<br>
+
+$$BIC =  n \log(L) + \log(n) \cdot p$$
+
+where L is the likelihood of the model 
+
+## In R
+
+```{r}
+#| echo: true
+
+
+AIC(news_mod, news_mod2, reduced_model)
+
+BIC(news_mod, news_mod2, reduced_model)
+```
+

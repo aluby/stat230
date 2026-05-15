@@ -6,6 +6,10 @@ execute:
 navbar: false
 ---
 
+::: callout-warning
+🚧 Under construction 🚧 
+:::
+
 # Overview
 
 The final project is an opportunity to use the methods learned in this course to address a question
@@ -83,6 +87,7 @@ We will follow the USCLAP guidelines for the format of the report: https://www.c
 
 # Tips for datasets
 
+See doc on moodle
 
 # Best practices for small group work
  
