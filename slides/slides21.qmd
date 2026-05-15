@@ -174,9 +174,8 @@ Write out regression model for each group separately
 Do we need the interaction term? Write out null and alternative hypothesis. 
 :::
 
-## Solution: 
-
 ## 
+
 ::: task
 Do we need `has_excl` at all? Write out the null and alternative hypothesis for this question.
 :::
