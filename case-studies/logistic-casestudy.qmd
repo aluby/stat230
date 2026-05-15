@@ -1,0 +1,180 @@
+---
+title: "Case Study 3: Logistic Regression"
+format: html
+execute:
+  echo: true
+navbar: false
+---
+
+# Overview
+
+The goals of this case study are twofold: 
+
+  (1) To gain experience with logistic regression
+  (2) To get practice with replicating other analyses
+
+
+You will submit your work to this case study in two parts: 
+
+  (1) individual submission as part of HW8 (due Friday of Week 8 at beginning of class)
+      - It's OK with me if your group works on this together as long as you actually do it together. You should not send code back and forth to complete this portion of the project. 
+      - You will have in-class time on Friday to work together, so I encourage you to get started on the analysis before class to use your time effectively
+  (2) a group report (due beginning of class on Wed of Week 9)
+      - Your groups are your in-class groups. Note that everybody is in a group of 3 for this project. 
+  
+You should all do an equal amount of contribution to parts (1) and (2). Equal does not necessarily mean identical, but all group members should have a deep understanding of the statistical approaches used and have contributed to the writing of the report. 
+
+# Background
+
+Before starting your analysis, read the following:
+
+  - APM study: https://features.apmreports.org/in-the-dark/mississippi-district-attorney-striking-
+blacks-from-juries/
+  
+  - This is a summary of research into Mississippi prosecutor Doug Evans’s use of “peremptory strikes”
+during the jury selection phase. The main question of interest is whether Mr. Evans unfairly
+excluded eligible black jurors from a jury.
+
+- APM methodology: https://www.apmreports.org/files/peremptory_strike_methodology.pdf
+  
+  – This paper is a more detailed description of how the researchers compiled the data used to argue
+that Evans was indeed unfairly excluding black jurors. Skim the whole report, but focus your
+attention on the logistic regression model explained starting on page 9.
+
+- APM update: https://www.apmreports.org/in-the-dark/season-two/curtis-flowers-updates
+  
+  – In June 2019, the US Supreme Court overturned Flowers’s sixth conviction on the grounds that
+Evans again violated Flowers’s constitutional rights by intentionally removing Black eligible jurors
+from the pool of all eligible jurors. In December 2019, Curtis Flowers was released on bail after 23
+years in prison. Finally, in September 2020, the Mississippi Attorney General’s office, which had
+taken over prosecution of his case from Doug Evans, dismissed all charges against Curtis Flowers.
+
+# Data
+
+The data set `apm.csv` contains data from 2,295 potential jurors for 89 jury trials in Mississippi that Doug Evans was primary prosecutor for between the years 1992 and 2017. These jurors were available for Doug
+Evan (the “state”) to strike using his "peremptory strikes" during the jury selection phase. Note that in this data set there were 13 jurors with an unknown race that were combined with the non-Black juror group.
+
+```{r}
+apm <- read.csv(here::here("data/apm.csv"))
+```
+
+Use the Appendix of the Methodology report to find the variable descriptions for this data set. The response variable is either `struck_state` (“not_state” or “state”) or the binary version `struck_state_bin` (1 = state struck, 0 = not state struck). Your initial set of predictors are divided into two groups (see next section for details):
+
+  - Group A: `accused`, `is_black`, `fam_accused`, `death_hesitation`, `know_def`, `same_race`, and
+`fam_law_enforcement`
+  - Group B: `know_vic`, `know_wit`, `fam_crime_victim`, `crime_victim`, `prior_info`, and `gender`
+  
+# Analysis Steps
+
+These are the steps that you should take in your analysis. Remember, however, that your report is not a
+step-by-step description of your analysis.
+
+1. Verify the findings of the APM methodology report that claims that the predictors in Group B are not
+significant after accounting for the predictors in Group A in the logistic model for the probability of a
+juror being struck by the state.
+
+2. Confirm that your model using predictors in Group A match the coefficients table and the odds ratio
+table on page 10 of the Methodology report.
+
+3. The report uses `same_race` (juror and defendant have the same race) to account for the race of the
+defendant. Explore whether including `defendant_race` (defendant’s race) is a better predictor than
+`same_race` in the model.
+
+4. Explore whether there are any statistically significant interactions between whether the juror is Black
+(`is_black`) and any the 6 predictors in Group (or the `defendant_race` predictor instead of `same_race`,
+depending on your analysis in part 3). Use both tests and EDA to explore this.
+
+# Format
+
+The report has the same structure as the previous case studies but it should be between 2-3 pages. You don’t need to report your results for analysis Steps 1-2 in your report (just show in the code appendix). Use the Results section to report on Steps 3-4, addressing the following questions:
+
+- Is the model presented in the APM study sufficient? Would you use defendant_race instead of
+same_race? Would you include interactions?
+- For your chosen model, interpret the effect of juror race on the odds of a state strike. If juror race
+is used in an interaction, then interpret the effect of juror race as it depends on the other predictor.
+Include confidence intervals for these effects. (Hint: this may involve computing the SE of a linear
+combination of parameters.) However, if your model has more than two interactions in it, please do
+not list the estimated effects for every possibly combination of the interaction terms. Instead, give a
+confidence interval for a reasonably chosen reference level along with correctly interpreted confidence
+intervals for each of the interaction terms.
+
+
+
+ - 3 pages or less (including figures but not including references). You may include up to 2 pages of appendices of graphs or coefficient tables that do not count towards this limit. Note that these should be *supporting graphs*, not discussed in the main text. 
+ - Introduction: this is where you introduce the problem and why it is important to study. This should focus on the data and the "real-world" questions. Give enough background in the intro so that a reader doesn’t need to refer to source material, but take care not to plagiarize your source material above. Cite sources as needed.
+ - EDA: this is where you discuss the variables of interest and present your EDA (e.g. graphs) to motivate your model. This section should not be exhaustive but should include *key* figures that help the reader understand your data and "see what's coming" in the results section.
+ - Results: this is where you present your model selection approach, final model, and interpret the results. You should explain your results both statistically and in context. 
+ - Discussion: this is a shorter section that summarizes the main points of your analysis and explains your answer to the research question.
+ - Appendices: this is an optional section where you can include graphs or results that you used, but aren't central to the point you are trying to make in the remainder of the report. (Eg residual plots that were "normal" or a list of transformations that you considered)
+ 
+# Best practices for small group work
+ 
+You will work in groups of three for this project. 
+  
+While you are permitted to do some work separately (e.g., the homework components, revising a section at a time when your schedules don’t permit meeting together), I discourage you from completing substantial portions of the final report individually. Each partner should contribute substantively to each component of the report, and each partner is assumed to be an equal contributor to the final product. You should be in regular contact with your partner(s) and should meet at least once outside of class. If you are having issues communicating with your partner(s), please email me as soon as possible.
+
+
+# Academic Integrity
+
+For this case study, you may use the following resources: 
+
+  - Your own course notes (from any class!) and any Stat230 materials of your own or provided by Amanda
+  - Web searches/AI where your search/prompts are general questions about coding (e.g., how do I subset a data set in R where I want only certain numerical values?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty.
+  - Web searches/AI where your search/prompts are background research about your project topic. If you use AI, you MUST provide a document shows your “conversation.” You must also find a real source (published by a reputable source, ideally peer-reviewed) and don't rely purely on AI. Failure to do so will be considered academic dishonesty.
+  - Web searches/AI where your search/prompts are general questions about formatting (e.g., how do I make a table in GoogleDocs?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty
+  - The writing center for help editing your write up. 
+  - Your in-class group
+  - Amanda
+  - Noah
+  - StatLab / Math Skills Center for R coding help or help with statistical models
+  
+For this project you may NOT use the following resources:
+
+  - Other humans (including other folks in this class)
+  - Web searches/AI where your searches/prompts are the specific questions you are being asked in the project about coding (e.g., How do I fit a linear regression model in R with the sales price as the response variable and square footage as the predictor variable?).
+  - Web searches/AI where your search/prompts are the specific formatting questions you are being asked to do for the project (e.g., please write a caption for this table).
+  - AI to write or edit any portion of your original write-up or your final write-up. 
+
+# Rubric
+
+*Note:* I recommend going through this checklist as a team before your final submission
+
+- Title and authors (5%) 
+    - [ ] Has a title and lists the authors
+    - [ ] Informative and engaging
+- Introduction (10%)
+    - [ ] Introduces and motivates the topic being addressed
+    - [ ] Includes at least one reference for context/motivation for this study that are well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)
+    - [ ] Explains the questions addressed in the report
+    - [ ] Gives appropriate background information (and avoids making broad and unsubstantiated claims)
+- EDA (10%)
+    - [ ] At least one visual summary that directly connects to the model
+    - [ ] Describes the data accurately and concisely 
+- Results (45%) 
+    - [ ]  Focus is on conveying the results of the analysis and is not a step-by-step description
+    - [ ] Model building process is appropriate and discussed
+    - [ ] Statistical inference is appropriately performed
+      - A complete model statement is given (give the equation!)
+      - An appropriate model is chosen
+      - Model assumptions are assessed and satisfactory 
+      - Estimates and uncertainties (confidence intervals) of model coefficients
+are given and *both* are interpreted in context
+      - The model and estimates are interpreted correctly and in the context
+of the question being addressed
+      - Technical language is used correctly
+- Discussion (15%)
+    - [ ] Summarizes the main findings and answers the question posed in the introduction (no new results should appear here!)
+    - [ ] Describes any limitations of your analysis and any necessary caveats
+    - [ ] Describes any follow-up questions that would be interesting to investigate
+- Quarto appendix (separate file) (5%)
+    - [ ] R code used for the analysis is shown and implemented correctly, using general conventions from class
+    - [ ] R code is approximately ordered as the results are presented in the report
+- Overall presentation (10%) 
+  - [ ] A separate references section is included, with any standard citation style
+  - [ ] The report is structured according to the instructions
+  - [ ] The text is neatly presented, broken into readable paragraphs and laid out in a coherent manner
+  - [ ] Peer evaluations were completed for group members and satisfactory from group members
+
+# Questions?
+
+If you have questions, please post them on the Case Study 3 thread on our Ed discussion page!

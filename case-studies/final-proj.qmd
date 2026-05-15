@@ -1,0 +1,163 @@
+---
+title: "Final Project"
+format: html
+execute:
+  echo: true
+navbar: false
+---
+
+# Overview
+
+The final project is an opportunity to use the methods learned in this course to address a question
+of your choice through data analysis.
+
+You will work in groups of 2 or 3 people assigned by me with your input. The expectation
+is that each student shares equal responsibility for the report. In a group project, you will turn in
+one report. Please let me know if you are having trouble communicating with your partner.
+
+Due dates: 
+  
+  - Monday of Week 8: Project partner form
+  - Friday of Week 9: Study proposal due
+  - Wednesday of Week 10: Data presentations
+  - Monday end of term: Final report due
+      - 1% extra credit for submitting to USCLAP (requires a rough draft due the last day of class and using a dataset *not* from our list)
+      - 1% extra credit for submitting final report 24 hours early
+      - Extra credit on last HW if you meet with Noah at least once as a group to discuss either your study proposal or final report
+  
+# Stage 1: Study Proposal
+
+Identify the research questions and data that will guide your project. Your dataset should have
+at least 100 observations/cases and at least 5 variables (at least four predictor variables and a
+response variable). You should not use textbook data. You should carefully consider the questions
+that you intend to ask with your data, as well as the design of the study and how the data were
+or will be collected. It is essential that the methods used to analyze your dataset ultimately be
+appropriate to both the question of interest and the data at hand.
+
+Examples of previous project abstracts will be posted on Moodle to give you an idea of what kinds of things people have done in the past. I will also post some online sources of data (but you may obtain data from a source not listed there).
+
+You should submit:
+
+1. A paragraph briefly identifying the research questions and data you will use. Be explicit
+about which variables will be included in your analysis, which variable is the response and
+which are the predictors. Describe how your data were obtained, providing a link or citation
+if appropriate.
+
+  - You should not use textbook data for this project. One goal of this project is for you to
+seek out data from an outside source to answer a question that you are interested in.
+  - I discourage you from using data found on Kaggle, since many datasets uploaded to
+that website do not have appropriate documentation for how they were collected (and
+often are fake datasets). If you choose to analyze a dataset found on Kaggle, you should
+be sure that you have appropriate information about where the data came from.
+  - Please keep in mind that many datasets have complex structures that require methods
+that are more advanced that we have learned in this class. A few kinds of data that
+generally won’t work well for this project because there will usually be a violation of
+the independence assumption of our models:
+    – Time series data (measurements of a single observational unit over time)
+    – Spatial data
+    – Longitudinal data (data with repeated measurements on the same individual). (*Note*: this can work if you consider averaging the repeated measurements or only looking at the measurements at one or two time points)
+
+2. One informative and well-labeled plot or table along with a paragraph that gives a brief
+description. This is not supposed to be an exhaustive analysis. The purpose is for you to
+ensure that your data are in a format that is ready for analysis and begin to think about
+modeling issues that may arise.
+
+3. A link to your data. The dataset should be in a format readable by R.
+
+We will do "data presentations" on the last day of class. 
+
+# Stage 2: Final Report
+
+We will follow the USCLAP guidelines for the format of the report: https://www.causeweb.org/usproc/usclap 
+
+
+## Format
+
+ - 3 pages or less (including figures but not including references). You may include up to 2 pages of appendices of graphs or coefficient tables that do not count towards this limit. Note that these should be *supporting graphs*, not discussed in the main text. 
+ - Introduction: this is where you introduce the problem and why it is important to study. This should focus on the data and the "real-world" questions. Give enough background in the intro so that a reader doesn’t need to refer to source material, but take care not to plagiarize your source material above. Cite sources as needed.
+ - Data and EDA: this is where you discuss the variables of interest and present your EDA (e.g. graphs) to motivate your model. This section should not be exhaustive but should include *key* figures that help the reader understand your data and "see what's coming" in the results section.
+ - Results: this is where you present your model selection approach, final model, and interpret the results. You should explain your results both statistically and in context. 
+ - Discussion: this is a shorter section that summarizes the main points of your analysis and explains your answer to the research question.
+ - Appendices: this is an optional section where you can include graphs or results that you used, but aren't central to the point you are trying to make in the remainder of the report. (Eg residual plots that were "normal" or a list of transformations that you considered)
+ 
+
+# Tips for datasets
+
+
+# Best practices for small group work
+ 
+You will work in groups of two or three for this project. 
+  
+While you are permitted to do some work separately (e.g., the homework components, revising a section at a time when your schedules don’t permit meeting together), I discourage you from completing substantial portions of the final report individually. Each partner should contribute substantively to each component of the report, and each partner is assumed to be an equal contributor to the final product. You should be in regular contact with your partner(s) and should meet at least once outside of class. If you are having issues communicating with your partner(s), please email me as soon as possible.
+
+
+# Academic Integrity
+
+For this case study, you may use the following resources: 
+
+  - Your own course notes (from any class!) and any Stat230 materials of your own or provided by Amanda
+  - Web searches/AI where your search/prompts are general questions about coding (e.g., how do I subset a data set in R where I want only certain numerical values?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty.
+  - Web searches/AI where your search/prompts are background research about your project topic. If you use AI, you MUST provide a document shows your “conversation.” You must also find a real source (published by a reputable source, ideally peer-reviewed) and don't rely purely on AI. Failure to do so will be considered academic dishonesty.
+  - Web searches/AI where your search/prompts are general questions about formatting (e.g., how do I make a table in GoogleDocs?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty
+  - The writing center for help editing your write up. 
+  - Your in-class group
+  - Amanda
+  - Noah
+  - StatLab / Math Skills Center for R coding help or help with statistical models
+  
+For this project you may NOT use the following resources:
+
+  - Other humans (including other folks in this class)
+  - Web searches/AI where your searches/prompts are the specific questions you are being asked in the project about coding (e.g., How do I fit a linear regression model in R with the sales price as the response variable and square footage as the predictor variable?).
+  - Web searches/AI where your search/prompts are the specific formatting questions you are being asked to do for the project (e.g., please write a caption for this table).
+  - AI to write or edit any portion of your original write-up or your final write-up. 
+
+# Rubric
+
+*Note:* I recommend going through this checklist as a team before your final submission
+
+- Title and authors (5%) 
+    - [ ] Has a title and lists the authors
+    - [ ] Informative and engaging
+- Abstract (5%)
+    - [ ] A brief, one-paragraph executive summary of the problem and your findings (200 words or fewer).
+- Introduction (10%)
+    - [ ] Introduces and motivates the topic being addressed
+    - [ ] Includes at least one reference for context/motivation for this study that are well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)
+    - [ ] Explains the questions addressed in the report
+    - [ ] Gives appropriate background information (and avoids making broad and unsubstantiated claims)
+- Data and EDA (15%)
+    - [ ] Describe how your data were collected (cite your sources and describe methods).
+    - [ ] What are the subjects? 
+    - [ ] What are the response and explanatory variables? Include any information or definitions that
+help establish the context of your data.
+    - [ ] At least one visual summary that directly connects to the model
+    - [ ] Describes the data accurately and concisely 
+- Results (40%) 
+    - [ ]  Focus is on conveying the results of the analysis and is not a step-by-step description
+    - [ ] Model building process is appropriate and discussed
+    - [ ] Statistical inference is appropriately performed
+      - A complete model statement is given (give the equation!)
+      - An appropriate model is chosen
+      - Model assumptions are assessed and satisfactory 
+      - Estimates and uncertainties (confidence intervals) of model coefficients
+are given and *both* are interpreted in context
+      - The model and estimates are interpreted correctly and in the context
+of the question being addressed
+      - Technical language is used correctly
+- Discussion (15%)
+    - [ ] Summarizes the main findings and answers the question posed in the introduction (no new results should appear here!)
+    - [ ] Describes any limitations of your analysis and any necessary caveats
+    - [ ] Describes any follow-up questions that would be interesting to investigate
+- Quarto appendix (separate file) (5%)
+    - [ ] R code used for the analysis is shown and implemented correctly, using general conventions from class
+    - [ ] R code is approximately ordered as the results are presented in the report
+- Overall presentation (10%) 
+  - [ ] A separate references section is included, with any standard citation style
+  - [ ] The report is structured according to the instructions
+  - [ ] The text is neatly presented, broken into readable paragraphs and laid out in a coherent manner
+  - [ ] Peer evaluations were completed for group members and satisfactory from group members
+
+# Questions?
+
+If you have questions, please post them on the Final Project thread on our Ed discussion page!

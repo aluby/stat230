@@ -1,0 +1,58 @@
+---
+title: "Homework 07"
+format: html
+engine: knitr
+editor: source
+navbar: false
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(ggplot2)
+library(ggformula)
+library(here)
+library(broom)
+library(tidyverse)
+
+theme_set(theme_minimal())
+```
+
+Due: Friday of Week 8 at start of class
+
+There is a [homework template](../files/hw-template.qmd) available if you'd like to use that as a starter file, and copy and paste the code as needed.
+
+::: callout-important
+## Important!
+
+Please attempt Case Study problems before class on Friday of Week 8
+:::
+
+# Problem 1: Friday
+
+# Problem 2: Friday
+
+# Problem 3: Monday
+
+# Problem 4: Monday
+
+# Problem 5: Wednesday
+
+# Problem 6: Case Study
+
+
+1. Summarize the main point of the "circles" visualization in the first APM reports article, then construct your own EDA that shows the same main point. 
+
+2. Verify the findings of the APM methodology report that claims that the predictors in Group B are not
+significant after accounting for the predictors in Group A in the logistic model for the probability of a
+juror being struck by the state.
+
+3. Confirm that your model using predictors in Group A match the coefficients table and the odds ratio
+table on page 10 of the Methodology report.
+
+
