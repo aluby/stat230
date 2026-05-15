@@ -1,5 +1,6 @@
 ---
-title: "r-functions-reference"
+title: "R Functions reference for Stat230"
+author: "Amanda Luby & Noah Lee"
 format: 
   html:
     fig-width: 4
@@ -112,6 +113,23 @@ Correlation (2 quantitative variables)
 
 ```{r}
 cor(bikes$temp_actual, bikes$temp_feel)
+```
+
+Correlation Matrix (only on numeric columns)
+
+```{r}
+bikes |>
+  select(temp_actual, temp_feel, humidity, windspeed, rides) |>
+  cor()
+```
+
+Pairs plot
+
+```{r, message=FALSE, cache=TRUE}
+library(GGally)
+bikes |>
+  select(temp_actual, temp_feel, humidity, windspeed, rides) |>
+  ggpairs()
 ```
 
 # SLR 
@@ -227,6 +245,19 @@ resid_panel(bikes_slr, type = "standardized")
 ```
 
 # MLR
+
+## F-test
+
+Sequential anova:
+```{r}
+bikes_mlr_full <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
+anova(bikes_mlr_full)
+```
+Comparing two models:
+```{r}
+bikes_mlr_red <- lm(rides ~ temp_actual, data = bikes)
+anova(bikes_mlr_full, bikes_mlr_red)
+```
 
 
 # Other R 
