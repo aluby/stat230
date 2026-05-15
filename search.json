@@ -695,23 +695,72 @@
   {
     "objectID": "readings/r-functions-reference.html",
     "href": "readings/r-functions-reference.html",
-    "title": "r-functions-reference",
+    "title": "R Functions reference for Stat230",
     "section": "",
     "text": "Note: This is a bare-bones functions reference for R code in Stat230. All examples use the bikes dataset from class, which lives in the {bayesrules} package. Most plotting functions use the {ggformula} package.\nlibrary(ggformula)\nlibrary(bayesrules)\nlibrary(dplyr)\nlibrary(ggplot2)"
   },
   {
     "objectID": "readings/r-functions-reference.html#graphs",
     "href": "readings/r-functions-reference.html#graphs",
-    "title": "r-functions-reference",
+    "title": "R Functions reference for Stat230",
     "section": "Graphs",
-    "text": "Graphs\n\nHistogram\nI like to specify col=\"white\" to draw white lines between the bars. You can also customize the color of the bars with fill\n\ngf_histogram(~temp_actual, data = bikes, col = \"white\", fill = \"darkgreen\")\n\n\n\n\n\n\n\n\n\n\nBoxplot\nOne quantitative variable:\n\ngf_boxplot(~temp_actual, data = bikes, fill = \"darkgreen\")\n\n\n\n\n\n\n\n\nOne quantitative variable separated and colored by a categorical variable:\n\ngf_boxplot(temp_actual ~ weekend, data = bikes, fill = ~weekend)\n\n\n\n\n\n\n\n\n\n\nScatterplot\n\ngf_point(rides ~ temp_actual, data = bikes)\n\n\n\n\n\n\n\n\nColored by a 3rd variable:\n\ngf_point(rides ~ temp_actual, color = ~weekend, data = bikes)"
+    "text": "Graphs\n\nHistogram\nI like to specify col=\"white\" to draw white lines between the bars. You can also customize the color of the bars with fill\n\ngf_histogram(~temp_actual, data = bikes, col = \"white\", fill = \"darkgreen\")\n\n\n\n\n\n\n\n\n\n\nBoxplot\nOne quantitative variable:\n\ngf_boxplot(~temp_actual, data = bikes, fill = \"darkgreen\")\n\n\n\n\n\n\n\n\nOne quantitative variable separated and colored by a categorical variable:\n\ngf_boxplot(temp_actual ~ weekend, data = bikes, fill = ~weekend)\n\n\n\n\n\n\n\n\n\n\nScatterplot\n\ngf_point(rides ~ temp_actual, data = bikes)\n\n\n\n\n\n\n\n\nColored by a 3rd variable:\n\ngf_point(rides ~ temp_actual, color = ~weekend, data = bikes)\n\n\n\n\n\n\n\n\n\n\nQQ plot\n\ngf_qq(~temp_actual, data = bikes) |&gt;\n  gf_qqline()"
   },
   {
     "objectID": "readings/r-functions-reference.html#numeric-summaries",
     "href": "readings/r-functions-reference.html#numeric-summaries",
-    "title": "r-functions-reference",
+    "title": "R Functions reference for Stat230",
     "section": "Numeric Summaries",
-    "text": "Numeric Summaries\nSyntax is data$variable_name.\nMean:\n\nmean(bikes$temp_actual)\n\n[1] 63.32782\n\n\nStandard deviation:\n\nsd(bikes$temp_actual)\n\n[1] 10.17069\n\n\nMedian:\n\nmedian(bikes$temp_actual)\n\n[1] 62.90375\n\n\nVariance\n\nvar(bikes$temp_actual)\n\n[1] 103.443\n\n\nCorrelation (2 quantitative variables)\n\ncor(bikes$temp_actual, bikes$temp_feel)\n\n[1] 0.9823728"
+    "text": "Numeric Summaries\nSyntax is data$variable_name.\nMean:\n\nmean(bikes$temp_actual)\n\n[1] 63.32782\n\n\nStandard deviation:\n\nsd(bikes$temp_actual)\n\n[1] 10.17069\n\n\nMedian:\n\nmedian(bikes$temp_actual)\n\n[1] 62.90375\n\n\nVariance\n\nvar(bikes$temp_actual)\n\n[1] 103.443\n\n\nCorrelation (2 quantitative variables)\n\ncor(bikes$temp_actual, bikes$temp_feel)\n\n[1] 0.9823728\n\n\nCorrelation Matrix (only on numeric columns)\n\nbikes |&gt;\n  select(temp_actual, temp_feel, humidity, windspeed, rides) |&gt;\n  cor()\n\n            temp_actual  temp_feel    humidity  windspeed       rides\ntemp_actual   1.0000000  0.9823728  0.26584951 -0.1055362  0.57634864\ntemp_feel     0.9823728  1.0000000  0.27078692 -0.1462235  0.58248980\nhumidity      0.2658495  0.2707869  1.00000000 -0.3244458 -0.06919525\nwindspeed    -0.1055362 -0.1462235 -0.32444582  1.0000000 -0.19493520\nrides         0.5763486  0.5824898 -0.06919525 -0.1949352  1.00000000\n\n\nPairs plot\n\nlibrary(GGally)\nbikes |&gt;\n  select(temp_actual, temp_feel, humidity, windspeed, rides) |&gt;\n  ggpairs()"
+  },
+  {
+    "objectID": "readings/r-functions-reference.html#fitting-the-model",
+    "href": "readings/r-functions-reference.html#fitting-the-model",
+    "title": "R Functions reference for Stat230",
+    "section": "Fitting the model",
+    "text": "Fitting the model\nTo get the slope and intercept, use lm()\n\nlm(rides ~ temp_actual, data = bikes)\n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nCoefficients:\n(Intercept)  temp_actual  \n   -2168.77        89.23  \n\n\nTo get the summary, first save the lm with &lt;- and then call summary\n\nbikes_slr &lt;- lm(rides ~ temp_actual, data = bikes)\nsummary(bikes_slr)\n\n\nCall:\nlm(formula = rides ~ temp_actual, data = bikes)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-3564.3 -1009.3  -116.4   959.1  3184.6 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -2168.77     363.64  -5.964 4.67e-09 ***\ntemp_actual    89.23       5.67  15.739  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1288 on 498 degrees of freedom\nMultiple R-squared:  0.3322,    Adjusted R-squared:  0.3308 \nF-statistic: 247.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16\n\n\nIf you want to access specific elements of the summary (like \\(R^2\\) or \\(\\sigma\\)) you can use:\n\nsummary(bikes_slr)$sigma\n\n[1] 1288.134\n\nsummary(bikes_slr)$r.squared\n\n[1] 0.3321778"
+  },
+  {
+    "objectID": "readings/r-functions-reference.html#plotting",
+    "href": "readings/r-functions-reference.html#plotting",
+    "title": "R Functions reference for Stat230",
+    "section": "Plotting",
+    "text": "Plotting\nOverlay a regression line with a pipe (|&gt;) and gf_lm()\n\ngf_point(rides ~ temp_actual, data = bikes) |&gt;\n  gf_lm()\n\n\n\n\n\n\n\n\nYou can also specify a prediction or confidence interval in gf_lm:\n\ngf_point(rides ~ temp_actual, data = bikes) |&gt;\n  gf_lm(interval = \"confidence\", level = .9)\n\n\n\n\n\n\n\n\n\ngf_point(rides ~ temp_actual, data = bikes) |&gt;\n  gf_lm(interval = \"confidence\", level = .9) |&gt;\n  gf_lm(interval = \"prediction\", level = .9, fill = \"goldenrod\")"
+  },
+  {
+    "objectID": "readings/r-functions-reference.html#predictions",
+    "href": "readings/r-functions-reference.html#predictions",
+    "title": "R Functions reference for Stat230",
+    "section": "Predictions",
+    "text": "Predictions\nUse predict() to get a point estimate for \\(\\hat{y}_i\\), a confidence interval or prediction interval.\n\npredict(bikes_slr, newdata = data.frame(temp_actual = 75))\n\n       1 \n4523.768 \n\n\n\npredict(bikes_slr, newdata = data.frame(temp_actual = 75),\n        interval = \"confidence\", \n        level = .9)\n\n       fit      lwr      upr\n1 4523.768 4379.182 4668.354\n\n\n\npredict(bikes_slr, newdata = data.frame(temp_actual = 75),\n        interval = \"prediction\", \n        level = .9)\n\n       fit      lwr      upr\n1 4523.768 2396.109 6651.427"
+  },
+  {
+    "objectID": "readings/r-functions-reference.html#inference",
+    "href": "readings/r-functions-reference.html#inference",
+    "title": "R Functions reference for Stat230",
+    "section": "Inference",
+    "text": "Inference\nConfidence intervals:\n\nconfint(bikes_slr)\n\n                 2.5 %     97.5 %\n(Intercept) -2883.2350 -1454.3122\ntemp_actual    78.0944   100.3734\n\n\nNice version of regression table:\n\nlibrary(broom)\ntidy(bikes_slr)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)  -2169.     364.       -5.96 4.67e- 9\n2 temp_actual     89.2      5.67     15.7  1.35e-45"
+  },
+  {
+    "objectID": "readings/r-functions-reference.html#conditions",
+    "href": "readings/r-functions-reference.html#conditions",
+    "title": "R Functions reference for Stat230",
+    "section": "Conditions",
+    "text": "Conditions\nUse augment to create an augmented dataset with residuals and fitted values for all data points:\n\nbikes_slr_aug &lt;- augment(bikes_slr)\nhead(bikes_slr_aug)\n\n# A tibble: 6 × 8\n  rides temp_actual .fitted .resid    .hat .sigma  .cooksd .std.resid\n  &lt;int&gt;       &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;\n1   654        57.4   2953. -2299. 0.00268  1285. 0.00429      -1.79 \n2  1229        46.5   1980.  -751. 0.00749  1289. 0.00129      -0.585\n3  1454        46.8   2004.  -550. 0.00732  1289. 0.000676     -0.428\n4  1518        48.7   2181.  -663. 0.00612  1289. 0.000821     -0.517\n5  1362        46.5   1981.  -619. 0.00748  1289. 0.000877     -0.482\n6   891        44.2   1773.  -882. 0.00911  1289. 0.00218      -0.688\n\n\nYou can then make a histogram or scatterplot with the usual {ggformula} tools:\n\ngf_point(.resid ~ .fitted, data = bikes_slr_aug)\n\n\n\n\n\n\n\ngf_histogram(~.resid , data = bikes_slr_aug, col = \"white\")\n\n\n\n\n\n\n\ngf_qq(~.resid , data = bikes_slr_aug) |&gt;\n  gf_qqline()\n\n\n\n\n\n\n\n\nAlternatively, you can make a panel of residual plots with the resid_panel shortcut function in {ggResidpanel} package:\n\nlibrary(ggResidpanel)\nresid_panel(bikes_slr)\n\n\n\n\n\n\n\n\n(If it takes a long time, try using standardized residuals instead)\n\nresid_panel(bikes_slr, type = \"standardized\")"
+  },
+  {
+    "objectID": "readings/r-functions-reference.html#f-test",
+    "href": "readings/r-functions-reference.html#f-test",
+    "title": "R Functions reference for Stat230",
+    "section": "F-test",
+    "text": "F-test\nSequential anova:\n\nbikes_mlr_full &lt;- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)\nanova(bikes_mlr_full)\n\nAnalysis of Variance Table\n\nResponse: rides\n             Df    Sum Sq   Mean Sq F value    Pr(&gt;F)    \ntemp_actual   1 411018312 411018312 270.013 &lt; 2.2e-16 ***\nwindspeed     1  22504757  22504757  14.784 0.0001362 ***\nweekend       1  48801976  48801976  32.060 2.534e-08 ***\nResiduals   496 755019445   1522217                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nComparing two models:\n\nbikes_mlr_red &lt;- lm(rides ~ temp_actual, data = bikes)\nanova(bikes_mlr_full, bikes_mlr_red)\n\nAnalysis of Variance Table\n\nModel 1: rides ~ temp_actual + windspeed + weekend\nModel 2: rides ~ temp_actual\n  Res.Df       RSS Df Sum of Sq      F    Pr(&gt;F)    \n1    496 755019445                                  \n2    498 826326178 -2 -71306733 23.422 1.906e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "readings/r-functions-reference.html#finding-t",
+    "href": "readings/r-functions-reference.html#finding-t",
+    "title": "R Functions reference for Stat230",
+    "section": "Finding \\(t^*\\)",
+    "text": "Finding \\(t^*\\)\nCorresponds to the 2.5th percentile of a \\(t_{498}\\) distribution:\n\nqt(.025, df = 498)\n\n[1] -1.964739"
   },
   {
     "objectID": "readings/revisions.html",
@@ -2104,7 +2153,7 @@
     "href": "readings.html",
     "title": "Readings",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nExam01 Review\n\n\n \n\n\n\n\n\n\nExam02 Review\n\n\n \n\n\n\n\n\n\nIntro Stat Review\n\n\n \n\n\n\n\n\n\nRevisions for Stat230\n\n\n \n\n\n\n\n\n\nUsing R/RStudio for Stat230\n\n\n \n\n\n\n\n\n\nr-functions-reference\n\n\n \n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nExam01 Review\n\n\n \n\n\n\n\n\n\nExam02 Review\n\n\n \n\n\n\n\n\n\nIntro Stat Review\n\n\n \n\n\n\n\n\n\nR Functions reference for Stat230\n\n\nAmanda Luby & Noah Lee\n\n\n\n\n\n\nRevisions for Stat230\n\n\n \n\n\n\n\n\n\nUsing R/RStudio for Stat230\n\n\n \n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "slides.html",
