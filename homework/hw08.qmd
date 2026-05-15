@@ -35,6 +35,27 @@ Please attempt Case Study problems before class on Friday of Week 8
 
 # Problem 1: Friday
 
+> The Ford Explorer is a popular sports utility vehicle made int he US and sold throughout the world. Early in its production, concern arose ove ra potential accident risk associated with tires of the prescribed size when the vehicle was carrying heavy loads, but the risk was thought to be acceptable if a low tire pressure was recommended. The problem was apparently exacerbated by a particular type of Firestone tire that was overly prone to read separation, especially in warm temperatures. This type of tire was a common one used on Explorers in model years 1995 and later. By the end of 1999 more than 30 lawsuits had been filed over accidents that were thought to be associated with this problem. US federal data on fatal car accidents were analyzed at that time, showing that the odds of a fatal accident being associated with tire failure were three times as great for Explorers as for other SUVs. Additional data from 1999 and other variables may be used to further explore the odds ratio. 
+
+> It is of interest to see whether the odds that a fatal accident is tire-related depend on whether the vehicle is a Ford, after accounting for the age of the car and the number of passengers.
+
+> Since many car owners replace their tires after the car is 3-5 years old, we may expect the odds of tire failure to increase with age up to a certain point, then perhaps to decrease after that.
+
+```{r}
+tires <- Sleuth3::ex2018
+```
+
+(a) The textbook suggests including a quadratic effect of age in the model for the odds of tire failure. Explain their rationale.
+
+(b) The textbook also suggests an interaction between vehicle type and number of passengers. To explore this interaction, create the plot using the code. Explain why this graph suggests an interaction between vehicle type (make) and number of passengers in the model for odds of tire failure.
+
+(c) Fit the logistic regression of the cause of tire failure on age, age$^2$, the number of passengers, vehicle make, and the interaction of passengers and make. Write down the separate fitted log odds model for Fords and non-Ford vehicles.
+
+(d)  What is the effect of vehicle type on the odds of tire failure? Give your answer as an odds ratio **formula** involving model coefficients and the variable passengers (i.e., the answer is a function of the number of passengers). Clearly state what the odds ratio is measuring (odds of ? for make xxx vs. make yyy)
+
+(e) Compute the odds ratios from part (d) for passenger levels of 0, 1, 2, 3, and 4 passengers. Explain what these odds ratios tell you about tire-related accidents, vehicle type, and number of passengers.
+
+
 # Problem 2: Friday
 
 # Problem 3: Monday
