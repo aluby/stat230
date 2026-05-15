@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Slides – stat230</title>
+<title>Final Project – stat230</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,26 +23,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,132 +68,43 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-title','listing-subtitle','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.scss">
+<link rel="stylesheet" href="../styles.scss">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    </a>
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">stat230</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./slides.html" aria-current="page"> 
-<span class="menu-text">Slides</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./activities.html"> 
-<span class="menu-text">Activities</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./readings.html"> 
-<span class="menu-text">Readings</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./syllabus.html"> 
-<span class="menu-text">Syllabus</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./schedule.html"> 
-<span class="menu-text">Schedule</span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
-</header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#stage-1-study-proposal" id="toc-stage-1-study-proposal" class="nav-link" data-scroll-target="#stage-1-study-proposal">Stage 1: Study Proposal</a></li>
+  <li><a href="#stage-2-final-report" id="toc-stage-2-final-report" class="nav-link" data-scroll-target="#stage-2-final-report">Stage 2: Final Report</a>
+  <ul class="collapse">
+  <li><a href="#format" id="toc-format" class="nav-link" data-scroll-target="#format">Format</a></li>
+  </ul></li>
+  <li><a href="#tips-for-datasets" id="toc-tips-for-datasets" class="nav-link" data-scroll-target="#tips-for-datasets">Tips for datasets</a></li>
+  <li><a href="#best-practices-for-small-group-work" id="toc-best-practices-for-small-group-work" class="nav-link" data-scroll-target="#best-practices-for-small-group-work">Best practices for small group work</a></li>
+  <li><a href="#academic-integrity" id="toc-academic-integrity" class="nav-link" data-scroll-target="#academic-integrity">Academic Integrity</a></li>
+  <li><a href="#rubric" id="toc-rubric" class="nav-link" data-scroll-target="#rubric">Rubric</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions?</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Slides</h1>
+<h1 class="title">Final Project</h1>
 </div>
 
 
@@ -212,288 +121,171 @@ window.Quarto = {
 </header>
 
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-title-sort" data-direction="asc">
-        Topic
-      </option>
-      <option value="listing-author" data-direction="asc">
-        Author
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<table class="quarto-listing-table table">
-<thead>
-<tr>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>🚧 Under construction 🚧</p>
+</div>
+</div>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>The final project is an opportunity to use the methods learned in this course to address a question of your choice through data analysis.</p>
+<p>You will work in groups of 2 or 3 people assigned by me with your input. The expectation is that each student shares equal responsibility for the report. In a group project, you will turn in one report. Please let me know if you are having trouble communicating with your partner.</p>
+<p>Due dates:</p>
+<ul>
+<li>Monday of Week 8: Project partner form</li>
+<li>Friday of Week 9: Study proposal due</li>
+<li>Wednesday of Week 10: Data presentations</li>
+<li>Monday end of term: Final report due
+<ul>
+<li>1% extra credit for submitting to USCLAP (requires a rough draft due the last day of class and using a dataset <em>not</em> from our list)</li>
+<li>1% extra credit for submitting final report 24 hours early</li>
+<li>Extra credit on last HW if you meet with Noah at least once as a group to discuss either your study proposal or final report</li>
+</ul></li>
+</ul>
+</section>
+<section id="stage-1-study-proposal" class="level1">
+<h1>Stage 1: Study Proposal</h1>
+<p>Identify the research questions and data that will guide your project. Your dataset should have at least 100 observations/cases and at least 5 variables (at least four predictor variables and a response variable). You should not use textbook data. You should carefully consider the questions that you intend to ask with your data, as well as the design of the study and how the data were or will be collected. It is essential that the methods used to analyze your dataset ultimately be appropriate to both the question of interest and the data at hand.</p>
+<p>Examples of previous project abstracts will be posted on Moodle to give you an idea of what kinds of things people have done in the past. I will also post some online sources of data (but you may obtain data from a source not listed there).</p>
+<p>You should submit:</p>
+<ol type="1">
+<li>A paragraph briefly identifying the research questions and data you will use. Be explicit about which variables will be included in your analysis, which variable is the response and which are the predictors. Describe how your data were obtained, providing a link or citation if appropriate.</li>
+</ol>
+<ul>
+<li>You should not use textbook data for this project. One goal of this project is for you to seek out data from an outside source to answer a question that you are interested in.</li>
+<li>I discourage you from using data found on Kaggle, since many datasets uploaded to that website do not have appropriate documentation for how they were collected (and often are fake datasets). If you choose to analyze a dataset found on Kaggle, you should be sure that you have appropriate information about where the data came from.</li>
+<li>Please keep in mind that many datasets have complex structures that require methods that are more advanced that we have learned in this class. A few kinds of data that generally won’t work well for this project because there will usually be a violation of the independence assumption of our models: – Time series data (measurements of a single observational unit over time) – Spatial data – Longitudinal data (data with repeated measurements on the same individual). (<em>Note</em>: this can work if you consider averaging the repeated measurements or only looking at the measurements at one or two time points)</li>
+</ul>
+<ol start="2" type="1">
+<li><p>One informative and well-labeled plot or table along with a paragraph that gives a brief description. This is not supposed to be an exhaustive analysis. The purpose is for you to ensure that your data are in a format that is ready for analysis and begin to think about modeling issues that may arise.</p></li>
+<li><p>A link to your data. The dataset should be in a format readable by R.</p></li>
+</ol>
+<p>We will do “data presentations” on the last day of class.</p>
+</section>
+<section id="stage-2-final-report" class="level1">
+<h1>Stage 2: Final Report</h1>
+<p>We will follow the USCLAP guidelines for the format of the report: https://www.causeweb.org/usproc/usclap</p>
+<section id="format" class="level2">
+<h2 class="anchored" data-anchor-id="format">Format</h2>
+<ul>
+<li>3 pages or less (including figures but not including references). You may include up to 2 pages of appendices of graphs or coefficient tables that do not count towards this limit. Note that these should be <em>supporting graphs</em>, not discussed in the main text.</li>
+<li>Introduction: this is where you introduce the problem and why it is important to study. This should focus on the data and the “real-world” questions. Give enough background in the intro so that a reader doesn’t need to refer to source material, but take care not to plagiarize your source material above. Cite sources as needed.</li>
+<li>Data and EDA: this is where you discuss the variables of interest and present your EDA (e.g.&nbsp;graphs) to motivate your model. This section should not be exhaustive but should include <em>key</em> figures that help the reader understand your data and “see what’s coming” in the results section.</li>
+<li>Results: this is where you present your model selection approach, final model, and interpret the results. You should explain your results both statistically and in context.</li>
+<li>Discussion: this is a shorter section that summarizes the main points of your analysis and explains your answer to the research question.</li>
+<li>Appendices: this is an optional section where you can include graphs or results that you used, but aren’t central to the point you are trying to make in the remainder of the report. (Eg residual plots that were “normal” or a list of transformations that you considered)</li>
+</ul>
+</section>
+</section>
+<section id="tips-for-datasets" class="level1">
+<h1>Tips for datasets</h1>
+<p>See doc on moodle</p>
+</section>
+<section id="best-practices-for-small-group-work" class="level1">
+<h1>Best practices for small group work</h1>
+<p>You will work in groups of two or three for this project.</p>
+<p>While you are permitted to do some work separately (e.g., the homework components, revising a section at a time when your schedules don’t permit meeting together), I discourage you from completing substantial portions of the final report individually. Each partner should contribute substantively to each component of the report, and each partner is assumed to be an equal contributor to the final product. You should be in regular contact with your partner(s) and should meet at least once outside of class. If you are having issues communicating with your partner(s), please email me as soon as possible.</p>
+</section>
+<section id="academic-integrity" class="level1">
+<h1>Academic Integrity</h1>
+<p>For this case study, you may use the following resources:</p>
+<ul>
+<li>Your own course notes (from any class!) and any Stat230 materials of your own or provided by Amanda</li>
+<li>Web searches/AI where your search/prompts are general questions about coding (e.g., how do I subset a data set in R where I want only certain numerical values?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty.</li>
+<li>Web searches/AI where your search/prompts are background research about your project topic. If you use AI, you MUST provide a document shows your “conversation.” You must also find a real source (published by a reputable source, ideally peer-reviewed) and don’t rely purely on AI. Failure to do so will be considered academic dishonesty.</li>
+<li>Web searches/AI where your search/prompts are general questions about formatting (e.g., how do I make a table in GoogleDocs?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty</li>
+<li>The writing center for help editing your write up.</li>
+<li>Your in-class group</li>
+<li>Amanda</li>
+<li>Noah</li>
+<li>StatLab / Math Skills Center for R coding help or help with statistical models</li>
+</ul>
+<p>For this project you may NOT use the following resources:</p>
+<ul>
+<li>Other humans (including other folks in this class)</li>
+<li>Web searches/AI where your searches/prompts are the specific questions you are being asked in the project about coding (e.g., How do I fit a linear regression model in R with the sales price as the response variable and square footage as the predictor variable?).</li>
+<li>Web searches/AI where your search/prompts are the specific formatting questions you are being asked to do for the project (e.g., please write a caption for this table).</li>
+<li>AI to write or edit any portion of your original write-up or your final write-up.</li>
+</ul>
+</section>
+<section id="rubric" class="level1">
+<h1>Rubric</h1>
+<p><em>Note:</em> I recommend going through this checklist as a team before your final submission</p>
+<ul>
+<li>Title and authors (5%)
+<ul class="task-list">
+<li><label><input type="checkbox">Has a title and lists the authors</label></li>
+<li><label><input type="checkbox">Informative and engaging</label></li>
+</ul></li>
+<li>Abstract (5%)
+<ul class="task-list">
+<li><label><input type="checkbox">A brief, one-paragraph executive summary of the problem and your findings (200 words or fewer).</label></li>
+</ul></li>
+<li>Introduction (10%)
+<ul class="task-list">
+<li><label><input type="checkbox">Introduces and motivates the topic being addressed</label></li>
+<li><label><input type="checkbox">Includes at least one reference for context/motivation for this study that are well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)</label></li>
+<li><label><input type="checkbox">Explains the questions addressed in the report</label></li>
+<li><label><input type="checkbox">Gives appropriate background information (and avoids making broad and unsubstantiated claims)</label></li>
+</ul></li>
+<li>Data and EDA (15%)
+<ul class="task-list">
+<li><label><input type="checkbox">Describe how your data were collected (cite your sources and describe methods).</label></li>
+<li><label><input type="checkbox">What are the subjects?</label></li>
+<li><label><input type="checkbox">What are the response and explanatory variables? Include any information or definitions that help establish the context of your data.</label></li>
+<li><label><input type="checkbox">At least one visual summary that directly connects to the model</label></li>
+<li><label><input type="checkbox">Describes the data accurately and concisely</label></li>
+</ul></li>
+<li>Results (40%)
+<ul class="task-list">
+<li><label><input type="checkbox">Focus is on conveying the results of the analysis and is not a step-by-step description</label></li>
+<li><label><input type="checkbox">Model building process is appropriate and discussed</label></li>
+<li><label><input type="checkbox">Statistical inference is appropriately performed</label>
+<ul>
+<li>A complete model statement is given (give the equation!)</li>
+<li>An appropriate model is chosen</li>
+<li>Model assumptions are assessed and satisfactory</li>
+<li>Estimates and uncertainties (confidence intervals) of model coefficients are given and <em>both</em> are interpreted in context</li>
+<li>The model and estimates are interpreted correctly and in the context of the question being addressed</li>
+<li>Technical language is used correctly</li>
+</ul></li>
+</ul></li>
+<li>Discussion (15%)
+<ul class="task-list">
+<li><label><input type="checkbox">Summarizes the main findings and answers the question posed in the introduction (no new results should appear here!)</label></li>
+<li><label><input type="checkbox">Describes any limitations of your analysis and any necessary caveats</label></li>
+<li><label><input type="checkbox">Describes any follow-up questions that would be interesting to investigate</label></li>
+</ul></li>
+<li>Quarto appendix (separate file) (5%)
+<ul class="task-list">
+<li><label><input type="checkbox">R code used for the analysis is shown and implemented correctly, using general conventions from class</label></li>
+<li><label><input type="checkbox">R code is approximately ordered as the results are presented in the report</label></li>
+</ul></li>
+<li>Overall presentation (10%)
+<ul class="task-list">
+<li><label><input type="checkbox">A separate references section is included, with any standard citation style</label></li>
+<li><label><input type="checkbox">The report is structured according to the instructions</label></li>
+<li><label><input type="checkbox">The text is neatly presented, broken into readable paragraphs and laid out in a coherent manner</label></li>
+<li><label><input type="checkbox">Peer evaluations were completed for group members and satisfactory from group members</label></li>
+</ul></li>
+</ul>
+</section>
+<section id="questions" class="level1">
+<h1>Questions?</h1>
+<p>If you have questions, please post them on the Final Project thread on our Ed discussion page!</p>
 
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Topic</a>
-</th>
 
-<th>
-Course Day
-</th>
+</section>
 
-<th>
-<a class="sort" data-sort="listing-author" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Author</a>
-</th>
-
-</tr>
-</thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1778869897905" data-listing-reading-time-sort="6" data-listing-word-count-sort="1003" data-listing-title-sort="Model Comparison for Logistic Regression" data-listing-filename-sort="slides21.qmd">
-<td>
-<a href="./slides/slides21.html" class="title listing-title">Model Comparison for Logistic Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 21</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1778696535207" data-listing-reading-time-sort="13" data-listing-word-count-sort="2507" data-listing-title-sort="Inference for Logistic Regression" data-listing-filename-sort="slides20.qmd">
-<td>
-<a href="./slides/slides20.html" class="title listing-title">Inference for Logistic Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 20</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1778522421266" data-listing-reading-time-sort="5" data-listing-word-count-sort="909" data-listing-title-sort="Logistic Regression" data-listing-filename-sort="slides19.qmd">
-<td>
-<a href="./slides/slides19.html" class="title listing-title">Logistic Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 19</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1777645988510" data-listing-reading-time-sort="11" data-listing-word-count-sort="2181" data-listing-title-sort="Model Selection" data-listing-filename-sort="slides15.qmd">
-<td>
-<a href="./slides/slides15.html" class="title listing-title">Model Selection</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 15</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1777488409376" data-listing-reading-time-sort="5" data-listing-word-count-sort="830" data-listing-title-sort="Multicollinearity" data-listing-filename-sort="slides14.qmd">
-<td>
-<a href="./slides/slides14.html" class="title listing-title">Multicollinearity</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 14</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1777294784326" data-listing-reading-time-sort="11" data-listing-word-count-sort="2117" data-listing-title-sort="Diagnostics for MLR" data-listing-filename-sort="slides13.qmd">
-<td>
-<a href="./slides/slides13.html" class="title listing-title">Diagnostics for MLR</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 13</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1777055365647" data-listing-reading-time-sort="4" data-listing-word-count-sort="703" data-listing-title-sort="Inference for Linear Combinations" data-listing-filename-sort="slides12.qmd">
-<td>
-<a href="./slides/slides12.html" class="title listing-title">Inference for Linear Combinations</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 12</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1776880777069" data-listing-reading-time-sort="10" data-listing-word-count-sort="1894" data-listing-title-sort="Inference for MLR" data-listing-filename-sort="slides11.qmd">
-<td>
-<a href="./slides/slides11.html" class="title listing-title">Inference for MLR</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 11</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1776708197319" data-listing-reading-time-sort="6" data-listing-word-count-sort="1008" data-listing-title-sort="Adding Categorical Predictors" data-listing-filename-sort="slides10.qmd">
-<td>
-<a href="./slides/slides10.html" class="title listing-title">Adding Categorical Predictors</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 10</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1776451225575" data-listing-reading-time-sort="6" data-listing-word-count-sort="1146" data-listing-title-sort="Intro to Multiple Linear Regression" data-listing-filename-sort="slides09.qmd">
-<td>
-<a href="./slides/slides09.html" class="title listing-title">Intro to Multiple Linear Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 09</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1776278034832" data-listing-reading-time-sort="10" data-listing-word-count-sort="1922" data-listing-title-sort="Transformations and polynomial regression" data-listing-filename-sort="slides08.qmd">
-<td>
-<a href="./slides/slides08.html" class="title listing-title">Transformations and polynomial regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 08</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1775831945222" data-listing-reading-time-sort="7" data-listing-word-count-sort="1221" data-listing-title-sort="Transforming SLR models" data-listing-filename-sort="slides06.qmd">
-<td>
-<a href="./slides/slides06.html" class="title listing-title">Transforming SLR models</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 06</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1775672551337" data-listing-reading-time-sort="8" data-listing-word-count-sort="1405" data-listing-title-sort="Evaluating SLR models" data-listing-filename-sort="slides05.qmd">
-<td>
-<a href="./slides/slides05.html" class="title listing-title">Evaluating SLR models</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 05</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1775479206754" data-listing-reading-time-sort="3" data-listing-word-count-sort="570" data-listing-title-sort="Inference for Prediction" data-listing-filename-sort="slides04.qmd">
-<td>
-<a href="./slides/slides04.html" class="title listing-title">Inference for Prediction</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 04</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="14" data-listing-file-modified-sort="1775227354874" data-listing-reading-time-sort="8" data-listing-word-count-sort="1451" data-listing-title-sort="Inference for SLR" data-listing-filename-sort="slides03.qmd">
-<td>
-<a href="./slides/slides03.html" class="title listing-title">Inference for SLR</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 03</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="15" data-listing-file-modified-sort="1775064752262" data-listing-reading-time-sort="9" data-listing-word-count-sort="1728" data-listing-title-sort="Simple Linear Regression (SLR)" data-listing-filename-sort="slides02.qmd">
-<td>
-<a href="./slides/slides02.html" class="title listing-title">Simple Linear Regression (SLR)</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 02</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="16" data-listing-file-modified-sort="1774443682008" data-listing-reading-time-sort="4" data-listing-word-count-sort="638" data-listing-title-sort="Slides Cheat Sheet" data-listing-filename-sort="slides-cheat-sheet.qmd">
-<td>
-<a href="./slides/slides-cheat-sheet.html" class="title listing-title">Slides Cheat Sheet</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 01</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="17" data-listing-file-modified-sort="1774878216868" data-listing-reading-time-sort="9" data-listing-word-count-sort="1724" data-listing-title-sort="Welcome to Stat230!" data-listing-filename-sort="slides01.qmd">
-<td>
-<a href="./slides/slides01.html" class="title listing-title">Welcome to Stat230!</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 01</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-</tbody>
-</table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
