@@ -54,7 +54,7 @@ The data set `apm.csv` contains data from 2,295 potential jurors for 89 jury tri
 Evan (the “state”) to strike using his "peremptory strikes" during the jury selection phase. Note that in this data set there were 13 jurors with an unknown race that were combined with the non-Black juror group.
 
 ```{r}
-apm <- read.csv(here::here("data/apm.csv"))
+apm <- read.csv("https://aluby.github.io/stat230/data/apm.csv")
 ```
 
 Use the Appendix of the Methodology report to find the variable descriptions for this data set. The response variable is either `struck_state` (“not_state” or “state”) or the binary version `struck_state_bin` (1 = state struck, 0 = not state struck). Your initial set of predictors are divided into two groups (see next section for details):
