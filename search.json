@@ -2065,11 +2065,158 @@
     "text": "Randomness\n\nA dataset containing data behind the study “FakeNewsNet: A Data Repository with News Content, Social Context and Spatialtemporal Information for Studying Fake News on Social Media” https://arxiv.org/abs/1809.01286. The news articles in this dataset were posted to Facebook in September 2016, in the run-up to the U.S. presidential election."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Stat 230: Applied Regression Analysis",
+    "objectID": "slides/slides22.html#moths-from-last-homework",
+    "href": "slides/slides22.html#moths-from-last-homework",
+    "title": "Binomial Logistic Regression",
+    "section": "moths from last homework",
+    "text": "moths from last homework\n\n\n   Morph Distance Placed Removed\n1  light      0.0     56      17\n2   dark      0.0     56      14\n3  light      7.2     80      28\n4   dark      7.2     80      20\n5  light     24.1     52      18\n6   dark     24.1     52      22\n7  light     30.2     60       9\n8   dark     30.2     60      16\n9  light     36.4     60      16\n10  dark     36.4     60      23\n11 light     41.5     84      20\n12  dark     41.5     84      40\n13 light     51.2     92      24\n14  dark     51.2     92      39"
+  },
+  {
+    "objectID": "slides/slides22.html#moth-coloration-and-natural-selection",
+    "href": "slides/slides22.html#moth-coloration-and-natural-selection",
+    "title": "Binomial Logistic Regression",
+    "section": "Moth Coloration and Natural Selection",
+    "text": "Moth Coloration and Natural Selection"
+  },
+  {
+    "objectID": "slides/slides22.html#what-is-the-y-variable",
+    "href": "slides/slides22.html#what-is-the-y-variable",
+    "title": "Binomial Logistic Regression",
+    "section": "What is the Y variable?",
+    "text": "What is the Y variable?\n\nmodel1 &lt;- lm(log_odds_removed ~ distance + morph + distance * morph, \n             data = moths)\n\n\n\n# A tibble: 4 × 5\n  term                estimate std.error statistic  p.value\n  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)          -1.12     0.240       -4.69 0.000858\n2 distance              0.0182   0.00747      2.44 0.0351  \n3 morphlight            0.374    0.339        1.10 0.296   \n4 distance:morphlight  -0.0276   0.0106      -2.61 0.0259"
+  },
+  {
+    "objectID": "slides/slides22.html#why-doesnt-glm-work",
+    "href": "slides/slides22.html#why-doesnt-glm-work",
+    "title": "Binomial Logistic Regression",
+    "section": "Why doesn’t glm work?",
+    "text": "Why doesn’t glm work?\n\nmodel2 &lt;- glm(Removed ~ distance + morph + distance * morph, \n              data = moths, \n              family = \"binomial\")\n\nError:\n! y values must be 0 &lt;= y &lt;= 1"
+  },
+  {
+    "objectID": "slides/slides22.html#binomial-response",
+    "href": "slides/slides22.html#binomial-response",
+    "title": "Binomial Logistic Regression",
+    "section": "Binomial response",
+    "text": "Binomial response\n\n\\(Y_i\\): the number of moths removed (i.e. “success”) on each tree for each morph\nWe will assume each trial (success/failure) is independent\n\n\n\n\n\n\n\nBinomial distribution\n\n\nThe sum of independent and identically distributed success/failure trials follows a Binomial(n, p) distribution."
+  },
+  {
+    "objectID": "slides/slides22.html#binomial-logistic-regression",
+    "href": "slides/slides22.html#binomial-logistic-regression",
+    "title": "Binomial Logistic Regression",
+    "section": "Binomial logistic regression",
+    "text": "Binomial logistic regression\n\\[\\pi_i = P(success | x_1, ..., x_3)\\]\nLog-odds scale:\n\\[\\text{logit}(\\pi_i) = \\log (\\frac{\\pi_i}{1-\\pi_i}) = \\beta_0 + \\beta_1 x_1 + ... + \\beta_p x_p = \\eta_i\\]\nProbability scale:\n\\[\\pi_i = \\dfrac{e^{\\eta_i}}{1 + e^{\\eta_i}}= \\dfrac{e^{\\beta_0 + \\beta_1 x_{1i} + \\beta_2 x_{2i} + \\cdots + \\beta_p x_{pi}}}{1 + e^{\\beta_0 + \\beta_1 x_{1i} + \\beta_2 x_{2i} + \\cdots + \\beta_p x_{pi}}}\\]"
+  },
+  {
+    "objectID": "slides/slides22.html#fitted-model",
+    "href": "slides/slides22.html#fitted-model",
+    "title": "Binomial Logistic Regression",
+    "section": "Fitted model",
+    "text": "Fitted model\n\n\n\n\\[\n\\operatorname{\\widehat{log\\_odds\\_removed}} = -1.123 + 0.018(\\operatorname{distance}) + 0.374(\\operatorname{morph}_{\\operatorname{light}}) - 0.028(\\operatorname{distance} \\times \\operatorname{morph}_{\\operatorname{light}})\n\\]"
+  },
+  {
+    "objectID": "slides/slides22.html#section",
+    "href": "slides/slides22.html#section",
+    "title": "Binomial Logistic Regression",
     "section": "",
-    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
+    "text": "This approach required calculating the empirical log-odds “by hand” and adding to the dataset. Alternatively, we can fit with glm() using the weights argument\n\nmodel3 &lt;- glm(Removed/Placed ~ distance + morph + distance * morph, \n              weights = Placed,\n              data = moths, \n              family = \"binomial\")\n\n\n\n# A tibble: 4 × 5\n  term                estimate std.error statistic      p.value\n  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;\n1 (Intercept)          -1.13     0.198       -5.70 0.0000000117\n2 distance              0.0185   0.00565      3.28 0.00105     \n3 morphlight            0.411    0.274        1.50 0.134       \n4 distance:morphlight  -0.0278   0.00809     -3.44 0.000588    \n\n\n\nThe estimates are slightly different due to different assumptions (eg \\(\\varepsilon\\))"
+  },
+  {
+    "objectID": "slides/slides22.html#binomial-model-assumptions",
+    "href": "slides/slides22.html#binomial-model-assumptions",
+    "title": "Binomial Logistic Regression",
+    "section": "Binomial model assumptions",
+    "text": "Binomial model assumptions\n\nBinomial counts\nIndependence: observations are independent\nLinearity: the log odds is a linear function of the predictors\nVariance structure: the variance of a binomial random variable is \\(n \\pi (1 - \\pi)\\)\n\\(\\Longrightarrow\\) so the variance of \\(Y_i\\) is \\(n_i \\pi_i (1 - \\pi_i)\\) (not constant!)"
+  },
+  {
+    "objectID": "slides/slides22.html#pearson-residuals",
+    "href": "slides/slides22.html#pearson-residuals",
+    "title": "Binomial Logistic Regression",
+    "section": "Pearson residuals",
+    "text": "Pearson residuals\n\\[{\\rm Pres}_i = \\dfrac{Y_i - n_i \\widehat{\\pi}_i}{\\sqrt{n_i \\widehat{\\pi}_i (1 - \\widehat{\\pi}_i)}}\\]\nFor large enough \\(n_i\\), Pearson residuals tend to behave like they come from \\(N(0,1)\\)\nHow to use?\n\nPlot against fitted values, predictors\nCheck for curvature, outliers"
+  },
+  {
+    "objectID": "slides/slides22.html#pearson-residuals-1",
+    "href": "slides/slides22.html#pearson-residuals-1",
+    "title": "Binomial Logistic Regression",
+    "section": "Pearson residuals",
+    "text": "Pearson residuals"
+  },
+  {
+    "objectID": "slides/slides22.html#deviance-residuals",
+    "href": "slides/slides22.html#deviance-residuals",
+    "title": "Binomial Logistic Regression",
+    "section": "Deviance residuals",
+    "text": "Deviance residuals\n\n\\({\\rm Dres}_i = {\\rm sign}(Y_i - n_i \\widehat{\\pi}_i) \\sqrt{2 \\left[ Y_i \\log \\left( \\dfrac{Y_i}{n_i \\widehat{\\pi}_i} \\right) + (n_i - Y_i) \\log \\left( \\frac{n_i - Y_i}{n_i - n_i \\widehat{\\pi}_i} \\right) \\right]}\\)\n\nFor large enough \\(n_i\\), deviance residuals tend to behave like they come from \\(N(0,1)\\)\nHow to use?\n\nPlot against fitted values, predictors\nCheck for curvature, outliers"
+  },
+  {
+    "objectID": "slides/slides22.html#deviance-residuals-1",
+    "href": "slides/slides22.html#deviance-residuals-1",
+    "title": "Binomial Logistic Regression",
+    "section": "Deviance residuals",
+    "text": "Deviance residuals"
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html",
+    "href": "finished/14-multicollinearity-finished.html",
+    "title": "Multicollinearity and R2",
+    "section": "",
+    "text": "In this activity you will learn how to calculate diagnostic measures and create diagnostic plots for multiple linear regression models in R."
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#overview",
+    "href": "finished/14-multicollinearity-finished.html#overview",
+    "title": "Multicollinearity and R2",
+    "section": "",
+    "text": "In this activity you will learn how to calculate diagnostic measures and create diagnostic plots for multiple linear regression models in R."
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#example-1-uncorrelated-predictors",
+    "href": "finished/14-multicollinearity-finished.html#example-1-uncorrelated-predictors",
+    "title": "Multicollinearity and R2",
+    "section": "Example 1: Uncorrelated Predictors",
+    "text": "Example 1: Uncorrelated Predictors\nAs a first example, let’s consider a multiple linear regression model where the two predictor variables are uncorrelated.\nTask 1. Inspect the below correlation matrix and verify that the correlation between the two predictor variables (x1 and x2) is 0.\n\n\n          x1        x2         y\nx1 1.0000000 0.0000000 0.7419309\nx2 0.0000000 1.0000000 0.6384057\ny  0.7419309 0.6384057 1.0000000\n\n\nTask 2. The below code chunk fits a simple linear regression model with y as the response variable and x1 as the predictor variables. The coefficients table was extracted using the broom::tidy(). (Feel free to use broom::tidy() in your work!)\n\nmod1 &lt;- lm(y ~ x1, data = ex1)\nbroom::tidy(mod1)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)    23.5      10.1       2.32  0.0591\n2 x1              5.37      1.98      2.71  0.0351\n\n\nSimilarly, here is the output for the simple linear regression model with y as the response variable and x2 as the predictor variable.\n\nmod2 &lt;- lm(y ~ x2, data = ex1)\nbroom::tidy(mod2)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)    27.3      11.6       2.35  0.0572\n2 x2              9.25      4.55      2.03  0.0885\n\n\nAnd finally, here is the output for the multiple linear regression model with y as the response variable and both x1 and x2 as the predictor variables.\n\nmod3 &lt;- lm(y ~ x1 + x2, data = ex1)\nbroom::tidy(mod3)\n\n# A tibble: 3 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)    0.375     4.74     0.0791 0.940   \n2 x1             5.37      0.664    8.10   0.000466\n3 x2             9.25      1.33     6.97   0.000937\n\n\nCompare the model summaries from the three models. What do you observe about the coefficients when both predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?"
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#example-2-prefectly-correlated-predictors",
+    "href": "finished/14-multicollinearity-finished.html#example-2-prefectly-correlated-predictors",
+    "title": "Multicollinearity and R2",
+    "section": "Example 2: Prefectly Correlated Predictors",
+    "text": "Example 2: Prefectly Correlated Predictors\nIn many examples the predictor variables will be correlated. As an extreme example, let’s consider a situation where the predictors are perfectly correlated. The data set for this small example is printed below.\n\n\n  x1 x2   y\n1  2  6  23\n2  8  9  83\n3  6  8  63\n4 10 10 103\n\n\nTask 3. Inspect the below correlation matrix and verify that the correlation between the two predictor variables (x1 and x2) is 1.\n\n\n   x1 x2 y\nx1  1  1 1\nx2  1  1 1\ny   1  1 1\n\n\nTask 4. From the previous task, you should have seen that the correlation between x1 and x2 is 1, as is the correlation between both predictors and y. This sounds like a great situation, right? We’ll explore two models to unpack this.\n\nConsider the fitted regression equation: \\(\\widehat{y} = -87 + x_1 + 18x_2\\). Verify that the predicted values are exactly equal to the observed values.\nConsider the fitted regression equation: \\(\\widehat{y} = -7 + 9x_1 + 2x_2\\). Verify that the predicted values are exactly equal to the observed values.\nDiscuss the following questions with your group:\n\nWould you be willing to use either model to make predictions for new observations? Why or why not?\nWould you be willing to interpret the coefficients in either model? Why or why not?\nDo you think the standard error of the slopes is reasonably small or large? Why?"
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#example-3-a-more-realistic-example",
+    "href": "finished/14-multicollinearity-finished.html#example-3-a-more-realistic-example",
+    "title": "Multicollinearity and R2",
+    "section": "Example 3: A more realistic example",
+    "text": "Example 3: A more realistic example\nLet’s consider a more realistic example where the predictor variables are correlated, but not perfectly correlated. The data set bodyfat contains measurements on 20 healthy adults between 25 and 34 years of age. We’re interested in predicting body fat percentage using three body measurements: triceps skinfold thickness, thigh circumference, and midarm circumference.\nTask 5. Below is the correlation matrix for the data set. What do you observe about the correlations between the predictor variables?\n\n\n                     triceps_skinfold thigh_circumference midarm_circumference\ntriceps_skinfold            1.0000000           0.9238425            0.4577772\nthigh_circumference         0.9238425           1.0000000            0.0846675\nmidarm_circumference        0.4577772           0.0846675            1.0000000\nbody_fat                    0.8432654           0.8780896            0.1424440\n                      body_fat\ntriceps_skinfold     0.8432654\nthigh_circumference  0.8780896\nmidarm_circumference 0.1424440\nbody_fat             1.0000000\n\n\nTask 6. There are numerous models that we could consider. Below are summary tables from several models. Compare the model summaries from the fitted models. What do you observe about the coefficients when different predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?\nOnly triceps skinfold as a predictor:\n\n\n# A tibble: 2 × 5\n  term             estimate std.error statistic    p.value\n  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n1 (Intercept)        -1.50      3.32     -0.451 0.658     \n2 triceps_skinfold    0.857     0.129     6.66  0.00000302\n\n\nOnly thigh circumference as a predictor:\n\n\n# A tibble: 2 × 5\n  term                estimate std.error statistic     p.value\n  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;\n1 (Intercept)          -23.6       5.66      -4.18 0.000566   \n2 thigh_circumference    0.857     0.110      7.79 0.000000360\n\n\nOnly midarm circumference as a predictor:\n\n\n# A tibble: 2 × 5\n  term                 estimate std.error statistic p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)            14.7       9.10      1.61    0.124\n2 midarm_circumference    0.199     0.327     0.611   0.549\n\n\nTriceps skinfold and thigh circumference as predictors:\n\n\n# A tibble: 3 × 5\n  term                estimate std.error statistic p.value\n  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)          -19.2       8.36     -2.29   0.0348\n2 triceps_skinfold       0.222     0.303     0.733  0.474 \n3 thigh_circumference    0.659     0.291     2.26   0.0369\n\n\nTriceps skinfold and midarm circumference as predictors:\n\n\n# A tibble: 3 × 5\n  term                 estimate std.error statistic     p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;\n1 (Intercept)          -26.0        7.00     -3.72  0.00172    \n2 midarm_circumference   0.0960     0.161     0.595 0.560      \n3 thigh_circumference    0.851      0.112     7.57  0.000000772\n\n\nThigh circumference and midarm circumference as predictors:\n\n\n# A tibble: 4 × 5\n  term                 estimate std.error statistic p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)            117.       99.8       1.17   0.258\n2 triceps_skinfold         4.33      3.02      1.44   0.170\n3 thigh_circumference     -2.86      2.58     -1.11   0.285\n4 midarm_circumference    -2.19      1.60     -1.37   0.190\n\n\n Let me know when you have reached this spot. We’ll regroup as a class to discuss your observations."
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#what-about-predictions",
+    "href": "finished/14-multicollinearity-finished.html#what-about-predictions",
+    "title": "Multicollinearity and R2",
+    "section": "What about predictions?",
+    "text": "What about predictions?\nNow that we’ve discussed the issues revolving around interpreting coefficients and drawing inference on them in the presence of multicollinearity, let’s consider how multicollinearity impacts predictions.\nRecall that the mean squared error (MSE) of a model measures the variability in the error terms (residuals). In other words, it is measuring the variability unexplained by the model.\nTask 7. Below are the MSE values for three of the models we considered in Task 6. What do you observe about the MSE values when different predictors are included in the model?\n\n\n\nPredictors\nMSE\n\n\n\n\ntriceps_skinfold\n7.95\n\n\ntriceps_skinfold, thigh_circumference\n6.47\n\n\ntriceps_skinfold, thigh_circumference, midarm_circumference\n6.15\n\n\n\nTask 8. Based on your observations, do you think we can use any of the models to make predictions for new observations? Why or why not?\n Let me know when you have reached this spot. We’ll regroup as a class to discuss your observations."
+  },
+  {
+    "objectID": "finished/14-multicollinearity-finished.html#be-wary-of-r2-when-comparing-models",
+    "href": "finished/14-multicollinearity-finished.html#be-wary-of-r2-when-comparing-models",
+    "title": "Multicollinearity and R2",
+    "section": "Be Wary of R2 when comparing models",
+    "text": "Be Wary of R2 when comparing models\nWe all love R2 right? It is “easy” to interpret and is a popular metric of model fit to report in many fields. While I agree that R2 is a nice metric for describing a single model, it has an issue when it’s used to compare models. In this example, you’ll explore this issue.\nCase Study 10.1.1 in The Statistical Sleuth describes Galileo’s experiment that led him to discover that the trajectory of a body falling with horizontal velocity is a parabola (see page 272). The case1011 data set in the Sleuth3 R package contains the results of Galileo’s experiment. The data set contains seven observations on the following two variables: the horizontal distance traveled from the edge of the table to its landing spot, and the initial height of the object. Both measurements are in punti (1 punti = or 169/180 mm or about 0.037 in).\nTask 9. Fit each of the following models and report the R2 value for each. Fill in the table below.\nStarter R code:\n\nlibrary(Sleuth3)\nmod &lt;- lm(Distance ~ Height, data = case1001)\nsummary(mod)\n\n\n\n\n\n\n\n\nModel\nR2\n\n\n\n\n\\(\\text{distance} \\sim \\text{height}\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4 + \\text{height}^5\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4 + \\text{height}^5+ \\text{height}^6\\)\n\n\n\n\nWhat do you observe about the R2 values as you add more polynomial terms to the model?"
+  },
+  {
+    "objectID": "slides.html",
+    "href": "slides.html",
+    "title": "Slides",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Topic\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTopic\n\n\n\nCourse Day\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nBinomial Logistic Regression\n\n\nDay 22\n\n\nProf Amanda Luby\n\n\n\n\n\n\nModel Comparison for Logistic Regression\n\n\nDay 21\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Logistic Regression\n\n\nDay 20\n\n\nProf Amanda Luby\n\n\n\n\n\n\nLogistic Regression\n\n\nDay 19\n\n\nProf Amanda Luby\n\n\n\n\n\n\nModel Selection\n\n\nDay 15\n\n\nProf Amanda Luby\n\n\n\n\n\n\nMulticollinearity\n\n\nDay 14\n\n\nProf Amanda Luby\n\n\n\n\n\n\nDiagnostics for MLR\n\n\nDay 13\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Linear Combinations\n\n\nDay 12\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for MLR\n\n\nDay 11\n\n\nProf Amanda Luby\n\n\n\n\n\n\nAdding Categorical Predictors\n\n\nDay 10\n\n\nProf Amanda Luby\n\n\n\n\n\n\nIntro to Multiple Linear Regression\n\n\nDay 09\n\n\nProf Amanda Luby\n\n\n\n\n\n\nTransformations and polynomial regression\n\n\nDay 08\n\n\nProf Amanda Luby\n\n\n\n\n\n\nTransforming SLR models\n\n\nDay 06\n\n\nProf Amanda Luby\n\n\n\n\n\n\nEvaluating SLR models\n\n\nDay 05\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Prediction\n\n\nDay 04\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for SLR\n\n\nDay 03\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nDay 02\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "readings.html",
+    "href": "readings.html",
+    "title": "Readings",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nExam01 Review\n\n\n \n\n\n\n\n\n\nExam02 Review\n\n\n \n\n\n\n\n\n\nIntro Stat Review\n\n\n \n\n\n\n\n\n\nR Functions reference for Stat230\n\n\nAmanda Luby & Noah Lee\n\n\n\n\n\n\nRevisions for Stat230\n\n\n \n\n\n\n\n\n\nUsing R/RStudio for Stat230\n\n\n \n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "finished/11-mlr-inference-finished.html",
@@ -2135,67 +2282,11 @@
     "text": "Function quick reference\nThe following table summarizes the functions we learned today:\n\n\n\n\n\n\n\nFunction\nPurpose\n\n\n\n\nlm()\nFit a linear model\n\n\nsummary()\nDisplay detailed results from a fitted model\n\n\nggpredict()\nCreate a data frame of predicted values from a fitted model\n\n\nplot()\nCreate a plot of predicted values from a fitted model\n\n\nanova()\nCreate an ANOVA table for a fitted model or compare two nested models"
   },
   {
-    "objectID": "readings.html",
-    "href": "readings.html",
-    "title": "Readings",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 230: Applied Regression Analysis",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nExam01 Review\n\n\n \n\n\n\n\n\n\nExam02 Review\n\n\n \n\n\n\n\n\n\nIntro Stat Review\n\n\n \n\n\n\n\n\n\nR Functions reference for Stat230\n\n\nAmanda Luby & Noah Lee\n\n\n\n\n\n\nRevisions for Stat230\n\n\n \n\n\n\n\n\n\nUsing R/RStudio for Stat230\n\n\n \n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "slides.html",
-    "href": "slides.html",
-    "title": "Slides",
-    "section": "",
-    "text": "Order By\n      Default\n      \n        Topic\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTopic\n\n\n\nCourse Day\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nModel Comparison for Logistic Regression\n\n\nDay 21\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Logistic Regression\n\n\nDay 20\n\n\nProf Amanda Luby\n\n\n\n\n\n\nLogistic Regression\n\n\nDay 19\n\n\nProf Amanda Luby\n\n\n\n\n\n\nModel Selection\n\n\nDay 15\n\n\nProf Amanda Luby\n\n\n\n\n\n\nMulticollinearity\n\n\nDay 14\n\n\nProf Amanda Luby\n\n\n\n\n\n\nDiagnostics for MLR\n\n\nDay 13\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Linear Combinations\n\n\nDay 12\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for MLR\n\n\nDay 11\n\n\nProf Amanda Luby\n\n\n\n\n\n\nAdding Categorical Predictors\n\n\nDay 10\n\n\nProf Amanda Luby\n\n\n\n\n\n\nIntro to Multiple Linear Regression\n\n\nDay 09\n\n\nProf Amanda Luby\n\n\n\n\n\n\nTransformations and polynomial regression\n\n\nDay 08\n\n\nProf Amanda Luby\n\n\n\n\n\n\nTransforming SLR models\n\n\nDay 06\n\n\nProf Amanda Luby\n\n\n\n\n\n\nEvaluating SLR models\n\n\nDay 05\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for Prediction\n\n\nDay 04\n\n\nProf Amanda Luby\n\n\n\n\n\n\nInference for SLR\n\n\nDay 03\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSimple Linear Regression (SLR)\n\n\nDay 02\n\n\nProf Amanda Luby\n\n\n\n\n\n\nSlides Cheat Sheet\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nWelcome to Stat230!\n\n\nDay 01\n\n\nProf Amanda Luby\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "finished/14-multicollinearity-finished.html",
-    "href": "finished/14-multicollinearity-finished.html",
-    "title": "Multicollinearity and R2",
-    "section": "",
-    "text": "In this activity you will learn how to calculate diagnostic measures and create diagnostic plots for multiple linear regression models in R."
-  },
-  {
-    "objectID": "finished/14-multicollinearity-finished.html#overview",
-    "href": "finished/14-multicollinearity-finished.html#overview",
-    "title": "Multicollinearity and R2",
-    "section": "",
-    "text": "In this activity you will learn how to calculate diagnostic measures and create diagnostic plots for multiple linear regression models in R."
-  },
-  {
-    "objectID": "finished/14-multicollinearity-finished.html#example-1-uncorrelated-predictors",
-    "href": "finished/14-multicollinearity-finished.html#example-1-uncorrelated-predictors",
-    "title": "Multicollinearity and R2",
-    "section": "Example 1: Uncorrelated Predictors",
-    "text": "Example 1: Uncorrelated Predictors\nAs a first example, let’s consider a multiple linear regression model where the two predictor variables are uncorrelated.\nTask 1. Inspect the below correlation matrix and verify that the correlation between the two predictor variables (x1 and x2) is 0.\n\n\n          x1        x2         y\nx1 1.0000000 0.0000000 0.7419309\nx2 0.0000000 1.0000000 0.6384057\ny  0.7419309 0.6384057 1.0000000\n\n\nTask 2. The below code chunk fits a simple linear regression model with y as the response variable and x1 as the predictor variables. The coefficients table was extracted using the broom::tidy(). (Feel free to use broom::tidy() in your work!)\n\nmod1 &lt;- lm(y ~ x1, data = ex1)\nbroom::tidy(mod1)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)    23.5      10.1       2.32  0.0591\n2 x1              5.37      1.98      2.71  0.0351\n\n\nSimilarly, here is the output for the simple linear regression model with y as the response variable and x2 as the predictor variable.\n\nmod2 &lt;- lm(y ~ x2, data = ex1)\nbroom::tidy(mod2)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)    27.3      11.6       2.35  0.0572\n2 x2              9.25      4.55      2.03  0.0885\n\n\nAnd finally, here is the output for the multiple linear regression model with y as the response variable and both x1 and x2 as the predictor variables.\n\nmod3 &lt;- lm(y ~ x1 + x2, data = ex1)\nbroom::tidy(mod3)\n\n# A tibble: 3 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)    0.375     4.74     0.0791 0.940   \n2 x1             5.37      0.664    8.10   0.000466\n3 x2             9.25      1.33     6.97   0.000937\n\n\nCompare the model summaries from the three models. What do you observe about the coefficients when both predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?"
-  },
-  {
-    "objectID": "finished/14-multicollinearity-finished.html#example-2-prefectly-correlated-predictors",
-    "href": "finished/14-multicollinearity-finished.html#example-2-prefectly-correlated-predictors",
-    "title": "Multicollinearity and R2",
-    "section": "Example 2: Prefectly Correlated Predictors",
-    "text": "Example 2: Prefectly Correlated Predictors\nIn many examples the predictor variables will be correlated. As an extreme example, let’s consider a situation where the predictors are perfectly correlated. The data set for this small example is printed below.\n\n\n  x1 x2   y\n1  2  6  23\n2  8  9  83\n3  6  8  63\n4 10 10 103\n\n\nTask 3. Inspect the below correlation matrix and verify that the correlation between the two predictor variables (x1 and x2) is 1.\n\n\n   x1 x2 y\nx1  1  1 1\nx2  1  1 1\ny   1  1 1\n\n\nTask 4. From the previous task, you should have seen that the correlation between x1 and x2 is 1, as is the correlation between both predictors and y. This sounds like a great situation, right? We’ll explore two models to unpack this.\n\nConsider the fitted regression equation: \\(\\widehat{y} = -87 + x_1 + 18x_2\\). Verify that the predicted values are exactly equal to the observed values.\nConsider the fitted regression equation: \\(\\widehat{y} = -7 + 9x_1 + 2x_2\\). Verify that the predicted values are exactly equal to the observed values.\nDiscuss the following questions with your group:\n\nWould you be willing to use either model to make predictions for new observations? Why or why not?\nWould you be willing to interpret the coefficients in either model? Why or why not?\nDo you think the standard error of the slopes is reasonably small or large? Why?"
-  },
-  {
-    "objectID": "finished/14-multicollinearity-finished.html#example-3-a-more-realistic-example",
-    "href": "finished/14-multicollinearity-finished.html#example-3-a-more-realistic-example",
-    "title": "Multicollinearity and R2",
-    "section": "Example 3: A more realistic example",
-    "text": "Example 3: A more realistic example\nLet’s consider a more realistic example where the predictor variables are correlated, but not perfectly correlated. The data set bodyfat contains measurements on 20 healthy adults between 25 and 34 years of age. We’re interested in predicting body fat percentage using three body measurements: triceps skinfold thickness, thigh circumference, and midarm circumference.\nTask 5. Below is the correlation matrix for the data set. What do you observe about the correlations between the predictor variables?\n\n\n                     triceps_skinfold thigh_circumference midarm_circumference\ntriceps_skinfold            1.0000000           0.9238425            0.4577772\nthigh_circumference         0.9238425           1.0000000            0.0846675\nmidarm_circumference        0.4577772           0.0846675            1.0000000\nbody_fat                    0.8432654           0.8780896            0.1424440\n                      body_fat\ntriceps_skinfold     0.8432654\nthigh_circumference  0.8780896\nmidarm_circumference 0.1424440\nbody_fat             1.0000000\n\n\nTask 6. There are numerous models that we could consider. Below are summary tables from several models. Compare the model summaries from the fitted models. What do you observe about the coefficients when different predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?\nOnly triceps skinfold as a predictor:\n\n\n# A tibble: 2 × 5\n  term             estimate std.error statistic    p.value\n  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n1 (Intercept)        -1.50      3.32     -0.451 0.658     \n2 triceps_skinfold    0.857     0.129     6.66  0.00000302\n\n\nOnly thigh circumference as a predictor:\n\n\n# A tibble: 2 × 5\n  term                estimate std.error statistic     p.value\n  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;\n1 (Intercept)          -23.6       5.66      -4.18 0.000566   \n2 thigh_circumference    0.857     0.110      7.79 0.000000360\n\n\nOnly midarm circumference as a predictor:\n\n\n# A tibble: 2 × 5\n  term                 estimate std.error statistic p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)            14.7       9.10      1.61    0.124\n2 midarm_circumference    0.199     0.327     0.611   0.549\n\n\nTriceps skinfold and thigh circumference as predictors:\n\n\n# A tibble: 3 × 5\n  term                estimate std.error statistic p.value\n  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)          -19.2       8.36     -2.29   0.0348\n2 triceps_skinfold       0.222     0.303     0.733  0.474 \n3 thigh_circumference    0.659     0.291     2.26   0.0369\n\n\nTriceps skinfold and midarm circumference as predictors:\n\n\n# A tibble: 3 × 5\n  term                 estimate std.error statistic     p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;\n1 (Intercept)          -26.0        7.00     -3.72  0.00172    \n2 midarm_circumference   0.0960     0.161     0.595 0.560      \n3 thigh_circumference    0.851      0.112     7.57  0.000000772\n\n\nThigh circumference and midarm circumference as predictors:\n\n\n# A tibble: 4 × 5\n  term                 estimate std.error statistic p.value\n  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 (Intercept)            117.       99.8       1.17   0.258\n2 triceps_skinfold         4.33      3.02      1.44   0.170\n3 thigh_circumference     -2.86      2.58     -1.11   0.285\n4 midarm_circumference    -2.19      1.60     -1.37   0.190\n\n\n Let me know when you have reached this spot. We’ll regroup as a class to discuss your observations."
-  },
-  {
-    "objectID": "finished/14-multicollinearity-finished.html#what-about-predictions",
-    "href": "finished/14-multicollinearity-finished.html#what-about-predictions",
-    "title": "Multicollinearity and R2",
-    "section": "What about predictions?",
-    "text": "What about predictions?\nNow that we’ve discussed the issues revolving around interpreting coefficients and drawing inference on them in the presence of multicollinearity, let’s consider how multicollinearity impacts predictions.\nRecall that the mean squared error (MSE) of a model measures the variability in the error terms (residuals). In other words, it is measuring the variability unexplained by the model.\nTask 7. Below are the MSE values for three of the models we considered in Task 6. What do you observe about the MSE values when different predictors are included in the model?\n\n\n\nPredictors\nMSE\n\n\n\n\ntriceps_skinfold\n7.95\n\n\ntriceps_skinfold, thigh_circumference\n6.47\n\n\ntriceps_skinfold, thigh_circumference, midarm_circumference\n6.15\n\n\n\nTask 8. Based on your observations, do you think we can use any of the models to make predictions for new observations? Why or why not?\n Let me know when you have reached this spot. We’ll regroup as a class to discuss your observations."
-  },
-  {
-    "objectID": "finished/14-multicollinearity-finished.html#be-wary-of-r2-when-comparing-models",
-    "href": "finished/14-multicollinearity-finished.html#be-wary-of-r2-when-comparing-models",
-    "title": "Multicollinearity and R2",
-    "section": "Be Wary of R2 when comparing models",
-    "text": "Be Wary of R2 when comparing models\nWe all love R2 right? It is “easy” to interpret and is a popular metric of model fit to report in many fields. While I agree that R2 is a nice metric for describing a single model, it has an issue when it’s used to compare models. In this example, you’ll explore this issue.\nCase Study 10.1.1 in The Statistical Sleuth describes Galileo’s experiment that led him to discover that the trajectory of a body falling with horizontal velocity is a parabola (see page 272). The case1011 data set in the Sleuth3 R package contains the results of Galileo’s experiment. The data set contains seven observations on the following two variables: the horizontal distance traveled from the edge of the table to its landing spot, and the initial height of the object. Both measurements are in punti (1 punti = or 169/180 mm or about 0.037 in).\nTask 9. Fit each of the following models and report the R2 value for each. Fill in the table below.\nStarter R code:\n\nlibrary(Sleuth3)\nmod &lt;- lm(Distance ~ Height, data = case1001)\nsummary(mod)\n\n\n\n\n\n\n\n\nModel\nR2\n\n\n\n\n\\(\\text{distance} \\sim \\text{height}\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4 + \\text{height}^5\\)\n\n\n\n\\(\\text{distance} \\sim \\text{height} + \\text{height}^2 + \\text{height}^3 + \\text{height}^4 + \\text{height}^5+ \\text{height}^6\\)\n\n\n\n\nWhat do you observe about the R2 values as you add more polynomial terms to the model?"
+    "text": "Welcome to the central hub for Stat 230! While you will submit your assignments and find specific daily links in Moodle, this website hosts all of the slides, R coding activities, and reference materials.\n\n\n\n👩‍🏫 Instructor Info\nAmanda Luby\n\nEmail: aluby@carleton.edu\nOffice: CMC 223\nOffice Hours: in CMC 307\n\nMon 3-4pm\nTues 2-3pm\nWed 9:30-10:30 (Stat120 priority)\nFri 10-11 (Stat230 priority)\n\nIndividual Appointments: Google Cal\n\n\n\n\n\n\n🚀 Getting Started\nBefore our first class, please make sure you:\n\nBookmark this website.\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials"
   },
   {
     "objectID": "slides/slides08.html#section",
