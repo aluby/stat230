@@ -9,7 +9,7 @@ title: "22: Binomial Logistic Regression"
 Run the code chunk below to load the data:
 
 ```{r}
-orobanche <- read.csv("https://aluby.github.io/stat230/data/orobanche.csv")
+orobanche <- read.csv("https://aluby.github.io/stat230/data/orabanche.csv")
 ```
 
 The variables in the data set are:
