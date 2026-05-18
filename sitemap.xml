@@ -37,16 +37,8 @@
     <lastmod>2026-04-15T18:21:28.561Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/08-polynomial-tutorial.html</loc>
-    <lastmod>2026-04-15T18:21:12.303Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/08T-polynomial.html</loc>
-    <lastmod>2026-04-15T18:21:12.303Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/activities/04-prediction.html</loc>
-    <lastmod>2026-04-07T16:00:01.308Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/03b-r-inference.html</loc>
+    <lastmod>2026-04-03T15:11:01.732Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/activities/20-logistic-inference.html</loc>
@@ -69,12 +61,12 @@
     <lastmod>2026-04-08T17:51:55.531Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/22-diagnostic-logistic.html</loc>
-    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/09-mlr.html</loc>
+    <lastmod>2026-04-17T19:12:19.126Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/11-mlr-inference.html</loc>
-    <lastmod>2026-04-22T19:55:14.082Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/22-binomial-logistic.html</loc>
+    <lastmod>2026-05-18T18:33:24.301Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/activities/10-cat-predictors.html</loc>
@@ -289,8 +281,8 @@
     <lastmod>2026-03-25T13:01:22.007Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/09-mlr.html</loc>
-    <lastmod>2026-04-17T19:12:19.126Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/11-mlr-inference.html</loc>
+    <lastmod>2026-04-22T19:55:14.082Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/activities/21-r-logistic.html</loc>
@@ -309,16 +301,16 @@
     <lastmod>2026-04-10T14:56:03.791Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/24-deviance.html</loc>
-    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/04-prediction.html</loc>
+    <lastmod>2026-04-07T16:00:01.308Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/03b-r-inference.html</loc>
-    <lastmod>2026-04-03T15:11:01.732Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/08T-polynomial.html</loc>
+    <lastmod>2026-04-15T18:21:12.303Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/activities/23-binomial-logistic.html</loc>
-    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
+    <loc>https://aluby.github.io/stat230/activities/08-polynomial-tutorial.html</loc>
+    <lastmod>2026-04-15T18:21:12.303Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/activities/15-model-selection.html</loc>
