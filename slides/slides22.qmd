@@ -1,0 +1,241 @@
+---
+title: Binomial Logistic Regression
+subtitle: Day 22
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+library(gt)
+library(gtsummary)
+library(carData)
+library(ggResidpanel)
+library(ggthemes)
+
+notes_theme = theme_minimal(base_size = 14, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+
+bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
+
+news <- bayesrules::fake_news |>
+  mutate(has_excl = ifelse(title_has_excl | text_excl > 0, TRUE, FALSE)) |>
+  select(title, url, type, title_words, has_excl, title_caps_percent, negative, positive) |>
+  mutate(type_num = as.numeric(type == "fake"))
+
+news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent, 
+                data = news, family = "binomial")
+
+```
+
+## `moths` from last homework
+
+```{r}
+moths <- read.csv("https://aluby.github.io/stat230/data/moths.csv") |>
+  mutate(notremoved = Placed - Removed, 
+               log_odds_removed = log(Removed / notremoved),
+               prop_removed = Removed / Placed, 
+               dark = ifelse(Morph=="dark",1,0), 
+               distance = Distance, 
+               morph = Morph) 
+
+moths |>
+  select(Morph, Distance, Placed, Removed)
+```
+ 
+## [Moth Coloration and Natural Selection]{style="color:#FFFFFF"} {background-image="http://catherinephamevolution.weebly.com/uploads/4/9/7/3/49739619/189059_orig.jpg" background-size="cover" background-position="bottom" style="color: "}
+
+## What is the Y variable?
+
+```{r}
+#| echo: true
+model1 <- lm(log_odds_removed ~ distance + morph + distance * morph, 
+             data = moths)
+```
+
+```{r}
+tidy(model1)
+```
+
+## Why doesn't `glm` work?
+
+```{r}
+#| echo: true
+#| error: true
+model2 <- glm(Removed ~ distance + morph + distance * morph, 
+              data = moths, 
+              family = "binomial")
+```
+
+
+## Binomial response
+
+- $Y_i$: the number of moths removed (i.e. "success") on each tree for each morph
+
+- We will **assume** each trial (success/failure) is independent
+
+::: callout-note
+## Binomial distribution
+
+The sum of independent and identically distributed success/failure trials follows a Binomial(n, p) distribution.
+
+:::
+
+## Binomial logistic regression
+
+$$\pi_i = P(success | x_1, ..., x_3)$$
+
+Log-odds scale: 
+
+$$\text{logit}(\pi_i) = \log (\frac{\pi_i}{1-\pi_i}) = \beta_0 + \beta_1 x_1 + ... + \beta_p x_p = \eta_i$$
+
+Probability scale: 
+
+$$\pi_i = \dfrac{e^{\eta_i}}{1 + e^{\eta_i}}= \dfrac{e^{\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi}}}{1 + e^{\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi}}}$$
+
+## Fitted model
+
+::: small
+
+```{r}
+equatiomatic::extract_eq(model1, use_coefs = TRUE, coef_digits = 3)
+```
+:::
+
+
+```{r echo=FALSE, fig.height = 3, fig.width=5.5, out.width = 700, fig.align='center'}
+gf_point(log_odds_removed ~ Distance, color =~morph, data = moths) |>
+  gf_lm() |>
+  gf_refine(scale_color_colorblind())
+```
+
+## 
+
+This approach required calculating the empirical log-odds "by hand" and adding to the dataset.  Alternatively, we can fit with `glm()` using the `weights` argument
+
+```{r}
+#| echo: true
+#| error: true
+model3 <- glm(Removed/Placed ~ distance + morph + distance * morph, 
+              weights = Placed,
+              data = moths, 
+              family = "binomial")
+```
+
+```{r}
+tidy(model3)
+```
+
+::: footer
+The estimates are slightly different due to different assumptions (eg $\varepsilon$)
+:::
+
+## Binomial model assumptions
+
+- **Binomial counts**
+
+- **Independence**: observations are independent
+
+- **Linearity**: the log odds is a linear function of the predictors
+
+- **Variance structure**: the variance of a binomial random variable is $n \pi (1 - \pi)$
+
+    $\Longrightarrow$ so the variance of $Y_i$ is $n_i \pi_i (1 - \pi_i)$ (not constant!)
+    
+## Pearson residuals
+
+$${\rm Pres}_i = \dfrac{Y_i - n_i \widehat{\pi}_i}{\sqrt{n_i \widehat{\pi}_i (1 - \widehat{\pi}_i)}}$$
+
+For large enough $n_i$, Pearson residuals tend to behave like they come from $N(0,1)$
+
+How to use?
+
+- Plot against fitted values, predictors
+
+- Check for curvature, outliers
+
+## Pearson residuals
+
+```{r}
+p1 <- ggResidpanel::resid_panel(model3, type = "pearson", plots = c("resid", "qq"), smoother = TRUE)
+p2 <- ggResidpanel::resid_xpanel(model3, type = "pearson", smoother = TRUE, nrow = 1)
+
+p1 / p2
+```
+
+## Deviance residuals
+
+::: medium
+
+${\rm Dres}_i = {\rm sign}(Y_i - n_i \widehat{\pi}_i) \sqrt{2 \left[ Y_i \log \left( \dfrac{Y_i}{n_i \widehat{\pi}_i} \right) + (n_i - Y_i) \log \left( \frac{n_i - Y_i}{n_i - n_i \widehat{\pi}_i} \right) \right]}$
+
+:::
+
+For large enough $n_i$, deviance residuals tend to behave like they come from $N(0,1)$
+
+How to use?
+
+- Plot against fitted values, predictors
+
+- Check for curvature, outliers
+
+## Deviance residuals
+
+```{r}
+p1 <- ggResidpanel::resid_panel(model3, type = "deviance", plots = c("resid", "qq"), smoother = TRUE)
+p2 <- ggResidpanel::resid_xpanel(model3, type = "deviance", smoother = TRUE, nrow = 1)
+
+p1/p2
+```
