@@ -1,0 +1,94 @@
+---
+title: "22: Binomial Logistic Regression"
+---
+
+## Data overview
+
+*Orobanche* is a genus of parasitic plants without chlorophyll that grow on the roots of flowering plants. In an experiment, seeds from two varieties, Orobanche aegyptiaca 75 and Orobanche aegyptiaca 73, where brushed with extract from either a cucumber root or a bean root. Researchers recorded the number of seeds that eventually germinated.
+
+Run the code chunk below to load the data:
+
+```{r}
+orobanche <- read.csv("https://aluby.github.io/stat230/data/orobanche.csv")
+```
+
+The variables in the data set are:
+
+- `y`: count of seeds germinated
+- `n`: number of seeds
+- `variety`: either oa75 or oa73
+- `root`: either cucumber or bean
+
+**1.** Explain why this is an example of a binomial response as compared to a binary response
+
+**2.** Does there appear to be a relationship bewteen the proportion of seeds that germinate and variety? What about root? 
+
+
+i. create boxplots of the estimated proportion by each variable.
+
+ii. create boxplots of the estimated proportion using one variable on the x-axis and the other as the `fill` color.
+
+What do you learn from these plots?
+
+
+## Additive model
+
+To begin, let's fit an additive logistic regression model where the main effects for `variety` and `root` are both included. Like in binary logistic regression, we use the `glm()` function to fit the model and specify `family = binomial`. The difference is in how we specify the response variable. For binomial logistics regression we specify the response as a proportion (e.g., `y/n`), and we need to use the `weights` argument to indicate the number of trials (i.e., `n`).
+
+
+**3** Fill in the blanks in the below code chunk to fit the additive binomial logistic regression model:
+
+```{r}
+oro_glm1 <- glm(y/n ~ variety + root, weights = n, family = binomial, data = orobanche)
+```
+
+
+**3.** Report the fitted equation for the linear predictor (i.e., the log-odds of germination).
+
+**4.** Interpret the coefficient for `varietyoa75` in context.
+
+**5.** We can create plots of the Pearson or deviance residuals using the `resid_panel` function from the `car` package and setting `type = "pearson"` or `type = "deviance"`. Create deviance residual plots for the fitted model. Do you see any model deficiencies?
+
+```{r}
+#| eval: false
+#| fig-width: 8
+#| fig-height: 3
+
+ggResidpanel::resid_panel(oro_glm1, type = "deviance", plots = c("resid", "qq"), smoother = TRUE)
+```
+
+
+## Adding an interaction term
+
+You should have found evidence of lack of fit, so we may be missing a term. The only other thing we can add here is an interaction. 
+
+**6.** Fit a new model that includes an interaction
+
+```{r}
+#| eval: false
+oro_glm2 <- glm(___ ~ variety*root, weights = ___, family = binomial, data = orobanche)
+```
+
+**7.** Create deviance residual plots for the fitted model. Do you see any model deficiencies?
+
+```{r}
+# Put your residual plot code here
+```
+
+**8.** Perform a Wald-based test to determine if the interaction is needed.
+
+**9.** Perform a Likelihood Ratio Test to compare the two models. 
+
+**10.** Do the results from 8 and 9 agree? What do you conclude? 
+
+
+***
+
+## Function quick reference
+
+The following table summarizes the functions discussed above:
+
+| Function | Purpose |
+|----|-----------|
+| `glm()` | Fit generalized linear models, including binomial logistic regression models. |
+| `resid_panel()` | Create residual plots to assess model fit. Set either `type = "pearson"` or `type = "deviance"` for binomial regression models. |

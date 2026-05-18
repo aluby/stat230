@@ -1,4 +1,0 @@
----
-title: "22: Diagnostics for Logistic Regression"
----
-
