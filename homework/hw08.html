@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -151,10 +151,10 @@ window.Quarto = {
   <ul>
   <li><a href="#problem-1-tires" id="toc-problem-1-tires" class="nav-link active" data-scroll-target="#problem-1-tires">Problem 1: Tires</a></li>
   <li><a href="#problem-2-checking-conditions" id="toc-problem-2-checking-conditions" class="nav-link" data-scroll-target="#problem-2-checking-conditions">Problem 2: Checking conditions</a></li>
-  <li><a href="#problem-3-monday" id="toc-problem-3-monday" class="nav-link" data-scroll-target="#problem-3-monday">Problem 3: Monday</a></li>
-  <li><a href="#problem-4-monday" id="toc-problem-4-monday" class="nav-link" data-scroll-target="#problem-4-monday">Problem 4: Monday</a></li>
-  <li><a href="#problem-5-wednesday" id="toc-problem-5-wednesday" class="nav-link" data-scroll-target="#problem-5-wednesday">Problem 5: Wednesday</a></li>
-  <li><a href="#problem-6-case-study-5-points-each" id="toc-problem-6-case-study-5-points-each" class="nav-link" data-scroll-target="#problem-6-case-study-5-points-each">Problem 6: Case Study (5 points each)</a></li>
+  <li><a href="#problem-3-budworm" id="toc-problem-3-budworm" class="nav-link" data-scroll-target="#problem-3-budworm">Problem 3: budworm</a></li>
+  <li><a href="#problem-4-monday" id="toc-problem-4-monday" class="nav-link" data-scroll-target="#problem-4-monday"><del>Problem 4: Monday</del></a></li>
+  <li><a href="#problem-5-4-wednesday" id="toc-problem-5-4-wednesday" class="nav-link" data-scroll-target="#problem-5-4-wednesday">Problem <del>5</del> 4: Wednesday</a></li>
+  <li><a href="#problem-6-5-case-study-5-points-each" id="toc-problem-6-5-case-study-5-points-each" class="nav-link" data-scroll-target="#problem-6-5-case-study-5-points-each">Problem <del>6</del> 5: Case Study (5 points each)</a></li>
   </ul>
 </nav>
     </div>
@@ -244,17 +244,29 @@ window.Quarto = {
 <li><p>The data consists of fatal accidents reported to the US federal government. Describe a scenario in which this dataset might violate the independence assumption.</p></li>
 </ol>
 </section>
-<section id="problem-3-monday" class="level1">
-<h1>Problem 3: Monday</h1>
+<section id="problem-3-budworm" class="level1">
+<h1>Problem 3: budworm</h1>
+<p>An experiment in the 1980’s looked at the levels of resistance to a certain toxin in the adult Budworm, a type of moth. Batches of 20 moths each of each sex were exposed to different doses of pyrethroid <em>trans</em>-cypermethrin and the number in each batch that were dead or knocked down were recorded (<code>numdead</code>).</p>
+<p>You can load the data using the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>budworm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"http://aluby.github.io/stat230/data/budworm.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="a">
+<li><p>We are interested in predicting the probability of a moth dying or being knocked down based on the dose and sex. Create an appropriate EDA to investigate this relationship. What do you conclude?</p></li>
+<li><p>Fit a binomial logistic regression model using <code>sex</code> and <code>dose</code> as predictors of the proportion of moths that were dead or knocked down. Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.</p></li>
+<li><p>Create a plots of the deviance residuals versus the predictors for the model from part (a). Is there any evidence of non-linearity?</p></li>
+<li><p>Fit a binomial logistic regression model using <code>sex</code> and <code>log2(dose)</code> as predictors of the proportion of moths that were dead or knocked down. (Note: <code>log2()</code> is <span class="math inline">\(log_2\)</span>.) Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.</p></li>
+<li><p>Create a plots of the deviance residuals versus the predictors for the model from part (c). Is there any evidence of non-linearity?</p></li>
+</ol>
 </section>
 <section id="problem-4-monday" class="level1">
-<h1>Problem 4: Monday</h1>
+<h1><del>Problem 4: Monday</del></h1>
 </section>
-<section id="problem-5-wednesday" class="level1">
-<h1>Problem 5: Wednesday</h1>
+<section id="problem-5-4-wednesday" class="level1">
+<h1>Problem <del>5</del> 4: Wednesday</h1>
 </section>
-<section id="problem-6-case-study-5-points-each" class="level1">
-<h1>Problem 6: Case Study (5 points each)</h1>
+<section id="problem-6-5-case-study-5-points-each" class="level1">
+<h1>Problem <del>6</del> 5: Case Study (5 points each)</h1>
 <ol type="1">
 <li><p>Summarize the main point of the “circles” visualization in the first APM reports article, then construct your own EDA that shows the same main point.</p></li>
 <li><p>Verify the findings of the APM methodology report that claims that the predictors in Group B are not significant after accounting for the predictors in Group A in the logistic model for the probability of a juror being struck by the state.</p></li>
