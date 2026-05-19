@@ -78,13 +78,37 @@ Use the model you fit in Problem 1.
 (c) The data consists of fatal accidents reported to the US federal government.  Describe a scenario in which this dataset might violate the independence assumption.
 
 
-# Problem 3: Monday
+# Problem 3: budworm
 
-# Problem 4: Monday
+An experiment in the 1980’s looked at the levels of resistance to a certain toxin in the adult Budworm, a type of moth. Batches of 20 moths each of each sex were exposed to different doses of pyrethroid *trans*-cypermethrin and the number in each batch that were dead or knocked down were recorded (`numdead`).
 
-# Problem 5: Wednesday
+You can load the data using the following code:
 
-# Problem 6: Case Study (5 points each)
+```{r}
+#| eval: false
+budworm <- read.csv("http://aluby.github.io/stat230/data/budworm.csv")
+```
+
+```{r}
+#| echo: false
+budworm <- read.csv(here::here("data/budworm.csv"))
+```
+
+(a) We are interested in predicting the probability of a moth dying or being knocked down based on the dose and sex. Create an appropriate EDA to investigate this relationship. What do you conclude?
+
+(b) Fit a binomial logistic regression model using `sex` and `dose` as predictors of the proportion of moths that were dead or knocked down. Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.
+
+(c) Create a plots of the deviance residuals versus the predictors for the model from part (a). Is there any evidence of non-linearity?
+
+(d) Fit a binomial logistic regression model using `sex` and `log2(dose)` as predictors of the proportion of moths that were dead or knocked down. (Note: `log2()` is $log_2$.) Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.
+
+(e) Create a plots of the deviance residuals versus the predictors for the model from part (c). Is there any evidence of non-linearity?
+
+# ~~Problem 4: Monday~~
+
+# Problem ~~5~~ 4: Wednesday
+
+# Problem ~~6~~ 5: Case Study (5 points each)
 
 1. Summarize the main point of the "circles" visualization in the first APM reports article, then construct your own EDA that shows the same main point. 
 
