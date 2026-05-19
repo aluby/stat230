@@ -1,0 +1,134 @@
+---
+title: "Exam03 Review"
+format: html
+---
+
+This is an outline of things you should review for Exam03 scheduled for Monday of Week 9.
+
+I recommend beginning by *carefully* reviewing your notes and activities from class and the homework questions. It's best to do this actively: by reading, thinking, solving problems, and asking questions. 
+
+# Materials
+
+ - You may bring **both sides** of one 3x5 inch notecard of your own notes. 
+ - I will not ask you to write down any R code, but you should be comfortable reading R output. 
+ - I will bring basic calculators but you may not use other calculators
+
+# Skills
+
+**1. Express a regression model using proper notation**
+
+  - Using proper statistical notation, write down the logistic regression model (linear predictor, logit link, probability of success)
+  - Use proper notation for the probability
+  - You should be able to express either the theoretical model or the fitted model, and know the difference between the two.
+  - You should know how and when to use an indicator variable and interaction variable 
+  
+*Example question:* TBD
+
+**2. Interpret the coefficients of a model in context.**
+
+  - Given a fitted logistic model equation, be able to interpret the y-intercept and each slope term
+  - You should be able to do this for both simple logistic regression (1 predictor) and multiple logistic regression (more than 1 predictor)
+  - You should be able to give interpretations on the odds scale
+  - Understand how the estimated slopes relate to the odds ratio
+  - Be able to interpret slopes in terms of a 1-unit and a C-unit increase in x
+  - Your interpretations should always be given in context, so don’t just talk about “x” and “y.”
+  
+*Example question:* TBD
+
+**3. Check necessary conditions for a  regression model and discuss the implications of a model deficiency**
+
+  - Be able to state the assumptions/conditions necessary for valid inference from a logistic model.
+  - Know how to assess each assumption
+  - Know how to read each type of residual plot and when to use each
+  - Know how to read each type of diagnostic plot (leverage, Cook's distance, standardized residuals, etc.) and identify possible problematic points
+  - Be able to conduct a deivance goodness-of-fit test to detect model deficiencies
+  
+*Example question:* TBD
+
+**4. Perform hypothesis tests about a single regression coefficient**
+  
+  - Given R output from a fitted regression model, conduct a Wald test for a coefficient
+  - The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context
+  - Understand and explain where the test statistic and p value came from
+  - Given a research question, state the hypotheses for your test in both words and proper notation
+  - Know the difference between a one-sided and two-sided p-value, and know when each is required (or given by R)
+  
+*Example question:* TBD
+  
+**5.  Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients**
+
+  - Given R output from a fitted regression model, identify a confidence interval for each regression coefficient.
+  - Know the equation for the confidence interval and how you could calculate it if you were given the estimate, standard error, and sample size.
+  - Describe how to find $z^*$ for a given confidence level
+  - Be able to interpret a confidence interval for each regression coefficient in context
+  
+*Example question:* TBD
+
+**6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval**
+
+  - Given a fitted logistic regression model, be able to calculate the predicted log-odds, odds, and probability for a given set of predictor values.
+  - Know the equations for converting between log-odds, odds, and probability.
+  
+*Example question:* TBD
+
+**7. Conduct inference to compare nested regression models.** 
+
+  - Understand what it means for two models to be nested
+  - Be able to state the null and alternative hypotheses for the likelihood ratio test (drop-in deviance test)
+  - Given the deviance from the full and reduced models, compute the LRT statistic
+  - Know where to find the deviance on R output
+  - Be able to specify the degrees of freedom for the drop-in deviance test
+  - Understand where the p-value comes from using the $\chi^2$ distribution
+  - The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context.
+
+*Example question:* TBD
+
+**8. Identify a binomial logistic regression scenario and whether overdispersion is present** 
+
+  - Given a dataset, identify whether binary logistic regression or binomial logistic regression should be used
+  - Understand what overdispersion means and how to fix it
+  
+# Formulas
+
+**I will give you the following formulas on the exam; you do not need to write them on your notecard.** However, I will not answer any questions about notation or formulas during the exam. 
+
+## Simple Linear Regression
+
+- $s_x = \sqrt{\frac{\sum(X_i - \bar{X})^2}{n-1}}$
+- $r = \frac{1}{n} \sum (\frac{X_i - \bar{X}}{s_x})(\frac{Y_i - \bar{Y}}{s_y})$
+- $\hat \beta_0 = \bar{Y} - \hat\beta_1 \bar{X}$
+- $\hat\beta_1 = r \frac{s_y}{s_x}$
+- $SE(\hat \beta_0) = \hat{\sigma} \sqrt{\frac{1}{n} + \frac{\bar{X}^2}{\sum (X_i - \bar{X})^2}}$
+- $SE(\hat \beta_1) = \frac{\hat{\sigma}}{\sum (X_i - \bar{X})^2}$
+- $\hat{\sigma}=\sqrt{\frac{\sum_{i=1}^{n}(Y_{i}-\hat{Y}_{i})^{2}}{n-2}}$
+- $SD(e_{i})=\hat{\sigma}\sqrt{1-h_{i}}$
+- $SE(\hat{\mu}(Y|X))=\hat{\sigma}\sqrt{\frac{1}{n}+\frac{(X_{0}-\overline{X})^{2}}{\sum(X_{i}-\overline{X})^{2}}}$
+ -$SE(\hat{Y})=\hat{\sigma}\sqrt{1+\frac{1}{n}+\frac{(X_{0}-\overline{X})^{2}}{\sum(X_{i}-\overline{X})^{2}}}$
+
+## Multiple Linear Regression
+
+- $\hat{\gamma}=c_{1}\hat{\beta}_{i}+c_{2}\hat{\beta}_{j}$
+- $Var(\hat{\gamma})=c_{1}^{2}Var(\hat{\beta}_{i})+c_{2}^{2}Var(\hat{\beta}_{j})+2c_{1}c_{2}Cov(\hat{\beta}_{i},\hat{\beta}_{j})$
+- $R^{2}=\frac{SSReg}{SSTotal}=1-\frac{SSE}{SSTotal}$
+- $R_{adj}^{2}=\frac{SSTotal/(n-1)-SSE/(n-(p+1))}{SSTotal/(n-1)} = \frac{MST-MSE}{MST}$
+- $F=\frac{(SSE(reduced)-SSE(full))/(df_{reduced}-df_{full})}{SSE(full)/df_{full}}$
+- $F = \frac{MSReg}{MSE}$
+- $e_{i}=Y_{i}-\hat{Y_{i}}$
+- $r_{i}=\frac{\hat{e}_{i}}{\hat{\sigma}\sqrt{1-h_{i}}}$
+- $h_{i}=\frac{1}{n-1}\left[\frac{X_{i}-\overline{X}}{s_{X}}\right]^{2}+\frac{1}{n} = \frac{1}{n}+\frac{{(X_{i}-\overline{X})}^{2}}{\sum(X_{i}-\overline{X})^{2}}$
+- $\sum_{i}h_{i}=p+1$
+- $D_{i}=\sum_{j=1}^{n}\frac{(\hat{Y}_{j(i)}-\hat{Y}_{j})^{2}}{(p+1)\hat{\sigma}} = \frac{r_{i}^{2}}{p+1}\left(\frac{h_{i}}{1-h_{i}}\right)$
+- $VIF_i=1/(1-R_{i}^{2})$
+
+## Logistic Regression
+
+- $\log(\pi_i) = \eta = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p$
+- $\pi = e^{\eta}/(1+ e^{\eta})$
+- $\omega = e^\eta$
+- $Z=\frac{\hat \beta_j - \beta_j}{SE(\hat\beta_j)}$
+- Deviance = $-2 \cdot \log(L)$
+- LRT = deviance(reduced) - deviance(full)
+- AIC = deviance + 2p
+- BIC = deviance + $\log(n)\cdot p$
+- ${\rm Pres}_i = \dfrac{Y_i - n_i \widehat{\pi}_i}{\sqrt{n_i \widehat{\pi}_i (1 - \widehat{\pi}_i)}}$
+- ${\rm Dres}_i = {\rm sign}(Y_i - n_i \widehat{\pi}_i) \sqrt{2 \left[ Y_i \log \left( \dfrac{Y_i}{n_i \widehat{\pi}_i} \right) + (n_i - Y_i) \log \left( \frac{n_i - Y_i}{n_i - n_i \widehat{\pi}_i} \right) \right]}$
