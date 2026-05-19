@@ -193,4 +193,8 @@ Note: This test is *only valid for the binomial logistic regression*, it is not 
 
 ## Communication Development Study
 
+<https://pmc.ncbi.nlm.nih.gov/articles/PMC4791950/>
 
+```{r}
+Lang <- read.csv("http://people.carleton.edu/~apoppick/ClassData/LangBinomial.csv")
+```
