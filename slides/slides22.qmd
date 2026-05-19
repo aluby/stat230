@@ -168,7 +168,7 @@ This approach required calculating the empirical log-odds "by hand" and adding t
 ```{r}
 #| echo: true
 #| error: true
-model3 <- glm(Removed/Placed ~ distance + morph + distance * morph, 
+model3 <- glm(Removed/Placed ~ distance + morph + distance*morph, 
               weights = Placed,
               data = moths, 
               family = "binomial")
