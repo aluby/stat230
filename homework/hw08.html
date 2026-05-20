@@ -264,6 +264,20 @@ window.Quarto = {
 </section>
 <section id="problem-5-4-wednesday" class="level1">
 <h1>Problem <del>5</del> 4: Wednesday</h1>
+<blockquote class="blockquote">
+<p>An experiment at the Marine/Freshater Biomedical Sciences Center at Oregon State University investigated the carcinogenic effects of aflatoxicol, a metabolite of Aflatoxin B1, which is a toxic by-product produced by a mold that infects cottonseed meal peanuts, and grains. Twenty tanks of rainbow trout embryos were exposed to one of five doses of Aflatoxicol for one hour. The data below represent the numbers of fish in each tank and the numbers of these that had liver tumors after one year :(</p>
+</blockquote>
+<p>Each row in the dataset represents a separate tank of rainbow trout embryos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trout <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex2116</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="a">
+<li><p>Make a plot of the empirical log-odds of cancer vs dose. Comment on what you see</p></li>
+<li><p>Now make a plot of the empirical log-odds of cancer vs <span class="math inline">\(1/\sqrt{\text{dose}}\)</span>. Comment on what you see</p></li>
+<li><p>Fit the binomial logistic model for the odds of cancer using <span class="math inline">\(\frac{1}{\sqrt{\text{dose}}}\)</span> as the sole predictor. (<em>Note:</em> to do this, the predictor in the <code>glm</code> command should be written as <code>I(1/sqrt(Dose))</code>) Plot the Pearson residuals vs <span class="math inline">\(\frac{1}{\sqrt{\text{dose}}}\)</span>. Is there evidence of nonlinearity between the log odds and the predictor variable?</p></li>
+<li><p>Give the dose at which your model estimates 50% chance of getting a tumor (<em>Hint:</em> what log-odds does this correspond to?)</p></li>
+<li><p>Refit the model in part (c) using the quasibinomial procedure. Give the dispersion parameter estimate. Compare the standard errors from the quasibinomial model to the standard binomial model.</p></li>
+</ol>
 </section>
 <section id="problem-6-5-case-study-5-points-each" class="level1">
 <h1>Problem <del>6</del> 5: Case Study (5 points each)</h1>
