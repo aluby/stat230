@@ -1,0 +1,118 @@
+---
+title: "23: Overdispersion and Quasibinomial Logistic Regression"
+---
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+library(patchwork)
+library(ggformula)
+```
+
+## Data overview
+
+*Orobanche* is a genus of parasitic plants without chlorophyll that grow on the roots of flowering plants. In an experiment, seeds from two varieties, Orobanche aegyptiaca 75 and Orobanche aegyptiaca 73, where brushed with extract from either a cucumber root or a bean root. Researchers recorded the number of seeds that eventually germinated.
+
+Run the code chunk below to load the data:
+
+```{r}
+orobanche <- read.csv("https://aluby.github.io/stat230/data/orabanche.csv")
+```
+
+The variables in the data set are:
+
+- `y`: count of seeds germinated
+- `n`: number of seeds
+- `variety`: either oa75 or oa73
+- `root`: either cucumber or bean
+
+## Model from last time
+
+Last class we fit the following model: 
+
+$$\text{logit}(\pi_i) = \beta_0 + \beta_1 \text{variety} + \beta_2 \text{root} + \beta_3 \text{variety}\cdot\text{root}$$
+
+```{r}
+oro_glm <- glm(y/n ~ variety + root + variety:root, 
+               weights = n, 
+               data = orobanche, 
+               family = "binomial")
+
+summary(oro_glm)
+```
+
+**1.** Use the `summary()` results above to perform an overall goodness of fit test. What do you conclude? 
+
+**2.** We should also check the *validity* of the model, specifically whether linearity is satsified and if there are any outliers. The plots below show the deviance residual plots. Do you see any evidence of nonlinearity or extreme outliers? 
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+#| echo: true
+
+
+aug_interaction <- broom::augment(oro_glm)
+
+p1 <- gf_point(.resid ~ .fitted, data = aug_interaction, xlab = "Linear predictor", ylab = "Deviance residuals") |>
+  gf_hline(yintercept = 0, linetype = 2) |>
+  gf_labs(title = "Deviance Residuals vs Fitted Values") 
+
+p2 <- gf_point(.resid ~ variety, data = aug_interaction, xlab = "variety", ylab = "Deviance residuals") |>
+  gf_hline(yintercept = 0, linetype = 2) |>
+  gf_labs(title = "Deviance Residuals vs Variety") 
+
+
+p3 <- gf_point(.resid ~ root, data = aug_interaction, xlab = "root", ylab = "Deviance residuals") |>
+  gf_hline(yintercept = 0, linetype = 2) |>
+  gf_labs(title = "Deviance Residuals vs Root") 
+
+p1 + p2 + p3
+```
+
+## Checking and correcting for overdispersion
+
+::: callout-tip
+## Hint: 
+
+You do not need to write any model-fitting code until Q4 in this section!
+:::
+
+**1.** Use the `summary()` output to perform the ad hoc test of overdispersion. What do you conclude?
+
+**2.** What is the ad-hoc estimate of $\widehat\psi$? Use this to calculate  $\text{SE}_{quasil}(\hat{\beta}_2)$.
+
+**3.** Construct a 95% confidence interval for $\beta_2$ using the adjusted standard error. 
+
+**4.** Now, confirm your answer by fitting a `glm()` model with `family = "quasibinomial"` and finding the confidence interval
+
+```{r}
+#| eval: false
+
+oro_qglm <- glm(___ ~ ___, 
+                weights = ___,
+                data = ___,
+                family = ___)
+```
+
+**5.** The confidence intervals computed by R may be slightly different than the ones you computed "by hand" due to different estimates of $\widehat\psi$. What estimate of $\widehat\psi$ did R use? (*Hint:* run `summary()` on your quasibinomial glm)
+
+**6.** What does your result from Q5 imply about the necessity of the interaction term? Is this the same or different than you conclusion about the interaction term using the binomial model? 
+
+***
+
+## Function quick reference
+
+The following table summarizes the functions discussed above:
+
+| Function | Purpose |
+|----|-----------|
+| `glm()` | Fit generalized linear models, including quasibinomial logistic regression models. |
