@@ -108,6 +108,24 @@ budworm <- read.csv(here::here("data/budworm.csv"))
 
 # Problem ~~5~~ 4: Wednesday
 
+> An experiment at the Marine/Freshater Biomedical Sciences Center at Oregon State University investigated the carcinogenic effects of aflatoxicol, a metabolite of Aflatoxin B1, which is a toxic by-product produced by a mold that infects cottonseed meal peanuts, and grains. Twenty tanks of rainbow trout embryos were exposed to one of five doses of Aflatoxicol for one hour. The data below represent the numbers of fish in each tank and the numbers of these that had liver tumors after one year :(  
+
+Each row in the dataset represents a separate tank of rainbow trout embryos. 
+
+```{r}
+trout <- Sleuth3::ex2116
+```
+
+(a) Make a plot of the empirical log-odds of cancer vs dose. Comment on what you see
+
+(b) Now make a plot of the empirical log-odds of cancer vs $1/\sqrt{\text{dose}}$. Comment on what you see
+
+(c) Fit the binomial logistic model for the odds of cancer using $\frac{1}{\sqrt{\text{dose}}}$ as the sole predictor. (*Note:* to do this, the predictor in the `glm` command should be written as `I(1/sqrt(Dose))`) Plot the Pearson residuals vs $\frac{1}{\sqrt{\text{dose}}}$. Is there evidence of nonlinearity between the log odds and the predictor variable?
+
+(d) Give the dose at which your model estimates 50% chance of getting a tumor (*Hint:* what log-odds does this correspond to?)
+
+(e) Refit the model in part (c) using the quasibinomial procedure. Give the dispersion parameter estimate. Compare the standard errors from the quasibinomial model to the standard binomial model. 
+
 # Problem ~~6~~ 5: Case Study (5 points each)
 
 1. Summarize the main point of the "circles" visualization in the first APM reports article, then construct your own EDA that shows the same main point. 
