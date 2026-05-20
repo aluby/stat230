@@ -1,5 +1,0 @@
----
-title: "slides24"
-format: html
----
-
