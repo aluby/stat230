@@ -123,7 +123,7 @@ tidy(moth_glm)
 
 ## Goodness-of-fit test
 
-Deviance can be used to assess the **overall fit** of binomial logistic regression
+Deviance can be used to assess the **overall fit** of a binomial logistic regression model
 
 Observed | Predicted | True
 :---------:|:---------:|:---------:
@@ -193,8 +193,233 @@ Note: This test is *only valid for the binomial logistic regression*, it is not 
 
 ## Communication Development Study
 
+TODO Add picture of study 
+
+## 
+
 <https://pmc.ncbi.nlm.nih.gov/articles/PMC4791950/>
 
 ```{r}
-Lang <- read.csv("http://people.carleton.edu/~apoppick/ClassData/LangBinomial.csv")
+Lang <- read.csv(here::here("data/Lang.csv"))
+
+language <- Lang |>
+  mutate(
+    sex = gender - 1,
+    language = case_when(language == 1 ~ "Monolingual", 
+                         language == 2 ~ "Exposed",
+                         language == 3 ~ "Bilingual"),
+    kbit = kbit,
+    maternal_ed =  mated,
+    ppvt = ppvt, 
+    success = grid, 
+    trials = 4
+  ) |>
+  drop_na(success) |>
+  select(subject, age, sex, language, kbit, maternal_ed, ppvt, success, trials)
+
+language
 ```
+
+## Binomial model
+
+```{r}
+#| echo: true
+lang_glm <- glm(success/trials ~ sex + language + kbit + 
+                  ppvt + maternal_ed + age + language, 
+                data = language, 
+                family = "binomial",
+                weights = trials)
+```
+
+```{r}
+tidy(lang_glm)
+```
+
+. . . 
+
+&rarr; Relative to Bilingual children, after accounting for all other variables in the model, monolingual children are worse at the task
+
+## Goodness of fit test
+
+```{r}
+#| echo: true
+#| eval: false
+
+summary(lang_glm)
+```
+```
+    Null deviance: 197.54  on 68  degrees of freedom
+Residual deviance: 167.35  on 61  degrees of freedom
+  (3 observations deleted due to missingness)
+AIC: 237.72
+```
+
+```{r}
+#| echo: true
+
+1 - pchisq(167.35, df = 61)
+```
+
+. . . 
+
+Indicates the model is **inadequate**
+
+## 
+
+If model is correct, Pearson residuals should be approximate N(0,1)
+
+```{r}
+#| echo: true
+lang_aug <- augment(lang_glm, type.residuals = "pearson")
+
+mean(lang_aug$.resid)
+sd(lang_aug$.resid)
+```
+
+```{r}
+#| fig-width: 6
+#| fig-height: 2
+p1 <- gf_qq(~.resid, data = lang_aug) |>
+  gf_qqline()
+
+p2 <- gf_dhistogram(~.resid, data = lang_aug, col = "white", fill = "darkgreen") |>
+  gf_dist("norm", linewidth = 1.5)
+
+p1 + p2
+```
+
+. . . 
+
+&rarr; These Pearson residuals are too variable
+
+## 
+
+::: medium
+
+In linear regression, the mean model ($\mu_y$) and the variance term ($\epsilon$) are independent. We can have points that are tightly clustered along the line or widely spread and both models are equally "valid"
+
+```{r}
+#| fig-width: 6
+#| fig-height: 2
+#| fig-align: center
+
+
+set.seed(051926)
+
+sim_data <- tibble(
+  x = rnorm(100) + 100,
+  y1 = 5+1.25*x + rnorm(100),
+  y2 = y1 + rnorm(100, sd = 3)
+)
+
+p1 <- sim_data |>
+  gf_point(y1 ~ x) |>
+  gf_lm() + 
+  ylim(c(120, 140))
+
+p2 <- sim_data |>
+  gf_point(y2 ~ x) |>
+  gf_lm() + 
+  ylim(c(120, 140))
+
+p1 + p2
+```
+
+
+In binomial logistic regression, the variance term is related to the mean model through a mathematical relationship: 
+
+$$\mu(Y) = n\pi \quad Var(Y) = n\pi(1-\pi)$$
+**Overdispersion** occurs when the actual, observed variance in our data is significantly larger than what we'd expect from these formulas
+
+:::
+
+## Diagnosing overdispersion
+
+```{r}
+#| echo: true
+#| eval: false
+summary(lang_glm)
+```
+
+```
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 197.54  on 68  degrees of freedom
+Residual deviance: 167.35  on 61  degrees of freedom
+  (3 observations deleted due to missingness)
+AIC: 237.72
+```
+
+Dispersion parameter: $\psi \approx \frac{\text{Residual Deviance}}{\text{degrees of freedom}} = \frac{167.35}{61} \approx 2.7$
+
+- $\psi \approx 1$: not overdispersed
+- $\psi > 1.5$ overdispersed
+
+## Fixing overdispersion: the `quasibinomial` family
+
+```{r}
+#| echo: true
+lang_qglm <- glm(success/trials ~ sex + language + kbit + ppvt +
+                   maternal_ed + age + language, 
+                data = language, 
+                family = "quasibinomial", 
+                weights = trials)
+
+```
+
+```
+(Dispersion parameter for quasibinomial family taken to be 2.351658)
+
+    Null deviance: 197.54  on 68  degrees of freedom
+Residual deviance: 167.35  on 61  degrees of freedom
+  (3 observations deleted due to missingness)
+AIC: NA
+```
+
+## What changed?
+
+:::: {.columns}
+
+::: {.column width="45%"}
+**Binomial:**
+
+::: small
+```{r}
+tidy(lang_glm)[,1:3]
+```
+:::
+
+:::
+
+::: {.column width="45%"}
+**Quasibinomial:**
+
+::: small
+
+```{r}
+tidy(lang_qglm)[,1:3]
+```
+:::
+
+:::
+
+::::
+
+## Back to t-distributions 
+
+TODO 
+
+## Cluster effects and Overdispersion
+
+$\pi_i = \frac{e^{\beta_0 + \beta_1 x_1 + ... + \beta_p x_p}}{1+e^{\beta_0 + \beta_1 x_1 + ... + \beta_p x_p}}$
+
+Binomial model assumes trials within each child are independent
+
+TODO 
+
+## Quasibinomial logistic regression
+
+1. Start by fitting `family = "quasibinomial"`
+    - If $\psi >> 1$, stick with it
+    - If $\psi \approx 1$, can switch to the binomial model 
+  
