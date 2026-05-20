@@ -82,6 +82,8 @@ news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent,
 
 ## `moths` from last homework
 
+::: medium
+
 ```{r}
 moths <- read.csv("https://aluby.github.io/stat230/data/moths.csv") |>
   mutate(notremoved = Placed - Removed, 
@@ -94,11 +96,25 @@ moths <- read.csv("https://aluby.github.io/stat230/data/moths.csv") |>
 moths |>
   select(Morph, Distance, Placed, Removed)
 ```
- 
 
-## binomial logistic regression model
+:::
+
+## Binomial logistic regression model
 
 ```{r}
+#| echo: true
+#| eval: false
+
+
+binomial_glm <- glm(Y/n ~ predictors, weights = n,
+                data = dataset, 
+                family = "binomial")
+```
+
+```{r}
+#| echo: true
+
+
 moth_glm <- glm(Removed/Placed ~ morph*distance, weights = Placed,
                 data = moths, 
                 family = "binomial")
@@ -110,9 +126,9 @@ tidy(moth_glm)
 
 ## Model assumptions
 
-- **Binomial counts**
+- **Binomial counts**: $Y_i \sim \text{Binom}(m_i, \pi_i)$
 
-- **Independence**: observations are independent
+- **Independence**: observations are independent ($Y_i$'s are independent *and* each 1/0 that contributes to $Y_i$ is independent)
 
 - **Linearity**: the log odds is a linear function of the predictors
 
@@ -123,23 +139,28 @@ tidy(moth_glm)
 
 ## Goodness-of-fit test
 
+::: medium
+
 Deviance can be used to assess the **overall fit** of a binomial logistic regression model
 
-Observed | Predicted | True
-:---------:|:---------:|:---------:
-$Y_i$ | $\widehat{\pi}_i$ | $\pi_i$
+
+
+Observed Count | Predicted P(Success) | True P(Success) | Predicted Count 
+:---------:|:---------:|:---------:|:---------:
+$Y_i$ | $\widehat{\pi}_i$ | $\pi_i$ | $m_i \widehat\pi_i$
 
 
 <br>
 
-
+<br>
 
 **Deviance:** $D = 2 \sum \left[ Y_i \log \left( \dfrac{Y_i}{m_i\widehat{\pi}_i} \right)  + (m_i - Y_i)  \log \left( \dfrac{m_i - Y_i}{m_i - m_i \widehat{\pi}_i} \right) \right]$
 
+:::
 <br>
 
 
-:::{style="font-size:0.9em"}
+::: small
 
 $D \overset{\cdot}{\sim} \chi^2$ with $\text{d.f.}= n-(p+1)$, **if** the model is correct and all $m_i$ are large enough (>5)
 
@@ -165,6 +186,8 @@ H<sub>a</sub>: ${\rm logit}(\pi_i) = \alpha_i$
 
 <br>
 
+::: medium
+
 ```{r eval=FALSE}
 summary(moth_glm)
 ```
@@ -184,6 +207,7 @@ glm(formula = Removed/Placed ~ Distance * Morph,
 1- pchisq(13.230, 10)
 ```
 
+:::
 
 <br>
 
@@ -193,11 +217,33 @@ Note: This test is *only valid for the binomial logistic regression*, it is not 
 
 ## Communication Development Study
 
-TODO Add picture of study 
+<br>
+
+::: medium
+
+> Our proposal, thus, is about the social consequences of growing up in a multilingual versus monolingual environment, rather than the impact of being bilingual per se. We propose that routine exposure to people who speak different languages provides children with a formative communication environment that is fundamentally different from that experienced by monolingual children. Exposure to diverse socio-linguistic environments could grant children with a profound understanding of differences between people’s perspectives, naturally enhancing their communicative abilities. 
+
+:::
+
+<br> 
+
+<br>
+
+::: xsmall
+Fan, S. P., Liberman, Z., Keysar, B., & Kinzler, K. D. (2015). The Exposure Advantage: Early Exposure to a Multilingual Environment Promotes Effective Communication. Psychological science, 26(7), 1090–1097. <https://doi.org/10.1177/0956797615574699>
+:::
 
 ## 
 
-<https://pmc.ncbi.nlm.nih.gov/articles/PMC4791950/>
+<br>
+
+> “I see a small car. Can you move the small car under the spoon?”
+
+![](img/language-img.jpg)
+
+## Data
+
+::: small
 
 ```{r}
 Lang <- read.csv(here::here("data/Lang.csv"))
@@ -220,20 +266,31 @@ language <- Lang |>
 language
 ```
 
+:::
+
+::: task
+What is $Y$? What is $n$? What are the possible predictors? What is the primary predictor we want to make inference about?
+:::
+
 ## Binomial model
+
+::: medium
 
 ```{r}
 #| echo: true
-lang_glm <- glm(success/trials ~ sex + language + kbit + 
-                  ppvt + maternal_ed + age + language, 
+lang_glm <- glm(success/trials ~ sex + kbit + ppvt + 
+                  maternal_ed + age + language, 
                 data = language, 
                 family = "binomial",
                 weights = trials)
 ```
 
 ```{r}
-tidy(lang_glm)
+tidy(lang_glm, conf.int = TRUE) |>
+  select(-c("statistic", "p.value"))
 ```
+
+:::
 
 . . . 
 
@@ -253,6 +310,8 @@ Residual deviance: 167.35  on 61  degrees of freedom
   (3 observations deleted due to missingness)
 AIC: 237.72
 ```
+
+<br>
 
 ```{r}
 #| echo: true
@@ -277,8 +336,8 @@ sd(lang_aug$.resid)
 ```
 
 ```{r}
-#| fig-width: 6
-#| fig-height: 2
+#| fig-width: 8
+#| fig-height: 3
 p1 <- gf_qq(~.resid, data = lang_aug) |>
   gf_qqline()
 
@@ -299,8 +358,8 @@ p1 + p2
 In linear regression, the mean model ($\mu_y$) and the variance term ($\epsilon$) are independent. We can have points that are tightly clustered along the line or widely spread and both models are equally "valid"
 
 ```{r}
-#| fig-width: 6
-#| fig-height: 2
+#| fig-width: 8
+#| fig-height: 3
 #| fig-align: center
 
 
@@ -350,17 +409,17 @@ Residual deviance: 167.35  on 61  degrees of freedom
 AIC: 237.72
 ```
 
-Dispersion parameter: $\psi \approx \frac{\text{Residual Deviance}}{\text{degrees of freedom}} = \frac{167.35}{61} \approx 2.7$
+Ad-hoc dispersion test: $\text{disp} \approx \frac{\text{Residual Deviance}}{\text{degrees of freedom}} = \frac{167.35}{61} \approx 2.7$
 
-- $\psi \approx 1$: not overdispersed
-- $\psi > 1.5$ overdispersed
+- $\text{disp}  \approx 1$: not overdispersed
+- $\text{disp}  >> 1$ overdispersed
 
 ## Fixing overdispersion: the `quasibinomial` family
 
 ```{r}
 #| echo: true
-lang_qglm <- glm(success/trials ~ sex + language + kbit + ppvt +
-                   maternal_ed + age + language, 
+lang_qglm <- glm(success/trials ~ sex + kbit + ppvt + 
+                  maternal_ed + age + language, 
                 data = language, 
                 family = "quasibinomial", 
                 weights = trials)
@@ -375,6 +434,10 @@ Residual deviance: 167.35  on 61  degrees of freedom
   (3 observations deleted due to missingness)
 AIC: NA
 ```
+
+::: small
+R uses a slightly different formula to calculate dispersion parameter; should not make a meaningful difference
+:::
 
 ## What changed?
 
@@ -407,19 +470,128 @@ tidy(lang_qglm)[,1:3]
 
 ## Back to t-distributions 
 
-TODO 
+$\widehat \psi$ is dispersion parameter from R
 
-## Cluster effects and Overdispersion
+$$SE_{\text{quasi}}(\widehat\beta) = \sqrt{\hat \psi} SE_{\text{binom}}(\widehat\beta)$$
 
-$\pi_i = \frac{e^{\beta_0 + \beta_1 x_1 + ... + \beta_p x_p}}{1+e^{\beta_0 + \beta_1 x_1 + ... + \beta_p x_p}}$
+:::: {.columns}
+::: {.column width="25%"}
+**Test statistic:**
+:::
 
-Binomial model assumes trials within each child are independent
+::: {.column width="75%"}
 
-TODO 
+$$t = \frac{\widehat \beta - 0}{SE(\widehat \beta)} =\frac{\widehat \beta - 0}{\sqrt{\hat \psi} SE_{\text{binom}}(\widehat\beta)} $$
+:::
 
-## Quasibinomial logistic regression
+::::
 
-1. Start by fitting `family = "quasibinomial"`
-    - If $\psi >> 1$, stick with it
-    - If $\psi \approx 1$, can switch to the binomial model 
+<br>
+
+:::: {.columns}
+::: {.column width="25%"}
+**Reference distribution**
+:::
+
+::: {.column width="75%"}
+
+$t_{n-(p+1)}$ when $H_0$ is true (p = number of predictors)
+
+:::
+
+::::
+
+## Back to F tests
+
+:::: {.columns}
+::: {.column width="25%"}
+**Hypotheses:**
+:::
+
+::: {.column width="75%"}
+::: {.fragment fragment-index=1}
+$H_0: \beta_i = \beta_j = ... = 0 \quad$ vs. $\quad H_a: \text{at least 1 } \beta \ne 0$
+:::
+:::
+
+::::
+
+:::: {.columns}
+::: {.column width="25%"}
+**Test statistic:**
+:::
+
+::: {.column width="75%"}
+::: {.fragment fragment-index=2}
+
+$$F = \frac{\text{LRT Test Statistic}}{\text{Dispersion Parameter}} = \frac{\Delta}{\widehat\psi}$$
+:::
+:::
+
+::::
+
+<br>
+
+
+:::: {.columns}
+::: {.column width="25%"}
+**Reference distribution:**
+:::
+
+::: {.column width="75%"}
+::: {.fragment fragment-index=3}
+$F_{df_1, df_2}$, where $df_1=$ the number of extra coefficients and $df_2$ = n - number of coefficients in full model
+:::
+:::
+
+::::
+
+## Example: is language necessary in the model? 
+
+$H_0: \beta_6 = \beta_7 = 0 \quad H_A:$ at least one $\ne 0$
+
+::: small
+
+```{r}
+#| echo: true 
+
+
+reduced_qglm <- glm(success/trials ~ sex + kbit + ppvt + 
+                  maternal_ed + age, 
+                data = language, 
+                family = "quasibinomial", 
+                weights = trials)
+
+anova(reduced_qglm, lang_qglm, test = "F")
+```
+
+
+
+<br>
+
+. . . 
+
+&rarr; only significant at $\alpha = .1$ level; weaker evidence that language background explains P(Success)
+
+:::
+
+## What about effect of *monolinguism*?
+
+```{r}
+#| echo: true
+
+exp(confint(lang_qglm))
+```
+
+<br> 
+
+&rarr; We are 95% confident that the odds of success for monolingual children is somewhere between 2.5% to 89% smaller than for bilingual children, holding the other variables constant.
+
+## Strategy for binomial logistic regression: 
+
+1. First, make sure data is grouped appropriately (each row is independent)
+2. Start by fitting `family = "quasibinomial"`
+    - If $\psi > 1$, stick with it
+    - If $\psi \approx 1$, doesn't matter which one you choose
+    - If $\psi \le 1$, switch to the binomial model 
   
