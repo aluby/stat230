@@ -81,7 +81,8 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-title','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
+      page: 30,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-title","listing-author"],
     };
 
@@ -512,7 +513,17 @@ window.Quarto = {
 
 </tr>
 
-<tr data-index="26" data-listing-file-modified-sort="1774443682006" data-listing-reading-time-sort="1" data-listing-word-count-sort="1" data-listing-title-sort="26: Overdispersion" data-listing-filename-sort="26-overdispersion.qmd">
+<tr data-index="26" data-listing-file-modified-sort="1779475729657" data-listing-reading-time-sort="5" data-listing-word-count-sort="831" data-listing-title-sort="24-case-studies" data-listing-filename-sort="24-case-studies.qmd">
+<td>
+<a href="./activities/24-case-studies.html" class="title listing-title">24-case-studies</a>
+</td>
+<td>
+<span class="listing-author">&nbsp;</span>
+</td>
+
+</tr>
+
+<tr data-index="27" data-listing-file-modified-sort="1774443682006" data-listing-reading-time-sort="1" data-listing-word-count-sort="1" data-listing-title-sort="26: Overdispersion" data-listing-filename-sort="26-overdispersion.qmd">
 <td>
 <a href="./activities/26-overdispersion.html" class="title listing-title">26: Overdispersion</a>
 </td>
@@ -522,7 +533,7 @@ window.Quarto = {
 
 </tr>
 
-<tr data-index="27" data-listing-file-modified-sort="1774443682006" data-listing-reading-time-sort="1" data-listing-word-count-sort="1" data-listing-title-sort="27: Intro to Poisson Regression" data-listing-filename-sort="27-poisson.qmd">
+<tr data-index="28" data-listing-file-modified-sort="1774443682006" data-listing-reading-time-sort="1" data-listing-word-count-sort="1" data-listing-title-sort="27: Intro to Poisson Regression" data-listing-filename-sort="27-poisson.qmd">
 <td>
 <a href="./activities/27-poisson.html" class="title listing-title">27: Intro to Poisson Regression</a>
 </td>
@@ -532,7 +543,7 @@ window.Quarto = {
 
 </tr>
 
-<tr data-index="28" data-listing-file-modified-sort="1774443682007" data-listing-reading-time-sort="1" data-listing-word-count-sort="1" data-listing-title-sort="28: Quasibinomial Logistic Regression" data-listing-filename-sort="28-quasibinomial.qmd">
+<tr data-index="29" data-listing-file-modified-sort="1774443682007" data-listing-reading-time-sort="1" data-listing-word-count-sort="1" data-listing-title-sort="28: Quasibinomial Logistic Regression" data-listing-filename-sort="28-quasibinomial.qmd">
 <td>
 <a href="./activities/28-quasibinomial.html" class="title listing-title">28: Quasibinomial Logistic Regression</a>
 </td>
@@ -542,7 +553,7 @@ window.Quarto = {
 
 </tr>
 
-<tr data-index="29" data-listing-file-modified-sort="1777056547190" data-listing-reading-time-sort="1" data-listing-word-count-sort="62" data-listing-title-sort="Group Expectations" data-listing-filename-sort="group-expectations.qmd">
+<tr data-index="30" data-listing-file-modified-sort="1777056547190" data-listing-reading-time-sort="1" data-listing-word-count-sort="62" data-listing-title-sort="Group Expectations" data-listing-filename-sort="group-expectations.qmd">
 <td>
 <a href="./activities/group-expectations.html" class="title listing-title">Group Expectations</a>
 </td>
@@ -555,6 +566,9 @@ window.Quarto = {
 </tbody>
 </table>
 <div class="listing-no-matching d-none">No matching items</div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -28,6 +28,7 @@
       "/activities/21-r-logistic.html",
       "/activities/22-binomial-logistic.html",
       "/activities/23-overdispersion.html",
+      "/activities/24-case-studies.html",
       "/activities/26-overdispersion.html",
       "/activities/27-poisson.html",
       "/activities/28-quasibinomial.html",
@@ -49,6 +50,7 @@
   {
     "listing": "/slides.html",
     "items": [
+      "/slides/slides24.html",
       "/slides/slides23.html",
       "/slides/slides22.html",
       "/slides/slides21.html",

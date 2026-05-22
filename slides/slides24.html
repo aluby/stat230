@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/tabby.min.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -27,7 +10,7 @@
   <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
-  <title>stat230 – slides24</title>
+  <title>stat230 – Case Study Tips</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -146,8 +129,9 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">slides24</h1>
+<section id="title-slide" data-background-color="#003300" data-slide-number="none" class="quarto-title-block center">
+  <h1 class="title">Case Study Tips</h1>
+  <p class="subtitle">Day 24</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -161,8 +145,108 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section class="slide level2">
+<section id="common-issues-on-case-studies" class="slide level2">
+<h2>Common issues on case studies</h2>
+<ul>
+<li>Correct things in an incorrect order</li>
+<li>What goes in an EDA?</li>
+<li>What types of plots go in the main text?</li>
+<li>Report appendix vs quarto appendix</li>
+</ul>
+</section>
+<section id="general-order" class="slide level2 scrollable">
+<h2>General order</h2>
+<ul>
+<li><p>Intro: What is the research question? What background information should the reader have to understand your study? What is the response and (general) predictor variables?</p></li>
+<li><p>EDA/Data: What dataset are you using? How many observations/variables? What is the distribution of the response variable? How are the predictors related to the response variable? Is there collinearity or skewness that should be addressed before fitting any models?</p></li>
+<li><p>Results:</p>
+<ol type="a">
+<li>Model building: what were your candidate models? what were your criteria for choosing a model? (You can report <em>theoretical</em> model here)</li>
+<li>Conditions and diagnostics: does everything look OK? Did you need to do any further investigation?</li>
+<li>Now that you have verified the validity of your model, you can report the <em>fitted</em> model equation or the coefficient table</li>
+<li>Interpretations of coefficients (with uncertainty!) or results from tests. Answer your research question here</li>
+</ol></li>
+<li><p>Discussion:</p>
+<ul>
+<li>Reiterate your main result without any technical results</li>
+<li>Are there any limitations to your analysis?</li>
+<li>If you had another week, what could you investigate? If you had another dataset, what could you investigate?</li>
+</ul></li>
+<li><p>Report appendix</p></li>
+<li><p>Quarto appendix</p></li>
+</ul>
+</section>
+<section id="presenting-equation" class="slide level2">
+<h2>Presenting equation</h2>
+<div class="small">
+<p>My recommendation is to report the <em>theoretical</em> equation first, then include a coefficient table.</p>
+<p><span class="math display">\[
+\log\left[ \frac { P( \operatorname{Removed} ) }{ 1 - P( \operatorname{Removed} ) } \right] = \beta_{0} + \beta_{1}(\operatorname{morph}_{\operatorname{light}}) + \beta_{2}(\operatorname{distance}) + \beta_{3}(\operatorname{morph}_{\operatorname{light}} \times \operatorname{distance})
+\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-1.13</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">-1.46</td>
+<td style="text-align: right;">-0.81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">morphlight</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">-0.04</td>
+<td style="text-align: right;">0.86</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">distance</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">morphlight:distance</td>
+<td style="text-align: right;">-0.03</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">-0.04</td>
+<td style="text-align: right;">-0.01</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="alternatively-put-coefficient-table-in-the-report-appendix-and-include-a-coefficent-graph" class="slide level2">
+<h2>Alternatively, put coefficient table in the report appendix and include a coefficent graph</h2>
 
+<img data-src="slides24_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<section id="removing-intercept" class="slide level2">
+<h2>Removing intercept</h2>
+
+<img data-src="slides24_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section id="examples" class="slide level2">
+<h2>Examples:</h2>
+<ul>
+<li><p><a href="https://www.causeweb.org/usproc/sites/default/files/usclap/2024-2/usclap%203418%20-%20community%20factors%20on%20violent%20crime%20rates.pdf">Multiple linear regression example</a>)</p></li>
+<li><p><a href="https://causeweb.org/usproc/sites/default/files/usclap/2025-2/usclap%203657%20-%20predicting%20health%20insurance%20coverage.pdf">Logistic regression example</a></p></li>
+<li><p><a href="https://causeweb.org/usproc/sites/default/files/usclap/2025-2/usclap%203675%20-%20modeling%20sockeye%20salmon%20populations.pdf">Advanced method example</a></p></li>
+<li><p><a href="https://causeweb.org/usproc/sites/default/files/usclap/2025-1/usclap%203471.pdf">Experiment example</a></p></li>
+<li><p><a href="https://causeweb.org/usproc/sites/default/files/usclap/2025-1/usclap%203502.pdf">A logistic regression example</a></p></li>
+</ul>
 
 
 </section>
@@ -383,6 +467,44 @@ Prof Amanda Luby
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
@@ -453,7 +575,7 @@ Prof Amanda Luby
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
