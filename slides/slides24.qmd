@@ -1,5 +1,172 @@
 ---
-title: "slides24"
-format: html
+title: Case Study Tips
+subtitle: Day 24
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
 ---
 
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+library(gt)
+library(gtsummary)
+library(carData)
+library(ggResidpanel)
+library(ggthemes)
+
+notes_theme = theme_minimal(base_size = 14, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+
+bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
+
+news <- bayesrules::fake_news |>
+  mutate(has_excl = ifelse(title_has_excl | text_excl > 0, TRUE, FALSE)) |>
+  select(title, url, type, title_words, has_excl, title_caps_percent, negative, positive) |>
+  mutate(type_num = as.numeric(type == "fake"))
+
+news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent, 
+                data = news, family = "binomial")
+
+```
+
+
+## Common issues on case studies
+
+- Correct things in an incorrect order
+- What goes in an EDA? 
+- What types of plots go in the main text? 
+- Report appendix vs quarto appendix
+
+## General order
+
+- Intro: What is the research question? What background information should the reader have to understand your study? What is the response and (general) predictor variables?
+
+- EDA/Data: What dataset are you using? How many observations/variables? What is the distribution of the response variable? How are the predictors related to the response variable? Is there collinearity or skewness that should be addressed before fitting any models? 
+
+- Results: 
+    (a) Model building: what were your candidate models? what were your criteria for choosing a model? (You can report *theoretical* model here)
+    (b) Conditions and diagnostics: does everything look OK? Did you need to do any further investigation? 
+    (c) Now that you have verified the validity of your model, you can report the *fitted* model equation or the coefficient table
+    (d) Interpretations of coefficients (with uncertainty!) or results from tests. Answer your research question here
+    
+- Discussion: 
+  - Reiterate your main result without any technical results
+  - Are there any limitations to your analysis? 
+  - If you had another week, what could you investigate? If you had another dataset, what could you investigate? 
+  
+- Report appendix
+
+- Quarto appendix
+
+## Presenting equation
+
+```{r}
+moths <- read.csv("https://aluby.github.io/stat230/data/moths.csv") |>
+  mutate(notremoved = Placed - Removed, 
+               log_odds_removed = log(Removed / notremoved),
+               prop_removed = Removed / Placed, 
+               dark = ifelse(Morph=="dark",1,0), 
+               distance = Distance, 
+               morph = Morph) 
+
+
+moth_glm <- glm(Removed/Placed ~ morph*distance, weights = Placed,
+                data = moths, 
+                family = "binomial")
+```
+
+::: small
+
+My recommendation is to report the *theoretical* equation first, then include a coefficient table. 
+
+`r equatiomatic::extract_eq(moth_glm, intercept = "beta")`
+
+```{r}
+broom::tidy(moth_glm, conf.int = TRUE, conf.level = .9) |>
+  select(-c("statistic", "p.value")) |>
+  knitr::kable(digits = 2)
+```
+
+:::
+
+## Alternatively, put coefficient table in the report appendix and include a coefficent graph
+
+```{r}
+broom::tidy(moth_glm, conf.int = TRUE, conf.level = .9) |>
+  gf_pointrange(estimate + conf.low + conf.high ~ term) |>
+  gf_hline(yintercept = 0, linetype = "dashed", col = "gray") +
+  coord_flip()
+```
+
+## Removing intercept
+
+```{r}
+broom::tidy(moth_glm, conf.int = TRUE, conf.level = .9) |>
+  filter(term != "(Intercept)") |>
+  gf_pointrange(estimate + conf.low + conf.high ~ term) |>
+  gf_hline(yintercept = 0, linetype = "dashed", col = "gray") +
+  coord_flip()
+```
+
+## Examples: 
+
+- [Multiple linear regression example](https://www.causeweb.org/usproc/sites/default/files/usclap/2024-2/usclap%203418%20-%20community%20factors%20on%20violent%20crime%20rates.pdf))
+
+- [Logistic regression example](https://causeweb.org/usproc/sites/default/files/usclap/2025-2/usclap%203657%20-%20predicting%20health%20insurance%20coverage.pdf)
+
+- [Advanced method example](https://causeweb.org/usproc/sites/default/files/usclap/2025-2/usclap%203675%20-%20modeling%20sockeye%20salmon%20populations.pdf)
+
+- [Experiment example](https://causeweb.org/usproc/sites/default/files/usclap/2025-1/usclap%203471.pdf)
+
+- [A logistic regression example](https://causeweb.org/usproc/sites/default/files/usclap/2025-1/usclap%203502.pdf)
