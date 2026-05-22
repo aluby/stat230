@@ -353,8 +353,6 @@ p1 + p2
 
 ## 
 
-::: medium
-
 In linear regression, the mean model ($\mu_y$) and the variance term ($\epsilon$) are independent. We can have points that are tightly clustered along the line or widely spread and both models are equally "valid"
 
 ```{r}
@@ -385,12 +383,14 @@ p1 + p2
 ```
 
 
+## 
+
 In binomial logistic regression, the variance term is related to the mean model through a mathematical relationship: 
 
 $$\mu(Y) = n\pi \quad Var(Y) = n\pi(1-\pi)$$
+
 **Overdispersion** occurs when the actual, observed variance in our data is significantly larger than what we'd expect from these formulas
 
-:::
 
 ## Diagnosing overdispersion
 
@@ -409,10 +409,10 @@ Residual deviance: 167.35  on 61  degrees of freedom
 AIC: 237.72
 ```
 
-Ad-hoc dispersion test: $\text{disp} \approx \frac{\text{Residual Deviance}}{\text{degrees of freedom}} = \frac{167.35}{61} \approx 2.7$
+Ad-hoc dispersion test: $\text{disp} = \widehat\psi = \frac{\text{Residual Deviance}}{\text{degrees of freedom}} = \frac{167.35}{61} \approx 2.7$
 
-- $\text{disp}  \approx 1$: not overdispersed
-- $\text{disp}  >> 1$ overdispersed
+- $\widehat\psi  \approx 1$: not overdispersed
+- $\widehat\psi >> 1$ overdispersed
 
 ## Fixing overdispersion: the `quasibinomial` family
 
@@ -436,7 +436,7 @@ AIC: NA
 ```
 
 ::: small
-R uses a slightly different formula to calculate dispersion parameter; should not make a meaningful difference
+R uses a slightly different formula to calculate dispersion parameter; should not make a difference in deciding whether model is overdispersed
 :::
 
 ## What changed?
@@ -524,7 +524,7 @@ $H_0: \beta_i = \beta_j = ... = 0 \quad$ vs. $\quad H_a: \text{at least 1 } \bet
 ::: {.column width="75%"}
 ::: {.fragment fragment-index=2}
 
-$$F = \frac{\text{LRT Test Statistic}}{\text{Dispersion Parameter}} = \frac{\Delta}{\widehat\psi}$$
+$$F =  \frac{(\text{Deviance}_{red} - \text{Deviance}_{full})/\text{n coefs}}{\text{Dispersion Parameter}} =  \frac{\Delta}{\widehat\psi}$$
 :::
 :::
 
@@ -546,7 +546,7 @@ $F_{df_1, df_2}$, where $df_1=$ the number of extra coefficients and $df_2$ = n 
 
 ::::
 
-## Example: is language necessary in the model? 
+## Is `language` necessary in the model? 
 
 $H_0: \beta_6 = \beta_7 = 0 \quad H_A:$ at least one $\ne 0$
 
@@ -565,12 +565,11 @@ reduced_qglm <- glm(success/trials ~ sex + kbit + ppvt +
 anova(reduced_qglm, lang_qglm, test = "F")
 ```
 
-
-
-<br>
+:::
 
 . . . 
 
+::: medium
 &rarr; only significant at $\alpha = .1$ level; weaker evidence that language background explains P(Success)
 
 :::
