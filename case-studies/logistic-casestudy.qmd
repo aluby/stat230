@@ -80,7 +80,7 @@ defendant. Explore whether including `defendant_race` (defendant’s race) is a 
 `same_race` in the model.
 
 4. Explore whether there are any statistically significant interactions between whether the juror is Black
-(`is_black`) and any the 6 predictors in Group (or the `defendant_race` predictor instead of `same_race`,
+(`is_black`) and any the 6 predictors in Group A (or the `defendant_race` predictor instead of `same_race`,
 depending on your analysis in part 3). Use both tests and EDA to explore this.
 
 # Format

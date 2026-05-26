@@ -1,4 +1,4 @@
 ---
-title: "26: Overdispersion"
+title: "26: Intro to Poisson Regression"
 ---
 

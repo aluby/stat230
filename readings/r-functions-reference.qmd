@@ -260,6 +260,180 @@ anova(bikes_mlr_full, bikes_mlr_red)
 ```
 
 
+# Logistic Regression
+
+```{r}
+#| include: false
+diabetes <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/diabetes.csv")
+diabetes <- diabetes %>% 
+  select(-DiabetesPedigreeFunction, -Insulin) %>%
+  filter(
+    Glucose>0,
+    BloodPressure>0,
+    SkinThickness>0,
+    BMI>0.0,
+    Age>0
+  )  %>%
+  mutate(
+    pregnant = ifelse(Pregnancies > 2, 1, 0),
+    obese = ifelse(BMI > 30.0, 1, 0)
+  ) %>%
+  select(-Pregnancies)
+```
+
+## Logistic EDA
+
+### Plotting against binned predictor
+
+Plotting Log Odds Against Binned Predictor
+
+```{r}
+diabetes %>%
+  mutate(bin = ntile(Glucose, 20)) %>%
+  group_by(bin) %>%
+  summarize(
+    mean_x = mean(Glucose),
+    prob = mean(Outcome),
+    odds = prob/(1-prob),
+    logodds = log(odds)
+  ) %>%
+  ggplot(aes(x=mean_x, y = logodds)) +
+  geom_point() +
+  geom_smooth(method="lm", se=FALSE, linetype="dashed")
+```
+
+### Bar graph
+
+Looking at one categorical variable on the response:
+
+```{r, warning=FALSE}
+gf_bar(~factor(Outcome), fill = ~factor(obese), data=diabetes) +
+  labs(title = "Diabetes Count by Obese and Pregnant", fill = "Obese") +
+  coord_flip()
+```
+
+Make it a proportion:
+
+```{r, warning=FALSE}
+gf_bar(~factor(Outcome), fill = ~factor(obese), position="fill", data=diabetes) +
+  labs(title = "Diabetes Count by Obese and Pregnant", fill = "Obese") +
+  coord_flip()
+```
+
+Interaction between categorical variables
+
+```{r, warning=FALSE}
+gf_bar(~factor(Outcome), fill = ~factor(obese), position="fill", data=diabetes) +
+  facet_wrap(~factor(pregnant), 
+           labeller = labeller(`factor(pregnant)` = c("0" = "Not Pregnant", "1" = "Pregnant"))) +
+  labs(title = "Diabetes Count by Obese and Pregnant", fill = "Obese") +
+  coord_flip()
+```
+
+Boxplot to compare quantitative variable to the response:
+
+```{r}
+gf_boxplot(BMI ~ factor(Outcome), fill = ~factor(obese), data = diabetes)
+```
+
+## Fitting the model (binary data)
+
+```{r}
+diabetes_glm <- glm(Outcome~BMI+pregnant*obese, family=binomial, data=diabetes)
+```
+
+
+## Residual Checks
+
+### Pearson Residuals
+
+```{r}
+diabetes_aug_p <- augment(diabetes_glm, 
+                          type.predict= "link", 
+                          type.residuals = "pearson") |>
+  mutate(.resp.resid = resid(diabetes_glm, type= "response"))
+```
+
+Or 
+
+```{r}
+resid_panel(diabetes_glm, 
+            type = "pearson", 
+            plots = c("resid", "qq"), 
+            smoother = TRUE)
+resid_xpanel(diabetes_glm, 
+             type = "pearson", 
+             smoother = TRUE)
+```
+
+
+### Deviance Residuals
+
+```{r}
+diabetes_aug_d <- augment(diabetes_glm, 
+                          type.predict= "link", 
+                          type.residuals = "pearson") |>
+  mutate(.resp.resid = resid(diabetes_glm, type= "response"))
+```
+
+Or
+
+```{r}
+resid_panel(diabetes_glm, 
+            type = "deviance", 
+            plots = c("resid", "qq"), 
+            smoother = TRUE)
+resid_xpanel(diabetes_glm, 
+             type = "deviance", 
+             smoother = TRUE)
+```
+
+### Binned Residuals
+
+```{r}
+diabetes_aug_p %>%
+  mutate(bin = ntile(.fitted, 20)) %>%
+  group_by(bin) %>%
+  summarize(
+    mean_fit = mean(.fitted),
+    mean_resid = mean(.resid)
+  ) %>% 
+  ggplot(aes(x=mean_fit, y=mean_resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dotted")
+```
+
+
+# Case Study tips
+
+Compact coefficient table: 
+
+```{r}
+tidy(bikes_slr)
+```
+
+Compact coefficient table, formatted (k)nicely: 
+
+```{r}
+tidy(bikes_slr) |>
+  knitr::kable(digits = 2)
+```
+
+Coefficient graph: 
+
+```{r}
+broom::tidy(bikes_slr, conf.int = TRUE, conf.level = .9) |>
+  gf_pointrange(estimate + conf.low + conf.high ~ term) |>
+  gf_hline(yintercept = 0, linetype = "dashed", col = "gray") +
+  coord_flip()
+```
+
+
+For other case-study specific tips: 
+
+  - [Case Study 2](https://aluby.github.io/stat230/activities/18-case-studies.html)
+  - [Case Study 3](https://aluby.github.io/stat230/activities/24-case-studies.html)
+
 # Other R 
 
 ## Finding $t^*$

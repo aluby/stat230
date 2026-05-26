@@ -74,6 +74,32 @@ We will do "data presentations" on the last day of class.
 
 We will follow the USCLAP guidelines for the format of the report: https://www.causeweb.org/usproc/usclap 
 
+## Data Presentation/Lightning Talk
+
+Each group will have **3 minutes** to present and **2 minutes** for questions/transitions. This is extremely short! You will not have time to discuss your progress in any amount of detail, so you should focus on your data and primary modeling approach. 
+
+Slide 1: Data overview 
+
+  - Source?
+  - Response/predictor variables? 
+  - General research question?
+
+Slide 2: Modeling approach
+
+  - Theoretical equation with your response and predictors
+  - Can include transformations, but don't need to show in detail
+  - Do not talk about the validity of the model
+
+Slide 3: 1 result/challenge so far: 
+
+This can be anything you've spent some time thinking about! Some ideas: 
+
+   - Cool EDA showing the relationship you will estimate
+   - Data issue you ran into
+   - Fun paper that you read as background information
+   - Report 1-2 interesting coefficients related to your research question
+   - Discuss an influential point and whether or not you will remove it
+   - Discuss a problematic residual plot and what you will do to fix it
 
 ## Format
 
