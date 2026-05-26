@@ -1,0 +1,34 @@
+---
+title: "26: Intro to Poisson Regression"
+---
+
+## Data Overview
+
+These data come from a study of 151 separate 3 hectare sites in Victoria, Australia. The purpose of the study was to learn what makes a good habitat for possums, in order to identify areas of forest for habitat preservation. The variables are:
+
+- `y`, the number of possum species found on the site
+- `Acacia`, basal area of acacia (a shrub), in $m^2$
+- `Bark`, a bark quality index (bigger is better)
+- `Habitat`, a habitat score for Leadbeater's possums (bigger is better)
+- `Shrubs`, the number of shrubs
+- `Stags`, the number of hollow trees
+- `Stumps`, indicator for whether or not stumps from logging are present
+- `Asp`, the primary aspect of the plot (SW-NW, NW-NE, etc.)
+- `Dom`, the dominant eucalypt species (one of three species)
+
+For today, we will focus on the number of possum species (`y`) and the bark quality index (`Bark`).
+
+Load the dataset:
+
+```{r}
+possums <- read.csv('https://www.math.carleton.edu/ckelling/data/possums.csv', header = TRUE)
+```
+
+## EDA 
+
+**1.** Make a plot of `y` vs. `Bark` and argue that there is a need for a transformation of **at least one of the response and/or predictor**. 
+
+::: callout-note
+I recommend that you jitter the value of `y` so that you can more easily see the density of points. Replace `gf_point` with `gf_jitter`
+:::
+
