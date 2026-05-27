@@ -1,0 +1,494 @@
+---
+title: Intro to Poisson Regression
+subtitle: Day 26
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+library(gt)
+library(gtsummary)
+library(carData)
+library(ggResidpanel)
+library(ggthemes)
+
+notes_theme = theme_minimal(base_size = 14, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+
+bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
+
+news <- bayesrules::fake_news |>
+  mutate(has_excl = ifelse(title_has_excl | text_excl > 0, TRUE, FALSE)) |>
+  select(title, url, type, title_words, has_excl, title_caps_percent, negative, positive) |>
+  mutate(type_num = as.numeric(type == "fake"))
+
+news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent, 
+                data = news, family = "binomial")
+
+```
+
+## Motivating data: number of anti-discrimination laws
+
+The `equality_index` data includes the observed number of anti-discrimination laws in each state,  $Y$ . We are interested in modeling  $Y$ by a state’s `percent_urban` and its `historical` presidential voting patterns. The `historical` variable has 3 levels:
+
+- `dem` = the state typically votes for the Democratic candidate
+- `gop` = the state typically votes for the Republican (GOP) candidate
+- `swing` = the state often swings back and forth between Democratic and Republican candidates
+
+::: footer
+Source: the {bayesrules} R package
+:::
+
+## EDA
+
+
+```{r}
+#| echo: false 
+#| fig-width: 8
+#| fig-height: 3
+
+
+data("equality_index")
+
+p1 <- ggplot(equality_index, aes(x = laws)) + 
+  geom_histogram(col = "white")
+
+p2 <- ggplot(equality_index, aes(y = laws, x = percent_urban)) + 
+  geom_point(size = .5)
+
+p3 <- ggplot(equality_index, aes(y = laws, x = historical)) + 
+  geom_boxplot(aes(fill = historical), alpha = .6) +
+  geom_point(size = .5) +
+  theme(legend.position = "none")
+
+p2 + p1 + p3
+```
+- `laws` is skewed
+- as percent urban increases, laws also increases
+- `dem` and `swing` generally have more laws than `gop`
+
+## EDA (log scale)
+
+
+```{r}
+#| echo: false 
+#| fig-width: 8
+#| fig-height: 3
+
+data("equality_index")
+
+p1 <- ggplot(equality_index, aes(x = log(laws))) + 
+  geom_histogram(col = "white")
+
+p2 <- ggplot(equality_index, aes(y = log(laws), x = percent_urban)) + 
+  geom_point(size = .5)
+
+p3 <- ggplot(equality_index, aes(y = log(laws), x = historical)) + 
+  geom_boxplot(aes(fill = historical), alpha = .6) +
+  geom_point(size = .5) +
+  theme(legend.position = "none")
+
+p2 + p1 + p3
+```
+
+- `log(laws)` is still a little skewed
+- `log(laws)` and `percent_urban` is more linear
+- if we had states with 0 laws, might have to do `log(laws + 1)`
+
+## SLR Model (ignoring `historical` for now)
+
+```{r}
+ggplot(equality_index, aes(y = log(laws), x = percent_urban)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
+
+equality_slr <- lm(log(laws) ~ percent_urban, data = equality_index)
+tidy(equality_slr)
+```
+
+## 
+
+```{r}
+ggResidpanel::resid_panel(equality_slr)
+```
+
+. . . 
+
+&rarr; some remaining nonlinearity, but is it worth going the transformation route? Why might we prefer a different model entirely?
+
+## Assumed SLR model (simulated data)
+
+
+```{r fig.height = 3.5, fig.width = 6, fig.align='center'}
+# Now make Poisson regression picture
+set.seed(0)
+old_dat <- data.frame(x=(x=runif(50, 35, 95)),
+                  y=rnorm(50, exp(-1.21 + .04179*x), 
+                          sd = 4*sigma(equality_slr)))
+
+
+old_slab_dat <- data.frame(
+  x = c(45, 65,85),
+  yhat = exp(predict(equality_slr, newdata = data.frame(percent_urban = c(45, 65, 85))))
+)
+
+library(ggdist)
+ggplot(old_dat, aes(x, y)) +
+  geom_point(size = 0.1, alpha = 0.4) +
+  geom_function(fun = \(x) exp(-1.21 + .04179*x)) +
+    stat_slab(aes(x = x, ydist = "norm", arg1 = yhat, arg2 = 4*sigma(equality_slr)), data = old_slab_dat, alpha = 0.4, inherit.aes = FALSE, scale = 0.6, fill = "darkgreen", side="left") +
+  geom_vline(xintercept=c(45, 65, 85), lty=2) +
+  labs(x = "percent_urban", y = "laws")
+```
+
+## Model for count data
+
+```{r fig.height = 3.5, fig.width = 6, fig.align='center'}
+# Now make Poisson regression picture
+
+equality_glm <- glm(laws ~ percent_urban, data = equality_index, family = "poisson")
+
+library(tidyverse)
+
+# 1. Setup your model and generate data
+set.seed(0)
+dat <- data.frame(
+  x = runif(100, 35, 95), # Increased sample size slightly for better visualization
+  y = rpois(100, exp(-2.18 + 0.061 * x))
+)
+
+# 2. Define the exact vertical slices where you want distributions shown
+# (We pick clean locations within your data range)
+anchor_points <- c(45, 65, 85)
+scale_factor <- 45  # Controls how far left the distributions bulge
+
+# 3. Generate the theoretical Poisson staircase steps at each anchor point
+dens_steps <- lapply(anchor_points, function(x_anchor) {
+  # Calculate the true theoretical lambda at this specific X position
+  lambda <- exp(-2.18 + 0.061 * x_anchor)
+  
+  # Define the range of counts (Y) to calculate probabilities for
+  y_vals <- 0:max(dat$y + 5)
+  p_vals <- dpois(y_vals, lambda)
+  
+  # Create clean staircase steps manually by duplicating coordinates:
+  # This makes a constant horizontal probability profile for each integer count
+  data.frame(
+    x = rep(x_anchor - scale_factor * p_vals, each = 2),
+    y = rep(y_vals, each = 2) + c(-0.5, 0.5),
+    group = as.character(x_anchor)
+  )
+}) |> do.call(rbind, args = _)
+
+# 4. Generate the final plot
+ggplot(dat, aes(x, y)) +
+  geom_point(size = 1.5, alpha = 0.5, color = "black") +
+  # Plot the continuous Poisson mean function line
+  geom_function(fun = \(x) exp(-2.18 + 0.061 * x), linewidth = 1, color = "black") +
+  # Add the vertical dashed anchor lines
+  geom_vline(xintercept = anchor_points, linetype = "dashed", alpha = 0.5) +
+  # Overlay the beautiful staircase PMF paths
+  geom_path(data = dens_steps, aes(x, y, group = group), color = "orange", linewidth = 1.1) +
+  labs(
+    x = "percent_urban", 
+    y = "Laws",
+  )
+```
+
+## Generalized linear model
+
+::: {.fragment fragment-index=1}
+**Random component: **
+:::
+
+::: {.fragment fragment-index=2}
+What distribution does the response variable follow?
+:::
+
+<br>
+
+
+::: {.fragment fragment-index=1}
+**Linear predictor (systematic component): **
+:::
+
+::: {.fragment fragment-index=3}
+What function of the predictors should we use?
+:::
+
+<br>
+
+
+::: {.fragment fragment-index=1}
+**Link function: **
+:::
+
+::: {.fragment fragment-index=4}
+How can we relate the expectation of $Y$ and our linear predictor?
+:::
+
+
+## Random component
+
+What distribution does the response variable follow?
+
+<br>
+
+**Possible values:** We are counting the number of events that occur over a fixed interval, so $Y =0, 1, 2, \ldots$
+
+<br>
+
+**Poisson distribution**
+
+$P(Y = y) = \frac{e^{-\lambda} \lambda^y}{y!}, \quad \text{for} \quad y = 0, 2, 1, \ldots$
+
+
+
+## Linear predictor
+
+What function of the predictors should we use?
+
+<br>
+
+$\eta = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p$
+
+:::{.aside}
+$\eta =$ "eta"
+:::
+
+##
+
+{{< video https://www.youtube.com/embed/6pDH66X3ClA?si=IsolyWEfJizfItxS width="100%" height="100%" >}}
+
+
+## Link function
+
+How can we relate the expectation of $Y$ and our linear predictor?
+
+. . .
+
+<br>
+
+$E(Y) = \lambda$ between 0 and $\infty$
+
+<br>
+
+$\eta = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p \longrightarrow$ between $-\infty$ and $\infty$
+
+<br>
+
+What function takes numbers between between 0 and $\infty$ as input and maps them to the real line?
+
+
+## Link function
+
+How can we relate the expectation of $Y$ and our linear predictor?
+
+
+$\log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p = \eta$
+
+
+## Poisson regression model for counts
+
+**Random component:** $Y_i = \#$ anti-discrimination laws in a state; Poisson distribution is reasonable
+
+. . .
+
+<br>
+
+**Link function:** $E(Y) = \lambda$ and $\lambda >0$
+
+$\Longrightarrow \log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p = \eta$
+
+. . .
+
+<br>
+
+**Inverse-link function:** $E(Y) = e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}$
+
+## EDA
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```{r fig.height = 4, fig.width=4, out.width="100%"}
+gf_point(log(laws) ~ percent_urban, data = equality_index, height = 0.25, width = 0.25, alpha = 0.5) 
+```
+
+:::
+
+::: {.column width="40%"}
+
+<!-- - Why did we use <br> `log(nests + 0.5)`? -->
+
+What structure are we looking for in this plot?
+
+<br>
+
+<br>
+
+
+There are no 0 counts in this data set, how could we create this plot if we had observed 0s?
+
+:::
+
+::::
+
+## Model fitting
+
+
+```{r eval=FALSE, echo=TRUE}
+glm(laws ~ percent_urban, data = equality_index, 
+    family = poisson)
+```
+
+```{r}
+pois1 <- glm(laws ~ percent_urban, data = equality_index, family = poisson)
+summary(pois1)$coef
+```
+
+<br>
+
+**Fitted model:** $\log(\widehat{\lambda}) = -2.18 + 0.06 \cdot \tt{percent urban}$
+
+. . .
+
+**How can we interpret the coefficients?**
+
+
+## Interpreting the coefficients
+
+$\log(\widehat{\lambda}) = \widehat{\beta}_0 + \widehat{\beta}_1 x$
+
+
+How does the expected (average) number of events, $\widehat{\lambda}$, change for a 1-unit increase in $x$?
+
+. . . 
+
+Let's consider $x=0$ and $x=1$:
+
+* $\widehat{\lambda} = e^{\widehat{\beta}_0 + \widehat{\beta}_1(0)}=e^{\widehat{\beta}_0}$
+
+* $\widehat{\lambda} = e^{\widehat{\beta}_0 + \widehat{\beta}_1(1)}=e^{\widehat{\beta}_0} e^{\widehat{\beta}_1}$
+
+. . .
+
+The expectation at $x+1$ is $e^{\widehat{\beta}_1}$ times the expectation at $x$
+
+## Interpreting the coefficients
+
+In our example:  $\log(\widehat{\lambda}) = -2.18 + 0.06 \cdot \tt{percent urban}$
+
+. . .
+
+$e^{0.06} \approx 1.06$
+
+. . . 
+
+<br>
+
+
+&rarr; A 1 percent increase in the percent of urban residents is associated with an increase in the average number of antidiscrimination laws by a factor of 1.06
+(i.e., a 6% increase).
+
+
+## Multiple predictors {.smaller}
+
+
+```{r echo=TRUE}
+full <- glm(laws ~ percent_urban + historical,
+            data = equality_index,
+            family = poisson)
+summary(full)
+```
+
+
+## 
+
+<br>
+
+&rarr; A 1 percent increase in the percent of urban residents is associated with an increase in the average number of antidiscrimination laws by a factor of $e^{.03} = 1.03$, holding `historical` constant
+(i.e., a 3% increase).
+
+. . . 
+
+<br>
+
+&rarr; Compared to `dem` states, `gop` states have fewer antidiscrimination laws by a factor of $e^{-1.6} = .202$, assuming `percent_urban` is held constant
+(i.e., a 80% decrease).
+
+. . . 
+
+<br>
+
+&rarr; Compared to `dem` states, `swing` states have fewer antidiscrimination laws by a factor of $e^{-.83} = .44$, assuming `percent_urban` is held constant
+(i.e., a 56% decrease).
+
+
+## Today: 
+
+- EDA
+- Interpretations
+- Wald-based tests and CI's
+
+### Next time: 
+
+- Conditions for inference
+- LRT 
+- quasipoisson
+
+
+

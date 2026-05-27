@@ -21,14 +21,55 @@ For today, we will focus on the number of possum species (`y`) and the bark qual
 Load the dataset:
 
 ```{r}
-possums <- read.csv('https://www.math.carleton.edu/ckelling/data/possums.csv', header = TRUE)
+#possums <- read.csv(here::here("data/possums.csv"), header = TRUE)
+possums <- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)
 ```
 
-## EDA 
+## Questions
 
 **1.** Make a plot of `y` vs. `Bark` and argue that there is a need for a transformation of **at least one of the response and/or predictor**. 
 
 ::: callout-note
-I recommend that you jitter the value of `y` so that you can more easily see the density of points. Replace `gf_point` with `gf_jitter`
+I recommend that you jitter the value of `y` so that you can more easily see the density of points. Replace `gf_point` with `gf_jitter`. You can vary the amount of horizontal "jitter" with `width = .25` and the amount of vertical jitter with `height = .25` (and replace .25 with whatever number you want!) 
 :::
+
+**2.** The variable `y` can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot `log(y+1)` vs. `Bark` and fit the corresponding log-normal linear model. Interpret the estimated slope coefficient.
+
+
+**3.** Now estimate the Poisson regression model, using `y` as the response variable and `Bark` as the predictor (and the log link function). Interpret the estimated slope coefficient.
+
+
+**4.** Let's visualize how well our two models capture the data on its original count scale. Fill in the missing pieces of the predict() functions in the starter code below to generate predictions across a range of bark indices from 0 to 30, then complete the plot.
+
+Compare and contrast the two fitted curves. Explain why the Poisson model predictions are bigger than the Gaussian model predictions. (Hint: the Poisson model gives estimates of the mean on the original scale.)
+
+::: callout-note
+
+Here is some starter code that first makes a `preds` dataset showing the predicted values under the two models for all `Bark` values between 0 and 30. Then, it creates a jittered scatterplot of the original data, and overlays the two fits. 
+
+- For the Log-Normal OLS model (`possum_lognormal`): Remember that this model predicts $\log(y+1)$. To map these predictions back to the original count scale ($y$), you will need to mathematically undo both operations.
+- For the Poisson GLM model (`possum_glm`): By default, `predict()` returns values on the log-link scale ($\eta$). Look at the help documentation (`?predict.glm`) to find the specific character string needed for the type argument to return predictions on the original response scale ($\mu$).
+- Fill in both blanks in the code with a version of `predict(model, newdata = data.frame(Bark = Bark))`. I've given you most of the `possum_glm` code. 
+
+```{r}
+#| eval: false
+#| fig-width: 4
+#| fig-height: 3
+
+preds <- tibble(
+  Bark = 0:30,
+  y_ols = _______,
+  y_glm = predict(possum_glm, newdata = data.frame(Bark = Bark), type = "____")
+)
+
+gf_jitter(y ~ Bark, data = possums, width = .25, height = .25) |>
+  gf_line(y_ols ~ Bark, data = preds, col = "darkgreen") |>
+  gf_line(y_glm ~ Bark, data = preds, col = "darkblue") 
+```
+:::
+
+**5.** Calculate a 95% Wald-based confidence interval for the slope coefficient ($\beta_1$) of `Bark` using the Poisson model. Do this (1) by hand using the formula and (2) with R using `confint` or `tidy`.
+
+
+**6.** Suppose a newly surveyed forest site has a bark quality index of `Bark = 15`. Use your Poisson regression model to calculate the predicted mean number of possum species ($\hat{\mu}$) for this site. Be careful with your scales!
 
