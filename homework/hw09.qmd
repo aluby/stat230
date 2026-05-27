@@ -82,4 +82,10 @@ gf_jitter(y ~ Bark, data = possums, width = .25, height = .25) |>
 
 # Problem 2: Fri
 
-# Problem 3: TBA Fri
+# Problem 3: Reflections
+
+(a) Start by reviewing either HW2 or Case Study 1. (Look at your submission on gradescope) What was something you found difficult initially, but now seems "easy"? 
+
+(b) Write 2-3 sentences describing how you have grown this term. (Some ideas to get you started: overcoming a technical hurdle; managing group work; incorporating R and math; study skills; time management; etc.)
+
+(c) Write 2-3 sentences describing the "main point" of this class. 
