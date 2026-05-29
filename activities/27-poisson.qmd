@@ -1,4 +1,45 @@
 ---
-title: "27: Intro to Poisson Regression"
+title: "27: Poisson Regression and Overdispersion"
 ---
+
+```{r}
+#| include: false
+library(ggformula)
+library(tidyverse)
+```
+
+## Data Overview
+
+These data come from a study of 151 separate 3 hectare sites in Victoria, Australia. The purpose of the study was to learn what makes a good habitat for possums, in order to identify areas of forest for habitat preservation. The variables are:
+
+- `y`, the number of possum species found on the site
+- `Acacia`, basal area of acacia (a shrub), in $m^2$
+- `Bark`, a bark quality index (bigger is better)
+- `Habitat`, a habitat score for Leadbeater's possums (bigger is better)
+- `Shrubs`, the number of shrubs
+- `Stags`, the number of hollow trees
+- `Stumps`, indicator for whether or not stumps from logging are present
+- `Asp`, the primary aspect of the plot (SW-NW, NW-NE, etc.)
+- `Dom`, the dominant eucalypt species (one of three species)
+
+
+Load the dataset:
+
+```{r}
+possums <- read.csv('https://www.math.carleton.edu/ckelling/data/possums.csv', header = TRUE)
+```
+
+**1.** As discussed on the last worksheet, the variable `y` can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot `log(y+1)` vs. each of the predictors and describe what you see.
+
+**2.** Fit the quasipoisson regression model using `y` as the response variable and include all the other predictors as main effects. The estimated dispersion parameter is less than one; argue that using the "regular" Poisson model will give more a conservative (cautious) assessment of uncertainty.
+
+**3.** Refit the model above, now using the nominal Poisson model (setting $\phi = 1$). Interpret the estimated effect of the number of hollow trees (`Stags`).
+
+**4.** Give a 95% confidence interval for the effect of the number of hollow trees on the mean number of species.
+
+**5.** Take a look at the fitted values (the estimated means). Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Deviance Goodness of Fit test?
+
+**6.** Drop `Acacia`, `Shrubs`, and `Stumps` from your model. On the basis of the likelihood ratio test, is there evidence against this reduced model?
+
+**7.** Using the reduced model from part 5, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of stumps is 10. Give a 95% confidence interval for this estimate by treating the $\log(\hat{\mu})$ as approximately normally distributed. Why is this justified?
 

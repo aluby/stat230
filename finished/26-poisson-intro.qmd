@@ -165,7 +165,7 @@ broom::tidy(possum_glm, conf.int = TRUE, exponentiate = FALSE) |>
 
 :::
 
-**6.** Suppose a newly surveyed forest site has a bark quality index of `Bark = 15`. Use your Poisson regression model to calculate the predicted mean number of possum species ($\hat{\mu}$) for this site. Be careful with your scales!
+**6.** Suppose a newly surveyed forest site has a bark quality index of Bark = 15. Use your Poisson regression model to calculate the predicted mean number of possum species ($\hat{\mu}$) for this site. Be careful with your scales!
 
 
 ::: callout-tip
