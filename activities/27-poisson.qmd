@@ -6,6 +6,7 @@ title: "27: Poisson Regression and Overdispersion"
 #| include: false
 library(ggformula)
 library(tidyverse)
+library(patchwork)
 ```
 
 ## Data Overview
@@ -19,21 +20,33 @@ These data come from a study of 151 separate 3 hectare sites in Victoria, Austra
 - `Shrubs`, the number of shrubs
 - `Stags`, the number of hollow trees
 - `Stumps`, indicator for whether or not stumps from logging are present
-- `Asp`, the primary aspect of the plot (SW-NW, NW-NE, etc.)
-- `Dom`, the dominant eucalypt species (one of three species)
 
 
 Load the dataset:
 
 ```{r}
-possums <- read.csv('https://www.math.carleton.edu/ckelling/data/possums.csv', header = TRUE)
+possums <- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)
 ```
 
-**1.** As discussed on the last worksheet, the variable `y` can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot `log(y+1)` vs. each of the predictors and describe what you see.
+**1.** As discussed last class, the variable `y` can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot `log(y+1)` vs. each of the predictors and describe what you see. (Starter code below to save you time)
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+
+p1 <- gf_jitter(y ~ Acacia, data = possums, width = .15, height = .15)
+p2 <- gf_jitter(y ~ Bark, data = possums, width = .15, height = .15)
+p3 <- gf_jitter(y ~ Habitat, data = possums, width = .15, height = .15)
+p4 <- gf_jitter(y ~ Shrubs, data = possums, width = .15, height = .15)
+p5 <- gf_jitter(y ~ Stags, data = possums, width = .15, height = .15)
+p6 <- gf_jitter(y ~ Stumps, data = possums, width = .15, height = .15)
+
+p1 + p2 + p3 + p4 + p5 + p6
+```
 
 **2.** Fit the quasipoisson regression model using `y` as the response variable and include all the other predictors as main effects. The estimated dispersion parameter is less than one; argue that using the "regular" Poisson model will give more a conservative (cautious) assessment of uncertainty.
 
-**3.** Refit the model above, now using the nominal Poisson model (setting $\phi = 1$). Interpret the estimated effect of the number of hollow trees (`Stags`).
+**3.** Refit the model above, now using the standard Poisson model (setting $\phi = 1$). Interpret the estimated effect of the number of hollow trees (`Stags`).
 
 **4.** Give a 95% confidence interval for the effect of the number of hollow trees on the mean number of species.
 

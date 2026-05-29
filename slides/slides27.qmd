@@ -128,8 +128,12 @@ p2 + p1 + p3
 - This leads to the Poisson regression model for counts:
 
     $$\log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p$$
-    or equivalently
     
+
+- or equivalently
+
+$$\lambda = e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}$$
+
 
 ## Assumptions
 
@@ -153,32 +157,42 @@ summary(full_glm)
 $$Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}}$$
 
 
+
 ```{r}
+#| fig-width: 8
+#| fig-height: 3
 ggResidpanel::resid_xpanel(full_glm, type = "pearson")
 ```
 
 
 ## For Poisson model
 
-$$Pres_i = \frac{Y_i - \hat \mu_i}{\widehat{SD(Y_i)}}$$
+$$Pres_i = \frac{Y_i - \widehat \mu_i}{\widehat{SD(Y_i)}}$$
 
-- Mean = $\hat \lambda$, SD = $\sqrt{\hat \lambda}$
-- Pearson residual: $\frac{Y_i - \hat \lambda_i}{\sqrt{\hat \lambda_i}}$
-- If $\hat\lambda$'s are "big" ($\ge 5$), Pearson residuals are $\approx N(0,1)$ if Poisson model is correct. Can use to diagnose problems with linearity
+
+- Mean = $\widehat \lambda$, SD = $\sqrt{\widehat \lambda}$
+- Pearson residual: $\frac{Y_i - \widehat \lambda_i}{\sqrt{\widehat \lambda_i}}$
+- If $\widehat\lambda$'s are "big" ($\ge 5$), Pearson residuals are $\approx N(0,1)$ if Poisson model is correct. Can use to diagnose problems with linearity
 - If overdispersed, then SD of Pearson residuals is $>1$
 
 ## Goodness of Fit test
 
-We want a formal way to test whether our Poisson model is a good fit for the data, or if it leaves a significant amount of variation unexplained.
+<br> 
 
-* **$H_0$:** The Poisson model fits the data adequately.
-* **$H_A$:** The Poisson model is deficient (a more complex, saturated model is required).
+**$H_0$:** The Poisson model fits the data adequately.
 
-The **Residual Deviance** ($G^2$) serves as our test statistic:
-$$G^2 = 2 \sum_{i=1}^n \left[ y_i \log\left(\frac{y_i}{\hat{\lambda}_i}\right) - (y_i - \hat{\lambda}_i) \right]$$
+**$H_A$:** The Poisson model is deficient (a more complex, saturated model is required).
 
-* Under $H_0$, $G^2$ follows an approximate $\chi^2$ distribution with $df = n - p - 1$.
-* A very small $p$-value means we reject $H_0$, indicating poor fit (often due to overdispersion).
+<br>
+
+The **Residual Deviance** ($D$) serves as our test statistic:
+$$D = 2 \sum_{i=1}^n \left[ y_i \log\left(\frac{y_i}{\widehat{\lambda}_i}\right) - (y_i - \widehat{\lambda}_i) \right]$$
+
+::: small
+
+Under $H_0$, $D \sim \chi^2$ distribution with $df = n - (p + 1)$.
+
+:::
 
 ## Are means big enough for GoF test? 
 
@@ -187,7 +201,7 @@ summary(predict(full_glm, type = "response"))
 ```
 
 
-## Quasipoisson model 
+## Quasipoisson model {.smaller}
 
 ```{r}
 full_quasi <- glm(laws ~ percent_urban + historical,
@@ -196,73 +210,162 @@ full_quasi <- glm(laws ~ percent_urban + historical,
 summary(full_quasi)
 ```
 
-## Pearson residuals
+## Pearson resids still show overdispersion
+
+Since they use the Poisson mean/sd
 
 ```{r}
+#| fig-width: 8
+#| fig-height: 3
 ggResidpanel::resid_xpanel(full_quasi, type = "pearson")
 ```
 
-## Studentized residuals
+## Standardized Pearson residuals
 
-Pearson residuals tell us how many standard deviations an observation falls from its predicted mean, but they don't account for **leverage** ($h_i$). 
+Use quasi versions of SD: $SD(Y_i) = \sqrt{\psi \lambda_i}$ (also adjusts for leverage)
 
-$$r_i = \frac{Pres_i}{\sqrt{1 - h_i}} = \frac{Y_i - \hat{\lambda}_i}{\sqrt{\hat{\lambda}_i(1 - h_i)}}$$
+```{r}
+#| fig-width: 8
+#| fig-height: 2.75
+#| echo: true
+ggResidpanel::resid_xpanel(full_quasi, type = "stand.pearson")
+```
 
-* **Why adjust for leverage?** Points with extreme predictor values (high leverage) naturally force the model line close to them, artificially shrinking their raw and Pearson residuals.
-* **Interpretation:** If the model assumptions hold, studentized residuals should be roughly normally distributed with a standard deviation of 1. 
-* Look out for any extreme outliers where $|r_i| > 3$.
+. . . 
+
+&rarr; better! perhaps one outlier we'd want to investigate further
 
 ## Inference for coefficients
 
-Under the Poisson model, we can perform inference on our slopes ($\beta_j$) using **Wald tests** and standard normal critical values ($z^*$).
+**Confidence interval** for $\beta$:
 
-### Testing $H_0: \beta_j = 0$
-The test statistic is a $z$-score rather than a $t$-statistic:
-$$z = \frac{\hat{\beta}_j}{SE(\hat{\beta}_j)} \sim N(0,1)$$
+- For Poisson model: $\widehat \beta \pm z^* SE(\widehat\beta)$
+- For Quasi model: $\widehat \beta \pm t_{n-(p+1)}^* SE_{quasi}(\widehat\beta)$
 
-### Confidence Intervals
+<br>
+
+**Hypothesis testing** for $H_0: \beta = 0$ against $H_A: \beta \ne 0$
+
+- Test stat: $\frac{\widehat \beta - 0}{SE}$
+  - $\sim N(0,1)$ under Poisson model
+  - $\sim t_{n-(p+1)}$ under Quasi model
+
+
+## Confidence Intervals: Interpretation
+
+<br>
+
 We construct intervals on the **log (link) scale** first, then exponentiate:
-$$\text{Scale of Log-Means:} \quad \hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)$$
-$$\text{Scale of Rate Ratios:} \quad e^{\hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)}$$
 
-* **Interpretation:** We are $(1-\alpha)\times100\%$ confident that a 1-unit increase in $X_j$ is associated with a multiplicative change in the expected count by a factor between $e^L$ and $e^U$, holding all other variables constant.
+$$\text{Log scale:} \quad \hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)$$
+$$\text{Count/Response scale:} \quad e^{\hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)}$$
+
+<br>
+
+. . . 
+
+&rarr; We are $(1-\alpha)\times100\%$ confident that a 1-unit increase in $X_j$ is associated with a multiplicative change in the expected count by a factor between $e^L$ and $e^U$, holding all other variables constant.
 
 ## Inference for $\lambda$
 
+::: medium
+
+Reminder: $\log \lambda = \eta$
 
 1. Compute the predicted value and standard error on the **link (log) scale**:
-   $$\hat{\eta} = \hat{\beta}_0 + \hat{\beta}_1 X_1 + \dots + \hat{\beta}_p X_p$$
-2. Build the interval on the log scale: $[\hat{\eta} - z^*SE, \,\, \hat{\eta} + z^*SE]$
+   $$\widehat{\eta} = \widehat{\beta}_0 + \widehat{\beta}_1 X_1 + \dots + \widehat{\beta}_p X_p$$
+2. Build the interval on the log scale: $[\widehat{\eta} - z^*SE, \,\, \widehat{\eta} + z^*SE]$
 3. Exponentiate the endpoints to map back to the **original count scale**:
-   $$\left[ e^{\hat{\eta} - z^*SE}, \,\, e^{\hat{\eta} + z^*SE} \right]$$
+   $$\left[ e^{\widehat{\eta} - z^*SE}, \,\, e^{\widehat{\eta} + z^*SE} \right]$$
 
-In R:
+In R: 
 
 ```r
 predict(model, newdata = data.frame(x = ...), type = "link", se.fit = TRUE)
+predict(model, newdata = data.frame(x = ...), type = "response", se.fit = TRUE)
 ```
 
+:::
+
+## Example: `link` scale
+
+::: medium
+Minnesota historically votes `dem` and has 73.3% of the population in urban areas.
+
+
+```{r}
+#| echo: true
+
+predict(full_glm, newdata = data.frame(historical = "dem", 
+                                       percent_urban = 73.3), 
+        type = "link", 
+        se.fit = TRUE)
+```
+
+:::
+
+$3.06 \pm 2\cdot .07 = [2.92, 3.20] \to [e^{2.92}, e^{3.20}] = [18.54, 24.53]$
+
+## Example: `response` scale
+
+::: medium
+
+```{r}
+#| echo: true
+
+
+predict(full_glm, newdata = data.frame(historical = "dem", 
+                                       percent_urban = 73.3), 
+        type = "response", 
+        se.fit = TRUE)
+```
+
+:::
+
+$21.275 \pm 2\cdot 1.47 = [18.33, 24.22]$
+
+. . . 
+
+&rarr; We are 95% confident that the average number of anti-discrimination laws in states like Minnesota is between 18.33 and 24.22
 
 ## Likelihood Ratio Test
 
-When we want to test a collection of slopes simultaneously (e.g., evaluating whether the multi-level categorical variable `historical` can be dropped entirely), we use a **Likelihood Ratio Test (LRT)**.
+**Hypotheses:**
 
-$$\Delta G^2 = G^2_{\text{Reduced}} - G^2_{\text{Full}}$$
+$H_0: \beta_i = \beta_j = ... = 0$
 
-* **Standard Poisson GLM:** We compare $\Delta G^2$ to a $\chi^2$ distribution with $df = \Delta p$.
+$H_A$: at least one $\ne$ 0
+
+<br>
+
+**Test Statistic**: 
+
+$$\Delta  = D_{\text{Reduced}} - D_{\text{Full}}$$
+
+**Reference distribution**:
+
+- Depends on standard poisson vs quasipoisson
+
+## LRT reference distribution
+
+**Standard Poisson GLM:** We compare $\Delta$ to a $\chi^2$ distribution with $df = \Delta p$.
 
 ```{r}
 #| eval: false
+#| echo: true
 
 anova(reduced_glm, full_glm, test = "Chisq")
 ```
 
-* **Quasipoisson GLM**: 🛑 We cannot use the standard $\chi^2$ distribution because the variance has been inflated by $\hat{\phi}$. Instead, we scale the drop in deviance and perform an F-test: $$F = \frac{\Delta G^2 / \Delta p}{\hat{\phi}}$$
+<br>
+
+**Quasipoisson GLM**: Variance has been inflated by $\widehat{\psi}$. Instead, we scale the drop in deviance and perform an F-test: 
 
 R automatically handles the scale adjustment when you ask for test = "F":
 
 ```{r}
 #| eval: false
+#| echo: true
 anova(reduced_quasi, full_quasi, test = "F")
 ```
 
