@@ -88,6 +88,8 @@ gf_jitter(y ~ Bark, data = possums, width = .25, height = .25) |>
 #| fig-width: 8
 #| fig-height: 6
 
+library(patchwork) 
+
 p1 <- gf_jitter(y ~ Acacia, data = possums, width = .15, height = .15)
 p2 <- gf_jitter(y ~ Bark, data = possums, width = .15, height = .15)
 p3 <- gf_jitter(y ~ Habitat, data = possums, width = .15, height = .15)
