@@ -150,7 +150,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#problem-1-possums" id="toc-problem-1-possums" class="nav-link active" data-scroll-target="#problem-1-possums">Problem 1: <code>possums</code></a></li>
-  <li><a href="#problem-2-fri" id="toc-problem-2-fri" class="nav-link" data-scroll-target="#problem-2-fri">Problem 2: Fri</a></li>
+  <li><a href="#problem-2-more-possums" id="toc-problem-2-more-possums" class="nav-link" data-scroll-target="#problem-2-more-possums">Problem 2: More <code>possums</code></a></li>
   <li><a href="#problem-3-reflections" id="toc-problem-3-reflections" class="nav-link" data-scroll-target="#problem-3-reflections">Problem 3: Reflections</a></li>
   </ul>
 </nav>
@@ -234,8 +234,34 @@ Note
 <p><strong>5.</strong> Calculate a 95% Wald-based confidence interval for the slope coefficient (<span class="math inline">\(\beta_1\)</span>) of <code>Bark</code> using the Poisson model. Do this (1) by hand using the formula and (2) with R using <code>confint</code> or <code>tidy</code>.</p>
 <p><strong>6.</strong> Suppose a newly surveyed forest site has a bark quality index of <code>Bark = 15</code>. Use your Poisson regression model to calculate the predicted mean number of possum species (<span class="math inline">\(\hat{\mu}\)</span>) for this site. Be careful with your scales!</p>
 </section>
-<section id="problem-2-fri" class="level1">
-<h1>Problem 2: Fri</h1>
+<section id="problem-2-more-possums" class="level1">
+<h1>Problem 2: More <code>possums</code></h1>
+<p><strong>1.</strong> As discussed last class, the variable <code>y</code> can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot <code>log(y+1)</code> vs.&nbsp;each of the predictors and describe what you see. (Starter code below to save you time)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork) </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Acacia, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Bark, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Habitat, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Shrubs, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Stags, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Stumps, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> p4 <span class="sc">+</span> p5 <span class="sc">+</span> p6</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="hw09_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>2.</strong> Fit the quasipoisson regression model using <code>y</code> as the response variable and include all the other predictors as main effects. The estimated dispersion parameter is less than one; argue that using the “regular” Poisson model will give more a conservative (cautious) assessment of uncertainty.</p>
+<p><strong>3.</strong> Refit the model above, now using the standard Poisson model (setting <span class="math inline">\(\phi = 1\)</span>). Interpret the estimated effect of the number of hollow trees (<code>Stags</code>).</p>
+<p><strong>4.</strong> Give a 95% confidence interval for the effect of the number of hollow trees on the mean number of species.</p>
+<p><strong>5.</strong> Take a look at the fitted values (the estimated means). Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Deviance Goodness of Fit test?</p>
+<p><strong>6.</strong> Drop <code>Acacia</code>, <code>Shrubs</code>, and <code>Stumps</code> from your model. On the basis of the likelihood ratio test, is there evidence against this reduced model?</p>
+<p><strong>7.</strong> Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of stumps is 10. Give a 95% confidence interval for this estimate by treating the <span class="math inline">\(\log(\hat{\mu})\)</span> as approximately normally distributed. Why is this justified?</p>
 </section>
 <section id="problem-3-reflections" class="level1">
 <h1>Problem 3: Reflections</h1>
