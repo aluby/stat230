@@ -1,0 +1,268 @@
+---
+title: Overdispersion and Inference for Poisson Regression
+subtitle: Day 27
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+library(gt)
+library(gtsummary)
+library(carData)
+library(ggResidpanel)
+library(ggthemes)
+
+notes_theme = theme_minimal(base_size = 14, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+
+bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
+
+news <- bayesrules::fake_news |>
+  mutate(has_excl = ifelse(title_has_excl | text_excl > 0, TRUE, FALSE)) |>
+  select(title, url, type, title_words, has_excl, title_caps_percent, negative, positive) |>
+  mutate(type_num = as.numeric(type == "fake"))
+
+news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent, 
+                data = news, family = "binomial")
+
+```
+
+## Motivating data: number of anti-discrimination laws
+
+The `equality_index` data includes the observed number of anti-discrimination laws in each state,  $Y$ . We are interested in modeling  $Y$ by a state’s `percent_urban` and its `historical` presidential voting patterns. The `historical` variable has 3 levels:
+
+- `dem` = the state typically votes for the Democratic candidate
+- `gop` = the state typically votes for the Republican (GOP) candidate
+- `swing` = the state often swings back and forth between Democratic and Republican candidates
+
+::: footer
+Source: the {bayesrules} R package
+:::
+
+## EDA
+
+
+```{r}
+#| echo: false 
+#| fig-width: 8
+#| fig-height: 3
+
+
+data("equality_index")
+
+p1 <- ggplot(equality_index, aes(x = laws)) + 
+  geom_histogram(col = "white")
+
+p2 <- ggplot(equality_index, aes(y = laws, x = percent_urban)) + 
+  geom_point(size = .5)
+
+p3 <- ggplot(equality_index, aes(y = laws, x = historical)) + 
+  geom_boxplot(aes(fill = historical), alpha = .6) +
+  geom_point(size = .5) +
+  theme(legend.position = "none")
+
+p2 + p1 + p3
+```
+- `laws` is skewed
+- as percent urban increases, laws also increases
+- `dem` and `swing` generally have more laws than `gop`
+
+## Review: Poisson regression model
+
+- If $Y_i =$ # of events in a fixed interval of time/space, then $Y_i \sim \text{Poisson}(\lambda)$ 
+
+
+- This leads to the Poisson regression model for counts:
+
+    $$\log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p$$
+    or equivalently
+    
+
+## Assumptions
+
+1. **Linearity**: the log of the mean of Y, $\log(\lambda)$, must be a linear function of the predictors
+
+2. **Mean = Variance**: the mean of a Poisson random variable must be equal to its variance
+
+3. **Independence**: the observations must be independent
+
+## Model fitting {.smaller}
+
+```{r echo=TRUE}
+full_glm <- glm(laws ~ percent_urban + historical,
+            data = equality_index,
+            family = poisson)
+summary(full_glm)
+```
+
+## Pearson residuals
+
+$$Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}}$$
+
+
+```{r}
+ggResidpanel::resid_xpanel(full_glm, type = "pearson")
+```
+
+
+## For Poisson model
+
+$$Pres_i = \frac{Y_i - \hat \mu_i}{\widehat{SD(Y_i)}}$$
+
+- Mean = $\hat \lambda$, SD = $\sqrt{\hat \lambda}$
+- Pearson residual: $\frac{Y_i - \hat \lambda_i}{\sqrt{\hat \lambda_i}}$
+- If $\hat\lambda$'s are "big" ($\ge 5$), Pearson residuals are $\approx N(0,1)$ if Poisson model is correct. Can use to diagnose problems with linearity
+- If overdispersed, then SD of Pearson residuals is $>1$
+
+## Goodness of Fit test
+
+We want a formal way to test whether our Poisson model is a good fit for the data, or if it leaves a significant amount of variation unexplained.
+
+* **$H_0$:** The Poisson model fits the data adequately.
+* **$H_A$:** The Poisson model is deficient (a more complex, saturated model is required).
+
+The **Residual Deviance** ($G^2$) serves as our test statistic:
+$$G^2 = 2 \sum_{i=1}^n \left[ y_i \log\left(\frac{y_i}{\hat{\lambda}_i}\right) - (y_i - \hat{\lambda}_i) \right]$$
+
+* Under $H_0$, $G^2$ follows an approximate $\chi^2$ distribution with $df = n - p - 1$.
+* A very small $p$-value means we reject $H_0$, indicating poor fit (often due to overdispersion).
+
+## Are means big enough for GoF test? 
+
+```{r}
+summary(predict(full_glm, type = "response"))
+```
+
+
+## Quasipoisson model 
+
+```{r}
+full_quasi <- glm(laws ~ percent_urban + historical,
+            data = equality_index,
+            family = quasipoisson)
+summary(full_quasi)
+```
+
+## Pearson residuals
+
+```{r}
+ggResidpanel::resid_xpanel(full_quasi, type = "pearson")
+```
+
+## Studentized residuals
+
+Pearson residuals tell us how many standard deviations an observation falls from its predicted mean, but they don't account for **leverage** ($h_i$). 
+
+$$r_i = \frac{Pres_i}{\sqrt{1 - h_i}} = \frac{Y_i - \hat{\lambda}_i}{\sqrt{\hat{\lambda}_i(1 - h_i)}}$$
+
+* **Why adjust for leverage?** Points with extreme predictor values (high leverage) naturally force the model line close to them, artificially shrinking their raw and Pearson residuals.
+* **Interpretation:** If the model assumptions hold, studentized residuals should be roughly normally distributed with a standard deviation of 1. 
+* Look out for any extreme outliers where $|r_i| > 3$.
+
+## Inference for coefficients
+
+Under the Poisson model, we can perform inference on our slopes ($\beta_j$) using **Wald tests** and standard normal critical values ($z^*$).
+
+### Testing $H_0: \beta_j = 0$
+The test statistic is a $z$-score rather than a $t$-statistic:
+$$z = \frac{\hat{\beta}_j}{SE(\hat{\beta}_j)} \sim N(0,1)$$
+
+### Confidence Intervals
+We construct intervals on the **log (link) scale** first, then exponentiate:
+$$\text{Scale of Log-Means:} \quad \hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)$$
+$$\text{Scale of Rate Ratios:} \quad e^{\hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)}$$
+
+* **Interpretation:** We are $(1-\alpha)\times100\%$ confident that a 1-unit increase in $X_j$ is associated with a multiplicative change in the expected count by a factor between $e^L$ and $e^U$, holding all other variables constant.
+
+## Inference for $\lambda$
+
+
+1. Compute the predicted value and standard error on the **link (log) scale**:
+   $$\hat{\eta} = \hat{\beta}_0 + \hat{\beta}_1 X_1 + \dots + \hat{\beta}_p X_p$$
+2. Build the interval on the log scale: $[\hat{\eta} - z^*SE, \,\, \hat{\eta} + z^*SE]$
+3. Exponentiate the endpoints to map back to the **original count scale**:
+   $$\left[ e^{\hat{\eta} - z^*SE}, \,\, e^{\hat{\eta} + z^*SE} \right]$$
+
+In R:
+
+```r
+predict(model, newdata = data.frame(x = ...), type = "link", se.fit = TRUE)
+```
+
+
+## Likelihood Ratio Test
+
+When we want to test a collection of slopes simultaneously (e.g., evaluating whether the multi-level categorical variable `historical` can be dropped entirely), we use a **Likelihood Ratio Test (LRT)**.
+
+$$\Delta G^2 = G^2_{\text{Reduced}} - G^2_{\text{Full}}$$
+
+* **Standard Poisson GLM:** We compare $\Delta G^2$ to a $\chi^2$ distribution with $df = \Delta p$.
+
+```{r}
+#| eval: false
+
+anova(reduced_glm, full_glm, test = "Chisq")
+```
+
+* **Quasipoisson GLM**: 🛑 We cannot use the standard $\chi^2$ distribution because the variance has been inflated by $\hat{\phi}$. Instead, we scale the drop in deviance and perform an F-test: $$F = \frac{\Delta G^2 / \Delta p}{\hat{\phi}}$$
+
+R automatically handles the scale adjustment when you ask for test = "F":
+
+```{r}
+#| eval: false
+anova(reduced_quasi, full_quasi, test = "F")
+```
+
