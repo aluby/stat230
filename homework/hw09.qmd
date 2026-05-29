@@ -80,7 +80,35 @@ gf_jitter(y ~ Bark, data = possums, width = .25, height = .25) |>
 
 **6.** Suppose a newly surveyed forest site has a bark quality index of `Bark = 15`. Use your Poisson regression model to calculate the predicted mean number of possum species ($\hat{\mu}$) for this site. Be careful with your scales!
 
-# Problem 2: Fri
+# Problem 2: More `possums`
+
+**1.** As discussed last class, the variable `y` can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot `log(y+1)` vs. each of the predictors and describe what you see. (Starter code below to save you time)
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+
+p1 <- gf_jitter(y ~ Acacia, data = possums, width = .15, height = .15)
+p2 <- gf_jitter(y ~ Bark, data = possums, width = .15, height = .15)
+p3 <- gf_jitter(y ~ Habitat, data = possums, width = .15, height = .15)
+p4 <- gf_jitter(y ~ Shrubs, data = possums, width = .15, height = .15)
+p5 <- gf_jitter(y ~ Stags, data = possums, width = .15, height = .15)
+p6 <- gf_jitter(y ~ Stumps, data = possums, width = .15, height = .15)
+
+p1 + p2 + p3 + p4 + p5 + p6
+```
+
+**2.** Fit the quasipoisson regression model using `y` as the response variable and include all the other predictors as main effects. The estimated dispersion parameter is less than one; argue that using the "regular" Poisson model will give more a conservative (cautious) assessment of uncertainty.
+
+**3.** Refit the model above, now using the standard Poisson model (setting $\phi = 1$). Interpret the estimated effect of the number of hollow trees (`Stags`).
+
+**4.** Give a 95% confidence interval for the effect of the number of hollow trees on the mean number of species.
+
+**5.** Take a look at the fitted values (the estimated means). Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Deviance Goodness of Fit test?
+
+**6.** Drop `Acacia`, `Shrubs`, and `Stumps` from your model. On the basis of the likelihood ratio test, is there evidence against this reduced model?
+
+**7.** Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of stumps is 10. Give a 95% confidence interval for this estimate by treating the $\log(\hat{\mu})$ as approximately normally distributed. Why is this justified?
 
 # Problem 3: Reflections
 
