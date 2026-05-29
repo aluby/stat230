@@ -74,7 +74,7 @@
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/activities/27-poisson.html</loc>
-    <lastmod>2026-03-25T13:01:22.006Z</lastmod>
+    <lastmod>2026-05-29T16:06:56.639Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/readings/r-functions-reference.html</loc>
@@ -82,7 +82,7 @@
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/readings/revisions.html</loc>
-    <lastmod>2026-05-11T18:35:58.995Z</lastmod>
+    <lastmod>2026-05-29T15:55:37.896Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/readings/exam01-review.html</loc>
@@ -149,68 +149,72 @@
     <lastmod>2026-04-03T14:42:34.874Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/slides/slides26.html</loc>
-    <lastmod>2026-05-27T17:55:10.061Z</lastmod>
+    <loc>https://aluby.github.io/stat230/slides/slides27.html</loc>
+    <lastmod>2026-05-29T15:53:07.479Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/slides/slides19.html</loc>
-    <lastmod>2026-05-11T18:00:21.266Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/slides/slides09.html</loc>
-    <lastmod>2026-04-17T18:40:25.575Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/slides/slides20.html</loc>
-    <lastmod>2026-05-13T18:22:15.207Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/slides/slides22.html</loc>
-    <lastmod>2026-05-19T19:56:04.891Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/index.html</loc>
-    <lastmod>2026-03-25T13:01:22.007Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/finished/11-mlr-inference-finished.html</loc>
-    <lastmod>2026-04-22T13:04:48.565Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/slides.html</loc>
-    <lastmod>2026-04-10T18:16:33.348Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/readings.html</loc>
-    <lastmod>2026-03-30T20:24:57.101Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/finished/26-poisson-intro.html</loc>
-    <lastmod>2026-05-27T14:21:12.528Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/finished/14-multicollinearity-finished.html</loc>
-    <lastmod>2026-04-29T13:56:24.619Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/slides/slides23.html</loc>
-    <lastmod>2026-05-20T15:38:25.688Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/slides/slides08.html</loc>
-    <lastmod>2026-04-15T18:33:54.832Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aluby.github.io/stat230/slides/slides21.html</loc>
-    <lastmod>2026-05-15T18:31:37.905Z</lastmod>
+    <loc>https://aluby.github.io/stat230/slides/slides24.html</loc>
+    <lastmod>2026-05-22T14:10:51.415Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/slides/slides-cheat-sheet.html</loc>
     <lastmod>2026-03-25T13:01:22.008Z</lastmod>
   </url>
   <url>
-    <loc>https://aluby.github.io/stat230/slides/slides24.html</loc>
-    <lastmod>2026-05-22T14:10:51.415Z</lastmod>
+    <loc>https://aluby.github.io/stat230/slides/slides21.html</loc>
+    <lastmod>2026-05-15T18:31:37.905Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/slides/slides08.html</loc>
+    <lastmod>2026-04-15T18:33:54.832Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/slides/slides23.html</loc>
+    <lastmod>2026-05-20T15:38:25.688Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/finished/14-multicollinearity-finished.html</loc>
+    <lastmod>2026-04-29T13:56:24.619Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/finished/26-poisson-intro.html</loc>
+    <lastmod>2026-05-29T14:59:40.264Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/readings.html</loc>
+    <lastmod>2026-03-30T20:24:57.101Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/slides.html</loc>
+    <lastmod>2026-04-10T18:16:33.348Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/finished/11-mlr-inference-finished.html</loc>
+    <lastmod>2026-04-22T13:04:48.565Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/index.html</loc>
+    <lastmod>2026-03-25T13:01:22.007Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/slides/slides22.html</loc>
+    <lastmod>2026-05-19T19:56:04.891Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/slides/slides20.html</loc>
+    <lastmod>2026-05-13T18:22:15.207Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/slides/slides09.html</loc>
+    <lastmod>2026-04-17T18:40:25.575Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/slides/slides19.html</loc>
+    <lastmod>2026-05-11T18:00:21.266Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aluby.github.io/stat230/slides/slides26.html</loc>
+    <lastmod>2026-05-27T17:55:10.061Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/slides/slides02.html</loc>
@@ -270,7 +274,7 @@
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/homework/hw09.html</loc>
-    <lastmod>2026-05-27T18:31:56.700Z</lastmod>
+    <lastmod>2026-05-27T18:42:14.060Z</lastmod>
   </url>
   <url>
     <loc>https://aluby.github.io/stat230/readings/exam03-review.html</loc>
