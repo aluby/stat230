@@ -110,7 +110,7 @@ p1 + p2 + p3 + p4 + p5 + p6
 
 **6.** Drop `Acacia`, `Shrubs`, and `Stumps` from your model. On the basis of the likelihood ratio test, is there evidence against this reduced model?
 
-**7.** Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of stumps is 10. Give a 95% confidence interval for this estimate by treating the $\log(\hat{\mu})$ as approximately normally distributed. Why is this justified?
+**7.** Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of ~~stumps~~ stags is 10. Give a 95% confidence interval for this estimate by treating the $\log(\hat{\mu})$ as approximately normally distributed. Why is this justified?
 
 # Problem 3: Reflections
 
