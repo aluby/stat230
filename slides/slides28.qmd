@@ -83,7 +83,33 @@ news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent,
 
 ## What is a lightning talk? 
 
-## Data Overview
+:::: {.columns}
+
+::: {.column width="60%"}
+**Is:** 
+
+- An appetizer
+- A movie trailer
+- A way to get us interested in your research question
+- A work in progress
+- A chance for you to get targeted feedback
+:::
+
+::: {.column width="40%"}
+
+**Is not**:
+
+- The full meal
+- The entire movie
+- Everything you have done to this point
+- Your final analysis
+- A way to get a pre-grade
+:::
+
+::::
+
+
+## Data Overview Slide
 
 ::: {.panel-tabset}
 
@@ -97,7 +123,7 @@ news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent,
 
 :::
 
-## Model
+## Model Slide
 
 ::: {.panel-tabset}
 
@@ -111,7 +137,7 @@ news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent,
 
 :::
 
-## One cool thing
+## "One thing" slide
 
 ::: {.panel-tabset}
 
@@ -201,8 +227,12 @@ news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent,
 ## Other tips
 
 - You cannot successfully "wing" a 3 minute talk, especially as a group. 
-- Practice together at least twice
+- Practice together at least twice 
 - This is a work in progress! Your graphs do not need to be perfect (but they do need to be readable) 
 - *no code* unless there is a specific question/thing you want to mention
 
 ## Your role as an audience member
+
+- Be respectful: no open computers or side tasks
+- Ask a question or provide an answer to a presenter's question at least once
+- Think about how your experience can help the presenters', but also how you can learn from the different groups

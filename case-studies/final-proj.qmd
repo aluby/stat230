@@ -147,10 +147,10 @@ For this project you may NOT use the following resources:
 
 *Note:* I recommend going through this checklist as a team before your final submission
 
-- Title and authors (5%) 
+- Title and authors (2%) 
     - [ ] Has a title and lists the authors
     - [ ] Informative and engaging
-- Abstract (5%)
+- Abstract (3%)
     - [ ] A brief, one-paragraph executive summary of the problem and your findings (200 words or fewer).
 - Introduction (10%)
     - [ ] Introduces and motivates the topic being addressed
@@ -164,22 +164,28 @@ For this project you may NOT use the following resources:
 help establish the context of your data.
     - [ ] At least one visual summary that directly connects to the model
     - [ ] Describes the data accurately and concisely 
-- Results (40%) 
+- Methods (15%)
+    - [ ] Methods are appropriate for the research question(s) and data structure
+    - [ ] Clearly and correctly states the theoretical model
+    - [ ] Summarizes the strategy for model selection (not every model tried)
+    - [ ] If transformations or removal of observations are applied, justification is provided (and refer to appropriate diagnostic plot in appendix)
+    - [ ] References the appendix for diagnostics and additional details
+- Results (25%) 
     - [ ]  Focus is on conveying the results of the analysis and is not a step-by-step description
-    - [ ] Model building process is appropriate and discussed
+    - [ ] Presents fitted model using correct notation and context
+    - [ ] Includes a polished coefficient table (estimates, SE, test results and/or CI's)
+    - [ ] Includes a summary of inferential results (SE's, CI's, tests) relevant to the research question
     - [ ] Statistical inference is appropriately performed
-      - A complete model statement is given (give the equation!)
-      - An appropriate model is chosen
-      - Model assumptions are assessed and satisfactory 
-      - Estimates and uncertainties (confidence intervals) of model coefficients
-are given and *both* are interpreted in context
-      - The model and estimates are interpreted correctly and in the context
-of the question being addressed
-      - Technical language is used correctly
-- Discussion (15%)
+    - [ ] All technical language is used correctly
+- Discussion (10%)
     - [ ] Summarizes the main findings and answers the question posed in the introduction (no new results should appear here!)
     - [ ] Describes any limitations of your analysis and any necessary caveats
     - [ ] Describes any follow-up questions that would be interesting to investigate
+- Report appendix (included in your PDF) (5%)
+    - [ ] Includes justification that selected model is appropriate
+    - [ ] Contains relevant diagnostics, figures, or tables
+    - [ ] No unnecessary/irrelevant content is included
+    - [ ] Omits unnecessary model selection details
 - Quarto appendix (separate file) (5%)
     - [ ] R code used for the analysis is shown and implemented correctly, using general conventions from class
     - [ ] R code is approximately ordered as the results are presented in the report
@@ -187,6 +193,7 @@ of the question being addressed
   - [ ] A separate references section is included, with any standard citation style
   - [ ] The report is structured according to the instructions
   - [ ] The text is neatly presented, broken into readable paragraphs and laid out in a coherent manner
+  - [ ] All figures and tables are clean, labeled, captioned, appropriately sized, referenced in the text, and relevant
   - [ ] Peer evaluations were completed for group members and satisfactory from group members
 
 # Questions?
