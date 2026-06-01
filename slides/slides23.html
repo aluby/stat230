@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Overdispersion and the Quasibinomial model</title>
@@ -515,7 +515,7 @@ AIC: 237.72</code></pre>
 </div>
 </div>
 
-<img data-src="slides23_files/figure-html/unnamed-chunk-14-1.png" width="768" class="r-stretch"><div class="fragment">
+<img data-src="slides23_files/figure-revealjs/unnamed-chunk-14-1.png" width="768" class="r-stretch"><div class="fragment">
 <p>→ These Pearson residuals are too variable</p>
 </div>
 </section>
@@ -523,7 +523,7 @@ AIC: 237.72</code></pre>
 <h2></h2>
 <p>In linear regression, the mean model (<span class="math inline">\(\mu_y\)</span>) and the variance term (<span class="math inline">\(\epsilon\)</span>) are independent. We can have points that are tightly clustered along the line or widely spread and both models are equally “valid”</p>
 
-<img data-src="slides23_files/figure-html/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
+<img data-src="slides23_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
 <section id="section-3" class="slide level2">
 <h2></h2>
 <p>In binomial logistic regression, the variance term is related to the mean model through a mathematical relationship:</p>
@@ -936,6 +936,44 @@ languageMonolingual 0.1148159 9.750352e-01</code></pre>
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

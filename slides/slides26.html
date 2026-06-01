@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Intro to Poisson Regression</title>
@@ -226,7 +226,7 @@ Prof Amanda Luby
 <section id="eda" class="slide level2">
 <h2>EDA</h2>
 
-<img data-src="slides26_files/figure-html/unnamed-chunk-2-1.png" width="768" class="r-stretch"><ul>
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-2-1.png" width="768" class="r-stretch"><ul>
 <li><code>laws</code> is skewed</li>
 <li>as percent urban increases, laws also increases</li>
 <li><code>dem</code> and <code>swing</code> generally have more laws than <code>gop</code></li>
@@ -235,7 +235,7 @@ Prof Amanda Luby
 <section id="eda-log-scale" class="slide level2">
 <h2>EDA (log scale)</h2>
 
-<img data-src="slides26_files/figure-html/unnamed-chunk-3-1.png" width="768" class="r-stretch"><ul>
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-3-1.png" width="768" class="r-stretch"><ul>
 <li><code>log(laws)</code> is still a little skewed</li>
 <li><code>log(laws)</code> and <code>percent_urban</code> is more linear</li>
 <li>if we had states with 0 laws, might have to do <code>log(laws + 1)</code></li>
@@ -253,22 +253,22 @@ Prof Amanda Luby
 2 percent_urban   0.0418    0.0106      3.95 0.000255</code></pre>
 </div>
 </div>
-<img data-src="slides26_files/figure-html/unnamed-chunk-4-1.png" width="672" class="r-stretch"></section>
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
 <section id="section" class="slide level2">
 <h2></h2>
 
-<img data-src="slides26_files/figure-html/unnamed-chunk-5-1.png" width="672" class="r-stretch"><div class="fragment">
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"><div class="fragment">
 <p>→ some remaining nonlinearity, but is it worth going the transformation route? Why might we prefer a different model entirely?</p>
 </div>
 </section>
 <section id="assumed-slr-model-simulated-data" class="slide level2">
 <h2>Assumed SLR model (simulated data)</h2>
 
-<img data-src="slides26_files/figure-html/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
 <section id="model-for-count-data" class="slide level2">
 <h2>Model for count data</h2>
 
-<img data-src="slides26_files/figure-html/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
 <section id="generalized-linear-model" class="slide level2">
 <h2>Generalized linear model</h2>
 <div class="fragment" data-fragment-index="1">
@@ -352,7 +352,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides26_files/figure-html/unnamed-chunk-8-1.png" style="width:100.0%"></p>
+<p><img data-src="slides26_files/figure-revealjs/unnamed-chunk-8-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -688,6 +688,44 @@ Number of Fisher Scoring iterations: 5</code></pre>
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
