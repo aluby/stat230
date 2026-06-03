@@ -62,6 +62,19 @@ One quantitative variable separated and colored by a categorical variable:
 gf_boxplot(temp_actual ~ weekend, data = bikes, fill = ~weekend)
 ```
 
+One quantitative variable separated by a categorical variable and colored by a categorical variable:
+
+
+```{r}
+gf_boxplot(temp_actual ~ season, data = bikes, fill = ~weekend)
+```
+
+One quantitative variable with three categorical variables 
+
+```{r}
+gf_boxplot(temp_actual ~ season | holiday, data = bikes, fill = ~weekend)
+```
+
 ### Scatterplot
 
 ```{r}
