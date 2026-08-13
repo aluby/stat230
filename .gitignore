@@ -9,7 +9,7 @@
 # Quarto working directory (stores temporary rendering files)
 /.quarto/
 
-# Rendered website output 
+# Rendered website output
 /_site/
 
 /_freeze/
@@ -17,3 +17,5 @@
 .DS_Store
 
 *-sols.qmd
+
+/.luarc.json

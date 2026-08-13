@@ -49,7 +49,7 @@ A 2021 article in *Pediatrics* ("Baby’s First Years: Design of a Randomized Co
   
   (d) How could the researchers decrease the probability that they make the type of error in (c)?
   
-# Problem 2: Regression
+# Problem 2: Runoff
 
 One factor affecting water availability in Southern California is stream runoff from snowfall.
 If runoff could be predicted, engineers, planners, and policy makers could do their jobs more
@@ -60,12 +60,14 @@ California (due east of San Jose) with snowfall (in inches) at a site in the Sie
 mountains. For each of the following questions, assume that your audience is city water
 planners with moderate statistical training.
 
+(a) First, write down the theoretical population regression model. Specify what all variables correspond to, and make sure to include the error term! 
+
 ```{r}
 #| echo: false
 runoff <- read.csv(here(here(), "data/runoff.csv"))
 ```
 
-(a) Below is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).
+(b) Below is a scatterplot of stream runoff against snowfall. Comment on the apparent relationship (strength, shape, direction).
 
 ```{r}
 #| echo: false
@@ -83,19 +85,19 @@ ggplot(runoff, aes(x = Precip, y = Runoff)) +
 ```
 
 
-(b) Below is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.
+(c) Below is the summary table produced when I fit the regression of the expected runoff given snowfall. Write the fitted regression equation. Be sure to use proper notation.
 
 ```{r}
 lm(Runoff ~ Precip, data = runoff) |> tidy()
 ```
 
 
-(c)  Interpret the slope coefficient in the context of the problem. (Don’t forget to specify
+(d)  Interpret the slope coefficient in the context of the problem. (Don’t forget to specify
 units.)
 
-(d) Interpret the intercept in the context of the problem. (Don’t forget to specify units.)
+(e) Interpret the intercept in the context of the problem. (Don’t forget to specify units.)
 
-(e) If one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t
+(f) If one winter the site received 10 inches of snowfall, how much runoff is expected? (Don’t
 forget to specify units.)
 
 

@@ -419,6 +419,11 @@ library(broom)
 tidy(mod)
 ```
 
+::: callout-tip
+## Try it: 
+
+Verify the test statistic for $H_0: \beta_1 = 0$ against $H_A: \beta_1 \ne 0$.
+:::
 
 ## Example: 90% confidence interval for $\beta_1$
 

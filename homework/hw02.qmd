@@ -51,16 +51,32 @@ ggplot(runoff, aes(x = Precip, y = Runoff)) +
 Below is the summary table produced when I fit the regression of the expected runoff given snowfall.
 
 ```{r}
+#| include: false
 lm(Runoff ~ Precip, data = runoff) |> summary()
 ```
 
-(a) Calculate a 80% confidence interval for the slope coefficient. Show your work.
+```
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  27014.6     ______   8.393 1.93e-10 ***
+Precip        3752.5      215.7   _____  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(b) Interpret the confidence interval you calculated in part (b) in the context of the problem
+Residual standard error: 8922 on 41 degrees of freedom
+Multiple R-squared:  0.8807,	Adjusted R-squared:  0.8778 
+F-statistic: 302.6 on 1 and 41 DF,  p-value: < 2.2e-16
+```
 
-(c) Based on your confidence interval in (b), is there convincing evidence of a relationship between snowfall and runoff? Explain. 
+(a) Fill in the missing blanks (`______`) in the table
 
-(d) The first data point in the dataset $(x_1, y_1)$ has `Precip = 6.47` and `Runoff = 54235`. Find $\hat{y}_1$ and $\epsilon_1$
+(b) Calculate a 80% confidence interval for the slope coefficient. Show your work.
+
+(c) Interpret the confidence interval you calculated in part (b) in the context of the problem
+
+(d) Based on your confidence interval in (b), is there convincing evidence of a relationship between snowfall and runoff? Explain. 
+
+(e) The first data point in the dataset $(x_1, y_1)$ has `Precip = 6.47` and `Runoff = 54235`. Find $\hat{y}_1$ and $\epsilon_1$
 
 # Problem 2: Hubble (again) 
 
@@ -146,6 +162,13 @@ res[-1]
 The data set below was collected by Educational Testing Services (ETS) and consists of 1,000 randomly selected students at an unnamed college. We are interested in predicting first year GPA (`FYGPA`) from the sum of the verbal and math percentiles (`SATSum`). Load the data with the following code: 
 
 ```{r}
+#| include: false
+
+runoff <- read.csv(here(here(), "data/satGPA.csv"))
+```
+
+```{r}
+#| eval: false
 sat_gpa <- read.csv("http://aluby.github.io/stat230/data/satGPA.csv")
 ```
 
@@ -177,6 +200,8 @@ For each part of this question, use the provided residual plots to determine whe
 
 ![](img/hw2q5d.png)
 
+(e) Using the residual plots, provide a sketch of what the original X-Y scatterplot looked like for each of (a)-(d)
+
 # Problem 8: Animals metabolic rate
 
 The following data comes from *Statistical Sleuth* Chapter 8. The data are the average mass, metabolic rate, and lifespan for 95 species of mammals. [Kleiber’s law](https://en.wikipedia.org/wiki/Kleiber%27s_law) states that the metabolic rate of an animal species, on average, is proportional to its mass raised to the power of 3/4.
@@ -193,4 +218,5 @@ head(animals)
 (c)  Plot the residuals from the model in part (b) vs. the mass. To see what is going on more easily, also plot the residuals vs. the log(mass). Are the SLR conditions satisfied?
 
 (d) Make a plot of the log(metablic rate) vs. the log(mass) with a regression line overlaid. Compare with the plot in (a). Do you think this scatterplot will be better or worse in terms of meeting the SLR conditions than the plot in (a)? (you do not need to fit this model)
+
 
