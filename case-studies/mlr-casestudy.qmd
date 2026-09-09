@@ -95,6 +95,7 @@ The exact formula has evolved over time, but the goal of this project is to buil
 To load the NASCAR driver dataset:
 
 ```{r}
+#| eval: false
 nascar <- read.csv("https://aluby.github.io/stat230/data/nascar_driver_statistics.csv") 
 ```
 
