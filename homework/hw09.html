@@ -239,7 +239,7 @@ Note
 <h1>Problem 2: More <code>possums</code></h1>
 <p><strong>1.</strong> As discussed last class, the variable <code>y</code> can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot <code>log(y+1)</code> vs.&nbsp;each of the predictors and describe what you see. (Starter code below to save you time)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork) </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Acacia, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Bark, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
@@ -252,7 +252,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hw09_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="hw09_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Six jittered scatterplots, each with the count response y on the y-axis and one predictor on the x-axis: Acacia, Bark, Habitat, Shrubs, Stags, and Stumps." width="768"></p>
 </figure>
 </div>
 </div>

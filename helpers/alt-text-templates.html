@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Homework 08 – stat230</title>
+<title>alt-text-templates – stat230</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -104,44 +104,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.scss">
 </head>
 
-<body class="quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">stat230</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../slides.html"> 
+<span class="menu-text">Slides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../readings.html"> 
+<span class="menu-text">Readings</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -149,145 +167,228 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#problem-1-tires" id="toc-problem-1-tires" class="nav-link active" data-scroll-target="#problem-1-tires">Problem 1: Tires</a></li>
-  <li><a href="#problem-2-checking-conditions" id="toc-problem-2-checking-conditions" class="nav-link" data-scroll-target="#problem-2-checking-conditions">Problem 2: Checking conditions</a></li>
-  <li><a href="#problem-3-budworm" id="toc-problem-3-budworm" class="nav-link" data-scroll-target="#problem-3-budworm">Problem 3: budworm</a></li>
-  <li><a href="#problem-4-monday" id="toc-problem-4-monday" class="nav-link" data-scroll-target="#problem-4-monday"><del>Problem 4: Monday</del></a></li>
-  <li><a href="#problem-5-4-wednesday" id="toc-problem-5-4-wednesday" class="nav-link" data-scroll-target="#problem-5-4-wednesday">Problem <del>5</del> 4: Wednesday</a></li>
-  <li><a href="#problem-6-5-case-study-5-points-each" id="toc-problem-6-5-case-study-5-points-each" class="nav-link" data-scroll-target="#problem-6-5-case-study-5-points-each">Problem <del>6</del> 5: Case Study (5 points each)</a></li>
+  <li><a href="#alt-text-templates-for-stat-230-figures" id="toc-alt-text-templates-for-stat-230-figures" class="nav-link active" data-scroll-target="#alt-text-templates-for-stat-230-figures">Alt-text templates for STAT 230 figures</a>
+  <ul class="collapse">
+  <li><a href="#the-principle" id="toc-the-principle" class="nav-link" data-scroll-target="#the-principle">The principle</a></li>
+  <li><a href="#core-plot-templates" id="toc-core-plot-templates" class="nav-link" data-scroll-target="#core-plot-templates">Core plot templates</a></li>
+  <li><a href="#diagnostic-plots-keep-these-especially-bland" id="toc-diagnostic-plots-keep-these-especially-bland" class="nav-link" data-scroll-target="#diagnostic-plots-keep-these-especially-bland">Diagnostic plots (keep these especially bland)</a></li>
+  <li><a href="#model-effect-prediction-plots" id="toc-model-effect-prediction-plots" class="nav-link" data-scroll-target="#model-effect-prediction-plots">Model-effect / prediction plots</a></li>
+  <li><a href="#add-on-phrases-append-to-any-template-above" id="toc-add-on-phrases-append-to-any-template-above" class="nav-link" data-scroll-target="#add-on-phrases-append-to-any-template-above">Add-on phrases (append to any template above)</a></li>
+  <li><a href="#screenshots" id="toc-screenshots" class="nav-link" data-scroll-target="#screenshots">Screenshots</a></li>
+  <li><a href="#mechanics" id="toc-mechanics" class="nav-link" data-scroll-target="#mechanics">Mechanics</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Homework 08</h1>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Due: Friday of Week 8 at start of class</p>
-<p>There is a <a href="../files/hw-template.pdf">homework template</a> available if you’d like to use that as a starter file, and copy and paste the code as needed.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Important!
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Please attempt Case Study problems before class on Friday of Week 8</p>
-</div>
-</div>
-<section id="problem-1-tires" class="level1">
-<h1>Problem 1: Tires</h1>
-<blockquote class="blockquote">
-<p>The Ford Explorer is a popular sports utility vehicle made int he US and sold throughout the world. Early in its production, concern arose ove ra potential accident risk associated with tires of the prescribed size when the vehicle was carrying heavy loads, but the risk was thought to be acceptable if a low tire pressure was recommended. The problem was apparently exacerbated by a particular type of Firestone tire that was overly prone to read separation, especially in warm temperatures. This type of tire was a common one used on Explorers in model years 1995 and later. By the end of 1999 more than 30 lawsuits had been filed over accidents that were thought to be associated with this problem. US federal data on fatal car accidents were analyzed at that time, showing that the odds of a fatal accident being associated with tire failure were three times as great for Explorers as for other SUVs. Additional data from 1999 and other variables may be used to further explore the odds ratio.</p>
-</blockquote>
-<p>Load the data with:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tires <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex2018[<span class="sc">-</span><span class="dv">1</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ol type="a">
-<li>The excerpt below is from the <em>Statistical Sleuth</em>. What is the response varibale and what are the predictor variables?</li>
-</ol>
-<blockquote class="blockquote">
-<p>It is of interest to see whether the odds that a fatal accident is tire-related depend on whether the vehicle is a Ford, after accounting for the age of the car and the number of passengers.</p>
-</blockquote>
-<ol start="2" type="a">
-<li>The following is also from the <em>Sleuth</em> textbook. Which predictor and transformation does this suggest using?</li>
-</ol>
-<blockquote class="blockquote">
-<p>Since many car owners replace their tires after the car is 3-5 years old, we may expect the odds of tire failure to increase with age up to a certain point, then perhaps to decrease after that.</p>
-</blockquote>
-<ol start="3" type="a">
-<li>The book also suggests an interaction between vehicle type and number of passengers. Explain why this graph suggests an interaction between vehicle type (make) and number of passengers in the model for odds of tire failure.</li>
-</ol>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Make <span class="sc">~</span> Passengers, <span class="at">col =</span> <span class="sc">~</span>Cause, <span class="at">data =</span> tires)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="hw08_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="Boxplots of Passengers, one for each level of Make, colored by Cause." width="576"></p>
-</figure>
-</div>
-</div>
-</div>
-<ol start="4" type="a">
-<li><p>Fit the logistic regression of the cause of tire failure on age, age<span class="math inline">\(^2\)</span>, the number of passengers, vehicle make, and the interaction of passengers and make. Write down the separate fitted log odds model for Fords and non-Ford vehicles.</p></li>
-<li><p>What is the effect of vehicle type on the odds of tire failure? Give your answer as an odds ratio <strong>formula</strong> involving model coefficients and the variable passengers (i.e., the answer is a function of the number of passengers). Clearly state what the odds ratio is measuring (odds of ? for make xxx vs.&nbsp;make yyy)</p></li>
-<li><p>Compute the odds ratios from part (d) for passenger levels of 0, 1, 2, 3, and 4 passengers. Explain what these odds ratios tell you about tire-related accidents, vehicle type, and number of passengers.</p></li>
-</ol>
+<section id="alt-text-templates-for-stat-230-figures" class="level1">
+<h1>Alt-text templates for STAT 230 figures</h1>
+<section id="the-principle" class="level2">
+<h2 class="anchored" data-anchor-id="the-principle">The principle</h2>
+<p>Describe <em>structure</em>, not <em>findings</em>. Say “a fitted line is overlaid,” not “the points follow the line.” Say “residuals against fitted values,” not “a funnel pattern.” Anything a student is meant to judge (linearity, constant variance, normality, outliers, whether groups differ, whether a transformation helps) stays out of the alt text.</p>
 </section>
-<section id="problem-2-checking-conditions" class="level1">
-<h1>Problem 2: Checking conditions</h1>
-<p>Use the model you fit in Problem 1.</p>
-<ol type="a">
-<li><p>Create a binned residual plot. Which condition does this address and does it appear to be satisfied?</p></li>
-<li><p>Create a plot of Pearson residuals against each predictor variable. Which condition does this address and does it appear to be satisfied?</p></li>
-<li><p>The data consists of fatal accidents reported to the US federal government. Describe a scenario in which this dataset might violate the independence assumption.</p></li>
-</ol>
+<section id="core-plot-templates" class="level2">
+<h2 class="anchored" data-anchor-id="core-plot-templates">Core plot templates</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Figure</th>
+<th>Code it maps to</th>
+<th>Template</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Scatterplot</td>
+<td><code>gf_point(Y ~ X)</code></td>
+<td><code>Scatterplot with {X} on the x-axis and {Y} on the y-axis.</code></td>
+</tr>
+<tr class="even">
+<td>Scatterplot + regression line</td>
+<td><code>gf_point() \|&gt; gf_lm()</code></td>
+<td><code>Scatterplot with {X} on the x-axis and {Y} on the y-axis, with a fitted straight line overlaid.</code></td>
+</tr>
+<tr class="odd">
+<td>Scatterplot + smoother</td>
+<td><code>gf_smooth()</code></td>
+<td><code>Scatterplot with {X} on the x-axis and {Y} on the y-axis, with a smoothed curve overlaid.</code></td>
+</tr>
+<tr class="even">
+<td>Scatterplot + fitted function</td>
+<td><code>gf_fun()</code> / <code>geom_function</code></td>
+<td><code>Scatterplot with {X} on the x-axis and {Y} on the y-axis, with a fitted curve overlaid.</code></td>
+</tr>
+<tr class="odd">
+<td>Jittered scatterplot</td>
+<td><code>gf_jitter()</code></td>
+<td><code>Jittered scatterplot with {X} on the x-axis and {Y} on the y-axis.</code></td>
+</tr>
+<tr class="even">
+<td>Histogram</td>
+<td><code>gf_histogram(~X)</code></td>
+<td><code>Histogram of {X}.</code></td>
+</tr>
+<tr class="odd">
+<td>Boxplot (one variable)</td>
+<td><code>gf_boxplot(~X)</code></td>
+<td><code>Boxplot of {X}.</code></td>
+</tr>
+<tr class="even">
+<td>Side-by-side boxplots</td>
+<td><code>gf_boxplot(Y ~ G)</code></td>
+<td><code>Boxplots of {Y}, one for each level of {G}.</code></td>
+</tr>
+<tr class="odd">
+<td>Bar chart</td>
+<td><code>gf_bar()</code> / <code>geom_bar</code></td>
+<td><code>Bar chart showing the number of observations at each level of {X}.</code></td>
+</tr>
+<tr class="even">
+<td>Stacked/filled bar chart</td>
+<td><code>geom_bar(aes(fill=))</code></td>
+<td><code>Bar chart of {X}, with bars divided by {G}.</code></td>
+</tr>
+<tr class="odd">
+<td>Line plot</td>
+<td><code>gf_line(Y ~ X)</code></td>
+<td><code>Line plot with {X} on the x-axis and {Y} on the y-axis.</code></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="problem-3-budworm" class="level1">
-<h1>Problem 3: budworm</h1>
-<p>An experiment in the 1980’s looked at the levels of resistance to a certain toxin in the adult Budworm, a type of moth. Batches of 20 moths each of each sex were exposed to different doses of pyrethroid <em>trans</em>-cypermethrin and the number in each batch that were dead or knocked down were recorded (<code>numdead</code>).</p>
-<p>You can load the data using the following code:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>budworm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"http://aluby.github.io/stat230/data/budworm.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ol type="a">
-<li><p>We are interested in predicting the probability of a moth dying or being knocked down based on the dose and sex. Create an appropriate EDA to investigate this relationship. What do you conclude?</p></li>
-<li><p>Fit a binomial logistic regression model using <code>sex</code> and <code>dose</code> as predictors of the proportion of moths that were dead or knocked down. Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.</p></li>
-<li><p>Create a plots of the deviance residuals versus the predictors for the model from part (a). Is there any evidence of non-linearity?</p></li>
-<li><p>Fit a binomial logistic regression model using <code>sex</code> and <code>log2(dose)</code> as predictors of the proportion of moths that were dead or knocked down. (Note: <code>log2()</code> is <span class="math inline">\(log_2\)</span>.) Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.</p></li>
-<li><p>Create a plots of the deviance residuals versus the predictors for the model from part (c). Is there any evidence of non-linearity?</p></li>
-</ol>
+<section id="diagnostic-plots-keep-these-especially-bland" class="level2">
+<h2 class="anchored" data-anchor-id="diagnostic-plots-keep-these-especially-bland">Diagnostic plots (keep these especially bland)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Figure</th>
+<th>Code</th>
+<th>Template</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Residuals vs fitted</td>
+<td><code>gf_point(.resid ~ .fitted) \|&gt; gf_hline(yintercept=0)</code></td>
+<td><code>Scatterplot of residuals on the y-axis against fitted values on the x-axis, with a horizontal reference line at zero.</code></td>
+</tr>
+<tr class="even">
+<td>Residuals vs a predictor</td>
+<td><code>gf_point(.resid ~ X)</code></td>
+<td><code>Scatterplot of residuals on the y-axis against {X} on the x-axis, with a horizontal reference line at zero.</code></td>
+</tr>
+<tr class="odd">
+<td>Normal QQ plot of residuals</td>
+<td><code>gf_qq(~.resid) \|&gt; gf_qqline()</code></td>
+<td><code>Normal quantile-quantile plot of the model residuals, with a reference line overlaid.</code></td>
+</tr>
+<tr class="even">
+<td>Histogram of residuals</td>
+<td><code>gf_histogram(~.resid)</code></td>
+<td><code>Histogram of the model residuals.</code></td>
+</tr>
+<tr class="odd">
+<td>Base 4-panel diagnostics</td>
+<td><code>plot(model)</code></td>
+<td><code>A set of four standard regression diagnostic plots for the fitted model.</code></td>
+</tr>
+<tr class="even">
+<td>Scale-location</td>
+<td>—</td>
+<td><code>Scatterplot with fitted values on the x-axis and a function of the residuals on the y-axis.</code></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="problem-4-monday" class="level1">
-<h1><del>Problem 4: Monday</del></h1>
+<section id="model-effect-prediction-plots" class="level2">
+<h2 class="anchored" data-anchor-id="model-effect-prediction-plots">Model-effect / prediction plots</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Figure</th>
+<th>Code</th>
+<th>Template</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Predicted values, one group</td>
+<td><code>plot(ggpredict(...))</code></td>
+<td><code>Plot of model-predicted {Y} on the y-axis against {X} on the x-axis, with a shaded confidence band.</code></td>
+</tr>
+<tr class="even">
+<td>Predicted values, by group</td>
+<td><code>plot(ggpredict(..., terms=c(X, G)))</code></td>
+<td><code>Plot of model-predicted {Y} against {X}, with a separate line and confidence band for each level of {G}.</code></td>
+</tr>
+<tr class="odd">
+<td>Fitted curves compared</td>
+<td>multiple <code>gf_line()</code> overlays</td>
+<td><code>Scatterplot with {X} on the x-axis and {Y} on the y-axis, with {n} fitted curves overlaid.</code></td>
+</tr>
+<tr class="even">
+<td>Empirical log-odds plot</td>
+<td><code>gf_point(log_odds ~ X)</code></td>
+<td><code>Scatterplot with {X} on the x-axis and the empirical log-odds of {Y} on the y-axis.</code> (or, more neutral: <code>...and a transformed version of {Y} on the y-axis.</code>)</td>
+</tr>
+<tr class="odd">
+<td>Coefficient / interval plot</td>
+<td><code>gf_pointrange(estimate + conf.low + conf.high ~ term)</code></td>
+<td><code>Plot showing an estimate and its confidence interval for each model term.</code></td>
+</tr>
+<tr class="even">
+<td>Theoretical distribution overlay</td>
+<td><code>gf_dist("norm")</code>, <code>gf_dhistogram</code></td>
+<td><code>Plot of {X} with a theoretical density curve overlaid.</code></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="problem-5-4-wednesday" class="level1">
-<h1>Problem <del>5</del> 4: Wednesday</h1>
-<blockquote class="blockquote">
-<p>An experiment at the Marine/Freshater Biomedical Sciences Center at Oregon State University investigated the carcinogenic effects of aflatoxicol, a metabolite of Aflatoxin B1, which is a toxic by-product produced by a mold that infects cottonseed meal peanuts, and grains. Twenty tanks of rainbow trout embryos were exposed to one of five doses of Aflatoxicol for one hour. The data below represent the numbers of fish in each tank and the numbers of these that had liver tumors after one year :(</p>
-</blockquote>
-<p>Each row in the dataset represents a separate tank of rainbow trout embryos.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trout <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex2116</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ol type="a">
-<li><p>Make a plot of the empirical log-odds of cancer vs dose. Comment on what you see</p></li>
-<li><p>Now make a plot of the empirical log-odds of cancer vs <span class="math inline">\(1/\sqrt{\text{dose}}\)</span>. Comment on what you see</p></li>
-<li><p>Fit the binomial logistic model for the odds of cancer using <span class="math inline">\(\frac{1}{\sqrt{\text{dose}}}\)</span> as the sole predictor. (<em>Note:</em> to do this, the predictor in the <code>glm</code> command should be written as <code>I(1/sqrt(Dose))</code>) Plot the Pearson residuals vs <span class="math inline">\(\frac{1}{\sqrt{\text{dose}}}\)</span>. Is there evidence of nonlinearity between the log odds and the predictor variable?</p></li>
-<li><p>Give the dose at which your model estimates 50% chance of getting a tumor (<em>Hint:</em> what log-odds does this correspond to?)</p></li>
-<li><p>Refit the model in part (c) using the quasibinomial procedure. Give the dispersion parameter estimate. Compare the standard errors from the quasibinomial model to the standard binomial model.</p></li>
-</ol>
+<section id="add-on-phrases-append-to-any-template-above" class="level2">
+<h2 class="anchored" data-anchor-id="add-on-phrases-append-to-any-template-above">Add-on phrases (append to any template above)</h2>
+<ul>
+<li>Colored by group: <code>Points are colored by {G}.</code></li>
+<li>Faceted: <code>The plot is split into separate panels by {G}.</code></li>
+<li>Multiple stacked panels (e.g.&nbsp;<code>p1 / p2 / p3</code>): <code>Three exploratory plots of {Y} against {X1}, {X2}, and {X3}.</code></li>
+<li>Log scale set up in the question: <code>The x-axis is on a log scale.</code> – skip this if whether-to-transform is the thing being assessed; just describe the plotted variable, e.g.&nbsp;“with log of {X} on the x-axis”.</li>
+<li>Before/after transformation pairs: give both the same skeleton and vary only the variable name (<code>{X}</code> vs <code>log of {X}</code>) so the alt text doesn’t signal which is preferable.</li>
+</ul>
 </section>
-<section id="problem-6-5-case-study-5-points-each" class="level1">
-<h1>Problem <del>6</del> 5: Case Study (5 points each)</h1>
-<ol type="1">
-<li><p>Summarize the main point of the “circles” visualization in the first APM reports article, then construct your own EDA that shows the same main point.</p></li>
-<li><p>Verify the findings of the APM methodology report that claims that the predictors in Group B are not significant after accounting for the predictors in Group A in the logistic model for the probability of a juror being struck by the state.</p></li>
-<li><p>Confirm that your model using predictors in Group A match the coefficients table and the odds ratio table on page 10 of the Methodology report.</p></li>
-</ol>
+<section id="screenshots" class="level2">
+<h2 class="anchored" data-anchor-id="screenshots">Screenshots</h2>
+<p><code>A screenshot of {application} showing {panel/button being pointed to}.</code></p>
+</section>
+<section id="mechanics" class="level2">
+<h2 class="anchored" data-anchor-id="mechanics">Mechanics</h2>
+<ul>
+<li><p>R-generated figure: add a chunk option</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-alt: "Scatterplot with critic score on the x-axis and audience score on the y-axis."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Markdown image: <code>![](img.png){fig-alt="..."}</code></p></li>
+<li><p>Quarto sets <code>fig-alt</code> per chunk only, so multi-plot chunks share one alt string – split the chunk if each plot needs its own.</p></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
