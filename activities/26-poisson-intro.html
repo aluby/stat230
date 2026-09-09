@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -195,7 +195,8 @@ window.Quarto = {
 <p>Load the dataset:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#possums &lt;- read.csv(here::here("data/possums.csv"), header = TRUE)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>possums <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/possums.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># possums &lt;- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>possums <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/possums.csv"</span>), <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="questions" class="level2">
@@ -731,56 +732,57 @@ Note
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#possums &lt;- read.csv(here::here("data/possums.csv"), header = TRUE)</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>possums <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/possums.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questions</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>**1.** Make a plot of `y` vs. `Bark` and argue that there is a need for a transformation of **at least one of the response and/or predictor**. </span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>I recommend that you jitter the value of <span class="in">`y`</span> so that you can more easily see the density of points. Replace <span class="in">`gf_point`</span> with <span class="in">`gf_jitter`</span>. You can vary the amount of horizontal "jitter" with <span class="in">`width = .25`</span> and the amount of vertical jitter with <span class="in">`height = .25`</span> (and replace .25 with whatever number you want!) </span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>**2.** The variable <span class="in">`y`</span> can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot <span class="in">`log(y+1)`</span> vs. <span class="in">`Bark`</span> and fit the corresponding log-normal linear model. Interpret the estimated slope coefficient.</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># possums &lt;- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>possums <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/possums.csv"</span>), <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questions</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>**1.** Make a plot of `y` vs. `Bark` and argue that there is a need for a transformation of **at least one of the response and/or predictor**. </span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>I recommend that you jitter the value of <span class="in">`y`</span> so that you can more easily see the density of points. Replace <span class="in">`gf_point`</span> with <span class="in">`gf_jitter`</span>. You can vary the amount of horizontal "jitter" with <span class="in">`width = .25`</span> and the amount of vertical jitter with <span class="in">`height = .25`</span> (and replace .25 with whatever number you want!) </span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>**2.** The variable <span class="in">`y`</span> can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot <span class="in">`log(y+1)`</span> vs. <span class="in">`Bark`</span> and fit the corresponding log-normal linear model. Interpret the estimated slope coefficient.</span>
 <span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>**3.** Now estimate the Poisson regression model, using <span class="in">`y`</span> as the response variable and <span class="in">`Bark`</span> as the predictor (and the log link function). Interpret the estimated slope coefficient.</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>**3.** Now estimate the Poisson regression model, using <span class="in">`y`</span> as the response variable and <span class="in">`Bark`</span> as the predictor (and the log link function). Interpret the estimated slope coefficient.</span>
 <span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>**4.** Let's visualize how well our two models capture the data on its original count scale. Fill in the missing pieces of the predict() functions in the starter code below to generate predictions across a range of bark indices from 0 to 30, then complete the plot.</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>Compare and contrast the two fitted curves. Explain why the Poisson model predictions are bigger than the Gaussian model predictions. (Hint: the Poisson model gives estimates of the mean on the original scale.)</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>Here is some starter code that first makes a <span class="in">`preds`</span> dataset showing the predicted values under the two models for all <span class="in">`Bark`</span> values between 0 and 30. Then, it creates a jittered scatterplot of the original data, and overlays the two fits. </span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For the Log-Normal OLS model (<span class="in">`possum_lognormal`</span>): Remember that this model predicts $\log(y+1)$. To map these predictions back to the original count scale ($y$), you will need to mathematically undo both operations.</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For the Poisson GLM model (<span class="in">`possum_glm`</span>): By default, <span class="in">`predict()`</span> returns values on the log-link scale ($\eta$). Look at the help documentation (<span class="in">`?predict.glm`</span>) to find the specific character string needed for the type argument to return predictions on the original response scale ($\mu$).</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fill in both blanks in the code with a version of <span class="in">`predict(model, newdata = data.frame(Bark = Bark))`</span>. I've given you most of the <span class="in">`possum_glm`</span> code. </span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3</span></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>preds <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">Bark =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">30</span>,</span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_ols =</span> _______,</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_glm =</span> <span class="fu">predict</span>(possum_glm, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Bark =</span> Bark), <span class="at">type =</span> <span class="st">"____"</span>)</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(y <span class="sc">~</span> Bark, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">25</span>, <span class="at">height =</span> .<span class="dv">25</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>(y_ols <span class="sc">~</span> Bark, <span class="at">data =</span> preds, <span class="at">col =</span> <span class="st">"darkgreen"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>(y_glm <span class="sc">~</span> Bark, <span class="at">data =</span> preds, <span class="at">col =</span> <span class="st">"darkblue"</span>) </span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>**5.** Calculate a 95% Wald-based confidence interval for the slope coefficient ($\beta_1$) of <span class="in">`Bark`</span> using the Poisson model. Do this (1) by hand using the formula and (2) with R using <span class="in">`confint`</span> or <span class="in">`tidy`</span>.</span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>**4.** Let's visualize how well our two models capture the data on its original count scale. Fill in the missing pieces of the predict() functions in the starter code below to generate predictions across a range of bark indices from 0 to 30, then complete the plot.</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>Compare and contrast the two fitted curves. Explain why the Poisson model predictions are bigger than the Gaussian model predictions. (Hint: the Poisson model gives estimates of the mean on the original scale.)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>Here is some starter code that first makes a <span class="in">`preds`</span> dataset showing the predicted values under the two models for all <span class="in">`Bark`</span> values between 0 and 30. Then, it creates a jittered scatterplot of the original data, and overlays the two fits. </span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For the Log-Normal OLS model (<span class="in">`possum_lognormal`</span>): Remember that this model predicts $\log(y+1)$. To map these predictions back to the original count scale ($y$), you will need to mathematically undo both operations.</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For the Poisson GLM model (<span class="in">`possum_glm`</span>): By default, <span class="in">`predict()`</span> returns values on the log-link scale ($\eta$). Look at the help documentation (<span class="in">`?predict.glm`</span>) to find the specific character string needed for the type argument to return predictions on the original response scale ($\mu$).</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fill in both blanks in the code with a version of <span class="in">`predict(model, newdata = data.frame(Bark = Bark))`</span>. I've given you most of the <span class="in">`possum_glm`</span> code. </span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>preds <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">Bark =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">30</span>,</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_ols =</span> _______,</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_glm =</span> <span class="fu">predict</span>(possum_glm, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Bark =</span> Bark), <span class="at">type =</span> <span class="st">"____"</span>)</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(y <span class="sc">~</span> Bark, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">25</span>, <span class="at">height =</span> .<span class="dv">25</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>(y_ols <span class="sc">~</span> Bark, <span class="at">data =</span> preds, <span class="at">col =</span> <span class="st">"darkgreen"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>(y_glm <span class="sc">~</span> Bark, <span class="at">data =</span> preds, <span class="at">col =</span> <span class="st">"darkblue"</span>) </span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>**5.** Calculate a 95% Wald-based confidence interval for the slope coefficient ($\beta_1$) of <span class="in">`Bark`</span> using the Poisson model. Do this (1) by hand using the formula and (2) with R using <span class="in">`confint`</span> or <span class="in">`tidy`</span>.</span>
 <span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>**6.** Suppose a newly surveyed forest site has a bark quality index of <span class="in">`Bark = 15`</span>. Use your Poisson regression model to calculate the predicted mean number of possum species ($\hat{\mu}$) for this site. Be careful with your scales!</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>**6.** Suppose a newly surveyed forest site has a bark quality index of <span class="in">`Bark = 15`</span>. Use your Poisson regression model to calculate the predicted mean number of possum species ($\hat{\mu}$) for this site. Be careful with your scales!</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

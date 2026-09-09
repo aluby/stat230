@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -209,30 +209,18 @@ window.Quarto = {
 </div>
 </div>
 <p>Below is the summary table produced when I fit the regression of the expected runoff given snowfall.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Runoff <span class="sc">~</span> Precip, <span class="at">data =</span> runoff) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Runoff ~ Precip, data = runoff)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--17603.8  -5338.0    332.1   3410.6  20875.6 
-
-Coefficients:
+<pre><code>Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  27014.6     3218.9   8.393 1.93e-10 ***
-Precip        3752.5      215.7  17.394  &lt; 2e-16 ***
+(Intercept)  27014.6     ______   8.393 1.93e-10 ***
+Precip        3752.5      215.7   _____  &lt; 2e-16 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 8922 on 41 degrees of freedom
 Multiple R-squared:  0.8807,    Adjusted R-squared:  0.8778 
 F-statistic: 302.6 on 1 and 41 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
 <ol type="a">
+<li><p>Fill in the missing blanks (<code>______</code>) in the table</p></li>
 <li><p>Calculate a 80% confidence interval for the slope coefficient. Show your work.</p></li>
 <li><p>Interpret the confidence interval you calculated in part (b) in the context of the problem</p></li>
 <li><p>Based on your confidence interval in (b), is there convincing evidence of a relationship between snowfall and runoff? Explain.</p></li>
@@ -243,8 +231,8 @@ F-statistic: 302.6 on 1 and 41 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h1>Problem 2: Hubble (again)</h1>
 <p>The <code>ex0725</code> data points below are measured distances and recession velocities for 10 clusters of nebulae, much farther from earth than Hubble’s data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Sleuth3)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ex0725</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Sleuth3)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ex0725</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Distance Velocity
 1      1.80      890
@@ -268,7 +256,7 @@ F-statistic: 302.6 on 1 and 41 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h1>Problem 3: Baby birth weights vs father’s age</h1>
 <p>US Department of Health and Human Services, Centers for Disease Control and Prevention collect information on births recorded in the country. The data used here are a random sample of 1000 births from 2014. Here, we study the relationship between the father’s age and the weight of the baby.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>births14 <span class="ot">&lt;-</span> openintro<span class="sc">::</span>births14</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>births14 <span class="ot">&lt;-</span> openintro<span class="sc">::</span>births14</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -287,19 +275,19 @@ Tip
 <li>Make a scatterplot of birth weight (<code>weight</code>) as the response variable and father’s age (<code>fage</code>) as the explanatory variable. Overlay a linear regression line and describe the relationship you see.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol start="2" type="a">
 <li>Find and report the linear regression equation</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol start="3" type="a">
 <li>Do the data provide convincing evidence that there is a relationship between father’s age and baby’s birth weight? State the null and alternative hypotheses, report the p-value, and state your conclusion.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol start="4" type="a">
 <li>Based on your conclusion, is father’s age a useful predictor of baby’s weight?</li>
@@ -352,7 +340,7 @@ $residual.scale
 <h1>Problem 6</h1>
 <p>The data set below was collected by Educational Testing Services (ETS) and consists of 1,000 randomly selected students at an unnamed college. We are interested in predicting first year GPA (<code>FYGPA</code>) from the sum of the verbal and math percentiles (<code>SATSum</code>). Load the data with the following code:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sat_gpa <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"http://aluby.github.io/stat230/data/satGPA.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sat_gpa <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"http://aluby.github.io/stat230/data/satGPA.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="a">
 <li><p>Fit the simple linear regression model predicting first year GPA from the sum of the verbal and math SAT percentiles. Report the fitted regression equation.</p></li>
@@ -380,13 +368,16 @@ $residual.scale
 <li></li>
 </ol>
 <p><img src="img/hw2q5d.png" class="img-fluid"></p>
+<ol start="5" type="a">
+<li>Using the residual plots, provide a sketch of what the original X-Y scatterplot looked like for each of (a)-(d)</li>
+</ol>
 </section>
 <section id="problem-8-animals-metabolic-rate" class="level1">
 <h1>Problem 8: Animals metabolic rate</h1>
 <p>The following data comes from <em>Statistical Sleuth</em> Chapter 8. The data are the average mass, metabolic rate, and lifespan for 95 species of mammals. <a href="https://en.wikipedia.org/wiki/Kleiber%27s_law">Kleiber’s law</a> states that the metabolic rate of an animal species, on average, is proportional to its mass raised to the power of 3/4.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>animals <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex0826</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(animals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>animals <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex0826</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(animals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              CommonName                  Species   Mass Metab Life
 1                Echidna   Tachiglossus aculeatus  2.500   302   14

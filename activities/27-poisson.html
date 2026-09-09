@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -190,7 +190,8 @@ window.Quarto = {
 </ul>
 <p>Load the dataset:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>possums <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/possums.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># possums &lt;- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>possums <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/possums.csv"</span>), <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>1.</strong> As discussed last class, the variable <code>y</code> can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot <code>log(y+1)</code> vs.&nbsp;each of the predictors and describe what you see. (Starter code below to save you time)</p>
 <div class="cell">
@@ -215,7 +216,7 @@ window.Quarto = {
 <p><strong>4.</strong> Give a 95% confidence interval for the effect of the number of hollow trees on the mean number of species.</p>
 <p><strong>5.</strong> Take a look at the fitted values (the estimated means). Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Deviance Goodness of Fit test?</p>
 <p><strong>6.</strong> Drop <code>Acacia</code>, <code>Shrubs</code>, and <code>Stumps</code> from your model. On the basis of the likelihood ratio test, is there evidence against this reduced model?</p>
-<p><strong>7.</strong> Using the reduced model from part 5, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of stumps is 10. Give a 95% confidence interval for this estimate by treating the <span class="math inline">\(\log(\hat{\mu})\)</span> as approximately normally distributed. Why is this justified?</p>
+<p><strong>7.</strong> Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of stumps is 10. Give a 95% confidence interval for this estimate by treating the <span class="math inline">\(\log(\hat{\mu})\)</span> as approximately normally distributed. Why is this justified?</p>
 
 
 <!-- -->
@@ -701,36 +702,37 @@ window.Quarto = {
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>Load the dataset:</span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>possums <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/possums.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>**1.** As discussed last class, the variable <span class="in">`y`</span> can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot <span class="in">`log(y+1)`</span> vs. each of the predictors and describe what you see. (Starter code below to save you time)</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Acacia, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Bark, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Habitat, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Shrubs, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Stags, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Stumps, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> p4 <span class="sc">+</span> p5 <span class="sc">+</span> p6</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>**2.** Fit the quasipoisson regression model using <span class="in">`y`</span> as the response variable and include all the other predictors as main effects. The estimated dispersion parameter is less than one; argue that using the "regular" Poisson model will give more a conservative (cautious) assessment of uncertainty.</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>**3.** Refit the model above, now using the standard Poisson model (setting $\phi = 1$). Interpret the estimated effect of the number of hollow trees (<span class="in">`Stags`</span>).</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>**4.** Give a 95% confidence interval for the effect of the number of hollow trees on the mean number of species.</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>**5.** Take a look at the fitted values (the estimated means). Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Deviance Goodness of Fit test?</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>**6.** Drop <span class="in">`Acacia`</span>, <span class="in">`Shrubs`</span>, and <span class="in">`Stumps`</span> from your model. On the basis of the likelihood ratio test, is there evidence against this reduced model?</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>**7.** Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of stumps is 10. Give a 95% confidence interval for this estimate by treating the $\log(\hat{\mu})$ as approximately normally distributed. Why is this justified?</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co"># possums &lt;- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>possums <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/possums.csv"</span>), <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>**1.** As discussed last class, the variable <span class="in">`y`</span> can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot <span class="in">`log(y+1)`</span> vs. each of the predictors and describe what you see. (Starter code below to save you time)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Acacia, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Bark, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Habitat, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Shrubs, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Stags, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Stumps, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> p4 <span class="sc">+</span> p5 <span class="sc">+</span> p6</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>**2.** Fit the quasipoisson regression model using <span class="in">`y`</span> as the response variable and include all the other predictors as main effects. The estimated dispersion parameter is less than one; argue that using the "regular" Poisson model will give more a conservative (cautious) assessment of uncertainty.</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>**3.** Refit the model above, now using the standard Poisson model (setting $\phi = 1$). Interpret the estimated effect of the number of hollow trees (<span class="in">`Stags`</span>).</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>**4.** Give a 95% confidence interval for the effect of the number of hollow trees on the mean number of species.</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>**5.** Take a look at the fitted values (the estimated means). Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Deviance Goodness of Fit test?</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>**6.** Drop <span class="in">`Acacia`</span>, <span class="in">`Shrubs`</span>, and <span class="in">`Stumps`</span> from your model. On the basis of the likelihood ratio test, is there evidence against this reduced model?</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>**7.** Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of stumps is 10. Give a 95% confidence interval for this estimate by treating the $\log(\hat{\mu})$ as approximately normally distributed. Why is this justified?</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -1,0 +1,18 @@
+/* css styles */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Gochi+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&display=swap');
+
+/* Default body and text styles */
+body {
+  font-family: "Source Sans 3", sans-serif;
+}
+
+/* Header styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Merriweather";
+  color: #003300; 
+}
