@@ -73,9 +73,10 @@ runoff <- read.csv(here(here(), "data/runoff.csv"))
 #| echo: false
 #| fig-width: 4
 #| fig-height: 3
+#| fig-alt: "Scatterplot with snowfall on the x-axis and runoff on the y-axis."
 
 
-ggplot(runoff, aes(x = Precip, y = Runoff)) + 
+ggplot(runoff, aes(x = Precip, y = Runoff)) +
   geom_point() + 
   theme_minimal() +
   labs(

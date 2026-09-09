@@ -60,6 +60,7 @@ $H_A: \mu_1 \neq \mu_2$ (two-sided)
 #| fig.height: 2.5
 #| fig.width: 4
 #| fig.align: center
+#| fig-alt: "A t-distribution density curve, with t on the x-axis and density on the y-axis."
 data.frame(x = seq(-4, 4, length = 100)) |>
   ggplot(aes(x = x)) +
   stat_function(fun = dt, args = list(df = 20), linewidth = 1) +
@@ -80,6 +81,7 @@ The p-value is equal to the area in the two tails beyond $2.84$ and $-2.84$.
 #| fig.height: 3
 #| fig.width: 6
 #| fig.align: center
+#| fig-alt: "A t-distribution density curve, with the two tail regions beyond plus and minus 2.84 shaded."
 data.frame(x = seq(-4, 4, length = 100)) |>
   ggplot(aes(x = x)) +
   stat_function(fun = dt, args = list(df = 20), linewidth = 1) +

@@ -48,10 +48,11 @@ Below is a graph, summary output from the multiple regression model fit, and cov
 #| fig-width: 4
 #| fig-height: 3
 #| echo: false
+#| fig-alt: "Scatterplot with pieces on the x-axis and amazon_price on the y-axis, with points colored by theme."
 
 
 lego_friends <- read.csv(here::here("data/lego_city_friends.csv"))
-gf_point(amazon_price ~ pieces, color = ~theme, data = lego_friends) 
+gf_point(amazon_price ~ pieces, color = ~theme, data = lego_friends)
 ```
 
 ```{r}
@@ -190,6 +191,7 @@ this reveal about the pairwise correlations between the variables?
 
 ```{r}
 #| echo: false
+#| fig-alt: "A scatterplot matrix (pairs plot) of the variables in the brand preference data."
 
 
 brand_preference <- read.csv("https://aloy.github.io/stat230-materials/data/brand_preference.csv")

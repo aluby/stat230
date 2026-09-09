@@ -22,10 +22,11 @@ In the first few lines of your code chunks, you can specify figure output.
 Default:
 
 ```{r}
+#| fig-alt: "Scatterplot with temp_actual on the x-axis and rides on the y-axis."
 gf_point(rides ~ temp_actual, data = bikes)
 ```
 
-with 
+with
 
 ```
 #| fig-width: 4
@@ -38,6 +39,7 @@ at top of chunk:
 ```{r}
 #| fig-width: 4
 #| fig-height: 2
+#| fig-alt: "Scatterplot with temp_actual on the x-axis and rides on the y-axis."
 gf_point(rides ~ temp_actual, data = bikes)
 ```
 
@@ -46,12 +48,14 @@ gf_point(rides ~ temp_actual, data = bikes)
 Sometimes, you might want to include some residual plots instead of the full panel (For example, you want to mention a weird trend in the index plot but all other residual plots are uninteresting). Specify using `plots` argument. 
 
 ```{r}
+#| fig-alt: "A panel of four standard regression diagnostic plots for the fitted model."
 resid_panel(mod)
 ```
 
 vs
 
 ```{r}
+#| fig-alt: "Scatterplot of residuals against fitted values for the fitted model, with a horizontal reference line at zero."
 resid_panel(mod, plots = "resid")
 ```
 
@@ -63,6 +67,7 @@ Use the {patchwork} package to save individual plots and put them side by side
 ```{r}
 #| fig-width: 8
 #| fig-height: 3
+#| fig-alt: "Scatterplot with temp_actual on the x-axis and rides on the y-axis, beside a plot of residuals against fitted values with a horizontal reference line at zero."
 p1 <- gf_point(rides ~ temp_actual, data = bikes)
 p2 <- resid_panel(mod, plots = "resid")
 
@@ -77,8 +82,9 @@ p1 + p2
 Oh no! The plots above look terrible together because they use different `theme`s. *Note:* setting a theme is different with "regular plots" compared to resid panels
 
 ```{r}
+#| fig-alt: "Scatterplot with temp_actual on the x-axis and rides on the y-axis, beside a plot of residuals against fitted values with a horizontal reference line at zero."
 p1 <- gf_point(rides ~ temp_actual, data = bikes) + theme_bw()
-p2 <- resid_panel(mod, plots = "resid", theme = "bw", title.opt = FALSE) 
+p2 <- resid_panel(mod, plots = "resid", theme = "bw", title.opt = FALSE)
 
 p1 + p2
 ```
@@ -86,8 +92,9 @@ p1 + p2
 Classic theme: 
 
 ```{r}
+#| fig-alt: "Scatterplot with temp_actual on the x-axis and rides on the y-axis, beside a plot of residuals against fitted values with a horizontal reference line at zero."
 p1 <- gf_point(rides ~ temp_actual, data = bikes) + theme_classic()
-p2 <- resid_panel(mod, plots = "resid", theme = "classic", title.opt = FALSE) 
+p2 <- resid_panel(mod, plots = "resid", theme = "classic", title.opt = FALSE)
 
 p1 + p2
 ```

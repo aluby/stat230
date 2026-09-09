@@ -91,9 +91,10 @@ To adapt this code for your own binary logistic regression model, replace `news_
 Finally, we plot the binned residuals:
 
 ```{r}
+#| fig-alt: "Scatterplot of average response residual on the y-axis against predicted log odds on the x-axis, with a horizontal reference line at zero."
 gf_point(avg_resid ~ mean_linear_pred, data = binned_resids,
          xlab = "Predicted log odds", ylab = "Average response residual") |>
-  gf_hline(yintercept = 0, linetype = 2) 
+  gf_hline(yintercept = 0, linetype = 2)
 ```
 
 
@@ -102,7 +103,8 @@ The above process creates a binned residual plot of the response residuals again
 Below we create a binned residual plot where 13 bins were created from the `title_words` variable. Notice that now we need to calculate both the mean value of the predictor and the mean value of the residual.
 
 ```{r}
-news_aug |> 
+#| fig-alt: "Scatterplot of average response residual on the y-axis against the mean predictor value within each bin on the x-axis, with a horizontal reference line at zero."
+news_aug |>
   mutate(bin = ntile(title_words, 13)) |>  # Creating 65 bins for age
   group_by(bin) |>
   summarize(mean_x = mean(title_words),
@@ -125,6 +127,7 @@ Below we recreate the residual plots from the slides:
 
 
 ```{r}
+#| fig-alt: "A Pearson residual plot for the fitted model, with a smoother overlaid."
 resid_panel(news_mod, plot = "resid", type = "pearson", smoother = TRUE)
 ```
 
@@ -133,6 +136,7 @@ resid_panel(news_mod, plot = "resid", type = "pearson", smoother = TRUE)
 ```{r}
 #| fig-width: 8
 #| fig-height: 3
+#| fig-alt: "Pearson residuals plotted against each predictor in the model, one panel per predictor, each with a smoother overlaid."
 resid_xpanel(news_mod, yvar = "residual", type = "pearson", smoother = TRUE, nrow = 1)
 ```
 

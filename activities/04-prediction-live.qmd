@@ -36,6 +36,7 @@ The columns of interest are `education` and `income`.
 
 ```{webr}
 #| min-lines: 3
+#| fig-alt: "Scatterplot with education on the x-axis and income on the y-axis."
 gf_point(income ~ education, data = city)
 ```
 
@@ -87,7 +88,8 @@ The first person in this dataset has `education = 8`.
 It can be useful to plot your confidence/prediction intervals to communicate your findings to a broader audience. The code below creates a scatterplot of the data, adds the fitted regression line, and then adds 89% prediction intervals.
 
 ```{webr}
-gf_point(income ~ education, data = city) |> 
+#| fig-alt: "Scatterplot with education on the x-axis and income on the y-axis, with a fitted straight line and two shaded interval bands overlaid."
+gf_point(income ~ education, data = city) |>
   gf_lm(interval = "prediction", level = .89) |>
   gf_lm(interval = "confidence", alpha = 0.6, level = .89)
 ```

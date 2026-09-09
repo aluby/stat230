@@ -57,6 +57,7 @@ tires <- Sleuth3::ex2018[-1,]
 ```{r}
 #| fig-width: 6
 #| fig-height: 3
+#| fig-alt: "Boxplots of Passengers, one for each level of Make, colored by Cause."
 gf_boxplot(Make ~ Passengers, col = ~Cause, data = tires)
 ```
 

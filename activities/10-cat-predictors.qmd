@@ -65,6 +65,7 @@ Fitted equation for smokers:
 #| fig-asp: 1
 #| fig-width: 3.75
 #| out-width: 60%
+#| fig-alt: "A blank grid with evenly spaced gridlines, for sketching a fitted model."
 graph_paper
 ```
 
@@ -87,6 +88,7 @@ Fitted equation for smokers:
 #| fig-asp: 1
 #| fig-width: 3.75
 #| out-width: 60%
+#| fig-alt: "A blank grid with evenly spaced gridlines, for sketching a fitted model."
 graph_paper
 ```
 
@@ -106,6 +108,7 @@ Fitted equation for smokers:
 #| fig-asp: 1
 #| fig-width: 3.75
 #| out-width: 60%
+#| fig-alt: "A blank grid with evenly spaced gridlines, for sketching a fitted model."
 graph_paper
 ```
 
@@ -131,6 +134,7 @@ The researchers constructed a depression score from responses to several related
 #| fig-asp: 1
 #| fig-width: 3.75
 #| out-width: 60%
+#| fig-alt: "A sketch with Age on the x-axis and Depression Score on the y-axis, showing three lines with different line styles."
 model1
 ```
 
@@ -143,6 +147,7 @@ model1
 #| fig-asp: 1
 #| fig-width: 3.75
 #| out-width: 60%
+#| fig-alt: "A sketch with Age on the x-axis and Depression Score on the y-axis, showing three lines with different line styles."
 model2
 ```
 
@@ -156,6 +161,7 @@ model2
 #| fig-asp: 1
 #| fig-width: 3.75
 #| out-width: 60%
+#| fig-alt: "A sketch with Age on the x-axis and Depression Score on the y-axis, showing three lines with different line styles."
 model3
 ```
 

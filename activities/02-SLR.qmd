@@ -101,6 +101,7 @@ library(ggformula)
 For example, to create a histogram of the critic's score we can run
 
 ```{webr}
+#| fig-alt: "Histogram of critics."
 gf_histogram(~critics, data = movies, bins = 10)
 ```
 
@@ -109,6 +110,7 @@ Here we use the `~` to tell R that `critics` is a variable in the data set. We m
 Similar syntax is used to create a boxplot
 
 ```{webr}
+#| fig-alt: "Boxplot of critics."
 gf_boxplot(~critics, data = movies)
 ```
 
@@ -134,6 +136,7 @@ Use the below code box for the checkpoint questions:
 In this course we are interested in exploring relationships between variables. If we have two quantitative variables, then a scatterplot is a natural way to visually explore this relationship. To create a scatterplot we can use the `gf_point()` function (since scatterplots are just points):
 
 ```{webr}
+#| fig-alt: "Scatterplot with critics on the x-axis and audience on the y-axis."
 gf_point(audience ~ critics, data = movies)
 ```
 
@@ -157,6 +160,7 @@ Use the below code box for the checkpoint questions:
 You can also add a simple linear regression line to your scatterplot by adding a **layer**. To add a layer, we append the `|>` pipe operator to the end of our `gf_point()` code and use the `gf_lm()` command to add a line:
 
 ```{webr}
+#| fig-alt: "Scatterplot with critics on the x-axis and audience on the y-axis, with a fitted straight line overlaid."
 gf_point(audience ~ critics, data = movies) |>
   gf_lm()
 ```

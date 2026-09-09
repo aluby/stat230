@@ -69,6 +69,7 @@ When we have multiple predictors, we can still use residual plots to assess the 
 
 ```{r}
 #| warning: false
+#| fig-alt: "A panel of four standard regression diagnostic plots for the fitted model, using standardized residuals."
 library(ggResidpanel)
 resid_panel(surgical_lm, type = "standardized")
 ```

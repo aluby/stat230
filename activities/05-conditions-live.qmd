@@ -39,6 +39,7 @@ head(movies)
 On that day, we made the following scatterplot: 
 
 ```{webr}
+#| fig-alt: "Scatterplot with critics on the x-axis and audience on the y-axis, with a fitted straight line overlaid."
 gf_point(audience ~ critics, data = movies) |>
   gf_lm()
 ```
@@ -74,6 +75,7 @@ The code below makes a normal QQ plot and a histogram of the residuals. Do you t
 
 ```{webr}
 #| layout-ncol: 2
+#| fig-alt: "A normal quantile-quantile plot of the model residuals with a reference line, beside a histogram of the model residuals."
 
 
 gf_qq(~.resid, data = movie_aug) |>
@@ -95,6 +97,7 @@ Use the `movie_aug` dataset to make a scatterplot with `.fitted` on the x-axis a
 We will make a **ton** of residual plots this term. A shortcut is to use the `resid_panel` function within the {ggResidpanel} package: 
 
 ```{webr}
+#| fig-alt: "A panel of four standard regression diagnostic plots for the fitted model."
 library(ggResidpanel)
 resid_panel(movie_lm)
 ```

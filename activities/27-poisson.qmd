@@ -34,6 +34,7 @@ possums <- read.csv(here::here("data/possums.csv"), header = TRUE)
 ```{r}
 #| fig-width: 8
 #| fig-height: 6
+#| fig-alt: "Six jittered scatterplots, each with the count response y on the y-axis and one predictor on the x-axis: Acacia, Bark, Habitat, Shrubs, Stags, and Stumps."
 
 p1 <- gf_jitter(y ~ Acacia, data = possums, width = .15, height = .15)
 p2 <- gf_jitter(y ~ Bark, data = possums, width = .15, height = .15)

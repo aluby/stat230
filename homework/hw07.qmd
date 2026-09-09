@@ -180,6 +180,7 @@ model1 <- lm(log_odds_removed ~ distance + morph + distance * morph, data = moth
 #| echo: false
 #| fig-width: 8
 #| fig-height: 3
+#| fig-alt: "Response residuals plotted against each predictor in the model, one panel per predictor."
 
 ggResidpanel::resid_xpanel(model1, yvar = "response")
 ```

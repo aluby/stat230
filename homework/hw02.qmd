@@ -35,11 +35,12 @@ I will add problems after each class day. Be sure to check back here after each 
 #| echo: false
 #| fig-width: 4
 #| fig-height: 3
+#| fig-alt: "Scatterplot with snowfall on the x-axis and runoff on the y-axis."
 
 
 runoff <- read.csv(here(here(), "data/runoff.csv"))
 
-ggplot(runoff, aes(x = Precip, y = Runoff)) + 
+ggplot(runoff, aes(x = Precip, y = Runoff)) +
   geom_point() + 
   theme_minimal() +
   labs(

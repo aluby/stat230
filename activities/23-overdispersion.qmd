@@ -59,6 +59,7 @@ summary(oro_glm)
 #| fig-height: 3
 #| fig-width: 9
 #| echo: true
+#| fig-alt: "Three panels showing deviance residuals on the y-axis against, respectively, the linear predictor, variety, and root; each panel has a horizontal reference line at zero."
 
 
 aug_interaction <- broom::augment(oro_glm)

@@ -116,14 +116,16 @@ broom::tidy(moth_glm, conf.int = TRUE, conf.level = .9) |>
 Alternatively, put coefficient table in the report appendix and include a coefficent graph
 
 ```{r}
+#| fig-alt: "Plot showing an estimate and its confidence interval for each model term, with a horizontal reference line at zero."
 broom::tidy(moth_glm, conf.int = TRUE, conf.level = .9) |>
   gf_pointrange(estimate + conf.low + conf.high ~ term) |>
-  gf_hline(yintercept = 0, linetype = "dashed", col = "gray") 
+  gf_hline(yintercept = 0, linetype = "dashed", col = "gray")
 ```
 
 I prefer to flip the coordinates here so that the x axis labels don't overlap:
 
 ```{r}
+#| fig-alt: "Plot showing an estimate and its confidence interval for each model term, drawn horizontally, with a vertical reference line at zero."
 broom::tidy(moth_glm, conf.int = TRUE, conf.level = .9) |>
   gf_pointrange(estimate + conf.low + conf.high ~ term) |>
   gf_hline(yintercept = 0, linetype = "dashed", col = "gray") +
@@ -133,6 +135,7 @@ broom::tidy(moth_glm, conf.int = TRUE, conf.level = .9) |>
 Removing intercept can often make the remaining terms easier to read:
 
 ```{r}
+#| fig-alt: "Plot showing an estimate and its confidence interval for each model term except the intercept, drawn horizontally, with a vertical reference line at zero."
 broom::tidy(moth_glm, conf.int = TRUE, conf.level = .9) |>
   filter(term != "(Intercept)") |>
   gf_pointrange(estimate + conf.low + conf.high ~ term) |>

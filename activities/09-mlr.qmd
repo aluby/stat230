@@ -45,6 +45,7 @@ Variable |	Description
 We will use the `ggpairs()` function in the {GGally} package to make the pairs plot. By default, it will include every variable in the dataset. The code below firsts `select()`s the columns we want to include (all of them). I have also moved the response variable to be the last in the list, so that it shows up on the Y axis. 
 
 ```{r}
+#| fig-alt: "A scatterplot matrix (pairs plot) of the seven selected variables."
 supervisor |>
   select(complaints, privileges, learn, raises, critical, advance, overall) |>
   ggpairs()

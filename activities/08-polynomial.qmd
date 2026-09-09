@@ -51,6 +51,7 @@ Use the `lm()` command to fit the cubic model where `Year` is used to predict `A
 To plot the fitted cubic model, you can use the `gf_point()` and `gf_lm()` functions from the `ggformula` package. The following code will create a scatter plot of the data and add the fitted cubic regression line:
 
 ```{r}
+#| fig-alt: "Scatterplot with Year on the x-axis and Acres burned on the y-axis, with a fitted curve overlaid."
 gf_point(Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned") |>
   gf_lm(formula = y ~ poly(x, 3), linewidth = .5)
 ```
