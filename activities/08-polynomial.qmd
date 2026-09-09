@@ -17,7 +17,8 @@ This is the tutorial version of the R activity. If you prefer to use .qmd and RS
 To load the wildfires data set, run the following code chunk:
 
 ```{r}
-wildfires <- read.csv("https://aluby.github.io/stat230/data/wildfires.csv")
+# wildfires <- read.csv("https://aluby.github.io/stat230/data/wildfires.csv")
+wildfires <- read.csv(here::here("data/wildfires.csv"))
 ```
 
 

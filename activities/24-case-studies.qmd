@@ -75,7 +75,8 @@ theme_set(notes_theme)
 #| echo: false
 
 
-moths <- read.csv("https://aluby.github.io/stat230/data/moths.csv") |>
+# moths <- read.csv("https://aluby.github.io/stat230/data/moths.csv") |>
+moths <- read.csv(here::here("data/moths.csv")) |>
   mutate(notremoved = Placed - Removed, 
                log_odds_removed = log(Removed / notremoved),
                prop_removed = Removed / Placed, 

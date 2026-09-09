@@ -221,7 +221,8 @@ An analyst in the district sales office of a national cosmetics firm obtained da
 The data can be loaded via:
 
 ```{r}
-cosmetics <- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")
+# cosmetics <- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")
+cosmetics <- read.csv(here::here("data/cosmetics.csv"))
 ```
 
 The analyst was told to investigate the impact of increasing expenditures for point-of-sale displays while holding local and national media advertising constant.

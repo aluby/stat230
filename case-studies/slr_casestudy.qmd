@@ -36,7 +36,8 @@ Since the Reform party and Republican party are right of center on the political
 For this case study, you'll look at results (at the county level) from the 2000 election in Florida.
 
 ```{r}
-florida <- read.csv("https://aluby.github.io/stat230/data/florida_2000.csv") 
+# florida <- read.csv("https://aluby.github.io/stat230/data/florida_2000.csv")
+florida <- read.csv(here::here("data/florida_2000.csv")) 
 head(florida)
 ```
 
@@ -80,7 +81,8 @@ For this exercise, you will be examining the relationship between a driver’s a
 Load the NASCAR driver statistics dataset:
 
 ```{r}
-nascar <- read.csv("https://aluby.github.io/stat230/data/nascar_driver_statistics.csv") 
+# nascar <- read.csv("https://aluby.github.io/stat230/data/nascar_driver_statistics.csv")
+nascar <- read.csv(here::here("data/nascar_driver_statistics.csv")) 
 head(nascar)
 ```
 

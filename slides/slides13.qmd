@@ -67,7 +67,8 @@ regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
 
 UBSprices <- read.csv("http://aloy.rbind.io/data/UBSprices.csv")
 bigmac.lm <- lm(bigmac2009 ~ bigmac2003, data = UBSprices)
-florida <- read.csv("https://aluby.github.io/stat230/data/florida_2000.csv") 
+# florida <- read.csv("https://aluby.github.io/stat230/data/florida_2000.csv")
+florida <- read.csv(here::here("data/florida_2000.csv")) 
 florida_lm <- lm(BUCHANAN ~ BUSH, data = florida)
 bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 ```

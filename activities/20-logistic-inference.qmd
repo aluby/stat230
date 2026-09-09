@@ -13,7 +13,8 @@ library(ggResidpanel)
 In this tutorial we'll explore the model fit of a binary logistic regression using R. We'll use the fake news dataset as an example. To load the data, run the following code chunk:
 
 ```{r}
-news <- read.csv("https://aluby.github.io/stat230/data/fake_news_bayesrules.csv")
+# news <- read.csv("https://aluby.github.io/stat230/data/fake_news_bayesrules.csv")
+news <- read.csv(here::here("data/fake_news_bayesrules.csv"))
 ```
 
 

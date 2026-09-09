@@ -25,7 +25,8 @@ These data come from a study of 151 separate 3 hectare sites in Victoria, Austra
 Load the dataset:
 
 ```{r}
-possums <- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)
+# possums <- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)
+possums <- read.csv(here::here("data/possums.csv"), header = TRUE)
 ```
 
 **1.** As discussed last class, the variable `y` can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot `log(y+1)` vs. each of the predictors and describe what you see. (Starter code below to save you time)

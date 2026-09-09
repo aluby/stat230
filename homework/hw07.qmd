@@ -119,7 +119,8 @@ A marketing research firm was engaged by an automobile manufacturer to conduct a
 You can load the data into R via:
 
 ```{r}
-car_purchase <- read.csv("https://aluby.github.io/stat230/data/car_purchase.csv")
+# car_purchase <- read.csv("https://aluby.github.io/stat230/data/car_purchase.csv")
+car_purchase <- read.csv(here::here("data/car_purchase.csv"))
 ```
 
 a. Fit the logistic regression model that uses income and car_age to predict whether a family would purchase a new car in the next year (y). Report the fitted logit function (i.e., linear predictor).

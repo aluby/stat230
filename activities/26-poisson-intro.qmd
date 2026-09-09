@@ -22,7 +22,8 @@ Load the dataset:
 
 ```{r}
 #possums <- read.csv(here::here("data/possums.csv"), header = TRUE)
-possums <- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)
+# possums <- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)
+possums <- read.csv(here::here("data/possums.csv"), header = TRUE)
 ```
 
 ## Questions
