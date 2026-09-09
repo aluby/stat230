@@ -1,6 +1,6 @@
 ---
 title: "Stat230: Applied Regression Analysis"
-subtitle: "Tentative Calendar - Spring 2026"
+subtitle: "Tentative Calendar - Fall 2026"
 navbar: false
 execute:
   freeze: false
@@ -9,6 +9,11 @@ format:
   pdf: 
     pdf-engine: lualatex
     mainfont: "Palatino"
+    classoption: landscape
+    geometry: margin=0.75in
+    include-in-header:
+      - text: |
+          \renewcommand{\maketitle}{}
 editor: 
   markdown: 
     wrap: 72
@@ -23,7 +28,7 @@ library(googlesheets4)
 library(gt)
 library(tidyverse)
 gs4_deauth()
-d <- read_sheet("https://docs.google.com/spreadsheets/d/1AyvpFMtNRidAAaTjZ-iSJXE7VpgHBSRauv_TtiFEF_Y/edit?usp=sharing")
+d <- read_sheet("https://docs.google.com/spreadsheets/d/1bNyJZlnVZ0OZEoUbFTmB9P5WFwNdjfMBue9iltZy38k/edit?usp=sharing")
 
 ```
 
@@ -32,9 +37,16 @@ d <- read_sheet("https://docs.google.com/spreadsheets/d/1AyvpFMtNRidAAaTjZ-iSJXE
 
 options(gt.html_tag_check = FALSE)
 
+
+
 d |>
   select(week, dow, date, `reference reading`, topic, due) |>
   rowwise() |>
+  mutate(`reference reading` = if (knitr::is_latex_output()) {
+  stringr::str_replace_all(`reference reading`, "[\\p{So}\\p{Cn}]", "•")
+} else {
+  `reference reading`
+}) |>
   gt() |>
   fmt_date(date, date_style = 30) |>
   sub_missing(columns = c(week, dow, date, `reference reading`, topic, due), missing_text = "") |>
@@ -66,7 +78,7 @@ d |>
   cols_width(
     week ~ px(45),
     dow ~ px(30),
-    date ~ px(50), 
+    date ~ px(60), 
     `reference reading` ~ px(150),
     topic ~ px(200),
     due ~ px(150)
@@ -77,7 +89,7 @@ d |>
         stringr::str_replace_all("^|$", "**") |>
         md()
     }) |>
-  tab_options(table.font.size = 13) #|>
-  #opt_row_striping()
+  tab_options(table.font.size = 13,
+              data_row.padding = px(10)) 
 ```
 

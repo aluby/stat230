@@ -1,6 +1,6 @@
 ---
 title: "Stat230: Applied Regression Analysis"
-subtitle: "Spring 2026"
+subtitle: "Fall 2026"
 navbar: false
 execute:
   freeze: true
@@ -17,9 +17,9 @@ editor:
 ::: {.boxed-text}
 
 +------------+-------------------------------------------+---------+
-| MEETINGS:  | MWF 5a                                    | CMC 306 |
+| MEETINGS:  | MWF 4a                                    | CMC 306 |
 |            |                                           |         |
-|            | 1:50-3 MW; 2:20-3:20 F                    |         |
+|            | 12:30-1:40 MW; 1:10-2:10 F                |         |
 +------------+-------------------------------------------+---------+
 | PROFESSOR: | Amanda Luby                               | CMC 223 |
 |            | aluby@carleton                            |         |
@@ -27,18 +27,20 @@ editor:
 | DROP-IN:   |                                           | CMC 307 |
 |            | Mon 3-4pm                                 |         |
 |            |                                           |         |
-|            | Tues 2-3                                  |         |
+|            | Tues 10:30-11:30am                        |         |
 |            |                                           |         |
-|            | Wed 9:30-10:30 (120 priority)             |         |
+|            | Wed 2-3pm (220 priority)                  |         |
 |            |                                           |         |
-|            | Fri 10-11 (230 priority)                  |         |
+|            | Fri 11:30-12:30 (230 priority)            |         |
 |            |                                           |         |
 |            | Or by appointment!                        |         |
 +------------+-------------------------------------------+---------+
 | WEBSITE:   | moodle.carleton.edu                       |         |
 +------------+-------------------------------------------+---------+
-| TEXT:      | Regression Analysis by Example by A. Hadi |         |
-|            | [Freely available through the Library](https://ebookcentral.proquest.com/lib/carleton-ebooks/detail.action?docID=7103682)      |         |
+| TEXT:      | Readings primarily assigned from          |         |
+|            |Introduction to Regression Analysis by     |         |
+|            | M. Tackett                                |         |
+|            | [Freely available online](https://introregression.netlify.app/00-preface)      |         |
 +------------+-------------------------------------------+---------+
 | SOFTWARE:  |                                           |         |
 |            |  maize.mathcs.carleton.edu  (R code)      |         |
@@ -108,7 +110,7 @@ competency in each of the following areas:
     glad to set up individual appointments as needed.
 -   **Timely responses**. I will respond to Ed messages within 24 hours
     and emails within 48 hours on weekdays (and as soon as I can on
-    weekdays).
+    weekends).
 -   **Prompt feedback**. I will return graded assignments to you within
     one week
 -   **Seek your feedback**. I will ask for your feedback at least twice
@@ -132,31 +134,30 @@ exercises. Please show up ready to participate and engage from the first minute 
 
 ## Homework Assignments
 
-Homework will be assigned once per week on moodle (typically due
+Homework will be assigned once per week (typically due
 Fridays) and should be submitted on gradescope before class. There is an
 8 hour grace period for each assignment. If you are ill or have an
 emergency, please contact me to arrange an alternative due date.
-Assignment submissions should be neatly written and scanned or submitted
-as a PDF file. You must show all work to receive credit.
+For most assignments, I expect you to use a quarto document to include your code, results, and conclusions. Any handwritten work must be neatly written and incorporated into a PDF submission. You must show all work to receive credit.
 
 ## Case Studies
 
-There will be three case studies spaced throughout the term. These will
+There will be two case studies throughout the term. These will
 ask you to analyze a dataset using tools from the course and clearly
 report your findings in writing. These are larger and more open-ended
 than a typical homework assignment and are preparation for your final
 project. You'll work in pairs or small groups (which I will form with
 your input).
 
-## Exams
+## Quizzes
 
 A key part of statistical literacy is being able to recall concepts “on
-the fly”. I use in-class exams to assess your understanding of class
-material without access to resources. There will be three midterm exams
+the fly”. I use in-class quizzes to assess your understanding of class
+material without access to resources. There will be three quizzes
 — tentatively scheduled for **Week 3 Monday, 6 Wednesday, and 9
 Monday**.
 
-If you miss a class when there is an exam with less than 1 week notice,
+If you miss a quiz due to a conflict with less than 1 week notice,
 then there are no revisions or makeups offered. If must miss an exam due
 to an illness or other last minute emergency, please let me know in
 advance to arrange an alternative.
@@ -172,7 +173,7 @@ the term.
 
 ## Communication
 
-Assignments, note sets, and grades will be posted on Moodle. We will
+Assignments, materials for course meetings, and grades will be posted on Moodle. We will
 also use Ed for announcements, discussion, and homework questions.
 Please use Ed for any homework or course content questions; email me
 privately with any personal matters (grade discussions, illness,
@@ -190,14 +191,11 @@ content through in-class assessments.
 
 Final grades will be calculated as follows:
 
--   15% Homework
--   30% Exams (10% each)
+-   10% Homework
+-   40% Quizzes (equally weighted)
 -   25% Final Project
--   25% Case Studies (8.33% each)
--   5% Attendance and participation in group work
-
-More than 5 absences from class will result in a 0% attendance and
-participation grade.
+-   20% Case Studies (10% each)
+-   5% Engagement and Professionalism
 
 Letter grades will be assigned based on the usual grading scale (A = 93%
 and above, A- = 90-92.9%, B+ = 88-89.9%, B = 83-87.9%, etc.).
@@ -217,6 +215,17 @@ interesting. Being able to perform interesting statistical analyses is a
 skill that is learned, not an innate ability, and working hard at
 developing that skill is the point of this course.
 
+## Engagement and Professionalism
+
+In this course, you will be working with teammates on formal assessments (case studies, the final project) as well as informal in-class work. Your contributions to each case study or project will be incorporated into those grades. Your engagement and professionalism grade will be determined holistically based on attendance, group evaluation surveys, and my observations during class. 
+
+- A level: Shows up to class prepared almost every day. Is a good communicator, walks teammates through thought processes carefully, asks questions of teammates and Amanda when confused. Technology use is almost always on task.
+- B level: Shows up to class prepared most days. Participates in group work and follows along with teammates' reasoning, but is less proactive about explaining their own thinking or flagging confusion in the moment. Technology use is sometimes off-task during group work.
+- C level: Shows up to class prepared inconsistently. Participates when directed to, but rarely initiates discussion, checks that teammates understand, or asks for help when stuck. Technology use is often off-task during group work.
+- D/F level: Rarely shows up to class prepared. Doesn't participate when prompted. 
+
+All levels above are premised on attendance almost every day, and missing more than 1-2 days of class will heavily impact your P&E grade. More than 5 absences will result in a 0%, other than in exceptional circumstances. Please speak with me if you will be away from campus for an extended period or have an emergency arise.
+
 ## Regrade requests
 
 Grading is often a tedious task, and the grading team will sometimes
@@ -230,28 +239,26 @@ point instead of 2” or “I didn’t realize we had to do X”). If you submit
 two or more inappropriate regrade requests, I will not consider
 additional regrade requests from you for the remainder of the term. If
 you’re unsure whether you should file a regrade request or not, just
-ask! You are always welcome to discuss any grading questions with me in
+ask! You are **always** welcome to discuss any grading questions with me in
 office hours.
 
 ## Tokens
 
-You have 4 tokens to use throughout the term. Tokens can be used for:
+You have 3 tokens to use throughout the term. Tokens can be used for:
 
--   a 48-hour extension on homework or case study due date
--   revise a case study
--   revise an exam
+-   a 48-hour extension on homework (individual) or case study (all team members must use a token) due date
+-   revise a case study (individual)
+-   retake a quiz
 
-## Exam corrections
+## Quiz retakes
 
-I offer the opportunity to submit exam corrections for two reasons: (1)
+I offer the opportunity to retake a quiz for two reasons: (1)
 to correct any major misunderstandings and have a chance to revisit
 material that you struggled with, (2) to mitigate the impact that a bad
-exam day can have on your final course grade. You can submit corrections
-to your exam to earn back 50% of your missed points. ~~Corrected exam
-grades are capped at 90%.~~ (no longer true -- see revisions document) 
-Exam revisions are due ~~1 week after graded
-exams are returned to you, or the last day of class at 11:59pm,
-whichever is earlier.~~ before the next exam. 
+exam day can have on your final course grade. 
+You can complete a short retake quiz to earn back 25% of the points that you missed. 
+The retake quiz questions will cover the same topics but use new numbers/context. 
+Quiz retakes must be completed before the next quiz, or the last day of class at 11:59pm, whichever is earlier.
 
 ## Case Study revisions
 
@@ -265,7 +272,7 @@ You are expected to follow Carleton’s [policies regarding academic
 integrity](https://www.carleton.edu/handbook/academics/?policy=329). I
 encourage you to discuss the homework problems with other humans and do
 background reading as needed. You should code and write up your
-solutions on your own. Exams must be done by yourself without
+solutions on your own. Quizzes must be done by yourself without
 communicating with others; all work must be your own. You should
 collaborate with your teammates on projects, and should use external
 resources for background research and debugging, but all work should be
@@ -274,7 +281,7 @@ solution manuals (physical or online), course materials from other
 students, or materials from previous versions of this course are not
 allowed.
 
-Large-language models (e.g. ChatGPT, Gemini, etc.) should only be used
+Large-language models (e.g. ChatGPT, Claude, Gemini, etc.) should only be used
 for coding or debugging help after you’ve attempted to solve the problem
 on your own, and you should never type homework problems directly into a
 prompt. Copying, paraphrasing, summarizing, or submitting work generated
@@ -313,11 +320,10 @@ your concerns with me.
 Please reach out to me if you have any questions! You can reach me on
 Ed, email, drop-in hours, or make an appointment. Ed is typically the
 best venue for homework/content questions outside of drop-in hours. I’ll
-respond to Ed messages at least 3 times each week day, and try to
-respond to emails within 48 hours You will receive responses faster on
+respond to Ed messages at least twice each week day, and try to
+respond to emails within 48 hours. You will receive responses faster on
 Ed than email. I am online irregularly over evenings and weekends to
-devote time to family and rest, and I hope that you also find time over
-the weekend to recharge and reset!
+devote time to family and rest, and I hope that you also find time to recharge and reset!
 
 ## Accomodations
 
@@ -334,7 +340,7 @@ OAR.
 
 ## Stat Lab
 
-The Stats Lab (CMC 304) offers drop-in help R/RStudio help sessions run
+The Stats Lab (CMC 331) offers drop-in help R/RStudio help sessions run
 by friendly and knowledgeable lab assistants from 7-10pm Sunday through
 Thursday evenings. To make the most of your time, attempt homework
 problems on your own beforehand and bring your class notes and lab
