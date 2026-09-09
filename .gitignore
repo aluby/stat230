@@ -19,3 +19,7 @@
 *-sols.qmd
 
 /.luarc.json
+
+*_files/
+
+*_cache/
