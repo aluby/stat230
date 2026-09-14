@@ -22,12 +22,8 @@ format:
     urlcolor: blue
     linkcolor: blue
     geometry:
-      - top=1in
-      - left=1in
-      - right=1in
-      - bottom=1in
-      - heightrounded
-    highlight-style: arrow
+      - margin=1in
+    include-in-header: notes-header.tex
   html: 
     toc: true
     urlcolor: blue

@@ -35,7 +35,7 @@ library(lubridate)
 
 ::::: columns
 ::: {.column width="50%"}
--   Second year at Carleton!
+-   Third year at Carleton!
 -   Taught at Swarthmore for 5 years before moving here
 -   PhD in Statistics & Data Science from Carnegie Mellon University
 -   Grew up in Minnesota, went to St Ben's as an undergrad
@@ -46,8 +46,6 @@ library(lubridate)
 ![](img/about-me.jpg)
 :::
 :::::
-
-# 👋 I'm Noah
 
 ## Proud of/ Nervous about {.center}
 
@@ -61,7 +59,7 @@ library(lubridate)
 ```{r}
 #| echo: false
 
-countdown::countdown(8)
+countdown::countdown(5)
 ```
 
 ## What is this class about?
@@ -252,10 +250,10 @@ Read the full syllabus by next class
 
 | Day       | Time                | Type    | Location |
 |:----------|:--------------------|:--------|:---------|
-| Monday    | 3-4pm               | Drop-in | CMC 307  |
-| Tuesday   | 2-3pm               | Drop-in | CMC 307  |
-| Wednesday | 9:30-10:30 (stat120)| Drop-in | CMC 307  |
-| Friday    | 10-11  (stat230)    | Drop-in | CMC 223  |
+| Monday    | 3-4pm                 | Drop-in | CMC 307  |
+| Tuesday   | 10:30-11:30am         | Drop-in | CMC 307  |
+| Wednesday | 2-3pm (220 priority)  | Drop-in | CMC 307  |
+| Friday    | 11:30-12:30 (230 priority) | Drop-in | CMC 307  |
 
 ## What will you do in this course?
 
@@ -309,20 +307,20 @@ Read the full syllabus by next class
 
 ## Grading
 
-- 15% Homework
-- 30% Exams (10% each)
+- 10% Homework
+- 40% Quizzes (equally weighted)
 - 25% Final Project
-- 25% Case Studies (8.33% each)
+- 20% Case Studies (10% each)
 - 5% Attendance and participation in group work
     - 5+ absences &rarr; 0%
 -   Letter grades will be assigned based on the usual grading scale (A = 93%+, A- = 90-92.9%, B+ = 88-89.9%, B = 83-87.9, etc.)
 
 ## Tokens
 
-You have 4 tokens that you can use throughout the term. Tokens can be redeemed for: 
+You have 3 tokens that you can use throughout the term. Tokens can be redeemed for:
 
 - 48 hour extension on a homework assignment or case study due date
-- Submit revisions to a quiz (earn up to 33% of points back)
+- Retake a quiz (earn up to 25% of missed points back)
 - Revise a case study
 
 I may also ask you to use a token for other as-needed arrangements throughout the term. Some examples: 
@@ -375,7 +373,7 @@ Source: DeLuca, L. S. et al (2025). [Developing Students’ Statistical Expertis
 
 ::: {.task .nonincremental}
 1. Review solutions to activity on Moodle
-2. **Sign up** for our Ed discussion board: <https://edstem.org/us/join/9uGcQg>
+2. **Sign up** for our Ed discussion board (link on moodle)
 3. Complete the **welcome survey**
 4. Review the [**full syllabus**](/syllabus.html)
 5. Make sure you can **access** <https://maize.mathcs.carleton.edu> with your Carleton credentials
