@@ -1285,7 +1285,7 @@
     "href": "slides/slides01.html#im-amanda-sheher",
     "title": "Welcome to Stat230!",
     "section": "👋 I’m Amanda (she/her)",
-    "text": "👋 I’m Amanda (she/her)\n\n\n\nSecond year at Carleton!\nTaught at Swarthmore for 5 years before moving here\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad\nWhen I’m not writing R code, making graphs, or chasing after my toddler, I like to read and have been trying to do more fiber crafts"
+    "text": "👋 I’m Amanda (she/her)\n\n\n\nThird year at Carleton!\nTaught at Swarthmore for 5 years before moving here\nPhD in Statistics & Data Science from Carnegie Mellon University\nGrew up in Minnesota, went to St Ben’s as an undergrad\nWhen I’m not writing R code, making graphs, or chasing after my toddler, I like to read and have been trying to do more fiber crafts"
   },
   {
     "objectID": "slides/slides01.html#proud-of-nervous-about",
@@ -1299,7 +1299,7 @@
     "href": "slides/slides01.html#in-groups-of-2-3",
     "title": "Welcome to Stat230!",
     "section": "In groups of 2-3",
-    "text": "In groups of 2-3\n\n\nIntroduce yourselves: name, year, academic interest, personal interest\nShare a bit about why you’re taking this class\n\n\n\n\n\n−+\n08:00"
+    "text": "In groups of 2-3\n\n\nIntroduce yourselves: name, year, academic interest, personal interest\nShare a bit about why you’re taking this class\n\n\n\n\n\n−+\n05:00"
   },
   {
     "objectID": "slides/slides01.html#what-is-this-class-about",
@@ -1341,7 +1341,7 @@
     "href": "slides/slides01.html#office-hours-tentative",
     "title": "Welcome to Stat230!",
     "section": "Office hours (tentative)",
-    "text": "Office hours (tentative)\n\n\n\nDay\nTime\nType\nLocation\n\n\n\n\nMonday\n3-4pm\nDrop-in\nCMC 307\n\n\nTuesday\n2-3pm\nDrop-in\nCMC 307\n\n\nWednesday\n9:30-10:30 (stat120)\nDrop-in\nCMC 307\n\n\nFriday\n10-11 (stat230)\nDrop-in\nCMC 223"
+    "text": "Office hours (tentative)\n\n\n\nDay\nTime\nType\nLocation\n\n\n\n\nMonday\n3-4pm\nDrop-in\nCMC 307\n\n\nTuesday\n10:30-11:30am\nDrop-in\nCMC 307\n\n\nWednesday\n2-3pm (220 priority)\nDrop-in\nCMC 307\n\n\nFriday\n11:30-12:30 (230 priority)\nDrop-in\nCMC 307"
   },
   {
     "objectID": "slides/slides01.html#what-will-you-do-in-this-course",
@@ -1362,14 +1362,14 @@
     "href": "slides/slides01.html#grading",
     "title": "Welcome to Stat230!",
     "section": "Grading",
-    "text": "Grading\n\n15% Homework\n30% Exams (10% each)\n25% Final Project\n25% Case Studies (8.33% each)\n5% Attendance and participation in group work\n\n5+ absences → 0%\n\nLetter grades will be assigned based on the usual grading scale (A = 93%+, A- = 90-92.9%, B+ = 88-89.9%, B = 83-87.9, etc.)"
+    "text": "Grading\n\n10% Homework\n40% Quizzes (equally weighted)\n25% Final Project\n20% Case Studies (10% each)\n5% Attendance and participation in group work\n\n5+ absences → 0%\n\nLetter grades will be assigned based on the usual grading scale (A = 93%+, A- = 90-92.9%, B+ = 88-89.9%, B = 83-87.9, etc.)"
   },
   {
     "objectID": "slides/slides01.html#tokens",
     "href": "slides/slides01.html#tokens",
     "title": "Welcome to Stat230!",
     "section": "Tokens",
-    "text": "Tokens\nYou have 4 tokens that you can use throughout the term. Tokens can be redeemed for:\n\n48 hour extension on a homework assignment or case study due date\nSubmit revisions to a quiz (earn up to 33% of points back)\nRevise a case study\n\nI may also ask you to use a token for other as-needed arrangements throughout the term. Some examples:\n\nextended absences\nlast minute makeups for quizzes\n\nI will track balances in the moodle gradebook (updated weekly, typically Fridays)"
+    "text": "Tokens\nYou have 3 tokens that you can use throughout the term. Tokens can be redeemed for:\n\n48 hour extension on a homework assignment or case study due date\nRetake a quiz (earn up to 25% of missed points back)\nRevise a case study\n\nI may also ask you to use a token for other as-needed arrangements throughout the term. Some examples:\n\nextended absences\nlast minute makeups for quizzes\n\nI will track balances in the moodle gradebook (updated weekly, typically Fridays)"
   },
   {
     "objectID": "slides/slides01.html#academic-integrity",
@@ -1404,7 +1404,7 @@
     "href": "slides/slides01.html#before-next-class",
     "title": "Welcome to Stat230!",
     "section": "Before next class:",
-    "text": "Before next class:\n\n\nReview solutions to activity on Moodle\nSign up for our Ed discussion board: https://edstem.org/us/join/9uGcQg\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials\nSkim textbook chapters and come prepared for some simple linear regression next time!"
+    "text": "Before next class:\n\n\nReview solutions to activity on Moodle\nSign up for our Ed discussion board (link on moodle)\nComplete the welcome survey\nReview the full syllabus\nMake sure you can access https://maize.mathcs.carleton.edu with your Carleton credentials\nSkim textbook chapters and come prepared for some simple linear regression next time!"
   },
   {
     "objectID": "slides/slides03.html#data-for-today",
@@ -4302,7 +4302,7 @@
     "href": "activities/01-intro.html",
     "title": "01: Intro Stats Review",
     "section": "",
-    "text": "Researchers examined the relationship between sleep duration and simple reaction time performance in healthy young adults in a controlled laboratory setting.\nSixty-five college-aged participants (ages 18-25) were recruited and randomly assigned to sleep either 4 hours per night (low sleep) or 8 hours per night (high sleep) over a one-week period. Each morning, participants completed a computerized simple reaction time task where they responded to visual stimuli as quickly as possible, with reaction times measured in milliseconds. The researchers are interested in whether there is a difference in reaction time for the low sleep vs the high sleep group.\n\n\n\n\nSample size (\\(n\\))\nSample mean (\\(\\bar{x}\\))\nSample SD (\\(s\\))\n\n\n\n\nLow Sleep\n33\n390 ms\n45 ms\n\n\nHigh Sleep\n32\n360 ms\n40 ms\n\n\n\n\nWhat is the null hypothesis for this test?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(H_0: \\mu_1 = \\mu_2\\) (or \\(H_0: \\mu_1 - \\mu_2 = 0\\))\n\n\n\n\nWhat is the alternative hypothesis for this test?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(H_A: \\mu_1 \\neq \\mu_2\\) (two-sided)\n\n\n\n\nThe researchers conduct a two-sample t-test and report a test statistic of \\(t=2.84\\). Below is a plot of the appropriate t-distribution for this test. Sketch how you would calculate the p-value for this situation.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nThe p-value is equal to the area in the two tails beyond \\(2.84\\) and \\(-2.84\\).\n\n\n\n\n\n\n\n\n\n\n\n\n\nHow did you calculate this p-value in your last statistics course?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nAnswers will vary based on where you took intro stats. You may have used StatKey or a similar online app/calculator, you may have used R’s pt() command, or you may have used a t-distribution table (we won’t use tables in this class).\n\n\n\n\nIf the p-value you calculated was 0.02, what would you conclude about the null hypothesis?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nA p-value of 0.02 provides evidence against the null hypothesis. In other words, there is statistically discernible evidence of a difference in means between the two groups (\\(t=2.5\\), p-value = 0.02).\n\n\n\n\nWhy did researchers randomly assign participants to a sleep condition?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nRandom assignment helps to ensure that any confounding variables are evenly distributed across the different sleep conditions. This allows the researchers to make a causal conclusion about the effect of sleep duration on reaction time.\n\n\n\n\nCan you generalize these results to all young adults in the U.S.? Why or why not?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nNo, we cannot generalize these results to all young adults in the U.S. because it may not be representative of all young adults in the U.S. It we truly wanted to generalize to the entire population, then we should draw a random sample from the population of interest."
+    "text": "Researchers are interested in whether how much time young adults spend sitting each day (reading, watching TV, using a computer, commuting) is related to symptoms of depression. To study this, they used data from the National Health and Nutrition Examination Survey (NHANES), an ongoing survey run by the CDC that collects health and behavioral data from a nationally representative, randomly selected sample of the U.S. population.\nUsing data from the NHANES survey, participants aged 18-25 were classified into two groups: those who reported more sitting time than average (“High”), and those who reported less (“Low”). Their depression symptoms were measured with the PHQ-9, a standard 9-item screening scale (0-27, higher = more symptoms).\n\n\n\n\n\nsitting_group\nn\nxbar\nsd\n\n\n\n\nHigh\n300\n3.58\n4.36\n\n\nLow\n359\n3.21\n4.04\n\n\n\n\n\n\nWhat is the null hypothesis for this test?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(H_0: \\mu_1 = \\mu_2\\) (or \\(H_0: \\mu_1 - \\mu_2 = 0\\))\n\n\n\n\nWhat is the alternative hypothesis for this test?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\\(H_A: \\mu_1 \\neq \\mu_2\\) (two-sided)\n\n\n\n\nThe researchers conduct a two-sample t-test and report a test statistic of \\(t=1.26\\). Below is a plot of the appropriate t-distribution for this test. Sketch how you would calculate the p-value for this situation.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nThe p-value is equal to the area in the two tails beyond \\(t=1.26\\) and \\(-t=1.26\\).\n\n\n\n\n\n\n\n\n\n\n\n\n\nHow did you calculate this p-value in your last statistics course?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nAnswers will vary based on where you took intro stats. You may have used StatKey or a similar online app/calculator, you may have used R’s pt() command, or you may have used a t-distribution table (we won’t use tables in this class).\n\n\n\n\nIf the p-value you calculated was 0.26, what would you conclude about the null hypothesis?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nA p-value of 0.26 does not provide evidence against the null hypothesis. In other words, there is no statistically discernible evidence of a difference in means between the two groups (\\(t=1.26\\), p-value = 0.26).\n\n\n\n\nWas this an observational study or an experiment? Based on your answer, can you conclude that spending more time sitting causes higher depression symptoms? Why or why not?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nThis is an observational study — participants were not randomly assigned to a sitting-time group, they were classified based on their reported behavior. Because sitting time was not randomly assigned, other variables (e.g., physical activity, chronic illness, employment status) could differ between the two groups and explain the difference in depression scores. We cannot conclude that sitting time causes a difference in depression symptoms, only that the two are associated.\n\n\n\n\nCan you generalize these results to all young adults in the U.S.? Why or why not?\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nYes, we can generalize these results to all young adults in the U.S. because NHANES is a nationally representative survey."
   },
   {
     "objectID": "activities/20-logistic-inference.html",
@@ -4659,7 +4659,7 @@
     "href": "syllabus.html#quizzes",
     "title": "Stat230: Applied Regression Analysis",
     "section": "Quizzes",
-    "text": "Quizzes\nA key part of statistical literacy is being able to recall concepts “on the fly”. I use in-class quizzes to assess your understanding of class material without access to resources. There will be three quizzes — tentatively scheduled for Week 3 Monday, 6 Wednesday, and 9 Monday.\nIf you miss a quiz due to a conflict with less than 1 week notice, then there are no revisions or makeups offered. If must miss an exam due to an illness or other last minute emergency, please let me know in advance to arrange an alternative."
+    "text": "Quizzes\nA key part of statistical literacy is being able to recall concepts “on the fly”. I use in-class quizzes to assess your understanding of class material without access to resources. There will be three quizzes — tentatively scheduled for Week 3 Monday, 6 Wednesday, and 9 Friday.\nIf you miss a quiz due to a conflict with less than 1 week notice, then there are no revisions or makeups offered. If must miss an exam due to an illness or other last minute emergency, please let me know in advance to arrange an alternative."
   },
   {
     "objectID": "syllabus.html#final-project",
