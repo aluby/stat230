@@ -28,14 +28,22 @@ library(broom)
 
 Due: Friday of Week 1 at start of class
 
+::: callout-tip
+## How do I complete homework?
+
+For HW1, we'll grade only your written answers and you don't need to turn in any R code or graphs. I'd recommend typing in word/docs/etc. 
+
+If you'd like to try quarto, there is a [homework template](hw-template.qmd) available if you'd like to use that as a starter file, and copy and paste the code as needed. 
+:::
+
 ::: callout-important
 ## Important! 
 
-I will add problems after each class day. Be sure to check back here after each class meeting for new problems.
+I may add problems after each class day. Be sure to check back here after each class meeting for new problems.
 :::
 
 
-# Problem 1: Intro Stat review
+# Problem 1: Intro Stat review (Mon)
 
 A 2021 article in *Pediatrics* ("Baby’s First Years: Design of a Randomized Controlled Trial of Poverty Reduction in the United States") describes the design of a study to measure the impact of poverty reduction on children's early development: 
 
@@ -49,7 +57,7 @@ A 2021 article in *Pediatrics* ("Baby’s First Years: Design of a Randomized Co
   
   (d) How could the researchers decrease the probability that they make the type of error in (c)?
   
-# Problem 2: Runoff
+# Problem 2: Runoff (Wed)
 
 One factor affecting water availability in Southern California is stream runoff from snowfall.
 If runoff could be predicted, engineers, planners, and policy makers could do their jobs more
@@ -102,7 +110,7 @@ units.)
 forget to specify units.)
 
 
-# Problem 3: Grizzlies
+# Problem 3: Grizzlies (Wed)
 
 ::: callout-tip
 This problem asks you to write R code. You can use the fill-in-the-blank boxes here, or maize or RStudio if you are comfortable. For this homework, we will grade your *written answers*, so you only need to include sentences for each part. Your answers should reference the specific numbers you found. 
@@ -148,7 +156,7 @@ grizzly
 #| min-lines: 5
 ```
 
-# Problem 4: The Hubble Constant
+# Problem 4: The Hubble Constant (Wed)
 
 ::: callout-tip
 This problem asks you to write R code. You can use the fill-in-the-blank boxes here, or maize or RStudio if you are comfortable. For this homework, we will grade your *written answers*, so you only need to include sentences for each part. Your answers should reference the specific numbers you found. 
@@ -179,10 +187,4 @@ ex0725
 
 ```{webr}
 hub_mod <- lm(Velocity ~ 0 + Distance, data = ex0725)
-```
-
-(d) Find a 95% confidence interval for this estimate
-
-```{webr}
-#| min-lines: 5
 ```

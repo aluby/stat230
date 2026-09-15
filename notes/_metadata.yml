@@ -1,0 +1,25 @@
+format:
+  pdf:
+    pdf-engine: lualatex
+    mainfont: "Source Sans 3"
+    fontsize: 11pt
+    geometry:
+      - margin=1in
+    toc: false
+    number-sections: false
+    include-in-header: notes-header.tex
+editor:
+  markdown:
+    wrap: 72
+engine: knitr
+execute:
+  echo: false
+  warning: false
+  message: false
+  freeze: auto
+knitr:
+  opts_chunk:
+    fig.align: center
+    fig.width: 6
+    fig.height: 3.5
+    out.width: "85%"

@@ -1,0 +1,47 @@
+% Shared preamble for Stat230 guided notes (matches slides/slides.scss styling)
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+\definecolor{darkgreen}{HTML}{003300}
+\definecolor{taskgreen}{HTML}{E6F0E6}
+\definecolor{notegray}{HTML}{6B7280}
+
+\IfFontExistsTF{Merriweather}{\newfontfamily\headingfont{Merriweather}}{\newfontfamily\headingfont{Georgia}}
+
+% Section / subsection styling to mirror the slide deck's dark green Merriweather headings
+\titleformat{\section}{\headingfont\bfseries\Large\color{darkgreen}}{\thesection}{0.6em}{}[{\color{darkgreen}\titlerule[0.8pt]}]
+\titleformat{\subsection}{\headingfont\bfseries\large\color{darkgreen}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\headingfont\bfseries\normalsize\color{darkgreen}}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.6em}
+\titlespacing*{\subsection}{0pt}{1.1em}{0.4em}
+
+% Title block styling (scrartcl/KOMA-Script native hooks -- no titling package needed)
+\setkomafont{title}{\headingfont\Huge\bfseries\color{darkgreen}}
+\setkomafont{author}{\large\color{notegray}}
+\setkomafont{date}{\small\color{notegray}}
+
+% Left-align the title block (KOMA-Script centers it by default via \centering),
+% follow it with a rule, and tighten the space before the body text.
+\makeatletter
+\let\oldmaketitle\maketitle
+\renewcommand{\maketitle}{%
+  \begingroup
+  \let\centering\raggedright
+  \oldmaketitle
+  \vspace{-4.3em}
+  {\color{darkgreen}\rule{\linewidth}{0.8pt}}
+  \vspace{-1.5em}
+  \endgroup
+}
+\makeatother
+
+% Empty box for a quick sketch in place of a slide graph
+\newcommand{\sketchbox}[2][3.2cm]{%
+  \par\vspace{0.4em}
+  \noindent\fbox{\parbox[c][#1][c]{\linewidth}{\centering\color{notegray}\itshape #2}}%
+  \par\vspace{0.4em}
+}
+
+% Small inline note marking where code/output would appear on the slide but isn't reproduced here
+\newcommand{\slidenote}[1]{{\small\color{notegray}\textit{#1}}}

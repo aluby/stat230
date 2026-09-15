@@ -1,0 +1,250 @@
+---
+title: "Day 06: Transforming SLR models"
+author: "Name: ________________________________"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+library(patchwork)
+library(mosaic)
+theme_set(theme_minimal(base_size = 12))
+
+redcedar <- read.csv("https://github.com/math430-lu/data/raw/master/ufcwc.csv")
+data("case0802", package = "Sleuth3")
+
+redcedar_mod <- lm(Height ~ Dbh, data = redcedar)
+aug_cedar <- augment(redcedar_mod)
+```
+
+## Last time -- and today
+
+We checked: are any conditions for SLR *violated*? Is there a strong
+predictive relationship between X and Y? **Today:** how can we fix the
+worst violation?
+
+If the linearity condition is not met, we get systematically biased
+predictions, might draw false conclusions about the existence or
+strength of a relationship, and all inference about
+$\beta_0, \beta_1, \widehat\mu(Y \mid X), \mathrm{Pred}(Y \mid X)$
+becomes meaningless.
+
+## Easing skew
+
+If a set of data values is skewed to the right, taking the (natural)
+log of each value *can* result in a data set that is roughly symmetric
+and often roughly normal.
+
+```{r}
+#| fig-height: 3.5
+h1 <- gf_histogram(~Time, data = case0802, fill = "#003300", col = "white")
+qq1 <- gf_qq(~Time, data = case0802, color = "#003300") %>% gf_qqline()
+h2 <- gf_histogram(~log(Time), data = case0802, fill = "#003300", col = "white")
+qq2 <- gf_qq(~log(Time), data = case0802, color = "#003300") %>% gf_qqline()
+(h1 + h2) / (qq1 + qq2)
+```
+
+## Data for today: red cedar
+
+How are tree height and tree diameter related for the western red
+cedar?
+
+```{r}
+#| fig-height: 2.8
+gf_point(Height ~ Dbh, data = redcedar, alpha = 0.6, color = "#003300") %>%
+  gf_labs(x = "Diameter at 137 cm above ground (mm)", y = "Height (dm)")
+```
+
+## Are the conditions violated?
+
+```{r}
+#| fig-height: 2.6
+#| fig-width: 8
+p_scat <- gf_point(Height ~ Dbh, data = redcedar, alpha = 0.5, color = "#003300") %>%
+  gf_lm(color = "#f15a31") %>%
+  gf_labs(x = "Diameter (mm)", y = "Height (dm)")
+
+p_resid <- gf_point(.resid ~ Dbh, data = aug_cedar, alpha = 0.5, color = "#003300") %>%
+  gf_hline(yintercept = 0, col = "darkgreen", lty = 2) %>%
+  gf_labs(x = "Diameter", y = "Residuals")
+
+p_qq <- gf_qq(~.resid, data = aug_cedar, color = "#003300") %>%
+  gf_qqline() %>%
+  gf_labs(x = "N(0, 1) quantiles", y = "Residuals")
+
+(p_scat | p_resid | p_qq)
+```
+
+Adding `gf_smooth()` to the residual plot can help reveal curvature --
+but trust your eyes first, and don't over-interpret small samples.
+
+Which condition(s) look violated here: (a) linearity (b) independent
+errors (c) normal errors (d) equal variance (e) outliers (f) none? \
+**Answer:** ___________________________
+
+## Does transforming X help?
+
+```{r}
+#| fig-height: 2.6
+#| fig-width: 8
+logx_mod <- lm(Height ~ log(Dbh), data = redcedar)
+aug <- augment(logx_mod)
+xlab <- "Diameter (mm) (log scale)"; ylab <- "Height (dm)"
+
+p1 <- gf_point(Height ~ log(Dbh), data = redcedar, alpha = 0.5, color = "#003300") %>%
+  gf_lm(color = "#f15a31") %>% gf_labs(x = xlab, y = ylab)
+p2 <- gf_point(.std.resid ~ .fitted, data = aug, alpha = 0.5, color = "#003300") %>%
+  gf_hline(yintercept = 0, col = "darkgreen", lty = 2) %>% gf_labs(x = "Fitted values", y = "Std. residuals")
+p3 <- gf_qq(~.std.resid, data = aug, color = "#003300") %>%
+  gf_qqline() %>% gf_labs(x = "N(0, 1) quantiles", y = "Std. residuals")
+(p1 | p2 | p3)
+```
+
+## Does transforming Y help?
+
+```{r}
+#| fig-height: 2.6
+#| fig-width: 8
+logy_mod <- lm(log(Height) ~ Dbh, data = redcedar)
+aug <- augment(logy_mod)
+xlab <- "Diameter (mm)"; ylab <- "Height (log scale)"
+
+p1 <- gf_point(log(Height) ~ Dbh, data = redcedar, alpha = 0.5, color = "#003300") %>%
+  gf_lm(color = "#f15a31") %>% gf_labs(x = xlab, y = ylab)
+p2 <- gf_point(.std.resid ~ .fitted, data = aug, alpha = 0.5, color = "#003300") %>%
+  gf_hline(yintercept = 0, col = "darkgreen", lty = 2) %>% gf_labs(x = "Fitted values", y = "Std. residuals")
+p3 <- gf_qq(~.std.resid, data = aug, color = "#003300") %>%
+  gf_qqline() %>% gf_labs(x = "N(0, 1) quantiles", y = "Std. residuals")
+(p1 | p2 | p3)
+```
+
+## Transforming both X and Y?
+
+```{r}
+#| fig-height: 2.6
+#| fig-width: 8
+logxy_mod <- lm(log(Height) ~ log(Dbh), data = redcedar)
+aug <- augment(logxy_mod)
+xlab <- "Diameter (log scale)"; ylab <- "Height (log scale)"
+
+p1 <- gf_point(log(Height) ~ log(Dbh), data = redcedar, alpha = 0.5, color = "#003300") %>%
+  gf_lm(color = "#f15a31") %>% gf_labs(x = xlab, y = ylab)
+p2 <- gf_point(.std.resid ~ .fitted, data = aug, alpha = 0.5, color = "#003300") %>%
+  gf_hline(yintercept = 0, col = "darkgreen", lty = 2) %>% gf_labs(x = "Fitted values", y = "Std. residuals")
+p3 <- gf_qq(~.std.resid, data = aug, color = "#003300") %>%
+  gf_qqline() %>% gf_labs(x = "N(0, 1) quantiles", y = "Std. residuals")
+(p1 | p2 | p3)
+```
+
+::: {.callout-tip}
+## Group task
+
+Work through the first example on the handout in your groups (online
+version with R chunks on Moodle). Compare the three transformation
+options above -- which one best resolves the condition violation(s)
+you flagged earlier?
+:::
+
+# Back-transforming
+
+Converting a transformed variable back to its original scale.
+
+## Example: back-transforming a mean
+
+```{r}
+#| fig-height: 2
+#| fig-width: 4
+gf_histogram(~log(Time), data = case0802, fill = "#003300", col = "white")
+```
+
+```{r}
+mean_logtime <- mean(log(case0802$Time))
+```
+
+Mean of `log(Time)` = `r round(mean_logtime, 3)`.
+
+Back-transformed mean: $e^{`r round(mean_logtime, 3)`} \approx$ `r round(exp(mean_logtime), 2)`.
+
+::: {.callout-note}
+## R note
+
+`log()` is the *natural* log; `exp(x)` calculates $e^x$. **Note:**
+back-transforming the mean of the logs does **not** generally equal
+the mean on the original scale (`r round(mean(case0802$Time), 2)`) --
+it estimates the geometric mean/median instead.
+:::
+
+## Displaying a transformed model
+
+`gf_lm(formula = log(y) ~ log(x), backtrans = exp, interval = "confidence")`
+plots the fitted line and CI back-transformed onto the *original*
+scale, so you can show results in units your audience understands.
+
+```{r}
+#| fig-height: 3
+#| fig-width: 8
+left <- gf_point(log(Height) ~ log(Dbh), data = redcedar, alpha = 0.5, color = "#003300") %>%
+  gf_lm(interval = "confidence", color = "#f15a31") %>%
+  gf_labs(x = "Diameter (mm) (log scale)", y = "Height (dm) (log scale)", title = "Transformed scale")
+
+right <- gf_point(Height ~ Dbh, data = redcedar, alpha = 0.5, color = "#003300") %>%
+  gf_lm(formula = log(y) ~ log(x), backtrans = exp, interval = "confidence", color = "#f15a31") %>%
+  gf_labs(x = "Diameter (mm)", y = "Height (dm)", title = "Original scale")
+
+left + right
+```
+
+## Rules of thumb
+
+-   **Transform X:** if the mean function is nonlinear, but
+    monotonic, and the residual variance is constant.
+-   **Transform Y:** if the mean function is nonlinear *and* residual
+    variance increases as the mean increases (log, reciprocal, or
+    square root often work).
+-   **Log rule:** if values range over more than 1 order of magnitude
+    and are strictly positive, the natural log is likely helpful.
+-   **Range rule:** if the range is considerably less than 1 order of
+    magnitude, transformations are unlikely to help.
+-   **Square roots** are useful for count data.
+
+## Ladder of transformations & Rule of the Bulge
+
+Tukey and Mosteller's "Rule of the Bulge" gives a visual guide: match
+the direction your scatterplot bulges to the ladder position, and
+move X and/or Y toward that end to straighten the relationship.
+
+```{r}
+#| fig-width: 3.2
+#| out-width: 55%
+knitr::include_graphics(here::here("slides", "img", "clipboard-2725667272.png"))
+```
+
+```{r}
+#| fig-width: 4.5
+#| out-width: 75%
+knitr::include_graphics(here::here("slides", "img", "clipboard-2203698702.png"))
+```
+
+::: {.callout-note}
+Image credit: Andrew Zieffler
+:::
+
+## Modeling is an iterative process
+
+```{r}
+#| fig-width: 4
+#| out-width: 70%
+knitr::include_graphics(here::here("slides", "img", "clipboard-627702870.png"))
+```
+
+## Issues with transformations
+
+-   You're often guessing -- statistics is an art *and* a science.
+-   Transformations change the ___________________________ of the
+    parameters -- you need to back-transform to give interpretable
+    results.
+-   Transformations change the SEs of the parameters.
+-   Not always easy to keep track of all your assumptions once you've
+    transformed.

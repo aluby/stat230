@@ -1,0 +1,289 @@
+---
+title: "Day 05: Evaluating SLR models"
+author: "Name: ________________________________"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(broom)
+library(patchwork)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+set.seed(040726)
+bike_sample <- bikes |> slice_sample(n = 50)
+bike_sm_lm <- lm(rides ~ temp_actual, data = bike_sample)
+```
+
+## Data for today
+
+We return to the Capital Bikeshare data, this time working with a
+small random sample of 50 days so that patterns are easier to see by
+eye.
+
+```{r}
+gf_point(rides ~ temp_actual, data = bike_sample, xlab = "Temperature (F)",
+         ylab = "No. rides", color = "#003300") |>
+  gf_lm(color = "#f15a31")
+```
+
+```{r}
+kable_coef(bike_sm_lm, terms = c("Intercept", "temp_actual"))
+```
+
+## Two definitions of a "good" model
+
+1.  The model is appropriate, so our inferences (p-values, CIs) are
+    ___________________________
+2.  The x variable does a good job ___________________________ the y
+    variable
+
+Theoretical model: $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where
+$\varepsilon_i \overset{\mathrm{iid}}{\sim} N(0, \sigma^2)$
+
+Fitted model: $\widehat y_i = \widehat\beta_0 + \widehat\beta_1 x_i$,
+so that $y_i = \widehat y_i + \widehat\varepsilon_i$
+
+## Conditions for inference: LINE
+
+For our p-values and confidence intervals to be trustworthy, the
+theoretical model above has to be a reasonable description of the
+data. Check:
+
+-   **L**inear: ___________________________
+-   **I**ndependent and identically distributed errors:
+    ___________________________
+-   **N**ormally distributed errors: ___________________________
+-   **E**qual variance of the errors: ___________________________
+
+::: {.callout-note}
+These conditions are about the *errors*, not about the raw x or y
+variables themselves.
+:::
+
+## Residuals
+
+**Definition:** $e_i = \widehat\varepsilon_i = y_i - \widehat y_i$
+
+**Properties:**
+
+-   sum to zero $\Longrightarrow$ mean is ___
+-   **uncorrelated** with $x$ and $\widehat y$
+-   (should be) normally distributed
+-   $SD(e_i) = \widehat\sigma \sqrt{1 - \dfrac1n - \dfrac{(x_i - \overline x)^2}{\sum (x_i - \overline x)^2}}$
+
+## Residual plots
+
+For SLR, plotting residuals against $x$ or against the fitted values
+$\widehat y$ shows the same shape (since $\widehat y$ is a linear
+function of $x$) -- either is a valid way to check linearity and
+equal variance.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+p1 <- ggplot(augment(bike_sm_lm), aes(x = temp_actual, y = .resid)) +
+  geom_point(color = "#003300") +
+  geom_hline(yintercept = 0, color = "#f15a31", linewidth = 1) +
+  labs(x = "Temperature", y = "Residual")
+
+p2 <- ggplot(augment(bike_sm_lm), aes(x = .fitted, y = .resid)) +
+  geom_point(color = "#003300") +
+  geom_hline(yintercept = 0, color = "#f15a31", linewidth = 1) +
+  labs(x = "Fitted values", y = "Residual")
+
+p1 + p2
+```
+
+**A "good" residual plot** shows no pattern: residuals bounce randomly
+around zero with roughly constant spread across the range of fitted
+values.
+
+```{r}
+#| fig-height: 3
+#| fig-width: 4.5
+set.seed(72384)
+x <- rnorm(100, mean = 10, sd = 3.5)
+y <- 1 + 1 * x + rnorm(100, mean = 0, sd = 10)
+good_mod <- lm(y ~ x)
+
+gf_point(residuals(good_mod) ~ fitted(good_mod),
+         ylab = "Residual", xlab = "Fitted values") |>
+  gf_hline(yintercept = 0, color = "#f15a31", linetype = 2)
+```
+
+::: {.callout-tip}
+## Group task
+
+On the whiteboards, sketch a plot of $y$ vs. $x$ *and* the
+corresponding residual plot that would indicate a violation of
+
+1.  the linearity condition
+2.  the equal variance condition
+:::
+
+## Assessing normality
+
+Use a histogram or normal Q-Q plot of the residuals. A "good" Q-Q plot
+hugs the diagonal reference line closely.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+p1 <- gf_histogram(~ .resid, data = augment(bike_sm_lm), color = "white",
+                    bins = 10, xlab = "Residual", ylab = "Count")
+
+p2 <- gf_qq(~ .resid, data = augment(bike_sm_lm),
+            ylab = "Residual", xlab = "N(0,1) quantiles") |>
+  gf_qqline()
+
+p1 + p2
+```
+
+::: {.callout-note}
+Normality is **harder to judge at small sample sizes** -- even true
+random draws from a normal distribution can look lumpy or have a
+wandering Q-Q plot when $n$ is small. Don't over-interpret minor
+wiggles with only 30-50 points.
+:::
+
+## Assessing independence
+
+Plot residuals against whatever variable might induce dependence
+(time, location, subject, batch, ...). Using the *full* bikes dataset
+ordered by date reveals a clear pattern -- a strong hint that
+day-to-day ridership is **not** independent once we condition only on
+temperature:
+
+```{r}
+#| fig-height: 3
+bikes_full_lm <- lm(rides ~ temp_actual, data = bikes)
+
+bikes |>
+  mutate(.resid = residuals(bikes_full_lm)) |>
+  ggplot(aes(x = date, y = .resid)) +
+  geom_line(color = "#003300") +
+  geom_hline(yintercept = 0, color = "#f15a31", linetype = 2) +
+  labs(x = "Date", y = "Residual")
+```
+
+## What happens if the conditions aren't met?
+
+-   **Linearity:** if nonlinear, everything breaks!
+-   **Independence:** estimates are still unbiased, but the SEs are
+    typically too **small** (we have less information than $n$
+    independent points suggests)
+-   **Normality:** estimates and SEs are still fine, but **prediction
+    intervals** (which rely on individual points being normal around
+    the mean) are wrong
+-   **Equal variance:** estimates are still unbiased, but SEs are
+    wrong -- and we don't know in which direction
+
+## What do we do if assumptions are violated?
+
+1.  Change our assumptions (hard -- needs more advanced methods)
+2.  Transform $y$, $x$, or both
+3.  Change the type of inference (e.g. bootstrap)
+
+# Is x a "good" predictor of y?
+
+## Partitioning variability
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+slr_aug <- augment(bike_sm_lm) |> mutate(mean.y = mean(rides))
+
+p1 <- ggplot(slr_aug, aes(x = temp_actual, y = rides)) +
+  geom_point(color = "#003300") +
+  geom_segment(aes(xend = temp_actual, yend = mean.y), color = "gray70", alpha = 0.6) +
+  geom_hline(yintercept = mean(slr_aug$rides), color = "#f15a31") +
+  labs(title = "SS Total")
+
+p2 <- ggplot(slr_aug, aes(x = temp_actual, y = rides)) +
+  geom_point(color = "#003300") +
+  geom_segment(aes(xend = temp_actual, yend = .fitted), color = "#003069", alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "#f15a31") +
+  labs(title = "SS Error")
+
+p1 + p2
+```
+
+$$\underbrace{\sum (y_i - \overline y)^2}_{SSTO} = \underbrace{\sum (\widehat y_i - \overline y)^2}_{SSR} + \underbrace{\sum e_i^2}_{SSE}$$
+
+$$\text{total variability} = \text{variability of } \widehat Y\text{'s} \; + \; \text{variability of residuals (}\underline{\hspace{2cm}}\text{)}$$
+
+$$R^2 = \frac{SSR}{SSTO} = \frac{\text{variability of } \widehat Y}{\text{variability of } Y}$$
+
+::: {.callout-note}
+## $R^2$
+
+$R^2$ gives the proportion of total variability in $Y$ explained by
+the SLR model.
+:::
+
+For our small bike sample, $R^2 =$ `r round(summary(bike_sm_lm)$r.squared, 3)`
+-- about `r round(summary(bike_sm_lm)$r.squared, 3) * 100`% of the
+variability in rides is explained by temperature.
+
+## Properties of $R^2$
+
+-   Between ___ and ___
+-   Big when $\sigma$ is small relative to the overall variability of
+    $y$ (i.e. a big proportion of variability explained by the model)
+-   For SLR, $R^2 =$ ___ (where $r$ is the correlation coefficient
+    between $x$ and $y$)
+
+::: {.callout-note}
+## Quick notation reference
+
+| Symbol | Meaning |
+|:---|:---|
+| $r$ | sample correlation coefficient |
+| $\rho$ | population correlation coefficient |
+| $R^2$ | coefficient of determination |
+| $p$ | a population proportion |
+| $\widehat p$ | a sample proportion |
+| p-value | $P(\text{test statistic} \mid H_0)$ |
+| $P(A)$ | probability of event $A$ |
+:::
+
+## $R^2$ dangers: high $R^2$ doesn't mean "good fit"
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3.2
+set.seed(040726)
+fake_data <- tibble(
+  x = c(runif(50, 0, 200), 400),
+  y = c(.5 * x[1:50]^2 + rnorm(50, 0, 50), 30000)
+)
+fake_lm <- lm(y ~ x, data = fake_data)
+
+p1 <- ggplot(fake_data, aes(x = x, y = y)) +
+  geom_point(color = "#003300") +
+  geom_smooth(method = "lm", se = FALSE, color = "#f15a31") +
+  labs(title = paste0("R² = ", round(summary(fake_lm)$r.squared, 3)))
+
+p2 <- ggplot(augment(fake_lm), aes(x = .fitted, y = .resid)) +
+  geom_point(color = "#003300") +
+  geom_hline(yintercept = 0, color = "#f15a31", linetype = 2) +
+  labs(x = "Fitted values", y = "Residual")
+
+p1 + p2
+```
+
+A single high-leverage point drove $R^2$ up to
+`r round(summary(fake_lm)$r.squared, 3)` even though the residual plot
+shows an obvious curve -- the linear model is a bad fit! **Always check
+the residual plot, not just $R^2$.**
+
+::: {.callout-tip}
+## Your turn
+
+Would you trust this model just based on its $R^2$? What does the
+residual plot tell you that $R^2$ alone can't?
+:::

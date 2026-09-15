@@ -1,0 +1,160 @@
+---
+title: "Day 04: Inference for Prediction"
+author: "Name: ________________________________"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(ggdist)
+library(patchwork)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+bikes_lm <- lm(rides ~ temp_actual, data = bikes)
+```
+
+## Last time, and today
+
+Last time: the sampling distribution for $\beta_i$'s, confidence
+intervals and hypothesis tests for $\beta_i$'s, both by hand and in R.
+
+**Today:** inference for *predictions*.
+
+## Two types of predictions
+
+1. Predicting the **mean response** at a specific value of $x$ --
+   e.g. the *average* number of riders on a 62 degree day.
+2. Predicting the response for a **specific future observation** --
+   e.g. the number of riders *tomorrow* (forecast to be 62 degrees).
+
+::: {.callout-tip}
+Think of two additional real-world examples of each type of
+prediction.
+:::
+
+## Inference for prediction
+
+Best estimate: $\widehat y_0 = \widehat\beta_0 + \widehat\beta_1 x_0$
+
+General interval formula:
+$$\text{estimate} \pm t^* \times SE$$
+
+- $\widehat y_0$ is our estimate
+- use a $t$-distribution with $df = n-2$ to find $t^*$
+
+We'll need a *different* SE depending on whether we're building:
+
+- a confidence interval for the mean response $\widehat\mu(Y \mid X_0)$, or
+- a prediction interval for an individual response $Y \mid X_0$
+
+## Standard errors
+
+$$SE\big(\widehat\mu(Y\mid X)\big) = \widehat\sigma \sqrt{\frac{1}{n} + \frac{(x_0-\overline x)^2}{\sum_{i=1}^n (x_i-\overline x)^2}}$$
+
+$$SE(\widehat y) = \widehat\sigma \sqrt{1 + \frac{1}{n} + \frac{(x_0-\overline x)^2}{\sum_{i=1}^n (x_i-\overline x)^2}}$$
+
+Comparing the two formulas: the prediction interval SE has an extra
+"$+1$" under the square root, so it will always be
+___________________ (wider/narrower) than the confidence interval SE.
+
+As $x_0$ moves farther from $\overline x$, both standard errors
+___________________ (grow/shrink), because
+$(x_0-\overline x)^2$ grows.
+
+## Where the extra variability comes from
+
+$$SE(\widehat y) = \sqrt{\underbrace{\widehat\sigma^2}_{\text{variability in } \varepsilon_i\text{'s}} + \underbrace{\frac{\widehat\sigma^2}{n} + \frac{\widehat\sigma^2(x_0-\overline x)^2}{\sum_{i=1}^n (x_i-\overline x)^2}}_{\text{variability in } \widehat\beta_i\text{'s}}}$$
+
+The first term is the leftover noise around the line at any $x$; the
+rest comes from not knowing the true line exactly.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2.8
+set.seed(1234)
+boots <- bootstraps(bikes, times = 20, apparent = TRUE)
+fit_lm_on_bootstrap <- function(split) lm(rides ~ temp_actual, data = analysis(split))
+boot_models <- boots |>
+  mutate(model = map(splits, fit_lm_on_bootstrap), coef_info = map(model, tidy))
+boot_coefs <- boot_models |>
+  unnest(coef_info) |>
+  select(-std.error, -statistic, -p.value) |>
+  pivot_wider(names_from = term, values_from = estimate)
+
+bike_dsn <- tibble(
+  temp_actual = c(50, 60, 70, 80),
+  yhat = predict(bikes_lm, data.frame(temp_actual = c(50, 60, 70, 80))),
+  resid_sd = sigma(bikes_lm)
+)
+
+p_beta <- ggplot(boot_coefs) +
+  geom_abline(aes(slope = temp_actual, intercept = `(Intercept)`),
+              color = "#0072B2", linewidth = 0.5, alpha = 0.4) +
+  geom_point(data = bikes, aes(temp_actual, rides), color = "grey60") +
+  labs(x = "Temperature", y = "No. rides", title = "Variability in the fitted line")
+
+p_eps <- ggplot(data = bikes, aes(x = temp_actual, y = rides)) +
+  geom_point(alpha = 0.4, size = 1.2, color = "#003300") +
+  geom_lm(color = "#f15a31") +
+  stat_slab(aes(x = temp_actual, ydist = "norm", arg1 = yhat, arg2 = resid_sd),
+            data = bike_dsn, alpha = 0.4, inherit.aes = FALSE, scale = 0.6, fill = "#f15a31") +
+  labs(x = "Temperature", y = "No. rides", title = "Variability around the line")
+
+p_beta + p_eps
+```
+
+## R: point estimate
+
+`predict()` quickly calculates $\widehat y$ for a given $x$ (or a
+vector of $x$'s):
+
+```{r}
+#| echo: true
+predict(bikes_lm, newdata = data.frame(temp_actual = 52))
+predict(bikes_lm, newdata = data.frame(temp_actual = c(52, 62, 72, 82)))
+```
+
+## R: intervals
+
+The `interval` argument specifies which type of interval you want:
+
+```{r}
+#| echo: true
+predict(bikes_lm, newdata = data.frame(temp_actual = 52), interval = "confidence")
+predict(bikes_lm, newdata = data.frame(temp_actual = 52), interval = "prediction")
+```
+
+Notice the prediction interval is ___________________ than the
+confidence interval, exactly as the SE formulas predicted.
+
+## R: confidence level and SEs
+
+The `level` argument sets the confidence level (default 0.95):
+
+```{r}
+#| echo: true
+predict(bikes_lm, newdata = data.frame(temp_actual = 52), interval = "confidence", level = .95)
+predict(bikes_lm, newdata = data.frame(temp_actual = 52), interval = "prediction", level = .99)
+```
+
+Adding `se.fit = TRUE` returns the standard error needed for
+"by hand" calculations:
+
+```{r}
+#| echo: true
+predict(bikes_lm, newdata = data.frame(temp_actual = 52), se.fit = TRUE)
+```
+
+::: {.callout-tip}
+## Try it
+
+Using `$fit` and `$se.fit` above along with the appropriate $t^*$,
+reconstruct the 95% confidence interval for the mean response at
+`temp_actual = 52` by hand, and check it against the `predict()`
+output.
+:::

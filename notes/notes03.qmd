@@ -1,0 +1,145 @@
+---
+title: "Day 03: Inference for SLR"
+author: "Name: ________________________________"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(broom)
+library(rsample)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+bikes_lm <- lm(rides ~ temp_actual, data = bikes)
+```
+
+## Data for today
+
+*Capital Bikeshare* is a bike sharing service in the Washington, D.C.
+area. We're analyzing the relationship between number of rides taken
+and temperature.
+
+```{r}
+gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No. rides",
+         color = "#003300", size = 1) |>
+  gf_lm(rides ~ temp_actual, linewidth = 1.2, color = "#f15a31")
+```
+
+## Last time
+
+1.  $Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where
+    $\varepsilon_i \overset{\mathrm{iid}}{\sim} N(0, \sigma^2)$
+2.  Scatterplots + correlation
+3.  Fit the regression line in R and look at a `summary()`
+4.  Making confidence intervals using `confint`
+
+**Today:** moving from *descriptive* to ___________________________
+
+## Sampling variability
+
+Every new sample of riders gives us a slightly different fitted line.
+That variability in our ________________ (not the data) is what lets
+us build confidence intervals and hypothesis tests.
+
+```{r}
+set.seed(1234)
+boots <- bootstraps(bikes, times = 20, apparent = TRUE)
+fit_lm_on_bootstrap <- function(split) lm(rides ~ temp_actual, data = analysis(split))
+boot_models <- boots |>
+  mutate(model = map(splits, fit_lm_on_bootstrap),
+         coef_info = map(model, tidy))
+boot_coefs <- boot_models |>
+  unnest(coef_info) |>
+  select(-std.error, -statistic, -p.value) |>
+  pivot_wider(names_from = term, values_from = estimate)
+
+ggplot(boot_coefs) +
+  geom_abline(aes(slope = temp_actual, intercept = `(Intercept)`),
+              color = "#00aeef", alpha = 0.6, linewidth = 0.5) +
+  geom_point(data = bikes, aes(temp_actual, rides), color = "grey60") +
+  labs(x = "Temperature", y = "No. rides", title = "20 bootstrap resamples")
+```
+
+## Sampling distribution of a coefficient
+
+We use the **t distribution** to model the sampling distribution of a
+regression coefficient.
+
+-   Degrees of freedom: $df =$ ___________________
+-   Mean: $= \widehat\beta_i$
+-   Standard deviation: $SE(\widehat\beta_i) = \dfrac{\widehat\sigma}{\sqrt{\sum (x_i - \overline x)^2}}$
+
+## Confidence interval (general form)
+
+$$\text{statistic} \pm \text{critical value} \times \text{standard error}$$
+
+$$\widehat\beta_i \pm t^* \cdot SE(\widehat\beta_i)$$
+
+::: {.callout-note}
+## Critical value
+
+$t^*$ is the value that cuts off the right tail area that matches
+your confidence level -- e.g. for a 95% CI, find $t^*$ so that the
+two-sided tail area is 0.025 on each side, using `qt()`.
+:::
+
+## Hypothesis test (general form)
+
+$$H_0: \beta_i = \text{null value} \quad \text{vs.} \quad H_a: \beta_i \; \begin{cases}\ne\\<\\>\end{cases} \text{null value}$$
+
+$$\text{test statistic} = \frac{\text{estimate} - \text{null value}}{SE} = \frac{\widehat\beta_i - \text{null value}}{SE(\widehat\beta_i)}$$
+
+Then find the appropriate tail area(s) under the t-distribution with
+$df = n - 2$.
+
+## Coefficient table
+
+R's `summary()`/`tidy()` output gives us a coefficient table:
+
+```{r}
+kable_coef(bikes_lm, terms = c("Intercept", "temp_actual"))
+```
+
+::: {.callout-tip}
+## Try it
+
+Verify the test statistic for $H_0: \beta_1 = 0$ against
+$H_A: \beta_1 \ne 0$ using the table above.
+:::
+
+## Example: 90% confidence interval for $\beta_1$
+
+$$\widehat\beta_i \pm t^* \cdot SE(\widehat\beta_i)$$
+
+```{r}
+t_star <- qt(0.95, df = nrow(bikes) - 2)
+ci90 <- confint(bikes_lm, level = 0.90)
+slope_est <- coef(bikes_lm)[["temp_actual"]]
+```
+
+$t^* =$ `r round(t_star, 3)` (from `qt(0.95, df = nrow(bikes) - 2)`)
+
+$$`r round(slope_est, 2)` \pm `r round(t_star, 3)` \cdot SE(\widehat\beta_1) \;\Longrightarrow\; (`r round(ci90[2,1], 2)`, \; `r round(ci90[2,2], 2)`)$$
+
+**Interpretation:** We are 90% confident that for every 1°F increase
+in temperature, the number of rides changes by between
+`r round(ci90[2,1], 1)` and `r round(ci90[2,2], 1)`, on average.
+
+::: {.callout-tip}
+## General template (reusable for any CI)
+
+We are ________% confident that for every 1 __________ increase in
+______________________________, ___________________________________
+also ________________ by between ____________ and ____________.
+:::
+
+## Your turn: on paper
+
+::: {.callout-note}
+Work the hypothesis test and confidence interval for this example by
+hand before checking your answers against the worked example above.
+:::
+
+# Next: intro to R and RStudio
