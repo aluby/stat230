@@ -211,9 +211,17 @@ Prof Amanda Luby
 </div>
 
 </section>
+<section>
+<section id="meet-your-groups" class="title-slide slide level1 center">
+<h1>Meet your groups!</h1>
+
+</section>
+<section id="recap-of-last-time" class="slide level2">
+<h2>Recap of last time</h2>
+</section>
 <section id="data-for-today" class="slide level2 smaller">
 <h2>Data for today</h2>
-<p><em>Capital Bikeshare</em> is a bike sharing service in the Washington, D.C. area. To best serve its registered members, the company must understand the demand for its service. To help them out, we can analyze the number of rides taken on a random sample of <em>n</em> days.</p>
+<p>The <em>National Health and Nutrition Examination Survey</em> (NHANES) is an ongoing CDC survey that collects health and behavioral data from a nationally representative sample of the U.S. population. Today we’ll return to the sitting time and depression data from last class – this time looking at the actual numeric variables instead of the “High”/“Low” groups. We’ll summarize each participant’s responses to a 9-item depression screening survey as a <strong>depression risk score</strong> (higher = more risk).</p>
 <div class="columns">
 <div class="column" style="width:60%;">
 <p><br></p>
@@ -221,7 +229,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides02_files/figure-html/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+<p><img data-src="slides02_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -229,13 +237,12 @@ Prof Amanda Luby
 </div><div class="column" style="width:40%;">
 <p><br> The data also has information about:</p>
 <ul>
-<li>Weekend/holiday/etc</li>
-<li>Day of the measurement</li>
-<li>Weather information</li>
+<li>Age</li>
+<li>Sex</li>
 </ul>
+<p>For our first analysis, we’ll investigate the relationship between <strong>sitting time</strong> and <strong>depression symptoms</strong></p>
 </div></div>
-<p>For our first analysis, we’ll investigate the relationship between <strong>temperature</strong> and <strong>daily ridership</strong></p>
-</section>
+</section></section>
 <section>
 <section id="regression-in-intro" class="title-slide slide level1 center">
 <h1>Regression in Intro</h1>
@@ -250,7 +257,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides02_files/figure-html/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+<p><img data-src="slides02_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -268,13 +275,13 @@ Prof Amanda Luby
 <section id="q-describe-the-scatterplot" class="slide level2 scrollable">
 <h2>Q: Describe the scatterplot</h2>
 
-<img data-src="slides02_files/figure-html/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div class="columns">
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div class="columns">
 <div class="column" style="width:50%;">
 <div class="small">
 <div class="conceptest">
 <ol type="1">
-<li><p>There is a strong, positive, linear association between temperature and number of rides.</p></li>
-<li><p>There is a moderate, positive, linear association between temperature and number of rides.</p></li>
+<li><p>There is a strong, positive, linear association between sitting time and depression risk score.</p></li>
+<li><p>There is a weak, positive, linear association between sitting time and depression risk score.</p></li>
 </ol>
 </div>
 </div>
@@ -282,8 +289,8 @@ Prof Amanda Luby
 <div class="small">
 <div class="conceptest">
 <ol start="3" type="1">
-<li><p>There is a moderate, positive, non-linear association between temperature and number of rides.</p></li>
-<li><p>There is a moderate, positive, linear association between temperature and number of rides, but there are a few extreme outliers.</p></li>
+<li><p>There is a weak, positive, non-linear association between sitting time and depression risk score.</p></li>
+<li><p>There is no clear association between sitting time and depression risk score.</p></li>
 </ol>
 </div>
 </div>
@@ -292,15 +299,15 @@ Prof Amanda Luby
 <section id="q-write-the-equation-of-the-regression-line" class="slide level2">
 <h2>Q: Write the equation of the regression line</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual, <span class="at">data =</span> bikes) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">lm</span>(dep_score <span class="sc">~</span> sedentary_hours, <span class="at">data =</span> nhanes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = rides ~ temp_actual, data = bikes)
+lm(formula = dep_score ~ sedentary_hours, data = nhanes)
 
 Coefficients:
-(Intercept)  temp_actual  
-   -2168.77        89.23  </code></pre>
+    (Intercept)  sedentary_hours  
+        0.90426          0.03141  </code></pre>
 </div>
 </div>
 <p>What is the equation of the regression line?</p>
@@ -310,16 +317,16 @@ Coefficients:
 <h2>Q: Interpret the slope in context</h2>
 <div class="conceptest">
 <ol type="1">
-<li><p>For every one degree increase in temperature, the model predicts an average decrease of 89.23 rides</p></li>
-<li><p>For every one-degree decrease in temperature, the model predicts an average increase of 89.23 rides</p></li>
-<li><p>If the daily temperature is 0, we’d expect 89.23 rides</p></li>
-<li><p>If the temperature increases by one degree, it will cause an increase of 89.23 rides every day</p></li>
+<li><p>For every one-hour increase in sitting time, the model predicts an average decrease of 0.03 in depression risk score</p></li>
+<li><p>For every one-hour increase in sitting time, the model predicts an average increase of 0.03 in depression risk score</p></li>
+<li><p>If someone reports 0 hours of sitting time, we’d expect a depression risk score of 0.03</p></li>
+<li><p>If sitting time increases by one hour, it will cause an increase of 0.03 in depression risk score every day</p></li>
 </ol>
 </div>
 </section>
 <section id="q-make-a-prediction" class="slide level2">
 <h2>Q: Make a prediction</h2>
-<p>The high temperature forecast tomorrow is 72 degrees F. What does the model predict for ridership?</p>
+<p>A participant reports sitting for 6 hours per day. What does the model predict for their depression risk score?</p>
 </section></section>
 <section>
 <section id="regression-in-stat230" class="title-slide slide level1 center">
@@ -335,7 +342,7 @@ Coefficients:
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides02_files/figure-html/normal-1.png" width="1152"></p>
+<p><img data-src="slides02_files/figure-revealjs/normal-1.png" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -353,12 +360,7 @@ Coefficients:
 <section id="y-sim-nmu-sigma2" class="slide level2">
 <h2><span class="math inline">\(Y \sim N(\mu, \sigma^2)\)</span></h2>
 
-<img data-src="slides02_files/figure-html/normal-tuning-1.png" width="1152" class="r-stretch"></section>
-<section id="simple-linear-regression-model" class="slide level2">
-<h2>Simple Linear Regression Model</h2>
-<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
-
-<img data-src="slides02_files/figure-html/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
+<img data-src="slides02_files/figure-revealjs/normal-tuning-1.png" width="1152" class="r-stretch"></section>
 <section id="a-deterministic-model" class="slide level2">
 <h2>A deterministic model</h2>
 <ul>
@@ -366,23 +368,23 @@ Coefficients:
 <li><p>No uncertainty!</p></li>
 </ul>
 
-<img data-src="slides02_files/figure-html/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="linear-regression-model" class="slide level2">
 <h2>Linear Regression Model</h2>
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
 
-<img data-src="slides02_files/figure-html/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="linear-regression-model-1" class="slide level2">
 <h2>Linear Regression Model</h2>
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
 
-<img data-src="slides02_files/figure-html/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="linear-regression-model-2" class="slide level2">
 <h2>Linear Regression Model</h2>
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
 
-<img data-src="slides02_files/figure-html/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
-<section id="simple-linear-regression-model-1" class="slide level2">
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<section id="simple-linear-regression-model" class="slide level2">
 <h2>Simple Linear Regression Model</h2>
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
 <p><br></p>
@@ -405,15 +407,15 @@ Coefficients:
 <section id="uncertainty-in-the-parameters" class="slide level2">
 <h2>Uncertainty in the parameters</h2>
 
-<img data-src="slides02_files/figure-html/unnamed-chunk-11-1.png" width="576" class="r-stretch"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-10-1.png" width="576" class="r-stretch"></section>
 <section id="uncertainty-in-the-parameters-1" class="slide level2">
 <h2>Uncertainty in the parameters</h2>
 
-<img data-src="slides02_files/figure-html/unnamed-chunk-12-1.gif" class="r-stretch"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-11-1.gif" class="r-stretch"></section>
 <section id="uncertainty-in-the-parameters-2" class="slide level2">
 <h2>Uncertainty in the parameters</h2>
 
-<img data-src="slides02_files/figure-html/unnamed-chunk-13-1.png" width="480" class="r-stretch"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-12-1.png" width="480" class="r-stretch"></section>
 <section id="rest-of-today" class="slide level2">
 <h2>Rest of today</h2>
 <div class="task">
@@ -643,6 +645,44 @@ Coefficients:
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
