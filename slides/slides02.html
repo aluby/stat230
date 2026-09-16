@@ -190,6 +190,8 @@
       margin-right: 0; 
     }
   </style>
+  <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -214,14 +216,50 @@ Prof Amanda Luby
 <section>
 <section id="meet-your-groups" class="title-slide slide level1 center">
 <h1>Meet your groups!</h1>
-
+<p>Name, pronouns, year, last stats class</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_ca47b8e8" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
 </section>
-<section id="recap-of-last-time" class="slide level2">
+<section id="group-work-highs-and-lows" class="slide level2">
+<h2>Group work: highs and lows</h2>
+<ul>
+<li>Think about some people you have liked working with in the past. What have they done well?</li>
+<li>Think about some people you have <em>not</em> liked working with in the past. What made them hard to work with?</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_cd1934e5" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="in-your-groups" class="slide level2">
+<h2>In your groups</h2>
+<p>Fill out the proposed engagement rubric on your sheets. I’ll compile these after class and we’ll discuss them next time.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_6c1627dd" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="recap-of-last-time" class="slide level2 smaller">
 <h2>Recap of last time</h2>
+<p>The <em>National Health and Nutrition Examination Survey</em> (NHANES) is an ongoing CDC survey that collects health and behavioral data from a nationally representative sample of the U.S. population. participants aged 18-25 were classified into two groups: those who reported <strong>more</strong> sitting time than average (“High”), and those who reported <strong>less</strong> (“Low”). Their depression symptoms were measured with the PHQ-9, a standard 9-item screening scale (0-27, higher = more symptoms). This was translated into a <strong>depression risk score</strong>, with a larger number indicating a higher risk.</p>
+<p>Last time, we used the sample statistics and our trusty intro stat skills to show that there was <strong>no significant difference</strong> between the two groups.</p>
 </section>
-<section id="data-for-today" class="slide level2 smaller">
-<h2>Data for today</h2>
-<p>The <em>National Health and Nutrition Examination Survey</em> (NHANES) is an ongoing CDC survey that collects health and behavioral data from a nationally representative sample of the U.S. population. Today we’ll return to the sitting time and depression data from last class – this time looking at the actual numeric variables instead of the “High”/“Low” groups. We’ll summarize each participant’s responses to a 9-item depression screening survey as a <strong>depression risk score</strong> (higher = more risk).</p>
+<section id="lets-take-a-closer-look-at-the-data" class="slide level2">
+<h2>Let’s take a closer look at the data:</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <p><br></p>
@@ -229,7 +267,29 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides02_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+<p><img data-src="slides02_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p><br></p>
+<ul>
+<li>How do you think “High” and “Low” sitting group were defined?</li>
+</ul>
+</div></div>
+</section>
+<section id="data-for-today-the-original-variable" class="slide level2 smaller">
+<h2>Data for today: the original variable</h2>
+<p>Survey participants were asked to report how many hours they spend sitting per day, on average.</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides02_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -242,7 +302,11 @@ Prof Amanda Luby
 </ul>
 <p>For our first analysis, we’ll investigate the relationship between <strong>sitting time</strong> and <strong>depression symptoms</strong></p>
 </div></div>
-</section></section>
+</section>
+<section id="what-do-you-notice-that-you-couldnt-see-before" class="slide level2">
+<h2>What do you notice that you couldn’t see before?</h2>
+
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section></section>
 <section>
 <section id="regression-in-intro" class="title-slide slide level1 center">
 <h1>Regression in Intro</h1>
@@ -257,7 +321,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides02_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+<p><img data-src="slides02_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -275,7 +339,7 @@ Prof Amanda Luby
 <section id="q-describe-the-scatterplot" class="slide level2 scrollable">
 <h2>Q: Describe the scatterplot</h2>
 
-<img data-src="slides02_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div class="columns">
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div class="columns">
 <div class="column" style="width:50%;">
 <div class="small">
 <div class="conceptest">
@@ -368,22 +432,22 @@ Coefficients:
 <li><p>No uncertainty!</p></li>
 </ul>
 
-<img data-src="slides02_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="linear-regression-model" class="slide level2">
 <h2>Linear Regression Model</h2>
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
 
-<img data-src="slides02_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="linear-regression-model-1" class="slide level2">
 <h2>Linear Regression Model</h2>
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
 
-<img data-src="slides02_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="linear-regression-model-2" class="slide level2">
 <h2>Linear Regression Model</h2>
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
 
-<img data-src="slides02_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="simple-linear-regression-model" class="slide level2">
 <h2>Simple Linear Regression Model</h2>
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
@@ -404,20 +468,22 @@ Coefficients:
 <p>Fitted model equation:</p>
 <p><span class="math inline">\(\quad \widehat{Y}_i = \widehat{\mu}\{Y|X\} = \widehat{\beta}_0 + \widehat{\beta}_1 x_i\)</span></p>
 </section>
-<section id="uncertainty-in-the-parameters" class="slide level2">
-<h2>Uncertainty in the parameters</h2>
+<section id="sampling-variability" class="slide level2">
+<h2>Sampling Variability</h2>
+<p>If we had a slightly different sample of people in the survey, our line would look a little bit different</p>
 
-<img data-src="slides02_files/figure-revealjs/unnamed-chunk-10-1.png" width="576" class="r-stretch"></section>
-<section id="uncertainty-in-the-parameters-1" class="slide level2">
-<h2>Uncertainty in the parameters</h2>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-15-1.png" width="576" class="r-stretch"></section>
+<section id="how-different" class="slide level2">
+<h2>How different?</h2>
 
-<img data-src="slides02_files/figure-revealjs/unnamed-chunk-11-1.gif" class="r-stretch"></section>
-<section id="uncertainty-in-the-parameters-2" class="slide level2">
-<h2>Uncertainty in the parameters</h2>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-16-1.gif" class="r-stretch"></section>
+<section id="how-different-1" class="slide level2">
+<h2>How different?</h2>
 
-<img data-src="slides02_files/figure-revealjs/unnamed-chunk-12-1.png" width="480" class="r-stretch"></section>
+<img data-src="slides02_files/figure-revealjs/unnamed-chunk-17-1.png" width="480" class="r-stretch"></section>
 <section id="rest-of-today" class="slide level2">
 <h2>Rest of today</h2>
+<p>We’re going to see how to make some graphs and fit SLR models in R! We’ll focus on commands today, and talk about the maize server and .qmd files on Friday.</p>
 <div class="task">
 <ul>
 <li>Open the SLR in R activity on Moodle and complete in your groups</li>
