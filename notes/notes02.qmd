@@ -74,7 +74,7 @@ The main linear regression skills we focus on in intro stat are:
 -   Make a prediction
 
 ```{r}
-#| fig.height: 2.5
+#| fig.height: 2
 #| fig.width: 4
 #| fig.align: center
 #| echo: false
@@ -105,7 +105,7 @@ nhanes_lm$coef
 
 **Example:** Interpreting the slope:
 
-\vspace{1in}
+\vspace{.75in}
 
 ::: {.callout-note}
 ## Correlation vs Causation
@@ -167,6 +167,11 @@ ggplot(data = nhanes, aes(x = sedentary_hours, y = dep_score)) +
   labs(x = "Sitting time (hrs/day)", y = "Depression risk score")
 ```
 
+1.   Linear relationship between $x$ and $y$
+2.   Errors are independent and identically distributed (iid)
+3.   Errors are normally distributed
+4.   Errors have mean 0
+5.   Variance of the errors doesn't depend on $x$
 
 ## Notation
 
