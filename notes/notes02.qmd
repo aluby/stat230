@@ -13,75 +13,113 @@ library(patchwork)
 theme_set(theme_minimal(base_size = 12))
 source("notes-helpers.R")
 
-nhanes <- read_csv(here::here("data/nhanes-sitting-depression.csv")) |>
-  mutate(dep_score = log(phq9 + 1))
+nhanes <- read_csv(here::here("data/nhanes-sitting-depression.csv")) 
+
+median_hrs <- median(nhanes$sedentary_hours)
+
+nhanes <- nhanes |>
+  mutate(dep_score = log(phq9 + 1),
+          sitting_group = if_else(sedentary_hours > median_hrs, "High", "Low"))
+
+
 nhanes_lm <- lm(dep_score ~ sedentary_hours, data = nhanes)
 ```
 
-## Data for today
+## Last time
 
 The *National Health and Nutrition Examination Survey* (NHANES) is an
 ongoing CDC survey that collects health and behavioral data from a
-nationally representative sample of the U.S. population. Today we
-return to the sitting time and depression data from last class -- this
-time looking at the actual numeric variables instead of the
-"High"/"Low" groups. We'll summarize each participant's responses to
-a 9-item depression screening survey as a **depression risk score**
-(higher = more risk).
+nationally representative sample of the U.S. population. participants aged 18-25 were classified into two groups: those who reported **more** sitting time than average ("High"), and those who reported **less** ("Low"). Their depression symptoms were measured with the PHQ-9, a standard 9-item screening scale (0-27, higher = more symptoms). This was translated into a **depression risk score**, with a larger number indicating a higher risk. 
+
+Last time, we used the sample statistics and our trusty intro stat skills to show that there was **no significant difference** between the two groups.
+
+```{r}
+#| fig-width: 4
+#| fig-height: 2.5
+#| out-width: "50%"
+#| fig-align: "left"
+
+
+gf_boxplot(dep_score ~ sitting_group, data = nhanes)
+```
+
+A closer look: 
 
 ```{r}
 #| fig-width: 8
-#| fig-height: 3
-
+#| fig-height: 2.5
+#| echo: false
 
 p1 <- gf_histogram(~dep_score, data = nhanes, xlab = "Depression risk score", fill = "#003300", col = "white", bins = 25)
 
-p2 <- gf_jitter(dep_score ~ sedentary_hours, data = nhanes, xlab = "Sitting time (hrs/day)", ylab = "Depression risk score",
-         color = "#003300", size = 1, width = 0.15, height = 0.3) |>
-  gf_lm(linewidth = 1.2, color = "#f15a31")
+p2 <- gf_histogram(~sedentary_hours, data = nhanes, xlab = "Hours spent sedentary/sitting", fill = "#003300", col = "white", bins = 15) |>
+  gf_vline(xintercept = median_hrs, col = "darkred", linetype = "dashed")
 
 p1 + p2
 ```
 
-The data also includes each participant's age and sex. For our first
-analysis, we'll investigate the relationship between **sitting time**
-and **depression symptoms**.
+- Response variable: ___________
 
-## Regression, Intro Stat version
+- Predictor variable: __________
 
-**Q: describe the scatterplot**
+
+
+# Regression, Intro Stat version
+
+The main linear regression skills we focus on in intro stat are:
+
+-   Describe the scatterplot
+-   Write the equation of the regression line
+-   Interpret the slope and intercept
+-   Make a prediction
+
+```{r}
+#| fig.height: 2.5
+#| fig.width: 4
+#| fig.align: center
+#| echo: false
+gf_jitter(dep_score ~ sedentary_hours, data = nhanes, xlab = "Sitting time (hrs/day)", ylab = "Depression risk score", color = "#003300", size = 1, width = 0.15, height = 0.3) |>
+  gf_lm(dep_score ~ sedentary_hours, size = 1.5, color = "#f15a31")
+```
+
+**Example:** describe the scatterplot
 
 There is a ___________________ (strength), ___________________
 (direction), ___________________ (form) association between
 sitting time and depression risk score.
 
-**Q: Write out the regression equation**
-
 ```{r}
 #| echo: true
+#| eval: false
 lm(dep_score ~ sedentary_hours, data = nhanes)
 ```
 
-\vspace{1in}
+```{r}
+nhanes_lm$coef
+```
 
-**Q: Interpreting the slope:** 
+**Example:** Write out the regression equation
+
+
+\vspace{.75in}
+
+**Example:** Interpreting the slope:
 
 \vspace{1in}
 
 ::: {.callout-note}
+## Correlation vs Causation
 The slope describes an *association* -- an increase in sitting time
 doesn't *cause* an increase in depression symptoms just because the
 model says so. Watch for language that implies causation from an
 observational study.
 :::
 
-**Q: make a prediction**
+**Example:** make a prediction. A participant reports sitting for 6 hours per day. The model predicts:
 
-A participant reports sitting for 6 hours per day. The model predicts:
+\vspace{.5in}
 
-\vspace{1in}
-
-## Regression, Stat230 Version
+# Regression, Stat230 Version
 
 ## Recap: the Normal distribution
 
@@ -89,8 +127,8 @@ If $Y$ is **numeric**, **unimodal**, and **symmetric**, we might use a
 Normal model: $Y \sim N(\mu, \sigma^2)$.
 
 ```{r}
-#| fig-width: 6
-#| fig-height: 2.6
+#| fig-width: 8
+#| fig-height: 2
 mu <- c(2, 2, 4); sigma <- c(.5, 1, 2)
 normals2 <- tibble(
   setting = factor(rep(1:3, each = 500)),
@@ -111,15 +149,10 @@ ggplot(normals2, aes(x, y)) +
 
 $$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \quad\text{where}\quad \varepsilon_i \overset{\mathrm{iid}}{\sim} N(0, \sigma^2)$$
 
-A **deterministic** model $Y_i = \beta_0 + \beta_1 x_i$ (no error
-term) would place every point exactly on the line -- no uncertainty.
-Real data doesn't look like that. Instead, at every $x$ value we
-imagine a full Normal *distribution* of possible $y$'s, centered on
-the line, all sharing the same spread $\sigma$:
 
 ```{r}
-#| fig-width: 6
-#| fig-height: 3
+#| fig-width: 5
+#| fig-height: 2.5
 nhanes_dsn <- tibble(
   sedentary_hours = c(2, 6, 10, 14),
   yhat = predict(nhanes_lm, data.frame(sedentary_hours = c(2, 6, 10, 14))),
@@ -134,13 +167,6 @@ ggplot(data = nhanes, aes(x = sedentary_hours, y = dep_score)) +
   labs(x = "Sitting time (hrs/day)", y = "Depression risk score")
 ```
 
-**SLR assumptions** (mnemonic: think "LINE"):
-
-- **L**inear relationship between $x$ and $y$
-- Errors are **I**ndependent and identically distributed
-- Errors are **N**ormally distributed
-- **E**qual variance of errors across all $x$ (doesn't depend on $x$)
-- (and errors have mean 0)
 
 ## Notation
 
@@ -149,15 +175,11 @@ Mean function: $\;E(Y \mid X) = \mu\{Y \mid X\} = \beta_0 + \beta_1 x_i$
 Fitted model equation:
 $\;\widehat Y_i = \widehat\mu\{Y \mid X\} = \widehat\beta_0 + \widehat\beta_1 x_i$
 
-## Uncertainty in the parameters
-
-Every new sample of participants gives a slightly different fitted
-line. Below, each panel refits the model on a different bootstrap
-resample of the NHANES data:
+## Sampling Variability (preview for next class!) 
 
 ```{r}
-#| fig-width: 7
-#| fig-height: 2.8
+#| fig-width: 8
+#| fig-height: 2
 set.seed(1234)
 boots <- bootstraps(nhanes, times = 20, apparent = TRUE)
 fit_lm_on_bootstrap <- function(split) lm(dep_score ~ sedentary_hours, data = analysis(split))
@@ -181,27 +203,27 @@ ggplot(boot_aug3, aes(sedentary_hours, dep_score)) +
   labs(x = "Sitting time (hrs/day)", y = "Depression risk score")
 ```
 
-Overlaying all 20 resampled lines on one plot shows that variability
-directly -- that spread in the fitted ___________________ (not the
-raw data) is exactly what will let us build confidence intervals and
-run hypothesis tests next class:
-
-```{r}
-#| fig-width: 6
-#| fig-height: 3
-ggplot(data = boot_coefs) +
-  geom_abline(aes(slope = sedentary_hours, intercept = `(Intercept)`),
-              color = "#0072B2", linewidth = 0.5, alpha = 0.3) +
-  geom_point(data = nhanes, aes(sedentary_hours, dep_score), color = "grey60") +
-  labs(x = "Sitting time (hrs/day)", y = "Depression risk score", title = "20 bootstrap resamples")
-```
-
-## Rest of today
-
-::: {.callout-tip}
-## Group task
+# R Activity
 
 Open the SLR in R activity on Moodle and complete it in your groups.
 Make note of any questions, and choose someone responsible for
 reporting out your group's answers.
-:::
+
+
+All of the R commands you need are in the file, but here's a reference list of some of the functions you'll learn: 
+
+| Function | Purpose |
+|----|-----------|
+| `read.csv("file_or_url")` | Load a CSV data set from a file or the web |
+| `glimpse(data)` | Get a quick overview of a data set  |
+| `mean(x)` | Calculate the mean  |
+| `sd(x)` | Calculate the standard deviation  |
+| `gf_histogram(~x, data = data, bins = n)` | Create a histogram |
+| `gf_boxplot(~x, data = data)` | Create a boxplot |
+| `gf_point(y ~ x, data = data)` | Create a scatterplot |
+| `gf_lm()` | Add a SLR line to a scatterplot |
+| `cor(x, y)` | Calculate the correlation  |
+| `lm(y ~ x, data = data)` | Fit a SLR model |
+| `summary(model)` | Get detailed info about a fitted model |
+| `confint(model, level = 0.95)` | Confidence interval for SLR coefficients |
+| `predict(model, newdata = new_data)` | Make predictions using a fitted model |

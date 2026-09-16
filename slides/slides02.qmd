@@ -31,21 +31,51 @@ library(rsample)
 library(broom)
 library(gganimate)
 library(ggdist)
+library(patchwork)
+
 notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
 theme_set(notes_theme)
 
-nhanes <- read_csv(here::here("data/nhanes-sitting-depression.csv")) |>
-  mutate(dep_score = log(phq9 + 1))
+nhanes <- read_csv(here::here("data/nhanes-sitting-depression.csv")) 
+
+median_hrs <- median(nhanes$sedentary_hours)
+
+nhanes <- nhanes |>
+  mutate(dep_score = log(phq9 + 1),
+          sitting_group = if_else(sedentary_hours > median_hrs, "High", "Low"))
 ```
 
 # Meet your groups! 
 
-## Recap of last time
+Name, pronouns, year, last stats class
+```{r}
+countdown::countdown(5)
+```
 
-## Data for today {.smaller}
+## Group work: highs and lows
 
-The *National Health and Nutrition Examination Survey* (NHANES) is an ongoing CDC survey that collects health and behavioral data from a nationally representative sample of the U.S. population. Today we'll return to the sitting time and depression data from last class -- this time looking at the actual numeric variables instead of the "High"/"Low" groups. We'll summarize each participant's responses to a 9-item depression screening survey as a **depression risk score** (higher = more risk).
+- Think about some people you have liked working with in the past. What have they done well? 
+- Think about some people you have *not* liked working with in the past. What made them hard to work with? 
 
+```{r}
+countdown::countdown(1.5)
+```
+
+## In your groups 
+
+Fill out the proposed engagement rubric on your sheets. I'll compile these after class and we'll discuss them next time. 
+
+```{r}
+countdown::countdown(5)
+```
+
+## Recap of last time {.smaller}
+
+The *National Health and Nutrition Examination Survey* (NHANES) is an ongoing CDC survey that collects health and behavioral data from a nationally representative sample of the U.S. population. participants aged 18-25 were classified into two groups: those who reported **more** sitting time than average ("High"), and those who reported **less** ("Low"). Their depression symptoms were measured with the PHQ-9, a standard 9-item screening scale (0-27, higher = more symptoms). This was translated into a **depression risk score**, with a larger number indicating a higher risk. 
+
+Last time, we used the sample statistics and our trusty intro stat skills to show that there was **no significant difference** between the two groups.
+
+## Let's take a closer look at the data:
 
 ::::: columns
 ::: {.column width="60%"}
@@ -57,7 +87,36 @@ The *National Health and Nutrition Examination Survey* (NHANES) is an ongoing CD
 #| fig.align: center
 #| out.width: 100%
 #| echo: false
-gf_histogram(~dep_score, data = nhanes, xlab = "Depression risk score", fill = "#003300", col = "white", bins = 25)
+
+
+gf_boxplot(dep_score ~ sitting_group, data = nhanes)
+```
+
+:::
+
+::: {.column width="40%"}
+<br>
+
+- How do you think "High" and "Low" sitting group were defined?
+:::
+:::::
+
+## Data for today: the original variable {.smaller}
+
+Survey participants were asked to report how many hours they spend sitting per day, on average.
+
+::::: columns
+::: {.column width="60%"}
+<br>
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 6
+#| fig.align: center
+#| out.width: 100%
+#| echo: false
+gf_histogram(~sedentary_hours, data = nhanes, xlab = "Hours spent sedentary/sitting", fill = "#003300", col = "white", bins = 15) |>
+  gf_vline(xintercept = median_hrs, col = "darkred", linetype = "dashed")
 ```
 :::
 
@@ -72,6 +131,20 @@ The data also has information about:
 For our first analysis, we'll investigate the relationship between **sitting time** and **depression symptoms**
 :::
 :::::
+
+## What do you notice that you couldn't see before?
+
+```{r}
+#| fig.align: center
+#| out.width: 100%
+#| echo: false
+
+p1 <- gf_histogram(~sedentary_hours, data = nhanes, xlab = "Hours spent sedentary/sitting", fill = "#003300", col = "white", bins = 15) 
+
+p2 <- gf_histogram(~dep_score, data = nhanes, xlab = "Depression Risk Score", fill = "#003300", col = "white", bins = 15)
+
+p1 + p2
+```
 
 # Regression in Intro
 
@@ -365,7 +438,9 @@ Fitted model equation:
 
 $\quad \widehat{Y}_i = \widehat{\mu}\{Y|X\} = \widehat{\beta}_0 + \widehat{\beta}_1 x_i$
 
-## Uncertainty in the parameters
+## Sampling Variability
+
+If we had a slightly different sample of people in the survey, our line would look a little bit different
 
 ```{r}
 #| echo: false
@@ -406,7 +481,7 @@ ggplot(boot_aug3, aes(sedentary_hours, dep_score)) +
   labs(x = "Sitting time (hrs/day)", y = "Depression risk score")
 ```
 
-## Uncertainty in the parameters
+## How different?
 
 ```{r}
 #| echo: false
@@ -430,7 +505,7 @@ hop <-
 animate(hop)
 ```
 
-## Uncertainty in the parameters
+## How different?
 
 ```{r}
 #| echo: false
@@ -450,6 +525,8 @@ ggplot(data = boot_coefs) +
 ```
 
 ## Rest of today
+
+We're going to see how to make some graphs and fit SLR models in R! We'll focus on commands today, and talk about the maize server and .qmd files on Friday.
 
 ::: {.task .nonincremental}
 - Open the SLR in R activity on Moodle and complete in your groups
