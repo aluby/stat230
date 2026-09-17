@@ -162,7 +162,7 @@ grizzly
 This problem asks you to write R code. You can use the fill-in-the-blank boxes here, or maize or RStudio if you are comfortable. For this homework, we will grade your *written answers*, so you only need to include sentences for each part. Your answers should reference the specific numbers you found. 
 :::
 
-> Edwin Hubble used the power of the Mount Wilson Observatory telescopes to meaure features of nebulae outside the Milky WAy. He was surprised to find a relationship between a nebula's distance from earth and the velocity with which it was going away from the earth.... The apparent statistical relationship between distance and velocity led scientists to consider how such a relatinoship could arise. It was proposed that the universe came into being with a Big Bang, a long time ago. If this were true, then $Y = TX$, where $Y$ is Distance and $X$ is velocity, and $T$ gives the time elapsed since the Big Bang (that is, the age of the universe). 
+> Edwin Hubble used the power of the Mount Wilson Observatory telescopes to meaure features of nebulae outside the Milky WAy. He was surprised to find a relationship between a nebula's distance from earth and the velocity with which it was going away from the earth.... The apparent statistical relationship between distance and velocity led scientists to consider how such a relationship could arise. It was proposed that the universe came into being with a Big Bang, a long time ago. If this were true, then $Y = TX$, where $Y$ is Distance and $X$ is velocity, and $T$ gives the time elapsed since the Big Bang (that is, the age of the universe). (*Note:* $T$ is in units of megaparsecs-seconds per kilometer. You can multiply by 979.8 to get an answer in billions of years)
 
 The `ex0725` data points below are measured distances and recession velocities for 10 clusters of nebulae, much farther from earth than Hubble's data. 
 
@@ -171,7 +171,7 @@ library(Sleuth3)
 ex0725
 ```
 
-(a) Make a scatterplot with `Velocity` as the response and `Distance` as the predictor and describe the relationship
+(a) Make a scatterplot with `Distance` as the response and `Velocity` as the predictor and describe the relationship
 
 ```{webr}
 #| min-lines: 5
@@ -186,5 +186,5 @@ ex0725
 (c) Regardless of your answer to the previous question, fit a simple linear regression model through the origin (i.e., forcing $\beta_0 = 0$) by running the following code. Use this model to provide an estimate of the Hubble constant (the age of the universe)
 
 ```{webr}
-hub_mod <- lm(Velocity ~ 0 + Distance, data = ex0725)
+hub_mod <- lm(Distance ~ 0 + Velocity, data = ex0725)
 ```
