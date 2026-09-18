@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Inference for SLR</title>
@@ -215,7 +215,7 @@ Prof Amanda Luby
 </section>
 <section id="data-for-today" class="slide level2">
 <h2>Data for today</h2>
-<p><em>Capital Bikeshare</em> is a bike sharing service in the Washington, D.C. area. We’re interested in analyzing the relationship between <em>number of rides taken</em> and <em>temperature</em></p>
+<p>We’re returning to the NHANES sitting time and depression risk score data. We’re interested in analyzing the relationship between <em>depression risk score</em> and <em>sitting time</em></p>
 
 <img data-src="slides03_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="last-time" class="slide level2 scrollable">
@@ -226,14 +226,19 @@ Prof Amanda Luby
 <li><p>Fit the regression line in R and find a <code>summary()</code></p></li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>bikes_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual, <span class="at">data =</span> bikes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>nhanes_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(dep_score <span class="sc">~</span> sedentary_hours, <span class="at">data =</span> nhanes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<ol start="4" type="1">
-<li>Making confidence intervals using <code>confint</code></li>
-</ol>
 <div class="fragment">
 <h3 id="today-moving-from-descriptive-to-inferential">Today: moving from <em>descriptive</em> to <em>inferential</em></h3>
 </div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<p>Theoretical Model:</p>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
+<p><br></p>
+<p>Fitted Model:</p>
+<p><span class="math inline">\(\widehat{Y}_i = \widehat \beta_0 + \widehat \beta_1 x_i\)</span></p>
 </section>
 <section id="lm-summary" class="slide level2 smaller">
 <h2><code>lm()</code> Summary</h2>
@@ -241,27 +246,32 @@ Prof Amanda Luby
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = rides ~ temp_actual, data = bikes)
+lm(formula = dep_score ~ sedentary_hours, data = nhanes)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3564.3 -1009.3  -116.4   959.1  3184.6 
+-1.2812 -0.9671  0.0059  0.6424  2.1370 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -2168.77     363.64  -5.964 4.67e-09 ***
-temp_actual    89.23       5.67  15.739  &lt; 2e-16 ***
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      0.90426    0.07359   12.29   &lt;2e-16 ***
+sedentary_hours  0.03141    0.01155    2.72   0.0067 ** 
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1288 on 498 degrees of freedom
-Multiple R-squared:  0.3322,    Adjusted R-squared:  0.3308 
-F-statistic: 247.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.8835 on 657 degrees of freedom
+Multiple R-squared:  0.01113,   Adjusted R-squared:  0.009629 
+F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 </div>
 </div>
 </section>
-<section id="lets-take-a-step-back-sampling-variability" class="slide level2">
-<h2>Let’s take a step back: Sampling Variability</h2>
+<section id="sampling-variability" class="slide level2">
+<h2>Sampling Variability</h2>
+<p>If we had a slightly different sample of people in the survey, our line would look a little bit different</p>
+
+<img data-src="slides03_files/figure-revealjs/unnamed-chunk-5-1.png" width="576" class="r-stretch"></section>
+<section id="how-different" class="slide level2">
+<h2>How different?</h2>
 
 <img data-src="slides03_files/figure-revealjs/unnamed-chunk-6-1.gif" class="r-stretch"></section>
 <section id="sampling-distribution" class="slide level2">
@@ -440,10 +450,10 @@ F-statistic: 247.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb15-2"><a></a><span class="fu">tidy</span>(mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
-  term        estimate std.error statistic  p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)  -2169.     364.       -5.96 4.67e- 9
-2 temp_actual     89.2      5.67     15.7  1.35e-45</code></pre>
+  term            estimate std.error statistic  p.value
+  &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)       0.904     0.0736     12.3  2.18e-31
+2 sedentary_hours   0.0314    0.0115      2.72 6.70e- 3</code></pre>
 </div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -508,11 +518,16 @@ F-statistic: 247.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
+<section id="discussion" class="title-slide slide level1 center">
+<h1>Discussion</h1>
+<p>Recall from Day01: we found no significant difference between the “High” and “Low” sitting groups. How does this result compare? Which do you trust more?</p>
+</section>
+
 <section id="your-turn-on-paper" class="title-slide slide level1 center">
 <h1>Your turn: on paper</h1>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_f3570137" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_0410d64b" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
