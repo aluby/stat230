@@ -25,11 +25,17 @@ and sitting time.
 ::: callout-note
 ## Theoretical Model:
 
+$(x_i, Y_i)$ are the data points; \underline{\hspace{1.5cm}} and \underline{\hspace{1.5cm}} are (unknowable) population parameters
+
+
  $\underline{\hspace{1.5cm}} = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i\overset{iid}{\sim} N (0, \underline{\hspace{1.5cm}})$
 :::
 
 ::: callout-note
 ## Fitted Model:
+
+$\widehat{Y}_i$ are predictions; \underline{\hspace{1.5cm}} and \underline{\hspace{1.5cm}} are estimated from the sample
+
 
  $\underline{\hspace{1.5cm}} = \widehat \beta_0 + \widehat \beta_1 x_i$
 :::
@@ -63,7 +69,7 @@ boot_slrs <- ggplot(boot_coefs) +
   geom_abline(aes(slope = sedentary_hours, intercept = `(Intercept)`),
               color = "#00aeef", alpha = 0.6, linewidth = 0.5) +
   geom_point(data = nhanes, aes(sedentary_hours, dep_score), color = "grey60") +
-  labs(x = "Sitting time (hrs/day)", y = "Depression risk score", title = "20 sample SLRs")
+  labs(x = "Sitting time (hrs/day)", y = "Depression risk score", title = "SLRs from many samples")
 
 boots1k <- bootstraps(nhanes, times = 1000, apparent = TRUE)
 
@@ -95,7 +101,11 @@ boot_slrs + (slope_dist / intercept_dist)
 
 ```
 
-## Sampling distribution of a coefficient
+::: callout-tip
+## Sampling Distribution
+
+If we obtained many different random samples, what would the distribution of their ___________________ ($\widehat \beta_0$ and $\widehat\beta_1$) look like?
+:::
 
 We use the **t distribution** to model the sampling distribution of a
 regression coefficient.
@@ -160,13 +170,10 @@ $t^* =$
 qt(0.95, df = 659 - 2)
 ```
 
-$$\widehat\beta_i \pm t^* \cdot SE(\widehat\beta_i) = `r round(slope_est, 3)` \pm `r round(t_star, 3)` \cdot `r round(tidy(nhanes_lm)[3,2], 3)` \;\Longrightarrow\; (`r round(ci90[2,1], 3)`, \; `r round(ci90[2,2], 3)`)$$
 
-$~$
+\vspace{2in}
 
-**Interpretation:** We are 90% confident that for every 1-hour increase
-in sitting time, the depression risk score changes by between
-`r round(ci90[2,1], 3)` and `r round(ci90[2,2], 3)`, on average.
+**Interpretation:**
 
 $~$
 

@@ -71,19 +71,32 @@ nhanes_lm <- lm(dep_score ~ sedentary_hours, data = nhanes)
 
 ## 
 
-Theoretical Model:
+
+::: callout-note
+## Theoretical Model:
+
+$(x_i, Y_i)$ are the data points; $\beta_0$ and $\beta_1$ are (unknowable) population parameters
 
  $Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)$
 
+:::
+
 <br>
 
-Fitted Model:
+::: callout-note
+## Fitted Model:
+
+$\widehat{Y}_i$ are predictions; $\widehat\beta_0$ and $\widehat\beta_1$ are estimated from the sample
+
 
  $\widehat{Y}_i = \widehat \beta_0 + \widehat \beta_1 x_i$
+ 
+:::
 
-## `lm()` Summary {.smaller}
+##  {.smaller}
 
 ```{r}
+#| echo: true 
 summary(nhanes_lm)
 ```
 
@@ -161,7 +174,7 @@ animate(hop)
 ```{r}
 #| echo: false
 #| fig.height: 3
-#| fig.width: 6
+#| fig.width: 8
 
 boots1k <- bootstraps(nhanes, times = 1000, apparent = TRUE)
 
@@ -192,6 +205,11 @@ intercept_dist <- ggplot(boot_coefs) +
 slope_dist + intercept_dist 
 ```
 
+::: callout-tip
+## Sampling Distribution
+
+If we obtained many different random samples, what would the distribution of their statistics ($\widehat \beta_0$ and $\widehat\beta_1$) look like?
+:::
 
 ## Sampling distribution
 
@@ -445,10 +463,15 @@ library(broom)
 tidy(mod)
 ```
 
-::: callout-tip
+::: callout-tip 
 ## Try it: 
 
 Verify the test statistic for $H_0: \beta_1 = 0$ against $H_A: \beta_1 \ne 0$.
+
+::: {.fragment}
+$t = \frac{\widehat \beta_1 - \text{null value}}{SE(\widehat{\beta}_1)} = \frac{.0314 - 0}{.0115} = 2.73$
+:::
+
 :::
 
 ## Example: 90% confidence interval for $\beta_1$
@@ -482,16 +505,29 @@ $t^* \cdot SE(\widehat{\beta}_i)$
 ```{r}
 #| echo: true
 
-qt(.05, df = 30)
+qt(.05, df = 659-2)
 ```
 
-<br>
+::: {.fragment}
+::::{.columns}
+::: {.column width="15%"}
+$.0314$
+:::
+::: {.column width="7%"}
+±
+:::
+::: {.column width="33%"}
+$1.65 \cdot .0115$
+:::
+::::
 
-<br>
+$[.012, .050]$
 
-. . . 
+:::
 
-::: callout-tip
+
+
+::: {.callout-tip .fragment}
 ## CI Interpretation
 
 - We are _______% confident that for every 1 _________ increase in ____________________, 
