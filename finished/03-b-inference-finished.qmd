@@ -1,5 +1,9 @@
 ---
 title: "03: Inference for SLR"
+execute:
+    echo: true
+    warning: false
+    message: false
 ---
 
 ```{r}
@@ -8,19 +12,6 @@ library(broom)
 library(ggformula)
 ```
 
-First, skim [working in R for Stat230](../readings/r-for-stat230.qmd). Then, follow these directions: 
-
-1. Either open your local RStudio program or navigate to <https://maize.mathcs.carleton.edu> in your browser and log in.
-
-2. Go to file –> New file –> Quarto document … –> “Create empty document”. This should open a new .qmd file in your Rstudio session. Delete everything in this file so that you have a totally blank document.
-
-3. Next, we need to copy this template into your new quarto file. 
-
-  - come back to this page and click the “code” button at the top of the page.
-  - Click the “copy” symbol in the upper right corner of the popup file
-  - Navigate back to your empty .qmd file and “paste” the text there
-
-4. You should now be able to see this document in your own session, and you can run code and edit it as you need to! Make sure to save it in a "Stat230" folder
 
 # Part 2: In R[^1]
 
@@ -46,28 +37,46 @@ LeafWidth
 
 First, make a scatterplot of `Width` (response variable) against `Year` (explanatory variable). Overlay the linear regression line. Describe your findings.
 
-```{r}
+::: callout-tip
+## Solution
 
+There's a weak, negative, linear relationship between Width and Year. 
+
+```{r}
+gf_point(Width ~ Year, data = LeafWidth) |>
+    gf_lm()
 ```
+
+:::
 
 ## Linear Regression Model
 
 Find the linear regression equation using `lm()`. Use `tidy()` to print the coefficient table of the regression model. Make sure you get the same answer as the paper printout! 
 
+::: callout-tip
+## Solution
 
 ```{r}
-
+model <- lm(Width ~ Year, data = LeafWidth)
+tidy(model)
 ```
+
+:::
 
 ## CI for Slope
 
 Calculate a 95% confidence interval for the slope of the regression line using `confint`. 
 
-```{r}
+::: callout-tip
+## Solution
 
+We are 95% confident that, for each year increases, Width decreases by between .008 and .026 mm on average. This supports the hypothesis that leaves are getting smaller over time (which could be related to temperature, but we can't actually tell that with this analysis). 
+
+```{r}
+confint(model)
 ```
 
-
+:::
 
 
 
