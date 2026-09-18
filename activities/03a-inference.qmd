@@ -50,7 +50,7 @@ $\hat{y} = 37.723 - 0.018x$
 :::
 :::
 
-\vspace{1in}
+\vspace{1.25in}
 
 
 
@@ -65,7 +65,7 @@ As year increases by 1 (i.e., from one year to the next), we expect the average 
 :::
 :::
 
-\vspace{1in}
+\vspace{1.25in}
 
 
 c. Calculate a 95% confidence interval for the slope of the regression line. (Use the slides to find the appropriate critical value). Interpret this interval in context of the data. 

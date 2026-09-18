@@ -428,6 +428,12 @@ $Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where $\varepsilon_i \overset{\rm 
 
 ## Notation
 
+Theoretical Model: 
+
+$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$, $\varepsilon \sim N(0, \sigma^2)$
+
+<br> 
+
 Mean function:
 
 $\quad E(Y|X)=\mu\{Y|X\} = \beta_0 + \beta_1 x_i$
@@ -533,3 +539,5 @@ We're going to see how to make some graphs and fit SLR models in R! We'll focus 
 - Make note of any questions
 - Choose someone responsible for reporting out your answers
 :::
+
+<!-- For next time: include definition of residual. Removed sampling variability -->
