@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Inference for SLR</title>
@@ -234,15 +234,40 @@ Prof Amanda Luby
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
-<p>Theoretical Model:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Theoretical Model:</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math inline">\((x_i, Y_i)\)</span> are the data points; <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are (unknowable) population parameters</p>
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> where <span class="math inline">\(\varepsilon_i \overset{\rm iid}{\sim} N (0, \sigma^2)\)</span></p>
+</div>
+</div>
+</div>
 <p><br></p>
-<p>Fitted Model:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Fitted Model:</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math inline">\(\widehat{Y}_i\)</span> are predictions; <span class="math inline">\(\widehat\beta_0\)</span> and <span class="math inline">\(\widehat\beta_1\)</span> are estimated from the sample</p>
 <p><span class="math inline">\(\widehat{Y}_i = \widehat \beta_0 + \widehat \beta_1 x_i\)</span></p>
+</div>
+</div>
+</div>
 </section>
-<section id="lm-summary" class="slide level2 smaller">
-<h2><code>lm()</code> Summary</h2>
+<section id="section-1" class="slide level2 smaller">
+<h2></h2>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">summary</span>(nhanes_lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -277,13 +302,26 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 <section id="sampling-distribution" class="slide level2">
 <h2>Sampling distribution</h2>
 
-<img data-src="slides03_files/figure-revealjs/unnamed-chunk-7-1.png" width="576" class="r-stretch"></section>
-<section id="sampling-distribution-1" class="slide level2">
+<img data-src="slides03_files/figure-revealjs/unnamed-chunk-7-1.png" width="768" class="r-stretch"><div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Sampling Distribution</strong></p>
+</div>
+<div class="callout-content">
+<p>If we obtained many different random samples, what would the distribution of their statistics (<span class="math inline">\(\widehat \beta_0\)</span> and <span class="math inline">\(\widehat\beta_1\)</span>) look like?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sampling-distribution-2" class="slide level2">
 <h2>Sampling distribution</h2>
 <p>We use the t distribution with df = n - 2 to model the sampling distribution of a regression coefficient</p>
 
 <img data-src="slides03_files/figure-revealjs/unnamed-chunk-8-1.png" width="576" class="r-stretch"></section>
-<section id="sampling-distribution-2" class="slide level2">
+<section id="sampling-distribution-3" class="slide level2">
 <h2>Sampling distribution</h2>
 <ul>
 <li>t distribution with <span class="math inline">\(df =  n - 2\)</span></li>
@@ -324,7 +362,7 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 <div class="columns">
 <div class="column" style="width:33%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">qt</span>(.<span class="dv">025</span>, <span class="at">df =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">qt</span>(.<span class="dv">025</span>, <span class="at">df =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -2.042272</code></pre>
 </div>
@@ -339,8 +377,8 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">qt</span>(.<span class="dv">025</span>, <span class="at">df =</span> <span class="dv">30</span>, </span>
-<span id="cb5-2"><a></a>   <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">qt</span>(.<span class="dv">025</span>, <span class="at">df =</span> <span class="dv">30</span>, </span>
+<span id="cb6-2"><a></a>   <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.042272</code></pre>
 </div>
@@ -356,7 +394,7 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 </div>
 </div><div class="column" style="width:33%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">qt</span>(.<span class="dv">1</span>, <span class="at">df =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">qt</span>(.<span class="dv">1</span>, <span class="at">df =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1.310415</code></pre>
 </div>
@@ -371,8 +409,8 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">qt</span>(.<span class="dv">1</span>, <span class="at">df =</span> <span class="dv">30</span>,</span>
-<span id="cb9-2"><a></a>   <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">qt</span>(.<span class="dv">1</span>, <span class="at">df =</span> <span class="dv">30</span>,</span>
+<span id="cb10-2"><a></a>   <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.310415</code></pre>
 </div>
@@ -388,7 +426,7 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 </div>
 </div><div class="column" style="width:33%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">qt</span>(.<span class="dv">25</span>, <span class="at">df =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">qt</span>(.<span class="dv">25</span>, <span class="at">df =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.6827557</code></pre>
 </div>
@@ -403,8 +441,8 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">qt</span>(.<span class="dv">25</span>, <span class="at">df =</span> <span class="dv">30</span>, </span>
-<span id="cb13-2"><a></a>   <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">qt</span>(.<span class="dv">25</span>, <span class="at">df =</span> <span class="dv">30</span>, </span>
+<span id="cb14-2"><a></a>   <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6827557</code></pre>
 </div>
@@ -446,8 +484,8 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 <h2>Coefficient table</h2>
 <p>Standard output for a regression model includes a coefficient table</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">library</span>(broom)</span>
-<span id="cb15-2"><a></a><span class="fu">tidy</span>(mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">library</span>(broom)</span>
+<span id="cb16-2"><a></a><span class="fu">tidy</span>(mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term            estimate std.error statistic  p.value
@@ -466,6 +504,9 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 </div>
 <div class="callout-content">
 <p>Verify the test statistic for <span class="math inline">\(H_0: \beta_1 = 0\)</span> against <span class="math inline">\(H_A: \beta_1 \ne 0\)</span>.</p>
+<div class="fragment">
+<p><span class="math inline">\(t = \frac{\widehat \beta_1 - \text{null value}}{SE(\widehat{\beta}_1)} = \frac{.0314 - 0}{.0115} = 2.73\)</span></p>
+</div>
 </div>
 </div>
 </div>
@@ -490,13 +531,21 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 </div></div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">qt</span>(.<span class="dv">05</span>, <span class="at">df =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">qt</span>(.<span class="dv">05</span>, <span class="at">df =</span> <span class="dv">659-2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -1.697261</code></pre>
+<pre><code>[1] -1.647176</code></pre>
 </div>
 </div>
-<p><br></p>
-<p><br></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:15%;">
+<p><span class="math inline">\(.0314\)</span></p>
+</div><div class="column" style="width:7%;">
+<p>±</p>
+</div><div class="column" style="width:33%;">
+<p><span class="math inline">\(1.65 \cdot .0115\)</span></p>
+</div></div>
+<p><span class="math inline">\([.012, .050]\)</span></p>
 </div>
 <div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -517,6 +566,7 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 </div>
 </div>
 </div>
+</div>
 </section>
 <section id="discussion" class="title-slide slide level1 center">
 <h1>Discussion</h1>
@@ -527,7 +577,7 @@ F-statistic: 7.398 on 1 and 657 DF,  p-value: 0.006704</code></pre>
 <h1>Your turn: on paper</h1>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_0410d64b" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_abd4c2f3" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
