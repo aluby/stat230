@@ -7,7 +7,7 @@ This is an outline of things you should review for Exam01 scheduled for Monday o
 
 I recommend beginning by *carefully* reviewing your notes and activities from class and the homework questions. It's best to do this actively: by reading, thinking, solving problems, and asking questions.
 
-See the [Exam01 Practice Questions](exam01-practice.qmd) for two worked examples of each skill below.
+See the [Exam01 Practice Questions]() for two worked examples of each skill below.
 
 # Materials
 
