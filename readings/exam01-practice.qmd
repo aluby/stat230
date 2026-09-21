@@ -1,0 +1,233 @@
+---
+title: "Exam01 Practice Questions"
+format: html
+---
+
+Practice questions for each skill on the [Exam01 Review](exam01-review.qmd) sheet. Solutions are collapsed by default -- try each question before checking.
+
+## 1. Express a SLR model using proper notation
+
+*Example question* In the Day 2 activity, we explored the relationship between `audience` score (response) and `critics` score (explanatory) for a sample of movies. Write out the *theoretical* SLR model for this relationship. Define $Y_i$ and $x_i$ in context, include all parameters, and state the assumption placed on the error term.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+$Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$, where $Y_i$ is the audience score for movie $i$, $x_i$ is the critics score for movie $i$, $\beta_0$ and $\beta_1$ are the (unknown) population intercept and slope, and $\varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)$.
+
+:::
+:::
+
+*Example question* The Day 3 activity fit a model relating leaf width (`Width`, in mm) to `Year` for a sample of 252 leaves, giving the coefficient estimates below.
+
+| term | estimate |
+|---|---|
+| (Intercept) | 37.723 |
+| Year | -0.018 |
+
+Write out the *fitted* SLR model using proper notation.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+$\widehat{\text{Width}}_i = 37.723 - 0.018 \times \text{Year}_i$
+
+Note there's no error term in the fitted model -- $\widehat{Y}_i$ is a single predicted value, not a random variable, so there's nothing left to place a distributional assumption on.
+
+:::
+:::
+
+## 2. Interpret the coefficients and $R^2$ of a model in context
+
+*Example question* Using the fitted model from Practice Q1b ($\widehat{\text{Width}}_i = 37.723 - 0.018 \times \text{Year}_i$), interpret the slope and intercept in context.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+**Slope:** For each additional year, the model predicts an average decrease of 0.018 mm in leaf width.
+
+**Intercept:** In year 0, the model predicts an average leaf width of 37.723 mm. This is an extreme extrapolation -- the data only cover a narrow, recent range of years -- so this interpretation isn't meaningful in context.
+
+:::
+:::
+
+*Example question* For the Day 4 Riverview data, a model predicting `income` (in thousands of dollars) from `education` (in years) has $R^2 = 0.632$. Which of the following is the best interpretation of this value?
+
+(a) For each additional year of education, income increases by 0.632 thousand dollars on average.
+(b) About 63.2% of employees have their income predicted exactly correctly by this model.
+(c) About 63.2% of the variability in income among these employees is explained by education level.
+(d) The correlation between income and education is 0.632.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+**(c)** -- $R^2$ is the proportion of variability in the response explained by the model. (Watch out for (d): $r = \sqrt{R^2} = 0.795$ here, not 0.632 -- $R^2$ and $r$ are related but not equal.)
+
+:::
+:::
+
+## 3. Check necessary conditions for a regression model and discuss the implications of a model deficiency
+
+*Example question* For each statement below, circle TRUE or FALSE.
+
+(a) TRUE or FALSE: We can check the linearity condition using a scatterplot of the response against the explanatory variable, before ever fitting a model.
+(b) TRUE or FALSE: A normal Q-Q plot that curves away from the diagonal line in both tails suggests the residuals are more heavily-tailed than a Normal distribution.
+(c) TRUE or FALSE: A residuals-vs-fitted-values plot that fans out (wider spread for larger fitted values) suggests a violation of the equal variance condition.
+(d) TRUE or FALSE: If the independence condition is violated, we can typically detect it just by looking at a residuals-vs-fitted plot.
+(e) TRUE or FALSE: If the linearity condition is badly violated, the estimated slope may be misleading, even if the p-value for the slope is small.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) TRUE (b) TRUE (c) TRUE (d) FALSE -- independence is usually about *how the data were collected* (e.g., time series, clustering), and often can't be verified from a residuals-vs-fitted plot; a residuals-vs-index plot can sometimes reveal it if the data have a meaningful order. (e) TRUE
+
+:::
+:::
+
+*Example question* Suppose you fit a model predicting `income` from `education` for the Day 4 Riverview data, and the residuals-vs-fitted plot shows a clear curved (U-shaped) pattern. Which of the following can you still trust about this model? Select all that apply, and explain your reasoning.
+
+(a) The point estimate of the slope
+(b) The p-value for the slope
+(c) The standard error of the slope
+(d) Predictions made from the model
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+None of these should be trusted. A curved residual pattern means the *linearity* condition is violated -- a straight line is the wrong shape for this relationship. That makes the point estimate itself misleading, not just the inference built on top of it, so the p-value, standard error, and any predictions are all compromised too.
+
+:::
+:::
+
+## 4. Perform a hypothesis test to draw inference about a single regression coefficient
+
+*Example question* The Day 3 LeafWidth model gives the following output for the slope of `Year`: estimate = -0.0176, SE = 0.0044, on $df = 250$. Conduct a hypothesis test for $H_0: \beta_1 = 0$ vs. $H_A: \beta_1 \ne 0$. State the test statistic, and describe (without necessarily calculating exactly) how you'd find the p-value.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+$t = \dfrac{-0.0176 - 0}{0.0044} \approx -4.0$
+
+The p-value is the two-sided tail area beyond $t = \pm 4.0$ under a $t$-distribution with $df = 250$: $P(T \le -4.0) + P(T \ge 4.0)$. Since $t \approx -4.0$ is far in the tail, this p-value will be very small (R reports it as $7.43\times 10^{-5}$), giving strong evidence that $\beta_1 \ne 0$.
+
+:::
+:::
+
+*Example question* Before collecting the NHANES sitting-time data, a researcher hypothesizes that *more* sitting time is associated with a *higher* depression risk score -- not just a difference in either direction. The fitted model (`dep_score ~ sedentary_hours`) gives a slope of 0.0314 (SE = 0.0116) for `sedentary_hours`, with $df = 657$.
+
+(a) State $H_0$ and $H_A$ in symbols, matching the researcher's directional hypothesis.
+(b) Is the p-value R reports by default (from `summary()`) the correct one to use here? Why or why not?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) $H_0: \beta_1 = 0$ vs. $H_A: \beta_1 > 0$
+
+(b) No -- R's default p-value is two-sided, but the researcher's hypothesis is one-sided. Since the test statistic ($t = 0.0314/0.0116 \approx 2.71$) is positive, in the direction of $H_A$, the correct one-sided p-value is *half* of R's reported two-sided p-value.
+
+:::
+:::
+
+## 5. Construct and interpret confidence intervals for regression coefficients
+
+*Example question* Recall the Day 2 movies model: `audience ~ critics` gives a slope estimate of 0.519 (SE = 0.0345), with $df = 144$. For a 90% confidence interval, the critical value is $t^* = 1.656$. Construct and report a 90% CI for the slope, showing the formula with numbers plugged in.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+$0.519 \pm 1.656 \times 0.0345 \;\Longrightarrow\; (0.462, \; 0.576)$
+
+:::
+:::
+
+*Example question* Recall the Day 4 Riverview model using *standardized* education: `income ~ scale(education)` gives a slope estimate of 11.567 (SE = 1.613), with $df = 30$. For a 90% confidence interval, the critical value is $t^* = 1.697$.
+
+(a) Construct a 90% CI for this slope.
+(b) Interpret the interval in context.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) $11.567 \pm 1.697 \times 1.613 \;\Longrightarrow\; (8.829, \; 14.305)$
+
+(b) We are 90% confident that for each one-SD increase in education (about 4.36 years), average income increases by between \$8,829 and \$14,305 (8.829 and 14.305 thousand dollars).
+
+:::
+:::
+
+## 6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval
+
+*Example question* Using the Day 2 movies model, we predict the audience score for a movie with a critics score of 75. The point estimate is 71.2, and R produces two 90% intervals: (50.4, 92.1) and (69.3, 73.1).
+
+(a) Which interval is the confidence interval, and which is the prediction interval? How can you tell?
+(b) If we wanted to predict the audience score for one specific new movie with critics score 75, which interval should we use?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) (69.3, 73.1) is the confidence interval -- it's narrower, since it only accounts for uncertainty in the *average* audience score at critics = 75. (50.4, 92.1) is the prediction interval -- it's wider, since it also accounts for the extra variability of one individual movie's score around that average.
+
+(b) The prediction interval, (50.4, 92.1), since we're predicting a single new movie's score, not an average.
+
+:::
+:::
+
+*Example question* A researcher wants to use the NHANES `dep_score ~ sedentary_hours` model to make a claim about people who sit 6 hours per day. Explain which interval (confidence or prediction) is appropriate for each scenario below, and briefly say why.
+
+(a) "I want a range for the depression risk score of one specific person who sits 6 hours a day."
+(b) "I want a range for the *average* depression risk score among everyone who sits 6 hours a day."
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) A prediction interval -- this is about one individual, whose depression risk score could be far from the average even if we knew the average perfectly.
+
+(b) A confidence interval -- this is about a population average, which only requires accounting for uncertainty in *where the regression line is*, not individual-level variability. The confidence interval will be substantially narrower than the prediction interval for the same $x$ value.
+
+:::
+:::
+
+## 7. Express an SLR model when transformations have been used on the response and/or the explanatory variables
+
+*Example question* On Day 2, we modeled a transformed response: instead of the raw PHQ-9 depression score, we used `dep_score`, defined as $\log(\text{PHQ-9} + 1)$. The fitted model is `dep_score ~ sedentary_hours`, with intercept 0.904 and slope 0.0314.
+
+(a) Write out the fitted SLR equation, being careful to write it in terms of `dep_score`, not the raw PHQ-9 score.
+(b) A student concludes: "for every one-hour increase in sitting time, the model predicts an average increase of 0.0314 points in PHQ-9 score." Explain in one sentence why this is incorrect, then give a corrected interpretation.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) $\widehat{\text{dep\_score}}_i = 0.904 + 0.0314 \times \text{sedentary\_hours}_i$, where $\text{dep\_score}_i = \log(\text{PHQ-9}_i + 1)$.
+
+(b) The model was fit on the *log-transformed* PHQ-9 score, not the raw PHQ-9 score, so "0.0314" describes a change in $\log(\text{PHQ-9}+1)$, not a change in PHQ-9 itself -- the usual slope interpretation doesn't carry over once you've transformed the response. Corrected: "for every one-hour increase in sitting time, the model predicts an average increase of 0.0314 in depression risk score (the log-transformed PHQ-9 measure)."
+
+:::
+:::
+
+*Example question* Suppose instead of transforming the response, we wanted to write out the general *theoretical* model for a log-transformed response, where $Y_i$ is the raw response and $x_i$ is the explanatory variable.
+
+(a) Write the theoretical model using proper notation, and state the assumption on the error term.
+(b) Give one reason (from what we discussed in class) why we might choose to log-transform a response variable before fitting a model.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) $\log(Y_i) = \beta_0 + \beta_1 x_i + \varepsilon_i$, where $\varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)$. (Note: $\varepsilon_i$'s Normal/equal-variance assumptions now apply on the log scale, not the original scale of $Y$.)
+
+(b) A log transformation can help address a right-skewed response and/or non-constant variance in the residuals (e.g., PHQ-9 scores were heavily right-skewed, with many zeros and a long tail of high scores) -- both violations of the SLR conditions on the original scale.
+
+:::
+:::

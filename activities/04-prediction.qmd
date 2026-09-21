@@ -10,6 +10,7 @@ Is education level associated with income? Researchers collected education level
 #| include: false
 city <- readr::read_csv(file = "https://raw.githubusercontent.com/zief0002/modeling/main/data/riverview.csv")
 lm.a = lm(income ~ 1 + education, data = city)
+library(ggformula)
 ```
 
 The researchers fit a simple linear regression of income on education and obtained the following output:
@@ -28,6 +29,8 @@ knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
 ::: {.callout-tip collapse="true"}
 ### Solution
 
+$\widehat{\text{income}} = 11.321 + 2.651 \times \text{education}$
+
 :::
 :::
 
@@ -39,6 +42,8 @@ knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
 ::: {.callout-tip collapse="true"}
 ### Solution
 
+For each additional year of education, the model predicts an average increase of \$2,651 (2.651 thousand dollars) in income.
+
 :::
 :::
 
@@ -49,6 +54,8 @@ knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
 ### Solution
+
+For an employee with 0 years of education, the model predicts an average income of \$11,321 (11.321 thousand dollars). Note that this is extrapolation -- education ranges from 8 to 24 years in this sample, so no one has 0 years of education, and this interpretation may not be meaningful in context.
 
 :::
 :::
@@ -71,6 +78,8 @@ knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
 ::: {.callout-tip collapse="true"}
 ### Solution
 
+$\widehat{\text{income}} = 53.742 + 11.567 \times \text{scale(education)}$
+
 :::
 :::
 
@@ -81,6 +90,8 @@ knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
 ### Solution
+
+For each one standard deviation increase in education (about 4.36 years), the model predicts an average increase of \$11,567 (11.567 thousand dollars) in income.
 
 :::
 :::
@@ -93,6 +104,8 @@ knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
 ::: {.callout-tip collapse="true"}
 ### Solution
 
+For an employee with average education (16 years, i.e. `scale(education) = 0`), the model predicts an average income of \$53,742 (53.742 thousand dollars). Unlike the intercept in the original model, this is a meaningful value since it corresponds to an employee actually near the center of the observed data.
+
 :::
 :::
 
@@ -103,6 +116,8 @@ knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
 ### Solution
+
+The two models describe exactly the same relationship -- the p-values for the slope are identical. What differs is the scale of the x-variable, which changes the numeric values of the coefficients and what they mean: the slope goes from "per 1 year of education" (2.651) to "per 1 SD of education" (11.567), and the intercept goes from "predicted income at 0 years of education" (an extrapolation) to "predicted income at average education" (a value within the data).
 
 :::
 :::
@@ -128,6 +143,15 @@ Now, we'll explore the `city` data using R.
 ::: {.callout-tip collapse="true"}
 ### Solution
 
+```{r}
+#| fig-width: 4
+#| fig-height: 3
+gf_point(income ~ education, data = city) |>
+    gf_lm()
+```
+
+Yes -- the scatterplot shows a positive, linear, moderately strong relationship between education and income, consistent with the positive slope from the regression output above.
+
 :::
 :::
 
@@ -139,6 +163,15 @@ Now, we'll explore the `city` data using R.
 ::: {.callout-tip collapse="true"}
 ### Solution
 
+```{r}
+#| fig-width: 4
+#| fig-height: 3
+gf_point(income ~ scale(education), data = city) |>
+    gf_lm()
+```
+
+Yes -- the plot looks identical in shape to Q1, just with the x-axis relabeled in standard deviations from the mean instead of raw years. Standardizing doesn't change the strength or direction of the relationship, only the scale of the x-axis.
+
 :::
 :::
 
@@ -146,11 +179,33 @@ Now, we'll explore the `city` data using R.
 
 **Q3.** Find the linear regression equation from Q1. Confirm that it matches the table at the beginning of this worksheet.
 
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| fig-width: 4
+#| fig-height: 3
+
+library(broom)
+lm.a = lm(income ~ 1 + education, data = city)
+tidy(lm.a)
+```
+
+:::
+:::
+
 **Q4.** The first person in this dataset has `education = 8`. Calculate the expected income of this person using the first regression equation.
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
 ### Solution
+
+$\widehat{\text{income}} = 11.321 + 2.651(8) = 32.531$, i.e. \$32,531.
+
+```{r}
+predict(lm.a, newdata = data.frame(education = 8))
+```
 
 :::
 :::
@@ -163,6 +218,8 @@ Now, we'll explore the `city` data using R.
 ::: {.callout-tip collapse="true"}
 ### Solution
 
+A prediction interva. We're predicting an individual outcome (this specific person's income), not the average income of all employees with 8 years of education. 
+
 :::
 :::
 
@@ -173,6 +230,13 @@ Now, we'll explore the `city` data using R.
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
 ### Solution
+
+```{r}
+predict(lm.a, newdata = data.frame(education = 8),
+ interval = "prediction", level = .89)
+```
+
+89% prediction interval: (16.746, 48.318), i.e. (\$16,746, \$48,318).
 
 :::
 :::
@@ -185,6 +249,8 @@ Now, we'll explore the `city` data using R.
 ::: {.callout-tip collapse="true"}
 ### Solution
 
+We are 89% confident that a randomly selected City of Riverview employee with 8 years of education will have an income between \$16,746 and \$48,318.
+
 :::
 :::
 
@@ -195,6 +261,8 @@ Now, we'll explore the `city` data using R.
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
 ### Solution
+
+The prediction interval is the wider band; the confidence interval is the narrower band hugging the regression line. The confidence interval only captures uncertainty in the *average* income at a given education level, while the prediction interval also accounts for individual-level variability around that average, which makes it wider.
 
 :::
 :::

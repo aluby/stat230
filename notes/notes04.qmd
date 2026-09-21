@@ -1,6 +1,5 @@
 ---
 title: "Day 04: Inference for Prediction"
-author: "Name: ________________________________"
 ---
 
 ```{r}
@@ -15,31 +14,96 @@ library(patchwork)
 theme_set(theme_minimal(base_size = 12))
 source("notes-helpers.R")
 
+nhanes <- read_csv(here::here("data/nhanes-sitting-depression.csv")) |>
+  mutate(dep_score = log(phq9 + 1))
+
 bikes_lm <- lm(rides ~ temp_actual, data = bikes)
+
+nhanes_lm <- lm(dep_score ~ sedentary_hours, data = nhanes)
+
 ```
 
-## Last time, and today
+## In groups: warm-up questions 
 
-Last time: the sampling distribution for $\beta_i$'s, confidence
-intervals and hypothesis tests for $\beta_i$'s, both by hand and in R.
+Is education level associated with income? Researchers collected education level (in years) and income (in thousands of dollars) for a random sample of 32 employees working for the city of Riverview.
 
-**Today:** inference for *predictions*.
+```{r}
+#| include: false
+city <- readr::read_csv(file = "https://raw.githubusercontent.com/zief0002/modeling/main/data/riverview.csv")
+lm.a = lm(income ~ 1 + education, data = city)
+```
+
+The researchers fit a simple linear regression of income on education and obtained the following output:
+
+```{r}
+#| echo: false
+#| tbl-align: center
+broom::tidy(lm.a) |>
+dplyr::mutate(p.value = gtsummary::style_pvalue(p.value)) |>
+knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
+```
+
+**Q1.** Write the fitted regression equation.
+
+\vspace{1in}
+
+**Q2.** Interpret the slope coefficient in the context of the problem. (Don't forget to specify units.)
+
+\vspace{1in}
+
+**Q3.** Interpret the intercept in the context of the problem. (Don't forget to specify units.)
+
+\vspace{1in}
+
+A new researcher joined the team and decided that education should be standardized (to have mean 0 and SD 1) before fitting the regression model. The output from this regression is shown below:
+
+```{r}
+#| echo: false
+lm.b <- lm(income ~ 1 + scale(education), data = city)
+broom::tidy(lm.b) |>
+dplyr::mutate(p.value = gtsummary::style_pvalue(p.value)) |>
+knitr::kable(format = "pipe", digits = 3, booktabs = TRUE)
+```
+
+**Q4.** Write the fitted regression equation for this new model.
+
+\vspace{1in}
+
+**Q5.** Interpret the slope coefficient in the context of the problem. (Don't forget to specify units.)
+
+\vspace{1in}
+
+**Q6.** Interpret the intercept in the context of the problem. (Don't forget to specify units.)
+
+\vspace{1in}
+
+**Q7.** Compare the two models. What's the same? What's different?
+
+\vspace{1in}
+
+::: callout-important
+## Stop here
+
+Let Amanda know when your group finishes! 
+:::
 
 ## Two types of predictions
 
-1. Predicting the **mean response** at a specific value of $x$ --
-   e.g. the *average* number of riders on a 62 degree day.
-2. Predicting the response for a **specific future observation** --
-   e.g. the number of riders *tomorrow* (forecast to be 62 degrees).
+1. Predicting the **mean response** at a specific value of $x$ (called a _________________________ interval)
+    - e.g., the average leaf width in 2010
 
-::: {.callout-tip}
-Think of two additional real-world examples of each type of
-prediction.
-:::
+2. Predicting the response for a **specific future observation** (called a _________________________ interval)
+    - e.g., the leaf width of *one specific leaf* in 2010
+
+
+**Other Examples:** 
+
+\vspace{1in}
+
 
 ## Inference for prediction
 
-Best estimate: $\widehat y_0 = \widehat\beta_0 + \widehat\beta_1 x_0$
+Best point estimate: $\widehat y_0 = \widehat\beta_0 + \widehat\beta_1 x_0$
 
 General interval formula:
 $$\text{estimate} \pm t^* \times SE$$
@@ -58,24 +122,16 @@ $$SE\big(\widehat\mu(Y\mid X)\big) = \widehat\sigma \sqrt{\frac{1}{n} + \frac{(x
 
 $$SE(\widehat y) = \widehat\sigma \sqrt{1 + \frac{1}{n} + \frac{(x_0-\overline x)^2}{\sum_{i=1}^n (x_i-\overline x)^2}}$$
 
-Comparing the two formulas: the prediction interval SE has an extra
-"$+1$" under the square root, so it will always be
-___________________ (wider/narrower) than the confidence interval SE.
+- The interval for _________ will be wider
 
-As $x_0$ moves farther from $\overline x$, both standard errors
-___________________ (grow/shrink), because
-$(x_0-\overline x)^2$ grows.
+- As $x_0$ gets farther from $\overline{x}$, both SE's get _______________
 
-## Where the extra variability comes from
+$$SE(\widehat y) = \sqrt{\underbrace{\widehat\sigma^2}_{\text{variability in } \rule{.5cm}{0.3pt}} + \underbrace{\frac{\widehat\sigma^2}{n} + \frac{\widehat\sigma^2(x_0-\overline x)^2}{\sum_{i=1}^n (x_i-\overline x)^2}}_{\text{variability in } \rule{1cm}{0.3pt}}}$$
 
-$$SE(\widehat y) = \sqrt{\underbrace{\widehat\sigma^2}_{\text{variability in } \varepsilon_i\text{'s}} + \underbrace{\frac{\widehat\sigma^2}{n} + \frac{\widehat\sigma^2(x_0-\overline x)^2}{\sum_{i=1}^n (x_i-\overline x)^2}}_{\text{variability in } \widehat\beta_i\text{'s}}}$$
-
-The first term is the leftover noise around the line at any $x$; the
-rest comes from not knowing the true line exactly.
 
 ```{r}
-#| fig-width: 7
-#| fig-height: 2.8
+#| fig-width: 8
+#| fig-height: 3
 set.seed(1234)
 boots <- bootstraps(bikes, times = 20, apparent = TRUE)
 fit_lm_on_bootstrap <- function(split) lm(rides ~ temp_actual, data = analysis(split))
@@ -95,11 +151,11 @@ bike_dsn <- tibble(
 p_beta <- ggplot(boot_coefs) +
   geom_abline(aes(slope = temp_actual, intercept = `(Intercept)`),
               color = "#0072B2", linewidth = 0.5, alpha = 0.4) +
-  geom_point(data = bikes, aes(temp_actual, rides), color = "grey60") +
+  geom_point(data = bikes, aes(temp_actual, rides), color = "grey60", size = .25) +
   labs(x = "Temperature", y = "No. rides", title = "Variability in the fitted line")
 
 p_eps <- ggplot(data = bikes, aes(x = temp_actual, y = rides)) +
-  geom_point(alpha = 0.4, size = 1.2, color = "#003300") +
+  #geom_point(alpha = 0.4, size = 1.2, color = "#003300") +
   geom_lm(color = "#f15a31") +
   stat_slab(aes(x = temp_actual, ydist = "norm", arg1 = yhat, arg2 = resid_sd),
             data = bike_dsn, alpha = 0.4, inherit.aes = FALSE, scale = 0.6, fill = "#f15a31") +
@@ -108,53 +164,87 @@ p_eps <- ggplot(data = bikes, aes(x = temp_actual, y = rides)) +
 p_beta + p_eps
 ```
 
-## R: point estimate
+## R commands
 
 `predict()` quickly calculates $\widehat y$ for a given $x$ (or a
 vector of $x$'s):
 
 ```{r}
 #| echo: true
-predict(bikes_lm, newdata = data.frame(temp_actual = 52))
-predict(bikes_lm, newdata = data.frame(temp_actual = c(52, 62, 72, 82)))
+#| collapse: true
+predict(nhanes_lm, newdata = data.frame(sedentary_hours = 10))
+predict(nhanes_lm, newdata = data.frame(sedentary_hours = c(8, 10, 12)))
 ```
-
-## R: intervals
 
 The `interval` argument specifies which type of interval you want:
 
 ```{r}
 #| echo: true
-predict(bikes_lm, newdata = data.frame(temp_actual = 52), interval = "confidence")
-predict(bikes_lm, newdata = data.frame(temp_actual = 52), interval = "prediction")
+#| collapse: true
+predict(nhanes_lm, newdata = data.frame(sedentary_hours = 10),
+ interval = "confidence")
+predict(nhanes_lm, newdata = data.frame(sedentary_hours = 10),
+ interval = "prediction")
 ```
-
-Notice the prediction interval is ___________________ than the
-confidence interval, exactly as the SE formulas predicted.
-
-## R: confidence level and SEs
 
 The `level` argument sets the confidence level (default 0.95):
 
 ```{r}
 #| echo: true
-predict(bikes_lm, newdata = data.frame(temp_actual = 52), interval = "confidence", level = .95)
-predict(bikes_lm, newdata = data.frame(temp_actual = 52), interval = "prediction", level = .99)
+#| collapse: true
+predict(nhanes_lm, newdata = data.frame(sedentary_hours = 10), 
+interval = "prediction", level = .99)
 ```
 
-Adding `se.fit = TRUE` returns the standard error needed for
-"by hand" calculations:
+Adding `se.fit = TRUE` returns the standard error needed for "by hand" calculations:
 
 ```{r}
 #| echo: true
-predict(bikes_lm, newdata = data.frame(temp_actual = 52), se.fit = TRUE)
+#| collapse: true
+predict(nhanes_lm, newdata = data.frame(sedentary_hours = 10), 
+se.fit = TRUE)
 ```
 
-::: {.callout-tip}
-## Try it
+## In groups: prediction and confidence intervals
 
-Using `$fit` and `$se.fit` above along with the appropriate $t^*$,
-reconstruct the 95% confidence interval for the mean response at
-`temp_actual = 52` by hand, and check it against the `predict()`
-output.
+::: {.callout-tip}
+The R code for the following questions is found at <br>
+
+<https://aluby.github.io/stat230/activities/04R-prediction>
+
+The URL is also posted on Moodle.
 :::
+
+Now, we'll explore the `city` data using R.
+
+
+**Q1.** Make a plot of `income` against `education`  and overlay the linear regression equation. Does it look like what you expected?
+
+\vspace{1in}
+
+**Q2.** Make a plot of `income` against `scale(education)` and overlay the linear regression equation. Does it look like what you expected?
+
+\vspace{1in}
+
+**Q3.** Find the linear regression equation from Q1. Confirm that it matches the table at the beginning of this worksheet.
+
+**Q4.** The first person in this dataset has `education = 8`. Calculate the expected income of this person using the first regression equation.
+
+\vspace{1in}
+
+**Q5.** If we want to predict the income of **this** person, should we use a confidence interval or a prediction interval?
+
+\vspace{1in}
+
+**Q6.** Use R to construct the appropriate 89% interval for this person's income. Record this interval below.
+
+\vspace{1in}
+
+**Q7.** Interpret the interval in context.
+
+\vspace{1in}
+
+**Q8.** Run the code to produce a scatterplot, regression line, and both types of intervals. Which is the prediction interval and which is the confidence interval? How can you tell?
+
+\vspace{1in}
+
