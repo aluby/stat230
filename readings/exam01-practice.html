@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.23">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Exam01 Practice Questions – stat230</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.scss">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#express-a-slr-model-using-proper-notation" id="toc-express-a-slr-model-using-proper-notation" class="nav-link active" data-scroll-target="#express-a-slr-model-using-proper-notation">1. Express a SLR model using proper notation</a></li>
+  <li><a href="#interpret-the-coefficients-and-r2-of-a-model-in-context" id="toc-interpret-the-coefficients-and-r2-of-a-model-in-context" class="nav-link" data-scroll-target="#interpret-the-coefficients-and-r2-of-a-model-in-context">2. Interpret the coefficients and <span class="math inline">\(R^2\)</span> of a model in context</a></li>
+  <li><a href="#check-necessary-conditions-for-a-regression-model-and-discuss-the-implications-of-a-model-deficiency" id="toc-check-necessary-conditions-for-a-regression-model-and-discuss-the-implications-of-a-model-deficiency" class="nav-link" data-scroll-target="#check-necessary-conditions-for-a-regression-model-and-discuss-the-implications-of-a-model-deficiency">3. Check necessary conditions for a regression model and discuss the implications of a model deficiency</a></li>
+  <li><a href="#perform-a-hypothesis-test-to-draw-inference-about-a-single-regression-coefficient" id="toc-perform-a-hypothesis-test-to-draw-inference-about-a-single-regression-coefficient" class="nav-link" data-scroll-target="#perform-a-hypothesis-test-to-draw-inference-about-a-single-regression-coefficient">4. Perform a hypothesis test to draw inference about a single regression coefficient</a></li>
+  <li><a href="#construct-and-interpret-confidence-intervals-for-regression-coefficients" id="toc-construct-and-interpret-confidence-intervals-for-regression-coefficients" class="nav-link" data-scroll-target="#construct-and-interpret-confidence-intervals-for-regression-coefficients">5. Construct and interpret confidence intervals for regression coefficients</a></li>
+  <li><a href="#use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval" id="toc-use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval" class="nav-link" data-scroll-target="#use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval">6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval</a></li>
+  <li><a href="#express-an-slr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables" id="toc-express-an-slr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables" class="nav-link" data-scroll-target="#express-an-slr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables">7. Express an SLR model when transformations have been used on the response and/or the explanatory variables</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exam01 Practice Questions</h1>
+<p class="subtitle lead">Stat 230 - Spring 2026</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Practice questions for each skill on the <a href="../readings/exam01-review.html">Exam01 Review</a> sheet. Solutions are collapsed by default – try each question before checking.</p>
+<section id="express-a-slr-model-using-proper-notation" class="level2">
+<h2 class="anchored" data-anchor-id="express-a-slr-model-using-proper-notation">1. Express a SLR model using proper notation</h2>
+<p><em>Example question</em> In the Day 2 activity, we explored the relationship between <code>audience</code> score (response) and <code>critics</code> score (explanatory) for a sample of movies. Write out the <em>theoretical</em> SLR model for this relationship. Define <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(x_i\)</span> in context, include all parameters, and state the assumption placed on the error term.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span>, where <span class="math inline">\(Y_i\)</span> is the audience score for movie <span class="math inline">\(i\)</span>, <span class="math inline">\(x_i\)</span> is the critics score for movie <span class="math inline">\(i\)</span>, <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the (unknown) population intercept and slope, and <span class="math inline">\(\varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)\)</span>.</p>
+</div>
+</div>
+</div>
+<p><em>Example question</em> The Day 3 activity fit a model relating leaf width (<code>Width</code>, in mm) to <code>Year</code> for a sample of 252 leaves, giving the coefficient estimates below.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>term</th>
+<th>estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td>37.723</td>
+</tr>
+<tr class="even">
+<td>Year</td>
+<td>-0.018</td>
+</tr>
+</tbody>
+</table>
+<p>Write out the <em>fitted</em> SLR model using proper notation.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\widehat{\text{Width}}_i = 37.723 - 0.018 \times \text{Year}_i\)</span></p>
+<p>Note there’s no error term in the fitted model – <span class="math inline">\(\widehat{Y}_i\)</span> is a single predicted value, not a random variable, so there’s nothing left to place a distributional assumption on.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="interpret-the-coefficients-and-r2-of-a-model-in-context" class="level2">
+<h2 class="anchored" data-anchor-id="interpret-the-coefficients-and-r2-of-a-model-in-context">2. Interpret the coefficients and <span class="math inline">\(R^2\)</span> of a model in context</h2>
+<p><em>Example question</em> Using the fitted model from Practice Q1b (<span class="math inline">\(\widehat{\text{Width}}_i = 37.723 - 0.018 \times \text{Year}_i\)</span>), interpret the slope and intercept in context.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Slope:</strong> For each additional year, the model predicts an average decrease of 0.018 mm in leaf width.</p>
+<p><strong>Intercept:</strong> In year 0, the model predicts an average leaf width of 37.723 mm. This is an extreme extrapolation – the data only cover a narrow, recent range of years – so this interpretation isn’t meaningful in context.</p>
+</div>
+</div>
+</div>
+<p><em>Example question</em> For the Day 4 Riverview data, a model predicting <code>income</code> (in thousands of dollars) from <code>education</code> (in years) has <span class="math inline">\(R^2 = 0.632\)</span>. Which of the following is the best interpretation of this value?</p>
+<ol type="a">
+<li>For each additional year of education, income increases by 0.632 thousand dollars on average.</li>
+<li>About 63.2% of employees have their income predicted exactly correctly by this model.</li>
+<li>About 63.2% of the variability in income among these employees is explained by education level.</li>
+<li>The correlation between income and education is 0.632.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>(c)</strong> – <span class="math inline">\(R^2\)</span> is the proportion of variability in the response explained by the model. (Watch out for (d): <span class="math inline">\(r = \sqrt{R^2} = 0.795\)</span> here, not 0.632 – <span class="math inline">\(R^2\)</span> and <span class="math inline">\(r\)</span> are related but not equal.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="check-necessary-conditions-for-a-regression-model-and-discuss-the-implications-of-a-model-deficiency" class="level2">
+<h2 class="anchored" data-anchor-id="check-necessary-conditions-for-a-regression-model-and-discuss-the-implications-of-a-model-deficiency">3. Check necessary conditions for a regression model and discuss the implications of a model deficiency</h2>
+<p><em>Example question</em> For each statement below, circle TRUE or FALSE.</p>
+<ol type="a">
+<li>TRUE or FALSE: We can check the linearity condition using a scatterplot of the response against the explanatory variable, before ever fitting a model.</li>
+<li>TRUE or FALSE: A normal Q-Q plot that curves away from the diagonal line in both tails suggests the residuals are more heavily-tailed than a Normal distribution.</li>
+<li>TRUE or FALSE: A residuals-vs-fitted-values plot that fans out (wider spread for larger fitted values) suggests a violation of the equal variance condition.</li>
+<li>TRUE or FALSE: If the independence condition is violated, we can typically detect it just by looking at a residuals-vs-fitted plot.</li>
+<li>TRUE or FALSE: If the linearity condition is badly violated, the estimated slope may be misleading, even if the p-value for the slope is small.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>TRUE (b) TRUE (c) TRUE (d) FALSE – independence is usually about <em>how the data were collected</em> (e.g., time series, clustering), and often can’t be verified from a residuals-vs-fitted plot; a residuals-vs-index plot can sometimes reveal it if the data have a meaningful order. (e) TRUE</li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Suppose you fit a model predicting <code>income</code> from <code>education</code> for the Day 4 Riverview data, and the residuals-vs-fitted plot shows a clear curved (U-shaped) pattern. Which of the following can you still trust about this model? Select all that apply, and explain your reasoning.</p>
+<ol type="a">
+<li>The point estimate of the slope</li>
+<li>The p-value for the slope</li>
+<li>The standard error of the slope</li>
+<li>Predictions made from the model</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>None of these should be trusted. A curved residual pattern means the <em>linearity</em> condition is violated – a straight line is the wrong shape for this relationship. That makes the point estimate itself misleading, not just the inference built on top of it, so the p-value, standard error, and any predictions are all compromised too.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="perform-a-hypothesis-test-to-draw-inference-about-a-single-regression-coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="perform-a-hypothesis-test-to-draw-inference-about-a-single-regression-coefficient">4. Perform a hypothesis test to draw inference about a single regression coefficient</h2>
+<p><em>Example question</em> The Day 3 LeafWidth model gives the following output for the slope of <code>Year</code>: estimate = -0.0176, SE = 0.0044, on <span class="math inline">\(df = 250\)</span>. Conduct a hypothesis test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_A: \beta_1 \ne 0\)</span>. State the test statistic, and describe (without necessarily calculating exactly) how you’d find the p-value.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(t = \dfrac{-0.0176 - 0}{0.0044} \approx -4.0\)</span></p>
+<p>The p-value is the two-sided tail area beyond <span class="math inline">\(t = \pm 4.0\)</span> under a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(df = 250\)</span>: <span class="math inline">\(P(T \le -4.0) + P(T \ge 4.0)\)</span>. Since <span class="math inline">\(t \approx -4.0\)</span> is far in the tail, this p-value will be very small (R reports it as <span class="math inline">\(7.43\times 10^{-5}\)</span>), giving strong evidence that <span class="math inline">\(\beta_1 \ne 0\)</span>.</p>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Before collecting the NHANES sitting-time data, a researcher hypothesizes that <em>more</em> sitting time is associated with a <em>higher</em> depression risk score – not just a difference in either direction. The fitted model (<code>dep_score ~ sedentary_hours</code>) gives a slope of 0.0314 (SE = 0.0116) for <code>sedentary_hours</code>, with <span class="math inline">\(df = 657\)</span>.</p>
+<ol type="a">
+<li>State <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_A\)</span> in symbols, matching the researcher’s directional hypothesis.</li>
+<li>Is the p-value R reports by default (from <code>summary()</code>) the correct one to use here? Why or why not?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(H_0: \beta_1 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_A: \beta_1 &gt; 0\)</span></p></li>
+<li><p>No – R’s default p-value is two-sided, but the researcher’s hypothesis is one-sided. Since the test statistic (<span class="math inline">\(t = 0.0314/0.0116 \approx 2.71\)</span>) is positive, in the direction of <span class="math inline">\(H_A\)</span>, the correct one-sided p-value is <em>half</em> of R’s reported two-sided p-value.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="construct-and-interpret-confidence-intervals-for-regression-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="construct-and-interpret-confidence-intervals-for-regression-coefficients">5. Construct and interpret confidence intervals for regression coefficients</h2>
+<p><em>Example question</em> Recall the Day 2 movies model: <code>audience ~ critics</code> gives a slope estimate of 0.519 (SE = 0.0345), with <span class="math inline">\(df = 144\)</span>. For a 90% confidence interval, the critical value is <span class="math inline">\(t^* = 1.656\)</span>. Construct and report a 90% CI for the slope, showing the formula with numbers plugged in.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(0.519 \pm 1.656 \times 0.0345 \;\Longrightarrow\; (0.462, \; 0.576)\)</span></p>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Recall the Day 4 Riverview model using <em>standardized</em> education: <code>income ~ scale(education)</code> gives a slope estimate of 11.567 (SE = 1.613), with <span class="math inline">\(df = 30\)</span>. For a 90% confidence interval, the critical value is <span class="math inline">\(t^* = 1.697\)</span>.</p>
+<ol type="a">
+<li>Construct a 90% CI for this slope.</li>
+<li>Interpret the interval in context.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(11.567 \pm 1.697 \times 1.613 \;\Longrightarrow\; (8.829, \; 14.305)\)</span></p></li>
+<li><p>We are 90% confident that for each one-SD increase in education (about 4.36 years), average income increases by between $8,829 and $14,305 (8.829 and 14.305 thousand dollars).</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval" class="level2">
+<h2 class="anchored" data-anchor-id="use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval">6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval</h2>
+<p><em>Example question</em> Using the Day 2 movies model, we predict the audience score for a movie with a critics score of 75. The point estimate is 71.2, and R produces two 90% intervals: (50.4, 92.1) and (69.3, 73.1).</p>
+<ol type="a">
+<li>Which interval is the confidence interval, and which is the prediction interval? How can you tell?</li>
+<li>If we wanted to predict the audience score for one specific new movie with critics score 75, which interval should we use?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>(69.3, 73.1) is the confidence interval – it’s narrower, since it only accounts for uncertainty in the <em>average</em> audience score at critics = 75. (50.4, 92.1) is the prediction interval – it’s wider, since it also accounts for the extra variability of one individual movie’s score around that average.</p></li>
+<li><p>The prediction interval, (50.4, 92.1), since we’re predicting a single new movie’s score, not an average.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> A researcher wants to use the NHANES <code>dep_score ~ sedentary_hours</code> model to make a claim about people who sit 6 hours per day. Explain which interval (confidence or prediction) is appropriate for each scenario below, and briefly say why.</p>
+<ol type="a">
+<li>“I want a range for the depression risk score of one specific person who sits 6 hours a day.”</li>
+<li>“I want a range for the <em>average</em> depression risk score among everyone who sits 6 hours a day.”</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>A prediction interval – this is about one individual, whose depression risk score could be far from the average even if we knew the average perfectly.</p></li>
+<li><p>A confidence interval – this is about a population average, which only requires accounting for uncertainty in <em>where the regression line is</em>, not individual-level variability. The confidence interval will be substantially narrower than the prediction interval for the same <span class="math inline">\(x\)</span> value.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="express-an-slr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables" class="level2">
+<h2 class="anchored" data-anchor-id="express-an-slr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables">7. Express an SLR model when transformations have been used on the response and/or the explanatory variables</h2>
+<p><em>Example question</em> On Day 2, we modeled a transformed response: instead of the raw PHQ-9 depression score, we used <code>dep_score</code>, defined as <span class="math inline">\(\log(\text{PHQ-9} + 1)\)</span>. The fitted model is <code>dep_score ~ sedentary_hours</code>, with intercept 0.904 and slope 0.0314.</p>
+<ol type="a">
+<li>Write out the fitted SLR equation, being careful to write it in terms of <code>dep_score</code>, not the raw PHQ-9 score.</li>
+<li>A student concludes: “for every one-hour increase in sitting time, the model predicts an average increase of 0.0314 points in PHQ-9 score.” Explain in one sentence why this is incorrect, then give a corrected interpretation.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(\widehat{\text{dep\_score}}_i = 0.904 + 0.0314 \times \text{sedentary\_hours}_i\)</span>, where <span class="math inline">\(\text{dep\_score}_i = \log(\text{PHQ-9}_i + 1)\)</span>.</p></li>
+<li><p>The model was fit on the <em>log-transformed</em> PHQ-9 score, not the raw PHQ-9 score, so “0.0314” describes a change in <span class="math inline">\(\log(\text{PHQ-9}+1)\)</span>, not a change in PHQ-9 itself – the usual slope interpretation doesn’t carry over once you’ve transformed the response. Corrected: “for every one-hour increase in sitting time, the model predicts an average increase of 0.0314 in depression risk score (the log-transformed PHQ-9 measure).”</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Suppose instead of transforming the response, we wanted to write out the general <em>theoretical</em> model for a log-transformed response, where <span class="math inline">\(Y_i\)</span> is the raw response and <span class="math inline">\(x_i\)</span> is the explanatory variable.</p>
+<ol type="a">
+<li>Write the theoretical model using proper notation, and state the assumption on the error term.</li>
+<li>Give one reason (from what we discussed in class) why we might choose to log-transform a response variable before fitting a model.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(\log(Y_i) = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span>, where <span class="math inline">\(\varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)\)</span>. (Note: <span class="math inline">\(\varepsilon_i\)</span>’s Normal/equal-variance assumptions now apply on the log scale, not the original scale of <span class="math inline">\(Y\)</span>.)</p></li>
+<li><p>A log transformation can help address a right-skewed response and/or non-constant variance in the residuals (e.g., PHQ-9 scores were heavily right-skewed, with many zeros and a long tail of high scores) – both violations of the SLR conditions on the original scale.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
