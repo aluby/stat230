@@ -6,32 +6,30 @@ author: "Name: ________________________________"
 ```{r}
 #| include: false
 library(tidyverse)
-library(bayesrules)
 library(ggformula)
 library(broom)
 library(patchwork)
 theme_set(theme_minimal(base_size = 12))
 source("notes-helpers.R")
 
-set.seed(040726)
-bike_sample <- bikes |> slice_sample(n = 50)
-bike_sm_lm <- lm(rides ~ temp_actual, data = bike_sample)
+city <- readr::read_csv("https://raw.githubusercontent.com/zief0002/modeling/main/data/riverview.csv")
+city_lm <- lm(income ~ education, data = city)
 ```
 
 ## Data for today
 
-We return to the Capital Bikeshare data, this time working with a
-small random sample of 50 days so that patterns are easier to see by
-eye.
+We return to the Riverview data (income vs. education) from Day 4 --
+a nice size for spotting patterns by eye, and we don't need to
+subsample it.
 
 ```{r}
-gf_point(rides ~ temp_actual, data = bike_sample, xlab = "Temperature (F)",
-         ylab = "No. rides", color = "#003300") |>
+gf_point(income ~ education, data = city, xlab = "Education (years)",
+         ylab = "Income ($1000s)", color = "#003300") |>
   gf_lm(color = "#f15a31")
 ```
 
 ```{r}
-kable_coef(bike_sm_lm, terms = c("Intercept", "temp_actual"))
+kable_coef(city_lm, terms = c("Intercept", "education"))
 ```
 
 ## Two definitions of a "good" model
@@ -85,12 +83,12 @@ equal variance.
 ```{r}
 #| fig-width: 8
 #| fig-height: 3
-p1 <- ggplot(augment(bike_sm_lm), aes(x = temp_actual, y = .resid)) +
+p1 <- ggplot(augment(city_lm), aes(x = education, y = .resid)) +
   geom_point(color = "#003300") +
   geom_hline(yintercept = 0, color = "#f15a31", linewidth = 1) +
-  labs(x = "Temperature", y = "Residual")
+  labs(x = "Education", y = "Residual")
 
-p2 <- ggplot(augment(bike_sm_lm), aes(x = .fitted, y = .resid)) +
+p2 <- ggplot(augment(city_lm), aes(x = .fitted, y = .resid)) +
   geom_point(color = "#003300") +
   geom_hline(yintercept = 0, color = "#f15a31", linewidth = 1) +
   labs(x = "Fitted values", y = "Residual")
@@ -133,10 +131,10 @@ hugs the diagonal reference line closely.
 ```{r}
 #| fig-width: 8
 #| fig-height: 3
-p1 <- gf_histogram(~ .resid, data = augment(bike_sm_lm), color = "white",
+p1 <- gf_histogram(~ .resid, data = augment(city_lm), color = "white",
                     bins = 10, xlab = "Residual", ylab = "Count")
 
-p2 <- gf_qq(~ .resid, data = augment(bike_sm_lm),
+p2 <- gf_qq(~ .resid, data = augment(city_lm),
             ylab = "Residual", xlab = "N(0,1) quantiles") |>
   gf_qqline()
 
@@ -153,21 +151,25 @@ wiggles with only 30-50 points.
 ## Assessing independence
 
 Plot residuals against whatever variable might induce dependence
-(time, location, subject, batch, ...). Using the *full* bikes dataset
-ordered by date reveals a clear pattern -- a strong hint that
-day-to-day ridership is **not** independent once we condition only on
-temperature:
+(time, location, subject, batch, ...). A clear pattern -- rather than
+random bouncing around zero -- is a strong hint that the independence
+condition is violated. For example, if employees were hired in waves
+and residuals cycled up and down with the order they were added to
+the dataset, that would be a red flag:
 
 ```{r}
 #| fig-height: 3
-bikes_full_lm <- lm(rides ~ temp_actual, data = bikes)
+set.seed(040726)
+bad_indep <- tibble(
+  index = 1:50,
+  resid = 15 * sin(index / 5) + rnorm(50, sd = 5)
+)
 
-bikes |>
-  mutate(.resid = residuals(bikes_full_lm)) |>
-  ggplot(aes(x = date, y = .resid)) +
+ggplot(bad_indep, aes(x = index, y = resid)) +
   geom_line(color = "#003300") +
+  geom_point(color = "#003300") +
   geom_hline(yintercept = 0, color = "#f15a31", linetype = 2) +
-  labs(x = "Date", y = "Residual")
+  labs(x = "Order collected", y = "Residual")
 ```
 
 ## What happens if the conditions aren't met?
@@ -193,24 +195,33 @@ bikes |>
 ## Partitioning variability
 
 ```{r}
-#| fig-width: 8
+#| fig-width: 9
 #| fig-height: 3
-slr_aug <- augment(bike_sm_lm) |> mutate(mean.y = mean(rides))
+slr_aug <- augment(city_lm) |> mutate(mean.y = mean(income))
 
-p1 <- ggplot(slr_aug, aes(x = temp_actual, y = rides)) +
+p1 <- ggplot(slr_aug, aes(x = education, y = income)) +
   geom_point(color = "#003300") +
-  geom_segment(aes(xend = temp_actual, yend = mean.y), color = "gray70", alpha = 0.6) +
-  geom_hline(yintercept = mean(slr_aug$rides), color = "#f15a31") +
+  geom_segment(aes(xend = education, yend = mean.y), color = "gray70", alpha = 0.6) +
+  geom_hline(yintercept = mean(slr_aug$income), color = "#f15a31") +
   labs(title = "SS Total")
 
-p2 <- ggplot(slr_aug, aes(x = temp_actual, y = rides)) +
+p2 <- ggplot(slr_aug, aes(x = education, y = .fitted)) +
   geom_point(color = "#003300") +
-  geom_segment(aes(xend = temp_actual, yend = .fitted), color = "#003069", alpha = 0.6) +
+  geom_segment(aes(xend = education, yend = mean.y), color = "gray70", alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "#f15a31") +
+  geom_hline(yintercept = mean(slr_aug$income), color = "#f15a31", linetype = "dashed") +
+  labs(title = "SS Regression", y = "income")
+
+p3 <- ggplot(slr_aug, aes(x = education, y = income)) +
+  geom_point(color = "#003300") +
+  geom_segment(aes(xend = education, yend = .fitted), color = "#003069", alpha = 0.6) +
   geom_smooth(method = "lm", se = FALSE, color = "#f15a31") +
   labs(title = "SS Error")
 
-p1 + p2
+p1 + p2 + p3
 ```
+
+Each gray/blue segment is one squared deviation in the sum -- same $x_i$'s, three different "distances": how far each point is from $\overline y$ (Total), how far the model's prediction $\widehat y_i$ is from $\overline y$ (Regression -- the part $x$ explains), and how far each point is from its own prediction $\widehat y_i$ (Error -- the residuals).
 
 $$\underbrace{\sum (y_i - \overline y)^2}_{SSTO} = \underbrace{\sum (\widehat y_i - \overline y)^2}_{SSR} + \underbrace{\sum e_i^2}_{SSE}$$
 
@@ -225,9 +236,9 @@ $R^2$ gives the proportion of total variability in $Y$ explained by
 the SLR model.
 :::
 
-For our small bike sample, $R^2 =$ `r round(summary(bike_sm_lm)$r.squared, 3)`
--- about `r round(summary(bike_sm_lm)$r.squared, 3) * 100`% of the
-variability in rides is explained by temperature.
+For the Riverview data, $R^2 =$ `r round(summary(city_lm)$r.squared, 3)`
+-- about `r round(summary(city_lm)$r.squared, 3) * 100`% of the
+variability in income is explained by education.
 
 ## Properties of $R^2$
 

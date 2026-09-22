@@ -26,7 +26,6 @@ execute:
 
 library(countdown)
 library(tidyverse)
-library(bayesrules)
 library(ggformula)
 library(rsample)
 library(broom)
@@ -35,6 +34,8 @@ library(patchwork)
 library(fontawesome)
 notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
 theme_set(notes_theme)
+
+city <- readr::read_csv("https://raw.githubusercontent.com/zief0002/modeling/main/data/riverview.csv")
 ```
 
 ## Topics for Exam I
@@ -76,27 +77,22 @@ $\widehat{y}_i = \widehat\beta_0 + \widehat\beta_1 x_i$
 $y_i = \widehat{y}_i + \widehat{\varepsilon}_i$
  
 
-## Bike Data (small sample) 
+## Riverview Data
 
 ```{r}
 #| fig-width: 4
 #| fig-height: 2.5
 #| fig-align: 'left'
 
+gf_point(income ~ education, data = city, xlab = "Education (years)", ylab = "Income ($1000s)") |>
+  gf_lm()
 
-set.seed(040726)
-bike_sample <- bikes |> slice_sample(n = 50)
-
-gf_point(rides ~ temp_actual, data = bike_sample) |>
-  gf_lm() + 
-  geom_abline(intercept = -2168.77, slope = 89.23, col = "darkorange", linetype = "dashed", linewidth = 1.25)
-
-bike_sm_lm = lm(rides ~ temp_actual, data = bike_sample)
+city_lm = lm(income ~ education, data = city)
 ```
 
 
 ```{r}
-lm(rides ~ temp_actual, data = bike_sample)
+lm(income ~ education, data = city)
 ```
 
 ## Conditions for inference 
@@ -142,39 +138,20 @@ Conditions to check:
 #| fig-height: 3
 
 
-p1 <- ggplot(broom::augment(bike_sm_lm), aes(x = temp_actual, y = rides)) + 
-  geom_segment(aes(xend = temp_actual, yend = .fitted), col = "darkorange") + 
-  geom_point() + 
+p1 <- ggplot(broom::augment(city_lm), aes(x = education, y = income)) +
+  geom_segment(aes(xend = education, yend = .fitted), col = "darkorange") +
+  geom_point() +
   geom_smooth(method = "lm", se = FALSE, linewidth = 1.5)
 
-p2 <- ggplot(broom::augment(bike_sm_lm), aes(x = temp_actual, y = .resid)) + 
-  geom_segment(aes(xend = temp_actual, yend = 0), col = "darkorange") + 
-  geom_point() + 
+p2 <- ggplot(broom::augment(city_lm), aes(x = .fitted, y = .resid)) +
+  geom_segment(aes(xend = .fitted, yend = 0), col = "darkorange") +
+  geom_point() +
   geom_abline(slope = 0, intercept = 0, linewidth = 1.5, col = "blue")
 
 p1 + p2
 ```
 
-## Put $\widehat{y}$ on the y axis instead of $x$
-
-
-```{r}
-#| fig-width: 8
-#| fig-height: 3
-
-
-p1 <- ggplot(broom::augment(bike_sm_lm), aes(x = temp_actual, y = .resid)) + 
-  geom_segment(aes(xend = temp_actual, yend = 0), col = "darkorange") + 
-  geom_point() + 
-  geom_abline(slope = 1, intercept = 0, linewidth = 1.5, col = "blue")
-
-p2 <- ggplot(broom::augment(bike_sm_lm), aes(x = .fitted, y = .resid)) + 
-  geom_segment(aes(xend = .fitted, yend = 0), col = "darkorange") + 
-  geom_point() + 
-  geom_abline(slope = 0, intercept = 0, linewidth = 1.5, col = "blue")
-
-p1 + p2
-```
+For SLR, plotting residuals against $x$ or against the fitted values $\widehat y$ shows the same shape (since $\widehat y$ is a linear function of $x$) -- either is a valid way to check linearity and equal variance.
 
 
 ## A "good" residual plot
@@ -243,46 +220,9 @@ gf_qq(~residuals( good_mod2b), ylab = "Residual", xlab = "N(0, 1) quantiles") |>
   gf_qqline()
 ```
 
-## Harder to gauge at small sample sizes
-
-All of these are random samples from normal distributions
-
-```{r}
-#| echo: false
-#| layout-ncol: 4
-#| fig.height: 3.5
-#| fig.width: 5
-
-
-x1 <- rnorm(10, mean = 10, sd = 3.5)
-
-x2 <- rnorm(50, mean = 10, sd = 3.5)
-
-x3 <- rnorm(100, mean = 10, sd = 3.5)
-
-x4 <- rnorm(500, mean = 10, sd = 3.5)
-
-
-gf_histogram(~x1, color = "white", bins = 10, xlab = "Residual", ylab = "Count", title = "n = 10") 
-
-gf_histogram(~x2, color = "white", xlab = "Residual", ylab = "Count", title = "n = 50") 
-
-gf_histogram(~x3, color = "white", xlab = "Residual", ylab = "Count", title = "n = 100") 
-
-gf_histogram(~x4, color = "white", xlab = "Residual", ylab = "Count", title = "n = 500") 
-
-gf_qq(~x1, ylab = "Residual", xlab = "N(0, 1) quantiles") |>
-  gf_qqline() 
-
-gf_qq(~x2, ylab = "Residual", xlab = "N(0, 1) quantiles") |>
-  gf_qqline() 
-
-gf_qq(~x3, ylab = "Residual", xlab = "N(0, 1) quantiles") |>
-  gf_qqline() 
-
-gf_qq(~x4, ylab = "Residual", xlab = "N(0, 1) quantiles") |>
-  gf_qqline() 
-```
+::: {.callout-note}
+Normality is **harder to judge at small sample sizes** -- even true random draws from a normal distribution can look lumpy or have a wandering Q-Q plot when $n$ is small. Don't over-interpret minor wiggles with only 30-50 points.
+:::
 
 ## Assessing independence
 
@@ -341,32 +281,68 @@ Work through Example 1 on the activity
 ```{r}
 #| fig-width: 8
 #| fig-height: 4
-#| 
-p1 <- gf_point(rides ~ temp_actual, data = bike_sample) |>
-  gf_lm() + 
-  xlim(c(40, 85)) + 
-  ylim(c(0, 7000))
+#|
+p1 <- gf_point(income ~ education, data = city) |>
+  gf_lm() +
+  xlim(c(5, 29)) +
+  ylim(c(0, 140))
 
 p2 <- tibble(
-  x = rnorm(50, sd = 6) + 60, 
-  y = -2940 + 101*x + rnorm(50, sd = 3000)
+  x = rnorm(50, sd = 4.5) + 16,
+  y = 11.3 + 2.65*x + rnorm(50, sd = 32)
 ) |>
   gf_point(y ~ x) |>
-  gf_abline(slope = 101, intercept = -2940, col = "#3366FF", linewidth = 1) + 
-  xlim(c(40, 85)) + 
-  ylim(c(0, 7000))
+  gf_abline(slope = 2.65, intercept = 11.3, col = "#3366FF", linewidth = 1) +
+  xlim(c(5, 29)) +
+  ylim(c(0, 140))
 
 p3 <- tibble(
-  x = rnorm(50, sd = 6) + 60, 
-  y = -2940 + 101*x + rnorm(50, mean = 50, sd = 100)
+  x = rnorm(50, sd = 4.5) + 16,
+  y = 11.3 + 2.65*x + rnorm(50, sd = 2)
 ) |>
   gf_point(y ~ x) |>
-  gf_lm() + 
-  xlim(c(40, 85)) + 
-  ylim(c(0, 7000))
+  gf_lm() +
+  xlim(c(5, 29)) +
+  ylim(c(0, 140))
 
 p1 + p2 + p3
 ```
+
+## Partitioning variability
+
+```{r}
+#| fig-width: 9
+#| fig-height: 3.2
+
+slr_aug <- broom::augment(city_lm) |> mutate(mean.y = mean(income))
+
+p1 <- ggplot(slr_aug, aes(x = education, y = income)) +
+  geom_segment(aes(xend = education, yend = mean.y), col = "darkorange") +
+  geom_point() +
+  geom_hline(yintercept = mean(slr_aug$income), col = "blue", linewidth = 1) +
+  labs(title = "SS Total")
+
+p2 <- ggplot(slr_aug, aes(x = education, y = .fitted)) +
+  geom_segment(aes(xend = education, yend = mean.y), col = "darkorange") +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "blue", linewidth = 1) +
+  geom_hline(yintercept = mean(slr_aug$income), col = "blue", linetype = "dashed") +
+  labs(title = "SS Regression", y = "income")
+
+p3 <- ggplot(slr_aug, aes(x = education, y = income)) +
+  geom_segment(aes(xend = education, yend = .fitted), col = "darkorange") +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, col = "blue", linewidth = 1) +
+  labs(title = "SS Error")
+
+p1 + p2 + p3
+```
+
+Each orange segment is one squared deviation in the sum -- same $x_i$'s, three different "distances":
+
+- **SS Total:** how far each point is from $\overline{y}$ (ignoring $x$ entirely)
+- **SS Regression:** how far the *model's prediction* $\widehat y_i$ is from $\overline y$ -- the part $x$ explains
+- **SS Error:** how far each point is from its *own prediction* $\widehat y_i$ -- what's left over (residuals)
 
 ## $R^2$
 
@@ -375,7 +351,7 @@ p1 + p2 + p3
 \text{total variability} &= \text{variability of } \hat{Y}\text{'s} + \text{variability of residuals}\\
 \end{align*}
 
-Then: 
+Then:
 
 $$R^2 = \frac{\sum (\hat{Y} - \bar{Y})^2}{\sum (Y - \bar{Y})} = \frac{\text{variability of } \widehat{Y}}{\text{variability of }Y} $$
 
@@ -387,22 +363,23 @@ The $R^2$ value gives the proportion of total variability in Y explained by the 
 :::
 
 
-## SSNBATNT
+## Notation reference
 
-- $r$: correlation coefficient
-- R: statistical programming language
-- $R^2$: "coefficient of variation" 
-- $\rho$: population correlation coefficient
-- $p$: a population proportion
-- p-value: P(test stat | hypothesis)
-- P(A): probability of event A
-- $\widehat{p}$: sample proportion
+| Symbol | Meaning |
+|:---|:---|
+| $r$ | sample correlation coefficient |
+| $\rho$ | population correlation coefficient |
+| $R^2$ | coefficient of determination |
+| $p$ | a population proportion |
+| $\widehat p$ | a sample proportion |
+| p-value | $P(\text{test statistic} \mid H_0)$ |
+| $P(A)$ | probability of event $A$ |
 
 ## Finding $R^2$ in R {.smaller}
 
 ```{r}
 #| echo: true
-summary(bike_sm_lm)
+summary(city_lm)
 ```
 
 ## Properties of $R^2$
@@ -423,22 +400,20 @@ set.seed(040726)
 
 fake_data <- tibble(
   x = c(runif(50, 0, 200), 400),
-  y = c(.5*x^2 + c(rnorm(50, 0, 50)))
+  y = c(.5 * x[1:50]^2 + rnorm(50, 0, 50), 30000)
 )
-
-fake_data[51, 2] = 30000
-
-p1 <- ggplot(fake_data, aes(x = x, y = y)) +
-  geom_point() + 
-  geom_smooth(method = "lm", se = FALSE) + 
-  labs(
-    title = expression(R^2 == .968)
-  )
 
 fake_lm <- lm(y ~ x, data = fake_data)
 
+p1 <- ggplot(fake_data, aes(x = x, y = y)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = paste0("R² = ", round(summary(fake_lm)$r.squared, 3))
+  )
+
 p2 <- ggplot(broom::augment(fake_lm), aes(x = .fitted, y = .resid)) +
-  geom_point() 
+  geom_point()
 
 p1 + p2
 
