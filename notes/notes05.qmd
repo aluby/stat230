@@ -1,6 +1,5 @@
 ---
 title: "Day 05: Evaluating SLR models"
-author: "Name: ________________________________"
 ---
 
 ```{r}
@@ -18,26 +17,21 @@ city_lm <- lm(income ~ education, data = city)
 
 ## Data for today
 
-We return to the Riverview data (income vs. education) from Day 4 --
-a nice size for spotting patterns by eye, and we don't need to
-subsample it.
+We return to the Riverview data (income vs. education) from last time
 
 ```{r}
+#| layout-ncol: 2
 gf_point(income ~ education, data = city, xlab = "Education (years)",
          ylab = "Income ($1000s)", color = "#003300") |>
   gf_lm(color = "#f15a31")
-```
 
-```{r}
 kable_coef(city_lm, terms = c("Intercept", "education"))
 ```
 
 ## Two definitions of a "good" model
 
-1.  The model is appropriate, so our inferences (p-values, CIs) are
-    ___________________________
-2.  The x variable does a good job ___________________________ the y
-    variable
+1.  The model is appropriate, so our inferences (p-values, CIs) are ___________________________
+2.  The x variable does a good job ___________________________ the y variable
 
 Theoretical model: $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ where
 $\varepsilon_i \overset{\mathrm{iid}}{\sim} N(0, \sigma^2)$
@@ -96,13 +90,13 @@ p2 <- ggplot(augment(city_lm), aes(x = .fitted, y = .resid)) +
 p1 + p2
 ```
 
-**A "good" residual plot** shows no pattern: residuals bounce randomly
+**A ______________ residual plot** shows no pattern: residuals bounce randomly
 around zero with roughly constant spread across the range of fitted
 values.
 
 ```{r}
-#| fig-height: 3
-#| fig-width: 4.5
+#| fig-height: 2
+#| fig-width: 3
 set.seed(72384)
 x <- rnorm(100, mean = 10, sd = 3.5)
 y <- 1 + 1 * x + rnorm(100, mean = 0, sd = 10)
@@ -123,14 +117,58 @@ corresponding residual plot that would indicate a violation of
 2.  the equal variance condition
 :::
 
-## Assessing normality
+(wait to fill these in until after we discuss)
+
+## Assessing Linearity
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+
+
+p1 <- gf_blank(residuals(good_mod) ~ fitted(good_mod),
+         ylab = "Y variable", xlab = "X variable") + 
+          theme(axis.text = element_blank()) +
+          labs(title = "Violates linearity")
+
+p2 <- gf_blank(residuals(good_mod) ~ fitted(good_mod),
+         ylab = "Residual", xlab = "Fitted values") + 
+          theme(axis.text = element_blank()) +
+          labs(title = "Violates linearity")
+
+p1 + p2
+```
+
+## Assessing Equal Variance
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+
+
+p1 <- gf_blank(residuals(good_mod) ~ fitted(good_mod),
+         ylab = "Y variable", xlab = "X variable") + 
+          theme(axis.text = element_blank()) +
+          labs(title = "Violates equal variance")
+
+p2 <- gf_blank(residuals(good_mod) ~ fitted(good_mod),
+         ylab = "Residual", xlab = "Fitted values") + 
+          theme(axis.text = element_blank()) +
+          labs(title = "Violates equal variance")
+
+p1 + p2
+```
+
+\pagebreak 
+
+## Assessing Normality
 
 Use a histogram or normal Q-Q plot of the residuals. A "good" Q-Q plot
 hugs the diagonal reference line closely.
 
 ```{r}
 #| fig-width: 8
-#| fig-height: 3
+#| fig-height: 2.5
 p1 <- gf_histogram(~ .resid, data = augment(city_lm), color = "white",
                     bins = 10, xlab = "Residual", ylab = "Count")
 
@@ -151,11 +189,7 @@ wiggles with only 30-50 points.
 ## Assessing independence
 
 Plot residuals against whatever variable might induce dependence
-(time, location, subject, batch, ...). A clear pattern -- rather than
-random bouncing around zero -- is a strong hint that the independence
-condition is violated. For example, if employees were hired in waves
-and residuals cycled up and down with the order they were added to
-the dataset, that would be a red flag:
+(time, location, subject, batch, ...). A clear pattern is a strong hint that the independence condition is violated. For example, if employees were hired in waves and residuals cycled up and down with the order they were added to the dataset, that would be a red flag:
 
 ```{r}
 #| fig-height: 3
@@ -171,6 +205,38 @@ ggplot(bad_indep, aes(x = index, y = resid)) +
   geom_hline(yintercept = 0, color = "#f15a31", linetype = 2) +
   labs(x = "Order collected", y = "Residual")
 ```
+
+# Making Residual Plots in R 
+
+In order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for *every single data point*! Instead, we'll use the `augment()` function from the {broom} R package to created an augmented movie dataset. This takes the original X and Y variables and adds the $\hat{y}$ values (`.fitted`) and residuals (`.resid`) (along with some other columns that we'll use later) 
+
+```{r}
+#| echo: true
+
+city_aug <- augment(city_lm)
+city_aug
+```
+
+Once we have the augmented dataset, we can make scatterplots, etc. as usual with `gf_point`/`gf_histogram` etc. 
+
+```{r}
+#| layout-ncol: 4
+#| echo: true
+#| fig-width: 8
+#| fig-height: 5
+gf_point(.resid ~ .fitted, data = city_aug)
+gf_histogram(~.resid, data = city_aug, col = "white")
+gf_qq(~ .resid, data = augment(city_lm)) |> gf_qqline()
+gf_point(.resid ~ 1:nrow(city_aug), data = city_aug)
+```
+
+::: {.callout-tip}
+## Group task
+
+Try Part 1 of the R activity together
+:::
+
+\pagebreak 
 
 ## What happens if the conditions aren't met?
 
@@ -256,13 +322,9 @@ variability in income is explained by education.
 | $r$ | sample correlation coefficient |
 | $\rho$ | population correlation coefficient |
 | $R^2$ | coefficient of determination |
-| $p$ | a population proportion |
-| $\widehat p$ | a sample proportion |
-| p-value | $P(\text{test statistic} \mid H_0)$ |
-| $P(A)$ | probability of event $A$ |
 :::
 
-## $R^2$ dangers: high $R^2$ doesn't mean "good fit"
+## $R^2$ dangers: 
 
 ```{r}
 #| fig-width: 8
@@ -287,14 +349,25 @@ p2 <- ggplot(augment(fake_lm), aes(x = .fitted, y = .resid)) +
 p1 + p2
 ```
 
-A single high-leverage point drove $R^2$ up to
-`r round(summary(fake_lm)$r.squared, 3)` even though the residual plot
-shows an obvious curve -- the linear model is a bad fit! **Always check
-the residual plot, not just $R^2$.**
-
 ::: {.callout-tip}
 ## Your turn
 
 Would you trust this model just based on its $R^2$? What does the
 residual plot tell you that $R^2$ alone can't?
 :::
+
+# Finding $R^2$ in R 
+
+We get $R^2$ as part of the `summary()` output: 
+
+```{r}
+#| echo: true
+summary(city_lm)
+```
+
+and you can access it directly with `$`:
+
+```{r}
+#| echo: true
+summary(city_lm)$r.squared
+```

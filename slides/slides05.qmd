@@ -151,7 +151,7 @@ p2 <- ggplot(broom::augment(city_lm), aes(x = .fitted, y = .resid)) +
 p1 + p2
 ```
 
-For SLR, plotting residuals against $x$ or against the fitted values $\widehat y$ shows the same shape (since $\widehat y$ is a linear function of $x$) -- either is a valid way to check linearity and equal variance.
+
 
 
 ## A "good" residual plot
@@ -187,9 +187,43 @@ gf_point(residuals(good_mod) ~ x,
     
 :::
 
-## Assessing Linearity 
+## Assessing Linearity
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+
+p1 <- gf_blank(residuals(good_mod) ~ fitted(good_mod),
+         ylab = "Y variable", xlab = "X variable") +
+          theme(axis.text = element_blank()) +
+          labs(title = "Violates linearity")
+
+p2 <- gf_blank(residuals(good_mod) ~ fitted(good_mod),
+         ylab = "Residual", xlab = "Fitted values") +
+          theme(axis.text = element_blank()) +
+          labs(title = "Violates linearity")
+
+p1 + p2
+```
 
 ## Assessing Equal Variance
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+
+p1 <- gf_blank(residuals(good_mod) ~ fitted(good_mod),
+         ylab = "Y variable", xlab = "X variable") +
+          theme(axis.text = element_blank()) +
+          labs(title = "Violates equal variance")
+
+p2 <- gf_blank(residuals(good_mod) ~ fitted(good_mod),
+         ylab = "Residual", xlab = "Fitted values") +
+          theme(axis.text = element_blank()) +
+          labs(title = "Violates equal variance")
+
+p1 + p2
+```
 
 ## Assessing Normality
 
@@ -243,7 +277,32 @@ gf_point(rstandard(good_mod2a) ~ 1:30, ylab = "Standardized Residual", xlab = "O
 
 gf_point(rstandard(good_mod2b) ~ 1:30, ylab = "Standardized Residual", xlab = "Order") |>
   gf_line() |>
-  gf_hline(yintercept = 0) 
+  gf_hline(yintercept = 0)
+```
+
+# Making residual plots in R
+
+## `augment()`
+
+The `augment()` function (from {broom}) adds `.fitted` and `.resid` columns to your data, so you don't have to compute them by hand.
+
+```{r}
+#| echo: true
+city_aug <- augment(city_lm)
+city_aug
+```
+
+## Residual plots in R
+
+```{r}
+#| echo: true
+#| layout-ncol: 4
+#| fig-width: 8
+#| fig-height: 5
+gf_point(.resid ~ .fitted, data = city_aug)
+gf_histogram(~.resid, data = city_aug, col = "white")
+gf_qq(~ .resid, data = city_aug) |> gf_qqline()
+gf_point(.resid ~ 1:nrow(city_aug), data = city_aug)
 ```
 
 # Your turn
@@ -370,16 +429,19 @@ The $R^2$ value gives the proportion of total variability in Y explained by the 
 | $r$ | sample correlation coefficient |
 | $\rho$ | population correlation coefficient |
 | $R^2$ | coefficient of determination |
-| $p$ | a population proportion |
-| $\widehat p$ | a sample proportion |
-| p-value | $P(\text{test statistic} \mid H_0)$ |
-| $P(A)$ | probability of event $A$ |
 
 ## Finding $R^2$ in R {.smaller}
 
 ```{r}
 #| echo: true
 summary(city_lm)
+```
+
+and you can access it directly with `$`:
+
+```{r}
+#| echo: true
+summary(city_lm)$r.squared
 ```
 
 ## Properties of $R^2$
