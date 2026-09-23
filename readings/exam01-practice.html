@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -37,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -122,7 +157,7 @@ window.Quarto = {
   <li><a href="#use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval" id="toc-use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval" class="nav-link" data-scroll-target="#use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval">6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval</a></li>
   <li><a href="#express-an-slr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables" id="toc-express-an-slr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables" class="nav-link" data-scroll-target="#express-an-slr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables">7. Express an SLR model when transformations have been used on the response and/or the explanatory variables</a></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="exam01-practice.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -147,10 +182,26 @@ window.Quarto = {
 </header>
 
 
-<p>Practice questions for each skill on the <a href="../readings/exam01-review.html">Exam01 Review</a> sheet. Solutions are collapsed by default – try each question before checking.</p>
+<p>Practice questions for each skill on the <a href="../readings/exam01-review.html">Exam01 Review</a> sheet.</p>
 <section id="express-a-slr-model-using-proper-notation" class="level2">
 <h2 class="anchored" data-anchor-id="express-a-slr-model-using-proper-notation">1. Express a SLR model using proper notation</h2>
-<p><em>Example question</em> In the Day 2 activity, we explored the relationship between <code>audience</code> score (response) and <code>critics</code> score (explanatory) for a sample of movies. Write out the <em>theoretical</em> SLR model for this relationship. Define <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(x_i\)</span> in context, include all parameters, and state the assumption placed on the error term.</p>
+<p><em>Example question</em> In the Day 2 activity, we explored the relationship between <code>audience</code> score and <code>critics</code> score for a sample of movies. Here is the scatterplot we looked at:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>movies <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aloy.github.io/stat230-materials/data/movie_scores.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(audience <span class="sc">~</span> critics, <span class="at">data =</span> movies) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gf_lm</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exam01-practice_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li><p>What is the response variable? What is the explanatory variable?</p></li>
+<li><p>Write out the <em>theoretical</em> SLR model for this relationship. Define <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(x_i\)</span> in context, include all parameters, and state the assumption placed on the error term.</p></li>
+</ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -207,7 +258,11 @@ window.Quarto = {
 </section>
 <section id="interpret-the-coefficients-and-r2-of-a-model-in-context" class="level2">
 <h2 class="anchored" data-anchor-id="interpret-the-coefficients-and-r2-of-a-model-in-context">2. Interpret the coefficients and <span class="math inline">\(R^2\)</span> of a model in context</h2>
-<p><em>Example question</em> Using the fitted model from Practice Q1b (<span class="math inline">\(\widehat{\text{Width}}_i = 37.723 - 0.018 \times \text{Year}_i\)</span>), interpret the slope and intercept in context.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>LeafWidth <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://aluby.github.io/stat230/data/LeafWidth.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>leaf_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Width <span class="sc">~</span> Year, <span class="at">data =</span> LeafWidth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Example question</em> Using the fitted model (<span class="math inline">\(\widehat{\text{Width}}_i = 37.723 - 0.018 \times \text{Year}_i\)</span>), interpret the slope and intercept in context.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -225,12 +280,12 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p><em>Example question</em> For the Day 4 Riverview data, a model predicting <code>income</code> (in thousands of dollars) from <code>education</code> (in years) has <span class="math inline">\(R^2 = 0.632\)</span>. Which of the following is the best interpretation of this value?</p>
+<p><em>Example question</em> For the <code>LeafWidth</code> model above, predicting <code>Width</code> from <code>Year</code> has <span class="math inline">\(R^2 = 0.06\)</span>. Which of the following is the best interpretation of this value?</p>
 <ol type="a">
-<li>For each additional year of education, income increases by 0.632 thousand dollars on average.</li>
-<li>About 63.2% of employees have their income predicted exactly correctly by this model.</li>
-<li>About 63.2% of the variability in income among these employees is explained by education level.</li>
-<li>The correlation between income and education is 0.632.</li>
+<li>For each additional year, leaf width increases by 0.6mm on average.</li>
+<li>About 6% of leafs have their width predicted exactly correctly by this model.</li>
+<li>About 6% of the variability in width among these leaves is explained by year.</li>
+<li>The correlation between width and year is 0.6.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
@@ -244,7 +299,7 @@ window.Quarto = {
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>(c)</strong> – <span class="math inline">\(R^2\)</span> is the proportion of variability in the response explained by the model. (Watch out for (d): <span class="math inline">\(r = \sqrt{R^2} = 0.795\)</span> here, not 0.632 – <span class="math inline">\(R^2\)</span> and <span class="math inline">\(r\)</span> are related but not equal.)</p>
+<p><strong>(c)</strong> – <span class="math inline">\(R^2\)</span> is the proportion of variability in the response explained by the model. (Watch out for (d): <span class="math inline">\(r = \sqrt{R^2}\)</span> – <span class="math inline">\(R^2\)</span> and <span class="math inline">\(r\)</span> are related but not equal.)</p>
 </div>
 </div>
 </div>
@@ -277,7 +332,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p><em>Example question</em> Suppose you fit a model predicting <code>income</code> from <code>education</code> for the Day 4 Riverview data, and the residuals-vs-fitted plot shows a clear curved (U-shaped) pattern. Which of the following can you still trust about this model? Select all that apply, and explain your reasoning.</p>
+<p><em>Example question</em> Suppose you fit a model predicting <code>income</code> from <code>education</code> for the Riverview data, and the residuals-vs-fitted plot shows a clear curved (U-shaped) pattern. Which of the following can you still trust about this model? Select all that apply, and explain your reasoning.</p>
 <ol type="a">
 <li>The point estimate of the slope</li>
 <li>The p-value for the slope</li>
@@ -303,7 +358,41 @@ window.Quarto = {
 </section>
 <section id="perform-a-hypothesis-test-to-draw-inference-about-a-single-regression-coefficient" class="level2">
 <h2 class="anchored" data-anchor-id="perform-a-hypothesis-test-to-draw-inference-about-a-single-regression-coefficient">4. Perform a hypothesis test to draw inference about a single regression coefficient</h2>
-<p><em>Example question</em> The Day 3 LeafWidth model gives the following output for the slope of <code>Year</code>: estimate = -0.0176, SE = 0.0044, on <span class="math inline">\(df = 250\)</span>. Conduct a hypothesis test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_A: \beta_1 \ne 0\)</span>. State the test statistic, and describe (without necessarily calculating exactly) how you’d find the p-value.</p>
+<p><em>Example question</em> The LeafWidth model gives the following output:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(leaf_mod) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">37.723</td>
+<td style="text-align: right;">8.575</td>
+<td style="text-align: right;">4.399</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Year</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">-4.029</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>On <span class="math inline">\(n = 252\)</span> data points. Conduct a hypothesis test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_A: \beta_1 \ne 0\)</span>. State the test statistic, and describe (without necessarily calculating exactly) how the p-value could be found.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -316,7 +405,7 @@ window.Quarto = {
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(t = \dfrac{-0.0176 - 0}{0.0044} \approx -4.0\)</span></p>
+<p><span class="math inline">\(t = \dfrac{-0.018 - 0}{0.004} \approx -4.0\)</span></p>
 <p>The p-value is the two-sided tail area beyond <span class="math inline">\(t = \pm 4.0\)</span> under a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(df = 250\)</span>: <span class="math inline">\(P(T \le -4.0) + P(T \ge 4.0)\)</span>. Since <span class="math inline">\(t \approx -4.0\)</span> is far in the tail, this p-value will be very small (R reports it as <span class="math inline">\(7.43\times 10^{-5}\)</span>), giving strong evidence that <span class="math inline">\(\beta_1 \ne 0\)</span>.</p>
 </div>
 </div>
@@ -324,7 +413,7 @@ window.Quarto = {
 <p><em>Example question</em> Before collecting the NHANES sitting-time data, a researcher hypothesizes that <em>more</em> sitting time is associated with a <em>higher</em> depression risk score – not just a difference in either direction. The fitted model (<code>dep_score ~ sedentary_hours</code>) gives a slope of 0.0314 (SE = 0.0116) for <code>sedentary_hours</code>, with <span class="math inline">\(df = 657\)</span>.</p>
 <ol type="a">
 <li>State <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_A\)</span> in symbols, matching the researcher’s directional hypothesis.</li>
-<li>Is the p-value R reports by default (from <code>summary()</code>) the correct one to use here? Why or why not?</li>
+<li>Is the p-value R reports by default (from <code>summary()</code>) the correct one to use here? If not, explain how you would find the correct p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
@@ -348,7 +437,31 @@ window.Quarto = {
 </section>
 <section id="construct-and-interpret-confidence-intervals-for-regression-coefficients" class="level2">
 <h2 class="anchored" data-anchor-id="construct-and-interpret-confidence-intervals-for-regression-coefficients">5. Construct and interpret confidence intervals for regression coefficients</h2>
-<p><em>Example question</em> Recall the Day 2 movies model: <code>audience ~ critics</code> gives a slope estimate of 0.519 (SE = 0.0345), with <span class="math inline">\(df = 144\)</span>. For a 90% confidence interval, the critical value is <span class="math inline">\(t^* = 1.656\)</span>. Construct and report a 90% CI for the slope, showing the formula with numbers plugged in.</p>
+<p><em>Example question</em> Recall Movies model: <code>lm(audience ~ critics)</code> gives a slope estimate of 0.519 (SE = 0.0345), with <span class="math inline">\(df = 144\)</span>.</p>
+<ol type="a">
+<li>Using the <code>qt()</code> output below, report the correct <span class="math inline">\(t^*\)</span> value to use rounded to 3 decimal places</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">01</span>, <span class="at">df =</span> <span class="dv">144</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.352522</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">025</span>, <span class="at">df =</span> <span class="dv">144</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.976575</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">05</span>, <span class="at">df =</span> <span class="dv">144</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.655504</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">1</span>, <span class="at">df =</span> <span class="dv">144</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.287458</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Construct and report a 90% CI for the slope, showing the formula with numbers plugged in.</li>
+</ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -361,13 +474,18 @@ window.Quarto = {
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>You should use <code>qt(.05, df = 144)</code>: 1.656</p></li>
+<li></li>
+</ol>
 <p><span class="math inline">\(0.519 \pm 1.656 \times 0.0345 \;\Longrightarrow\; (0.462, \; 0.576)\)</span></p>
 </div>
 </div>
 </div>
-<p><em>Example question</em> Recall the Day 4 Riverview model using <em>standardized</em> education: <code>income ~ scale(education)</code> gives a slope estimate of 11.567 (SE = 1.613), with <span class="math inline">\(df = 30\)</span>. For a 90% confidence interval, the critical value is <span class="math inline">\(t^* = 1.697\)</span>.</p>
+<p><em>Example question</em> Recall Riverview model using <em>standardized</em> education: <code>income ~ scale(education)</code> gives a slope estimate of 11.567 (SE = 1.613), with <span class="math inline">\(df = 30\)</span>. For a 95% confidence interval, use a critical value is $t^* = 2.</p>
+<p>It may also be helpful know that the <code>income</code> has a mean of 53.7 and a SD of 14.5. <code>education</code> has a mean of 16 and a SD of 4.36.</p>
 <ol type="a">
-<li>Construct a 90% CI for this slope.</li>
+<li>Construct a 95% CI for this slope.</li>
 <li>Interpret the interval in context.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -383,8 +501,8 @@ window.Quarto = {
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="a">
-<li><p><span class="math inline">\(11.567 \pm 1.697 \times 1.613 \;\Longrightarrow\; (8.829, \; 14.305)\)</span></p></li>
-<li><p>We are 90% confident that for each one-SD increase in education (about 4.36 years), average income increases by between $8,829 and $14,305 (8.829 and 14.305 thousand dollars).</p></li>
+<li><p><span class="math inline">\(11.567 \pm 2 \times 1.613 \;\Longrightarrow\; (8.83, \; 14.8)\)</span></p></li>
+<li><p>We are 95% confident that for each one-SD increase in education (about 4.36 years), average income increases by between $8,829 and $14,305 (8.829 and 14.305 thousand dollars).</p></li>
 </ol>
 </div>
 </div>
@@ -392,10 +510,11 @@ window.Quarto = {
 </section>
 <section id="use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval" class="level2">
 <h2 class="anchored" data-anchor-id="use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval">6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval</h2>
-<p><em>Example question</em> Using the Day 2 movies model, we predict the audience score for a movie with a critics score of 75. The point estimate is 71.2, and R produces two 90% intervals: (50.4, 92.1) and (69.3, 73.1).</p>
+<p><em>Example question</em> Using the movies model, we predict the audience score for a movie with a critics score of 75. The point estimate is 71.2, and R produces two 90% intervals: (50.4, 92.1) and (69.3, 73.1).</p>
 <ol type="a">
 <li>Which interval is the confidence interval, and which is the prediction interval? How can you tell?</li>
-<li>If we wanted to predict the audience score for one specific new movie with critics score 75, which interval should we use?</li>
+<li>If we wanted to predict the audience score for <em>Kingsman: The Secret Service</em>, which has a critics score of 75, which interval should we use?</li>
+<li>For the type of interval you did <em>not</em> choose in (b), what is the correct interpretation?</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
@@ -412,6 +531,7 @@ window.Quarto = {
 <ol type="a">
 <li><p>(69.3, 73.1) is the confidence interval – it’s narrower, since it only accounts for uncertainty in the <em>average</em> audience score at critics = 75. (50.4, 92.1) is the prediction interval – it’s wider, since it also accounts for the extra variability of one individual movie’s score around that average.</p></li>
 <li><p>The prediction interval, (50.4, 92.1), since we’re predicting a single new movie’s score, not an average.</p></li>
+<li><p>The other inerval is the confidence interval. This gives the interval for the <em>average</em> audience score for all movies with a critics score of 75.</p></li>
 </ol>
 </div>
 </div>
@@ -443,7 +563,7 @@ window.Quarto = {
 </section>
 <section id="express-an-slr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables" class="level2">
 <h2 class="anchored" data-anchor-id="express-an-slr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables">7. Express an SLR model when transformations have been used on the response and/or the explanatory variables</h2>
-<p><em>Example question</em> On Day 2, we modeled a transformed response: instead of the raw PHQ-9 depression score, we used <code>dep_score</code>, defined as <span class="math inline">\(\log(\text{PHQ-9} + 1)\)</span>. The fitted model is <code>dep_score ~ sedentary_hours</code>, with intercept 0.904 and slope 0.0314.</p>
+<p><em>Example question</em> Instead of the raw PHQ-9 depression score, we actually used <code>dep_score</code>, defined as <span class="math inline">\(\log(\text{PHQ-9} + 1)\)</span>. The fitted model is <code>dep_score ~ sedentary_hours</code>, with intercept 0.904 and slope 0.0314.</p>
 <ol type="a">
 <li>Write out the fitted SLR equation, being careful to write it in terms of <code>dep_score</code>, not the raw PHQ-9 score.</li>
 <li>A student concludes: “for every one-hour increase in sitting time, the model predicts an average increase of 0.0314 points in PHQ-9 score.” Explain in one sentence why this is incorrect, then give a corrected interpretation.</li>

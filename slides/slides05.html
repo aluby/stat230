@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Evaluating SLR models</title>
@@ -246,18 +246,18 @@ Prof Amanda Luby
 <p><span class="math inline">\(\widehat{y}_i = \widehat\beta_0 + \widehat\beta_1 x_i\)</span></p>
 <p><span class="math inline">\(y_i = \widehat{y}_i + \widehat{\varepsilon}_i\)</span></p>
 </section>
-<section id="bike-data-small-sample" class="slide level2">
-<h2>Bike Data (small sample)</h2>
+<section id="riverview-data" class="slide level2">
+<h2>Riverview Data</h2>
 
 <img data-src="slides05_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-left r-stretch" width="384"><div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = rides ~ temp_actual, data = bike_sample)
+lm(formula = income ~ education, data = city)
 
 Coefficients:
-(Intercept)  temp_actual  
-      -2940          101  </code></pre>
+(Intercept)    education  
+     11.321        2.651  </code></pre>
 </div>
 </div>
 </section>
@@ -290,19 +290,15 @@ Coefficients:
 <h2>What is a residual plot?</h2>
 
 <img data-src="slides05_files/figure-revealjs/unnamed-chunk-4-1.png" width="768" class="r-stretch"></section>
-<section id="put-widehaty-on-the-y-axis-instead-of-x" class="slide level2">
-<h2>Put <span class="math inline">\(\widehat{y}\)</span> on the y axis instead of <span class="math inline">\(x\)</span></h2>
-
-<img data-src="slides05_files/figure-revealjs/unnamed-chunk-5-1.png" width="768" class="r-stretch"></section>
 <section id="a-good-residual-plot" class="slide level2">
 <h2>A “good” residual plot</h2>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-6-1.png" width="480"></p>
+<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-5-1.png" width="480"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-6-2.png" width="480"></p>
+<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-5-2.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -322,10 +318,12 @@ Coefficients:
 </section>
 <section id="assessing-linearity" class="slide level2">
 <h2>Assessing Linearity</h2>
-</section>
+
+<img data-src="slides05_files/figure-revealjs/unnamed-chunk-6-1.png" width="768" class="r-stretch"></section>
 <section id="assessing-equal-variance" class="slide level2">
 <h2>Assessing Equal Variance</h2>
-</section>
+
+<img data-src="slides05_files/figure-revealjs/unnamed-chunk-7-1.png" width="768" class="r-stretch"></section>
 <section id="assessing-normality" class="slide level2">
 <h2>Assessing Normality</h2>
 <ul>
@@ -333,26 +331,6 @@ Coefficients:
 <li>normal Q-Q plot of residuals</li>
 </ul>
 <p><strong>Examples of “good” plots:</strong></p>
-<div class="cell quarto-layout-panel" data-layout-ncol="4">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-7-1.png" width="480"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-7-2.png" width="480"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-7-3.png" width="480"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-7-4.png" width="480"></p>
-</div>
-</div>
-</div>
-</section>
-<section id="harder-to-gauge-at-small-sample-sizes" class="slide level2">
-<h2>Harder to gauge at small sample sizes</h2>
-<p>All of these are random samples from normal distributions</p>
 <div class="cell quarto-layout-panel" data-layout-ncol="4">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
@@ -368,18 +346,17 @@ Coefficients:
 <p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-8-4.png" width="480"></p>
 </div>
 </div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-8-5.png" width="480"></p>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-8-6.png" width="480"></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-8-7.png" width="480"></p>
+<p><strong>Note</strong></p>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-8-8.png" width="480"></p>
+<div class="callout-content">
+<p>Normality is <strong>harder to judge at small sample sizes</strong> – even true random draws from a normal distribution can look lumpy or have a wandering Q-Q plot when <span class="math inline">\(n\)</span> is small. Don’t over-interpret minor wiggles with only 30-50 points.</p>
 </div>
 </div>
 </div>
@@ -401,6 +378,58 @@ Coefficients:
 </div>
 </div>
 </section>
+<section>
+<section id="making-residual-plots-in-r" class="title-slide slide level1 center">
+<h1>Making residual plots in R</h1>
+
+</section>
+<section id="augment" class="slide level2">
+<h2><code>augment()</code></h2>
+<p>The <code>augment()</code> function (from {broom}) adds <code>.fitted</code> and <code>.resid</code> columns to your data, so you don’t have to compute them by hand.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>city_aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(city_lm)</span>
+<span id="cb2-2"><a></a>city_aug</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 8
+   income education .fitted .resid   .hat .sigma .cooksd .std.resid
+    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+ 1   26.4         8    32.5  -6.10 0.140    9.05 0.0436      -0.733
+ 2   37.4         8    32.5   4.92 0.140    9.08 0.0283       0.590
+ 3   34.2        10    37.8  -3.65 0.0923   9.10 0.00927     -0.427
+ 4   25.5        10    37.8 -12.4  0.0923   8.81 0.106       -1.44 
+ 5   47.0        10    37.8   9.20 0.0923   8.95 0.0588       1.08 
+ 6   46.5        12    43.1   3.35 0.0584   9.11 0.00459      0.385
+ 7   52.5        12    43.1   9.34 0.0584   8.95 0.0356       1.07 
+ 8   37.7        12    43.1  -5.48 0.0584   9.07 0.0123      -0.629
+ 9   50.3        12    43.1   7.13 0.0584   9.03 0.0207       0.818
+10   32.6        14    48.4 -15.8  0.0380   8.63 0.0637      -1.80 
+# ℹ 22 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="residual-plots-in-r" class="slide level2">
+<h2>Residual plots in R</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">gf_point</span>(.resid <span class="sc">~</span> .fitted, <span class="at">data =</span> city_aug)</span>
+<span id="cb4-2"><a></a><span class="fu">gf_histogram</span>(<span class="sc">~</span>.resid, <span class="at">data =</span> city_aug, <span class="at">col =</span> <span class="st">"white"</span>)</span>
+<span id="cb4-3"><a></a><span class="fu">gf_qq</span>(<span class="sc">~</span> .resid, <span class="at">data =</span> city_aug) <span class="sc">|&gt;</span> <span class="fu">gf_qqline</span>()</span>
+<span id="cb4-4"><a></a><span class="fu">gf_point</span>(.resid <span class="sc">~</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(city_aug), <span class="at">data =</span> city_aug)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="4">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-11-1.png" width="768"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-11-2.png" width="768"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-11-3.png" width="768"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img data-src="slides05_files/figure-revealjs/unnamed-chunk-11-4.png" width="768"></p>
+</div>
+</div>
+</div>
+</section></section>
 <section>
 <section id="your-turn-1" class="title-slide slide level1 center">
 <h1>Your turn</h1>
@@ -433,7 +462,11 @@ Coefficients:
 <section id="section" class="slide level2">
 <h2></h2>
 
-<img data-src="slides05_files/figure-revealjs/unnamed-chunk-10-1.png" width="768" class="r-stretch"></section>
+<img data-src="slides05_files/figure-revealjs/unnamed-chunk-12-1.png" width="768" class="r-stretch"></section>
+<section id="partitioning-variability" class="slide level2">
+<h2>Partitioning variability</h2>
+
+<img data-src="slides05_files/figure-revealjs/unnamed-chunk-13-1.png" width="864" class="r-stretch"></section>
 <section id="r2" class="slide level2">
 <h2><span class="math inline">\(R^2\)</span></h2>
 <p><span class="math display">\[\begin{align*}
@@ -456,42 +489,61 @@ Coefficients:
 </div>
 </div>
 </section>
-<section id="ssnbatnt" class="slide level2">
-<h2>SSNBATNT</h2>
-<ul>
-<li><span class="math inline">\(r\)</span>: correlation coefficient</li>
-<li>R: statistical programming language</li>
-<li><span class="math inline">\(R^2\)</span>: “coefficient of variation”</li>
-<li><span class="math inline">\(\rho\)</span>: population correlation coefficient</li>
-<li><span class="math inline">\(p\)</span>: a population proportion</li>
-<li>p-value: P(test stat | hypothesis)</li>
-<li>P(A): probability of event A</li>
-<li><span class="math inline">\(\widehat{p}\)</span>: sample proportion</li>
-</ul>
+<section id="notation-reference" class="slide level2">
+<h2>Notation reference</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Symbol</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(r\)</span></td>
+<td style="text-align: left;">sample correlation coefficient</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\rho\)</span></td>
+<td style="text-align: left;">population correlation coefficient</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(R^2\)</span></td>
+<td style="text-align: left;">coefficient of determination</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="finding-r2-in-r" class="slide level2 smaller">
 <h2>Finding <span class="math inline">\(R^2\)</span> in R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">summary</span>(bike_sm_lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">summary</span>(city_lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = rides ~ temp_actual, data = bike_sample)
+lm(formula = income ~ education, data = city)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3551.0  -885.8    90.6   784.2  2436.0 
+-15.809  -5.783   2.088   5.127  18.379 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -2940.40    1072.08  -2.743  0.00854 ** 
-temp_actual   101.00      16.57   6.096 1.79e-07 ***
+(Intercept)  11.3214     6.1232   1.849   0.0743 .  
+education     2.6513     0.3696   7.173 5.56e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1252 on 48 degrees of freedom
-Multiple R-squared:  0.4364,    Adjusted R-squared:  0.4246 
-F-statistic: 37.16 on 1 and 48 DF,  p-value: 1.787e-07</code></pre>
+Residual standard error: 8.978 on 30 degrees of freedom
+Multiple R-squared:  0.6317,    Adjusted R-squared:  0.6194 
+F-statistic: 51.45 on 1 and 30 DF,  p-value: 5.562e-08</code></pre>
+</div>
+</div>
+<p>and you can access it directly with <code>$</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">summary</span>(city_lm)<span class="sc">$</span>r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6316828</code></pre>
 </div>
 </div>
 </section>
@@ -512,7 +564,7 @@ F-statistic: 37.16 on 1 and 48 DF,  p-value: 1.787e-07</code></pre>
 <section id="r2-dangers" class="slide level2">
 <h2><span class="math inline">\(R^2\)</span> dangers</h2>
 
-<img data-src="slides05_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section></section>
+<img data-src="slides05_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section></section>
 <section id="your-turn-2" class="title-slide slide level1 center">
 <h1>Your turn</h1>
 <div class="task">
