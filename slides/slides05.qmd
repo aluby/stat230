@@ -379,29 +379,26 @@ p1 <- ggplot(slr_aug, aes(x = education, y = income)) +
   geom_segment(aes(xend = education, yend = mean.y), col = "darkorange") +
   geom_point() +
   geom_hline(yintercept = mean(slr_aug$income), col = "blue", linewidth = 1) +
-  labs(title = "SS Total")
+  labs(title = "SS Total") + 
+  ylim(20, 85)
 
 p2 <- ggplot(slr_aug, aes(x = education, y = .fitted)) +
   geom_segment(aes(xend = education, yend = mean.y), col = "darkorange") +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, col = "blue", linewidth = 1) +
   geom_hline(yintercept = mean(slr_aug$income), col = "blue", linetype = "dashed") +
-  labs(title = "SS Regression", y = "income")
+  labs(title = "SS Regression", y = "income") + 
+  ylim(20, 85)
 
 p3 <- ggplot(slr_aug, aes(x = education, y = income)) +
   geom_segment(aes(xend = education, yend = .fitted), col = "darkorange") +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, col = "blue", linewidth = 1) +
-  labs(title = "SS Error")
+  labs(title = "SS Error") + 
+  ylim(20, 85)
 
 p1 + p2 + p3
 ```
-
-Each orange segment is one squared deviation in the sum -- same $x_i$'s, three different "distances":
-
-- **SS Total:** how far each point is from $\overline{y}$ (ignoring $x$ entirely)
-- **SS Regression:** how far the *model's prediction* $\widehat y_i$ is from $\overline y$ -- the part $x$ explains
-- **SS Error:** how far each point is from its *own prediction* $\widehat y_i$ -- what's left over (residuals)
 
 ## $R^2$
 

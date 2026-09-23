@@ -1,13 +1,37 @@
 ---
 title: "Exam01 Practice Questions"
-format: html
+format:
+    html: default
+    pdf: default
 ---
 
-Practice questions for each skill on the [Exam01 Review](exam01-review.qmd) sheet. Solutions are collapsed by default -- try each question before checking.
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(ggformula)
+theme_set(theme_minimal())
+```
+
+Practice questions for each skill on the [Exam01 Review](exam01-review.qmd) sheet. 
 
 ## 1. Express a SLR model using proper notation
 
-*Example question* In the Day 2 activity, we explored the relationship between `audience` score (response) and `critics` score (explanatory) for a sample of movies. Write out the *theoretical* SLR model for this relationship. Define $Y_i$ and $x_i$ in context, include all parameters, and state the assumption placed on the error term.
+*Example question* In the Day 2 activity, we explored the relationship between `audience` score and `critics` score for a sample of movies. Here is the scatterplot we looked at: 
+
+```{r}
+#| fig-width: 4
+#| fig-height: 3
+
+movies <- read.csv("https://aloy.github.io/stat230-materials/data/movie_scores.csv")
+gf_point(audience ~ critics, data = movies) |>
+    gf_lm()
+```
+
+(a) What is the response variable? What is the explanatory variable?
+
+(b) Write out the *theoretical* SLR model for this relationship. Define $Y_i$ and $x_i$ in context, include all parameters, and state the assumption placed on the error term.
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
@@ -40,7 +64,12 @@ Note there's no error term in the fitted model -- $\widehat{Y}_i$ is a single pr
 
 ## 2. Interpret the coefficients and $R^2$ of a model in context
 
-*Example question* Using the fitted model from Practice Q1b ($\widehat{\text{Width}}_i = 37.723 - 0.018 \times \text{Year}_i$), interpret the slope and intercept in context.
+```{r}
+LeafWidth <- read_csv("https://aluby.github.io/stat230/data/LeafWidth.csv")
+leaf_mod <- lm(Width ~ Year, data = LeafWidth)
+```
+
+*Example question* Using the fitted model ($\widehat{\text{Width}}_i = 37.723 - 0.018 \times \text{Year}_i$), interpret the slope and intercept in context.
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
@@ -53,18 +82,21 @@ Note there's no error term in the fitted model -- $\widehat{Y}_i$ is a single pr
 :::
 :::
 
-*Example question* For the Day 4 Riverview data, a model predicting `income` (in thousands of dollars) from `education` (in years) has $R^2 = 0.632$. Which of the following is the best interpretation of this value?
 
-(a) For each additional year of education, income increases by 0.632 thousand dollars on average.
-(b) About 63.2% of employees have their income predicted exactly correctly by this model.
-(c) About 63.2% of the variability in income among these employees is explained by education level.
-(d) The correlation between income and education is 0.632.
+*Example question* For the `LeafWidth` model above, predicting `Width` from `Year` has $R^2 = 0.06$. Which of the following is the best interpretation of this value?
+
+
+
+(a) For each additional year, leaf width increases by 0.6mm on average.
+(b) About 6% of leafs have their width predicted exactly correctly by this model.
+(c) About 6% of the variability in width among these leaves is explained by year.
+(d) The correlation between width and year is 0.6.
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
 ### Solution
 
-**(c)** -- $R^2$ is the proportion of variability in the response explained by the model. (Watch out for (d): $r = \sqrt{R^2} = 0.795$ here, not 0.632 -- $R^2$ and $r$ are related but not equal.)
+**(c)** -- $R^2$ is the proportion of variability in the response explained by the model. (Watch out for (d): $r = \sqrt{R^2}$ -- $R^2$ and $r$ are related but not equal.)
 
 :::
 :::
@@ -88,7 +120,7 @@ Note there's no error term in the fitted model -- $\widehat{Y}_i$ is a single pr
 :::
 :::
 
-*Example question* Suppose you fit a model predicting `income` from `education` for the Day 4 Riverview data, and the residuals-vs-fitted plot shows a clear curved (U-shaped) pattern. Which of the following can you still trust about this model? Select all that apply, and explain your reasoning.
+*Example question* Suppose you fit a model predicting `income` from `education` for the Riverview data, and the residuals-vs-fitted plot shows a clear curved (U-shaped) pattern. Which of the following can you still trust about this model? Select all that apply, and explain your reasoning.
 
 (a) The point estimate of the slope
 (b) The p-value for the slope
@@ -106,13 +138,20 @@ None of these should be trusted. A curved residual pattern means the *linearity*
 
 ## 4. Perform a hypothesis test to draw inference about a single regression coefficient
 
-*Example question* The Day 3 LeafWidth model gives the following output for the slope of `Year`: estimate = -0.0176, SE = 0.0044, on $df = 250$. Conduct a hypothesis test for $H_0: \beta_1 = 0$ vs. $H_A: \beta_1 \ne 0$. State the test statistic, and describe (without necessarily calculating exactly) how you'd find the p-value.
+*Example question* The LeafWidth model gives the following output:
+
+```{r}
+broom::tidy(leaf_mod) |>
+    knitr::kable(digits = 3)
+```
+
+On $n = 252$ data points. Conduct a hypothesis test for $H_0: \beta_1 = 0$ vs. $H_A: \beta_1 \ne 0$. State the test statistic, and describe (without necessarily calculating exactly) how the p-value could be found.
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
 ### Solution
 
-$t = \dfrac{-0.0176 - 0}{0.0044} \approx -4.0$
+$t = \dfrac{-0.018 - 0}{0.004} \approx -4.0$
 
 The p-value is the two-sided tail area beyond $t = \pm 4.0$ under a $t$-distribution with $df = 250$: $P(T \le -4.0) + P(T \ge 4.0)$. Since $t \approx -4.0$ is far in the tail, this p-value will be very small (R reports it as $7.43\times 10^{-5}$), giving strong evidence that $\beta_1 \ne 0$.
 
@@ -122,7 +161,7 @@ The p-value is the two-sided tail area beyond $t = \pm 4.0$ under a $t$-distribu
 *Example question* Before collecting the NHANES sitting-time data, a researcher hypothesizes that *more* sitting time is associated with a *higher* depression risk score -- not just a difference in either direction. The fitted model (`dep_score ~ sedentary_hours`) gives a slope of 0.0314 (SE = 0.0116) for `sedentary_hours`, with $df = 657$.
 
 (a) State $H_0$ and $H_A$ in symbols, matching the researcher's directional hypothesis.
-(b) Is the p-value R reports by default (from `summary()`) the correct one to use here? Why or why not?
+(b) Is the p-value R reports by default (from `summary()`) the correct one to use here? If not, explain how you would find the correct p-value. 
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
@@ -137,39 +176,56 @@ The p-value is the two-sided tail area beyond $t = \pm 4.0$ under a $t$-distribu
 
 ## 5. Construct and interpret confidence intervals for regression coefficients
 
-*Example question* Recall the Day 2 movies model: `audience ~ critics` gives a slope estimate of 0.519 (SE = 0.0345), with $df = 144$. For a 90% confidence interval, the critical value is $t^* = 1.656$. Construct and report a 90% CI for the slope, showing the formula with numbers plugged in.
+*Example question* Recall Movies model: `lm(audience ~ critics)` gives a slope estimate of 0.519 (SE = 0.0345), with $df = 144$. 
+
+(a) Using the `qt()` output below, report the correct $t^*$ value to use rounded to 3 decimal places
+
+```{r}
+qt(.01, df = 144, lower.tail = FALSE)
+qt(.025, df = 144, lower.tail = FALSE)
+qt(.05, df = 144, lower.tail = FALSE)
+qt(.1, df = 144, lower.tail = FALSE)
+```
+
+(b) Construct and report a 90% CI for the slope, showing the formula with numbers plugged in.
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
 ### Solution
+(a) You should use `qt(.05, df = 144)`: 1.656
+
+(b)
 
 $0.519 \pm 1.656 \times 0.0345 \;\Longrightarrow\; (0.462, \; 0.576)$
 
 :::
 :::
 
-*Example question* Recall the Day 4 Riverview model using *standardized* education: `income ~ scale(education)` gives a slope estimate of 11.567 (SE = 1.613), with $df = 30$. For a 90% confidence interval, the critical value is $t^* = 1.697$.
+*Example question* Recall Riverview model using *standardized* education: `income ~ scale(education)` gives a slope estimate of 11.567 (SE = 1.613), with $df = 30$. For a 95% confidence interval, use a critical value is $t^* = 2. 
 
-(a) Construct a 90% CI for this slope.
+It may also be helpful know that the `income` has a mean of 53.7 and a SD of 14.5. `education` has a mean of 16 and a SD of 4.36. 
+
+(a) Construct a 95% CI for this slope.
 (b) Interpret the interval in context.
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
 ### Solution
 
-(a) $11.567 \pm 1.697 \times 1.613 \;\Longrightarrow\; (8.829, \; 14.305)$
+(a) $11.567 \pm 2 \times 1.613 \;\Longrightarrow\; (8.83, \; 14.8)$
 
-(b) We are 90% confident that for each one-SD increase in education (about 4.36 years), average income increases by between \$8,829 and \$14,305 (8.829 and 14.305 thousand dollars).
+(b) We are 95% confident that for each one-SD increase in education (about 4.36 years), average income increases by between \$8,829 and \$14,305 (8.829 and 14.305 thousand dollars).
 
 :::
 :::
 
 ## 6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval
 
-*Example question* Using the Day 2 movies model, we predict the audience score for a movie with a critics score of 75. The point estimate is 71.2, and R produces two 90% intervals: (50.4, 92.1) and (69.3, 73.1).
+*Example question* Using the movies model, we predict the audience score for a movie with a critics score of 75. The point estimate is 71.2, and R produces two 90% intervals: (50.4, 92.1) and (69.3, 73.1).
 
 (a) Which interval is the confidence interval, and which is the prediction interval? How can you tell?
-(b) If we wanted to predict the audience score for one specific new movie with critics score 75, which interval should we use?
+(b) If we wanted to predict the audience score for *Kingsman: The Secret Service*, which has a critics score of 75, which interval should we use?
+(c) For the type of interval you did *not* choose in (b), what is the correct interpretation?
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true"}
@@ -179,6 +235,7 @@ $0.519 \pm 1.656 \times 0.0345 \;\Longrightarrow\; (0.462, \; 0.576)$
 
 (b) The prediction interval, (50.4, 92.1), since we're predicting a single new movie's score, not an average.
 
+(c) The other inerval is the confidence interval. This gives the interval for the *average* audience score for all movies with a critics score of 75.
 :::
 :::
 
@@ -200,7 +257,7 @@ $0.519 \pm 1.656 \times 0.0345 \;\Longrightarrow\; (0.462, \; 0.576)$
 
 ## 7. Express an SLR model when transformations have been used on the response and/or the explanatory variables
 
-*Example question* On Day 2, we modeled a transformed response: instead of the raw PHQ-9 depression score, we used `dep_score`, defined as $\log(\text{PHQ-9} + 1)$. The fitted model is `dep_score ~ sedentary_hours`, with intercept 0.904 and slope 0.0314.
+*Example question* Instead of the raw PHQ-9 depression score, we actually used `dep_score`, defined as $\log(\text{PHQ-9} + 1)$. The fitted model is `dep_score ~ sedentary_hours`, with intercept 0.904 and slope 0.0314.
 
 (a) Write out the fitted SLR equation, being careful to write it in terms of `dep_score`, not the raw PHQ-9 score.
 (b) A student concludes: "for every one-hour increase in sitting time, the model predicts an average increase of 0.0314 points in PHQ-9 score." Explain in one sentence why this is incorrect, then give a corrected interpretation.

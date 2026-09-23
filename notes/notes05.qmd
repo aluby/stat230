@@ -289,11 +289,11 @@ p1 + p2 + p3
 
 Each gray/blue segment is one squared deviation in the sum -- same $x_i$'s, three different "distances": how far each point is from $\overline y$ (Total), how far the model's prediction $\widehat y_i$ is from $\overline y$ (Regression -- the part $x$ explains), and how far each point is from its own prediction $\widehat y_i$ (Error -- the residuals).
 
-$$\underbrace{\sum (y_i - \overline y)^2}_{SSTO} = \underbrace{\sum (\widehat y_i - \overline y)^2}_{SSR} + \underbrace{\sum e_i^2}_{SSE}$$
+$$\underbrace{\sum (y_i - \overline y)^2}_{SST} = \underbrace{\sum (\widehat y_i - \overline y)^2}_{SSR} + \underbrace{\sum e_i^2}_{SSE}$$
 
 $$\text{total variability} = \text{variability of } \widehat Y\text{'s} \; + \; \text{variability of residuals (}\underline{\hspace{2cm}}\text{)}$$
 
-$$R^2 = \frac{SSR}{SSTO} = \frac{\text{variability of } \widehat Y}{\text{variability of } Y}$$
+$$R^2 = \frac{SSR}{SST} = \frac{\text{variability of } \widehat Y}{\text{variability of } Y}$$
 
 ::: {.callout-note}
 ## $R^2$
