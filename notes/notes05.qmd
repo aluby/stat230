@@ -208,7 +208,7 @@ ggplot(bad_indep, aes(x = index, y = resid)) +
 
 # Making Residual Plots in R 
 
-In order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for *every single data point*! Instead, we'll use the `augment()` function from the {broom} R package to created an augmented movie dataset. This takes the original X and Y variables and adds the $\hat{y}$ values (`.fitted`) and residuals (`.resid`) (along with some other columns that we'll use later) 
+In order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for *every single data point*! Instead, we'll use the `augment()` function from the {broom} R package to created an augmented dataset. This takes the original X and Y variables and adds the $\hat{y}$ values (`.fitted`) and residuals (`.resid`) (along with some other columns that we'll use later) 
 
 ```{r}
 #| echo: true
