@@ -37,7 +37,8 @@ log of each value *can* result in a data set that is roughly symmetric
 and often roughly normal.
 
 ```{r}
-#| fig-height: 3.5
+#| fig-height: 2
+#| fig-width: 8
 h1 <- gf_histogram(~Time, data = case0802, fill = "#003300", col = "white")
 qq1 <- gf_qq(~Time, data = case0802, color = "#003300") %>% gf_qqline()
 h2 <- gf_histogram(~log(Time), data = case0802, fill = "#003300", col = "white")

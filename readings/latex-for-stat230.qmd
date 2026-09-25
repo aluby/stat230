@@ -1,0 +1,170 @@
+---
+title: $\LaTeX$ for Stat230
+format: html
+---
+
+$\LaTeX$ is a language for writing math. If you plan to take a lot of math/stat courses, it is incredibly useful to be able to write out nice looking mathematical equations. 
+
+This is a bare-bones introduction to latex meant to help you for the type of equations we'll use a lot in Stat230. 
+
+# Math mode in Quarto
+
+Since our activities, homework, and quizzes are all `.qmd` files, you don't need a full standalone LaTeX document, you just need to know how to turn on "math mode" inside a regular Quarto file. There are two ways to do this:
+
+**Inline math** for a symbol or short expression in the middle of a sentence. Wrap your equation in single dollar signs: `$\beta_1$` renders as $\beta_1$.
+
+**Display math** for an equation that should get its own centered line. Wrap your equation in double dollar signs:
+
+```
+$$
+\hat{y}_i = 3.4 + 2.3 x_i
+$$
+```
+
+renders as
+
+$$
+\hat{y}_i = 3.4 + 2.3 x_i
+$$
+
+A few habits that will save you time:
+
+::: callout-tip
+Every `$` needs a matching `$` (and every `$$` needs a matching `$$`). A missing dollar sign is the #1 reason a Quarto document fails to render. If you get a cryptic LaTeX error when you render, check that your dollar signs are paired first.
+:::
+
+::: callout-tip
+Underscores (`_`) and carets (`^`) only mean "subscript" and "superscript" *inside* math mode. If you type `beta_1` outside of `$...$`, Quarto will try to interpret the underscore as markdown formatting (italics) instead of a subscript, and it won't look right.
+:::
+
+# Basic building blocks
+
+| Code | Renders as | Used for |
+|----|----|----|
+| `x_1` | $x_1$ | subscripts |
+| `x^2` | $x^2$ | superscripts (exponents) |
+| `\hat{y}` | $\hat{y}$ | a "hat" (predicted/fitted value) |
+| `\bar{x}` | $\bar{x}$ | a "bar" (sample mean) |
+| `\beta_0`, `\beta_1` | $\beta_0$, $\beta_1$ | population regression coefficients |
+| `\varepsilon_i` | $\varepsilon_i$ | the error term |
+| `\hat{\beta}_1` or `b_1` | $\hat{\beta}_1$ or $b_1$ | an estimated (fitted) coefficient |
+| `\frac{a}{b}` | $\frac{a}{b}$ | a fraction |
+| `\sqrt{x}` | $\sqrt{x}$ | a square root |
+| `\log{x}` | $\log{x}$ | natural log |
+| `\sum_{i=1}^{n}` | $\sum_{i=1}^{n}$ | a sum |
+| `\times` or `\cdot` | $\times$ or $\cdot$ | multiplication (don't use a plain `*`) |
+| `\leq`, `\geq`, `\neq` | $\leq$, $\geq$, $\neq$ | $\leq$, $\geq$, $\neq$ |
+| `\sim` | $\sim$ | "is distributed as" |
+| `\overset{iid}{\sim}` | $\overset{iid}{\sim}$ | "is independently and identically distributed as" |
+| `\pm` | $\pm$ | plus-or-minus (handy for confidence intervals) |
+| `\text{words}` | $\text{words}$ | regular (non-italic) text *inside* math mode |
+| `\left(`, `\right)` | $\left(\dfrac{a}{b}\right)$ | brackets that auto-resize around tall content like fractions |
+
+# Writing out regression models
+
+Here's how the notation you'll be asked to reproduce all term actually looks in Quarto source.
+
+**The theoretical SLR model:**
+
+```
+$$
+Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \quad \varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)
+$$
+```
+
+$$
+Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \quad \varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)
+$$
+
+**The fitted SLR model**:
+
+```
+$\hat{y}_i = 2.3 + 3.2 x_i$
+```
+
+**A hypothesis test**, written in symbols:
+
+```
+$H_0: \beta_1 = 0$ vs. $H_A: \beta_1 \neq 0$
+```
+
+$H_0: \beta_1 = 0$ vs. $H_A: \beta_1 \neq 0$
+
+**A confidence interval**, showing the general form and a filled-in example:
+
+```
+$$
+b_1 \pm t^* \cdot SE(b_1)
+$$
+
+$$
+0.519 \pm 1.656 \times 0.0345
+$$
+```
+
+**The MLR model**, once you have more than one predictor (note the second subscript on $x$, indexing *which* predictor):
+
+```
+$$
+Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{ip} + \varepsilon_i
+$$
+```
+
+$$
+Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{ip} + \varepsilon_i
+$$
+
+**A model with a transformed response**: keep the transformation *outside* the $Y_i$ on the left:
+
+```
+$\log(Y_i) = \beta_0 + \beta_1 x_i + \varepsilon_i$
+```
+
+**Logistic regression** uses the same right-hand side, but on the log-odds (logit) scale:
+
+```
+$$
+\log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_i
+$$
+```
+
+$$
+\log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_i
+$$
+
+Notice the `\left(` and `\right)` around the fraction. Without them, the parentheses print at a fixed small size and look cramped around a tall `\frac{}{}`. Compare `(\frac{p_i}{1-p_i})`  $(\frac{p_i}{1-p_i})$  to `\left(\frac{p_i}{1-p_i}\right)` $\left(\frac{p_i}{1-p_i}\right)$.
+
+# Common mistakes
+
+::: callout-tip
+**Forgetting the dollar signs.** `beta_1` in regular text just prints as "beta_1". You need `$\beta_1$` to get $\beta_1$.
+:::
+
+::: callout-tip
+**Using `*` for multiplication.** `2 * x` inside math mode renders with an odd-looking asterisk. Use `\times` ($\times$) or `\cdot` ($\cdot$) instead, or just put the terms next to each other (`2x` renders as $2x$).
+:::
+
+::: callout-tip
+**Mixing words into math mode without `\text{}`.** `$Y_i if x_i > 0$` tries to italicize and squish together "ifxi0" as if it were all variables. Wrap the words: `$Y_i \text{ if } x_i > 0$` renders as $Y_i \text{ if } x_i > 0$.
+:::
+
+::: callout-tip
+**Copy-pasting from Word or a PDF.** Just like with regular text in your `.qmd` files, don't paste formatted equations in from another program. Retype them using the syntax above, or you'll get rendering errors that are hard to track down.
+:::
+
+# Quick reference
+
+| Code | Renders as |
+|----|----|
+| `$\beta_0$`, `$\beta_1$` | $\beta_0$, $\beta_1$ |
+| `$b_0$`, `$b_1$` | $b_0$, $b_1$ |
+| `$\hat{y}_i$` | $\hat{y}_i$ |
+| `$\bar{x}$` | $\bar{x}$ |
+| `$\varepsilon_i$` | $\varepsilon_i$ |
+| `$\overset{iid}{\sim} N(0, \sigma^2)$` | $\overset{iid}{\sim} N(0, \sigma^2)$ |
+| `$H_0: \beta_1 = 0$` | $H_0: \beta_1 = 0$ |
+| `$H_A: \beta_1 \neq 0$` | $H_A: \beta_1 \neq 0$ |
+| `$b_1 \pm t^* \cdot SE(b_1)$` | $b_1 \pm t^* \cdot SE(b_1)$ |
+| `$R^2$` | $R^2$ |
+| `$\log(Y_i)$` | $\log(Y_i)$ |
+| `$\log\left(\frac{p_i}{1-p_i}\right)$` | $\log\left(\frac{p_i}{1-p_i}\right)$ |
