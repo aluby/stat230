@@ -254,20 +254,7 @@ Note
 </section>
 <section id="problem-3-wed" class="level1">
 <h1>Problem 3: Wed</h1>
-<p>Statistics students completed a class project where they designed an experiment to explore the relationship between the wing length (in cm) and flight time (in seconds) of paper helicopters. One group collected data from six different wing lengths.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># flights &lt;- read.csv("https://aluby.github.io/stat230/data/winglengths2.csv")</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>flights <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/winglengths2.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ol type="a">
-<li><p>Create a scatterplot of flight time against wing length. Describe what you learn from this plot.</p></li>
-<li><p>Fit a simple linear regression model of flight time against wing length. Create residual plots to explore the adequacy of your model. Report your results.</p></li>
-<li><p>Try several transformations of either the response or the explanatory variable to see if you can alleviate the problems you observed in part (b). Report the “best” transformation and whether it remedies the issues.</p></li>
-<li><p>It is likely that you cannot successfully find a transformation to solve the nonlinearity problem. A closer look at the residuals helps to explain why. The residuals from the regression follow a somewhat sinusoidal pattern: down, then up, then down again. This is a pattern that is seen in a typical third-degree polynomial. Create a scatterplot of flight time against wing length with a third degree polynomial overlayed. Does this look like a reasonable description of the data?</p></li>
-<li><p>Fit a third degree polynomial regression model and report the fitted model equation.</p></li>
-<li><p>Create residual plots to explore the adequacy of your model. Report your results.</p></li>
-<li><p>Using visual inspection, what wing length will lead to the longest flight time?</p></li>
-</ol>
+<p>TBD</p>
 </section>
 <section id="problem-45-case-study" class="level1">
 <h1>Problem 4/5: Case Study</h1>
@@ -288,7 +275,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If your <code>resid_panel</code> code is taking a long time and/or booting you out of maize, try using <code>resid_panel(florida_lm, type = "standardized")</code> instead (this uses the standardized residuals)</p>
+<p>If your <code>resid_panel</code> code is taking a long time and/or booting you out of maize, try using <code>resid_panel(lm_model, type = "standardized")</code> instead (this uses the standardized residuals)</p>
 </div>
 </div>
 
