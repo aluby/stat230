@@ -83,27 +83,7 @@ head(animals)
 
 # Problem 3: Wed
 
-Statistics students completed a class project where they designed an experiment to explore the relationship between the wing length (in cm) and flight time (in seconds) of paper helicopters. One group collected data from six different wing lengths.
-
-```{r}
-# flights <- read.csv("https://aluby.github.io/stat230/data/winglengths2.csv")
-flights <- read.csv(here::here("data/winglengths2.csv"))
-```
-
-(a) Create a scatterplot of flight time against wing length. Describe what you learn from this plot.
-
-(b) Fit a simple linear regression model of flight time against wing length. Create residual plots to explore the adequacy of your model. Report your results.
-
-(c) Try several transformations of either the response or the explanatory variable to see if you can alleviate the problems you observed in part (b). Report the “best” transformation and whether it remedies the issues.
-
-(d) It is likely that you cannot successfully find a transformation to solve the nonlinearity problem. A closer look at the residuals helps to explain why. The residuals from the regression follow a somewhat sinusoidal pattern: down, then up, then down again. This is a pattern that is seen in a typical third-degree polynomial. Create a scatterplot of flight time against wing length with a third degree polynomial overlayed. Does this look like a reasonable description of the data?
-
-(e) Fit a third degree polynomial regression model and report the fitted model equation.
-
-(f) Create residual plots to explore the adequacy of your model. Report your results.
-
-(g) Using visual inspection, what wing length will lead to the longest flight time?
-
+TBD
 
 # Problem 4/5: Case Study 
 
@@ -117,5 +97,5 @@ flights <- read.csv(here::here("data/winglengths2.csv"))
 ::: callout-warning
 ## Warning!
 
-If your `resid_panel` code is taking a long time and/or booting you out of maize, try using `resid_panel(florida_lm, type = "standardized")` instead (this uses the standardized residuals)
+If your `resid_panel` code is taking a long time and/or booting you out of maize, try using `resid_panel(lm_model, type = "standardized")` instead (this uses the standardized residuals)
 :::
