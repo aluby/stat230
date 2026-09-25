@@ -172,7 +172,7 @@ Prof Amanda Luby
 <p>If a set of data values is skewed to the right, taking the (natural) log of each data value <em>can</em> result in a data set that is roughly symmetric and often roughly normal.</p>
 </div>
 
-<img data-src="slides06_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<img data-src="slides06_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
 <section id="section" class="slide level2">
 <h2></h2>
 <p>How are tree height and tree diameter related for the western red cedar?</p>
@@ -356,6 +356,7 @@ Prof Amanda Luby
 <ul>
 <li><code>log</code> is the natural log</li>
 <li><code>exp(x)</code> calculated <span class="math inline">\(e^x\)</span></li>
+<li>back-transforming the mean of the logs does <strong>not</strong> generally equal the mean on the original scale, but estimates the median of the original data instead.</li>
 </ul>
 </div>
 </div>
@@ -412,17 +413,26 @@ Prof Amanda Luby
 <h2>Modeling is an iterative process</h2>
 
 <img data-src="img/clipboard-627702870.png" class="r-stretch"></section>
-<section id="issues-with-transformations" class="slide level2">
+<section id="issues-with-transformations" class="slide level2 incremental">
 <h2>Issues with transformations</h2>
 <ul>
 <li><p>You’re often guessing — Statistics is an art AND a science! <br></p></li>
-<li><p>Changes the interpretation of the parameters — need to back-transform to provide interpretable results <br></p></li>
+<li><p>Changes the interpretation of the parameters (need to back-transform to provide interpretable results) <br></p></li>
 <li><p>Changes SEs of the parameters <br></p></li>
 <li><p>Not always easy to keep track of all your assumptions</p></li>
 </ul>
-
-
 </section></section>
+<section id="your-turn-1" class="title-slide slide level1 center">
+<h1>Your turn</h1>
+<div class="task">
+<ul>
+<li><p>Work through the second example on the handout in your groups</p></li>
+<li><p>Online version with R chunks on moodle</p></li>
+</ul>
+</div>
+
+
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
