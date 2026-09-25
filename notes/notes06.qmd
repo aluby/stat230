@@ -1,6 +1,5 @@
 ---
 title: "Day 06: Transforming SLR models"
-author: "Name: ________________________________"
 ---
 
 ```{r}
@@ -19,7 +18,7 @@ redcedar_mod <- lm(Height ~ Dbh, data = redcedar)
 aug_cedar <- augment(redcedar_mod)
 ```
 
-## Last time -- and today
+## Last time
 
 We checked: are any conditions for SLR *violated*? Is there a strong
 predictive relationship between X and Y? **Today:** how can we fix the
@@ -43,21 +42,13 @@ h1 <- gf_histogram(~Time, data = case0802, fill = "#003300", col = "white")
 qq1 <- gf_qq(~Time, data = case0802, color = "#003300") %>% gf_qqline()
 h2 <- gf_histogram(~log(Time), data = case0802, fill = "#003300", col = "white")
 qq2 <- gf_qq(~log(Time), data = case0802, color = "#003300") %>% gf_qqline()
-(h1 + h2) / (qq1 + qq2)
+(h1 +  qq1 + h2 + qq2) + plot_layout(ncol = 4)
 ```
 
-## Data for today: red cedar
+**New Data for today**: Red Cedar
 
 How are tree height and tree diameter related for the western red
 cedar?
-
-```{r}
-#| fig-height: 2.8
-gf_point(Height ~ Dbh, data = redcedar, alpha = 0.6, color = "#003300") %>%
-  gf_labs(x = "Diameter at 137 cm above ground (mm)", y = "Height (dm)")
-```
-
-## Are the conditions violated?
 
 ```{r}
 #| fig-height: 2.6
@@ -77,14 +68,16 @@ p_qq <- gf_qq(~.resid, data = aug_cedar, color = "#003300") %>%
 (p_scat | p_resid | p_qq)
 ```
 
-Adding `gf_smooth()` to the residual plot can help reveal curvature --
-but trust your eyes first, and don't over-interpret small samples.
-
 Which condition(s) look violated here: (a) linearity (b) independent
-errors (c) normal errors (d) equal variance (e) outliers (f) none? \
+errors (c) normal errors (d) equal variance (e) outliers (f) none? 
 **Answer:** ___________________________
 
-## Does transforming X help?
+Adding `gf_smooth()` to the residual plot can help reveal curvature,
+but trust your eyes first, and don't over-interpret small samples.
+
+**Does transforming X help?**
+
+Answer:
 
 ```{r}
 #| fig-height: 2.6
@@ -102,7 +95,9 @@ p3 <- gf_qq(~.std.resid, data = aug, color = "#003300") %>%
 (p1 | p2 | p3)
 ```
 
-## Does transforming Y help?
+**Does transforming Y help?**
+
+Answer:
 
 ```{r}
 #| fig-height: 2.6
@@ -120,7 +115,9 @@ p3 <- gf_qq(~.std.resid, data = aug, color = "#003300") %>%
 (p1 | p2 | p3)
 ```
 
-## Transforming both X and Y?
+**Transforming both X and Y?**
+
+Answer:
 
 ```{r}
 #| fig-height: 2.6
@@ -167,13 +164,14 @@ Mean of `log(Time)` = `r round(mean_logtime, 3)`.
 
 Back-transformed mean: $e^{`r round(mean_logtime, 3)`} \approx$ `r round(exp(mean_logtime), 2)`.
 
+Original `mean(Time)` = `r round(mean(case0802$Time), 3)`
+
 ::: {.callout-note}
-## R note
+## Note
 
 `log()` is the *natural* log; `exp(x)` calculates $e^x$. **Note:**
 back-transforming the mean of the logs does **not** generally equal
-the mean on the original scale (`r round(mean(case0802$Time), 2)`) --
-it estimates the geometric mean/median instead.
+the mean on the original scale, but estimates the median instead.
 :::
 
 ## Displaying a transformed model
@@ -216,27 +214,11 @@ the direction your scatterplot bulges to the ladder position, and
 move X and/or Y toward that end to straighten the relationship.
 
 ```{r}
-#| fig-width: 3.2
-#| out-width: 55%
-knitr::include_graphics(here::here("slides", "img", "clipboard-2725667272.png"))
-```
-
-```{r}
-#| fig-width: 4.5
-#| out-width: 75%
-knitr::include_graphics(here::here("slides", "img", "clipboard-2203698702.png"))
-```
-
-::: {.callout-note}
-Image credit: Andrew Zieffler
-:::
-
-## Modeling is an iterative process
-
-```{r}
 #| fig-width: 4
-#| out-width: 70%
-knitr::include_graphics(here::here("slides", "img", "clipboard-627702870.png"))
+#| fig-height: 4
+#| layout-ncol: 2
+knitr::include_graphics(here::here("slides", "img", "clipboard-2725667272.png"))
+knitr::include_graphics(here::here("slides", "img", "clipboard-2203698702.png"))
 ```
 
 ## Issues with transformations

@@ -75,6 +75,8 @@ If a set of data values is skewed to the right, taking the (natural) log of each
 ```{r}
 #| echo: false
 #| fig-align: 'center'
+#| fig-width: 8
+#| fig-height: 3
 
 
 set.seed(1234)
@@ -304,6 +306,8 @@ knitr::kable(mosaic::favstats(~Time, data = case0802)[c("mean")], format = "html
 
 -   `log` is the natural log
 -   `exp(x)` calculated $e^x$
+- back-transforming the mean of the logs does **not** generally equal
+the mean on the original scale, but estimates the median of the original data instead.
 :::
 
 ## Displaying a transformed model
@@ -373,12 +377,21 @@ Image credit: Andrew Zieffler
 
 ![](img/clipboard-627702870.png)
 
-## Issues with transformations
+## Issues with transformations {.incremental}
 
 -   You're often guessing — Statistics is an art AND a science! <br>
 
--   Changes the interpretation of the parameters — need to back-transform to provide interpretable results <br>
+-   Changes the interpretation of the parameters (need to back-transform to provide interpretable results) <br>
 
 -   Changes SEs of the parameters <br>
 
 -   Not always easy to keep track of all your assumptions
+
+# Your turn
+
+::: {.task}
+
+-   Work through the second example on the handout in your groups
+
+-   Online version with R chunks on moodle
+::: 
