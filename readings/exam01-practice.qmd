@@ -212,9 +212,9 @@ It may also be helpful know that the `income` has a mean of 53.7 and a SD of 14.
 ::: {.callout-tip collapse="true"}
 ### Solution
 
-(a) $11.567 \pm 2 \times 1.613 \;\Longrightarrow\; (8.83, \; 14.8)$
+(a) $11.567 \pm 2 \times 1.613 \;\Longrightarrow\; (8.34, \; 14.8)$
 
-(b) We are 95% confident that for each one-SD increase in education (about 4.36 years), average income increases by between \$8,829 and \$14,305 (8.829 and 14.305 thousand dollars).
+(b) We are 95% confident that for each one-SD increase in education (about 4.36 years), average income increases by between \$8,341 and \$14,800 (8.834 and 14.8 thousand dollars).
 
 :::
 :::
