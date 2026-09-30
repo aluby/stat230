@@ -1,0 +1,297 @@
+---
+title: "Day 08: Transformations and polynomial regression"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+library(patchwork)
+library(here)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  aug <- augment(mod)
+  plot_fit <- makeFun(mod)
+
+  if (is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  }
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+
+  (orig_data | resid_plot | qq_plot)
+}
+
+wildfires <- read.csv(here("data", "wildfires.csv"))
+wildfires <- filter(wildfires, Year >= 1960)
+
+linear_mod <- lm(Acres ~ Year, data = wildfires)
+tform_mod <- lm(Acres ~ I(Year^2), data = wildfires)
+quad_mod <- lm(Acres ~ Year + I(Year^2), data = wildfires)
+```
+
+**Warm up:** Consider the following two models:
+
+-   $\log_{2}(y) = 1 + 2\log_{2}(x) + \varepsilon, \ \varepsilon \sim N(0,1)$
+-   $y = 2x^2 + \varepsilon, \ \varepsilon \sim N(0,1)$
+
+Show that the two models have the same $\widehat y$'s.
+
+\vspace{2in}
+
+::: callout-tip
+## Hint: log rules might be useful
+
+- $\log(ab) = \log(a) + \log(b)$
+- $\log(a^b) = b \log (a)$
+- $\log(a/b) = \log(a) - \log(b)$
+- $\log_{b} b = 1$
+:::
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2.5
+set.seed(041526)
+tibble(x = seq(.1, 2, len = 100),
+       y1 = 2^(1 + 2 * log2(x) + rnorm(100)),
+       y2 = 2 * x^2 + rnorm(100)) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x = x, y = value)) +
+  geom_point(color = "#003300") +
+  facet_grid(cols = vars(name)) +
+  theme(legend.position = "none")
+```
+
+Even though they give the same **predictions**, Model (2) has
+constant variance but Model (1) does not. If we use Model (2) to make
+prediction intervals for data that actually look like Model (1), our
+interval will be too wide for small $x$ and too narrow for large $x$.
+
+## Data for today: wildfires
+
+The National Interagency Coordination Center compiles annual wildland
+fire statistics for federal and state agencies (Situation Reports,
+used for several decades). Our goal is to model the number of acres
+burned over the years.
+
+```{r}
+#| fig-height: 2
+#| fig-width: 4
+#| fig-align: left
+gf_point(Acres ~ Year, data = wildfires) %>%
+  gf_labs(x = "Year", y = "Acres burned") %>%
+  gf_smooth(linewidth = 0.5) 
+```
+
+## Three candidate mean functions
+
+**Option 1: SLR** $\mu\{y \mid x\} = \beta_0 + \beta_1 x$
+
+```{r}
+#| fig-height: 2.75
+#| fig-width: 9
+regression_panel(Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned")
+```
+
+**Option 2: transform X** $\mu\{y \mid x\} = \beta_0 + \beta_1 x^2$
+
+```{r}
+#| fig-height: 2.75
+#| fig-width: 9
+regression_panel(Acres ~ I(Year^2), scat.formula = Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned")
+```
+
+**Option 3: polynomial** $\mu\{y \mid x\} = \beta_0 + \beta_1 x + \beta_2 x^2$
+
+```{r}
+#| fig-height: 2.75
+#| fig-width: 9
+regression_panel(Acres ~ Year + I(Year^2), scat.formula = Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned")
+```
+
+## The polynomial regression model
+
+$$Y_i = \beta_0 + \beta_1 x_{i} + \beta_2 x_{i}^2 + \cdots + \beta_k x_{i}^k + \varepsilon_i, \quad \varepsilon_i \overset{\mathrm{iid}}{\sim} N(0, \sigma)$$
+
+Assumptions (same as in SLR):
+
+1.  $\mu\{Y \mid x_i\}$ is a linear function of the ________
+2.  I: 
+3.  For each $x_i$, the sub-population of responses is normally distributed
+4.  The standard deviation for each sub-population is  ___________________________
+
+## Interpreting the model coefficients
+
+With a quadratic term, we can no longer talk about "the" slope. Instead we focus on the expected change in $y$ for a ____________ increase in $x$. 
+
+$\mu\{y \mid x+1\} - \mu\{y \mid x\}=$
+
+\vspace{2in}
+
+Notice this expected change **depends on ___________**
+
+```{r}
+#| fig-height: 2.5
+#| fig-width: 4
+#| fig-align: left
+gf_point(Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned", color = "#003300") %>%
+  gf_lm(formula = y ~ x + I(x^2), color = "#f15a31")
+```
+
+## Inference about coefficients
+
+Inference uses the same $t$-based tools as SLR, but with
+
+$$\widehat{\sigma} = \sqrt{\dfrac{\sum_{i=1}^n e_i^2}{n - (k+1)}}$$
+
+and the degrees of freedom of the reference $t$-distribution change to $n - (k+1)$, where $k$ is:
+
+## Testing a single coefficient
+
+**Hypotheses:** $H_0: \beta_j = \#$ vs. $H_a: \beta_j \underset{>}{\overset{<}{\ne}} \text{null value}$
+
+**Test statistic:** $t = \dfrac{\widehat\beta_j - \text{null value}}{SE(\widehat\beta_j)}$
+
+**Reference distribution:** $t$ distribution with $df = n - (k+1)$
+
+**p-value:** area in the tail(s) specified by $H_a$
+
+```{r}
+#| fig-height: 2
+#| fig-width: 7.5
+p1 <- ggplot(data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = .4) +
+  ggtitle(expression(H[a]: beta[j] < 0)) +
+  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
+
+p2 <- ggplot(data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = .4) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = .4) +
+  ggtitle(expression(H[a]: beta[j] != 0)) +
+  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
+
+p3 <- ggplot(data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = .4) +
+  ggtitle(expression(H[a]: beta[j] > 0)) +
+  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
+
+(p1 | p2 | p3)
+```
+
+**Example:** Wildfires
+
+```{r}
+kable_coef(quad_mod, terms = c("Intercept", "Year", "Year^2"))
+```
+
+\vspace{2in}
+
+::: {.callout-tip}
+## Try it
+
+Would a higher-order polynomial (e.g. cubic, quartic, quintic)
+provide a *better* fit to the wildfire data? Work through the R
+handout with your group.
+:::
+
+**1.** Does the cubic model appear to be necessary? Use the `summary()` function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?
+
+\vspace{1in}
+
+
+**2.** What degrees of freedom did R use for the t-distribution used to calculate the p-value for the test of the cubic term?
+
+\vspace{1in}
+
+**3.** Do you notice anything curious about the inferential results for the linear and quadratic terms?
+
+\vspace{1in}
+
+::: callout-important
+## Stop here
+
+Let Amanda know if/when your group finishes the R activity
+:::
+
+## A warning about polynomials
+
+High-order polynomial regression models will over-fit your data rather than capturing the true, generalizable trend.
+
+```{r}
+#| fig-height: 2.5
+#| fig-width: 9
+poly2 <- makeFun(quad_mod)
+p1 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
+  gf_fun(poly2(x) ~ x, color = "#f15a31") %>%
+  gf_labs(title = "2nd-order") +
+  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
+
+poly5_mod <- lm(Acres ~ poly(Year, 5), data = wildfires)
+poly5 <- makeFun(poly5_mod)
+p5 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
+  gf_fun(poly5(x) ~ x, color = "#f15a31") %>%
+  gf_labs(title = "5th-order") +
+  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
+
+poly25_mod <- lm(Acres ~ poly(Year, 25), data = wildfires)
+poly25 <- makeFun(poly25_mod)
+p25 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
+  gf_fun(poly25(x) ~ x, color = "#f15a31") %>%
+  gf_labs(title = "25th-order") +
+  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
+
+(p1 | p5 | p25)
+```
+
+## Decomposing the variability
+
+-   **Null model** ($\mu\{Y \mid X\} = \beta_0$): uses $\overline y$ as the prediction for every point
+-   $\mathrm{SSTotal} = \sum(Y_i - \overline Y)^2$ -- overall
+    variability in $Y$.
+-   $\mathrm{SSResidual} = \sum(Y_i - \widehat{Y}_i)^2$ -- variability
+    left *unexplained* by the model
+        - *Note:* $\widehat\sigma = \sqrt{\mathrm{SSResidual}/df}$.
+-   $\mathrm{SSRegression} = \mathrm{SSTotal} - \mathrm{SSResidual}$ is the variability *explained* by the model.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 3
+quad_aug <- augment(quad_mod) |> mutate(mean.y = mean(Acres))
+
+null_plot <- gf_point(Acres ~ Year, data = quad_aug, ylab = "Acres burned") %>%
+  gf_hline(yintercept = mean(quad_aug$Acres), color = "#f15a31") %>%
+  gf_segment(mean.y + Acres ~ Year + Year, color = "gray70") %>%
+  gf_labs(title = "SSTotal (null model)")
+
+resid_plot <- gf_point(Acres ~ Year, data = quad_aug, ylab = "Acres burned") %>%
+  gf_lm(formula = y ~ poly(x, 2), color = "#f15a31") %>%
+  gf_segment(.fitted + Acres ~ Year + Year, color = "gray70") %>%
+  gf_labs(title = "SSResidual (quadratic model)")
+
+null_plot + resid_plot
+```
+
+
+::: callout-note
+## Coefficient of determination ($R^2$)
+
+Proportion of the total variation in $y$ explained by the model:
+
+$$R^2 = \dfrac{\mathrm{SSRegression}}{\mathrm{SSTotal}} = 1 - \dfrac{\mathrm{SSResidual}}{\mathrm{SSTotal}}$$
+
+:::
+

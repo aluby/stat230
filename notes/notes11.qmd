@@ -1,0 +1,239 @@
+---
+title: "Day 11: Inference for MLR"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(broom)
+library(patchwork)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+bikes <- bikes |> select(date, season, year, month, weekend, holiday,
+                          temp_actual, temp_feel, humidity, windspeed, rides)
+
+bikes_slr <- lm(rides ~ temp_actual, data = bikes)
+bikes_mlr <- lm(rides ~ temp_actual * weekend, data = bikes)
+bikes_mlr2 <- lm(rides ~ temp_actual + weekend, data = bikes)
+```
+
+## MLR model for `bikes` data
+
+We're back to the separate-lines model from last class:
+
+```{r}
+kable_coef(bikes_mlr, terms = c("Intercept", "temp_actual", "weekendTRUE",
+                                 "temp_actual:weekendTRUE"))
+```
+
+::: {.callout-tip}
+## Warm up
+
+Write out the theoretical and fitted regression model for
+`rides ~ temp_actual * weekend`.
+:::
+
+## Do we *need* a different-slopes model?
+
+```{r}
+#| fig-height: 3
+gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) |> gf_lm()
+```
+
+Look at the `temp_actual:weekendTRUE` row in the table above -- its
+estimate is tiny and its p-value is large, suggesting the slopes
+might not really differ.
+
+## Testing a single coefficient
+
+**Hypotheses:** $H_0: \beta_j = \#$ vs. $H_a: \beta_j \ne, <, \text{or} > \#$
+
+**Test statistic:** $t = \dfrac{\widehat\beta_j - \#}{SE(\widehat\beta_j)}$
+
+**Reference distribution:** $t$ distribution with $df = n - (k+1)$,
+where $k$ = number of predictors in the model
+
+**p-value:** area in the tail(s) specified by $H_a$
+
+```{r}
+#| fig-height: 2
+#| fig-width: 7.5
+p1 <- ggplot(data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = 0.4) +
+  ggtitle(expression(H[a]: beta[j] < 0)) +
+  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
+
+p2 <- ggplot(data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = 0.4) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = 0.4) +
+  ggtitle(expression(H[a]: beta[j] != 0)) +
+  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
+
+p3 <- ggplot(data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = 0.4) +
+  ggtitle(expression(H[a]: beta[j] > 0)) +
+  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
+
+p1 + p2 + p3
+```
+
+**CI for a single coefficient:**
+$\widehat\beta_j \pm t^*_{n-(k+1)} \cdot SE(\widehat\beta_j)$
+
+## Do we need `weekend` at all?
+
+Careful -- with the interaction term still in the model, the
+`weekendTRUE` row alone doesn't answer "do we need weekend at all,"
+because `weekend` also appears in the interaction term.
+
+```{r}
+kable_coef(bikes_mlr, terms = c("Intercept", "temp_actual", "weekendTRUE",
+                                 "temp_actual:weekendTRUE"))
+```
+
+::: {.callout-caution}
+## Caution!
+
+A single coefficient's p-value only tests that ___ term, holding all
+others in the model. To ask whether `weekend` matters *at all*, we
+need to test $\beta_2 = \beta_3 = 0$ jointly -- more on this below.
+:::
+
+Once we drop the (non-significant) interaction, the simpler
+parallel-lines model shows `weekend` is clearly still useful:
+
+```{r}
+kable_coef(bikes_mlr2, terms = c("Intercept", "temp_actual", "weekendTRUE"))
+```
+
+## Explained variability
+
+```{r}
+#| fig-height: 2.5
+#| fig-width: 7
+slr_aug <- augment(bikes_slr) |> mutate(mean.y = mean(rides))
+
+p1 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Total") |>
+  gf_segment(mean.y + rides ~ temp_actual + temp_actual, color = "gray70", alpha = 0.4) |>
+  gf_hline(yintercept = mean(slr_aug$rides), color = "#f15a31")
+
+p2 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Error") |>
+  gf_segment(.fitted + rides ~ temp_actual + temp_actual, color = "#003069", alpha = 0.4) |>
+  gf_lm(color = "#f15a31")
+
+p1 + p2
+```
+
+**Idea:** does a larger model explain a *significantly* bigger share
+of the total variability than a smaller model?
+
+## Can we just compare $R^2$ values?
+
+```{r}
+bikes_mlr_3var <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
+bikes_mlr_4var <- lm(rides ~ temp_actual + windspeed * weekend, data = bikes)
+
+tibble(
+  Model = c("temp only", "temp + weekend", "temp + windspeed + weekend",
+            "temp + windspeed*weekend"),
+  R2 = c(summary(bikes_slr)$r.squared, summary(bikes_mlr2)$r.squared,
+         summary(bikes_mlr_3var)$r.squared, summary(bikes_mlr_4var)$r.squared),
+  Adj_R2 = c(summary(bikes_slr)$adj.r.squared, summary(bikes_mlr2)$adj.r.squared,
+             summary(bikes_mlr_3var)$adj.r.squared, summary(bikes_mlr_4var)$adj.r.squared)
+) |>
+  knitr::kable(digits = 4, col.names = c("Model", "$R^2$", "Adjusted $R^2$"))
+```
+
+$$R^2 = 1 - \frac{SSE}{SST} \hspace{2cm} R^2_{adj} = 1 - \frac{SSE/(n-k)}{SST/(n-1)} = 1 - \frac{MSE}{MST}$$
+
+-   $R^2$ **always** increases when predictors are added, even useless
+    ones
+-   $R^2_{adj}$ **could** ___________________________ if unnecessary
+    predictors are added
+-   Better to use $R^2_{adj}$ for comparing multiple regression models
+
+## Formal test for comparing models
+
+| | Model |
+|:---|:---|
+| Full | $\mu\{Y|X\} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2$ |
+| Reduced | $\mu\{Y|X\} = \beta_0 + \beta_1 x_1$ |
+
+**Hypotheses:** $H_0: \beta_2 = \beta_3 = 0$ vs. $H_a:$ at least one
+$\beta_j \ne 0$, $j = 2,3$
+
+## Comparing models with an F-test
+
+$$F = \frac{(R^2_{\text{full}} - R^2_{\text{reduced}})/d}{(1 - R^2_{\text{full}})/df_{\text{full}}} = \frac{(SSR_{\text{full}} - SSR_{\text{reduced}})/d}{MSE_{\text{full}}} = \frac{(SSE_{\text{reduced}} - SSE_{\text{full}})/d}{MSE_{\text{full}}}$$
+
+where
+
+-   $d = df_{\text{full}} - df_{\text{reduced}} =$ \# of $\beta$'s
+    being tested
+-   $df_i = n - (p+1) =$ error d.f. for model $i$
+-   $MSE_{\text{full}} = \dfrac{SSE_{\text{full}}}{df_{\text{full}}}$
+
+The $F$ statistic follows an $F$ distribution with $d$ and $n-p-1$
+degrees of freedom. Like the $\chi^2$, it's right-skewed and only
+takes positive values, so we only ever look at the **upper tail** for
+a p-value:
+
+```{r}
+#| fig-height: 2.5
+#| fig-width: 5
+#| fig-align: center
+ggplot(data.frame(x = c(0.00001, 5.5)), aes(x)) +
+  stat_function(fun = df, args = list(df1 = 4, df2 = 23), color = "#003300", linewidth = 1) +
+  stat_function(fun = df, args = list(df1 = 4, df2 = 23), xlim = c(3, 5.5),
+                geom = "area", fill = "#003300", alpha = 0.4) +
+  labs(x = "F", y = "Density") +
+  annotate("text", x = 4.6, y = 0.15, label = "p-value", color = "#003300", size = 5)
+```
+
+Upper-tail area in R: `1 - pf(stat, df1, df2)`
+
+## Putting it all together
+
+```{r}
+full_table <- glance(bikes_mlr) |> select(r.squared, df, df.residual, nobs) |>
+  mutate(model = "Full: temp*weekend")
+reduced_table <- glance(bikes_slr) |> select(r.squared, df, df.residual, nobs) |>
+  mutate(model = "Reduced: temp only")
+
+bind_rows(full_table, reduced_table) |>
+  select(model, everything()) |>
+  knitr::kable(digits = 3)
+```
+
+```{r}
+d <- 2
+mse_full <- summary(bikes_mlr)$sigma^2
+f_stat <- ((summary(bikes_mlr)$r.squared - summary(bikes_slr)$r.squared) / d) /
+  ((1 - summary(bikes_mlr)$r.squared) / bikes_mlr$df.residual)
+p_val <- 1 - pf(f_stat, d, bikes_mlr$df.residual)
+```
+
+$$F = \frac{(R^2_{\text{full}} - R^2_{\text{reduced}})/d}{(1 - R^2_{\text{full}})/df_{\text{full}}} = \frac{(`r round(summary(bikes_mlr)$r.squared,3)` - `r round(summary(bikes_slr)$r.squared,3)`)/2}{(1 - `r round(summary(bikes_mlr)$r.squared,3)`)/`r bikes_mlr$df.residual`} \approx `r round(f_stat,1)`$$
+
+p-value = `r format(p_val, scientific = TRUE, digits = 3)` -- extremely
+small, so we ___________________________ $H_0$: adding `weekend`
+(and its interaction with `temp_actual`) meaningfully improves the
+model.
+
+## Doing it directly in R with `anova()`
+
+`anova(reduced, full)` takes the **reduced** model first, then the
+**full** model, and runs exactly the F-test above -- no need to
+compute $R^2$'s by hand.
+
+```{r}
+full <- lm(rides ~ temp_actual * weekend, data = bikes)
+reduced <- lm(rides ~ temp_actual, data = bikes)
+anova(reduced, full)
+```

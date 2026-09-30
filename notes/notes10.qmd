@@ -1,0 +1,226 @@
+---
+title: "Day 10: Adding Categorical Predictors"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(broom)
+library(patchwork)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+bikes <- bikes |> select(date, season, year, month, weekend, holiday,
+                          temp_actual, temp_feel, humidity, windspeed, rides)
+
+fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt",
+                   sep = "\t", header = TRUE) |>
+  mutate(Smoke = factor(Smoke, levels = c(0, 1), labels = c("Nonsmoker", "Smoker")))
+
+bikes_slr <- lm(rides ~ temp_actual, data = bikes)
+bikes_mlr <- lm(rides ~ temp_actual + windspeed, data = bikes)
+```
+
+## Recap: `bikes` MLR
+
+Last time we added a second quantitative predictor, `windspeed`, to
+our model for `rides`:
+
+$$\widehat{\text{rides}} = `r round(coef(bikes_mlr)[1], 1)` `r round(coef(bikes_mlr)[2], 2)` \cdot \text{temp\_actual} `r round(coef(bikes_mlr)[3], 2)` \cdot \text{windspeed}$$
+
+```{r}
+kable_coef(bikes_mlr, terms = c("Intercept", "temp_actual", "windspeed"))
+```
+
+$R^2 =$ `r round(summary(bikes_mlr)$r.squared, 3)`
+
+## Today's plan: drop `windspeed`, add `weekend`
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+p1 <- gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) +
+  theme(legend.position = "none")
+p2 <- gf_boxplot(rides ~ weekend, fill = ~weekend, data = bikes) +
+  theme(legend.position = "none")
+
+p1 + p2 + plot_layout(widths = c(3, 1))
+```
+
+## A new example: lung function and smoking
+
+**Goal:** investigate the association between smoking and lung
+capacity using data from 345 adolescents ages 10-19.
+
+**Wrinkle:** lung function naturally increases during adolescence, but
+smoking may slow its progression -- so we need to account for *both*
+age and smoking status.
+
+| Variable | Description |
+|:---|:---|
+| `FEV` | forced expiratory volume (liters/second) |
+| `Age` | age in years |
+| `Smoke` | `Smoker` or `Nonsmoker` |
+
+::: {.callout-note}
+Source: Rosner (2006)
+:::
+
+## EDA
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+ggplot(fev) +
+  geom_boxplot(aes(x = Smoke, y = FEV, fill = Smoke), alpha = 0.6) +
+  scale_fill_manual(values = c("#f15a31", "#000036")) +
+  theme(legend.position = "none") +
+  coord_flip() +
+  labs(x = "", y = "FEV (L/s)")
+```
+
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+ggplot(fev) +
+  geom_point(aes(x = Age, y = FEV, color = Smoke, shape = Smoke), alpha = 0.5) +
+  facet_wrap(vars(Smoke)) +
+  scale_color_manual(values = c("#f15a31", "#000036")) +
+  labs(y = "FEV (L/s)")
+```
+
+Notice smokers skew *older* -- any raw FEV difference between smokers
+and nonsmokers is tangled up with age. This is exactly why we need a
+model that controls for both variables at once.
+
+## Indicator variables
+
+Regression requires a **numeric** representation of every variable,
+so a categorical predictor gets converted to indicator (0/1) columns
+-- e.g. `Smoker` = ___, `Nonsmoker` = ___.
+
+::: {.callout-tip}
+## Group task
+
+For each regression model on the handout, sketch the fitted model on
+the whiteboard. Each fitted model will have two lines: one for
+smokers, one for nonsmokers.
+:::
+
+::: callout-important
+## Stop here
+
+Let Amanda know when your group finishes!
+:::
+
+## Three ways to combine a line + a group
+
+We'll illustrate with `rides ~ temp_actual + weekend` on the bikes
+data, since it's easy to see two clear groups.
+
+### Parallel lines model
+
+Same rate of increase in both groups, but a different baseline.
+
+```{r}
+#| fig-height: 3
+mod_parallel <- lm(rides ~ temp_actual + weekend, data = bikes)
+bikes_aug <- augment(mod_parallel, data = bikes)
+p1 |> gf_line(.fitted ~ temp_actual, color = ~weekend, data = bikes_aug, linewidth = 1)
+```
+
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend}$$
+
+-   $\beta_0$: intercept for weekdays
+-   $\beta_0 + \beta_2$: intercept for weekends
+-   $\beta_1$: slope for ___________________________
+
+### Different slopes model
+
+Same baseline, but temperature affects ridership differently on
+weekends vs. weekdays.
+
+```{r}
+#| fig-height: 3
+mod_diff_slope <- lm(rides ~ temp_actual:weekend, data = bikes)
+bikes_aug <- augment(mod_diff_slope, data = bikes)
+p1 |> gf_line(.fitted ~ temp_actual, color = ~weekend, data = bikes_aug, linewidth = 1)
+```
+
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{temp} \times \texttt{weekend}$$
+
+-   $\beta_0$: intercept for ___________________________
+-   $\beta_1$: slope for weekdays
+-   $\beta_1 + \beta_2$: slope for weekends
+
+### Separate lines model
+
+Both the baseline *and* the rate of increase differ by group.
+
+```{r}
+#| fig-height: 3
+mod_separate <- lm(rides ~ temp_actual + weekend + temp_actual * weekend, data = bikes)
+bikes_aug <- augment(mod_separate, data = bikes)
+p1 |> gf_line(.fitted ~ temp_actual, color = ~weekend, data = bikes_aug, linewidth = 1)
+```
+
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend} + \beta_3 \texttt{temp} \times \texttt{weekend}$$
+
+-   $\beta_0$: intercept for weekdays
+-   $\beta_0 + \beta_2$: intercept for weekends
+-   $\beta_1$: slope for weekdays
+-   $\beta_1 + \beta_3$: slope for ___________________________
+
+::: {.callout-note}
+A model with an **interaction term** ($x \times \text{group}$) is
+exactly the separate-lines model: it lets both the intercept and
+slope differ by group.
+:::
+
+# More than two categories
+
+What if we want to incorporate `season` (fall, spring, summer,
+winter)?
+
+## A bad idea
+
+Convert the column to a single number:
+Fall $\to 1$, Winter $\to 2$, Spring $\to 3$, Summer $\to 4$, then fit
+$\mu(\text{rides} \mid \text{season}) = \beta_0 + \beta_1 \, \texttt{season}$.
+
+This is wrong -- it forces the seasons onto an arbitrary numeric scale
+and assumes, e.g., that the "jump" from fall to winter is the same
+size and direction as the jump from spring to summer.
+
+## A good idea: indicator (dummy) variables
+
+For a categorical variable with $k$ levels, create $k - 1$ indicator
+variables (one level is left out as the **reference level**).
+
+```{r}
+season_ex <- tibble(
+  season = factor(c("winter", "fall", "spring", "spring", "fall", "summer"),
+                   levels = c("fall", "winter", "spring", "summer"))
+)
+cbind(season = as.character(season_ex$season),
+      model.matrix(~season, data = season_ex)[, -1]) |>
+  knitr::kable()
+```
+
+Here `fall` is the reference level -- it's represented by all zeros --
+and each other season gets its own 0/1 column.
+
+::: {.callout-tip}
+## Group task
+
+For each sketched regression model on the handout, write the mean
+function that matches it (line type represents `season`).
+:::
+
+::: callout-important
+## Stop here
+
+Let Amanda know when your group finishes!
+:::

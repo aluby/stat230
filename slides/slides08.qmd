@@ -107,7 +107,7 @@ Show that the two models have the same $\widehat y$'s
 :::: {.columns}
 
 ::: {.column width="45%"}
-- $\log(a + b) = \log(a) \log(b)$
+- $\log(ab) = \log(a) + \log(b)$
 - $\log(a^b) = b \log (a)$
 :::
 
@@ -116,8 +116,8 @@ Show that the two models have the same $\widehat y$'s
 :::
 
 ::: {.column width="45%"}
-- $\log(a - b) = \log(a) /\log(b)$
-- $\log_{b} b = 1$ or $\log e = 1$
+- $\log(a/b) = \log(a) - \log(b)$
+- $\log_{b} b = 1$
 :::
 
 ::::
@@ -132,7 +132,7 @@ Show that the two models have the same $\widehat y$'s
 #| fig-height: 3
 set.seed(041526)
 tibble(x = seq(.1, 2, len = 100),
-       y1 = 2^(1 + 2 * log10(x) + rnorm(100)), 
+       y1 = 2^(1 + 2 * log2(x) + rnorm(100)),
        y2 = 2*x^2 + rnorm(100)) |>
   pivot_longer(-x) |>
   ggplot(aes(x = x, y = value), col = "#003300") + 

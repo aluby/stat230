@@ -1,0 +1,215 @@
+---
+title: "Day 09: Intro to Multiple Linear Regression"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(patchwork)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+bikes_slr <- lm(rides ~ temp_actual, data = bikes)
+bikes_mlr <- lm(rides ~ temp_actual + windspeed, data = bikes)
+
+bikes <- bikes |>
+  mutate(
+    temp_centered = temp_actual - mean(temp_actual, na.rm = TRUE),
+    wind_centered = windspeed - mean(windspeed, na.rm = TRUE),
+    temp_std = (temp_actual - mean(temp_actual, na.rm = TRUE)) / sd(temp_actual, na.rm = TRUE),
+    wind_std = (windspeed - mean(windspeed, na.rm = TRUE)) / sd(windspeed, na.rm = TRUE)
+  )
+bikes_mlr_c <- lm(rides ~ temp_centered + wind_centered, data = bikes)
+bikes_mlr_std <- lm(rides ~ temp_std + wind_std, data = bikes)
+```
+
+## Back to `bikes`: one predictor
+
+$$\widehat{\text{rides}} = `r round(coef(bikes_slr)[1],2)` + `r round(coef(bikes_slr)[2],2)`(\text{temp\_actual})$$
+
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No. rides",
+         color = "#003300", size = 1) |>
+  gf_lm(linewidth = 1.2, color = "#f15a31")
+```
+
+$R^2 =$ `r round(summary(bikes_slr)$r.squared, 3)` -- temperature alone
+leaves a lot of variation in ridership unexplained. What if we add a
+second predictor?
+
+## Pairs plot and correlation matrix
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4.5
+bikes |>
+  select(temp_actual, windspeed, rides) |>
+  GGally::ggpairs(progress = FALSE)
+```
+
+```{r}
+#| echo: true
+bikes |>
+  select(temp_actual, windspeed, rides) |>
+  cor() |> round(3)
+```
+
+## Multiple Linear Regression (MLR)
+
+$$Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{ip} + \varepsilon_i, \quad \varepsilon_i \overset{\mathrm{iid}}{\sim} N(0, \sigma^2)$$
+
+This model requires:
+
+1. $\mu\{Y \mid x_1, x_2, \ldots, x_p\}$ is a ___________________
+   function of the predictors
+2. The error terms are ___________________
+3. The error terms follow a Normal distribution with mean 0 and
+   variance $\sigma^2$
+
+## Fitting the model
+
+**Procedure:** least squares estimation chooses the coefficients to
+minimize
+
+$$\text{SSE} = \sum_{i=1}^n \left(Y_i - \widehat{Y}_i\right)^2, \qquad \text{then} \quad \widehat\sigma = \sqrt{\frac{\text{SSE}}{n - (p+1)}}$$
+
+```{r}
+#| echo: true
+bikes_mlr <- lm(rides ~ temp_actual + windspeed, data = bikes)
+coef(bikes_mlr)
+```
+
+## Interpreting $\widehat\beta_0$
+
+```{r}
+coef(bikes_mlr) |> round(3)
+```
+
+$\widehat\beta_0$ is the expected value of the response when
+___________________. Here: the expected number of rides is about
+`r round(coef(bikes_mlr)[1], 1)` when temperature = 0 and windspeed =
+0 -- not a meaningful day in this dataset!
+
+## Interpreting $\widehat\beta_j$
+
+$\widehat\beta_j$ is the expected change in the response for a
+1-unit increase in $x_j$, when ___________________________________.
+
+- We expect `r round(coef(bikes_mlr)[2],2)` *additional* rides for
+  every 1 degree increase in actual temperature, holding windspeed
+  constant.
+- We expect `r round(abs(coef(bikes_mlr)[3]),2)` *fewer* rides for
+  every 1 MPH increase in windspeed, holding temperature constant.
+
+## Geometric interpretation: the MLR "line" is a plane
+
+With two predictors, the fitted model is no longer a line but a
+**plane** through 3-dimensional space:
+
+```{r}
+#| fig-width: 6
+#| fig-height: 5
+library(scatterplot3d)
+s3d <- scatterplot3d(bikes$temp_actual, bikes$windspeed, bikes$rides,
+                      angle = 55, pch = 16, color = "#003300",
+                      xlab = "Temperature", ylab = "Windspeed", zlab = "No. rides")
+s3d$plane3d(bikes_mlr, draw_polygon = TRUE, polygon_args = list(col = adjustcolor("#f15a31", alpha.f = 0.3)))
+```
+
+## Centering predictor variables
+
+*Idea:* recenter each predictor at its own mean, so an intercept of
+"all predictors = 0" becomes an intercept of "all predictors at their
+___________________" -- a value that actually occurs in the data.
+
+```{r}
+#| echo: true
+bikes <- bikes |>
+  mutate(
+    temp_centered = temp_actual - mean(temp_actual, na.rm = TRUE),
+    wind_centered = windspeed - mean(windspeed, na.rm = TRUE)
+  )
+```
+
+Centering shifts the mean to 0 but leaves the spread alone:
+
+```{r}
+bikes |>
+  summarize(mean_orig = mean(temp_actual), mean_centered = mean(temp_centered),
+            sd_orig = sd(temp_actual), sd_centered = sd(temp_centered)) |>
+  round(2) |> knitr::kable()
+```
+
+## Interpreting the centered model
+
+```{r}
+bikes_mlr_c <- lm(rides ~ temp_centered + wind_centered, data = bikes)
+coef(bikes_mlr_c) |> round(3)
+```
+
+- $\widehat\beta_0$: the expected number of rides is about
+  `r round(coef(bikes_mlr_c)[1])` on an *average* temperature and
+  windspeed day -- much more interpretable than before.
+- $\widehat\beta_j$'s **don't change** -- they still describe the
+  expected change for a 1-unit increase in the original units of
+  $x_j$, holding the other predictor constant.
+
+## Standardizing predictor variables
+
+*Idea:* 1 MPH of windspeed isn't comparable to 1°F of temperature, so
+comparing raw slopes across predictors can be misleading. Standardize
+each predictor to have mean 0 and SD 1:
+
+```{r}
+#| fig-width: 6
+#| fig-height: 2.6
+p1 <- gf_histogram(~temp_centered, data = bikes, col = "white", fill = "#003300")
+p2 <- gf_histogram(~wind_centered, data = bikes, col = "white", fill = "#003300")
+p1 + p2
+```
+
+```{r}
+#| echo: true
+bikes <- bikes |>
+  mutate(
+    temp_std = (temp_actual - mean(temp_actual, na.rm = TRUE)) / sd(temp_actual, na.rm = TRUE),
+    wind_std = (windspeed - mean(windspeed, na.rm = TRUE)) / sd(windspeed, na.rm = TRUE)
+  )
+```
+
+```{r}
+bikes |>
+  summarize(mean_orig = mean(temp_actual), mean_std = mean(temp_std),
+            sd_orig = sd(temp_actual), sd_std = sd(temp_std)) |>
+  round(2) |> knitr::kable()
+```
+
+## Interpreting the standardized model
+
+```{r}
+bikes_mlr_std <- lm(rides ~ temp_std + wind_std, data = bikes)
+coef(bikes_mlr_std) |> round(3)
+```
+
+- $\widehat\beta_0$: expected rides on an average day is unchanged
+  from the centered model (`r round(coef(bikes_mlr_std)[1])`).
+- $\widehat\beta_j$: now the expected change in the response for a 1
+  ___________________ increase in $x_j$, holding the other predictor
+  constant.
+  - We expect `r round(coef(bikes_mlr_std)[2])` *additional* rides
+    for every 1 SD increase in temperature
+    (`r round(sd(bikes$temp_actual),1)` degrees), holding windspeed
+    constant.
+  - We expect `r round(abs(coef(bikes_mlr_std)[3]))` *fewer* rides
+    for every 1 SD increase in windspeed
+    (`r round(sd(bikes$windspeed),1)` MPH), holding temperature
+    constant.
+
+::: {.callout-note}
+Standardized coefficients put predictors measured in different units
+on a common scale, so their magnitudes become directly comparable.
+:::
