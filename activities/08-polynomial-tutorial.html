@@ -227,9 +227,9 @@ Note
 <p>In the <code>gf_lm()</code> layer we use the <code>poly(x, 3)</code> function to specify that we want to fit a cubic polynomial. You can use <code>poly()</code> to fit polynomials of any degree by changing the second argument, and you can also use this function within the <code>lm()</code> function to fit polynomial regression models if you’d like.</p>
 </div>
 </div>
-<p>Does the cubic model appear to be necessary? Use the <code>summary()</code> function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?</p>
-<p>What degrees of freedom did R for the t-distribution used to calculate the p-value for the test of the cubic term?</p>
-<p>Do you notice anything curious about the inferential results for the linear and quadratic terms?</p>
+<p><strong>1.</strong> Does the cubic model appear to be necessary? Use the <code>summary()</code> function to explore the fitted model and run a hypothesis test for the cubic term. What do you conclude?</p>
+<p><strong>2.</strong> What degrees of freedom did R use for the t-distribution used to calculate the p-value for the test of the cubic term?</p>
+<p><strong>3.</strong> Do you notice anything curious about the inferential results for the linear and quadratic terms?</p>
 <p>The issue here is that the polynomial terms for year are highly correlated with each other (i.e., year, year<span class="math inline">\(^2\)</span>, and year<span class="math inline">\(^3\)</span> are correlated). This can lead to numerical instability and make it difficult to interpret the coefficients. This is a situation called <strong>multicollinearity</strong>. We’ll talk more about this later. One way to remedy this issue in polynomial regression is to use orthogonal polynomials, which are uncorrelated with each other.</p>
 </section>
 <section id="an-alternative-way-to-fit-polynomials" class="level2">

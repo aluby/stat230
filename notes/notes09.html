@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Slides – stat230</title>
+<title>Day 09: Intro to Multiple Linear Regression – stat230</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,29 +20,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,35 +103,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-subtitle','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -130,7 +134,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.scss">
+<link rel="stylesheet" href="../styles.scss">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -140,9 +144,9 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">stat230</span>
     </a>
   </div>
@@ -153,27 +157,27 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./slides.html" aria-current="page"> 
+    <a class="nav-link" href="../slides.html"> 
 <span class="menu-text">Slides</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./activities.html"> 
+    <a class="nav-link" href="../activities.html"> 
 <span class="menu-text">Activities</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./readings.html"> 
+    <a class="nav-link" href="../readings.html"> 
 <span class="menu-text">Readings</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./syllabus.html"> 
+    <a class="nav-link" href="../syllabus.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./schedule.html"> 
+    <a class="nav-link" href="../schedule.html"> 
 <span class="menu-text">Schedule</span></a>
   </li>  
 </ul>
@@ -187,15 +191,31 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#back-to-bikes-one-predictor" id="toc-back-to-bikes-one-predictor" class="nav-link active" data-scroll-target="#back-to-bikes-one-predictor">Back to <code>bikes</code>: one predictor</a></li>
+  <li><a href="#pairs-plot-and-correlation-matrix" id="toc-pairs-plot-and-correlation-matrix" class="nav-link" data-scroll-target="#pairs-plot-and-correlation-matrix">Pairs plot and correlation matrix</a></li>
+  <li><a href="#multiple-linear-regression-mlr" id="toc-multiple-linear-regression-mlr" class="nav-link" data-scroll-target="#multiple-linear-regression-mlr">Multiple Linear Regression (MLR)</a></li>
+  <li><a href="#fitting-the-model" id="toc-fitting-the-model" class="nav-link" data-scroll-target="#fitting-the-model">Fitting the model</a></li>
+  <li><a href="#interpreting-widehatbeta_0" id="toc-interpreting-widehatbeta_0" class="nav-link" data-scroll-target="#interpreting-widehatbeta_0">Interpreting <span class="math inline">\(\widehat\beta_0\)</span></a></li>
+  <li><a href="#interpreting-widehatbeta_j" id="toc-interpreting-widehatbeta_j" class="nav-link" data-scroll-target="#interpreting-widehatbeta_j">Interpreting <span class="math inline">\(\widehat\beta_j\)</span></a></li>
+  <li><a href="#geometric-interpretation-the-mlr-line-is-a-plane" id="toc-geometric-interpretation-the-mlr-line-is-a-plane" class="nav-link" data-scroll-target="#geometric-interpretation-the-mlr-line-is-a-plane">Geometric interpretation: the MLR “line” is a plane</a></li>
+  <li><a href="#centering-predictor-variables" id="toc-centering-predictor-variables" class="nav-link" data-scroll-target="#centering-predictor-variables">Centering predictor variables</a></li>
+  <li><a href="#interpreting-the-centered-model" id="toc-interpreting-the-centered-model" class="nav-link" data-scroll-target="#interpreting-the-centered-model">Interpreting the centered model</a></li>
+  <li><a href="#standardizing-predictor-variables" id="toc-standardizing-predictor-variables" class="nav-link" data-scroll-target="#standardizing-predictor-variables">Standardizing predictor variables</a></li>
+  <li><a href="#interpreting-the-standardized-model" id="toc-interpreting-the-standardized-model" class="nav-link" data-scroll-target="#interpreting-the-standardized-model">Interpreting the standardized model</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="notes09.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Slides</h1>
+<h1 class="title">Day 09: Intro to Multiple Linear Regression</h1>
 </div>
 
 
@@ -212,366 +232,220 @@ window.Quarto = {
 </header>
 
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
-      <option value="listing-title-sort" data-direction="asc">
-        Topic
-      </option>
-      <option value="listing-author" data-direction="asc">
-        Author
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
+<section id="back-to-bikes-one-predictor" class="level2">
+<h2 class="anchored" data-anchor-id="back-to-bikes-one-predictor">Back to <code>bikes</code>: one predictor</h2>
+<p><span class="math display">\[\widehat{\text{rides}} = -2168.77 + 89.23(\text{temp\_actual})\]</span></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes09_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
 </div>
-<table class="quarto-listing-table table">
+</div>
+</div>
+<p><span class="math inline">\(R^2 =\)</span> 0.332 – temperature alone leaves a lot of variation in ridership unexplained. What if we add a second predictor?</p>
+</section>
+<section id="pairs-plot-and-correlation-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="pairs-plot-and-correlation-matrix">Pairs plot and correlation matrix</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes09_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(temp_actual, windspeed, rides) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>() <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            temp_actual windspeed  rides
+temp_actual       1.000    -0.106  0.576
+windspeed        -0.106     1.000 -0.195
+rides             0.576    -0.195  1.000</code></pre>
+</div>
+</div>
+</section>
+<section id="multiple-linear-regression-mlr" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-linear-regression-mlr">Multiple Linear Regression (MLR)</h2>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{ip} + \varepsilon_i, \quad \varepsilon_i \overset{\mathrm{iid}}{\sim} N(0, \sigma^2)\]</span></p>
+<p>This model requires:</p>
+<ol type="1">
+<li><span class="math inline">\(\mu\{Y \mid x_1, x_2, \ldots, x_p\}\)</span> is a ___________________ function of the predictors</li>
+<li>The error terms are ___________________</li>
+<li>The error terms follow a Normal distribution with mean 0 and variance <span class="math inline">\(\sigma^2\)</span></li>
+</ol>
+</section>
+<section id="fitting-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-the-model">Fitting the model</h2>
+<p><strong>Procedure:</strong> least squares estimation chooses the coefficients to minimize</p>
+<p><span class="math display">\[\text{SSE} = \sum_{i=1}^n \left(Y_i - \widehat{Y}_i\right)^2, \qquad \text{then} \quad \widehat\sigma = \sqrt{\frac{\text{SSE}}{n - (p+1)}}\]</span></p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bikes_mlr <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed, <span class="at">data =</span> bikes)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(bikes_mlr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) temp_actual   windspeed 
+-1525.53822    87.01789   -38.62817 </code></pre>
+</div>
+</div>
+</section>
+<section id="interpreting-widehatbeta_0" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-widehatbeta_0">Interpreting <span class="math inline">\(\widehat\beta_0\)</span></h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) temp_actual   windspeed 
+  -1525.538      87.018     -38.628 </code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\widehat\beta_0\)</span> is the expected value of the response when ___________________. Here: the expected number of rides is about -1525.5 when temperature = 0 and windspeed = 0 – not a meaningful day in this dataset!</p>
+</section>
+<section id="interpreting-widehatbeta_j" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-widehatbeta_j">Interpreting <span class="math inline">\(\widehat\beta_j\)</span></h2>
+<p><span class="math inline">\(\widehat\beta_j\)</span> is the expected change in the response for a 1-unit increase in <span class="math inline">\(x_j\)</span>, when ___________________________________.</p>
+<ul>
+<li>We expect 87.02 <em>additional</em> rides for every 1 degree increase in actual temperature, holding windspeed constant.</li>
+<li>We expect 38.63 <em>fewer</em> rides for every 1 MPH increase in windspeed, holding temperature constant.</li>
+</ul>
+</section>
+<section id="geometric-interpretation-the-mlr-line-is-a-plane" class="level2">
+<h2 class="anchored" data-anchor-id="geometric-interpretation-the-mlr-line-is-a-plane">Geometric interpretation: the MLR “line” is a plane</h2>
+<p>With two predictors, the fitted model is no longer a line but a <strong>plane</strong> through 3-dimensional space:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes09_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="centering-predictor-variables" class="level2">
+<h2 class="anchored" data-anchor-id="centering-predictor-variables">Centering predictor variables</h2>
+<p><em>Idea:</em> recenter each predictor at its own mean, so an intercept of “all predictors = 0” becomes an intercept of “all predictors at their ___________________” – a value that actually occurs in the data.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> bikes <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp_centered =</span> temp_actual <span class="sc">-</span> <span class="fu">mean</span>(temp_actual, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">wind_centered =</span> windspeed <span class="sc">-</span> <span class="fu">mean</span>(windspeed, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Centering shifts the mean to 0 but leaves the spread alone:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
 <thead>
-<tr>
-
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Topic</a>
-</th>
-
-<th>
-Course Day
-</th>
-
-<th>
-<a class="sort" data-sort="listing-author" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Author</a>
-</th>
-
+<tr class="header">
+<th style="text-align: right;">mean_orig</th>
+<th style="text-align: right;">mean_centered</th>
+<th style="text-align: right;">sd_orig</th>
+<th style="text-align: right;">sd_centered</th>
 </tr>
 </thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-file-modified-sort="1780440001806" data-listing-reading-time-sort="3" data-listing-word-count-sort="569" data-listing-title-sort="Preparing for Lightning Talks" data-listing-filename-sort="slides28.qmd">
-<td>
-<a href="./slides/slides28.html" class="title listing-title">Preparing for Lightning Talks</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 28</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">63.33</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10.17</td>
+<td style="text-align: right;">10.17</td>
 </tr>
-
-<tr data-index="1" data-listing-file-modified-sort="1780147647497" data-listing-reading-time-sort="7" data-listing-word-count-sort="1268" data-listing-title-sort="Overdispersion and Inference for Poisson Regression" data-listing-filename-sort="slides27.qmd">
-<td>
-<a href="./slides/slides27.html" class="title listing-title">Overdispersion and Inference for Poisson Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 27</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-file-modified-sort="1779988545690" data-listing-reading-time-sort="9" data-listing-word-count-sort="1625" data-listing-title-sort="Intro to Poisson Regression" data-listing-filename-sort="slides26.qmd">
-<td>
-<a href="./slides/slides26.html" class="title listing-title">Intro to Poisson Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 26</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-file-modified-sort="1788979206536" data-listing-reading-time-sort="4" data-listing-word-count-sort="759" data-listing-title-sort="Case Study Tips" data-listing-filename-sort="slides24.qmd">
-<td>
-<a href="./slides/slides24.html" class="title listing-title">Case Study Tips</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 24</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="4" data-listing-file-modified-sort="1788979206532" data-listing-reading-time-sort="10" data-listing-word-count-sort="1948" data-listing-title-sort="Overdispersion and the Quasibinomial model" data-listing-filename-sort="slides23.qmd">
-<td>
-<a href="./slides/slides23.html" class="title listing-title">Overdispersion and the Quasibinomial model</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 23</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="5" data-listing-file-modified-sort="1788979206528" data-listing-reading-time-sort="5" data-listing-word-count-sort="874" data-listing-title-sort="Binomial Logistic Regression" data-listing-filename-sort="slides22.qmd">
-<td>
-<a href="./slides/slides22.html" class="title listing-title">Binomial Logistic Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 22</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="6" data-listing-file-modified-sort="1778881466450" data-listing-reading-time-sort="6" data-listing-word-count-sort="1003" data-listing-title-sort="Model Comparison for Logistic Regression" data-listing-filename-sort="slides21.qmd">
-<td>
-<a href="./slides/slides21.html" class="title listing-title">Model Comparison for Logistic Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 21</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="7" data-listing-file-modified-sort="1778846293427" data-listing-reading-time-sort="13" data-listing-word-count-sort="2507" data-listing-title-sort="Inference for Logistic Regression" data-listing-filename-sort="slides20.qmd">
-<td>
-<a href="./slides/slides20.html" class="title listing-title">Inference for Logistic Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 20</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="8" data-listing-file-modified-sort="1778846293427" data-listing-reading-time-sort="5" data-listing-word-count-sort="909" data-listing-title-sort="Logistic Regression" data-listing-filename-sort="slides19.qmd">
-<td>
-<a href="./slides/slides19.html" class="title listing-title">Logistic Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 19</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-file-modified-sort="1777831917944" data-listing-reading-time-sort="11" data-listing-word-count-sort="2181" data-listing-title-sort="Model Selection" data-listing-filename-sort="slides15.qmd">
-<td>
-<a href="./slides/slides15.html" class="title listing-title">Model Selection</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 15</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-file-modified-sort="1788979206523" data-listing-reading-time-sort="5" data-listing-word-count-sort="831" data-listing-title-sort="Multicollinearity" data-listing-filename-sort="slides14.qmd">
-<td>
-<a href="./slides/slides14.html" class="title listing-title">Multicollinearity</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 14</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-listing-file-modified-sort="1788979206519" data-listing-reading-time-sort="11" data-listing-word-count-sort="2120" data-listing-title-sort="Diagnostics for MLR" data-listing-filename-sort="slides13.qmd">
-<td>
-<a href="./slides/slides13.html" class="title listing-title">Diagnostics for MLR</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 13</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="12" data-listing-file-modified-sort="1777067145867" data-listing-reading-time-sort="4" data-listing-word-count-sort="703" data-listing-title-sort="Inference for Linear Combinations" data-listing-filename-sort="slides12.qmd">
-<td>
-<a href="./slides/slides12.html" class="title listing-title">Inference for Linear Combinations</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 12</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="13" data-listing-file-modified-sort="1776896610951" data-listing-reading-time-sort="10" data-listing-word-count-sort="1894" data-listing-title-sort="Inference for MLR" data-listing-filename-sort="slides11.qmd">
-<td>
-<a href="./slides/slides11.html" class="title listing-title">Inference for MLR</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 11</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="14" data-listing-file-modified-sort="1776817873384" data-listing-reading-time-sort="6" data-listing-word-count-sort="1008" data-listing-title-sort="Adding Categorical Predictors" data-listing-filename-sort="slides10.qmd">
-<td>
-<a href="./slides/slides10.html" class="title listing-title">Adding Categorical Predictors</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 10</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="15" data-listing-file-modified-sort="1776561848038" data-listing-reading-time-sort="6" data-listing-word-count-sort="1146" data-listing-title-sort="Intro to Multiple Linear Regression" data-listing-filename-sort="slides09.qmd">
-<td>
-<a href="./slides/slides09.html" class="title listing-title">Intro to Multiple Linear Regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 09</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="16" data-listing-file-modified-sort="1790718899370" data-listing-reading-time-sort="10" data-listing-word-count-sort="1914" data-listing-title-sort="Transformations and polynomial regression" data-listing-filename-sort="slides08.qmd">
-<td>
-<a href="./slides/slides08.html" class="title listing-title">Transformations and polynomial regression</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 08</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="17" data-listing-file-modified-sort="1790509992951" data-listing-reading-time-sort="7" data-listing-word-count-sort="1275" data-listing-title-sort="Transforming SLR models" data-listing-filename-sort="slides06.qmd">
-<td>
-<a href="./slides/slides06.html" class="title listing-title">Transforming SLR models</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 06</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="18" data-listing-file-modified-sort="1790166451254" data-listing-reading-time-sort="8" data-listing-word-count-sort="1578" data-listing-title-sort="Evaluating SLR models" data-listing-filename-sort="slides05.qmd">
-<td>
-<a href="./slides/slides05.html" class="title listing-title">Evaluating SLR models</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 05</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="19" data-listing-file-modified-sort="1789954545011" data-listing-reading-time-sort="3" data-listing-word-count-sort="545" data-listing-title-sort="Inference for Prediction" data-listing-filename-sort="slides04.qmd">
-<td>
-<a href="./slides/slides04.html" class="title listing-title">Inference for Prediction</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 04</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="20" data-listing-file-modified-sort="1789955781346" data-listing-reading-time-sort="9" data-listing-word-count-sort="1660" data-listing-title-sort="Inference for SLR" data-listing-filename-sort="slides03.qmd">
-<td>
-<a href="./slides/slides03.html" class="title listing-title">Inference for SLR</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 03</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="21" data-listing-file-modified-sort="1789696861020" data-listing-reading-time-sort="10" data-listing-word-count-sort="1981" data-listing-title-sort="Simple Linear Regression (SLR)" data-listing-filename-sort="slides02.qmd">
-<td>
-<a href="./slides/slides02.html" class="title listing-title">Simple Linear Regression (SLR)</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 02</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="22" data-listing-file-modified-sort="1774384087961" data-listing-reading-time-sort="4" data-listing-word-count-sort="638" data-listing-title-sort="Slides Cheat Sheet" data-listing-filename-sort="slides-cheat-sheet.qmd">
-<td>
-<a href="./slides/slides-cheat-sheet.html" class="title listing-title">Slides Cheat Sheet</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 01</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
-<tr data-index="23" data-listing-file-modified-sort="1789349743874" data-listing-reading-time-sort="9" data-listing-word-count-sort="1717" data-listing-title-sort="Welcome to Stat230!" data-listing-filename-sort="slides01.qmd">
-<td>
-<a href="./slides/slides01.html" class="title listing-title">Welcome to Stat230!</a>
-</td>
-<td>
-<span class="listing-subtitle">Day 01</span>
-</td>
-<td>
-<span class="listing-author">Prof Amanda Luby</span>
-</td>
-
-</tr>
-
 </tbody>
 </table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</div>
+</div>
+</section>
+<section id="interpreting-the-centered-model" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-centered-model">Interpreting the centered model</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>  (Intercept) temp_centered wind_centered 
+     3482.214        87.018       -38.628 </code></pre>
+</div>
+</div>
+<ul>
+<li><span class="math inline">\(\widehat\beta_0\)</span>: the expected number of rides is about 3482 on an <em>average</em> temperature and windspeed day – much more interpretable than before.</li>
+<li><span class="math inline">\(\widehat\beta_j\)</span>’s <strong>don’t change</strong> – they still describe the expected change for a 1-unit increase in the original units of <span class="math inline">\(x_j\)</span>, holding the other predictor constant.</li>
+</ul>
+</section>
+<section id="standardizing-predictor-variables" class="level2">
+<h2 class="anchored" data-anchor-id="standardizing-predictor-variables">Standardizing predictor variables</h2>
+<p><em>Idea:</em> 1 MPH of windspeed isn’t comparable to 1°F of temperature, so comparing raw slopes across predictors can be misleading. Standardize each predictor to have mean 0 and SD 1:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes09_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> bikes <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp_std =</span> (temp_actual <span class="sc">-</span> <span class="fu">mean</span>(temp_actual, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(temp_actual, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">wind_std =</span> (windspeed <span class="sc">-</span> <span class="fu">mean</span>(windspeed, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(windspeed, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">mean_orig</th>
+<th style="text-align: right;">mean_std</th>
+<th style="text-align: right;">sd_orig</th>
+<th style="text-align: right;">sd_std</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">63.33</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10.17</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="interpreting-the-standardized-model" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-standardized-model">Interpreting the standardized model</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)    temp_std    wind_std 
+   3482.214     885.032    -213.560 </code></pre>
+</div>
+</div>
+<ul>
+<li><span class="math inline">\(\widehat\beta_0\)</span>: expected rides on an average day is unchanged from the centered model (3482).</li>
+<li><span class="math inline">\(\widehat\beta_j\)</span>: now the expected change in the response for a 1 ___________________ increase in <span class="math inline">\(x_j\)</span>, holding the other predictor constant.
+<ul>
+<li>We expect 885 <em>additional</em> rides for every 1 SD increase in temperature (10.2 degrees), holding windspeed constant.</li>
+<li>We expect 214 <em>fewer</em> rides for every 1 SD increase in windspeed (5.5 MPH), holding temperature constant.</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Standardized coefficients put predictors measured in different units on a common scale, so their magnitudes become directly comparable.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -645,7 +519,7 @@ Course Day
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
