@@ -66,8 +66,10 @@ regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
 # wildfires <- read.csv("https://aloy.github.io/stat230-materials/data/wildfires.csv")
 # wildfires <- write.csv(wildfires, here("data", "wildfires.csv"))
 
-wildfires <- read.csv(here("data", "wildfires.csv"))
-wildfires <- filter(wildfires, Year >= 1960)
+wildfires_orig <- read.csv(here("data", "wildfires.csv"))
+wildfires <- filter(wildfires_orig, Year >= 1960) |>
+  mutate(Year = Year - 1960, # years since 1960; raw Year and Year^2 are ~perfectly correlated
+         Acres = Acres / 1e6) # millions of acres
 ```
 
 ## 
@@ -163,8 +165,19 @@ Data source: https://www.nifc.gov/fireInfo/fireInfo_stats_totalFires.html
 #| echo: true
 
 
-gf_point(Acres ~ Year, data = wildfires) %>%
+gf_point(Acres ~ Year, data = wildfires_orig) %>%
   gf_labs(x = "Year", y = "Acres burned") %>%
+  gf_smooth(size = .5)
+```
+
+## Rescale variables
+
+```{r fig.height=4, fig.width=5, message=FALSE, out.width=800}
+#| echo: true
+
+
+gf_point(Acres ~ Year, data = wildfires) %>%
+  gf_labs(x = "Years since 1960", y = "Millions of acres burned") %>%
   gf_smooth(size = .5)
 ```
 
@@ -179,7 +192,7 @@ Is the fit reasonable?
 
 ```{r fig.height=2.75, fig.width=9, message=FALSE, echo=FALSE}
 linear_mod <- lm(Acres ~ Year, data = wildfires)
-regression_panel(Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned")
+regression_panel(Acres ~ Year, data = wildfires, xlab = "Years since 1960", ylab = "Millions of acres burned")
 ```
 
 
@@ -193,7 +206,7 @@ Is the fit reasonable?
 
 ```{r fig.height=2.75, fig.width=9, message=FALSE, echo=FALSE}
 tform_mod <- lm(Acres ~ I(Year^2), data = wildfires)
-regression_panel(Acres ~ I(Year^2), scat.formula = Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned")
+regression_panel(Acres ~ I(Year^2), scat.formula = Acres ~ Year, data = wildfires, xlab = "Years since 1960", ylab = "Millions of acres burned")
 ```
 
 ## Option 3: Polynomial model
@@ -206,7 +219,7 @@ Is the fit reasonable?
 
 ```{r fig.height=2.75, fig.width=9, message=FALSE, echo=FALSE}
 quad_mod <- lm(Acres ~ Year + I(Year^2), data = wildfires)
-regression_panel(Acres ~ Year + I(Year^2), scat.formula = Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned")
+regression_panel(Acres ~ Year + I(Year^2), scat.formula = Acres ~ Year, data = wildfires, xlab = "Years since 1960", ylab = "Millions of acres burned")
 ```
 
 
@@ -232,7 +245,7 @@ Assumptions — same as in SLR
 :::{.column width="50%"}
 
 ```{r fig.height=3.25, fig.width=4, message=FALSE, echo=FALSE}
-gf_point(Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned", color = "#003069") %>%
+gf_point(Acres ~ Year, data = wildfires, xlab = "Years since 1960", ylab = "Millions of acres burned", color = "#003069") %>%
   gf_lm(formula = y ~ x + I(x^2), color = "#f15a31")
 ```
 :::
@@ -245,14 +258,10 @@ Focus on the expected change in $y$ for a specific increase in $x$
 :::
 :::
 
-::: {style="font-size: 0.8em;"}
-\begin{aligned}
-\mu\{ y | x + 1 \} - \mu\{ y | x \} 
-  &=  \left[ \beta_0 + \beta_1 (x+1) + \beta_2 (x+1)^2 \right] - \left[ \beta_0 + \beta_1 x + \beta_2 x^2 \right]\\
-  &= \beta_1 + \beta_2 \left( 2x + 1 \right)
-\end{aligned}
+## 
 
-:::
+$\mu\{ y | x + 1 \} - \mu\{ y | x \}=$
+
 
 
 ## Inferences about coefficients
@@ -334,7 +343,7 @@ coef_table <- tidy(quad_mod, conf.int = TRUE) |>
   select(-statistic, -p.value)
 
 
-knitr::kable(coef_table, format = "pipe", digits = 0, booktabs = TRUE, col.names = c("Term", "Estimate", "SE", "Lower", "Upper"))
+knitr::kable(coef_table, format = "pipe", digits = 3, booktabs = TRUE, col.names = c("Term", "Estimate", "SE", "Lower", "Upper"))
 ```
 
 :::
@@ -372,7 +381,7 @@ High-order polynomial regression models will over-fit your data (i.e. pick up on
 ```{r echo=FALSE, fig.height = 2.5, fig.width = 7.5, out.width=850}
 poly2 <- makeFun(quad_mod)
 p1 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
-  gf_labs(x = "Year", y = "Acres burned") %>%
+  gf_labs(x = "Years since 1960", y = "Millions of acres burned") %>%
   gf_fun(poly2(x) ~ x, color = "#f15a31") %>%
   gf_labs(title = "2nd-order polynomial") +
   theme(axis.title = element_blank(),
@@ -382,7 +391,7 @@ p1 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
 poly5_mod <- lm(Acres ~ poly(Year, 5), data = wildfires)
 poly5 <- makeFun(poly5_mod)
 p5 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
-  gf_labs(x = "Year", y = "Acres burned") %>%
+  gf_labs(x = "Years since 1960", y = "Millions of acres burned") %>%
   gf_fun(poly5(x) ~ x, color = "#f15a31")  %>%
   gf_labs(title = "5th-order polynomial") +
   theme(axis.title = element_blank(),
@@ -392,7 +401,7 @@ p5 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
 poly25_mod <- lm(Acres ~ poly(Year, 25), data = wildfires)
 poly25 <- makeFun(poly25_mod)
 p25 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
-  gf_labs(x = "Year", y = "Acres burned") %>%
+  gf_labs(x = "Years since 1960", y = "Millions of acres burned") %>%
   gf_fun(poly25(x) ~ x, color = "#f15a31") %>%
   gf_labs(title = "25th-order polynomial") +
   theme(axis.title = element_blank(),
@@ -417,12 +426,12 @@ p25 <- gf_point(Acres ~ Year, data = wildfires, color = "#003069") %>%
 ::: columns
 :::{.column width="45%"}
 ```{r echo=FALSE, fig.height = 3, fig.width = 3.5, out.width="90%", fig.align='center'}
-gf_point(Acres ~ Year, data = wildfires, ylab = "Acres burned", color = "#003069") %>%
+gf_point(Acres ~ Year, data = wildfires, ylab = "Millions of acres burned", color = "#003069") %>%
   gf_hline(yintercept = mean(wildfires$Acres), color = "#f15a31")
 ```
 :::
 :::{.column width="45%"}
-$SD(Y) = `r round(sd(wildfires[["Acres"]]), 2)`$ cm
+$SD(Y) = `r round(sd(wildfires[["Acres"]]), 2)`$ million acres
 :::
 :::
 
@@ -438,12 +447,12 @@ $SD(Y) = `r round(sd(wildfires[["Acres"]]), 2)`$ cm
 ::: columns
 :::{.column width="45%"}
 ```{r echo=FALSE, fig.height = 3, fig.width = 3.5, out.width="90%", fig.align='center'}
-gf_point(Acres ~ Year, data = wildfires, ylab = "Acres burned", color = "#003069") %>%
+gf_point(Acres ~ Year, data = wildfires, ylab = "Millions of acres burned", color = "#003069") %>%
   gf_lm(formula = y ~ poly(x, 2), color = "#f15a31")
 ```
 :::
 :::{.column width="45%"}
-$SD(\varepsilon) = `r round(sigma(quad_mod), 2)`$ cm
+$SD(\varepsilon) = `r round(sigma(quad_mod), 2)`$ million acres
 :::
 :::
 
@@ -463,7 +472,7 @@ Measures the overall variability in $Y$
 quad_aug <- augment(quad_mod)
 quad_aug <- mutate(quad_aug, mean.y = mean(Acres))
 
-gf_point(Acres ~ Year, data = quad_aug, ylab = "Acres burned") %>%
+gf_point(Acres ~ Year, data = quad_aug, ylab = "Millions of acres burned") %>%
   gf_hline(yintercept = mean(quad_aug$Acres), color = "#f15a31") %>%
   gf_segment(mean.y + Acres ~ Year + Year, color = "gray70") 
 ```
@@ -490,7 +499,7 @@ Measures the variability unexplained by the model
 ::: {.column width="45%"}
 ```{r echo=FALSE, fig.height = 3.25, fig.width = 3.75, fig.align='center'}
 
-gf_point(Acres ~ Year, data = quad_aug, ylab = "Acres burned") %>%
+gf_point(Acres ~ Year, data = quad_aug, ylab = "Millions of acres burned") %>%
   gf_lm(formula = y ~ poly(x, 2), color = "#f15a31") %>%
   gf_segment(.fitted + Acres ~ Year + Year, color = "gray70") 
 ```

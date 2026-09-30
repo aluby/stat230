@@ -9,7 +9,7 @@ library(broom)
 ```
 
 ::: callout-note
-This is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use <https://aluby.github.io/stat230/activities/08-polynomial-tutorial>
+This is the .qmd version of the R activity. If you prefer to use the tutorial, you can use <https://aluby.github.io/stat230/activities/08-polynomial-tutorial>
 :::
 
 ## Loading data
@@ -18,6 +18,8 @@ To load the wildfires data set, run the following code chunk:
 
 ```{r}
 wildfires <- read.csv("https://aluby.github.io/stat230/data/wildfires.csv")
+wildfires$Year <- wildfires$Year - 1960 # years since 1960
+wildfires$Acres <- wildfires$Acres / 1e6 # millions of acres
 ```
 
 
@@ -47,8 +49,8 @@ Use the `lm()` command to fit the cubic model where `Year` is used to predict `A
 To plot the fitted cubic model, you can use the `gf_point()` and `gf_lm()` functions from the `ggformula` package. The following code will create a scatter plot of the data and add the fitted cubic regression line:
 
 ```{r}
-#| fig-alt: "Scatterplot with Year on the x-axis and Acres burned on the y-axis, with a fitted curve overlaid."
-gf_point(Acres ~ Year, data = wildfires, xlab = "Year", ylab = "Acres burned") |>
+#| fig-alt: "Scatterplot with Years since 1960 on the x-axis and millions of acres burned on the y-axis, with a fitted curve overlaid."
+gf_point(Acres ~ Year, data = wildfires, xlab = "Years since 1960", ylab = "Millions of acres burned") |>
   gf_lm(formula = y ~ poly(x, 3), linewidth = .5)
 ```
 
