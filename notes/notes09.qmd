@@ -2,6 +2,8 @@
 title: "Day 09: Intro to Multiple Linear Regression"
 ---
 
+*Note:* the first section recaps what was in the lecture slides. You should fill in the second section in your groups using the R activity. 
+
 ```{r}
 #| include: false
 library(tidyverse)
@@ -12,51 +14,36 @@ theme_set(theme_minimal(base_size = 12))
 source("notes-helpers.R")
 
 bikes_slr <- lm(rides ~ temp_actual, data = bikes)
+bikes_slr_2 <- lm(rides ~ windspeed, data = bikes)
 bikes_mlr <- lm(rides ~ temp_actual + windspeed, data = bikes)
-
-bikes <- bikes |>
-  mutate(
-    temp_centered = temp_actual - mean(temp_actual, na.rm = TRUE),
-    wind_centered = windspeed - mean(windspeed, na.rm = TRUE),
-    temp_std = (temp_actual - mean(temp_actual, na.rm = TRUE)) / sd(temp_actual, na.rm = TRUE),
-    wind_std = (windspeed - mean(windspeed, na.rm = TRUE)) / sd(windspeed, na.rm = TRUE)
-  )
-bikes_mlr_c <- lm(rides ~ temp_centered + wind_centered, data = bikes)
-bikes_mlr_std <- lm(rides ~ temp_std + wind_std, data = bikes)
 ```
 
-## Back to `bikes`: one predictor
+*Capital Bikeshare* is a bike sharing service in the Washington, D.C.
+area. To best serve its registered members, the company must
+understand the demand for its service. We have data on the number of
+rides taken on a random sample of $n$ days, along with:
 
-$$\widehat{\text{rides}} = `r round(coef(bikes_slr)[1],2)` + `r round(coef(bikes_slr)[2],2)`(\text{temp\_actual})$$
+-   Weekend/holiday/etc.
+-   Day of the measurement
+-   Weather information
 
+We want to predict the number of `rides` based on `temp_actual` and `windspeed`. Both are correlated with `rides`:
 ```{r}
-#| fig-width: 6
-#| fig-height: 3
-gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No. rides",
+#| fig-width: 8
+#| fig-height: 2.5
+p1 <- gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No. rides",
          color = "#003300", size = 1) |>
   gf_lm(linewidth = 1.2, color = "#f15a31")
+
+p2 <- gf_point(rides ~ windspeed, data = bikes, xlab = "Windspeed", ylab = "No. rides",
+         color = "#003300", size = 1) |>
+  gf_lm(linewidth = 1.2, color = "#f15a31")
+
+p1 + p2
 ```
 
-$R^2 =$ `r round(summary(bikes_slr)$r.squared, 3)` -- temperature alone
-leaves a lot of variation in ridership unexplained. What if we add a
-second predictor?
+Neither predictor alone explains a large amount of the variation in ridership, and fitting two separate models would give us two different predictions for the same day, with no way to combine them into one. Instead, we want to build a single model that summarizes the relationship between `temp_actual` and `rides` *after accounting for windspeed* and vice-versa. 
 
-## Pairs plot and correlation matrix
-
-```{r}
-#| fig-width: 6
-#| fig-height: 4.5
-bikes |>
-  select(temp_actual, windspeed, rides) |>
-  GGally::ggpairs(progress = FALSE)
-```
-
-```{r}
-#| echo: true
-bikes |>
-  select(temp_actual, windspeed, rides) |>
-  cor() |> round(3)
-```
 
 ## Multiple Linear Regression (MLR)
 
@@ -64,46 +51,36 @@ $$Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{ip} + \v
 
 This model requires:
 
-1. $\mu\{Y \mid x_1, x_2, \ldots, x_p\}$ is a ___________________
-   function of the predictors
-2. The error terms are ___________________
-3. The error terms follow a Normal distribution with mean 0 and
-   variance $\sigma^2$
+1.  $\mu\{Y \mid x_1, x_2, \ldots, x_p\}$ is a ___________________
+    function of the predictors
+2.  The error terms are ___________________
+3.  The error terms follow a Normal distribution with mean 0 and
+    variance $\sigma^2$
 
-## Fitting the model
-
-**Procedure:** least squares estimation chooses the coefficients to
+**Fitting the model:** least squares estimation chooses the coefficients to
 minimize
 
 $$\text{SSE} = \sum_{i=1}^n \left(Y_i - \widehat{Y}_i\right)^2, \qquad \text{then} \quad \widehat\sigma = \sqrt{\frac{\text{SSE}}{n - (p+1)}}$$
-
 ```{r}
 #| echo: true
 bikes_mlr <- lm(rides ~ temp_actual + windspeed, data = bikes)
 coef(bikes_mlr)
 ```
 
-## Interpreting $\widehat\beta_0$
 
-```{r}
-coef(bikes_mlr) |> round(3)
-```
+$\widehat\beta_0$ is the expected value of the response when all predictors are 0. 
 
-$\widehat\beta_0$ is the expected value of the response when
-___________________. Here: the expected number of rides is about
-`r round(coef(bikes_mlr)[1], 1)` when temperature = 0 and windspeed =
-0 -- not a meaningful day in this dataset!
+**Example:** the expected number of rides is about `r round(coef(bikes_mlr)[1], 1)` when temperature = 0 and windspeed = 0 -- not meaningful in this dataset!
 
-## Interpreting $\widehat\beta_j$
+$\widehat\beta_j$ is the expected change in the response for a 1-unit increase in $x_j$, when all other predictors are held constant.
 
-$\widehat\beta_j$ is the expected change in the response for a
-1-unit increase in $x_j$, when ___________________________________.
+**Example:** 
 
-- We expect `r round(coef(bikes_mlr)[2],2)` *additional* rides for
-  every 1 degree increase in actual temperature, holding windspeed
-  constant.
-- We expect `r round(abs(coef(bikes_mlr)[3]),2)` *fewer* rides for
-  every 1 MPH increase in windspeed, holding temperature constant.
+-   We expect `r round(coef(bikes_mlr)[2],2)` *additional* rides for
+    every 1 degree increase in actual temperature, holding windspeed
+    constant.
+-   We expect `r round(abs(coef(bikes_mlr)[3]),2)` *fewer* rides for
+    every 1 MPH increase in windspeed, holding temperature constant.
 
 ## Geometric interpretation: the MLR "line" is a plane
 
@@ -111,105 +88,78 @@ With two predictors, the fitted model is no longer a line but a
 **plane** through 3-dimensional space:
 
 ```{r}
-#| fig-width: 6
-#| fig-height: 5
+#| fig-width: 5
+#| fig-height: 3.5
 library(scatterplot3d)
 s3d <- scatterplot3d(bikes$temp_actual, bikes$windspeed, bikes$rides,
-                      angle = 55, pch = 16, color = "#003300",
+                      angle = 65, pch = 16, color = "#003300", cex.symbols = .5, 
                       xlab = "Temperature", ylab = "Windspeed", zlab = "No. rides")
 s3d$plane3d(bikes_mlr, draw_polygon = TRUE, polygon_args = list(col = adjustcolor("#f15a31", alpha.f = 0.3)))
 ```
 
-## Centering predictor variables
+## Takeaways
 
-*Idea:* recenter each predictor at its own mean, so an intercept of
-"all predictors = 0" becomes an intercept of "all predictors at their
-___________________" -- a value that actually occurs in the data.
+-   EDA for more than one predictor variable
+-   Write the theoretical MLR model
+-   Write the fitted MLR model
+-   Interpret the MLR coefficients
 
-```{r}
-#| echo: true
-bikes <- bikes |>
-  mutate(
-    temp_centered = temp_actual - mean(temp_actual, na.rm = TRUE),
-    wind_centered = windspeed - mean(windspeed, na.rm = TRUE)
-  )
-```
+# MLR Activity
 
-Centering shifts the mean to 0 but leaves the spread alone:
+## Data
 
-```{r}
-bikes |>
-  summarize(mean_orig = mean(temp_actual), mean_centered = mean(temp_centered),
-            sd_orig = sd(temp_actual), sd_centered = sd(temp_centered)) |>
-  round(2) |> knitr::kable()
-```
+- In an effort to understand the important aspects of a satisfactory supervisor, clerical employees at a large financial organization were asked to rate their immediate supervisor. 
 
-## Interpreting the centered model
+- The survey questions were designed to measure overall performance of the supervisor, as well as six additional characteristics. 
 
-```{r}
-bikes_mlr_c <- lm(rides ~ temp_centered + wind_centered, data = bikes)
-coef(bikes_mlr_c) |> round(3)
-```
+- Employees were asked to rate the following statements on a scale from 0 to 100 (0 = "completely disagree", 100 = "completely
+agree")
 
-- $\widehat\beta_0$: the expected number of rides is about
-  `r round(coef(bikes_mlr_c)[1])` on an *average* temperature and
-  windspeed day -- much more interpretable than before.
-- $\widehat\beta_j$'s **don't change** -- they still describe the
-  expected change for a 1-unit increase in the original units of
-  $x_j$, holding the other predictor constant.
+Variable |	Description
+-----        | -------------------
+`rating`     |	Overall rating of supervisor performance
+`complaints` |	Score for “Your supervisor handles employee complaints appropriately.”
+`privileges` |	Score for “Your supervisor allows special privileges.”
+`learn`      |	Score for “Your supervisor provides opportunities to learn new things.”
+`raises`     |	Score for “Your supervisor bases raises on performance.”
+`critical`   |	Score for “Your supervisor is too critical of poor performance.”
+`advance`    |	Score for “I am not satisfied with the rate I am advancing in the company?”
 
-## Standardizing predictor variables
+**Q1:** Before looking at the data, how do you think each predictor variable will be related to `rating`? What do you think will have the strongest relationship? The weakest?
 
-*Idea:* 1 MPH of windspeed isn't comparable to 1°F of temperature, so
-comparing raw slopes across predictors can be misleading. Standardize
-each predictor to have mean 0 and SD 1:
+\vspace{1in}
 
-```{r}
-#| fig-width: 6
-#| fig-height: 2.6
-p1 <- gf_histogram(~temp_centered, data = bikes, col = "white", fill = "#003300")
-p2 <- gf_histogram(~wind_centered, data = bikes, col = "white", fill = "#003300")
-p1 + p2
-```
+**Q2:** Use the pairs plot to answer the following
 
-```{r}
-#| echo: true
-bikes <- bikes |>
-  mutate(
-    temp_std = (temp_actual - mean(temp_actual, na.rm = TRUE)) / sd(temp_actual, na.rm = TRUE),
-    wind_std = (windspeed - mean(windspeed, na.rm = TRUE)) / sd(windspeed, na.rm = TRUE)
-  )
-```
+- Which predictor variables appear to be most closely related to `overall`? 
 
-```{r}
-bikes |>
-  summarize(mean_orig = mean(temp_actual), mean_std = mean(temp_std),
-            sd_orig = sd(temp_actual), sd_std = sd(temp_std)) |>
-  round(2) |> knitr::kable()
-```
+\vspace{1in}
 
-## Interpreting the standardized model
+- Which predictor variables appear to be most closely related to *each other*? 
 
-```{r}
-bikes_mlr_std <- lm(rides ~ temp_std + wind_std, data = bikes)
-coef(bikes_mlr_std) |> round(3)
-```
+\vspace{1in}
 
-- $\widehat\beta_0$: expected rides on an average day is unchanged
-  from the centered model (`r round(coef(bikes_mlr_std)[1])`).
-- $\widehat\beta_j$: now the expected change in the response for a 1
-  ___________________ increase in $x_j$, holding the other predictor
-  constant.
-  - We expect `r round(coef(bikes_mlr_std)[2])` *additional* rides
-    for every 1 SD increase in temperature
-    (`r round(sd(bikes$temp_actual),1)` degrees), holding windspeed
-    constant.
-  - We expect `r round(abs(coef(bikes_mlr_std)[3]))` *fewer* rides
-    for every 1 SD increase in windspeed
-    (`r round(sd(bikes$windspeed),1)` MPH), holding temperature
-    constant.
 
-::: {.callout-note}
-Standardized coefficients put predictors measured in different units
-on a common scale, so their magnitudes become directly comparable.
-:::
+**Q3:** SLR. Choose what you think will be the best *single* predictor and fit an SLR model. Interpret the intercept and slope coefficient and report the $R^2$ value.
+
+\vspace{2in}
+
+**Q4:** MLR. uUe all predictors and fit an MLR model. Interpret the intercept and two of the slope coefficients and report the $R^2$ value.
+
+\vspace{2in}
+
+**Q5:** Use the `predict` function to predict the overall manager score for a manager with scores of 50% for all predictors
+
+\vspace{1in}
+
+**Q7:** What if the manager from the previous question decides to try to improve her `critical` score by 10 points (so 40% instead of 50%) and her `complaints` score by 10 points (so 60% instead of 50%). How does that change the prediction? 
+
+\vspace{1in}
+
+## Function quick reference
+
+| Function | Purpose |
+|----|-----------|
+| `lm(formula, data)` | Fit a MLR model |
+| `predict(model, newdata, interval, level, se.fit)` | Make predictions and calculate intervals |
+| `data |> select(vars) |> ggpairs()` | Make pairs plot for selected variables |
