@@ -6,7 +6,7 @@ title-slide-attributes:
   data-slide-number: none
 format: 
   revealjs:
-    incremental: false
+    incremental: true
     scrollable: true
 editor_options: 
   chunk_output_type: console
@@ -167,23 +167,15 @@ gf_point(rides ~ windspeed, data = bikes, xlab = "Windspeed", ylab = "No. rides"
 :::
 :::::
 
-## Pairs plot
+## Geometric interpretation: 
+
+This relationship is actually 3 dimensional:
 
 ```{r}
-bikes |> 
-  select(temp_actual, windspeed, rides) |>
-  GGally::ggpairs()
-```
-
-## Correlation matrix
-
-```{r}
-#| echo: true
-
-
-bikes |> 
-  select(temp_actual, windspeed, rides) |>
-  cor()
+library(plotly)
+p <- plot_ly(bikes, x = ~temp_actual, y = ~windspeed, z = ~rides, 
+             type = "scatter3d", mode = "markers", color = ~rides)
+p
 ```
 
 
@@ -205,6 +197,25 @@ This model requires that...
 
 3. The error terms follow a normal distribution with mean 0 and variance $\sigma^2$
 
+## EDA: Pairs plot
+
+```{r}
+bikes |> 
+  select(temp_actual, windspeed, rides) |>
+  GGally::ggpairs()
+```
+
+## EDA: Correlation matrix
+
+```{r}
+#| echo: true
+
+
+bikes |> 
+  select(temp_actual, windspeed, rides) |>
+  cor()
+```
+
 
 ## Fitting the model
 
@@ -212,7 +223,7 @@ This model requires that...
 
 Least squares estimation: choose the coefficients to minimize 
 $$\text{SSE} = \sum_{i=1}^n \left(Y_i - \widehat{Y}_i \right)^2$$
-Then use $\widehat{\sigma} = \sqrt{\frac{\text{SSE}}{n-(p+1)}}$
+Then use $\widehat{\sigma} = \sqrt{\frac{\text{SSE}}{n-(k+1)}}$ where $k$ is the number of $x$ variables
 
 ## Fitting the model 
 
@@ -223,6 +234,10 @@ Then use $\widehat{\sigma} = \sqrt{\frac{\text{SSE}}{n-(p+1)}}$
 bikes_mlr <- lm(rides ~ temp_actual + windspeed, data = bikes)
 coef(bikes_mlr)
 ```
+
+. . . 
+
+`r equatiomatic::extract_eq(bikes_mlr, use_coefs = TRUE)`
 
 ## Interpreting $\widehat{\beta}_0$
 
@@ -252,16 +267,7 @@ coef(bikes_mlr) |> round(3)
 
 - We expect 38.63 *fewer* rides for every 1 MPH increase in windspeed, assuming constant temperature
 
-## Geometric interpretation: 
-
-MLR "line" is actually a **plane**
-
-```{r}
-library(plotly)
-p <- plot_ly(bikes, x = ~temp_actual, y = ~windspeed, z = ~rides, 
-             type = "scatter3d", mode = "markers", color = ~rides)
-p
-```
+- Compare these to the SLR estimates: $\hat \beta_{\text{temp}} = 89.23$ and $\hat \beta_{\text{wind}} = -55.5$
 
 ## Geometric interpretation: 
 
