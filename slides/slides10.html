@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Adding Categorical Predictors</title>
@@ -161,7 +161,7 @@ Prof Amanda Luby
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides10_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+<p><img data-src="slides10_files/figure-html/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -205,134 +205,134 @@ Prof Amanda Luby
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2011-03-04</td>
-<td style="text-align: left;">winter</td>
-<td style="text-align: right;">2011</td>
-<td style="text-align: left;">Mar</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">51.31102</td>
-<td style="text-align: right;">55.01111</td>
-<td style="text-align: right;">61.0417</td>
-<td style="text-align: right;">13.624182</td>
-<td style="text-align: right;">1730</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2012-12-18</td>
-<td style="text-align: left;">fall</td>
-<td style="text-align: right;">2012</td>
-<td style="text-align: left;">Dec</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">62.31948</td>
-<td style="text-align: right;">68.87372</td>
-<td style="text-align: right;">66.6250</td>
-<td style="text-align: right;">14.834068</td>
-<td style="text-align: right;">5124</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2011-09-07</td>
-<td style="text-align: left;">summer</td>
-<td style="text-align: right;">2011</td>
-<td style="text-align: left;">Sep</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">76.21852</td>
-<td style="text-align: right;">80.98061</td>
-<td style="text-align: right;">91.7083</td>
-<td style="text-align: right;">6.500394</td>
-<td style="text-align: right;">1878</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2012-12-23</td>
+<td style="text-align: left;">2012-02-11</td>
 <td style="text-align: left;">winter</td>
 <td style="text-align: right;">2012</td>
-<td style="text-align: left;">Dec</td>
+<td style="text-align: left;">Feb</td>
 <td style="text-align: left;">TRUE</td>
 <td style="text-align: left;">no</td>
-<td style="text-align: right;">50.14248</td>
-<td style="text-align: right;">55.35239</td>
-<td style="text-align: right;">51.5417</td>
-<td style="text-align: right;">8.916561</td>
-<td style="text-align: right;">1379</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2012-11-27</td>
-<td style="text-align: left;">fall</td>
-<td style="text-align: right;">2012</td>
-<td style="text-align: left;">Nov</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">53.52502</td>
-<td style="text-align: right;">57.34022</td>
-<td style="text-align: right;">78.6667</td>
-<td style="text-align: right;">15.916654</td>
-<td style="text-align: right;">3836</td>
+<td style="text-align: right;">48.54352</td>
+<td style="text-align: right;">50.97803</td>
+<td style="text-align: right;">73.1250</td>
+<td style="text-align: right;">19.416332</td>
+<td style="text-align: right;">1977</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2012-03-22</td>
+<td style="text-align: left;">2012-04-10</td>
 <td style="text-align: left;">spring</td>
 <td style="text-align: right;">2012</td>
-<td style="text-align: left;">Mar</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">72.89752</td>
-<td style="text-align: right;">79.84103</td>
-<td style="text-align: right;">83.1250</td>
-<td style="text-align: right;">7.876654</td>
-<td style="text-align: right;">5537</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2011-04-20</td>
-<td style="text-align: left;">spring</td>
-<td style="text-align: right;">2011</td>
 <td style="text-align: left;">Apr</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">no</td>
-<td style="text-align: right;">75.91100</td>
-<td style="text-align: right;">82.79528</td>
-<td style="text-align: right;">61.4167</td>
-<td style="text-align: right;">16.208975</td>
-<td style="text-align: right;">3331</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2011-11-29</td>
-<td style="text-align: left;">fall</td>
-<td style="text-align: right;">2011</td>
-<td style="text-align: left;">Nov</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">65.82498</td>
-<td style="text-align: right;">72.62375</td>
-<td style="text-align: right;">83.0833</td>
-<td style="text-align: right;">17.292164</td>
-<td style="text-align: right;">2818</td>
+<td style="text-align: right;">64.96402</td>
+<td style="text-align: right;">71.26097</td>
+<td style="text-align: right;">43.5000</td>
+<td style="text-align: right;">16.708125</td>
+<td style="text-align: right;">5099</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">2012-09-23</td>
-<td style="text-align: left;">fall</td>
-<td style="text-align: right;">2012</td>
-<td style="text-align: left;">Sep</td>
-<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">2011-02-25</td>
+<td style="text-align: left;">winter</td>
+<td style="text-align: right;">2011</td>
+<td style="text-align: left;">Feb</td>
+<td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">no</td>
-<td style="text-align: right;">71.05252</td>
-<td style="text-align: right;">78.70397</td>
-<td style="text-align: right;">46.7083</td>
-<td style="text-align: right;">14.958286</td>
-<td style="text-align: right;">5453</td>
+<td style="text-align: right;">58.88888</td>
+<td style="text-align: right;">63.54149</td>
+<td style="text-align: right;">71.2174</td>
+<td style="text-align: right;">23.218113</td>
+<td style="text-align: right;">1341</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">2011-06-16</td>
+<td style="text-align: left;">2012-01-14</td>
+<td style="text-align: left;">winter</td>
+<td style="text-align: right;">2012</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: right;">45.28400</td>
+<td style="text-align: right;">48.47783</td>
+<td style="text-align: right;">45.7500</td>
+<td style="text-align: right;">12.541261</td>
+<td style="text-align: right;">2160</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2012-06-18</td>
 <td style="text-align: left;">spring</td>
-<td style="text-align: right;">2011</td>
+<td style="text-align: right;">2012</td>
 <td style="text-align: left;">Jun</td>
 <td style="text-align: left;">FALSE</td>
 <td style="text-align: left;">no</td>
-<td style="text-align: right;">78.37098</td>
-<td style="text-align: right;">85.58114</td>
-<td style="text-align: right;">68.8333</td>
-<td style="text-align: right;">13.833557</td>
-<td style="text-align: right;">3222</td>
+<td style="text-align: right;">73.94298</td>
+<td style="text-align: right;">81.03578</td>
+<td style="text-align: right;">77.7917</td>
+<td style="text-align: right;">11.707982</td>
+<td style="text-align: right;">4446</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2012-05-20</td>
+<td style="text-align: left;">spring</td>
+<td style="text-align: right;">2012</td>
+<td style="text-align: left;">May</td>
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: right;">77.81748</td>
+<td style="text-align: right;">84.55703</td>
+<td style="text-align: right;">53.0417</td>
+<td style="text-align: right;">17.042589</td>
+<td style="text-align: right;">4425</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2012-05-03</td>
+<td style="text-align: left;">spring</td>
+<td style="text-align: right;">2012</td>
+<td style="text-align: left;">May</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: right;">73.32800</td>
+<td style="text-align: right;">80.35178</td>
+<td style="text-align: right;">76.8333</td>
+<td style="text-align: right;">8.957632</td>
+<td style="text-align: right;">5657</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2011-01-20</td>
+<td style="text-align: left;">winter</td>
+<td style="text-align: right;">2011</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: right;">51.31102</td>
+<td style="text-align: right;">54.95450</td>
+<td style="text-align: right;">53.8333</td>
+<td style="text-align: right;">13.125568</td>
+<td style="text-align: right;">1844</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2011-02-17</td>
+<td style="text-align: left;">winter</td>
+<td style="text-align: right;">2011</td>
+<td style="text-align: left;">Feb</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: right;">64.16448</td>
+<td style="text-align: right;">70.57922</td>
+<td style="text-align: right;">50.5000</td>
+<td style="text-align: right;">15.416968</td>
+<td style="text-align: right;">2216</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2011-12-23</td>
+<td style="text-align: left;">winter</td>
+<td style="text-align: right;">2011</td>
+<td style="text-align: left;">Dec</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: right;">59.55198</td>
+<td style="text-align: right;">65.97617</td>
+<td style="text-align: right;">68.6250</td>
+<td style="text-align: right;">18.374482</td>
+<td style="text-align: right;">2046</td>
 </tr>
 </tbody>
 </table>
@@ -342,7 +342,7 @@ Prof Amanda Luby
 <section id="plan-for-today-remove-windspeed-but-add-weekend" class="slide level2">
 <h2>Plan for today: remove <code>windspeed</code> but add <code>weekend</code></h2>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<img data-src="slides10_files/figure-html/unnamed-chunk-5-1.png" width="672" class="r-stretch"></section>
 <section id="new-data-example" class="slide level2 smaller">
 <h2>New data example</h2>
 <div class="columns" data-align="center">
@@ -392,15 +392,15 @@ Prof Amanda Luby
 <section id="eda" class="slide level2">
 <h2>EDA</h2>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
+<img data-src="slides10_files/figure-html/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
 <section id="eda-1" class="slide level2">
 <h2>EDA</h2>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
+<img data-src="slides10_files/figure-html/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
 <section id="eda-2" class="slide level2">
 <h2>EDA</h2>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
+<img data-src="slides10_files/figure-html/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
 <section id="indicator-variables" class="slide level2">
 <h2>Indicator variables</h2>
 <p>Regression requires a numeric representation of all variables, so we treat <code>TRUE = 1</code> and <code>FALSE = 0</code></p>
@@ -432,17 +432,17 @@ Prof Amanda Luby
 <h2>Parallel lines model</h2>
 <p>The number of rides increases at the same rate, but always lower on weekends</p>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<img data-src="slides10_files/figure-html/unnamed-chunk-9-1.png" width="672" class="r-stretch"></section>
 <section id="different-slopes-model" class="slide level2">
 <h2>Different slopes model</h2>
 <p>The number of rides starts at the same baseline, but the relationship between temperature and rides is different on weekends vs weekdays</p>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<img data-src="slides10_files/figure-html/unnamed-chunk-10-1.png" width="672" class="r-stretch"></section>
 <section id="separate-lines-model" class="slide level2">
 <h2>Separate lines model</h2>
 <p>Weekends/weekdays have different baselines and different relationships with the number of rides</p>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<img data-src="slides10_files/figure-html/unnamed-chunk-11-1.png" width="672" class="r-stretch"></section>
 <section id="parallel-lines-model-1" class="slide level2">
 <h2>Parallel lines model</h2>
 <p><span class="math display">\[\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend}\]</span></p>
@@ -842,44 +842,6 @@ Prof Amanda Luby
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
