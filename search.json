@@ -2681,18 +2681,11 @@
     "text": "SLR model: rides ~ windspeed\n\n\n\\[\n\\operatorname{\\widehat{rides}} = 4205.06 - 55.52(\\operatorname{windspeed})\n\\]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \\(R^2 =\\) 0.038"
   },
   {
-    "objectID": "slides/slides09.html#pairs-plot",
-    "href": "slides/slides09.html#pairs-plot",
+    "objectID": "slides/slides09.html#geometric-interpretation",
+    "href": "slides/slides09.html#geometric-interpretation",
     "title": "Intro to Multiple Linear Regression",
-    "section": "Pairs plot",
-    "text": "Pairs plot"
-  },
-  {
-    "objectID": "slides/slides09.html#correlation-matrix",
-    "href": "slides/slides09.html#correlation-matrix",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Correlation matrix",
-    "text": "Correlation matrix\n\nbikes |&gt; \n  select(temp_actual, windspeed, rides) |&gt;\n  cor()\n\n            temp_actual  windspeed      rides\ntemp_actual   1.0000000 -0.1055362  0.5763486\nwindspeed    -0.1055362  1.0000000 -0.1949352\nrides         0.5763486 -0.1949352  1.0000000"
+    "section": "Geometric interpretation:",
+    "text": "Geometric interpretation:\nThis relationship is actually 3 dimensional:"
   },
   {
     "objectID": "slides/slides09.html#multiple-linear-regression-mlr",
@@ -2702,18 +2695,32 @@
     "text": "Multiple Linear Regression (MLR)\n\\[Y_i = \\beta_0 + \\beta_1 x_{i1} + \\beta_2 x_{i2} + \\cdots + \\beta_p x_{ip} + \\varepsilon_i, \\quad \\varepsilon_i \\overset{iid}{\\sim} N(0, \\sigma^2)\\]\n\n\nThis model requires that…\n\n\\(\\mu\\{Y|x_1, x_2, \\ldots, x_p\\}\\) is a linear function\nThe error terms are independent\nThe error terms follow a normal distribution with mean 0 and variance \\(\\sigma^2\\)"
   },
   {
+    "objectID": "slides/slides09.html#eda-pairs-plot",
+    "href": "slides/slides09.html#eda-pairs-plot",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "EDA: Pairs plot",
+    "text": "EDA: Pairs plot"
+  },
+  {
+    "objectID": "slides/slides09.html#eda-correlation-matrix",
+    "href": "slides/slides09.html#eda-correlation-matrix",
+    "title": "Intro to Multiple Linear Regression",
+    "section": "EDA: Correlation matrix",
+    "text": "EDA: Correlation matrix\n\nbikes |&gt; \n  select(temp_actual, windspeed, rides) |&gt;\n  cor()\n\n            temp_actual  windspeed      rides\ntemp_actual   1.0000000 -0.1055362  0.5763486\nwindspeed    -0.1055362  1.0000000 -0.1949352\nrides         0.5763486 -0.1949352  1.0000000"
+  },
+  {
     "objectID": "slides/slides09.html#fitting-the-model",
     "href": "slides/slides09.html#fitting-the-model",
     "title": "Intro to Multiple Linear Regression",
     "section": "Fitting the model",
-    "text": "Fitting the model\nProcedure:\nLeast squares estimation: choose the coefficients to minimize \\[\\text{SSE} = \\sum_{i=1}^n \\left(Y_i - \\widehat{Y}_i \\right)^2\\] Then use \\(\\widehat{\\sigma} = \\sqrt{\\frac{\\text{SSE}}{n-(p+1)}}\\)"
+    "text": "Fitting the model\nProcedure:\nLeast squares estimation: choose the coefficients to minimize \\[\\text{SSE} = \\sum_{i=1}^n \\left(Y_i - \\widehat{Y}_i \\right)^2\\] Then use \\(\\widehat{\\sigma} = \\sqrt{\\frac{\\text{SSE}}{n-(k+1)}}\\) where \\(k\\) is the number of \\(x\\) variables"
   },
   {
     "objectID": "slides/slides09.html#fitting-the-model-1",
     "href": "slides/slides09.html#fitting-the-model-1",
     "title": "Intro to Multiple Linear Regression",
     "section": "Fitting the model",
-    "text": "Fitting the model\nR:\n\nbikes_mlr &lt;- lm(rides ~ temp_actual + windspeed, data = bikes)\ncoef(bikes_mlr)\n\n(Intercept) temp_actual   windspeed \n-1525.53822    87.01789   -38.62817"
+    "text": "Fitting the model\nR:\n\nbikes_mlr &lt;- lm(rides ~ temp_actual + windspeed, data = bikes)\ncoef(bikes_mlr)\n\n(Intercept) temp_actual   windspeed \n-1525.53822    87.01789   -38.62817 \n\n\n\n\\[\n\\operatorname{\\widehat{rides}} = -1525.54 + 87.02(\\operatorname{temp\\_actual}) - 38.63(\\operatorname{windspeed})\n\\]"
   },
   {
     "objectID": "slides/slides09.html#interpreting-widehatbeta_0",
@@ -2727,14 +2734,7 @@
     "href": "slides/slides09.html#interpreting-widehatbeta_j",
     "title": "Intro to Multiple Linear Regression",
     "section": "Interpreting \\(\\widehat{\\beta}_j\\)",
-    "text": "Interpreting \\(\\widehat{\\beta}_j\\)\n\n\n(Intercept) temp_actual   windspeed \n  -1525.538      87.018     -38.628 \n\n\n\nThe expected change in the response for a 1-unit increase in \\(x_j\\), when all other variables are held constant.\nWe expect 87.02 additional rides for every 1 degree increase in actual temperature, assuming constant windspeed\nWe expect 38.63 fewer rides for every 1 MPH increase in windspeed, assuming constant temperature"
-  },
-  {
-    "objectID": "slides/slides09.html#geometric-interpretation",
-    "href": "slides/slides09.html#geometric-interpretation",
-    "title": "Intro to Multiple Linear Regression",
-    "section": "Geometric interpretation:",
-    "text": "Geometric interpretation:\nMLR “line” is actually a plane"
+    "text": "Interpreting \\(\\widehat{\\beta}_j\\)\n\n\n(Intercept) temp_actual   windspeed \n  -1525.538      87.018     -38.628 \n\n\n\nThe expected change in the response for a 1-unit increase in \\(x_j\\), when all other variables are held constant.\nWe expect 87.02 additional rides for every 1 degree increase in actual temperature, assuming constant windspeed\nWe expect 38.63 fewer rides for every 1 MPH increase in windspeed, assuming constant temperature\nCompare these to the SLR estimates: \\(\\hat \\beta_{\\text{temp}} = 89.23\\) and \\(\\hat \\beta_{\\text{wind}} = -55.5\\)"
   },
   {
     "objectID": "slides/slides09.html#geometric-interpretation-1",
