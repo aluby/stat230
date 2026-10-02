@@ -106,6 +106,8 @@ s3d$plane3d(bikes_mlr, draw_polygon = TRUE, polygon_args = list(col = adjustcolo
 
 # MLR Activity
 
+To complete this handout, open the R activity (linked on moodle)
+
 ## Data
 
 - In an effort to understand the important aspects of a satisfactory supervisor, clerical employees at a large financial organization were asked to rate their immediate supervisor. 
@@ -144,7 +146,7 @@ Variable |	Description
 
 \vspace{2in}
 
-**Q4:** MLR. uUe all predictors and fit an MLR model. Interpret the intercept and two of the slope coefficients and report the $R^2$ value.
+**Q4:** MLR. Use all predictors and fit an MLR model. Interpret the intercept and two of the slope coefficients and report the $R^2$ value.
 
 \vspace{2in}
 
@@ -159,7 +161,7 @@ Variable |	Description
 ## Function quick reference
 
 | Function | Purpose |
-|----|-----------|
+|------------|-----------|
 | `lm(formula, data)` | Fit a MLR model |
 | `predict(model, newdata, interval, level, se.fit)` | Make predictions and calculate intervals |
 | `data |> select(vars) |> ggpairs()` | Make pairs plot for selected variables |
