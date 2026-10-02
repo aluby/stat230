@@ -6,7 +6,7 @@ title-slide-attributes:
   data-slide-number: none
 format: 
   revealjs:
-    incremental: false
+    incremental: true
     scrollable: true
 editor_options: 
   chunk_output_type: console
@@ -71,7 +71,39 @@ wildfires <- filter(wildfires, Year >= 1960)
 ```
 
 
-## `bikes` again
+## `bikes` data {.smaller}
+
+*Capital Bikeshare* is a bike sharing service in the Washington, D.C. area. To best serve its registered members, the company must understand the demand for its service. To help them out, we can analyze the number of rides taken on a random sample of *n* days. 
+
+::::: columns
+::: {.column width="60%"}
+<br>
+
+```{r}
+#| fig.height: 3.5
+#| fig.width: 6
+#| fig.align: center
+#| out.width: 100%
+#| echo: false
+gf_histogram(~rides, data = bikes, xlab = "No. Rides", fill = "#003300", col = "white", bins = 25) 
+```
+:::
+
+::: {.column width="40%"}
+
+<br>
+The data also has information about: 
+
+- Weekend/holiday/etc
+- Day of the measurement
+- Weather information
+
+:::
+:::::
+
+We're interested in predicting daily rides based on `temp_actual` and `windspeed`
+
+## SLR model: `rides ~ temp_actual`
 
 ```{r}
 bikes_slr <- lm(rides ~ temp_actual, data = bikes)
@@ -103,23 +135,47 @@ gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No
 :::
 :::::
 
-## Pairs plot
+## SLR model: `rides ~ windspeed`
 
 ```{r}
-bikes |> 
-  select(temp_actual, windspeed, rides) |>
-  GGally::ggpairs()
+bikes_slr_2 <- lm(rides ~ windspeed, data = bikes)
+
+equatiomatic::extract_eq(bikes_slr_2, use_coefs = TRUE)
 ```
 
-## Correlation matrix
+::::: columns
+::: {.column width="50%"}
+<br>
 
 ```{r}
-#| echo: true
+#| fig.height: 3.5
+#| fig.width: 6
+#| fig.align: center
+#| out.width: 100%
+#| echo: false
+gf_point(rides ~ windspeed, data = bikes, xlab = "Windspeed", ylab = "No. rides", color = "#003300", size = 1) |>
+  gf_lm(rides ~ windspeed, size = 1.5, color = "#f15a31") 
+```
+
+:::
 
 
-bikes |> 
-  select(temp_actual, windspeed, rides) |>
-  cor()
+::: {.column width="50%"}
+
+<br> $R^2 =$ `r round(summary(bikes_slr_2)$r.squared, 3)`
+
+:::
+:::::
+
+## Geometric interpretation: 
+
+This relationship is actually 3 dimensional:
+
+```{r}
+library(plotly)
+p <- plot_ly(bikes, x = ~temp_actual, y = ~windspeed, z = ~rides, 
+             type = "scatter3d", mode = "markers", color = ~rides)
+p
 ```
 
 
@@ -141,6 +197,25 @@ This model requires that...
 
 3. The error terms follow a normal distribution with mean 0 and variance $\sigma^2$
 
+## EDA: Pairs plot
+
+```{r}
+bikes |> 
+  select(temp_actual, windspeed, rides) |>
+  GGally::ggpairs()
+```
+
+## EDA: Correlation matrix
+
+```{r}
+#| echo: true
+
+
+bikes |> 
+  select(temp_actual, windspeed, rides) |>
+  cor()
+```
+
 
 ## Fitting the model
 
@@ -148,7 +223,7 @@ This model requires that...
 
 Least squares estimation: choose the coefficients to minimize 
 $$\text{SSE} = \sum_{i=1}^n \left(Y_i - \widehat{Y}_i \right)^2$$
-Then use $\widehat{\sigma} = \sqrt{\frac{\text{SSE}}{n-(p+1)}}$
+Then use $\widehat{\sigma} = \sqrt{\frac{\text{SSE}}{n-(k+1)}}$ where $k$ is the number of $x$ variables
 
 ## Fitting the model 
 
@@ -160,7 +235,11 @@ bikes_mlr <- lm(rides ~ temp_actual + windspeed, data = bikes)
 coef(bikes_mlr)
 ```
 
-## Interpreting $\widehat{\beta}_0$ {.incremental}
+. . . 
+
+`r equatiomatic::extract_eq(bikes_mlr, use_coefs = TRUE)`
+
+## Interpreting $\widehat{\beta}_0$
 
 
 ```{r echo=FALSE}
@@ -172,7 +251,7 @@ coef(bikes_mlr) |> round(3)
 
 - The expected overall number of rides is about -1525.538 when temperature = 0 and windspeed = 0 🫠
 
-## Interpreting $\widehat{\beta}_j$ {.incremental}
+## Interpreting $\widehat{\beta}_j$ 
 
 
 ```{r echo=FALSE}
@@ -188,16 +267,7 @@ coef(bikes_mlr) |> round(3)
 
 - We expect 38.63 *fewer* rides for every 1 MPH increase in windspeed, assuming constant temperature
 
-## Geometric interpretation: 
-
-MLR "line" is actually a **plane**
-
-```{r}
-library(plotly)
-p <- plot_ly(bikes, x = ~temp_actual, y = ~windspeed, z = ~rides, 
-             type = "scatter3d", mode = "markers", color = ~rides)
-p
-```
+- Compare these to the SLR estimates: $\hat \beta_{\text{temp}} = 89.23$ and $\hat \beta_{\text{wind}} = -55.5$
 
 ## Geometric interpretation: 
 
@@ -230,128 +300,9 @@ p |>
   )
 ```
 
+## Takeaways: 
 
-## Centering predictor variables
-
-*Idea:* make intercept more interpretable
-
-```{r}
-p <- plot_ly(bikes, x = ~(temp_actual - mean(temp_actual)), y = ~(windspeed - mean(windspeed)), z = ~rides, 
-             type = "scatter3d", mode = "markers", color = ~rides)
-p
-```
-
-## Making centered variables
-
-```{r}
-#| echo: true
-
-bikes <- bikes |>
-  mutate(
-    temp_centered = temp_actual - mean(temp_actual, na.rm = TRUE), 
-    wind_centered = windspeed - mean(windspeed, na.rm = TRUE)
-  )
-```
-
-Mean shifts, standard deviation stays the same:
-
-```{r}
-bikes |>
-  summarize(
-    mean_orig = mean(temp_actual),
-    mean_centered = mean(temp_centered),
-    sd_orig = sd(temp_actual),
-    sd_centered = sd(temp_centered)
-  ) |>
-  round(2)
-```
-
-## Interpreting $\widehat{\beta}_0$ for centered predictors {.incremental}
-
-
-```{r echo=FALSE}
-bikes_mlr_c <- lm(rides ~ temp_centered + wind_centered, data = bikes)
-coef(bikes_mlr_c) |> round(3)
-```
-
-- The expected value of the response variable when all explanatory variables are 0
-
-- The expected overall number of rides is about 3,482 on an average temperature and windspeed day 😌
-
-## Interpreting $\widehat{\beta}_j$ (doesn't change) {.incremental} 
-
-
-```{r echo=FALSE}
-# knitr::kable(tidy(supervisor_lm), format = "html", digits = 4)
-coef(bikes_mlr_c) |> round(3)
-```
-
-
-- The expected change in the response for a 1-unit increase in $x_j$, when all other variables are held constant.
-
-- We expect 87.02 *additional* rides for every 1 degree increase in actual temperature, assuming constant windspeed
-
-- We expect 38.63 *fewer* rides for every 1 MPH increase in windspeed, assuming constant temperature
-
-## Standardizing predictor variables
-
-*Idea:* 1 MPH in windspeed is different than 1 degree temp change
-
-```{r}
-p1 <- gf_histogram(~temp_centered, data = bikes, col = "white", fill = "#003300")
-p2 <- gf_histogram(~wind_centered, data = bikes, col = "white", fill = "#003300")
-p1 + p2
-```
-
-
-## Making standardized variables
-
-```{r}
-#| echo: true
-
-bikes <- bikes |>
-  mutate(
-    temp_std = (temp_actual - mean(temp_actual, na.rm = TRUE))/sd(temp_actual, na.rm = TRUE), 
-    wind_std = (windspeed - mean(windspeed, na.rm = TRUE))/sd(windspeed, na.rm = TRUE)
-  )
-```
-
-Now, mean = 0 and sd = 1
-
-```{r}
-bikes |>
-  summarize(
-    mean_orig = mean(temp_actual),
-    mean_std = mean(temp_std),
-    sd_orig = sd(temp_actual),
-    sd_std = sd(temp_std)
-  ) |>
-  round(2)
-```
-
-## Interpreting $\widehat{\beta}_0$ for standardized predictors {.incremental}
-
-
-```{r echo=FALSE}
-bikes_mlr_std <- lm(rides ~ temp_std + wind_std, data = bikes)
-coef(bikes_mlr_std) |> round(3)
-```
-
-- The expected value of the response variable when all explanatory variables are 0
-
-- The expected overall number of rides is about 3,482 on an average temperature and windspeed day
-
-## Interpreting $\widehat{\beta}_j$ for standardized predictors {.incremental} 
-
-```{r echo=FALSE}
-# knitr::kable(tidy(supervisor_lm), format = "html", digits = 4)
-coef(bikes_mlr_std) |> round(3)
-```
-
-
-- The expected change in the response for a 1 *standard deviation* increase in $x_j$, when all other variables are held constant.
-
-- We expect 885 *additional* rides for every 1 SD increase in actual temperature (10.2 degrees), assuming constant windspeed
-
-- We expect 213 *fewer* rides for every 1 SD increase in windspeed (5.5 MPH), assuming constant temperature
-
+- EDA for more than 1 predictor variable
+- Write the theoretical MLR model
+- Write the fitted MLR model
+- Interpret the MLR coefficients

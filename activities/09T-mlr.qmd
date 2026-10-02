@@ -1,19 +1,23 @@
 ---
-title: "09: Intro to Multiple Regression"
+title: "09: Intro to Multiple Linear Regression"
+webr:
+  packages:
+    - ggformula
+    - ggResidpanel
+format: 
+  live-html:
+    toc: true
+    output-file: "09-mlr-tutorial"
+engine: knitr
+editor: source
+editor_options: 
+  chunk_output_type: console
 ---
 
-```{r}
-library(ggformula)
-library(dplyr)
-library(broom)
-library(GGally)
-
-supervisor <- read.csv("http://aluby.github.io/stat230/data/supervisor.csv")
-#supervisor <- read.csv(here::here("data/supervisor.csv"))
-```
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
 
 ::: callout-note
-This is the quarto version of the R activity. If you prefer to use the tutorial version, you can use <https://aluby.github.io/stat230/activities/09-mlr-tutorial>
+This is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use <https://aluby.github.io/stat230/activities/09-mlr>
 :::
 
 # Data
@@ -39,12 +43,19 @@ Variable |	Description
 
 **Before looking at the data**, how do you think each predictor variable will be related to `rating`? What do you think will have the strongest relationship? The weakest?
 
+## Loading data
+
+To load the `supervisor` data set, run the following code chunk:
+
+```{webr}
+supervisor <- read.csv("http://aluby.github.io/stat230/data/supervisor.csv")
+```
+
 ## EDA: Making a pairs plot
 
 We will use the `ggpairs()` function in the {GGally} package to make the pairs plot. By default, it will include every variable in the dataset. The code below firsts `select()`s the columns we want to include (all of them). I have also moved the response variable to be the last in the list, so that it shows up on the Y axis. 
 
-```{r}
-#| fig-alt: "A scatterplot matrix (pairs plot) of the seven selected variables."
+```{webr}
 supervisor |>
   select(complaints, privileges, learn, raises, critical, advance, overall) |>
   ggpairs()
@@ -53,27 +64,24 @@ supervisor |>
 - Which predictor variables appear to be most closely related to `overall`? 
 - Which predictor variables appear to be most closely related to *each other*? 
 
-# SLR
+
+## SLR
 
 In the code chunk below, choose what you think will be the best *single* predictor and fit an SLR model. Interpret the intercept and slope coefficient and report the $R^2$ value.
 
-```{r}
-#| error: true
+```{webr}
 supervisor_slr <- lm(overall ~ ______, data = supervisor)
 summary(supervisor_slr)
 ```
 
-# MLR
+## MLR
 
 In the code chunk below, use all predictors and fit an MLR model. Interpret the intercept and two of the slope coefficients and report the $R^2$ value.
 
-```{r}
-#| error: true
-
+```{webr}
 supervisor_mlr <- lm(overall ~ ______, data = supervisor)
 summary(supervisor_mlr)
 ```
-
 
 # Predicting responses
 
@@ -88,7 +96,7 @@ predict(bikes_lm, newdata = data.frame(temp_actual = 90, windspeed = 6))
 - Use this as starter code to predict the overall manager score for a manager with scores of 50% for all predictors
 - What if the manager from the previous question decides to try to improve her `critical` score by 10 points (so 40% instead of 50%) and her `complaints` score by 10 points (so 60% instead of 50%). How does that change the prediction? 
 
-```{r}
+```{webr}
 # your code here
 ```
 
@@ -101,3 +109,4 @@ predict(bikes_lm, newdata = data.frame(temp_actual = 90, windspeed = 6))
 | `lm(formula, data)` | Fit a MLR model |
 | `predict(model, newdata, interval, level, se.fit)` | Make predictions and calculate intervals |
 | `data |> select(vars) |> ggpairs()` | Make pairs plot for selected variables |
+
