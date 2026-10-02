@@ -184,6 +184,12 @@ of the question being addressed
   - [ ] The text is neatly presented, broken into readable paragraphs and laid out in a coherent manner
   - [ ] Peer evaluations were completed for group members and satisfactory from group members
 
+# Example
+
+::: callout-tip
+You can take a peek at an [annotated case study example](slr_casestudy_example.qmd), but I don't expect everybody's to look exactly the same!
+:::
+
 # Questions?
 
 If you have questions, please post them on the Case Study 1 thread on our Ed discussion page!
