@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Inference for MLR</title>
@@ -247,7 +247,7 @@ temp_actual:weekendTRUE
 4 temp_actual:weekendTRUE     0.411     12.5     0.0328 9.74e- 1</code></pre>
 </div>
 </div>
-<img data-src="slides11_files/figure-html/unnamed-chunk-3-1.png" width="672" class="r-stretch"></section>
+<img data-src="slides11_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
 <section id="testing-a-single-coefficient" class="slide level2">
 <h2>Testing a single coefficient</h2>
 <div style="font-size: 0.9em;">
@@ -267,7 +267,7 @@ temp_actual:weekendTRUE
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides11_files/figure-html/unnamed-chunk-4-1.png" width="850"></p>
+<p><img data-src="slides11_files/figure-revealjs/unnamed-chunk-4-1.png" width="850"></p>
 </figure>
 </div>
 </div>
@@ -327,7 +327,7 @@ temp_actual:weekendTRUE
 <section id="explained-variability" class="slide level2">
 <h2>Explained Variability</h2>
 
-<img data-src="slides11_files/figure-html/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="672"></section>
+<img data-src="slides11_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="672"></section>
 <section id="explained-variability-1" class="slide level2">
 <h2>Explained Variability</h2>
 <div class="columns">
@@ -337,7 +337,7 @@ temp_actual:weekendTRUE
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides11_files/figure-html/unnamed-chunk-9-1.png" style="width:100.0%"></p>
+<p><img data-src="slides11_files/figure-revealjs/unnamed-chunk-9-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -348,7 +348,7 @@ temp_actual:weekendTRUE
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides11_files/figure-html/unnamed-chunk-10-1.png" style="width:100.0%"></p>
+<p><img data-src="slides11_files/figure-revealjs/unnamed-chunk-10-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -443,11 +443,11 @@ F &amp;= \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{f
 <h2>F distribution</h2>
 <p>The F-statistics follows an <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(d\)</span> and <span class="math inline">\(n-p-1\)</span> d.f.</p>
 
-<img data-src="slides11_files/figure-html/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="slides11_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="upper-tail-p-values" class="slide level2">
 <h2>Upper-tail p-values</h2>
 
-<img data-src="slides11_files/figure-html/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>To obtain upper-tail areas: <code>1 - pf(stat, df1, df2)</code></p>
+<img data-src="slides11_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>To obtain upper-tail areas: <code>1 - pf(stat, df1, df2)</code></p>
 </section>
 <section id="putting-it-all-together" class="slide level2">
 <h2>Putting it all together</h2>
@@ -768,6 +768,44 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
