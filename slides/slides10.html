@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Adding Categorical Predictors</title>
@@ -28,6 +28,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #767676;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #767676;  padding-left: 4px; }
+    div.sourceCode
+      { color: #545454; background-color: #fefefe; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #545454; } /* Normal */
+    code span.al { color: #7928a1; } /* Alert */
+    code span.an { color: #696969; } /* Annotation */
+    code span.at { color: #a55a00; } /* Attribute */
+    code span.bn { color: #7928a1; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #d91e18; } /* ControlFlow */
+    code span.ch { color: #008000; } /* Char */
+    code span.cn { color: #d91e18; } /* Constant */
+    code span.co { color: #696969; } /* Comment */
+    code span.cv { color: #696969; font-style: italic; } /* CommentVar */
+    code span.do { color: #696969; font-style: italic; } /* Documentation */
+    code span.dt { color: #7928a1; } /* DataType */
+    code span.dv { color: #7928a1; } /* DecVal */
+    code span.er { color: #7928a1; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #a55a00; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #696969; } /* Information */
+    code span.kw { color: #d91e18; } /* Keyword */
+    code span.op { color: #00769e; } /* Operator */
+    code span.ot { color: #d91e18; } /* Other */
+    code span.pp { color: #7928a1; } /* Preprocessor */
+    code span.sc { color: #00769e; } /* SpecialChar */
+    code span.ss { color: #008000; } /* SpecialString */
+    code span.st { color: #008000; } /* String */
+    code span.va { color: #a55a00; } /* Variable */
+    code span.vs { color: #008000; } /* VerbatimString */
+    code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-4b8f244490ab824b6183a9146e95bcf1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -145,8 +211,8 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section id="recap-bikes-mlr" class="slide level2">
-<h2>Recap: <code>bikes</code> MLR</h2>
+<section id="last-time-bikes-mlr" class="slide level2">
+<h2>Last time: <code>bikes</code> MLR</h2>
 <div class="cell">
 <div class="cell-output-display">
 <p><span class="math display">\[
@@ -154,214 +220,31 @@ Prof Amanda Luby
 \]</span></p>
 </div>
 </div>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><br></p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="slides10_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
 <p><br> <span class="math inline">\(R^2 =\)</span> 0.35</p>
-</div></div>
-</section>
-<section id="bikes-data" class="slide level2 smaller">
-<h2><code>bikes</code> data</h2>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 7%">
-<col style="width: 5%">
-<col style="width: 6%">
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 13%">
-<col style="width: 10%">
-<col style="width: 9%">
-<col style="width: 10%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">date</th>
-<th style="text-align: left;">season</th>
-<th style="text-align: right;">year</th>
-<th style="text-align: left;">month</th>
-<th style="text-align: left;">weekend</th>
-<th style="text-align: left;">holiday</th>
-<th style="text-align: right;">temp_actual</th>
-<th style="text-align: right;">temp_feel</th>
-<th style="text-align: right;">humidity</th>
-<th style="text-align: right;">windspeed</th>
-<th style="text-align: right;">rides</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">2011-03-04</td>
-<td style="text-align: left;">winter</td>
-<td style="text-align: right;">2011</td>
-<td style="text-align: left;">Mar</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">51.31102</td>
-<td style="text-align: right;">55.01111</td>
-<td style="text-align: right;">61.0417</td>
-<td style="text-align: right;">13.624182</td>
-<td style="text-align: right;">1730</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2012-12-18</td>
-<td style="text-align: left;">fall</td>
-<td style="text-align: right;">2012</td>
-<td style="text-align: left;">Dec</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">62.31948</td>
-<td style="text-align: right;">68.87372</td>
-<td style="text-align: right;">66.6250</td>
-<td style="text-align: right;">14.834068</td>
-<td style="text-align: right;">5124</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2011-09-07</td>
-<td style="text-align: left;">summer</td>
-<td style="text-align: right;">2011</td>
-<td style="text-align: left;">Sep</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">76.21852</td>
-<td style="text-align: right;">80.98061</td>
-<td style="text-align: right;">91.7083</td>
-<td style="text-align: right;">6.500394</td>
-<td style="text-align: right;">1878</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2012-12-23</td>
-<td style="text-align: left;">winter</td>
-<td style="text-align: right;">2012</td>
-<td style="text-align: left;">Dec</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">50.14248</td>
-<td style="text-align: right;">55.35239</td>
-<td style="text-align: right;">51.5417</td>
-<td style="text-align: right;">8.916561</td>
-<td style="text-align: right;">1379</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2012-11-27</td>
-<td style="text-align: left;">fall</td>
-<td style="text-align: right;">2012</td>
-<td style="text-align: left;">Nov</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">53.52502</td>
-<td style="text-align: right;">57.34022</td>
-<td style="text-align: right;">78.6667</td>
-<td style="text-align: right;">15.916654</td>
-<td style="text-align: right;">3836</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2012-03-22</td>
-<td style="text-align: left;">spring</td>
-<td style="text-align: right;">2012</td>
-<td style="text-align: left;">Mar</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">72.89752</td>
-<td style="text-align: right;">79.84103</td>
-<td style="text-align: right;">83.1250</td>
-<td style="text-align: right;">7.876654</td>
-<td style="text-align: right;">5537</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2011-04-20</td>
-<td style="text-align: left;">spring</td>
-<td style="text-align: right;">2011</td>
-<td style="text-align: left;">Apr</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">75.91100</td>
-<td style="text-align: right;">82.79528</td>
-<td style="text-align: right;">61.4167</td>
-<td style="text-align: right;">16.208975</td>
-<td style="text-align: right;">3331</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2011-11-29</td>
-<td style="text-align: left;">fall</td>
-<td style="text-align: right;">2011</td>
-<td style="text-align: left;">Nov</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">65.82498</td>
-<td style="text-align: right;">72.62375</td>
-<td style="text-align: right;">83.0833</td>
-<td style="text-align: right;">17.292164</td>
-<td style="text-align: right;">2818</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2012-09-23</td>
-<td style="text-align: left;">fall</td>
-<td style="text-align: right;">2012</td>
-<td style="text-align: left;">Sep</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">71.05252</td>
-<td style="text-align: right;">78.70397</td>
-<td style="text-align: right;">46.7083</td>
-<td style="text-align: right;">14.958286</td>
-<td style="text-align: right;">5453</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2011-06-16</td>
-<td style="text-align: left;">spring</td>
-<td style="text-align: right;">2011</td>
-<td style="text-align: left;">Jun</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">no</td>
-<td style="text-align: right;">78.37098</td>
-<td style="text-align: right;">85.58114</td>
-<td style="text-align: right;">68.8333</td>
-<td style="text-align: right;">13.833557</td>
-<td style="text-align: right;">3222</td>
-</tr>
-</tbody>
-</table>
-</div>
+<p><br></p>
+<div class="fragment">
+<p>Both predictors so far have been <em>quantitative</em>. What if a predictor is <em>categorical</em>?</p>
 </div>
 </section>
-<section id="plan-for-today-remove-windspeed-but-add-weekend" class="slide level2">
-<h2>Plan for today: remove <code>windspeed</code> but add <code>weekend</code></h2>
-
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
 <section id="new-data-example" class="slide level2 smaller">
 <h2>New data example</h2>
 <div class="columns" data-align="center">
 <div class="column" style="width:20%;">
 <p><strong>Goal:</strong></p>
-</div><div class="column" style="width:80%;">
+</div><div class="column fragment" style="width:80%;">
 <p>investigate the association between smoking and lung capacity using data from 345 adolescents between the ages of 10 and 19</p>
 </div></div>
 <div class="columns" data-align="center">
 <div class="column" style="width:20%;">
 <p><strong>Wrinkle:</strong></p>
-</div><div class="column" style="width:80%;">
-<p>Lung function is expected to increase during adolescence, but smoking may slow it’s progression</p>
+</div><div class="column fragment" style="width:80%;">
+<p>Lung function is expected to increase during adolescence, but smoking may slow its progression</p>
 </div></div>
 <p><br></p>
 <div class="columns" data-align="center">
 <div class="column" style="width:20%;">
 <p><strong>Data:</strong></p>
-</div><div class="column" style="width:80%;">
+</div><div class="column fragment" style="width:80%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -392,18 +275,17 @@ Prof Amanda Luby
 <section id="eda" class="slide level2">
 <h2>EDA</h2>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
+<img data-src="slides10_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
 <section id="eda-1" class="slide level2">
 <h2>EDA</h2>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
-<section id="eda-2" class="slide level2">
-<h2>EDA</h2>
-
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
+<img data-src="slides10_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"><div class="fragment">
+<p>Smokers skew <em>older</em>, so any raw FEV difference is tangled up with age</p>
+</div>
+</section>
 <section id="indicator-variables" class="slide level2">
 <h2>Indicator variables</h2>
-<p>Regression requires a numeric representation of all variables, so we treat <code>TRUE = 1</code> and <code>FALSE = 0</code></p>
+<p>Regression requires a numeric representation of all variables, so we create an <strong>indicator</strong> (0/1) variable</p>
 <p><br></p>
 <p>Create a <code>Smoker</code> indicator variable:</p>
 <ul>
@@ -419,60 +301,126 @@ Prof Amanda Luby
 <li>Work with your groups (last day together!)</li>
 </ul>
 </section>
-<section id="model-1" class="slide level2">
-<h2>Model 1</h2>
-</section>
-<section id="model-2" class="slide level2">
-<h2>Model 2</h2>
-</section>
-<section id="model-3" class="slide level2">
-<h2>Model 3</h2>
-</section>
 <section id="parallel-lines-model" class="slide level2">
 <h2>Parallel lines model</h2>
-<p>The number of rides increases at the same rate, but always lower on weekends</p>
+<p>FEV increases at the same rate with age, but is shifted up or down for smokers</p>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<img data-src="slides10_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
 <section id="different-slopes-model" class="slide level2">
 <h2>Different slopes model</h2>
-<p>The number of rides starts at the same baseline, but the relationship between temperature and rides is different on weekends vs weekdays</p>
+<p>FEV starts at the same baseline (age 0), but the relationship between age and FEV is different for smokers vs nonsmokers</p>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<img data-src="slides10_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
 <section id="separate-lines-model" class="slide level2">
 <h2>Separate lines model</h2>
-<p>Weekends/weekdays have different baselines and different relationships with the number of rides</p>
+<p>Smokers/nonsmokers have different baselines <em>and</em> different relationships between age and FEV</p>
 
-<img data-src="slides10_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<img data-src="slides10_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="800"></section>
 <section id="parallel-lines-model-1" class="slide level2">
 <h2>Parallel lines model</h2>
-<p><span class="math display">\[\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend}\]</span></p>
+<p><span class="math display">\[\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{smoker}\]</span></p>
 <p><br></p>
 <ul>
-<li><span class="math inline">\(\beta_0\)</span>: intercept for weekdays</li>
-<li><span class="math inline">\(\beta_0 + \beta_2\)</span>: intercept for weekends</li>
+<li><span class="math inline">\(\beta_0\)</span>: intercept for nonsmokers</li>
+<li><span class="math inline">\(\beta_0 + \beta_2\)</span>: intercept for smokers</li>
 <li><span class="math inline">\(\beta_1\)</span>: slope for both groups</li>
 </ul>
 </section>
 <section id="different-slopes-model-1" class="slide level2">
 <h2>Different slopes model</h2>
-<p><span class="math display">\[\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{temp} \times \texttt{weekend}\]</span></p>
+<p><span class="math display">\[\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{age} \times \texttt{smoker}\]</span></p>
 <p><br></p>
 <ul>
 <li><span class="math inline">\(\beta_0\)</span>: intercept for both groups</li>
-<li><span class="math inline">\(\beta_1\)</span>: slope for weekdays</li>
-<li><span class="math inline">\(\beta_1 + \beta_2\)</span>: slope for weekends</li>
+<li><span class="math inline">\(\beta_1\)</span>: slope for nonsmokers</li>
+<li><span class="math inline">\(\beta_1 + \beta_2\)</span>: slope for smokers</li>
 </ul>
 </section>
 <section id="separate-lines-model-1" class="slide level2">
 <h2>Separate lines model</h2>
-<p><span class="math display">\[\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend} + \beta_3 \texttt{temp} \times \texttt{weekend}\]</span></p>
+<p><span class="math display">\[\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{smoker} + \beta_3 \texttt{age} \times \texttt{smoker}\]</span></p>
 <p><br></p>
 <ul>
-<li><span class="math inline">\(\beta_0\)</span>: intercept for weekdays</li>
-<li><span class="math inline">\(\beta_0 + \beta_2\)</span>: intercept for weekends</li>
-<li><span class="math inline">\(\beta_1\)</span>: slope for weekdays</li>
-<li><span class="math inline">\(\beta_1 + \beta_3\)</span>: slope for weekends</li>
+<li><span class="math inline">\(\beta_0\)</span>: intercept for nonsmokers</li>
+<li><span class="math inline">\(\beta_0 + \beta_2\)</span>: intercept for smokers</li>
+<li><span class="math inline">\(\beta_1\)</span>: slope for nonsmokers</li>
+<li><span class="math inline">\(\beta_1 + \beta_3\)</span>: slope for smokers</li>
 </ul>
+</section>
+<section id="fitting-the-separate-lines-model-in-r" class="slide level2">
+<h2>Fitting the separate lines model in R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>fev_sep <span class="ot">&lt;-</span> <span class="fu">lm</span>(FEV <span class="sc">~</span> Age <span class="sc">*</span> Smoke, <span class="at">data =</span> fev)</span>
+<span id="cb1-2"><a></a><span class="fu">coef</span>(fev_sep)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    (Intercept)             Age     SmokeSmoker Age:SmokeSmoker 
+      0.6747724       0.2097247       1.7197133      -0.1432927 </code></pre>
+</div>
+</div>
+<p><br></p>
+<p>R names an indicator after the level that is coded <strong>1</strong>. The level that never appears in a coefficient name (here, <code>Nonsmoker</code>) is the <strong>reference level</strong>.</p>
+</section>
+<section id="reading-the-coefficient-names" class="slide level2">
+<h2>Reading the coefficient names</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 11%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">R output</th>
+<th style="text-align: left;">Model term</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>(Intercept)</code></td>
+<td style="text-align: left;"><span class="math inline">\(\beta_0\)</span></td>
+<td style="text-align: left;">intercept for nonsmokers (reference level)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Age</code></td>
+<td style="text-align: left;"><span class="math inline">\(\beta_1\)</span></td>
+<td style="text-align: left;">slope for nonsmokers</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>SmokeSmoker</code></td>
+<td style="text-align: left;"><span class="math inline">\(\beta_2\)</span></td>
+<td style="text-align: left;"><strong>difference</strong> in intercepts (smokers <span class="math inline">\(-\)</span> nonsmokers)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Age:SmokeSmoker</code></td>
+<td style="text-align: left;"><span class="math inline">\(\beta_3\)</span></td>
+<td style="text-align: left;"><strong>difference</strong> in slopes (smokers <span class="math inline">\(-\)</span> nonsmokers)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fitted-lines" class="slide level2">
+<h2>Fitted lines:</h2>
+<p>Nonsmokers: <span class="math inline">\(\widehat{\text{FEV}} = 0.67 + 0.21 \, \texttt{age}\)</span></p>
+<p><br></p>
+<p>Smokers: <span class="math inline">\(\widehat{\text{FEV}} = (0.67 + 1.72) + (0.21 -0.14) \, \texttt{age} = 2.39 + 0.07 \, \texttt{age}\)</span></p>
+</section>
+<section id="same-idea-with-a-truefalse-predictor" class="slide level2">
+<h2>Same idea with a <code>TRUE</code>/<code>FALSE</code> predictor</h2>
+<p><code>weekend</code> in the <code>bikes</code> data is <code>TRUE</code>/<code>FALSE</code>, so R treats <code>TRUE</code> as 1 and names the coefficients <code>weekendTRUE</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">tidy</span>(<span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">*</span> weekend, <span class="at">data =</span> bikes))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term                     estimate std.error statistic  p.value
+  &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)             -1844.       416.     -4.44   1.13e- 5
+2 temp_actual                87.2        6.44   13.5    9.31e-36
+3 weekendTRUE              -715.       796.     -0.899  3.69e- 1
+4 temp_actual:weekendTRUE     0.411     12.5     0.0328 9.74e- 1</code></pre>
+</div>
+</div>
+<p>We’ll pick this model back up on Wednesday</p>
 </section>
 <section>
 <section id="more-than-2-categories" class="title-slide slide level1 center">
@@ -616,9 +564,10 @@ Prof Amanda Luby
 <section id="example-2" class="slide level2">
 <h2>Example 2</h2>
 <div class="task">
-<p>For each sketched regression model, write the mean function for a regression model that matches on the whiteboard</p>
+<p>Depression score vs.&nbsp;age, with education (college / some college / HS only) as a 3-level categorical predictor</p>
 <ul>
-<li>Note that line type = season</li>
+<li>Define the indicator variables</li>
+<li>For each of the two sketched models on the handout, write the matching mean function (line type = education level)</li>
 <li>Work with your groups</li>
 </ul>
 </div>
