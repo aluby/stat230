@@ -32,7 +32,7 @@ I will add problems after each class day. Be sure to check back here after each 
 :::
 
 
-# Problem 1: Log transformed response
+# Problem 1: Log transformed response 
 
 <!-- Math-y transformation problem (interpreting a log transform?)  -->
 
@@ -49,12 +49,13 @@ A data science team at a tech startup is analyzing the relationship between thei
 
 (c) If we find the following fitted equation $\widehat{\log y} = 2.4 + 0.08 x$, provide an interpretation of $\widehat{\beta_1}$ in terms of percentage change in raw downloads
 
-# Problem 2: Multiple regression (no R needed)
+# Problem 2: Multiple regression (LEGO sets) (Fri)
 
-Peterson and Ziegler (2021) scraped data on LEGO® sets from themes produced January 1, 2018 and September 11, 2020 from Brickset.com. In this problem, you will work with data on about 400 randomly selected LEGO sets produced during this time period. The data contains the following variables:
+Peterson and Ziegler (2021) scraped data on LEGO® sets from themes produced January 1, 2018 and September 11, 2020 from Brickset.com. In this problem, you will work with data on 100 randomly selected LEGO sets produced during this time period. The data contains the following variables:
 
 - `pieces`: Number of pieces in the set from brickset.com.
-- `minifigures`: Number of minifigures (LEGO® people) in the set scraped from brickset.com. - `amazon_price`: Price of the set on Amazon.com (in U.S. dollars)
+- `minifigures`: Number of minifigures (LEGO® people) in the set scraped from brickset.com.
+- `amazon_price`: Price of the set on Amazon.com (in U.S. dollars)
 
 Below is output from the multiple regression model fit in R: 
 
@@ -71,7 +72,7 @@ summary(lego_lm)
 ::: callout-note
 ## Note
 
-You do not need to do any R for this question, just use the output to answer the questions
+You do not need to fit any models in R for this question, just use the output above to answer the questions. For part (e), you can use R's `qt()` function to find the critical value (the residual degrees of freedom are in the output).
 :::
 
 a. Report the fitted regression equation.
@@ -80,14 +81,20 @@ c. Explain why the intercept is not meaningful in this context.
 d. What proportion of the variability in the Amazon price of a LEGO set is explained by the number of pieces and the number of minifigures?
 e. Calculate a 90% confidence interval for the slope associated with pieces.
 f. Interpret your confidence interval from part (e) in context.
+g. A classmate suggests fitting two separate simple linear regressions (one for `pieces` and one for `minifigures`) instead of one multiple regression. Give one reason why the multiple regression model is more useful.
 
 
-# Problem 3: Mon
+# Problem 3: Penguins (Mon)
 
 The {palmerpenguins} data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. This data contains measurements of penguins' body mass, flipper length, and bill size; along with their sex and species. There are 3 penguin species included: Gentoo, Chinstrap, and Adelie. We are interested in building a model to predict flipper length using body mass for each of the 3 species. 
 
 ![](https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png)
-Use the summary R output below to answer the questions (no R code needed)
+
+::: callout-note
+## Note
+
+You do not need to fit any models in R for this question, just use the output below to answer the questions. 
+:::
 
 ```{r}
 #| echo: false
@@ -97,44 +104,50 @@ penguins_mlr <- lm(flipper_length_mm ~ body_mass_g + species + body_mass_g:speci
 summary(penguins_mlr)
 ```
 
-(a) Write out the fitted regression equation for Chinstrap penguins
+(a) Which species is the reference level in this model? Define the indicator variables for `species` that R used, and write the theoretical mean function for the model that was fit.
 
-(b) Write out the fitted regression equation for Gentoo penguins
+(b) Write out the fitted regression equation for Chinstrap penguins
 
-(c) Write out the fitted regression equation for Adelie penguins
+(c) Write out the fitted regression equation for Gentoo penguins
 
-(d) Give a careful interpretation for the $\beta$ coefficient labeled `body_mass_g:speciesChinstrap` in the context of the problem
+(d) Write out the fitted regression equation for Adelie penguins
+
+(e) Give a careful interpretation for the $\beta$ coefficient labeled `body_mass_g:speciesChinstrap` in the context of the problem
+
+(f) A *parallel lines* model would force all three species to have the same slope for `body_mass_g`. Which coefficient(s) in the model above would be equal to 0 for a parallel lines model? 
 
 
-# Problem 4: Mon
-
-<!--  categorical predictor (in R)  -- Ames housing? -->
+# Problem 4: Ames housing
 
 The `ames_houses` dataset contains data on sale prices of 232 houses in Ames, Iowa. It was compiled by the Ames Assessor’s Office and used for computing assessed values for individual residential properties sold in Ames, IA from 2006 to 2010. 
 
-The original dataset included data on nearly 3000 houses and included 82 variables. For this problem, we’re going to focus on explaining `Sale_Price` using `Square_Feet`, `Lot_Area`, and `Fireplace`. 
+The original dataset included data on nearly 3000 houses and included 82 variables. For this problem, we’re going to focus on explaining `Sale_Price` using `Square_Feet`, `Lot_Area`, and `Fireplace` (`TRUE` if the house has at least one fireplace, `FALSE` otherwise). 
 
 
 ```{r}
-# ames_houses = read_csv("https://aluby.github.io/stat230/data/ames_houses.csv")
-ames_houses = read_csv(here::here("data/ames_houses.csv"))
+ames_houses = read_csv("https://aluby.github.io/stat230/data/ames_houses.csv")
+#ames_houses = read_csv(here::here("data/ames_houses.csv"))
 ```
 
-(a) Make a scatterplot of `Sale_Price` against `Square_Feet` and report the fitted regression equation. Summarize your main result in 1 sentence
+(a) Make a pairs plot of `Sale_Price`, `Square_Feet`, `Lot_Area`, and `Fireplace`. Summarize the main results in 1-2 sentences, including whether any of the predictors appear to be related to each other.
 
-(b) Check the SLR conditions and report your findings
+(b) Fit a parallel lines MLR model that uses all 3 predictors to explain `Sale_Price`, and report the fitted regression equation. 
 
-(c) There are additional predictors in this dataset. Make a pairs plot of `Sale_Price`, `Square_Feet`, `Lot_Area`, and `Fireplace`. Summarize the main results in 1 sentence.
+(c) R named one of your coefficients `FireplaceTRUE`. Explain why it was named this, which group is the reference level, and give a careful interpretation of this coefficient in context.
 
-(d) Fit a parallel lines MLR model that uses all 3 predictors and report the fitted regression equation. 
+(d) Fit a simple linear regression of `Sale_Price` on `Square_Feet` only. How does the estimated slope for `Square_Feet` compare with the slope in your model from part (b)? Why might it have changed?
 
-(e) How did $\beta_{\text{SquareFeet}}$ change from part (a)? 
+(e) Make a single EDA plot that shows the relationship between `Square_Feet`, `Fireplace`, and `Sale_Price`. Does your plot suggest that a different slopes model is needed?
 
-(f) Make a single EDA plot that shows the relationship between `Square_Feet`, `Fireplace`, and `Sale_Price`. Does your plot suggest a different slopes model is needed?
+(f) Fit a model that lets the slope for `Square_Feet` differ for houses with and without a fireplace (and still includes `Lot_Area`). Report the fitted regression equation, then write the fitted equation for houses **without** a fireplace and for houses **with** a fireplace.
 
-# Problem 5: F statistic
+(g) Test whether the different slopes model is needed. State the null and alternative hypotheses (in terms of a $\beta$ coefficient), report the test statistic and p-value from `summary()`, and state your conclusion in context. Then run `anova()` on your model from part (b) and your model from part (f) (e.g., `anova(model_b, model_f)`). What do you notice about the p-value compared with the one from `summary()`?
 
-A multiple regression analysis of a dataset with 82 observations was performed with 6 explanatory variables. $SS_{regression} = 22.6$ and $SS_{total} = 123.1$. 
+(h) Give a careful interpretation of the coefficient for `Square_Feet:FireplaceTRUE` in context.
+
+# Problem 5: F statistic (Wed)
+
+<!-- A multiple regression analysis of a dataset with 82 observations was performed with 6 explanatory variables. $SS_{regression} = 22.6$ and $SS_{total} = 123.1$. 
 
   (a) Find the value of the $F$ statistic
   
@@ -142,11 +155,11 @@ A multiple regression analysis of a dataset with 82 observations was performed w
   
   (c) The F-statistic has two degrees of freedom, where $df_1 = k$ and $df_2 = (n-k-1)$. Using R's `pf` function, find the p-value that corresponds to the test in parts (a) and (b). Assuming all assumptions are met, what do you conclude? (It may be helpful to review [Chapter 22.3 from IMS](https://openintro-ims.netlify.app/inference-many-means.html#sec-mathANOVA), or check out this interactive [Distribution Calculator](https://gallery.shinyapps.io/dist_calc/) for more information on the F distribution.)
   
-  (d) What proportion of variability in the response variable is explained by the explanatory variables?
+  (d) What proportion of variability in the response variable is explained by the explanatory variables ($R^2$)? Also calculate the adjusted $R^2$. Which is smaller, and why? -->
 
-# Problem 6: p-values galore
+# Problem 6: p-values galore (Review/Wed)
 
-Use the `penguins` summary output in Problem 4 for this question, along with the ANOVA output below. 
+Use the `penguins` summary output in Problem 3 for this question, along with the ANOVA output below. 
 
 ```{r}
 anova(penguins_mlr)
@@ -172,6 +185,4 @@ What do you conclude in the context of the data?
 What do you conclude in the context of the data? 
 
 
-# Problem 7
-
-*Optional* EC opportunity: if you attended the Math/Stat colloquium on Tues 4/21, include a sentence or two about the talk and how it relates to course content in your homework. 
+<!-- Problem 7 (optional EC for attending a colloquium): the previous version referenced a spring date (Tues 4/21). Add a Fall 2026 date or remove. -->
