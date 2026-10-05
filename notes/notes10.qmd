@@ -74,7 +74,7 @@ model that controls for both variables at once.
 
 ## Indicator variables
 
-Regression requires a **numeric** representation of every variable, so a categorical predictor gets converted to indicator (0/1) columns (e.g. `Smoker` = ___, `Nonsmoker` = ___)
+Regression requires a **numeric** representation of every variable, so a categorical predictor gets converted to indicator (0/1) columns (e.g. `Smoker` = _____, `Nonsmoker` = _____)
 
 # Group Task 1 
 
@@ -188,7 +188,7 @@ Let Amanda know when your group finishes!
 1. ______________________________________ model: Same rate of increase in both groups, but a different baseline.
 
 ```{r}
-#| fig-height: 3
+#| fig-height: 2.5
 #| fig-width: 5
 fev_fit_plot(mod_parallel)
 ```
@@ -203,7 +203,7 @@ $$\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{smoker}$$
 and nonsmokers.
 
 ```{r}
-#| fig-height: 3
+#| fig-height: 2.5
 #| fig-width: 5
 fev_fit_plot(mod_diff_slope)
 ```
@@ -217,7 +217,7 @@ $$\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{age} \times \textt
 3. ______________________________________ model: Both the baseline *and* the rate of increase differ by group.
 
 ```{r}
-#| fig-height: 3
+#| fig-height: 2.5
 #| fig-width: 5
 fev_fit_plot(mod_separate)
 ```
@@ -303,12 +303,12 @@ The researchers constructed a depression score from responses to several related
 
 2. Suppose that one researcher wants to fit a model that represents the below sketch. Carefully write the mean function for the regression model that you should fit.
 
-\vspace{.5in}
+\vspace{.25in}
 
 ```{r}
 #| echo: false
 #| warning: false
-#| fig-width: 3
+#| fig-width: 2.5
 #| fig-align: 'left'
 #| fig-alt: "A sketch with Age on the x-axis and Depression Score on the y-axis, showing three parallel lines with different line styles."
 model1
@@ -316,12 +316,12 @@ model1
 
 3. Suppose that one researcher wants to fit a model that represents the below sketch. Carefully write the mean function for the regression model that you should fit.
 
-\vspace{.5in}
+\vspace{.25in}
 
 ```{r}
 #| echo: false
 #| warning: false
-#| fig-width: 3
+#| fig-width: 2.5
 #| fig-align: 'left'
 #| fig-alt: "A sketch with Age on the x-axis and Depression Score on the y-axis, showing three lines with different slopes and different intercepts."
 model3
