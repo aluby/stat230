@@ -19,44 +19,26 @@ fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to1
                    sep = "\t", header = TRUE) |>
   mutate(Smoke = factor(Smoke, levels = c(0, 1), labels = c("Nonsmoker", "Smoker")))
 
+mod_parallel <- lm(FEV ~ Age + Smoke, data = fev)
+mod_diff_slope <- lm(FEV ~ Age + Age:Smoke, data = fev)
+mod_separate <- lm(FEV ~ Age * Smoke, data = fev)
+
+fev_fit_plot <- function(mod) {
+  ggplot(augment(mod, data = fev), aes(x = Age, y = FEV, color = Smoke, shape = Smoke)) +
+    geom_point(alpha = 0.5) +
+    geom_line(aes(y = .fitted), linewidth = 1) +
+    scale_color_manual(values = c("#f15a31", "#000036")) +
+    labs(y = "FEV (L/s)")
+}
+
 bikes_slr <- lm(rides ~ temp_actual, data = bikes)
 bikes_mlr <- lm(rides ~ temp_actual + windspeed, data = bikes)
 ```
 
-## Recap: `bikes` MLR
-
-Last time we added a second quantitative predictor, `windspeed`, to
-our model for `rides`:
-
-$$\widehat{\text{rides}} = `r round(coef(bikes_mlr)[1], 1)` `r round(coef(bikes_mlr)[2], 2)` \cdot \text{temp\_actual} `r round(coef(bikes_mlr)[3], 2)` \cdot \text{windspeed}$$
-
-```{r}
-kable_coef(bikes_mlr, terms = c("Intercept", "temp_actual", "windspeed"))
-```
-
-$R^2 =$ `r round(summary(bikes_mlr)$r.squared, 3)`
-
-## Today's plan: drop `windspeed`, add `weekend`
-
-```{r}
-#| fig-width: 8
-#| fig-height: 3
-p1 <- gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) +
-  theme(legend.position = "none")
-p2 <- gf_boxplot(rides ~ weekend, fill = ~weekend, data = bikes) +
-  theme(legend.position = "none")
-
-p1 + p2 + plot_layout(widths = c(3, 1))
-```
-
-## A new example: lung function and smoking
+## New data: lung function and smoking
 
 **Goal:** investigate the association between smoking and lung
 capacity using data from 345 adolescents ages 10-19.
-
-**Wrinkle:** lung function naturally increases during adolescence, but
-smoking may slow its progression -- so we need to account for *both*
-age and smoking status.
 
 | Variable | Description |
 |:---|:---|
@@ -64,32 +46,27 @@ age and smoking status.
 | `Age` | age in years |
 | `Smoke` | `Smoker` or `Nonsmoker` |
 
-::: {.callout-note}
-Source: Rosner (2006)
-:::
-
 ## EDA
 
 ```{r}
-#| fig-width: 5
-#| fig-height: 3
-ggplot(fev) +
+#| fig-width: 9
+#| fig-height: 2.5
+p1 <- ggplot(fev) +
   geom_boxplot(aes(x = Smoke, y = FEV, fill = Smoke), alpha = 0.6) +
   scale_fill_manual(values = c("#f15a31", "#000036")) +
   theme(legend.position = "none") +
   coord_flip() +
   labs(x = "", y = "FEV (L/s)")
-```
 
-```{r}
-#| fig-width: 6
-#| fig-height: 3
-ggplot(fev) +
+p2 <- ggplot(fev) +
   geom_point(aes(x = Age, y = FEV, color = Smoke, shape = Smoke), alpha = 0.5) +
   facet_wrap(vars(Smoke)) +
   scale_color_manual(values = c("#f15a31", "#000036")) +
   labs(y = "FEV (L/s)")
+
+p1 + p2
 ```
+
 
 Notice smokers skew *older* -- any raw FEV difference between smokers
 and nonsmokers is tangled up with age. This is exactly why we need a
@@ -97,17 +74,108 @@ model that controls for both variables at once.
 
 ## Indicator variables
 
-Regression requires a **numeric** representation of every variable,
-so a categorical predictor gets converted to indicator (0/1) columns
--- e.g. `Smoker` = ___, `Nonsmoker` = ___.
+Regression requires a **numeric** representation of every variable, so a categorical predictor gets converted to indicator (0/1) columns (e.g. `Smoker` = ___, `Nonsmoker` = ___)
 
-::: {.callout-tip}
-## Group task
+# Group Task 1 
 
-For each regression model on the handout, sketch the fitted model on
-the whiteboard. Each fitted model will have two lines: one for
-smokers, one for nonsmokers.
-:::
+```{r}
+#| include: false
+library(ggformula)
+library(ggeffects)
+library(Sleuth3)
+
+graph_paper <- ggplot(data = data.frame(x = c(0, 20), y = c(0, 30)), aes(x, y)) +
+  theme_classic() +
+  scale_x_continuous(name = "age", breaks = seq(0, 20, by = 2), expand = c(0, 0)) +
+  scale_y_continuous(name = "y", breaks = seq(0, 30, by = 2), expand = c(0, 0)) +
+  theme(  
+    panel.grid.major = element_line(color = "gray30", linewidth = 0.5), # Major grid lines
+    panel.grid.minor = element_line(color = "gray30", linewidth = 0.25), # Minor grid lines
+    panel.background = element_rect(fill = "white") # White background
+  )
+  
+
+base <- ggplot(data = NULL) +
+  scale_x_continuous(limits = c(0, 10), expand = c(0, 0), breaks = seq(0, 10, by = 2)) +
+  scale_y_continuous(limits = c(0, 10), expand = c(0, 0), breaks = seq(0, 10, by = 2)) +
+  scale_color_manual("Education", breaks = c("College", "Some college", "HS")) +
+  theme_classic() +
+  labs(x = "Age", y = "Depression Score")
+
+model1 <- base + 
+    geom_abline(slope = 0.6, intercept = 1,  linetype = 3, linewidth = 1) +
+  geom_abline(slope = 0.6, intercept = 2,  linetype = 2, linewidth = 1) +
+  geom_abline(slope = 0.6, intercept = 3, linetype = 1, linewidth = 1) 
+
+model3 <- base + 
+    geom_abline(slope = 0.1, intercept = 1.5, linetype = 3, linewidth = 1) +
+  geom_abline(slope = 0.6, intercept = 2,  linetype = 2, linewidth = 1) +
+  geom_abline(slope = 0.4, intercept = 3, linetype = 1, linewidth = 1) 
+
+```
+
+For each regression model, sketch the fitted model. To do this, first write the expression for the fitted model for non-smokers and the fitted model for smokers (i.e., plug in 0 and 1 for the `smoker` indicator variable). Once you have these two equations, use them to sketch the lines on the provided graph. (*Note:* fake equation alert! not estimates from the real data)
+
+
+**Model 1:** $\widehat{\mu}(y|x) = 10 +  1 \mathtt{age} -2 \mathtt{smoker}$
+
+Fitted equation for non-smokers:
+
+<br>
+
+Fitted equation for smokers:
+
+<br>
+
+```{r}
+#| echo: false
+#| fig-asp: 1
+#| fig-width: 3
+#| out-width: 50%
+#| fig-alt: "A blank grid with evenly spaced gridlines, for sketching a fitted model."
+graph_paper
+```
+
+**Model 2:** $\widehat{\mu}(y|x) = 5 +  1 \mathtt{age} -0.5 \mathtt{age \times smoker}$
+
+Fitted equation for non-smokers:
+
+<br>
+
+Fitted equation for smokers:
+
+<br>
+
+
+```{r}
+#| echo: false
+#| fig-asp: 1
+#| fig-width: 3
+#| out-width: 50%
+#| fig-alt: "A blank grid with evenly spaced gridlines, for sketching a fitted model."
+graph_paper
+```
+
+
+**Model 3:** $\widehat{\mu}(y|x) = 4  +  0.5 \mathtt{age} + 3\mathtt{smoker} -0.5 \mathtt{age \times smoker}$
+
+Fitted equation for non-smokers:
+
+<br>
+
+Fitted equation for smokers:
+
+<br>
+
+```{r}
+#| echo: false
+#| fig-asp: 1
+#| fig-width: 3
+#| out-width: 50%
+#| fig-alt: "A blank grid with evenly spaced gridlines, for sketching a fitted model."
+graph_paper
+```
+
 
 ::: callout-important
 ## Stop here
@@ -117,87 +185,98 @@ Let Amanda know when your group finishes!
 
 ## Three ways to combine a line + a group
 
-We'll illustrate with `rides ~ temp_actual + weekend` on the bikes
-data, since it's easy to see two clear groups.
-
-### Parallel lines model
-
-Same rate of increase in both groups, but a different baseline.
+1. ______________________________________ model: Same rate of increase in both groups, but a different baseline.
 
 ```{r}
 #| fig-height: 3
-mod_parallel <- lm(rides ~ temp_actual + weekend, data = bikes)
-bikes_aug <- augment(mod_parallel, data = bikes)
-p1 |> gf_line(.fitted ~ temp_actual, color = ~weekend, data = bikes_aug, linewidth = 1)
+#| fig-width: 5
+fev_fit_plot(mod_parallel)
 ```
 
-$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend}$$
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{smoker}$$
 
--   $\beta_0$: intercept for weekdays
--   $\beta_0 + \beta_2$: intercept for weekends
+-   $\beta_0$: intercept for nonsmokers
+-   $\beta_0 + \beta_2$: intercept for smokers
 -   $\beta_1$: slope for ___________________________
 
-### Different slopes model
-
-Same baseline, but temperature affects ridership differently on
-weekends vs. weekdays.
+2.  ______________________________________ model: Same baseline (at age 0), but age affects FEV differently for smokers
+and nonsmokers.
 
 ```{r}
 #| fig-height: 3
-mod_diff_slope <- lm(rides ~ temp_actual:weekend, data = bikes)
-bikes_aug <- augment(mod_diff_slope, data = bikes)
-p1 |> gf_line(.fitted ~ temp_actual, color = ~weekend, data = bikes_aug, linewidth = 1)
+#| fig-width: 5
+fev_fit_plot(mod_diff_slope)
 ```
 
-$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{temp} \times \texttt{weekend}$$
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{age} \times \texttt{smoker}$$
 
 -   $\beta_0$: intercept for ___________________________
--   $\beta_1$: slope for weekdays
--   $\beta_1 + \beta_2$: slope for weekends
+-   $\beta_1$: slope for nonsmokers
+-   $\beta_1 + \beta_2$: slope for smokers
 
-### Separate lines model
-
-Both the baseline *and* the rate of increase differ by group.
+3. ______________________________________ model: Both the baseline *and* the rate of increase differ by group.
 
 ```{r}
 #| fig-height: 3
-mod_separate <- lm(rides ~ temp_actual + weekend + temp_actual * weekend, data = bikes)
-bikes_aug <- augment(mod_separate, data = bikes)
-p1 |> gf_line(.fitted ~ temp_actual, color = ~weekend, data = bikes_aug, linewidth = 1)
+#| fig-width: 5
+fev_fit_plot(mod_separate)
 ```
 
-$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend} + \beta_3 \texttt{temp} \times \texttt{weekend}$$
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{smoker} + \beta_3 \texttt{age} \times \texttt{smoker}$$
 
--   $\beta_0$: intercept for weekdays
--   $\beta_0 + \beta_2$: intercept for weekends
--   $\beta_1$: slope for weekdays
+-   $\beta_0$: intercept for nonsmokers
+-   $\beta_0 + \beta_2$: intercept for smokers
+-   $\beta_1$: slope for nonsmokers
 -   $\beta_1 + \beta_3$: slope for ___________________________
 
-::: {.callout-note}
-A model with an **interaction term** ($x \times \text{group}$) is
-exactly the separate-lines model: it lets both the intercept and
-slope differ by group.
-:::
+Fitting the separate lines model in R:
+
+```{r}
+#| echo: true
+fev_sep <- lm(FEV ~ Age * Smoke, data = fev)
+coef(fev_sep)
+```
+
+R names an indicator after the level that is coded **1**. The level
+that never appears in a coefficient name is the reference level.
+
+Here, the reference level is ___________________________.
+
+| R output | Model term | Meaning |
+|:--------------|:------|:-------------------------------------|
+| `(Intercept)` | $\beta_0$ | intercept for nonsmokers (reference level) |
+| `Age` | $\beta_1$ | slope for nonsmokers |
+| `SmokeSmoker` | $\beta_2$ | **difference** in intercepts (smokers $-$ nonsmokers) |
+| `Age:SmokeSmoker` | $\beta_3$ | **difference** in slopes (smokers $-$ nonsmokers) |
+
+**Example:** Write the fitted regression line for nonsmokers and for
+smokers.
+
+\vspace{2in}
+
+**Example:** A `TRUE`/`FALSE` predictor
+
+`weekend` in the `bikes` data is `TRUE`/`FALSE`, so R treats `TRUE` as 1
+and names the coefficients `weekendTRUE` and `temp_actual:weekendTRUE`:
+
+```{r}
+#| echo: true
+coef(lm(rides ~ temp_actual * weekend, data = bikes))
+```
 
 # More than two categories
 
-What if we want to incorporate `season` (fall, spring, summer,
-winter)?
+**Motivating example:** Let's say we want to incorporate `season` (fall, spring, summer, winter) from the `bikes` data. 
 
-## A bad idea
-
-Convert the column to a single number:
+**A bad idea:** convert the column to a single number:
 Fall $\to 1$, Winter $\to 2$, Spring $\to 3$, Summer $\to 4$, then fit
 $\mu(\text{rides} \mid \text{season}) = \beta_0 + \beta_1 \, \texttt{season}$.
 
-This is wrong -- it forces the seasons onto an arbitrary numeric scale
-and assumes, e.g., that the "jump" from fall to winter is the same
-size and direction as the jump from spring to summer.
+This is wrong. It forces the seasons onto an arbitrary numeric scale and assumes that the "jump" from fall to winter is the same size and direction as the jump from spring to summer.
 
-## A good idea: indicator (dummy) variables
+**A better idea**: indicator (dummy) variables
 
-For a categorical variable with $k$ levels, create $k - 1$ indicator
-variables (one level is left out as the **reference level**).
+For a categorical variable with $k$ levels, create $k - 1$ indicator variables (one level is left out as the **reference level**).
 
 ```{r}
 season_ex <- tibble(
@@ -209,15 +288,44 @@ cbind(season = as.character(season_ex$season),
   knitr::kable()
 ```
 
-Here `fall` is the reference level -- it's represented by all zeros --
-and each other season gets its own 0/1 column.
+The reference level in this case is ___________. 
 
-::: {.callout-tip}
-## Group task
+# Group Task 2
 
-For each sketched regression model on the handout, write the mean
-function that matches it (line type represents `season`).
-:::
+Researchers investigated the association of depression with age and education, based on a nationwide (U.S.) telephone survey of 2,031 adults aged 18 to 90. Of particular interest was their finding that the association of depression with education strengthens with increasing age---a phenomenon they called the "divergence hypothesis."
+
+The researchers constructed a depression score from responses to several related questions. Education was categorized as (i) college degree, (ii) high school degree plus some college, or (iii) high school degree only. In the sketches below, the line type represents education: solid = college degree, dashed = high school plus some college, dotted = high school only.
+
+1. Define indicator variables that represent the `education` category. (Start by determining how many indicators you need. Then define them.)
+
+\vspace{1.5in}
+
+
+2. Suppose that one researcher wants to fit a model that represents the below sketch. Carefully write the mean function for the regression model that you should fit.
+
+\vspace{.5in}
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-width: 3
+#| fig-align: 'left'
+#| fig-alt: "A sketch with Age on the x-axis and Depression Score on the y-axis, showing three parallel lines with different line styles."
+model1
+```
+
+3. Suppose that one researcher wants to fit a model that represents the below sketch. Carefully write the mean function for the regression model that you should fit.
+
+\vspace{.5in}
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig-width: 3
+#| fig-align: 'left'
+#| fig-alt: "A sketch with Age on the x-axis and Depression Score on the y-axis, showing three lines with different slopes and different intercepts."
+model3
+```
 
 ::: callout-important
 ## Stop here

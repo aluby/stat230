@@ -87,7 +87,7 @@ You can load the data using the following code:
 
 ```{r}
 #| eval: false
-budworm <- read.csv("http://aluby.github.io/stat230/data/budworm.csv")
+budworm <- read.csv("https://aluby.github.io/stat230/data/budworm.csv")
 ```
 
 ```{r}

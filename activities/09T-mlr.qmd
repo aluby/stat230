@@ -48,7 +48,7 @@ Variable |	Description
 To load the `supervisor` data set, run the following code chunk:
 
 ```{webr}
-supervisor <- read.csv("http://aluby.github.io/stat230/data/supervisor.csv")
+supervisor <- read.csv("https://aluby.github.io/stat230/data/supervisor.csv")
 ```
 
 ## EDA: Making a pairs plot

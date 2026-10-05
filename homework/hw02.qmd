@@ -172,7 +172,7 @@ runoff <- read.csv(here(here(), "data/satGPA.csv"))
 
 ```{r}
 #| eval: false
-sat_gpa <- read.csv("http://aluby.github.io/stat230/data/satGPA.csv")
+sat_gpa <- read.csv("https://aluby.github.io/stat230/data/satGPA.csv")
 ```
 
 (a) Fit the simple linear regression model predicting first year GPA from the sum of the verbal and math SAT percentiles. Report the fitted regression equation. 

@@ -64,62 +64,39 @@ regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
 
 bikes <- bikes |> select(date, season, year, month, weekend, holiday, temp_actual, temp_feel, humidity, windspeed, rides)
 
-fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt", sep = "\t", header = TRUE)
+fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt", sep = "\t", header = TRUE) |>
+  mutate(Smoke = factor(Smoke, levels = c(0, 1), labels = c("Nonsmoker", "Smoker")))
+
+mod_parallel <- lm(FEV ~ Age + Smoke, data = fev)
+mod_diff_slope <- lm(FEV ~ Age + Age:Smoke, data = fev)
+mod_separate <- lm(FEV ~ Age * Smoke, data = fev)
+
+fev_fit_plot <- function(mod) {
+  ggplot(augment(mod, data = fev), aes(x = Age, y = FEV, color = Smoke, shape = Smoke)) +
+    geom_point(alpha = 0.5) +
+    geom_line(aes(y = .fitted), linewidth = 1) +
+    scale_color_manual(values = c("#f15a31", "#000036")) +
+    labs(y = "FEV (in L/s)")
+}
 
 ```
 
 
-## Recap: `bikes` MLR
+## Last time: `bikes` MLR
 
 ```{r}
-bikes_slr <- lm(rides ~ temp_actual, data = bikes)
-
 bikes_mlr <- lm(rides ~ temp_actual + windspeed, data = bikes)
 
 equatiomatic::extract_eq(bikes_mlr, use_coefs = TRUE)
 ```
 
-::::: columns
-::: {.column width="50%"}
-<br>
-
-```{r}
-#| fig.height: 3.5
-#| fig.width: 6
-#| fig.align: center
-#| out.width: 100%
-#| echo: false
-gf_point(rides ~ temp_actual, data = bikes, xlab = "Temperature (F)", ylab = "No. rides", color = "#003300", size = 1) |>
-  gf_lm(rides ~ temp_actual, size = 1.5, color = "#f15a31") 
-```
-
-:::
-
-
-::: {.column width="50%"}
-
 <br> $R^2 =$ `r round(summary(bikes_mlr)$r.squared, 3)`
 
-:::
-:::::
+<br>
 
-## `bikes` data {.smaller}
+. . . 
 
-```{r}
-bikes |> 
-  slice_sample(n=10) |>
-  knitr::kable()
-```
-
-## Plan for today: remove `windspeed` but add `weekend`
-
-```{r}
-p1 <- gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) + theme(legend.position = "none")
-
-p2 <- gf_boxplot(rides ~ weekend, fill = ~weekend, data = bikes) + theme(legend.position = "none")
-
-p1 + p2 + plot_layout(widths = c(3, 1))
-```
+Both predictors so far have been *quantitative*. What if a predictor is *categorical*?
 
 ## New data example {.smaller}
 
@@ -129,7 +106,7 @@ p1 + p2 + plot_layout(widths = c(3, 1))
 
 :::
 
-::: {.column width="80%"}
+::: {.column width="80%" .fragment}
 investigate the association between smoking and lung capacity using data from 345 adolescents between the ages of 10 and 19
 :::
 
@@ -141,8 +118,8 @@ investigate the association between smoking and lung capacity using data from 34
 **Wrinkle:**
 :::
 
-::: {.column width="80%"}
-Lung function is expected to increase during adolescence, but smoking may slow it's progression
+::: {.column width="80%" .fragment}
+Lung function is expected to increase during adolescence, but smoking may slow its progression
 
 :::
 
@@ -155,7 +132,7 @@ Lung function is expected to increase during adolescence, but smoking may slow i
 **Data:**
 :::
 
-::: {.column width="80%"}
+::: {.column width="80%" .fragment}
 Variable | Description
 :---------|:---------------
 `FEV`    | forced expiratory volume (in liters per second)
@@ -166,10 +143,6 @@ Variable | Description
 
 ::::
 
-
-
-
-
 :::{.footer}
 Source: Rosner (2006) 
 :::
@@ -178,7 +151,7 @@ Source: Rosner (2006)
 
 ```{r echo=FALSE, fig.width = 5, fig.height = 3, fig.align='center', out.width = 800}
 ggplot(data = fev) +
-  geom_boxplot(aes(x = Smoke, y = FEV, fill = as.factor(Smoke)), alpha = 0.6) +
+  geom_boxplot(aes(x = Smoke, y = FEV, fill = Smoke), alpha = 0.6) +
   scale_fill_manual(values = c("#f15a31", "#000036")) +
   theme(legend.position = "none") +
   coord_flip() +
@@ -187,30 +160,20 @@ ggplot(data = fev) +
 
 ## EDA
 
-```{r echo=FALSE, fig.width = 5, fig.height = 4, fig.align='center', out.width = 800}
+```{r echo=FALSE, fig.width = 5, fig.height = 3.5, fig.align='center', out.width = 800}
 ggplot(data = fev) +
-  geom_point(aes(x = Age, y = FEV, color = as.factor(Smoke), shape = as.factor(Smoke)), alpha = 0.5) +
+  geom_point(aes(x = Age, y = FEV, color = Smoke, shape = Smoke), alpha = 0.5) +
   scale_color_manual(values = c("#f15a31", "#000036")) +
-  labs(y = "FEV (in L/s)",
-       col = "Smoke",
-       shape = "Smoke")
+  labs(y = "FEV (in L/s)")
 ```
 
-## EDA
+. . . 
 
-```{r echo=FALSE, fig.width = 6, fig.height = 3, fig.align='center', out.width = 800}
-ggplot(data = fev) +
-  geom_point(aes(x = Age, y = FEV, color = as.factor(Smoke), shape = as.factor(Smoke)), alpha = 0.5) + 
-  facet_wrap(~Smoke) +
-  scale_color_manual(values = c("#f15a31", "#000036")) +
-  labs(y = "FEV (in L/s)",
-       col = "Smoke",
-       shape = "Smoke")
-```
+Smokers skew *older*, so any raw FEV difference is tangled up with age
 
 ## Indicator variables
 
-Regression requires a numeric representation of all variables, so we treat `TRUE = 1` and `FALSE = 0`
+Regression requires a numeric representation of all variables, so we create an **indicator** (0/1) variable
 
 <br>
 
@@ -229,75 +192,100 @@ For each regression model on the handout, sketch the fitted model on the whitebo
 - Work with your groups (last day together!) 
 :::
 
-
-## Model 1 
-
-## Model 2
-
-## Model 3
-
 ## Parallel lines model
 
-The number of rides increases at the same rate, but always lower on weekends
+FEV increases at the same rate with age, but is shifted up or down for smokers
 
-```{r}
-p1 |>
-  gf_lm()
+```{r echo=FALSE, fig.width = 6, fig.height = 3.5, fig.align='center', out.width = 800}
+fev_fit_plot(mod_parallel)
 ```
 
 ## Different slopes model
 
-The number of rides starts at the same baseline, but the relationship between temperature and rides is different on weekends vs weekdays
+FEV starts at the same baseline (age 0), but the relationship between age and FEV is different for smokers vs nonsmokers
 
-```{r}
-mod_same_int <- lm(rides ~ temp_actual:weekend, data = bikes)
-bikes_aug <- augment(mod_same_int, data = bikes)
-p1 |>
- gf_line(.fitted ~ temp_actual, color = ~weekend, data = bikes_aug, linewidth = 1)
+```{r echo=FALSE, fig.width = 6, fig.height = 3.5, fig.align='center', out.width = 800}
+fev_fit_plot(mod_diff_slope)
 ```
 
 ## Separate lines model
 
-Weekends/weekdays have different baselines and different relationships with the number of rides
+Smokers/nonsmokers have different baselines *and* different relationships between age and FEV
 
-```{r}
-mod_sep_lines <- lm(rides ~ temp_actual + weekend + temp_actual*weekend, data = bikes)
-bikes_aug <- augment(mod_sep_lines, data = bikes)
-p1 |>
- gf_line(.fitted ~ temp_actual, color = ~weekend, data = bikes_aug, linewidth = 1)
+```{r echo=FALSE, fig.width = 6, fig.height = 3.5, fig.align='center', out.width = 800}
+fev_fit_plot(mod_separate)
 ```
-
 
 ## Parallel lines model
 
-$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend}$$
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{smoker}$$
 
 <br> 
 
-- $\beta_0$: intercept for weekdays
-- $\beta_0 + \beta_2$: intercept for weekends
+- $\beta_0$: intercept for nonsmokers
+- $\beta_0 + \beta_2$: intercept for smokers
 - $\beta_1$: slope for both groups
 
 ## Different slopes model
 
-$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{temp} \times \texttt{weekend}$$
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{age} \times \texttt{smoker}$$
 
 <br> 
 
 - $\beta_0$: intercept for both groups
-- $\beta_1$: slope for weekdays
-- $\beta_1 + \beta_2$: slope for weekends
+- $\beta_1$: slope for nonsmokers
+- $\beta_1 + \beta_2$: slope for smokers
 
 ## Separate lines model
 
-$$\mu(y|x) = \beta_0 + \beta_1 \texttt{temp} + \beta_2 \texttt{weekend} + \beta_3 \texttt{temp} \times \texttt{weekend}$$
+$$\mu(y|x) = \beta_0 + \beta_1 \texttt{age} + \beta_2 \texttt{smoker} + \beta_3 \texttt{age} \times \texttt{smoker}$$
 
 <br> 
 
-- $\beta_0$: intercept for weekdays
-- $\beta_0 + \beta_2$: intercept for weekends
-- $\beta_1$: slope for weekdays
-- $\beta_1 + \beta_3$: slope for weekends
+- $\beta_0$: intercept for nonsmokers
+- $\beta_0 + \beta_2$: intercept for smokers
+- $\beta_1$: slope for nonsmokers
+- $\beta_1 + \beta_3$: slope for smokers
+
+## Fitting the separate lines model in R
+
+```{r}
+#| echo: true
+fev_sep <- lm(FEV ~ Age * Smoke, data = fev)
+coef(fev_sep)
+```
+
+<br>
+
+R names an indicator after the level that is coded **1**. The level that never appears in a coefficient name (here, `Nonsmoker`) is the **reference level**.
+
+## Reading the coefficient names
+
+| R output | Model term | Meaning |
+|:--------------|:------|:-------------------------------------|
+| `(Intercept)` | $\beta_0$ | intercept for nonsmokers (reference level) |
+| `Age` | $\beta_1$ | slope for nonsmokers |
+| `SmokeSmoker` | $\beta_2$ | **difference** in intercepts (smokers $-$ nonsmokers) |
+| `Age:SmokeSmoker` | $\beta_3$ | **difference** in slopes (smokers $-$ nonsmokers) |
+
+## Fitted lines:
+
+Nonsmokers: $\widehat{\text{FEV}} = `r round(coef(fev_sep)[1], 2)` + `r round(coef(fev_sep)[2], 2)` \, \texttt{age}$
+
+<br> 
+
+Smokers: $\widehat{\text{FEV}} = (`r round(coef(fev_sep)[1], 2)` + `r round(coef(fev_sep)[3], 2)`) + (`r round(coef(fev_sep)[2], 2)` `r round(coef(fev_sep)[4], 2)`) \, \texttt{age} = `r round(coef(fev_sep)[1] + coef(fev_sep)[3], 2)` + `r round(coef(fev_sep)[2] + coef(fev_sep)[4], 2)` \, \texttt{age}$
+
+## Same idea with a `TRUE`/`FALSE` predictor
+
+`weekend` in the `bikes` data is `TRUE`/`FALSE`, so R treats `TRUE` as 1 and names the coefficients `weekendTRUE`
+
+```{r}
+#| echo: true
+tidy(lm(rides ~ temp_actual * weekend, data = bikes))
+```
+
+We'll pick this model back up on Wednesday
 
 # More than 2 categories
 
@@ -373,9 +361,10 @@ For a categorical variable with $k$ levels, create $k-1$ indicator variables to 
 ## Example 2
 
 ::: task
-For each sketched regression model, write the mean function for a regression model that matches on the whiteboard
+Depression score vs. age, with education (college / some college / HS only) as a 3-level categorical predictor
 
-- Note that line type = season
+- Define the indicator variables
+- For each of the two sketched models on the handout, write the matching mean function (line type = education level)
 - Work with your groups
 
 :::
