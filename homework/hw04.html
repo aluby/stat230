@@ -150,12 +150,11 @@ window.Quarto = {
    
   <ul>
   <li><a href="#problem-1-log-transformed-response" id="toc-problem-1-log-transformed-response" class="nav-link active" data-scroll-target="#problem-1-log-transformed-response">Problem 1: Log transformed response</a></li>
-  <li><a href="#problem-2-multiple-regression-no-r-needed" id="toc-problem-2-multiple-regression-no-r-needed" class="nav-link" data-scroll-target="#problem-2-multiple-regression-no-r-needed">Problem 2: Multiple regression (no R needed)</a></li>
-  <li><a href="#problem-3-mon" id="toc-problem-3-mon" class="nav-link" data-scroll-target="#problem-3-mon">Problem 3: Mon</a></li>
-  <li><a href="#problem-4-mon" id="toc-problem-4-mon" class="nav-link" data-scroll-target="#problem-4-mon">Problem 4: Mon</a></li>
-  <li><a href="#problem-5-f-statistic" id="toc-problem-5-f-statistic" class="nav-link" data-scroll-target="#problem-5-f-statistic">Problem 5: F statistic</a></li>
-  <li><a href="#problem-6-p-values-galore" id="toc-problem-6-p-values-galore" class="nav-link" data-scroll-target="#problem-6-p-values-galore">Problem 6: p-values galore</a></li>
-  <li><a href="#problem-7" id="toc-problem-7" class="nav-link" data-scroll-target="#problem-7">Problem 7</a></li>
+  <li><a href="#problem-2-multiple-regression-lego-sets-fri" id="toc-problem-2-multiple-regression-lego-sets-fri" class="nav-link" data-scroll-target="#problem-2-multiple-regression-lego-sets-fri">Problem 2: Multiple regression (LEGO sets) (Fri)</a></li>
+  <li><a href="#problem-3-penguins-mon" id="toc-problem-3-penguins-mon" class="nav-link" data-scroll-target="#problem-3-penguins-mon">Problem 3: Penguins (Mon)</a></li>
+  <li><a href="#problem-4-ames-housing" id="toc-problem-4-ames-housing" class="nav-link" data-scroll-target="#problem-4-ames-housing">Problem 4: Ames housing</a></li>
+  <li><a href="#problem-5-f-statistic-wed" id="toc-problem-5-f-statistic-wed" class="nav-link" data-scroll-target="#problem-5-f-statistic-wed">Problem 5: F statistic (Wed)</a></li>
+  <li><a href="#problem-6-p-values-galore-reviewwed" id="toc-problem-6-p-values-galore-reviewwed" class="nav-link" data-scroll-target="#problem-6-p-values-galore-reviewwed">Problem 6: p-values galore (Review/Wed)</a></li>
   </ul>
 </nav>
     </div>
@@ -211,12 +210,13 @@ window.Quarto = {
 <li><p>If we find the following fitted equation <span class="math inline">\(\widehat{\log y} = 2.4 + 0.08 x\)</span>, provide an interpretation of <span class="math inline">\(\widehat{\beta_1}\)</span> in terms of percentage change in raw downloads</p></li>
 </ol>
 </section>
-<section id="problem-2-multiple-regression-no-r-needed" class="level1">
-<h1>Problem 2: Multiple regression (no R needed)</h1>
-<p>Peterson and Ziegler (2021) scraped data on LEGO® sets from themes produced January 1, 2018 and September 11, 2020 from Brickset.com. In this problem, you will work with data on about 400 randomly selected LEGO sets produced during this time period. The data contains the following variables:</p>
+<section id="problem-2-multiple-regression-lego-sets-fri" class="level1">
+<h1>Problem 2: Multiple regression (LEGO sets) (Fri)</h1>
+<p>Peterson and Ziegler (2021) scraped data on LEGO® sets from themes produced January 1, 2018 and September 11, 2020 from Brickset.com. In this problem, you will work with data on 100 randomly selected LEGO sets produced during this time period. The data contains the following variables:</p>
 <ul>
 <li><code>pieces</code>: Number of pieces in the set from brickset.com.</li>
-<li><code>minifigures</code>: Number of minifigures (LEGO® people) in the set scraped from brickset.com. - <code>amazon_price</code>: Price of the set on Amazon.com (in U.S. dollars)</li>
+<li><code>minifigures</code>: Number of minifigures (LEGO® people) in the set scraped from brickset.com.</li>
+<li><code>amazon_price</code>: Price of the set on Amazon.com (in U.S. dollars)</li>
 </ul>
 <p>Below is output from the multiple regression model fit in R:</p>
 <div class="cell">
@@ -252,7 +252,7 @@ F-statistic: 129.2 on 2 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You do not need to do any R for this question, just use the output to answer the questions</p>
+<p>You do not need to fit any models in R for this question, just use the output above to answer the questions. For part (e), you can use R’s <code>qt()</code> function to find the critical value (the residual degrees of freedom are in the output).</p>
 </div>
 </div>
 <ol type="a">
@@ -262,12 +262,26 @@ F-statistic: 129.2 on 2 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>What proportion of the variability in the Amazon price of a LEGO set is explained by the number of pieces and the number of minifigures?</li>
 <li>Calculate a 90% confidence interval for the slope associated with pieces.</li>
 <li>Interpret your confidence interval from part (e) in context.</li>
+<li>A classmate suggests fitting two separate simple linear regressions (one for <code>pieces</code> and one for <code>minifigures</code>) instead of one multiple regression. Give one reason why the multiple regression model is more useful.</li>
 </ol>
 </section>
-<section id="problem-3-mon" class="level1">
-<h1>Problem 3: Mon</h1>
+<section id="problem-3-penguins-mon" class="level1">
+<h1>Problem 3: Penguins (Mon)</h1>
 <p>The {palmerpenguins} data were collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. This data contains measurements of penguins’ body mass, flipper length, and bill size; along with their sex and species. There are 3 penguin species included: Gentoo, Chinstrap, and Adelie. We are interested in building a model to predict flipper length using body mass for each of the 3 species.</p>
-<p><img src="https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png" class="img-fluid"> Use the summary R output below to answer the questions (no R code needed)</p>
+<p><img src="https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You do not need to fit any models in R for this question, just use the output below to answer the questions.</p>
+</div>
+</div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -297,43 +311,48 @@ F-statistic: 404.2 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <ol type="a">
+<li><p>Which species is the reference level in this model? Define the indicator variables for <code>species</code> that R used, and write the theoretical mean function for the model that was fit.</p></li>
 <li><p>Write out the fitted regression equation for Chinstrap penguins</p></li>
 <li><p>Write out the fitted regression equation for Gentoo penguins</p></li>
 <li><p>Write out the fitted regression equation for Adelie penguins</p></li>
 <li><p>Give a careful interpretation for the <span class="math inline">\(\beta\)</span> coefficient labeled <code>body_mass_g:speciesChinstrap</code> in the context of the problem</p></li>
+<li><p>A <em>parallel lines</em> model would force all three species to have the same slope for <code>body_mass_g</code>. Which coefficient(s) in the model above would be equal to 0 for a parallel lines model?</p></li>
 </ol>
 </section>
-<section id="problem-4-mon" class="level1">
-<h1>Problem 4: Mon</h1>
-<!--  categorical predictor (in R)  -- Ames housing? -->
+<section id="problem-4-ames-housing" class="level1">
+<h1>Problem 4: Ames housing</h1>
 <p>The <code>ames_houses</code> dataset contains data on sale prices of 232 houses in Ames, Iowa. It was compiled by the Ames Assessor’s Office and used for computing assessed values for individual residential properties sold in Ames, IA from 2006 to 2010.</p>
-<p>The original dataset included data on nearly 3000 houses and included 82 variables. For this problem, we’re going to focus on explaining <code>Sale_Price</code> using <code>Square_Feet</code>, <code>Lot_Area</code>, and <code>Fireplace</code>.</p>
+<p>The original dataset included data on nearly 3000 houses and included 82 variables. For this problem, we’re going to focus on explaining <code>Sale_Price</code> using <code>Square_Feet</code>, <code>Lot_Area</code>, and <code>Fireplace</code> (<code>TRUE</code> if the house has at least one fireplace, <code>FALSE</code> otherwise).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ames_houses = read_csv("https://aluby.github.io/stat230/data/ames_houses.csv")</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ames_houses <span class="ot">=</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/ames_houses.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ames_houses <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://aluby.github.io/stat230/data/ames_houses.csv"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#ames_houses = read_csv(here::here("data/ames_houses.csv"))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="a">
-<li><p>Make a scatterplot of <code>Sale_Price</code> against <code>Square_Feet</code> and report the fitted regression equation. Summarize your main result in 1 sentence</p></li>
-<li><p>Check the SLR conditions and report your findings</p></li>
-<li><p>There are additional predictors in this dataset. Make a pairs plot of <code>Sale_Price</code>, <code>Square_Feet</code>, <code>Lot_Area</code>, and <code>Fireplace</code>. Summarize the main results in 1 sentence.</p></li>
-<li><p>Fit a parallel lines MLR model that uses all 3 predictors and report the fitted regression equation.</p></li>
-<li><p>How did <span class="math inline">\(\beta_{\text{SquareFeet}}\)</span> change from part (a)?</p></li>
-<li><p>Make a single EDA plot that shows the relationship between <code>Square_Feet</code>, <code>Fireplace</code>, and <code>Sale_Price</code>. Does your plot suggest a different slopes model is needed?</p></li>
+<li><p>Make a pairs plot of <code>Sale_Price</code>, <code>Square_Feet</code>, <code>Lot_Area</code>, and <code>Fireplace</code>. Summarize the main results in 1-2 sentences, including whether any of the predictors appear to be related to each other.</p></li>
+<li><p>Fit a parallel lines MLR model that uses all 3 predictors to explain <code>Sale_Price</code>, and report the fitted regression equation.</p></li>
+<li><p>R named one of your coefficients <code>FireplaceTRUE</code>. Explain why it was named this, which group is the reference level, and give a careful interpretation of this coefficient in context.</p></li>
+<li><p>Fit a simple linear regression of <code>Sale_Price</code> on <code>Square_Feet</code> only. How does the estimated slope for <code>Square_Feet</code> compare with the slope in your model from part (b)? Why might it have changed?</p></li>
+<li><p>Make a single EDA plot that shows the relationship between <code>Square_Feet</code>, <code>Fireplace</code>, and <code>Sale_Price</code>. Does your plot suggest that a different slopes model is needed?</p></li>
+<li><p>Fit a model that lets the slope for <code>Square_Feet</code> differ for houses with and without a fireplace (and still includes <code>Lot_Area</code>). Report the fitted regression equation, then write the fitted equation for houses <strong>without</strong> a fireplace and for houses <strong>with</strong> a fireplace.</p></li>
+<li><p>Test whether the different slopes model is needed. State the null and alternative hypotheses (in terms of a <span class="math inline">\(\beta\)</span> coefficient), report the test statistic and p-value from <code>summary()</code>, and state your conclusion in context. Then run <code>anova()</code> on your model from part (b) and your model from part (f) (e.g., <code>anova(model_b, model_f)</code>). What do you notice about the p-value compared with the one from <code>summary()</code>?</p></li>
+<li><p>Give a careful interpretation of the coefficient for <code>Square_Feet:FireplaceTRUE</code> in context.</p></li>
 </ol>
 </section>
-<section id="problem-5-f-statistic" class="level1">
-<h1>Problem 5: F statistic</h1>
-<p>A multiple regression analysis of a dataset with 82 observations was performed with 6 explanatory variables. <span class="math inline">\(SS_{regression} = 22.6\)</span> and <span class="math inline">\(SS_{total} = 123.1\)</span>.</p>
-<ol type="a">
-<li><p>Find the value of the <span class="math inline">\(F\)</span> statistic</p></li>
-<li><p>Write out the null hypothesis that corresponds to your statistic from (a)</p></li>
-<li><p>The F-statistic has two degrees of freedom, where <span class="math inline">\(df_1 = k\)</span> and <span class="math inline">\(df_2 = (n-k-1)\)</span>. Using R’s <code>pf</code> function, find the p-value that corresponds to the test in parts (a) and (b). Assuming all assumptions are met, what do you conclude? (It may be helpful to review <a href="https://openintro-ims.netlify.app/inference-many-means.html#sec-mathANOVA">Chapter 22.3 from IMS</a>, or check out this interactive <a href="https://gallery.shinyapps.io/dist_calc/">Distribution Calculator</a> for more information on the F distribution.)</p></li>
-<li><p>What proportion of variability in the response variable is explained by the explanatory variables?</p></li>
-</ol>
+<section id="problem-5-f-statistic-wed" class="level1">
+<h1>Problem 5: F statistic (Wed)</h1>
+<!-- A multiple regression analysis of a dataset with 82 observations was performed with 6 explanatory variables. $SS_{regression} = 22.6$ and $SS_{total} = 123.1$. 
+
+  (a) Find the value of the $F$ statistic
+  
+  (b) Write out the null hypothesis that corresponds to your statistic from (a) 
+  
+  (c) The F-statistic has two degrees of freedom, where $df_1 = k$ and $df_2 = (n-k-1)$. Using R's `pf` function, find the p-value that corresponds to the test in parts (a) and (b). Assuming all assumptions are met, what do you conclude? (It may be helpful to review [Chapter 22.3 from IMS](https://openintro-ims.netlify.app/inference-many-means.html#sec-mathANOVA), or check out this interactive [Distribution Calculator](https://gallery.shinyapps.io/dist_calc/) for more information on the F distribution.)
+  
+  (d) What proportion of variability in the response variable is explained by the explanatory variables ($R^2$)? Also calculate the adjusted $R^2$. Which is smaller, and why? -->
 </section>
-<section id="problem-6-p-values-galore" class="level1">
-<h1>Problem 6: p-values galore</h1>
-<p>Use the <code>penguins</code> summary output in Problem 4 for this question, along with the ANOVA output below.</p>
+<section id="problem-6-p-values-galore-reviewwed" class="level1">
+<h1>Problem 6: p-values galore (Review/Wed)</h1>
+<p>Use the <code>penguins</code> summary output in Problem 3 for this question, along with the ANOVA output below.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(penguins_mlr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -362,10 +381,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ol>
 <p><code>body_mass_g:species   2    228     114    3.9837 0.0195 *</code></p>
 <p>What do you conclude in the context of the data?</p>
-</section>
-<section id="problem-7" class="level1">
-<h1>Problem 7</h1>
-<p><em>Optional</em> EC opportunity: if you attended the Math/Stat colloquium on Tues 4/21, include a sentence or two about the talk and how it relates to course content in your homework.</p>
+<!-- Problem 7 (optional EC for attending a colloquium): the previous version referenced a spring date (Tues 4/21). Add a Fall 2026 date or remove. -->
 
 
 </section>
