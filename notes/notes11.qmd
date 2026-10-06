@@ -20,34 +20,45 @@ bikes_mlr <- lm(rides ~ temp_actual * weekend, data = bikes)
 bikes_mlr2 <- lm(rides ~ temp_actual + weekend, data = bikes)
 ```
 
-## MLR model for `bikes` data
+## `bikes` data
 
-We're back to the separate-lines model from last class:
+**Goal:** Predict ______________ based on `temp_actual` and `weekend`
+
 
 ```{r}
 kable_coef(bikes_mlr, terms = c("Intercept", "temp_actual", "weekendTRUE",
                                  "temp_actual:weekendTRUE"))
 ```
 
-::: {.callout-tip}
-## Warm up
+**Warm up:**
 
-Write out the theoretical and fitted regression model for
-`rides ~ temp_actual * weekend`.
-:::
+Write out the theoretical model from the table above
+
+\vspace{1in}
+
+Write out the fitted model for weekends and weekdays separately
+
+\vspace{2in}
+
 
 ## Do we *need* a different-slopes model?
 
 ```{r}
-#| fig-height: 3
-gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) |> gf_lm()
+#| fig-height: 2
+#| fig-width: 4 
+#| fig-align: left
+gf_point(rides ~ temp_actual, color = ~weekend, data = bikes, size = .5) |> gf_lm()
 ```
 
-Look at the `temp_actual:weekendTRUE` row in the table above -- its
-estimate is tiny and its p-value is large, suggesting the slopes
-might not really differ.
+**Answer based on the graph:**
 
-## Testing a single coefficient
+\vspace{.5in}
+
+**Answer based on the table:**
+
+\vspace{.5in}
+
+## T-test for a single coefficient
 
 **Hypotheses:** $H_0: \beta_j = \#$ vs. $H_a: \beta_j \ne, <, \text{or} > \#$
 
@@ -84,28 +95,18 @@ p1 + p2 + p3
 ```
 
 **CI for a single coefficient:**
+
 $\widehat\beta_j \pm t^*_{n-(k+1)} \cdot SE(\widehat\beta_j)$
 
-## Do we need `weekend` at all?
-
-Careful -- with the interaction term still in the model, the
-`weekendTRUE` row alone doesn't answer "do we need weekend at all,"
-because `weekend` also appears in the interaction term.
-
-```{r}
-kable_coef(bikes_mlr, terms = c("Intercept", "temp_actual", "weekendTRUE",
-                                 "temp_actual:weekendTRUE"))
-```
+\vspace{1in}
 
 ::: {.callout-caution}
 ## Caution!
 
-A single coefficient's p-value only tests that ___ term, holding all
-others in the model. To ask whether `weekend` matters *at all*, we
-need to test $\beta_2 = \beta_3 = 0$ jointly -- more on this below.
+$\widehat \beta$'s and p-values are highly ___________________ on each other! ___________________ $\beta$'s might become ___________________ after removing or adding another term
 :::
 
-Once we drop the (non-significant) interaction, the simpler
+Once we drop the interaction between `weekend` and `temp_actual`, the simpler
 parallel-lines model shows `weekend` is clearly still useful:
 
 ```{r}
