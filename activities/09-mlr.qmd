@@ -29,7 +29,7 @@ agree")
 
 Variable |	Description
 -----        | -------------------
-`rating`     |	Overall rating of supervisor performance
+`overall`    |	Overall rating of supervisor performance
 `complaints` |	Score for “Your supervisor handles employee complaints appropriately.”
 `privileges` |	Score for “Your supervisor allows special privileges.”
 `learn`      |	Score for “Your supervisor provides opportunities to learn new things.”
@@ -37,7 +37,7 @@ Variable |	Description
 `critical`   |	Score for “Your supervisor is too critical of poor performance.”
 `advance`    |	Score for “I am not satisfied with the rate I am advancing in the company?”
 
-**Before looking at the data**, how do you think each predictor variable will be related to `rating`? What do you think will have the strongest relationship? The weakest?
+**Before looking at the data**, how do you think each predictor variable will be related to `overall`? What do you think will have the strongest relationship? The weakest?
 
 ## EDA: Making a pairs plot
 
