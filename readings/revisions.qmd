@@ -3,28 +3,24 @@ title: "Revisions for Stat230"
 format: html
 ---
 
-In Stat230, you can [spend a token](https://forms.gle/MivjnJEbqHesQYnw9) to revise an exam or a case study. Both should be revised individually. 
+In Stat230, you can [spend a token](https://forms.gle/MivjnJEbqHesQYnw9) to retake a quiz or resubmit a case study (or have an extension). Both should be done individually. 
 
-# Exam Revisions
+# Quiz Retakes
 
-- To revise an exam, you must spend a token
-- If you submit exam revisions, you can earn up to 50% of your missed points back
+- To retake a quiz, you must spend a token
+- If you retake a quiz, you can earn up to 25% of your missed points back
 
-To submit exam revisions
+To retake a quiz
 
 - Fill out the [spend a token](https://forms.gle/MivjnJEbqHesQYnw9) form
-- Print out a paper copy of your completed exam from gradescope
-- For any question where you missed points, you should write your corrected answer directly on the printout (if you need more space, you can write on a post-it note) 
-    - For open-ended questions, you only need to write the corrected answer
-    - For T/F or multiple choice questions, you should include an explanation/justification of why it is true or false. This could be a reference to slides/activity/hw from class, the book, an equation, a counterexample, a correction to the statement to make it true, etc. You will not earn points back for only marking the correct option.
-- If you scored 80% or less, please also include 1-2 sentence answers to the following questions
-    a) How did you study for this exam?
-    b) Did you have any major misunderstandings or knowledge gaps going into this exam? If so, what are they? 
-    c) What will you do differently to prepare for the next exam?
-- Exam revisions should be handed to me directly in class or office hours
-- Exam revisions are due before the next exam. Revisions on the 3rd exam are due by 11:59 pm on the last day of class. 
+- Fill out the retake cover sheet (linked on moodle)
+- Review *all* questions and concepts, even those you earned full points on
+- The retake is a 30 minute "second pass" at the content from the quiz. The questions will be different but cover the same concepts.
+- Retakes should be scheduled with me during an office hour or at an alternative time during the regular workday.
+    - Please schedule with me at least a week out! 
+- Retakes must be completed before the next quiz. 
 
-**For Exam3**: Please also fill out the revisions cover sheet (linked on moodle)
+**For quiz01 only:** The content of quiz01 will continue to be used throughout MLR, so quiz02 is kind of an extension of the ideas of quiz01. If your score on quiz02 is *higher* than your score on quiz01 (before retakes), I will replace your quiz01 score with quiz02. You do not need to spend a token to use this option; I will do it for everybody. 
 
 # Case Study Revisions
 
