@@ -340,19 +340,17 @@ F-statistic: 404.2 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="problem-5-f-statistic-wed" class="level1">
 <h1>Problem 5: F statistic (Wed)</h1>
-<!-- A multiple regression analysis of a dataset with 82 observations was performed with 6 explanatory variables. $SS_{regression} = 22.6$ and $SS_{total} = 123.1$. 
-
-  (a) Find the value of the $F$ statistic
-  
-  (b) Write out the null hypothesis that corresponds to your statistic from (a) 
-  
-  (c) The F-statistic has two degrees of freedom, where $df_1 = k$ and $df_2 = (n-k-1)$. Using R's `pf` function, find the p-value that corresponds to the test in parts (a) and (b). Assuming all assumptions are met, what do you conclude? (It may be helpful to review [Chapter 22.3 from IMS](https://openintro-ims.netlify.app/inference-many-means.html#sec-mathANOVA), or check out this interactive [Distribution Calculator](https://gallery.shinyapps.io/dist_calc/) for more information on the F distribution.)
-  
-  (d) What proportion of variability in the response variable is explained by the explanatory variables ($R^2$)? Also calculate the adjusted $R^2$. Which is smaller, and why? -->
+<p>A multiple regression analysis of a dataset with 82 observations was performed with 6 explanatory variables. <span class="math inline">\(SS_{regression} = 22.6\)</span> and <span class="math inline">\(SS_{total} = 123.1\)</span>.</p>
+<ol type="a">
+<li><p>Find the value of the overall <span class="math inline">\(F\)</span> statistic that would be reported in the <code>summary()</code> table</p></li>
+<li><p>Write out the null hypothesis that corresponds to your statistic from (a)</p></li>
+<li><p>The F-statistic has two degrees of freedom, where <span class="math inline">\(df_1 = p\)</span> and <span class="math inline">\(df_2 = (n-p-1)\)</span>. Using R’s <code>pf</code> function, find the p-value that corresponds to the test in parts (a) and (b). Assuming all assumptions are met, what do you conclude? (It may be helpful to review <a href="https://openintro-ims.netlify.app/inference-many-means.html#sec-mathANOVA">Chapter 22.3 from IMS</a>, or check out this interactive <a href="https://gallery.shinyapps.io/dist_calc/">Distribution Calculator</a> for more information on the F distribution.)</p></li>
+<li><p>What proportion of variability in the response variable is explained by the explanatory variables (<span class="math inline">\(R^2\)</span>)? Also calculate the adjusted <span class="math inline">\(R^2\)</span>. Which is smaller, and why?</p></li>
+</ol>
 </section>
 <section id="problem-6-p-values-galore-reviewwed" class="level1">
 <h1>Problem 6: p-values galore (Review/Wed)</h1>
-<p>Use the <code>penguins</code> summary output in Problem 3 for this question, along with the ANOVA output below.</p>
+<p>Use the <code>penguins</code> summary output in <strong>Problem 3</strong> for this question, along with the ANOVA output below.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(penguins_mlr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
