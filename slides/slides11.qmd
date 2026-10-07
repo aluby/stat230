@@ -67,6 +67,34 @@ bikes <- bikes |> select(date, season, year, month, weekend, holiday, temp_actua
 fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt", sep = "\t", header = TRUE)
 
 bikes_slr <- lm(rides ~ temp_actual, data = bikes)
+bikes_mlr <- lm(rides ~ temp_actual * weekend, data = bikes)
+bikes_par <- lm(rides ~ temp_actual + weekend, data = bikes)
+
+set.seed(230)
+bikes_noise <- lm(rides ~ temp_actual + n1 + n2 + n3 + n4 + n5,
+                  data = bikes |> mutate(n1 = rnorm(n()), n2 = rnorm(n()), n3 = rnorm(n()),
+                                         n4 = rnorm(n()), n5 = rnorm(n())))
+
+bikes_season <- lm(rides ~ temp_actual + season, data = bikes)
+bikes_season_w <- lm(rides ~ temp_actual + season_w,
+                     data = bikes |> mutate(season_w = relevel(season, ref = "winter")))
+
+a_full <- anova(bikes_slr, bikes_mlr)
+a_slopes <- anova(bikes_par, bikes_mlr)
+a_shift <- anova(bikes_slr, bikes_par)
+d_full <- a_full$Df[2]
+f_full <- a_full$F[2]
+f_full_p <- a_full$`Pr(>F)`[2]
+
+fmt_p <- function(p) ifelse(p < 0.001, "<0.001", format(round(p, 3), nsmall = 3))
+sci <- function(p) format(p, digits = 2, scientific = TRUE)
+
+coef_tbl <- function(m) {
+  tidy(m) |>
+    mutate(across(c(estimate, std.error, statistic), \(x) round(x, 2)),
+           p.value = fmt_p(p.value)) |>
+    knitr::kable()
+}
 
 
 ```
@@ -75,111 +103,99 @@ bikes_slr <- lm(rides ~ temp_actual, data = bikes)
 
 ```{r}
 bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
-bikes_mlr
+broom::tidy(bikes_mlr) |> select(term, estimate)
 ```
 
 ::: {.task .medium}
-**Warm up:** Write out the theoretical and fitted regression model (use blank space on next slide)
+**Warm up:** Write out the theoretical and fitted regression model
 :::
 
-## 
+::: notes
+Timing: ~7 min for this block (warm-up, different slopes?, t-test/CI review). Don't re-derive the t-test; it is SLR review.
+:::
 
-## Do we _need_ a different slopes model? 
+## Do we _need_ a different slopes model? {.smaller}
 
 ```{r}
 gf_point(rides ~ temp_actual, color = ~weekend, data = bikes) |>
   gf_lm()
 
-tidy(bikes_mlr) 
+coef_tbl(bikes_mlr) 
 ```
 
+## Hypothesis test for a single coefficient
 
+Let $p$ = the number of predictors in the model (an interaction counts as one)
 
-## Testing a single coefficient
+<br>
 
-::: {style="font-size: 0.9em;"}
-**Hypotheses:** $H_0: \ \beta_j = \#$ vs. $H_a: \ \beta_j \underset{>}{\overset{<}{\ne}} \#$
-:::
+**Hypotheses:** $H_0: \ \beta_j = \#$ vs. $H_a: \ \beta_j \ne, <, \text{or} > \#$
 
-. . .
+**Test statistic:** $t = \dfrac{\widehat{\beta}_j - \#}{SE(\widehat{\beta}_j)}$
 
-::: {style="font-size: 0.9em;"}
-**Test statistic:** $t = \dfrac{\widehat{\beta}_j - \#}{SE(\beta_j)}$
-:::
-. . .
-
-::: {style="font-size: 0.9em;"}
-**Reference distribution:** $t$ distribution with d.f. = $n-(k+1)$
-
+**Reference distribution:** $t$ distribution with d.f. = $n-(p+1)$
 
 **p-value:** Area in the tail(s) specified by $H_a$
-:::
-
-
-```{r echo=FALSE, fig.height = 2, fig.width = 7.5, out.width=850}
-p1 <- ggplot(data = data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
-  stat_function(fun = dt, args = list(df = 5)) +
-  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = .4) +
-  ggtitle(expression(H[a]: beta[j] < 0)) +
-  theme(axis.title = element_blank(),
-        axis.ticks = element_blank(),
-        axis.text = element_blank())
-
-p2 <- ggplot(data = data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
-  stat_function(fun = dt, args = list(df = 5)) +
-  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = .4) +
-  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = .4) +
-  ggtitle(expression(H[a]: beta[j] != 0)) +
-  theme(axis.title = element_blank(),
-        axis.ticks = element_blank(),
-        axis.text = element_blank())
-
-p3 <- ggplot(data = data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
-  stat_function(fun = dt, args = list(df = 5)) +
-  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = .4) +
-  ggtitle(expression(H[a]: beta[j] > 0)) +
-  theme(axis.title = element_blank(),
-        axis.ticks = element_blank(),
-        axis.text = element_blank())
-
-(p1 | p2 | p3)
-```
 
 ## CIs for a single coefficient
 
+$\widehat{\beta}_j \pm t^*_{n-(p+1)} \cdot SE(\widehat{\beta}_j )$
 
-$\widehat{\beta}_j \pm t^*_{n-(k+1)} \cdot SE(\widehat{\beta}_j )$
+<br>
 
+```{r}
+#| echo: true
+tidy(bikes_mlr, conf.int = TRUE) |> select(term, estimate, std.error, conf.low, conf.high)
+qt(0.975, df = 496)
+```
 
-## Answer: Do we need a different slopes model? 
+By hand, for `temp_actual`: $`r round(coef(bikes_mlr)[2], 2)` \pm `r round(qt(0.975, 496), 3)` \times `r round(summary(bikes_mlr)$coef[2, 2], 3)` = (`r round(confint(bikes_mlr)[2, 1], 1)`, `r round(confint(bikes_mlr)[2, 2], 1)`)$
 
+## Answer: Do we need a different slopes model?
+
+- **Graph:** the weekday and weekend lines are nearly parallel
+- **Table:** the interaction coefficient is only `r round(coef(bikes_mlr)[4], 2)` rides per degree, with $p =$ `r round(summary(bikes_mlr)$coef[4, 4], 3)`
+
+So there is no evidence that the slope for temperature differs on weekends. 
+
+. . .
+
+**Next question:** do we need `weekend` *at all*?
 
 ## Do we need `weekend` at all?
 
+Full model with the interaction:
 
 ```{r}
-tidy(bikes_mlr) 
+coef_tbl(bikes_mlr)
 ```
+
+
+## ...but wait
+
+Drop only the interaction (parallel lines model):
+
+```{r}
+coef_tbl(bikes_par)
+```
+
+Now `weekendTRUE` **is** significant!
+
+. . .
 
 ::: callout-caution
 ## Caution!
 
-<br>
-
-<br>
-
-<br>
-
-<br>
-
+$\widehat \beta$'s and p-values **are highly dependent**. A t-test tells us: "is this one term needed, *given everything else is already in the model*?"
 :::
 
-## Do we need `weekend` at all?
+. . . 
 
-```{r}
-bikes_mlr2 <- lm(rides ~ temp_actual + weekend, data = bikes)
-tidy(bikes_mlr2)
-```
+We need a test that asks about several coefficients at once
+
+::: notes
+Timing: puzzle block ~7 min (minutes 7-14). Let students argue which table to believe before revealing the resolution.
+:::
 
 ## Explained Variability
 
@@ -187,16 +203,20 @@ tidy(bikes_mlr2)
 slr_aug <- augment(bikes_slr)
 slr_aug <- mutate(slr_aug, mean.y = mean(rides))
 
-p1 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Total") %>%
+p1 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Total", size = .2) %>%
   gf_segment(mean.y + rides ~ temp_actual + temp_actual, color = "gray70", alpha = .4) %>%
   gf_hline(yintercept = mean(slr_aug$rides), color = "#f15a31") 
 
-p2 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Error") %>%
+p2 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Error", size = .2) %>%
   gf_segment(.fitted + rides ~ temp_actual + temp_actual, color = "#003069", alpha = .4) %>%
   gf_lm(color = "#f15a31") 
 
 p1 + p2
 ```
+
+. . . 
+
+**Idea**: Compare the *explained variability* of the two models
 
 ## Explained Variability
 
@@ -245,7 +265,7 @@ decomp_plot2 <- ggplot(data = ssdf2 |> filter(Source != "Total"), aes(x = "", y 
 
 ::: columns
 :::{.column width="30%"}
-"Smaller" Model
+"Reduced" Model
 
 
 ```{r}
@@ -257,7 +277,7 @@ sst_plot + decomp_plot
 ```
 :::
 :::{.column width="30%"}
-"Larger" Model
+"Full" Model
 
 
 ```{r}
@@ -272,167 +292,83 @@ sst_plot2 + decomp_plot2
 :::{.column width="30%" .fragment .center}
 <br>
 
-**Idea:** Is the proportion of variability explained by Model 2 significantly better than Model 1?
+**Idea:** Does the full model reduce the error (SSE) by *more than chance alone*?
 
 :::
 :::
 
-## Can we just use $R^2$? 
 
-```{r}
-bikes_mlr_3var <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
-bikes_mlr_4var <- lm(rides ~ temp_actual + windspeed*weekend , data = bikes)
-
-```
-
-::: medium
-- About `r round(summary(bikes_slr)$r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature
-- About `r round(summary(bikes_mlr2)$r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature and an indicator for weekend
-- About `r round(summary(bikes_mlr_3var)$r.squared, 5)*100`% of the variability in rides is explained by the regression model including temperature, windspeed, and an indicator for weekend
-- About `r round(summary(bikes_mlr_4var)$r.squared, 5)*100`% of the variability in rides is explained by the regression model including temperature, windspeed, an indicator for weekend, and an interaction between weekend and windspeed
-:::
-
-What trend do you notice? 
-
-## $R^2$ vs adjusted $R^2$
-
-::: columns
-:::{.column width="50%"}
-
-$$R^2 = 1 - \frac{SSE}{SST}$$
-
-:::
-:::{.column width="50%"}
-$$R^2_{adj} = 1 - \frac{SSE/(n-k)}{SST/(n-1)}$$
-$$R^2_{adj} = 1 - \frac{MSE}{MST}$$
-:::
-
-:::
-
-- $R^2$ **always** increases when predictors are added to the model
-- $R^2_{adj}$ **could** decrease if unnecessary predictors are added to the model
-- Better to use $R^2_{adj}$ for multiple regression
-
-## Adjusted $R^2$
-
-```{r}
-bikes_mlr_3var <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
-bikes_mlr_4var <- lm(rides ~ temp_actual + windspeed*weekend , data = bikes)
-
-```
-
-::: medium
-
-- About `r round(summary(bikes_slr)$adj.r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature
-- About `r round(summary(bikes_mlr2)$adj.r.squared, 4)*100`% of the variability in rides is explained by the regression model including temperature and an indicator for weekend
-- About `r round(summary(bikes_mlr_3var)$adj.r.squared, 5)*100`% of the variability in rides is explained by the regression model including temperature, windspeed, and an indicator for weekend
-- About `r round(summary(bikes_mlr_4var)$adj.r.squared, 5)*100`% of the variability in rides is explained by the regression model including temperature, windspeed, an indicator for weekend, and an interaction between weekend and windspeed
-:::
-
-## Formal test for comparing models
+## Comparing nested models
 
 :::: {.columns align=center}
-::: {.column width="25%"}
+::: {.column width="20%"}
 Full model
 :::
 
-::: {.column width="70%"}
-$\mu \lbrace Y | X \rbrace = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2$
+::: {.column width="75%"}
+$\mu \lbrace Y | X \rbrace = \beta_0 + \beta_1 \text{temp} + \beta_2 \text{weekend} + \beta_3 \text{temp} \times \text{weekend}$
 :::
 
-::: {.column width="25%"}
+::: {.column width="20%"}
 Reduced model
 :::
 
-::: {.column width="70%"}
-$\mu \lbrace Y | X \rbrace = \beta_0 + \beta_1 x_1$
+::: {.column width="75%"}
+$\mu \lbrace Y | X \rbrace = \beta_0 + \beta_1 \text{temp}$
 :::
 
 ::::
+
+<br>
+
+The reduced model is the full model with some $\beta$'s set to 0, so we say the models are **nested**
 
 . . .
 
 <br>
 
-
 :::: {.columns align=center}
-::: {.column width="25%"}
+::: {.column width="20%"}
 Hypotheses
 :::
 
-::: {.column width="70%"}
-$H_0:\ \beta_{2} = \beta_3 = 0$
+::: {.column width="75%"}
+$H_0:\ \beta_{2} = \beta_3 = 0$ (`weekend` doesn't matter: it neither shifts the line nor changes its slope)
 
-$H_a:$ at least one $\beta_j \ne 0$, $j=2,3$
+$H_a:$ at least one of $\beta_2, \beta_3 \ne 0$
 :::
 
 ::::
 
-## Comparing models with an F-test
+## The extra sum of squares F test
+
+$$F = \frac{(\text{SSE}_{\text{reduced}} - \text{SSE}_{\text{full}}) / d}{\text{MSE}_{\text{full}}} = \frac{\text{how much error drops per } \beta}{\text{estimate of } \sigma^2}$$
+
+<br>
 
 
-::: medium
+::: fragment
 
-Test statistic
-
-
-$$
-\begin{split}
-F &= \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{full}}) / df_{\text{full}}}\\
-&= \frac{(\text{SSR}_{\text{full}} - \text{SSR}_{\text{reduced}}) / d}{\text{MSE}_{\text{full}}}\\
-&= \frac{(\text{SSE}_{\text{reduced}} - \text{SSE}_{\text{full}}) / d}{\text{MSE}_{\text{full}}}
-\end{split}
-$$
+- If $H_0$ is true, both parts estimate $\sigma^2$, so $F \approx 1$
+- If the extra terms really help, $F$ is much bigger than 1
 
 :::
 
 ::: small
-
 where 
 
-- $d = \text{df}_{full} - \text{df}_{reduced}$ = \# betas being tested
-- $\text{df}_{i} = n - (p + 1)=$ error d.f. for model $i$
+- $d = \text{df}_{reduced} - \text{df}_{full}$ = number of $\beta$'s being tested, 
+- $\text{df}_{i} = n - (p_i + 1)$ is the error d.f. for model $i$, 
 - $\text{MSE}_{\text{full}} = \dfrac{\text{SSE}_{\text{full}}}{\text{df}_{\text{full}}}$
-
 :::
-
-
-## F distribution
-
-
-The F-statistics follows an $F$ distribution with $d$ and $n-p-1$ d.f.
-
-```{r fig.height=3, fig.width=5, echo=FALSE, message=FALSE, fig.align='center'}
-par(mar = c(2, .1, .1, .1))
-plot(c(0, 5), c(0, df(.01, 1, 1)), type = "n", axes = FALSE)
-at <- seq(0, 5, 1)
-axis(1, at)
-# axis(1, at, rep("", length(at)), tcl = -0.1)
-X <- seq(0, 5, 0.01)
-DF1 <- c(1, 2, 5, 10, 100)
-DF2 <- c(1, 1, 2, 1, 100)
-COL. <- RColorBrewer::brewer.pal(n = 7, name = "Blues")[-1]
-for (i in 1:5) {
-  Y <- df(X, as.numeric(DF1[i]), as.numeric(DF2[i]))
-  lines(X, Y, col = COL.[i])
-}
-legend(2.5, 3.25,
-       legend = c(paste('df1 = ', DF1[1:5], ', df2 = ', DF2[1:5], sep = '')),
-       col = COL.,
-       text.col = COL.,
-       lty = rep(1, 5))
-
-```
-
-```{r include=FALSE}
-dev.off
-```
 
 ## Upper-tail p-values
 
+The F-statistic follows an $F$ distribution with $d$ and $\text{df}_{full}$ d.f. It is right-skewed, and only large values of $F$ are evidence against $H_0$, so the p-value is the **upper tail**
+
 ```{r fig.height=3, fig.width=5, echo=FALSE, message=FALSE, fig.align='center'}
  ggplot(data = data.frame(x = c(.00001, 5.5)), aes(x)) +
-  stat_function(fun = df, args = list(df1=4, df2=23), color = "navy", size = 1) +
+  stat_function(fun = df, args = list(df1=4, df2=23), color = "navy", linewidth = 1) +
   stat_function(fun = df, args = list(df1=4, df2=23), xlim = c(3, 5.5),
                   geom = "area", fill = "navy", alpha = .4) +
   labs(x = "F", y = "Density") +
@@ -441,43 +377,94 @@ dev.off
   annotate("text", x = 5.26, y = .25, label = "p-value", color = "navy", size = 6) 
 ```
 
+To obtain upper-tail areas: `pf(stat, df1, df2, lower.tail = FALSE)`
 
-To obtain upper-tail areas: `1 - pf(stat, df1, df2)`
-
-
-## Putting it all together
-
-
+## Putting it all together: by hand
 
 ```{r}
-full_table <- glance(bikes_mlr) |> 
-  select(r.squared, df, df.residual, nobs) |>
-  mutate(model = "Full")
-
-reduced_table <- glance(bikes_slr) |> 
-  select(r.squared, df, df.residual, nobs) |>
-  mutate(model = "Reduced")
-
-bind_rows(full_table, reduced_table) |>
-  select(model, everything()) |>
-  knitr::kable(digits = 3)
+tibble(
+  Model = c("Reduced: `temp_actual`", "Full: `temp_actual * weekend`"),
+  SSE = c(deviance(bikes_slr), deviance(bikes_mlr)),
+  df = c(df.residual(bikes_slr), df.residual(bikes_mlr))
+) |>
+  knitr::kable(format.args = list(big.mark = ",", scientific = FALSE), digits = 0)
 ```
 
 . . .
 
 $$
-F = \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{full}}) / df_{\text{full}}} = \frac{(0.371 - 0.332) / 2}{(1 - 0.371) / 496} \approx 15.4
+F = \frac{(`r format(round(deviance(bikes_slr)), big.mark = ",")` - `r format(round(deviance(bikes_mlr)), big.mark = ",")`) / `r d_full`}{`r format(round(deviance(bikes_mlr)), big.mark = ",")` / `r df.residual(bikes_mlr)`} \approx `r round(f_full, 2)`
 $$
 
 . . .
 
 ```{r}
 #| echo: true
-1 - pf(15.4, 2, 496)
+pf(15.26, df1 = 2, df2 = 496, lower.tail = FALSE)
 ```
 
+## Extra sums of squares F-test in R
 
+```{r}
+#| echo: true
+full <- lm(formula = rides ~ temp_actual * weekend, data = bikes)    #<1>
+reduced <- lm(formula = rides ~ temp_actual, data = bikes) #<2>
+anova(reduced, full) #<3>
+```
 
+1. Fit the full model
+2. Fit the reduced model
+3. Use `anova()` to compare the two models. The first argument should be the reduced model.
+
+## Reading the `anova()` output
+
+```
+Analysis of Variance Table
+
+Model 1: rides ~ temp_actual
+Model 2: rides ~ temp_actual * weekend
+  Res.Df       RSS Df    Sum of Sq      F               Pr(>F)    
+1    df1      SSE1                                  
+2    df2      SSE2  d    SSE1-SSE2  (SumSq/d)/(SSE2/df2) p-val
+```
+
+. . .
+
+**Conclusion:** $p =$ `r sci(f_full_p)`. Strong evidence that `weekend` matters (as a shift in the line, a change in slope, or both)
+
+## Resolving the puzzle {.smaller}
+
+```{r}
+tibble(
+  Question = c("Different slopes needed?", "Weekend shift needed (no interaction)?", "Weekend needed at all?"),
+  Reduced = c("`temp + weekend`", "`temp`", "`temp`"),
+  Full = c("`temp * weekend`", "`temp + weekend`", "`temp * weekend`"),
+  d = c(a_slopes$Df[2], a_shift$Df[2], a_full$Df[2]),
+  F = as.character(signif(c(a_slopes$F[2], a_shift$F[2], a_full$F[2]), 3)),
+  `p-value` = fmt_p(c(a_slopes$`Pr(>F)`[2], a_shift$`Pr(>F)`[2], a_full$`Pr(>F)`[2]))
+) |>
+  knitr::kable()
+```
+
+<br>
+
+- One tool answers all three questions
+- When $d = 1$, the F-test and the t-test are the same test ($F = t^2$)
+- The t-tests couldn't answer the *joint* question (row 3)
+
+::: notes
+Timing: F-test block ~16 min (minutes 22-38). Spend the time on the "Putting it all together: by hand" and "Reading the anova() output" slides; if short on time, skip "Resolving the puzzle" and revisit it at the start of Day 12.
+:::
+
+## `anova()` on a single model
+
+```{r}
+#| echo: true
+anova(bikes_mlr)
+```
+
+- Each row adds one term to the model, in order, and tests whether it improves the fit given the terms above it
+- The **last row** is the extra sums of squares F-test for the last term and matches `anova(bikes_par, bikes_mlr)`
 
 ## Reading R output
 
@@ -496,28 +483,117 @@ Multiple R-squared:  0.3709,	Adjusted R-squared:  0.3671
 F-statistic: 97.47 on 3 and 496 DF,  p-value: < 2.2e-16
 ```
 
-
 ::: footer
 Output was edited to fit on one slide
 :::
 
+. . .
 
-## Extra sums of squares F-test in R
+The **F-statistic** at the bottom is the same kind of test: the full model vs. an *intercept-only* model. $H_0: \beta_1 = \beta_2 = \beta_3 = 0$ (none of the predictors help)
+
+## Last piece of the `summary()` table: adjusted $R^2$
+
+::: columns
+:::{.column width="50%"}
+
+$$R^2 = 1 - \frac{SSE}{SST}$$
+
+:::
+:::{.column width="50%" .fragment}
+$$R^2_{adj} = 1 - \frac{SSE/(n-p-1)}{SST/(n-1)}$$
+$$R^2_{adj} = 1 - \frac{MSE}{MST}$$
+:::
+
+:::
+
+Adjusted $R^2$ adds a penalty for having a more complex model (model with more $\beta$s)
+
+## $R^2$ vs Adjusted $R^2$ {.incremental}
 
 ```{r}
-#| echo: true
-full <- lm(formula = rides ~ temp_actual * weekend, data = bikes)    #<1>
-reduced <- lm(formula = rides ~ temp_actual, data = bikes) #<2>
-anova(reduced, full) #<3>
+tibble(
+  Model = c("`temp_actual`", "`temp_actual + weekend`", "`temp_actual * weekend`", "`temp_actual` + 5 random noise variables"),
+  `$R^2$` = c(summary(bikes_slr)$r.squared, summary(bikes_par)$r.squared,
+              summary(bikes_mlr)$r.squared, summary(bikes_noise)$r.squared),
+  `Adjusted $R^2$` = c(summary(bikes_slr)$adj.r.squared, summary(bikes_par)$adj.r.squared,
+                       summary(bikes_mlr)$adj.r.squared, summary(bikes_noise)$adj.r.squared)
+) |>
+  knitr::kable(digits = 4)
 ```
 
-1. Fit the full model
-2. Fit the reduced model
-3. Use `anova()` to compare the two models. The first argument should be the reduced model.
+. . .
+
+- $R^2$ never goes down when predictors are added, even for pure noise! 
+- Bigger $R^2$ alone can't tell us whether the improvement is "real"
+- $R^2_{adj}$ could decrease if unnecessary predictors are added 
+- Better to use $R^2_{adj}$ than $R^2$ to compare models
+- Neither is a formal test
 
 
 
+## Takeaways
 
+- A t-test asks about **one** coefficient, given everything else in the model
+- To test several coefficients at once, compare nested models with an **extra sums of squares F-test**
+- $R^2$ always goes up; adjusted $R^2$ accounts for model complexity; the F-test tells us whether the improvement is "significant"
 
+## Activity: Inference for MLR
 
+Open the Day 11 activity. Questions 10 and 11 are the extra sums of squares F-tests.
 
+```{r}
+countdown::countdown(minutes = 20)
+```
+
+## Appendix: t distribution tail areas {visibility="hidden"}
+
+```{r echo=FALSE, fig.height = 2, fig.width = 7.5, out.width=850}
+p1 <- ggplot(data = data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = .4) +
+  ggtitle(expression(H[a]: beta[j] < 0)) +
+  theme(axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank())
+
+p2 <- ggplot(data = data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = .4) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = .4) +
+  ggtitle(expression(H[a]: beta[j] != 0)) +
+  theme(axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank())
+
+p3 <- ggplot(data = data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5)) +
+  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = .4) +
+  ggtitle(expression(H[a]: beta[j] > 0)) +
+  theme(axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank())
+
+(p1 | p2 | p3)
+```
+
+## Appendix: F distributions {visibility="hidden"}
+
+```{r fig.height=3, fig.width=5, echo=FALSE, message=FALSE, fig.align='center'}
+par(mar = c(2, .1, .1, .1))
+plot(c(0, 5), c(0, df(.01, 1, 1)), type = "n", axes = FALSE)
+at <- seq(0, 5, 1)
+axis(1, at)
+X <- seq(0, 5, 0.01)
+DF1 <- c(1, 2, 5, 10, 100)
+DF2 <- c(1, 1, 2, 1, 100)
+COL. <- RColorBrewer::brewer.pal(n = 7, name = "Blues")[-1]
+for (i in 1:5) {
+  Y <- df(X, as.numeric(DF1[i]), as.numeric(DF2[i]))
+  lines(X, Y, col = COL.[i])
+}
+legend(2.5, 3.25,
+       legend = c(paste('df1 = ', DF1[1:5], ', df2 = ', DF2[1:5], sep = '')),
+       col = COL.,
+       text.col = COL.,
+       lty = rep(1, 5))
+```

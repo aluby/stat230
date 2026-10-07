@@ -4,6 +4,8 @@ webr:
   packages:
     - ggformula
     - ggResidpanel
+    - GGally
+    - dplyr
 format: 
   live-html:
     toc: true
@@ -48,6 +50,9 @@ Variable |	Description
 To load the `supervisor` data set, run the following code chunk:
 
 ```{webr}
+library(dplyr)
+library(GGally)
+
 supervisor <- read.csv("https://aluby.github.io/stat230/data/supervisor.csv")
 ```
 

@@ -64,41 +64,36 @@ gf_point(rides ~ temp_actual, color = ~weekend, data = bikes, size = .5) |> gf_l
 
 **Test statistic:** $t = \dfrac{\widehat\beta_j - \#}{SE(\widehat\beta_j)}$
 
-**Reference distribution:** $t$ distribution with $df = n - (k+1)$,
-where $k$ = number of predictors in the model
+**Reference distribution:** $t$ distribution with $df = n - (p+1)$,
+where $p$ = number of predictors in the model (an interaction counts as
+one)
 
 **p-value:** area in the tail(s) specified by $H_a$
 
-```{r}
-#| fig-height: 2
-#| fig-width: 7.5
-p1 <- ggplot(data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
-  stat_function(fun = dt, args = list(df = 5)) +
-  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = 0.4) +
-  ggtitle(expression(H[a]: beta[j] < 0)) +
-  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
-
-p2 <- ggplot(data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
-  stat_function(fun = dt, args = list(df = 5)) +
-  stat_function(fun = dt, args = list(df = 5), xlim = c(-3.5, -2), geom = "area", alpha = 0.4) +
-  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = 0.4) +
-  ggtitle(expression(H[a]: beta[j] != 0)) +
-  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
-
-p3 <- ggplot(data.frame(x = c(-3.5, 3.5)), aes(x = x)) +
-  stat_function(fun = dt, args = list(df = 5)) +
-  stat_function(fun = dt, args = list(df = 5), xlim = c(2, 3.5), geom = "area", alpha = 0.4) +
-  ggtitle(expression(H[a]: beta[j] > 0)) +
-  theme(axis.title = element_blank(), axis.ticks = element_blank(), axis.text = element_blank())
-
-p1 + p2 + p3
-```
-
 **CI for a single coefficient:**
 
-$\widehat\beta_j \pm t^*_{n-(k+1)} \cdot SE(\widehat\beta_j)$
+$\widehat\beta_j \pm t^*_{n-(p+1)} \cdot SE(\widehat\beta_j)$
+
+**Example:** Use the coefficient table at the top of the notes and `qt(0.975, df = 496)` to calculate a 95% confidence interval for the slope of `temp_actual` (the slope for weekdays).
 
 \vspace{1in}
+
+Do we need `weekend` at all? 
+
+**Answer:** 
+
+\vspace{.75in}
+
+Now drop only the interaction between `weekend` and `temp_actual` (the
+parallel-lines model):
+
+```{r}
+kable_coef(bikes_mlr2, terms = c("Intercept", "temp_actual", "weekendTRUE"))
+```
+
+What changed about `weekend`?
+
+\vspace{.75in}
 
 ::: {.callout-caution}
 ## Caution!
@@ -106,89 +101,81 @@ $\widehat\beta_j \pm t^*_{n-(k+1)} \cdot SE(\widehat\beta_j)$
 $\widehat \beta$'s and p-values are highly ___________________ on each other! ___________________ $\beta$'s might become ___________________ after removing or adding another term
 :::
 
-Once we drop the interaction between `weekend` and `temp_actual`, the simpler
-parallel-lines model shows `weekend` is clearly still useful:
-
-```{r}
-kable_coef(bikes_mlr2, terms = c("Intercept", "temp_actual", "weekendTRUE"))
-```
+A t-test can only ask about **one** coefficient at a time, given everything else in the model. We need a test that asks about several coefficients at once
 
 ## Explained variability
+
+**Idea:** does the **full** model reduce the error (SSE) by *more than chance alone would*?
+
+```{r}
+#| include: false
+bikes_noise <- lm(rides ~ temp_actual + n1 + n2 + n3 + n4 + n5,
+                  data = {
+                    set.seed(230)
+                    bikes |> mutate(n1 = rnorm(n()), n2 = rnorm(n()), n3 = rnorm(n()),
+                                    n4 = rnorm(n()), n5 = rnorm(n()))
+                  })
+bikes_season <- lm(rides ~ temp_actual + season, data = bikes)
+bikes_season_w <- lm(rides ~ temp_actual + season_w,
+                     data = bikes |> mutate(season_w = relevel(season, ref = "winter")))
+
+a_full <- anova(bikes_slr, bikes_mlr)
+a_slopes <- anova(bikes_mlr2, bikes_mlr)
+a_shift <- anova(bikes_slr, bikes_mlr2)
+d_full <- a_full$Df[2]
+f_full <- a_full$F[2]
+f_full_p <- a_full$`Pr(>F)`[2]
+sci <- function(p) format(p, digits = 2, scientific = TRUE)
+```
 
 ```{r}
 #| fig-height: 2.5
 #| fig-width: 7
 slr_aug <- augment(bikes_slr) |> mutate(mean.y = mean(rides))
 
-p1 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Total") |>
+p1 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Total", size = .1) |>
   gf_segment(mean.y + rides ~ temp_actual + temp_actual, color = "gray70", alpha = 0.4) |>
   gf_hline(yintercept = mean(slr_aug$rides), color = "#f15a31")
 
-p2 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Error") |>
+p2 <- gf_point(rides ~ temp_actual, data = slr_aug, title = "SS Error", size = .1) |>
   gf_segment(.fitted + rides ~ temp_actual + temp_actual, color = "#003069", alpha = 0.4) |>
   gf_lm(color = "#f15a31")
 
 p1 + p2
 ```
 
-**Idea:** does a larger model explain a *significantly* bigger share
-of the total variability than a smaller model?
 
-## Can we just compare $R^2$ values?
+## Comparing nested models: the Extra Sum of Squares F Test
 
-```{r}
-bikes_mlr_3var <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
-bikes_mlr_4var <- lm(rides ~ temp_actual + windspeed * weekend, data = bikes)
+Full Model: $\mu\{Y|X\} = \beta_0 + \beta_1 \text{temp} + \beta_2 \text{weekend} + \beta_3 \text{temp} \times \text{weekend}$ 
 
-tibble(
-  Model = c("temp only", "temp + weekend", "temp + windspeed + weekend",
-            "temp + windspeed*weekend"),
-  R2 = c(summary(bikes_slr)$r.squared, summary(bikes_mlr2)$r.squared,
-         summary(bikes_mlr_3var)$r.squared, summary(bikes_mlr_4var)$r.squared),
-  Adj_R2 = c(summary(bikes_slr)$adj.r.squared, summary(bikes_mlr2)$adj.r.squared,
-             summary(bikes_mlr_3var)$adj.r.squared, summary(bikes_mlr_4var)$adj.r.squared)
-) |>
-  knitr::kable(digits = 4, col.names = c("Model", "$R^2$", "Adjusted $R^2$"))
-```
+Reduced Model: $\mu\{Y|X\} = \beta_0 + \beta_1 \text{temp}$ 
 
-$$R^2 = 1 - \frac{SSE}{SST} \hspace{2cm} R^2_{adj} = 1 - \frac{SSE/(n-k)}{SST/(n-1)} = 1 - \frac{MSE}{MST}$$
+The reduced model is the full model with some $\beta$'s set to 0, so we say the models are **nested**.
 
--   $R^2$ **always** increases when predictors are added, even useless
-    ones
--   $R^2_{adj}$ **could** ___________________________ if unnecessary
-    predictors are added
--   Better to use $R^2_{adj}$ for comparing multiple regression models
+- $H_0$: ___________________ 
+- $H_a:$ ___________________
 
-## Formal test for comparing models
+$$F = \frac{(\text{SSE}_{\text{reduced}} - \text{SSE}_{\text{full}}) / d}{\text{MSE}_{\text{full}}} = \frac{\text{how much error drops per } \beta}{\text{estimate of } \sigma^2}$$
 
-| | Model |
-|:---|:---|
-| Full | $\mu\{Y|X\} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2$ |
-| Reduced | $\mu\{Y|X\} = \beta_0 + \beta_1 x_1$ |
+-   If $H_0$ is true, both parts estimate $\sigma^2$, so
+    $F \approx$ ______
+-   If the extra terms really help, $F$ is much ___________________ than 1
 
-**Hypotheses:** $H_0: \beta_2 = \beta_3 = 0$ vs. $H_a:$ at least one
-$\beta_j \ne 0$, $j = 2,3$
+where 
 
-## Comparing models with an F-test
+  - $d = \text{df}_{\text{reduced}} - \text{df}_{\text{full}}$ is the number of $\beta$'s being tested
+  - $\text{df}_i = n - (p_i + 1)$ is the error d.f. for model $i$
+  - $\text{MSE}_{\text{full}} = \text{SSE}_{\text{full}} / \text{df}_{\text{full}}$.
 
-$$F = \frac{(R^2_{\text{full}} - R^2_{\text{reduced}})/d}{(1 - R^2_{\text{full}})/df_{\text{full}}} = \frac{(SSR_{\text{full}} - SSR_{\text{reduced}})/d}{MSE_{\text{full}}} = \frac{(SSE_{\text{reduced}} - SSE_{\text{full}})/d}{MSE_{\text{full}}}$$
-
-where
-
--   $d = df_{\text{full}} - df_{\text{reduced}} =$ \# of $\beta$'s
-    being tested
--   $df_i = n - (p+1) =$ error d.f. for model $i$
--   $MSE_{\text{full}} = \dfrac{SSE_{\text{full}}}{df_{\text{full}}}$
-
-The $F$ statistic follows an $F$ distribution with $d$ and $n-p-1$
-degrees of freedom. Like the $\chi^2$, it's right-skewed and only
-takes positive values, so we only ever look at the **upper tail** for
-a p-value:
+The $F$ statistic follows an $F$ distribution with $d$ and
+$\text{df}_{\text{full}}$ degrees of freedom. It is right-skewed, and only large values of $F$ are evidence against $H_0$, so the p-value is the
+**upper tail**:
 
 ```{r}
-#| fig-height: 2.5
-#| fig-width: 5
-#| fig-align: center
+#| fig-height: 2
+#| fig-width: 3
+#| fig-align: left
 ggplot(data.frame(x = c(0.00001, 5.5)), aes(x)) +
   stat_function(fun = df, args = list(df1 = 4, df2 = 23), color = "#003300", linewidth = 1) +
   stat_function(fun = df, args = list(df1 = 4, df2 = 23), xlim = c(3, 5.5),
@@ -197,44 +184,156 @@ ggplot(data.frame(x = c(0.00001, 5.5)), aes(x)) +
   annotate("text", x = 4.6, y = 0.15, label = "p-value", color = "#003300", size = 5)
 ```
 
-Upper-tail area in R: `1 - pf(stat, df1, df2)`
+Upper-tail area in R: `pf(stat, df1, df2, lower.tail = FALSE)`
 
-## Putting it all together
+
 
 ```{r}
-full_table <- glance(bikes_mlr) |> select(r.squared, df, df.residual, nobs) |>
-  mutate(model = "Full: temp*weekend")
-reduced_table <- glance(bikes_slr) |> select(r.squared, df, df.residual, nobs) |>
-  mutate(model = "Reduced: temp only")
+tibble(
+  Model = c("Reduced: temp", "Full: temp * weekend"),
+  SSE = c(deviance(bikes_slr), deviance(bikes_mlr)),
+  df = c(df.residual(bikes_slr), df.residual(bikes_mlr))
+) |>
+  knitr::kable(format.args = list(big.mark = ",", scientific = FALSE), digits = 0)
+```
 
-bind_rows(full_table, reduced_table) |>
-  select(model, everything()) |>
-  knitr::kable(digits = 3)
+**Example:** Calculate the $F$ statistic.
+
+\vspace{1.25in}
+
+
+```{r}
+f_stat <- 15.26
 ```
 
 ```{r}
-d <- 2
-mse_full <- summary(bikes_mlr)$sigma^2
-f_stat <- ((summary(bikes_mlr)$r.squared - summary(bikes_slr)$r.squared) / d) /
-  ((1 - summary(bikes_mlr)$r.squared) / bikes_mlr$df.residual)
-p_val <- 1 - pf(f_stat, d, bikes_mlr$df.residual)
+#| echo: true
+#| collapse: true
+pf(f_stat, df1 = 2, df2 = 496, lower.tail = FALSE)
 ```
 
-$$F = \frac{(R^2_{\text{full}} - R^2_{\text{reduced}})/d}{(1 - R^2_{\text{full}})/df_{\text{full}}} = \frac{(`r round(summary(bikes_mlr)$r.squared,3)` - `r round(summary(bikes_slr)$r.squared,3)`)/2}{(1 - `r round(summary(bikes_mlr)$r.squared,3)`)/`r bikes_mlr$df.residual`} \approx `r round(f_stat,1)`$$
 
-p-value = `r format(p_val, scientific = TRUE, digits = 3)` -- extremely
-small, so we ___________________________ $H_0$: adding `weekend`
-(and its interaction with `temp_actual`) meaningfully improves the
-model.
+&rarr; We ___________________________ $H_0$ and conclude: 
 
-## Doing it directly in R with `anova()`
-
-`anova(reduced, full)` takes the **reduced** model first, then the
-**full** model, and runs exactly the F-test above -- no need to
-compute $R^2$'s by hand.
+## Extra Sum of Squares F test in R
 
 ```{r}
+#| echo: true
 full <- lm(rides ~ temp_actual * weekend, data = bikes)
 reduced <- lm(rides ~ temp_actual, data = bikes)
 anova(reduced, full)
 ```
+
+```
+Analysis of Variance Table
+
+Model 1: rides ~ temp_actual
+Model 2: rides ~ temp_actual * weekend
+  Res.Df       RSS Df    Sum of Sq      F               Pr(>F)    
+1    df1      SSE1                                  
+2    df2      SSE2  d    SSE1-SSE2  (SumSq/d)/(SSE2/df2) p-val
+```
+
+## Resolving the puzzle
+
+Earlier, the t-tests in the full model said neither `weekend` term was
+useful, but `weekend` was highly significant once the interaction was
+dropped. The F-test lets us ask each question directly:
+
+```{r}
+tibble(
+  Question = c("Different slopes needed?", "Weekend shift needed (no interaction)?",
+               "Weekend needed at all?"),
+  Reduced = c("temp + weekend", "temp", "temp"),
+  Full = c("temp * weekend", "temp + weekend", "temp * weekend"),
+  d = c(a_slopes$Df[2], a_shift$Df[2], a_full$Df[2]),
+  F = as.character(signif(c(a_slopes$F[2], a_shift$F[2], a_full$F[2]), 3)),
+  `p-value` = fmt_p(c(a_slopes$`Pr(>F)`[2], a_shift$`Pr(>F)`[2], a_full$`Pr(>F)`[2]))
+) |>
+  knitr::kable()
+```
+
+-   One tool answers all three questions
+-   When $d = 1$, the F-test and the t-test are the same test:
+    $F = $ ______
+-   The t-tests couldn't answer the *joint* question (row __)
+
+## `anova()` on a single model
+
+```{r}
+#| echo: true
+anova(bikes_mlr)
+```
+
+-   Each row adds one term to the model, in order, and tests whether it
+    improves the fit ___________________________ the terms above it
+-   The **last row** is the extra sums of squares F-test for the last term
+    (here, the interaction) and matches
+    `anova(bikes_mlr2, bikes_mlr)`
+
+
+## Reading R output
+
+```
+lm(formula = rides ~ temp_actual * weekend, data = bikes)
+
+Coefficients:
+                         Estimate Std. Error t value Pr(>|t|)    
+(Intercept)             -1843.867    415.700  -4.436 1.13e-05 ***
+temp_actual                87.173      6.439  13.538  < 2e-16 ***
+weekendTRUE              -714.938    795.698  -0.899    0.369    
+temp_actual:weekendTRUE     0.411     12.539   0.033    0.974    
+
+Residual standard error: 1253 on 496 degrees of freedom
+Multiple R-squared:  0.3709,	Adjusted R-squared:  0.3671 
+F-statistic: 97.47 on 3 and 496 DF,  p-value: < 2.2e-16
+```
+
+The **F-statistic** at the bottom is the same kind of test: the full
+model vs. an *intercept-only* model.
+
+$H_0$: ___________________________________ (none of the predictors
+help)
+
+
+
+## Adjusted $R^2$
+
+
+$$R^2 = 1 - \frac{SSE}{SST} \hspace{2cm} R^2_{adj} = 1 - \frac{SSE/(n-p-1)}{SST/(n-1)} = 1 - \frac{MSE}{MST}$$
+
+where $p$ is the number of predictors in the model.
+
+**Example:** Look at the adjusted $R^2$ column. Which model has the
+largest adjusted $R^2$? Did adding the interaction help?
+
+\vspace{.75in}
+
+```{r}
+tibble(
+  Model = c("temp", "temp + weekend", "temp * weekend", "temp + 5 random noise variables"),
+  R2 = c(summary(bikes_slr)$r.squared, summary(bikes_mlr2)$r.squared,
+         summary(bikes_mlr)$r.squared, summary(bikes_noise)$r.squared),
+  Adj_R2 = c(summary(bikes_slr)$adj.r.squared, summary(bikes_mlr2)$adj.r.squared,
+             summary(bikes_mlr)$adj.r.squared, summary(bikes_noise)$adj.r.squared)
+) |>
+  knitr::kable(digits = 4, col.names = c("Model", "$R^2$", "Adjusted $R^2$"))
+```
+
+-   $R^2$ **never** goes ___________________ when predictors are added,
+    even for pure ___________________
+-   $R^2_{adj}$ **could** ___________________________ if unnecessary
+    predictors are added
+-   Better to use $R^2_{adj}$ than $R^2$ to *compare* models, but neither
+    is a formal test
+
+## Takeaways
+
+-   A t-test asks about **one** coefficient, *given* everything else in
+    the model
+-   To test **several** coefficients at once, compare nested models with
+    an **extra sums of squares F-test**
+-   $F = \dfrac{(\text{SSE}_{\text{reduced}} - \text{SSE}_{\text{full}}) / d}{\text{MSE}_{\text{full}}}$:
+    error reduction per extra $\beta$, relative to the noise
+-   $R^2$ always goes up; the F-test tells us whether the improvement is
+    *real*
