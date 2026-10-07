@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Inference for MLR</title>
@@ -190,6 +190,8 @@
       margin-right: 0; 
     }
   </style>
+  <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -215,85 +217,215 @@ Prof Amanda Luby
 <h2>MLR model for <code>bikes</code> data</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = rides ~ temp_actual * weekend, data = bikes)
-
-Coefficients:
-            (Intercept)              temp_actual              weekendTRUE  
-              -1843.867                   87.173                 -714.938  
-temp_actual:weekendTRUE  
-                  0.411  </code></pre>
+<pre><code># A tibble: 4 × 2
+  term                     estimate
+  &lt;chr&gt;                       &lt;dbl&gt;
+1 (Intercept)             -1844.   
+2 temp_actual                87.2  
+3 weekendTRUE              -715.   
+4 temp_actual:weekendTRUE     0.411</code></pre>
 </div>
 </div>
 <div class="task medium">
-<p><strong>Warm up:</strong> Write out the theoretical and fitted regression model (use blank space on next slide)</p>
+<p><strong>Warm up:</strong> Write out the theoretical and fitted regression model</p>
 </div>
+<aside class="notes">
+<p>Timing: ~7 min for this block (warm-up, different slopes?, t-test/CI review). Don’t re-derive the t-test; it is SLR review.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="section" class="slide level2">
-<h2></h2>
-</section>
-<section id="do-we-need-a-different-slopes-model" class="slide level2">
+<section id="do-we-need-a-different-slopes-model" class="slide level2 smaller">
 <h2>Do we <em>need</em> a different slopes model?</h2>
 <div class="cell">
 
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 5
-  term                     estimate std.error statistic  p.value
-  &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)             -1844.       416.     -4.44   1.13e- 5
-2 temp_actual                87.2        6.44   13.5    9.31e-36
-3 weekendTRUE              -715.       796.     -0.899  3.69e- 1
-4 temp_actual:weekendTRUE     0.411     12.5     0.0328 9.74e- 1</code></pre>
-</div>
-</div>
-<img data-src="slides11_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
-<section id="testing-a-single-coefficient" class="slide level2">
-<h2>Testing a single coefficient</h2>
-<div style="font-size: 0.9em;">
-<p><strong>Hypotheses:</strong> <span class="math inline">\(H_0: \ \beta_j = \#\)</span> vs.&nbsp;<span class="math inline">\(H_a: \ \beta_j \underset{&gt;}{\overset{&lt;}{\ne}} \#\)</span></p>
-</div>
-<div class="fragment">
-<div style="font-size: 0.9em;">
-<p><strong>Test statistic:</strong> <span class="math inline">\(t = \dfrac{\widehat{\beta}_j - \#}{SE(\beta_j)}\)</span></p>
-</div>
-</div>
-<div class="fragment">
-<div style="font-size: 0.9em;">
-<p><strong>Reference distribution:</strong> <span class="math inline">\(t\)</span> distribution with d.f. = <span class="math inline">\(n-(k+1)\)</span></p>
-<p><strong>p-value:</strong> Area in the tail(s) specified by <span class="math inline">\(H_a\)</span></p>
-</div>
-<div class="cell">
 <div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides11_files/figure-revealjs/unnamed-chunk-4-1.png" width="850"></p>
-</figure>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: left;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-1843.87</td>
+<td style="text-align: right;">415.70</td>
+<td style="text-align: right;">-4.44</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">temp_actual</td>
+<td style="text-align: right;">87.17</td>
+<td style="text-align: right;">6.44</td>
+<td style="text-align: right;">13.54</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">weekendTRUE</td>
+<td style="text-align: right;">-714.94</td>
+<td style="text-align: right;">795.70</td>
+<td style="text-align: right;">-0.90</td>
+<td style="text-align: left;">0.369</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">temp_actual:weekendTRUE</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">12.54</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: left;">0.974</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
-</div>
+<img data-src="slides11_files/figure-html/unnamed-chunk-3-1.png" width="672" class="r-stretch"></section>
+<section id="hypothesis-test-for-a-single-coefficient" class="slide level2">
+<h2>Hypothesis test for a single coefficient</h2>
+<p>Let <span class="math inline">\(p\)</span> = the number of predictors in the model (an interaction counts as one)</p>
+<p><br></p>
+<p><strong>Hypotheses:</strong> <span class="math inline">\(H_0: \ \beta_j = \#\)</span> vs.&nbsp;<span class="math inline">\(H_a: \ \beta_j \ne, &lt;, \text{or} &gt; \#\)</span></p>
+<p><strong>Test statistic:</strong> <span class="math inline">\(t = \dfrac{\widehat{\beta}_j - \#}{SE(\widehat{\beta}_j)}\)</span></p>
+<p><strong>Reference distribution:</strong> <span class="math inline">\(t\)</span> distribution with d.f. = <span class="math inline">\(n-(p+1)\)</span></p>
+<p><strong>p-value:</strong> Area in the tail(s) specified by <span class="math inline">\(H_a\)</span></p>
 </section>
 <section id="cis-for-a-single-coefficient" class="slide level2">
 <h2>CIs for a single coefficient</h2>
-<p><span class="math inline">\(\widehat{\beta}_j \pm t^*_{n-(k+1)} \cdot SE(\widehat{\beta}_j )\)</span></p>
+<p><span class="math inline">\(\widehat{\beta}_j \pm t^*_{n-(p+1)} \cdot SE(\widehat{\beta}_j )\)</span></p>
+<p><br></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">tidy</span>(bikes_mlr, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(term, estimate, std.error, conf.low, conf.high)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term                     estimate std.error conf.low conf.high
+  &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)             -1844.       416.    -2661.    -1027. 
+2 temp_actual                87.2        6.44     74.5      99.8
+3 weekendTRUE              -715.       796.    -2278.      848. 
+4 temp_actual:weekendTRUE     0.411     12.5     -24.2      25.0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">496</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.964758</code></pre>
+</div>
+</div>
+<p>By hand, for <code>temp_actual</code>: <span class="math inline">\(87.17 \pm 1.965 \times 6.439 = (74.5, 99.8)\)</span></p>
 </section>
 <section id="answer-do-we-need-a-different-slopes-model" class="slide level2">
 <h2>Answer: Do we need a different slopes model?</h2>
+<ul>
+<li><strong>Graph:</strong> the weekday and weekend lines are nearly parallel</li>
+<li><strong>Table:</strong> the interaction coefficient is only 0.41 rides per degree, with <span class="math inline">\(p =\)</span> 0.974</li>
+</ul>
+<p>So there is no evidence that the slope for temperature differs on weekends.</p>
+<div class="fragment">
+<p><strong>Next question:</strong> do we need <code>weekend</code> <em>at all</em>?</p>
+</div>
 </section>
 <section id="do-we-need-weekend-at-all" class="slide level2">
 <h2>Do we need <code>weekend</code> at all?</h2>
+<p>Full model with the interaction:</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 5
-  term                     estimate std.error statistic  p.value
-  &lt;chr&gt;                       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)             -1844.       416.     -4.44   1.13e- 5
-2 temp_actual                87.2        6.44   13.5    9.31e-36
-3 weekendTRUE              -715.       796.     -0.899  3.69e- 1
-4 temp_actual:weekendTRUE     0.411     12.5     0.0328 9.74e- 1</code></pre>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: left;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-1843.87</td>
+<td style="text-align: right;">415.70</td>
+<td style="text-align: right;">-4.44</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">temp_actual</td>
+<td style="text-align: right;">87.17</td>
+<td style="text-align: right;">6.44</td>
+<td style="text-align: right;">13.54</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">weekendTRUE</td>
+<td style="text-align: right;">-714.94</td>
+<td style="text-align: right;">795.70</td>
+<td style="text-align: right;">-0.90</td>
+<td style="text-align: left;">0.369</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">temp_actual:weekendTRUE</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">12.54</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: left;">0.974</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+</section>
+<section id="but-wait" class="slide level2">
+<h2>…but wait</h2>
+<p>Drop only the interaction (parallel lines model):</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: left;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-1850.78</td>
+<td style="text-align: right;">357.95</td>
+<td style="text-align: right;">-5.17</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">temp_actual</td>
+<td style="text-align: right;">87.28</td>
+<td style="text-align: right;">5.52</td>
+<td style="text-align: right;">15.81</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">weekendTRUE</td>
+<td style="text-align: right;">-689.18</td>
+<td style="text-align: right;">124.64</td>
+<td style="text-align: right;">-5.53</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Now <code>weekendTRUE</code> <strong>is</strong> significant!</p>
+<div class="fragment">
 <div class="callout callout-caution callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -303,180 +435,137 @@ temp_actual:weekendTRUE
 <p><strong>Caution!</strong></p>
 </div>
 <div class="callout-content">
-<p><br></p>
-<p><br></p>
-<p><br></p>
-<p><br></p>
+<p><span class="math inline">\(\widehat \beta\)</span>’s and p-values <strong>are highly dependent</strong>. A t-test tells us: “is this one term needed, <em>given everything else is already in the model</em>?”</p>
 </div>
 </div>
 </div>
-</section>
-<section id="do-we-need-weekend-at-all-1" class="slide level2">
-<h2>Do we need <code>weekend</code> at all?</h2>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 5
-  term        estimate std.error statistic  p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)  -1851.     358.       -5.17 3.39e- 7
-2 temp_actual     87.3      5.52     15.8  6.45e-46
-3 weekendTRUE   -689.     125.       -5.53 5.20e- 8</code></pre>
 </div>
+<div class="fragment">
+<p>We need a test that asks about several coefficients at once</p>
+<aside class="notes">
+<p>Timing: puzzle block ~7 min (minutes 7-14). Let students argue which table to believe before revealing the resolution.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="explained-variability" class="slide level2">
 <h2>Explained Variability</h2>
 
-<img data-src="slides11_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="672"></section>
+<img data-src="slides11_files/figure-html/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="672"><div class="fragment">
+<p><strong>Idea</strong>: Compare the <em>explained variability</em> of the two models</p>
+</div>
+</section>
 <section id="explained-variability-1" class="slide level2">
 <h2>Explained Variability</h2>
 <div class="columns">
 <div class="column" style="width:30%;">
-<p>“Smaller” Model</p>
+<p>“Reduced” Model</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides11_files/figure-revealjs/unnamed-chunk-9-1.png" style="width:100.0%"></p>
+<p><img data-src="slides11_files/figure-html/unnamed-chunk-9-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:30%;">
-<p>“Larger” Model</p>
+<p>“Full” Model</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="slides11_files/figure-revealjs/unnamed-chunk-10-1.png" style="width:100.0%"></p>
+<p><img data-src="slides11_files/figure-html/unnamed-chunk-10-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column fragment center" style="width:30%;">
 <p><br></p>
-<p><strong>Idea:</strong> Is the proportion of variability explained by Model 2 significantly better than Model 1?</p>
+<p><strong>Idea:</strong> Does the full model reduce the error (SSE) by <em>more than chance alone</em>?</p>
 </div></div>
 </section>
-<section id="can-we-just-use-r2" class="slide level2">
-<h2>Can we just use <span class="math inline">\(R^2\)</span>?</h2>
-<div class="medium">
-<ul>
-<li>About 33.22% of the variability in rides is explained by the regression model including temperature</li>
-<li>About 37.09% of the variability in rides is explained by the regression model including temperature and an indicator for weekend</li>
-<li>About 38.981% of the variability in rides is explained by the regression model including temperature, windspeed, and an indicator for weekend</li>
-<li>About 39.014% of the variability in rides is explained by the regression model including temperature, windspeed, an indicator for weekend, and an interaction between weekend and windspeed</li>
-</ul>
-</div>
-<p>What trend do you notice?</p>
-</section>
-<section id="r2-vs-adjusted-r2" class="slide level2">
-<h2><span class="math inline">\(R^2\)</span> vs adjusted <span class="math inline">\(R^2\)</span></h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><span class="math display">\[R^2 = 1 - \frac{SSE}{SST}\]</span></p>
-</div><div class="column" style="width:50%;">
-<p><span class="math display">\[R^2_{adj} = 1 - \frac{SSE/(n-k)}{SST/(n-1)}\]</span> <span class="math display">\[R^2_{adj} = 1 - \frac{MSE}{MST}\]</span></p>
-</div></div>
-<ul>
-<li><span class="math inline">\(R^2\)</span> <strong>always</strong> increases when predictors are added to the model</li>
-<li><span class="math inline">\(R^2_{adj}\)</span> <strong>could</strong> decrease if unnecessary predictors are added to the model</li>
-<li>Better to use <span class="math inline">\(R^2_{adj}\)</span> for multiple regression</li>
-</ul>
-</section>
-<section id="adjusted-r2" class="slide level2">
-<h2>Adjusted <span class="math inline">\(R^2\)</span></h2>
-<div class="medium">
-<ul>
-<li>About 33.08% of the variability in rides is explained by the regression model including temperature</li>
-<li>About 36.83% of the variability in rides is explained by the regression model including temperature and an indicator for weekend</li>
-<li>About 38.612% of the variability in rides is explained by the regression model including temperature, windspeed, and an indicator for weekend</li>
-<li>About 38.522% of the variability in rides is explained by the regression model including temperature, windspeed, an indicator for weekend, and an interaction between weekend and windspeed</li>
-</ul>
-</div>
-</section>
-<section id="formal-test-for-comparing-models" class="slide level2">
-<h2>Formal test for comparing models</h2>
+<section id="comparing-nested-models" class="slide level2">
+<h2>Comparing nested models</h2>
 <div class="columns" data-align="center">
-<div class="column" style="width:25%;">
+<div class="column" style="width:20%;">
 <p>Full model</p>
-</div><div class="column" style="width:70%;">
-<p><span class="math inline">\(\mu \lbrace Y | X \rbrace = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2\)</span></p>
-</div><div class="column" style="width:25%;">
+</div><div class="column" style="width:75%;">
+<p><span class="math inline">\(\mu \lbrace Y | X \rbrace = \beta_0 + \beta_1 \text{temp} + \beta_2 \text{weekend} + \beta_3 \text{temp} \times \text{weekend}\)</span></p>
+</div><div class="column" style="width:20%;">
 <p>Reduced model</p>
-</div><div class="column" style="width:70%;">
-<p><span class="math inline">\(\mu \lbrace Y | X \rbrace = \beta_0 + \beta_1 x_1\)</span></p>
+</div><div class="column" style="width:75%;">
+<p><span class="math inline">\(\mu \lbrace Y | X \rbrace = \beta_0 + \beta_1 \text{temp}\)</span></p>
 </div></div>
+<p><br></p>
+<p>The reduced model is the full model with some <span class="math inline">\(\beta\)</span>’s set to 0, so we say the models are <strong>nested</strong></p>
 <div class="fragment">
 <p><br></p>
 <div class="columns" data-align="center">
-<div class="column" style="width:25%;">
+<div class="column" style="width:20%;">
 <p>Hypotheses</p>
-</div><div class="column" style="width:70%;">
-<p><span class="math inline">\(H_0:\ \beta_{2} = \beta_3 = 0\)</span></p>
-<p><span class="math inline">\(H_a:\)</span> at least one <span class="math inline">\(\beta_j \ne 0\)</span>, <span class="math inline">\(j=2,3\)</span></p>
+</div><div class="column" style="width:75%;">
+<p><span class="math inline">\(H_0:\ \beta_{2} = \beta_3 = 0\)</span> (<code>weekend</code> doesn’t matter: it neither shifts the line nor changes its slope)</p>
+<p><span class="math inline">\(H_a:\)</span> at least one of <span class="math inline">\(\beta_2, \beta_3 \ne 0\)</span></p>
 </div></div>
 </div>
 </section>
-<section id="comparing-models-with-an-f-test" class="slide level2">
-<h2>Comparing models with an F-test</h2>
-<div class="medium">
-<p>Test statistic</p>
-<p><span class="math display">\[
-\begin{split}
-F &amp;= \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{full}}) / df_{\text{full}}}\\
-&amp;= \frac{(\text{SSR}_{\text{full}} - \text{SSR}_{\text{reduced}}) / d}{\text{MSE}_{\text{full}}}\\
-&amp;= \frac{(\text{SSE}_{\text{reduced}} - \text{SSE}_{\text{full}}) / d}{\text{MSE}_{\text{full}}}
-\end{split}
-\]</span></p>
+<section id="the-extra-sum-of-squares-f-test" class="slide level2">
+<h2>The extra sum of squares F test</h2>
+<p><span class="math display">\[F = \frac{(\text{SSE}_{\text{reduced}} - \text{SSE}_{\text{full}}) / d}{\text{MSE}_{\text{full}}} = \frac{\text{how much error drops per } \beta}{\text{estimate of } \sigma^2}\]</span></p>
+<p><br></p>
+<div class="fragment">
+<ul>
+<li>If <span class="math inline">\(H_0\)</span> is true, both parts estimate <span class="math inline">\(\sigma^2\)</span>, so <span class="math inline">\(F \approx 1\)</span></li>
+<li>If the extra terms really help, <span class="math inline">\(F\)</span> is much bigger than 1</li>
+</ul>
 </div>
 <div class="small">
 <p>where</p>
 <ul>
-<li><span class="math inline">\(d = \text{df}_{full} - \text{df}_{reduced}\)</span> = # betas being tested</li>
-<li><span class="math inline">\(\text{df}_{i} = n - (p + 1)=\)</span> error d.f. for model <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(d = \text{df}_{reduced} - \text{df}_{full}\)</span> = number of <span class="math inline">\(\beta\)</span>’s being tested,</li>
+<li><span class="math inline">\(\text{df}_{i} = n - (p_i + 1)\)</span> is the error d.f. for model <span class="math inline">\(i\)</span>,</li>
 <li><span class="math inline">\(\text{MSE}_{\text{full}} = \dfrac{\text{SSE}_{\text{full}}}{\text{df}_{\text{full}}}\)</span></li>
 </ul>
 </div>
 </section>
-<section id="f-distribution" class="slide level2">
-<h2>F distribution</h2>
-<p>The F-statistics follows an <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(d\)</span> and <span class="math inline">\(n-p-1\)</span> d.f.</p>
-
-<img data-src="slides11_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="upper-tail-p-values" class="slide level2">
 <h2>Upper-tail p-values</h2>
+<p>The F-statistic follows an <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(d\)</span> and <span class="math inline">\(\text{df}_{full}\)</span> d.f. It is right-skewed, and only large values of <span class="math inline">\(F\)</span> are evidence against <span class="math inline">\(H_0\)</span>, so the p-value is the <strong>upper tail</strong></p>
 
-<img data-src="slides11_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>To obtain upper-tail areas: <code>1 - pf(stat, df1, df2)</code></p>
+<img data-src="slides11_files/figure-html/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>To obtain upper-tail areas: <code>pf(stat, df1, df2, lower.tail = FALSE)</code></p>
 </section>
-<section id="putting-it-all-together" class="slide level2">
-<h2>Putting it all together</h2>
+<section id="putting-it-all-together-by-hand" class="slide level2">
+<h2>Putting it all together: by hand</h2>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: left;">model</th>
-<th style="text-align: right;">r.squared</th>
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">SSE</th>
 <th style="text-align: right;">df</th>
-<th style="text-align: right;">df.residual</th>
-<th style="text-align: right;">nobs</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Full</td>
-<td style="text-align: right;">0.371</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">496</td>
-<td style="text-align: right;">500</td>
+<td style="text-align: left;">Reduced: <code>temp_actual</code></td>
+<td style="text-align: right;">826,326,178</td>
+<td style="text-align: right;">498</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Reduced</td>
-<td style="text-align: right;">0.332</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">498</td>
-<td style="text-align: right;">500</td>
+<td style="text-align: left;">Full: <code>temp_actual * weekend</code></td>
+<td style="text-align: right;">778,436,469</td>
+<td style="text-align: right;">496</td>
 </tr>
 </tbody>
 </table>
@@ -484,17 +573,159 @@ F &amp;= \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{f
 </div>
 <div class="fragment">
 <p><span class="math display">\[
-F = \frac{(R^2_{\text{full}} - R^2_{\text{reduced}}) / d}{(1 - R^2_{\text{full}}) / df_{\text{full}}} = \frac{(0.371 - 0.332) / 2}{(1 - 0.371) / 496} \approx 15.4
+F = \frac{(826,326,178 - 778,436,469) / 2}{778,436,469 / 496} \approx 15.26
 \]</span></p>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pf</span>(<span class="fl">15.4</span>, <span class="dv">2</span>, <span class="dv">496</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">pf</span>(<span class="fl">15.26</span>, <span class="at">df1 =</span> <span class="dv">2</span>, <span class="at">df2 =</span> <span class="dv">496</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.24568e-07</code></pre>
+<pre><code>[1] 3.703116e-07</code></pre>
 </div>
 </div>
 </div>
+</section>
+<section id="extra-sums-of-squares-f-test-in-r" class="slide level2">
+<h2>Extra sums of squares F-test in R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1"></a>full <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> rides <span class="sc">~</span> temp_actual <span class="sc">*</span> weekend, <span class="at">data =</span> bikes)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2"></a>reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> rides <span class="sc">~</span> temp_actual, <span class="at">data =</span> bikes)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3"></a><span class="fu">anova</span>(reduced, full)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">Fit the full model</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="2">Fit the reduced model</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="3">Use <code>anova()</code> to compare the two models. The first argument should be the reduced model.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: rides ~ temp_actual
+Model 2: rides ~ temp_actual * weekend
+  Res.Df       RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    498 826326178                                  
+2    496 778436469  2  47889709 15.257 3.713e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="reading-the-anova-output" class="slide level2">
+<h2>Reading the <code>anova()</code> output</h2>
+<pre><code>Analysis of Variance Table
+
+Model 1: rides ~ temp_actual
+Model 2: rides ~ temp_actual * weekend
+  Res.Df       RSS Df    Sum of Sq      F               Pr(&gt;F)    
+1    df1      SSE1                                  
+2    df2      SSE2  d    SSE1-SSE2  (SumSq/d)/(SSE2/df2) p-val</code></pre>
+<div class="fragment">
+<p><strong>Conclusion:</strong> <span class="math inline">\(p =\)</span> 3.7e-07. Strong evidence that <code>weekend</code> matters (as a shift in the line, a change in slope, or both)</p>
+</div>
+</section>
+<section id="resolving-the-puzzle" class="slide level2 smaller">
+<h2>Resolving the puzzle</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 3%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Question</th>
+<th style="text-align: left;">Reduced</th>
+<th style="text-align: left;">Full</th>
+<th style="text-align: right;">d</th>
+<th style="text-align: left;">F</th>
+<th style="text-align: left;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Different slopes needed?</td>
+<td style="text-align: left;"><code>temp + weekend</code></td>
+<td style="text-align: left;"><code>temp * weekend</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">0.00107</td>
+<td style="text-align: left;">0.974</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Weekend shift needed (no interaction)?</td>
+<td style="text-align: left;"><code>temp</code></td>
+<td style="text-align: left;"><code>temp + weekend</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">30.6</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Weekend needed at all?</td>
+<td style="text-align: left;"><code>temp</code></td>
+<td style="text-align: left;"><code>temp * weekend</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">15.3</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><br></p>
+<ul>
+<li>One tool answers all three questions</li>
+<li>When <span class="math inline">\(d = 1\)</span>, the F-test and the t-test are the same test (<span class="math inline">\(F = t^2\)</span>)</li>
+<li>The t-tests couldn’t answer the <em>joint</em> question (row 3)</li>
+</ul>
+<aside class="notes">
+<p>Timing: F-test block ~16 min (minutes 22-38). Spend the time on the “Putting it all together: by hand” and “Reading the anova() output” slides; if short on time, skip “Resolving the puzzle” and revisit it at the start of Day 12.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="anova-on-a-single-model" class="slide level2">
+<h2><code>anova()</code> on a single model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">anova</span>(bikes_mlr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: rides
+                     Df    Sum Sq   Mean Sq  F value    Pr(&gt;F)    
+temp_actual           1 411018312 411018312 261.8905 &lt; 2.2e-16 ***
+weekend               1  47888023  47888023  30.5130 5.361e-08 ***
+temp_actual:weekend   1      1686      1686   0.0011    0.9739    
+Residuals           496 778436469   1569428                       
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<ul>
+<li>Each row adds one term to the model, in order, and tests whether it improves the fit given the terms above it</li>
+<li>The <strong>last row</strong> is the extra sums of squares F-test for the last term and matches <code>anova(bikes_par, bikes_mlr)</code></li>
+</ul>
 </section>
 <section id="reading-r-output" class="slide level2">
 <h2>Reading R output</h2>
@@ -513,44 +744,89 @@ F-statistic: 97.47 on 3 and 496 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="footer">
 <p>Output was edited to fit on one slide</p>
 </div>
+<div class="fragment">
+<p>The <strong>F-statistic</strong> at the bottom is the same kind of test: the full model vs.&nbsp;an <em>intercept-only</em> model. <span class="math inline">\(H_0: \beta_1 = \beta_2 = \beta_3 = 0\)</span> (none of the predictors help)</p>
+</div>
 </section>
-<section id="extra-sums-of-squares-f-test-in-r" class="slide level2">
-<h2>Extra sums of squares F-test in R</h2>
+<section id="last-piece-of-the-summary-table-adjusted-r2" class="slide level2">
+<h2>Last piece of the <code>summary()</code> table: adjusted <span class="math inline">\(R^2\)</span></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math display">\[R^2 = 1 - \frac{SSE}{SST}\]</span></p>
+</div><div class="column fragment" style="width:50%;">
+<p><span class="math display">\[R^2_{adj} = 1 - \frac{SSE/(n-p-1)}{SST/(n-1)}\]</span> <span class="math display">\[R^2_{adj} = 1 - \frac{MSE}{MST}\]</span></p>
+</div></div>
+<p>Adjusted <span class="math inline">\(R^2\)</span> adds a penalty for having a more complex model (model with more <span class="math inline">\(\beta\)</span>s)</p>
+</section>
+<section id="r2-vs-adjusted-r2" class="slide level2 incremental">
+<h2><span class="math inline">\(R^2\)</span> vs Adjusted <span class="math inline">\(R^2\)</span></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1"></a>full <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> rides <span class="sc">~</span> temp_actual <span class="sc">*</span> weekend, <span class="at">data =</span> bikes)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-3-2" class="code-annotation-target"><a href="#annotated-cell-3-2"></a>reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> rides <span class="sc">~</span> temp_actual, <span class="at">data =</span> bikes)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3"></a><span class="fu">anova</span>(reduced, full)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">Fit the full model</span>
-</dd>
-<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="2" data-code-annotation="2">Fit the reduced model</span>
-</dd>
-<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="3">Use <code>anova()</code> to compare the two models. The first argument should be the reduced model.</span>
-</dd>
-</dl>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;"><span class="math inline">\(R^2\)</span></th>
+<th style="text-align: right;">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>temp_actual</code></td>
+<td style="text-align: right;">0.3322</td>
+<td style="text-align: right;">0.3308</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>temp_actual + weekend</code></td>
+<td style="text-align: right;">0.3709</td>
+<td style="text-align: right;">0.3683</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>temp_actual * weekend</code></td>
+<td style="text-align: right;">0.3709</td>
+<td style="text-align: right;">0.3671</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>temp_actual</code> + 5 random noise variables</td>
+<td style="text-align: right;">0.3392</td>
+<td style="text-align: right;">0.3312</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
-
-Model 1: rides ~ temp_actual
-Model 2: rides ~ temp_actual * weekend
-  Res.Df       RSS Df Sum of Sq      F    Pr(&gt;F)    
-1    498 826326178                                  
-2    496 778436469  2  47889709 15.257 3.713e-07 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(R^2\)</span> never goes down when predictors are added, even for pure noise!</li>
+<li>Bigger <span class="math inline">\(R^2\)</span> alone can’t tell us whether the improvement is “real”</li>
+<li><span class="math inline">\(R^2_{adj}\)</span> could decrease if unnecessary predictors are added</li>
+<li>Better to use <span class="math inline">\(R^2_{adj}\)</span> than <span class="math inline">\(R^2\)</span> to compare models</li>
+<li>Neither is a formal test</li>
+</ul>
 </div>
-
-
 </section>
+<section id="takeaways" class="slide level2">
+<h2>Takeaways</h2>
+<ul>
+<li>A t-test asks about <strong>one</strong> coefficient, given everything else in the model</li>
+<li>To test several coefficients at once, compare nested models with an <strong>extra sums of squares F-test</strong></li>
+<li><span class="math inline">\(R^2\)</span> always goes up; adjusted <span class="math inline">\(R^2\)</span> accounts for model complexity; the F-test tells us whether the improvement is “significant”</li>
+</ul>
+</section>
+<section id="activity-inference-for-mlr" class="slide level2">
+<h2>Activity: Inference for MLR</h2>
+<p>Open the Day 11 activity. Questions 10 and 11 are the extra sums of squares F-tests.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_448c50b4" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+
+
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -768,44 +1044,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
