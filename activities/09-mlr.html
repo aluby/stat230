@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -228,7 +228,7 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>rating</code></td>
+<td><code>overall</code></td>
 <td>Overall rating of supervisor performance</td>
 </tr>
 <tr class="even">
@@ -257,7 +257,7 @@ Note
 </tr>
 </tbody>
 </table>
-<p><strong>Before looking at the data</strong>, how do you think each predictor variable will be related to <code>rating</code>? What do you think will have the strongest relationship? The weakest?</p>
+<p><strong>Before looking at the data</strong>, how do you think each predictor variable will be related to <code>overall</code>? What do you think will have the strongest relationship? The weakest?</p>
 <section id="eda-making-a-pairs-plot" class="level2">
 <h2 class="anchored" data-anchor-id="eda-making-a-pairs-plot">EDA: Making a pairs plot</h2>
 <p>We will use the <code>ggpairs()</code> function in the {GGally} package to make the pairs plot. By default, it will include every variable in the dataset. The code below firsts <code>select()</code>s the columns we want to include (all of them). I have also moved the response variable to be the last in the list, so that it shows up on the Y axis.</p>
@@ -837,7 +837,7 @@ Note
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>Variable |  Description</span>
 <span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>-----        | -------------------</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="in">`rating`</span>     |  Overall rating of supervisor performance</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="in">`overall`</span>    |  Overall rating of supervisor performance</span>
 <span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="in">`complaints`</span> |  Score for “Your supervisor handles employee complaints appropriately.”</span>
 <span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="in">`privileges`</span> |  Score for “Your supervisor allows special privileges.”</span>
 <span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="in">`learn`</span>      |  Score for “Your supervisor provides opportunities to learn new things.”</span>
@@ -845,7 +845,7 @@ Note
 <span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="in">`critical`</span>   |  Score for “Your supervisor is too critical of poor performance.”</span>
 <span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="in">`advance`</span>    |  Score for “I am not satisfied with the rate I am advancing in the company?”</span>
 <span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>**Before looking at the data**, how do you think each predictor variable will be related to <span class="in">`rating`</span>? What do you think will have the strongest relationship? The weakest?</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>**Before looking at the data**, how do you think each predictor variable will be related to <span class="in">`overall`</span>? What do you think will have the strongest relationship? The weakest?</span>
 <span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## EDA: Making a pairs plot</span></span>
 <span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a></span>
