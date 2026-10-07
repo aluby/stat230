@@ -147,19 +147,19 @@ ames_houses = read_csv("https://aluby.github.io/stat230/data/ames_houses.csv")
 
 # Problem 5: F statistic (Wed)
 
-<!-- A multiple regression analysis of a dataset with 82 observations was performed with 6 explanatory variables. $SS_{regression} = 22.6$ and $SS_{total} = 123.1$. 
+A multiple regression analysis of a dataset with 82 observations was performed with 6 explanatory variables. $SS_{regression} = 22.6$ and $SS_{total} = 123.1$. 
 
-  (a) Find the value of the $F$ statistic
+  (a) Find the value of the overall $F$ statistic that would be reported in the `summary()` table
   
   (b) Write out the null hypothesis that corresponds to your statistic from (a) 
   
-  (c) The F-statistic has two degrees of freedom, where $df_1 = k$ and $df_2 = (n-k-1)$. Using R's `pf` function, find the p-value that corresponds to the test in parts (a) and (b). Assuming all assumptions are met, what do you conclude? (It may be helpful to review [Chapter 22.3 from IMS](https://openintro-ims.netlify.app/inference-many-means.html#sec-mathANOVA), or check out this interactive [Distribution Calculator](https://gallery.shinyapps.io/dist_calc/) for more information on the F distribution.)
+  (c) The F-statistic has two degrees of freedom, where $df_1 = p$ and $df_2 = (n-p-1)$. Using R's `pf` function, find the p-value that corresponds to the test in parts (a) and (b). Assuming all assumptions are met, what do you conclude? (It may be helpful to review [Chapter 22.3 from IMS](https://openintro-ims.netlify.app/inference-many-means.html#sec-mathANOVA), or check out this interactive [Distribution Calculator](https://gallery.shinyapps.io/dist_calc/) for more information on the F distribution.)
   
-  (d) What proportion of variability in the response variable is explained by the explanatory variables ($R^2$)? Also calculate the adjusted $R^2$. Which is smaller, and why? -->
+  (d) What proportion of variability in the response variable is explained by the explanatory variables ($R^2$)? Also calculate the adjusted $R^2$. Which is smaller, and why?
 
 # Problem 6: p-values galore (Review/Wed)
 
-Use the `penguins` summary output in Problem 3 for this question, along with the ANOVA output below. 
+Use the `penguins` summary output in **Problem 3** for this question, along with the ANOVA output below. 
 
 ```{r}
 anova(penguins_mlr)
