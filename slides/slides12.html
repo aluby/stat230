@@ -157,7 +157,7 @@ Prof Amanda Luby
 <section id="fev-example" class="slide level2">
 <h2>FEV example</h2>
 
-<img data-src="slides12_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
+<img data-src="slides12_files/figure-html/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
 <section id="coefficient-table" class="slide level2">
 <h2>Coefficient table</h2>
 <div class="cell">
@@ -349,13 +349,13 @@ Age:SmokeTRUE  0.005221041 -0.000442301 -0.023403218   0.001779841</code></pre>
 <div class="fragment">
 <div style="font-size: 0.8em;">
 <p><span class="math display">\[
-SE(\widehat{\gamma}) = \sqrt{c_1^2 \lbrace SE(\widehat{\beta}_1)\rbrace^2 + c_2^2 \lbrace SE(\widehat{\beta}_2) \rbrace^2 + 2c_1c_2 Cov(\widehat{\beta}_1, \widehat{\beta}_2)}
+SE(\widehat{\gamma}) = \sqrt{c_1^2 \lbrace SE(\widehat{\beta}_1)\rbrace^2 + c_3^2 \lbrace SE(\widehat{\beta}_3) \rbrace^2 + 2c_1c_3 Cov(\widehat{\beta}_1, \widehat{\beta}_3)}
 \]</span></p>
 </div>
 </div>
 <div class="fragment">
 <div style="font-size: 0.8em;">
-<p><span class="math inline">\(c_1 = 1\)</span>, <span class="math inline">\(c_2 = 1\)</span></p>
+<p><span class="math inline">\(c_1 = 1\)</span>, <span class="math inline">\(c_3 = 1\)</span></p>
 </div>
 </div>
 <div class="fragment">
@@ -400,10 +400,44 @@ SE(\widehat{\gamma}) = \sqrt{c_1^2 \lbrace SE(\widehat{\beta}_1)\rbrace^2 + c_2^
 <p><span class="math inline">\(t = \dfrac{\widehat{\gamma} - \gamma_0}{SE(\widehat{\gamma})}\)</span></p>
 <p>Reference distribution: <span class="math inline">\(t_{n-(p+1)}\)</span></p>
 </section>
-<section id="your-turn" class="slide level2">
-<h2>Your turn</h2>
+<section id="your-turn-smokers-vs.-nonsmokers-at-age-15" class="slide level2 scrollable">
+<h2>Your turn: smokers vs.&nbsp;nonsmokers at age 15</h2>
 <div class="task">
-<p>Find the test statistic and p-value for the null hypothesis “the intercept for smokers is equal to zero” against a two sided alternative</p>
+<p>At age 15, how different is the mean FEV of smokers and nonsmokers?</p>
+<ol type="1">
+<li>Write the mean function for each group at <span class="math inline">\(\tt age = 15\)</span>. Subtract (smoker <span class="math inline">\(-\)</span> nonsmoker) to get <span class="math inline">\(\gamma\)</span> in terms of the <span class="math inline">\(\beta\)</span>’s.</li>
+<li>What are <span class="math inline">\(c_2\)</span> and <span class="math inline">\(c_3\)</span>? Write out <span class="math inline">\(SE(\widehat{\gamma})\)</span>.</li>
+<li>Construct a 95% CI for <span class="math inline">\(\gamma\)</span> and test <span class="math inline">\(H_0: \gamma = 0\)</span>.</li>
+<li>Interpret your results in context.</li>
+</ol>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>               (Intercept)          Age    SmokeTRUE Age:SmokeTRUE
+(Intercept)    0.063198674 -0.005221041 -0.063198674   0.005221041
+Age           -0.005221041  0.000442301  0.005221041  -0.000442301
+SmokeTRUE     -0.063198674  0.005221041  0.317247587  -0.023403218
+Age:SmokeTRUE  0.005221041 -0.000442301 -0.023403218   0.001779841</code></pre>
+</div>
+</div>
+<div class="footer">
+<p>Hint: <span class="math inline">\(c_3 \ne 1\)</span> this time. <span class="math inline">\(df = 341\)</span>, <span class="math inline">\(t^*_{341} \approx 1.967\)</span> for a 95% CI.</p>
+</div>
+</section>
+<section id="your-turn-solution" class="slide level2">
+<h2>Your turn: solution</h2>
+<div class="medium">
+<p><span class="math inline">\(\gamma = (\beta_0 + \beta_2) + (\beta_1 + \beta_3)(15) - (\beta_0 + \beta_1 (15)) = \beta_2 + 15\beta_3\)</span></p>
+<p>. . .</p>
+<p><span class="math inline">\(\widehat{\gamma} = 1.72 + 15(-0.143) = -0.43\)</span></p>
+<p>. . .</p>
+<p><span class="math inline">\(SE(\widehat{\gamma}) = \sqrt{\{SE(\widehat{\beta}_2)\}^2 + 15^2 \{SE(\widehat{\beta}_3)\}^2 + 2(1)(15) Cov(\widehat{\beta}_2, \widehat{\beta}_3)} = 0.125\)</span></p>
+<p>. . .</p>
+<p>95% CI: <span class="math inline">\(-0.43 \pm 1.967(0.125) = (-0.675, -0.184)\)</span></p>
+<p>. . .</p>
+<p><span class="math inline">\(t = -3.44\)</span>, p-value <span class="math inline">\(= 0.00066\)</span></p>
+<p>. . .</p>
+<p>At age 15, smokers’ mean FEV is estimated to be about 0.43 L/s lower than nonsmokers’ (95% CI: 0.18 to 0.68 L/s lower). The difference is statistically significant.</p>
 </div>
 
 
@@ -625,44 +659,6 @@ SE(\widehat{\gamma}) = \sqrt{c_1^2 \lbrace SE(\widehat{\beta}_1)\rbrace^2 + c_2^
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

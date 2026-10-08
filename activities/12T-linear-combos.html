@@ -124,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#calculating-cis-for-linear-combinations" id="toc-calculating-cis-for-linear-combinations" class="nav-link" data-scroll-target="#calculating-cis-for-linear-combinations">Calculating CIs for linear combinations</a></li>
   <li><a href="#function-quick-reference" id="toc-function-quick-reference" class="nav-link" data-scroll-target="#function-quick-reference">Function quick reference</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="12-linear-combos.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="12T-linear-combos.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -149,9 +149,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggformula)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use <a href="https://aluby.github.io/stat230/activities/12-linear-combos" class="uri">https://aluby.github.io/stat230/activities/12-linear-combos</a></p>
+</div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -163,38 +172,33 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>I recommend finishing the <a href="../activities/11-mlr-inference.html">Inference for MLR</a> activity before starting. This activity will use the same data and it will be helpful to have worked through the equations for each category before starting!</p>
+<p>I recommend finishing the <a href="https://aluby.github.io/stat230/activities/11-mlr-inference-tutorial">Inference for MLR</a> activity before starting. This activity will use the same data and it will be helpful to have worked through the equations for each category before starting!</p>
 </div>
 </div>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>The <code>cars</code> data set loaded below contains information on used cars for sale, including their <code>Price</code>, <code>Mileage</code>, and <code>Make</code> (a categorical variable with six levels).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run the code chunks in order: objects you create in one chunk (like a fitted model) are available in the chunks that follow.</p>
+</div>
+</div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cars &lt;- read.csv("https://aluby.github.io/stat230/data/Cars.csv", stringsAsFactors = TRUE)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/Cars.csv"</span>), <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="{webr}"><code>cars &lt;- read.csv("https://aluby.github.io/stat230/data/Cars.csv", stringsAsFactors = TRUE)</code></pre>
 </div>
 <p>We’ll proceed with the <code>car_lm2</code> model:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>car_lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Price) <span class="sc">~</span> Mileage <span class="sc">*</span> Make, <span class="at">data =</span> cars)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(car_lm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 5
-   term                       estimate  std.error statistic       p.value
-   &lt;chr&gt;                         &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
- 1 (Intercept)           10.1          0.0845      119.     0            
- 2 Mileage               -0.00000710   0.00000392   -1.81   0.0704       
- 3 MakeCadillac           0.647        0.106         6.13   0.00000000141
- 4 MakeChevrolet         -0.263        0.0915       -2.88   0.00411      
- 5 MakePontiac           -0.182        0.0987       -1.84   0.0657       
- 6 MakeSAAB               0.356        0.104         3.42   0.000664     
- 7 MakeSaturn            -0.322        0.117        -2.75   0.00617      
- 8 Mileage:MakeCadillac   0.000000158  0.00000495    0.0319 0.975        
- 9 Mileage:MakeChevrolet -0.00000162   0.00000425   -0.382  0.703        
-10 Mileage:MakePontiac    0.00000202   0.00000462    0.438  0.662        
-11 Mileage:MakeSAAB      -0.0000000492 0.00000476   -0.0103 0.992        
-12 Mileage:MakeSaturn    -0.00000367   0.00000539   -0.681  0.496        </code></pre>
-</div>
+<pre class="{webr}"><code>car_lm2 &lt;- lm(log(Price) ~ Mileage * Make, data = cars)
+
+summary(car_lm2)</code></pre>
 </div>
 </section>
 <section id="calculating-cis-for-linear-combinations" class="level2">
@@ -203,58 +207,36 @@ Note
 <p>Let’s calculate a 95% confidence interval for the slope of the Cadillac model. Refer to your notes/slides and determine the formulas for the estimate and standard error of this slope.</p>
 <p>Now that you know the formulas, you’ll use R to implement them. First, extract the coefficients and covariance matrix from the model object. Try printing the results to see what they look like and make note of where the Cadillac coefficients are located.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>car_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(car_lm2)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>car_vcov <span class="ot">&lt;-</span> <span class="fu">vcov</span>(car_lm2)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">Extract the coefficients from the model object and store them in <code>car_coefs</code>.</span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="2">Extract the covariance matrix from the model object and store it in <code>car_vcov</code>.</span>
-</dd>
-</dl>
-</div>
+<pre class="{webr}"><code># Extract the coefficients from the model object
+car_coefs &lt;- coef(car_lm2)
+
+# Extract the covariance matrix from the model object
+car_vcov &lt;- vcov(car_lm2)
+
+car_coefs
+car_vcov</code></pre>
 </div>
 <p>Next, calculate the estimate of the slope for Cadillacs.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-5-1" class="code-annotation-target"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>estimate <span class="ot">&lt;-</span> car_coefs[<span class="dv">2</span>] <span class="sc">+</span> car_coefs[<span class="dv">8</span>]</span>
-<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>estimate</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-5" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-5" data-code-lines="1" data-code-annotation="3"><code>car_coefs</code> is a vector, so we pull off the necessary coefficients using their position in square brackets. Here, <code>car_coefs[2]</code> pulls off the coefficient for <code>Mileage</code> and <code>car_coefs[8]</code> pulls off the coefficient for the interaction term <code>Mileage:MakeCadillac</code>.</span>
-</dd>
-</dl>
+<pre class="{webr}"><code>estimate &lt;- car_coefs[2] + car_coefs[8]
+estimate</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      Mileage 
--6.940914e-06 </code></pre>
-</div>
-</div>
+<p><code>car_coefs</code> is a vector, so we pull off the necessary coefficients using their position in square brackets. Here, <code>car_coefs[2]</code> pulls off the coefficient for <code>Mileage</code> and <code>car_coefs[8]</code> pulls off the coefficient for the interaction term <code>Mileage:MakeCadillac</code>.</p>
 <p>Now, calculate the standard error of the slope for Cadillacs.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-6-1" class="code-annotation-target"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(car_vcov[<span class="dv">2</span>,<span class="dv">2</span>] <span class="sc">+</span> car_vcov[<span class="dv">8</span>,<span class="dv">8</span>] <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>car_vcov[<span class="dv">2</span>,<span class="dv">8</span>])</span>
-<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>se</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-6" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="1" data-code-annotation="4"><code>car_vcov</code> is a matrix, so we pull off the necessary variances and covariances using their row and column positions in square brackets. Here, <code>car_vcov[2,2]</code> pulls off the variance for <code>Mileage</code>, <code>car_vcov[8,8]</code> pulls off the variance for the interaction term <code>Mileage:MakeCadillac</code>, and <code>car_vcov[2,8]</code> pulls off the covariance between these two coefficients.</span>
-</dd>
-</dl>
+<pre class="{webr}"><code>se &lt;- sqrt(car_vcov[2,2] + car_vcov[8,8] + 2*car_vcov[2,8])
+se</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.029984e-06</code></pre>
-</div>
-</div>
+<p><code>car_vcov</code> is a matrix, so we pull off the necessary variances and covariances using their row and column positions in square brackets. Here, <code>car_vcov[2,2]</code> pulls off the variance for <code>Mileage</code>, <code>car_vcov[8,8]</code> pulls off the variance for the interaction term <code>Mileage:MakeCadillac</code>, and <code>car_vcov[2,8]</code> pulls off the covariance between these two coefficients.</p>
 <p>Finally, use the estimate and standard error to calculate a 95% confidence interval for the slope of the Cadillac model. You can use the <code>qt()</code> function to find the appropriate critical value.</p>
 <p><strong>Q1.</strong> Calculate a 95% confidence interval for the slope of the Cadillac model.</p>
-<div class="cell" data-min-lines="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the 95% CI here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<pre class="{webr}"><code># Fill in the blanks to calculate the 95% CI
+# (hint: the degrees of freedom are in car_lm2$df.residual)
+tstar &lt;- qt(___, df = ___)
+
+estimate - tstar * ___
+estimate + tstar * ___</code></pre>
 </div>
 <hr>
 </section>
@@ -749,94 +731,110 @@ Note
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "12: Inference for Linear Combinations"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggformula)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>I recommend finishing the <span class="co">[</span><span class="ot">Inference for MLR</span><span class="co">](11-mlr-inference.qmd)</span> activity before starting. This activity will use the same data and it will be helpful to have worked through the equations for each category before starting! </span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>The <span class="in">`cars`</span> data set loaded below contains information on used cars for sale, including their <span class="in">`Price`</span>, <span class="in">`Mileage`</span>, and <span class="in">`Make`</span> (a categorical variable with six levels).</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># cars &lt;- read.csv("https://aluby.github.io/stat230/data/Cars.csv", stringsAsFactors = TRUE)</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/Cars.csv"</span>), <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>We'll proceed with the <span class="in">`car_lm2`</span> model: </span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>car_lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Price) <span class="sc">~</span> Mileage <span class="sc">*</span> Make, <span class="at">data =</span> cars)</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(car_lm2)</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculating CIs for linear combinations</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>To calculate a confidence interval for a linear combination of coefficients, we must first calculate the estimate and standard error of the linear combination. </span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>Let's calculate a 95% confidence interval for the slope of the Cadillac model. Refer to your notes/slides and determine the formulas for the estimate and standard error of this slope.</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>Now that you know the formulas, you'll use R to implement them.  First, extract the coefficients and covariance matrix from the model object. Try printing the results to see what they look like and make note of where the Cadillac coefficients are located.</span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>car_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(car_lm2) <span class="co">#&lt;1&gt;</span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>car_vcov <span class="ot">&lt;-</span> <span class="fu">vcov</span>(car_lm2)  <span class="co">#&lt;2&gt;</span></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Extract the coefficients from the model object and store them in <span class="in">`car_coefs`</span>.</span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Extract the covariance matrix from the model object and store it in <span class="in">`car_vcov`</span>.</span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>Next, calculate the estimate of the slope for Cadillacs.</span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>estimate <span class="ot">&lt;-</span> car_coefs[<span class="dv">2</span>] <span class="sc">+</span> car_coefs[<span class="dv">8</span>] <span class="co">#&lt;3&gt;</span></span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>estimate</span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="in">`car_coefs`</span> is a vector, so we pull off the necessary coefficients using their position in square brackets. Here, <span class="in">`car_coefs[2]`</span> pulls off the coefficient for <span class="in">`Mileage`</span> and <span class="in">`car_coefs[8]`</span> pulls off the coefficient for the interaction term <span class="in">`Mileage:MakeCadillac`</span>. </span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>Now, calculate the standard error of the slope for Cadillacs. </span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(car_vcov[<span class="dv">2</span>,<span class="dv">2</span>] <span class="sc">+</span> car_vcov[<span class="dv">8</span>,<span class="dv">8</span>] <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>car_vcov[<span class="dv">2</span>,<span class="dv">8</span>]) <span class="co">#&lt;4&gt;</span></span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>se</span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span><span class="in">`car_vcov`</span> is a matrix, so we pull off the necessary variances and covariances using their row and column positions in square brackets. Here, <span class="in">`car_vcov[2,2]`</span> pulls off the variance for <span class="in">`Mileage`</span>, <span class="in">`car_vcov[8,8]`</span> pulls off the variance for the interaction term <span class="in">`Mileage:MakeCadillac`</span>, and <span class="in">`car_vcov[2,8]`</span> pulls off the covariance between these two coefficients.</span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>Finally, use the estimate and standard error to calculate a 95% confidence interval for the slope of the Cadillac model. You can use the <span class="in">`qt()`</span> function to find the appropriate critical value.</span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>**Q1.** Calculate a 95% confidence interval for the slope of the Cadillac model.</span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a><span class="co">#| min-lines: 3</span></span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the 95% CI here</span></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>***</span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>The following table summarizes the functions we used today:</span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`coef()`</span> <span class="pp">|</span> Extract the estimated coefficients from a fitted model (as a named vector) <span class="pp">|</span></span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`vcov()`</span> <span class="pp">|</span> Extract the covariance matrix of the estimated coefficients from a fitted model <span class="pp">|</span></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`x[i]`</span>, <span class="in">`m[i, j]`</span> <span class="pp">|</span> Pull off element <span class="in">`i`</span> of a vector, or the entry in row <span class="in">`i`</span> and column <span class="in">`j`</span> of a matrix <span class="pp">|</span></span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`sqrt()`</span> <span class="pp">|</span> Take the square root (e.g., to turn a variance into a standard error) <span class="pp">|</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "12: Inference for Linear Combinations"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">  live-html:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    output-file: "12-linear-combos-tutorial"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="an">engine:</span><span class="co"> knitr</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> source</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../_extensions/r-wasm/live/_knitr.qmd &gt;}}</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>This is the tutorial version of the R activity. If you prefer to use .qmd and RStudio directly, you can use <span class="ot">&lt;https://aluby.github.io/stat230/activities/12-linear-combos&gt;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>I recommend finishing the <span class="co">[</span><span class="ot">Inference for MLR</span><span class="co">](https://aluby.github.io/stat230/activities/11-mlr-inference-tutorial)</span> activity before starting. This activity will use the same data and it will be helpful to have worked through the equations for each category before starting!</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>The <span class="in">`cars`</span> data set loaded below contains information on used cars for sale, including their <span class="in">`Price`</span>, <span class="in">`Mileage`</span>, and <span class="in">`Make`</span> (a categorical variable with six levels).</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>Run the code chunks in order: objects you create in one chunk (like a fitted model) are available in the chunks that follow.</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="in">cars &lt;- read.csv("https://aluby.github.io/stat230/data/Cars.csv", stringsAsFactors = TRUE)</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>We'll proceed with the <span class="in">`car_lm2`</span> model: </span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="in">car_lm2 &lt;- lm(log(Price) ~ Mileage * Make, data = cars)</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="in">summary(car_lm2)</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculating CIs for linear combinations</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>To calculate a confidence interval for a linear combination of coefficients, we must first calculate the estimate and standard error of the linear combination. </span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>Let's calculate a 95% confidence interval for the slope of the Cadillac model. Refer to your notes/slides and determine the formulas for the estimate and standard error of this slope.</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>Now that you know the formulas, you'll use R to implement them. First, extract the coefficients and covariance matrix from the model object. Try printing the results to see what they look like and make note of where the Cadillac coefficients are located.</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="in"># Extract the coefficients from the model object</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="in">car_coefs &lt;- coef(car_lm2)</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="in"># Extract the covariance matrix from the model object</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="in">car_vcov &lt;- vcov(car_lm2)</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="in">car_coefs</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a><span class="in">car_vcov</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>Next, calculate the estimate of the slope for Cadillacs.</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="in">estimate &lt;- car_coefs[2] + car_coefs[8]</span></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="in">estimate</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="in">`car_coefs`</span> is a vector, so we pull off the necessary coefficients using their position in square brackets. Here, <span class="in">`car_coefs[2]`</span> pulls off the coefficient for <span class="in">`Mileage`</span> and <span class="in">`car_coefs[8]`</span> pulls off the coefficient for the interaction term <span class="in">`Mileage:MakeCadillac`</span>.</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>Now, calculate the standard error of the slope for Cadillacs. </span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="in">se &lt;- sqrt(car_vcov[2,2] + car_vcov[8,8] + 2*car_vcov[2,8])</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="in">se</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a><span class="in">`car_vcov`</span> is a matrix, so we pull off the necessary variances and covariances using their row and column positions in square brackets. Here, <span class="in">`car_vcov[2,2]`</span> pulls off the variance for <span class="in">`Mileage`</span>, <span class="in">`car_vcov[8,8]`</span> pulls off the variance for the interaction term <span class="in">`Mileage:MakeCadillac`</span>, and <span class="in">`car_vcov[2,8]`</span> pulls off the covariance between these two coefficients.</span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>Finally, use the estimate and standard error to calculate a 95% confidence interval for the slope of the Cadillac model. You can use the <span class="in">`qt()`</span> function to find the appropriate critical value.</span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>**Q1.** Calculate a 95% confidence interval for the slope of the Cadillac model.</span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a><span class="in"># Fill in the blanks to calculate the 95% CI</span></span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a><span class="in"># (hint: the degrees of freedom are in car_lm2$df.residual)</span></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a><span class="in">tstar &lt;- qt(___, df = ___)</span></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="in">estimate - tstar * ___</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a><span class="in">estimate + tstar * ___</span></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>***</span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a>The following table summarizes the functions we used today:</span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`coef()`</span> <span class="pp">|</span> Extract the estimated coefficients from a fitted model (as a named vector) <span class="pp">|</span></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`vcov()`</span> <span class="pp">|</span> Extract the covariance matrix of the estimated coefficients from a fitted model <span class="pp">|</span></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`x[i]`</span>, <span class="in">`m[i, j]`</span> <span class="pp">|</span> Pull off element <span class="in">`i`</span> of a vector, or the entry in row <span class="in">`i`</span> and column <span class="in">`j`</span> of a matrix <span class="pp">|</span></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`sqrt()`</span> <span class="pp">|</span> Take the square root (e.g., to turn a variance into a standard error) <span class="pp">|</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
