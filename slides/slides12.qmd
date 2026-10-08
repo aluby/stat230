@@ -222,13 +222,13 @@ vcov(fev_lm)
 
 :::{style="font-size: 0.8em;"}
 $$
-SE(\widehat{\gamma}) = \sqrt{c_1^2 \lbrace SE(\widehat{\beta}_1)\rbrace^2 + c_2^2 \lbrace SE(\widehat{\beta}_2) \rbrace^2 + 2c_1c_2 Cov(\widehat{\beta}_1, \widehat{\beta}_2)} 
+SE(\widehat{\gamma}) = \sqrt{c_1^2 \lbrace SE(\widehat{\beta}_1)\rbrace^2 + c_3^2 \lbrace SE(\widehat{\beta}_3) \rbrace^2 + 2c_1c_3 Cov(\widehat{\beta}_1, \widehat{\beta}_3)} 
 $$
 :::
 . . .
 
 :::{style="font-size: 0.8em;"}
-$c_1 = 1$, $c_2 = 1$
+$c_1 = 1$, $c_3 = 1$
 :::
 
 . . .
@@ -293,10 +293,58 @@ $t = \dfrac{\widehat{\gamma} - \gamma_0}{SE(\widehat{\gamma})}$
 
 Reference distribution: $t_{n-(p+1)}$
 
-## Your turn
+## Your turn: smokers vs. nonsmokers at age 15
 
 ::: task
-Find the test statistic and p-value for the null hypothesis "the intercept for smokers is equal to zero" against a two sided alternative
+At age 15, how different is the mean FEV of smokers and nonsmokers?
+
+1. Write the mean function for each group at $\tt age = 15$. Subtract (smoker $-$ nonsmoker) to get $\gamma$ in terms of the $\beta$'s.
+2. What are $c_2$ and $c_3$? Write out $SE(\widehat{\gamma})$.
+3. Construct a 95% CI for $\gamma$ and test $H_0: \gamma = 0$.
+4. Interpret your results in context.
+:::
+
+```{r}
+#| echo: false
+vcov(fev_lm)
+```
+
+::: footer
+Hint: $c_3 \ne 1$ this time. $df = 341$, $t^*_{341} \approx 1.967$ for a 95% CI.
+:::
+
+## Your turn: solution
+
+```{r}
+#| echo: false
+cc <- c(0, 0, 1, 15)
+g_hat <- sum(cc * coef(fev_lm))
+se_g <- sqrt(drop(t(cc) %*% V %*% cc))
+tstar95 <- qt(0.975, df = fev_lm$df.residual)
+```
+
+::: medium
+$\gamma = (\beta_0 + \beta_2) + (\beta_1 + \beta_3)(15) - (\beta_0 + \beta_1 (15)) = \beta_2 + 15\beta_3$
+
+. . .
+
+$\widehat{\gamma} = `r round(coef(fev_lm)[3], 3)` + 15(`r round(coef(fev_lm)[4], 3)`) = `r round(g_hat, 3)`$
+
+. . .
+
+$SE(\widehat{\gamma}) = \sqrt{\{SE(\widehat{\beta}_2)\}^2 + 15^2 \{SE(\widehat{\beta}_3)\}^2 + 2(1)(15) Cov(\widehat{\beta}_2, \widehat{\beta}_3)} = `r round(se_g, 3)`$
+
+. . .
+
+95% CI: $`r round(g_hat, 3)` \pm 1.967(`r round(se_g, 3)`) = (`r round(g_hat - tstar95 * se_g, 3)`, `r round(g_hat + tstar95 * se_g, 3)`)$
+
+. . .
+
+$t = `r round(g_hat / se_g, 2)`$, p-value $= `r format(2 * pt(-abs(g_hat / se_g), fev_lm$df.residual), digits = 2)`$
+
+. . .
+
+At age 15, smokers' mean FEV is estimated to be about `r abs(round(g_hat, 2))` L/s lower than nonsmokers' (95% CI: `r abs(round(g_hat + tstar95 * se_g, 2))` to `r abs(round(g_hat - tstar95 * se_g, 2))` L/s lower). The difference is statistically significant.
 :::
 
 

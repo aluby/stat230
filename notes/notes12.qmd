@@ -1,0 +1,239 @@
+---
+title: "Day 12: Inference for linear combinations"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt",
+                   sep = "\t", header = TRUE) |>
+  mutate(Smoke = as.logical(Smoke))
+
+fev_lm <- lm(FEV ~ Age * Smoke, data = fev)
+V <- vcov(fev_lm)
+b <- coef(fev_lm)
+df_resid <- fev_lm$df.residual
+```
+
+We're interested in modeling **lung capacity** (FEV) on **age** and **smoking status** for a sample of adolescents. As kids get older, FEV generally increases, but we also think FEV decreases for smokers. Since smokers are likely to be older, we need a model that accounts for both.
+
+```{r}
+#| fig-height: 2.5
+#| fig-width: 4.5
+#| fig-align: left
+ggplot(fev, aes(x = Age, y = FEV, color = Smoke)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_color_manual(values = c("#f15a31", "#000036")) +
+  labs(y = "FEV (L/s)") +
+  theme(legend.position = "top")
+```
+
+Theoretical mean model: 
+
+$$\mu\{FEV \mid Age, Smoke\} = \beta_0 + \beta_1\, Age + \beta_2\, Smoke + \beta_3\, Age \times Smoke$$
+
+```{r}
+kable_coef(fev_lm, terms = c("Intercept", "Age", "SmokeTRUE", "Age:SmokeTRUE"))
+```
+
+**Example:** Models for each group
+
+Nonsmokers ($Smoke = 0$): $\mu\{FEV \mid Age\} =$ \vspace{.1in}
+
+\hspace{.5in} $\hat y=$ \vspace{.1in}
+
+Smokers ($Smoke = 1$): $\mu\{FEV \mid Age\} =$ \vspace{.1in}
+
+\hspace{.5in} $\hat y=$ \vspace{.1in}
+
+## Reading the table: what is significantly different than 0?
+
+- The intercept for non-smokers is ___________
+- The intercept offset for smokers is ___________
+- The slope for non-smokers is ___________
+- The *difference* in slopes between smokers and non-smokers is __________
+- The slope for smokers is ____________
+
+The slope for smokers is $\beta_1 + \beta_3$. The table gives us $SE(\widehat\beta_1)$ and $SE(\widehat\beta_3)$, but
+**not** the standard error of their sum.
+
+**Why can't we just add $SE(\widehat\beta_1) + SE(\widehat\beta_3)$?**
+
+\vspace{1.25in}
+
+**Why can't we use the p-value for `Age:SmokeTRUE` to test whether the smoker slope is zero?**
+
+\vspace{1.25in}
+
+
+::: callout-tip
+## Definition
+
+A **linear combination** of coefficients has the form
+
+$$\gamma = c_1 \beta_i + c_2 \beta_j$$
+
+where $c_1$ and $c_2$ are constants
+
+**Estimate:** $\widehat\gamma =$ _________________
+
+**Standard error:**
+
+$$SE(\widehat\gamma) = \sqrt{c_1^2 \{SE(\widehat\beta_i)\}^2 + c_2^2 \{SE(\widehat\beta_j)\}^2 + 2 c_1 c_2 \, Cov(\widehat\beta_i, \widehat\beta_j)}$$
+
+::: 
+
+The extra term is there because $\widehat\beta_i$ and $\widehat\beta_j$ come
+from the *same* fitted model, so their estimation errors are not
+independent. $Cov(\widehat\beta_i, \widehat\beta_j)$ measures how they move together.
+
+
+## The covariance matrix of the coefficients
+
+```{r}
+#| echo: true
+vcov(fev_lm) |> round(4)
+```
+
+The **diagonal** entries are the variances, $V(\widehat \beta_j) = \{SE(\widehat\beta_j)\}^2$.
+
+  - Check: $SE(\widehat\beta_1) =$ ________ , so $\{SE(\widehat\beta_1)\}^2 =$ ________
+
+The **off-diagonal** entries are the covariances, $Cov(\widehat\beta_i, \widehat\beta_j)$.
+-   The matrix is symmetric: $Cov(\widehat\beta_i, \widehat\beta_j) = Cov(\widehat\beta_j, \widehat\beta_i)$.
+
+## Example 1: CI for the smoker slope
+
+**Target:** $\gamma = \beta_1 + \beta_3$. So $c_1 =$_____ and $c_2=$_________
+
+**Estimate:**
+
+\vspace{.5in}
+
+**Standard error:** pull the pieces out of the covariance matrix.
+
+| piece | value |
+|:--|:--|
+| $\{SE(\widehat\beta_1)\}^2$ |  |
+| $\{SE(\widehat\beta_3)\}^2$ |   |
+| $Cov(\widehat\beta_1, \widehat\beta_3)$ |   |
+
+\vspace{1in}
+
+**90% CI:** $\widehat\gamma \pm t^*_{n-(p+1)} \cdot SE(\widehat\gamma)$, where $n = 345$, $p = 3$,
+so $df = 341$ and $t^* \approx 1.649$.
+
+\vspace{1in}
+
+**Interpretation:**
+
+\vspace{.75in}
+
+::: {.callout-note}
+## What if we ignored the covariance?
+
+Using only $\sqrt{\{SE(\widehat\beta_1)\}^2 + \{SE(\widehat\beta_3)\}^2}$ would
+give `r round(sqrt(V[2,2] + V[4,4]), 3)`. The correct SE is
+`r round(sqrt(V[2,2] + V[4,4] + 2 * V[2,4]), 3)`. Here the covariance is
+**negative**, so ignoring it makes the interval too wide.
+:::
+
+## Testing a linear combination
+
+**Hypotheses:** $H_0: \gamma = \gamma_0$ vs. $H_a: \gamma \ne, <, \text{or} > \gamma_0$
+
+**Test statistic:** $t = \dfrac{\widehat\gamma - \gamma_0}{SE(\widehat\gamma)}$
+
+**Reference distribution:** $t$ distribution with $df = n - (p+1)$
+
+**p-value:** area in the tail(s) specified by $H_a$
+
+Same four steps as a test for a single coefficient. Only the estimate
+and the SE change.
+
+**Example:** Is the smoker slope different from zero? Using
+$\widehat\gamma =$ `r round(b[2] + b[4], 4)` and
+$SE(\widehat\gamma) =$ `r round(sqrt(V[2,2] + V[4,4] + 2 * V[2,4]), 4)`:
+
+\vspace{1in}
+
+## Your turn: smokers vs. nonsmokers at age 15
+
+At age 15, how different is the mean FEV of smokers and nonsmokers?
+
+**0.** Look back and the graph and identify what this question is asking about. What do you think you will find?
+
+\vspace{1in}
+
+**1.** Write the theoretical mean function for each group evaluated at $Age = 15$,
+and subtract (smoker $-$ nonsmoker) to find $\gamma$.
+
+\vspace{1.25in}
+
+**2.** The difference is $\gamma =$___________________________, so $c_2 =$ ______ $\qquad c_3 =$ ______
+
+**3.** Find $\hat\gamma$
+
+\vspace{1in}
+
+**3.** Write out $SE(\widehat\gamma)$ using the values from the
+covariance matrix.
+
+\vspace{2in}
+
+**4.** Construct a 95% CI for $\gamma$ ($df = 341$, $t^* \approx 1.967$).
+
+\vspace{1.5in}
+
+**5.** Test $H_0: \gamma = 0$ vs. $H_a: \gamma \ne 0$.
+
+\vspace{1.5in}
+
+**6.** Interpret your results in context.
+
+\vspace{1in}
+
+## A shortcut: re-center the model
+
+If we measure age as "years since
+age 15", the coefficient on `Smoke` *is* the smoker-minus-nonsmoker
+difference at age 15, and the standard table gives us its SE directly:
+
+```{r}
+#| echo: true
+fev <- mutate(fev, Age15 = Age - 15)
+lm(FEV ~ Age15 * Smoke, data = fev) |> tidy()
+```
+
+Compare the `SmokeTRUE` row to the output from the previous section. 
+
+## Summary
+
+| To do inference for... | Use | 
+|:--|:--|:--|
+| a single coefficient $\beta_j$ | $t$-test / CI from the coefficient table | 
+| a linear combination $c_1\beta_i + c_2\beta_j$ | $t$-test / CI with $SE = \sqrt{c_1^2 \{SE(\widehat\beta_i)\}^2 + c_2^2 \{SE(\widehat\beta_j)\}^2 + 2 c_1 c_2 \, Cov(\widehat\beta_i, \widehat\beta_j)}$ | 
+| several coefficients at once ($\beta_2 = \beta_3 = 0$) | extra sums of squares $F$-test | 
+
+-   Never add standard errors. Use the covariance matrix.
+-   The reference distribution is always $t_{n-(p+1)}$ for a single
+    linear combination.
+-   A linear combination is *one* number, so we use a $t$ procedure. When
+    $d > 1$ coefficients are tested at the same time, that's an $F$-test.
+
+## Your turn: in R
+
+The R activity is posted on moodle. Here are some functions that might be helpful: 
+
+| Function | Purpose |
+|----|-----------|
+| `coef()` | Extract the estimated coefficients from a fitted model (as a named vector) |
+| `vcov()` | Extract the covariance matrix of the estimated coefficients from a fitted model |
+| `x[i]`, `m[i, j]` | Pull off element `i` of a vector, or the entry in row `i` and column `j` of a matrix |
+| `sqrt()` | Take the square root (e.g., to turn a variance into a standard error) |

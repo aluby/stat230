@@ -1,0 +1,229 @@
+---
+title: "Day 12 notes: instructor answer key"
+subtitle: "Filled-in version of notes/notes12.qmd (not for students)"
+format:
+  html:
+    toc: true
+    embed-resources: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+theme_set(theme_minimal(base_size = 12))
+source(here::here("notes", "notes-helpers.R"))
+
+fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt",
+                   sep = "\t", header = TRUE) |>
+  mutate(Smoke = as.logical(Smoke))
+
+fev_lm <- lm(FEV ~ Age * Smoke, data = fev)
+V <- vcov(fev_lm)
+b <- coef(fev_lm)
+df_resid <- fev_lm$df.residual
+
+r3 <- function(x) formatC(x, format = "f", digits = 3)
+r4 <- function(x) formatC(x, format = "f", digits = 4)
+
+# Example 1: smoker slope, gamma = b1 + b3
+g1 <- b[2] + b[4]
+se1_naive <- sqrt(V[2,2] + V[4,4])
+se1 <- sqrt(V[2,2] + V[4,4] + 2 * V[2,4])
+t90 <- qt(0.95, df_resid)
+t1 <- g1 / se1
+p1 <- 2 * pt(-abs(t1), df_resid)
+
+# Your turn: difference at age 15, gamma = b2 + 15 * b3
+cc <- c(0, 0, 1, 15)
+g2 <- sum(cc * b)
+se2 <- sqrt(drop(t(cc) %*% V %*% cc))
+t95 <- qt(0.975, df_resid)
+t2 <- g2 / se2
+p2 <- 2 * pt(-abs(t2), df_resid)
+```
+
+<style>
+.ans { color: #b00020; font-weight: 600; }
+</style>
+
+Answers are in <span class="ans">red</span>. Every number is computed from the model, so they match the notes' R output.
+
+## FEV data: the model
+
+$$\mu\{FEV \mid Age, Smoke\} = \beta_0 + \beta_1\, Age + \beta_2\, Smoke + \beta_3\, Age \times Smoke$$
+
+```{r}
+kable_coef(fev_lm, terms = c("Intercept", "Age", "SmokeTRUE", "Age:SmokeTRUE"))
+```
+
+**Mean function for each group:**
+
+Nonsmokers ($Smoke = 0$):
+$\mu\{FEV \mid Age\} =$ <span class="ans">$\beta_0 + \beta_1\, Age$</span>
+$\;\approx$ <span class="ans">`r r3(b[1])` + `r r3(b[2])` Age</span>
+
+Smokers ($Smoke = 1$):
+$\mu\{FEV \mid Age\} =$ <span class="ans">$(\beta_0 + \beta_2) + (\beta_1 + \beta_3)\, Age$</span>
+$\;\approx$ <span class="ans">`r r3(b[1] + b[3])` + `r r3(b[2] + b[4])` Age</span>
+
+## Warm up: what's missing from the table?
+
+The slope for smokers is $\beta_1 + \beta_3$.
+
+**Why can't we just add $SE(\widehat\beta_1) + SE(\widehat\beta_3)$?**
+
+<span class="ans">Two reasons. (1) Even for independent estimates, **variances** add, not standard deviations: $\sqrt{a^2 + b^2} < a + b$, so adding SEs overstates the uncertainty. (2) Here the estimates are not independent. They come from the same fitted model and are negatively correlated (correlation of about `r r3(V[2,4] / sqrt(V[2,2] * V[4,4]))`), which pulls the true SE of the sum down even further.</span>
+
+**Why can't we use the p-value for `Age:SmokeTRUE` to test whether the smoker slope is zero?**
+
+<span class="ans">That row tests $H_0: \beta_3 = 0$, i.e. whether the smoker slope **differs from the nonsmoker slope**. The smoker slope being zero is $H_0: \beta_1 + \beta_3 = 0$, a different hypothesis about a different quantity.</span>
+
+## Standard errors for linear combinations
+
+A **linear combination** of coefficients has the form $\gamma = c_1 \beta_i + c_2 \beta_j$.
+
+**Estimate:** $\widehat\gamma =$ <span class="ans">$c_1 \widehat\beta_i + c_2 \widehat\beta_j$</span>
+
+**Standard error:**
+
+$$SE(\widehat\gamma) = \sqrt{c_1^2 \{SE(\widehat\beta_i)\}^2 + c_2^2 \{SE(\widehat\beta_j)\}^2 + 2 c_1 c_2 \, Cov(\widehat\beta_i, \widehat\beta_j)}$$
+
+## The covariance matrix of the coefficients
+
+```{r}
+#| echo: true
+vcov(fev_lm)
+```
+
+Check: $SE(\widehat\beta_1) =$ <span class="ans">`r r3(sqrt(V[2,2]))`</span>
+(from the coefficient table), so
+$\{SE(\widehat\beta_1)\}^2 =$ <span class="ans">`r format(V[2,2], digits = 4)`</span>,
+which matches the (Age, Age) entry of the matrix.
+
+## Example 1: CI for the smoker slope
+
+**Target:** $\gamma = \beta_1 + \beta_3$. What are $c_1$ and $c_3$?
+<span class="ans">$c_1 = 1$, $c_3 = 1$</span>
+
+**Estimate:**
+<span class="ans">$\widehat\gamma = \widehat\beta_1 + \widehat\beta_3 = `r r3(b[2])` + (`r r3(b[4])`) = `r r4(g1)`$</span>
+
+**Standard error:**
+
+<span class="ans">
+$$SE(\widehat\gamma) = \sqrt{(1)^2(`r format(V[2,2], digits = 4)`) + (1)^2(`r format(V[4,4], digits = 4)`) + 2(1)(1)(`r format(V[2,4], digits = 4)`)} = \sqrt{`r format(se1^2, digits = 4)`} = `r r4(se1)`$$
+</span>
+
+**90% CI** ($df = 341$, $t^* \approx 1.649$):
+
+<span class="ans">$`r r4(g1)` \pm `r r3(t90)`(`r r4(se1)`) = (`r r3(g1 - t90 * se1)`,\ `r r3(g1 + t90 * se1)`)$</span>
+
+**Interpretation:**
+
+<span class="ans">We are 90% confident that, among smokers aged 10-19, each additional year of age is associated with an increase in mean FEV between about `r r3(g1 - t90 * se1)` and `r r3(g1 + t90 * se1)` L/s.</span>
+
+::: {.callout-note}
+## What if we ignored the covariance?
+
+Using only $\sqrt{\{SE(\widehat\beta_1)\}^2 + \{SE(\widehat\beta_3)\}^2}$ would
+give `r r3(se1_naive)`. The correct SE is `r r3(se1)`. Here the covariance is
+**negative**, so ignoring it makes the interval about `r round(100 * (se1_naive / se1 - 1))`% too wide.
+:::
+
+## Testing a linear combination
+
+Same four steps as a test for a single coefficient. Only the estimate and the SE change.
+
+**Example:** Is the smoker slope different from zero?
+
+<span class="ans">
+$H_0: \beta_1 + \beta_3 = 0$ vs. $H_a: \beta_1 + \beta_3 \ne 0$
+
+$t = \dfrac{`r r4(g1)` - 0}{`r r4(se1)`} = `r round(t1, 2)`$ on $df = 341$
+
+p-value $= 2\,P(t_{341} > |`r round(t1, 2)`|) \approx `r r3(p1)`$
+
+Using $\alpha = 0.05$ we fail to reject $H_0$: there is only weak evidence that mean FEV changes with age among smokers. (This agrees with the 90% CI barely excluding 0. A 95% CI would include 0.)
+</span>
+
+## Your turn: smokers vs. nonsmokers at age 15
+
+**1.** Mean function at $Age = 15$, then subtract (smoker $-$ nonsmoker):
+
+<span class="ans">
+Smokers: $(\beta_0 + \beta_2) + (\beta_1 + \beta_3)(15)$
+
+Nonsmokers: $\beta_0 + \beta_1(15)$
+
+$\gamma = (\beta_0 + \beta_2) + 15\beta_1 + 15\beta_3 - \beta_0 - 15\beta_1 = \beta_2 + 15\beta_3$
+</span>
+
+**2.** <span class="ans">$c_2 = 1$ $\qquad c_3 = 15$</span>
+(and $c_0 = c_1 = 0$, since $\beta_0$ and $\beta_1$ cancel).
+
+**3.** Standard error:
+
+<span class="ans">
+$$SE(\widehat\gamma) = \sqrt{(1)^2 \{SE(\widehat\beta_2)\}^2 + (15)^2 \{SE(\widehat\beta_3)\}^2 + 2(1)(15)\,Cov(\widehat\beta_2, \widehat\beta_3)}$$
+$$= \sqrt{`r format(V[3,3], digits = 4)` + 225(`r format(V[4,4], digits = 4)`) + 30(`r format(V[3,4], digits = 4)`)} = \sqrt{`r format(se2^2, digits = 4)`} = `r r3(se2)`$$
+</span>
+
+Common mistake: forgetting to square the 15 on the variance term while using it unsquared on the covariance term (the covariance term has $c_2 c_3 = 15$).
+
+**4.** 95% CI ($df = 341$, $t^* \approx 1.967$):
+
+<span class="ans">$`r r3(g2)` \pm `r r3(t95)`(`r r3(se2)`) = (`r r3(g2 - t95 * se2)`,\ `r r3(g2 + t95 * se2)`)$, where $\widehat\gamma = `r r3(b[3])` + 15(`r r3(b[4])`) = `r r3(g2)`$</span>
+
+**5.** Test $H_0: \gamma = 0$ vs. $H_a: \gamma \ne 0$:
+
+<span class="ans">$t = \dfrac{`r r3(g2)`}{`r r3(se2)`} = `r round(t2, 2)`$ on 341 df, p-value $\approx `r format(p2, digits = 2)`$. Reject $H_0$ at the 5% level.</span>
+
+**6.** Interpretation:
+
+<span class="ans">At age 15, smokers' mean FEV is estimated to be about `r r3(abs(g2))` L/s lower than nonsmokers' mean FEV. We are 95% confident the true difference is between `r r3(abs(g2 + t95 * se2))` and `r r3(abs(g2 - t95 * se2))` L/s lower. The difference is statistically significant (p $\approx$ `r format(p2, digits = 2)`).</span>
+
+## Doing it in R
+
+```{r}
+#| echo: true
+cc <- c(0, 0, 1, 15)   # coefficients are (Intercept), Age, SmokeTRUE, Age:SmokeTRUE
+
+est <- sum(cc * coef(fev_lm))
+se <- sqrt(drop(t(cc) %*% vcov(fev_lm) %*% cc))
+
+c(estimate = est, se = se)
+```
+
+```{r}
+#| echo: true
+tstar <- qt(0.975, df = fev_lm$df.residual)
+est + c(-1, 1) * tstar * se          # 95% CI
+
+2 * pt(-abs(est / se), df = fev_lm$df.residual)   # two-sided p-value
+```
+
+These match the hand calculation above.
+
+## A shortcut: re-center the model
+
+```{r}
+#| echo: true
+fev <- mutate(fev, Age15 = Age - 15)
+lm(FEV ~ Age15 * Smoke, data = fev) |> tidy()
+```
+
+The `SmokeTRUE` row (estimate `r r3(g2)`, SE `r r3(se2)`, p `r format(p2, digits = 2)`) is exactly the age-15 difference from Your turn.
+
+## Summary
+
+| To do inference for... | Use | Notes |
+|:--|:--|:--|
+| a single coefficient $\beta_j$ | $t$-test / CI from the coefficient table | Day 11 |
+| a linear combination $c_1\beta_i + c_2\beta_j$ | $t$-test / CI with $SE = \sqrt{\mathbf{c}^T \mathbf{V} \mathbf{c}}$ | today |
+| several coefficients at once ($\beta_2 = \beta_3 = 0$) | extra sums of squares $F$-test | Day 11 |

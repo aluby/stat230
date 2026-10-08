@@ -73,3 +73,16 @@ Finally, use the estimate and standard error to calculate a 95% confidence inter
 # Calculate the 95% CI here
 ```
 
+
+***
+
+## Function quick reference
+
+The following table summarizes the functions we used today:
+
+| Function | Purpose |
+|----|-----------|
+| `coef()` | Extract the estimated coefficients from a fitted model (as a named vector) |
+| `vcov()` | Extract the covariance matrix of the estimated coefficients from a fitted model |
+| `x[i]`, `m[i, j]` | Pull off element `i` of a vector, or the entry in row `i` and column `j` of a matrix |
+| `sqrt()` | Take the square root (e.g., to turn a variance into a standard error) |
