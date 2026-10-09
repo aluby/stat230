@@ -149,8 +149,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#problem-1-fri" id="toc-problem-1-fri" class="nav-link active" data-scroll-target="#problem-1-fri">Problem 1: Fri</a></li>
-  <li><a href="#problem-2-fri" id="toc-problem-2-fri" class="nav-link" data-scroll-target="#problem-2-fri">Problem 2: Fri</a></li>
+  <li><a href="#problem-1-lego-friends" id="toc-problem-1-lego-friends" class="nav-link active" data-scroll-target="#problem-1-lego-friends">Problem 1: Lego Friends</a></li>
+  <li><a href="#problem-2-madison-lakes" id="toc-problem-2-madison-lakes" class="nav-link" data-scroll-target="#problem-2-madison-lakes">Problem 2: Madison Lakes</a></li>
   <li><a href="#problem-3-influence-diagnostics-in-r" id="toc-problem-3-influence-diagnostics-in-r" class="nav-link" data-scroll-target="#problem-3-influence-diagnostics-in-r">Problem 3: Influence Diagnostics in R</a></li>
   <li><a href="#problem-4-a-new-diagnostic" id="toc-problem-4-a-new-diagnostic" class="nav-link" data-scroll-target="#problem-4-a-new-diagnostic">Problem 4: A new diagnostic</a></li>
   <li><a href="#problem-5-influence-diagnostics" id="toc-problem-5-influence-diagnostics" class="nav-link" data-scroll-target="#problem-5-influence-diagnostics">Problem 5: Influence diagnostics</a></li>
@@ -196,8 +196,8 @@ window.Quarto = {
 <p>I will add problems after each class day. Be sure to check back here after each class meeting for new problems.</p>
 </div>
 </div>
-<section id="problem-1-fri" class="level1">
-<h1>Problem 1: Fri</h1>
+<section id="problem-1-lego-friends" class="level1">
+<h1>Problem 1: Lego Friends</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -259,10 +259,11 @@ pieces:themeFriends   0.02636947 -8.146713e-05  -0.05706200        1.885430e-04<
 <li><p>Do the slopes between these models differ? Use an appropriate hypothesis test to support your claim. State your hypotheses, test statistic, p-value, and conclusion.</p></li>
 <li><p>Calculate a 90% confidence interval for the slope of the <code>City</code> theme LEGO sets and interpret your interval in context.</p></li>
 <li><p>Calculate a 90% confidence interval for the slope of the <code>Friends</code> theme LEGO sets and interpret your interval in context.</p></li>
+<li><p>Calculate a 90% confidence interval for the difference in mean Amazon price between <code>Friends</code> and <code>City</code> sets that each have 300 pieces (<code>Friends</code> minus <code>City</code>). Start by writing out the mean function for each theme at 300 pieces and subtracting them, then identify the constants you will multiply each coefficient by. Interpret your interval in context. Does it suggest that the prices of the two themes differ at 300 pieces?</p></li>
 </ol>
 </section>
-<section id="problem-2-fri" class="level1">
-<h1>Problem 2: Fri</h1>
+<section id="problem-2-madison-lakes" class="level1">
+<h1>Problem 2: Madison Lakes</h1>
 <p>According to the EPA, lake ice duration can be an indicator of climate change. This is because lake ice is dependent on several environmental factors, so changes in these factors will influence the formation of ice on top of lakes. As a result, the study and analysis of lake ice formation and duration can inform scientists about how quickly the climate is changing, and are critical to minimizing disruptions to lake ecosystems. We can examine the ice duration of Lake Mendota and Lake Monona, two lakes in the Madison, WI area, over 152 years. It contains the following variables:</p>
 <blockquote class="blockquote">
 <ul>
@@ -290,101 +291,87 @@ pieces:themeFriends   0.02636947 -8.146713e-05  -0.05706200        1.885430e-04<
 </section>
 <section id="problem-3-influence-diagnostics-in-r" class="level1">
 <h1>Problem 3: Influence Diagnostics in R</h1>
-<p>A large, national grocery retailer tracks productivity and costs of its facilities closely. Data were obtained from a single distribution center for a one-year period. Each data point for each variable represents one week of activity. The variables included are</p>
-<ul>
-<li><code>cases</code>: the number of cases shipped</li>
-<li><code>indirect_costs</code>: the indirect costs of the total labor hours as a percentage</li>
-<li><code>holiday</code>: a qualitative predictor called holiday that is coded 1 if the week has a holiday and 0 otherwise,</li>
-<li><code>total_labor</code>: the total labor hours</li>
-</ul>
-<p>Before anything, run the code chunk below to load the data set, fit the multiple regression model, and create the augmented dataset.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grocery &lt;- read.csv("https://aluby.github.io/stat230/data/grocery.csv")</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>grocery <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/grocery.csv"</span>))</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>grocery_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(total_labor <span class="sc">~</span> cases <span class="sc">+</span> indirect_costs <span class="sc">+</span> holiday, <span class="at">data =</span> grocery)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>grocery_aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(grocery_lm) <span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">"index"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ol type="a">
-<li>Create plots of leverage, the standardized residuals, and Cook’s distance against the row index. (You will have to use the augmented dataset and <code>gf_point()</code>)</li>
-<li>Based on the index plot of the standardized residuals, are there any observations outlying in the Y direction? If so, identify them by their row number.</li>
-<li>Based on the index plot of the leverage, identify any outlying X observations (by row number).</li>
-<li>Suppose that management wishes to predict the total labor hours required to handle the next shipment containing 300,000 cases whose indirect costs of the total hours is 7.2 and it’s not a holiday week (<code>holiday = 0</code>). Construct a scatter plot of <code>cases</code> against <code>indirect_costs</code> and determine visually whether this prediction involves an extrapolation beyond the range of the data.</li>
-<li>Based on Cook’s distance, are any of the observations you identified in parts (b) and (c) influential? Explain.</li>
-</ol>
+<!-- A large, national grocery retailer tracks productivity and costs of its facilities closely. Data were obtained from a single distribution center for a one-year period. Each data point for each variable represents one week of activity. The variables included are
+
+- `cases`: the number of cases shipped
+- `indirect_costs`: the indirect costs of the total labor hours as a percentage
+- `holiday`: a qualitative predictor called holiday that is coded 1 if the week has a holiday and 0 otherwise,
+- `total_labor`: the total labor hours
+
+Before anything, run the code chunk below to load the data set, fit the multiple regression model, and create the augmented dataset. 
+
+
+::: {.cell}
+
+```{.r .cell-code}
+grocery <- read.csv("https://aluby.github.io/stat230/data/grocery.csv")
+grocery_lm <- lm(total_labor ~ cases + indirect_costs + holiday, data = grocery)
+grocery_aug <- augment(grocery_lm) |>
+  mutate(index = row_number())
+```
+:::
+
+
+a. Create plots of leverage, the standardized residuals, and Cook’s distance against the row index. (You will have to use the augmented dataset and `gf_point()`)
+b. Based on the index plot of the standardized residuals, are there any observations outlying in the Y direction? If so, identify them by their row number.
+c. Based on the index plot of the leverage, identify any outlying X observations (by row number).
+d. Suppose that management wishes to predict the total labor hours required to handle the next shipment containing 300,000 cases whose indirect costs of the total hours is 7.2 and it’s not a holiday week (`holiday = 0`). Construct a scatter plot of `cases` against `indirect_costs` and determine visually whether this prediction involves an extrapolation beyond the range of the data.
+e. Based on Cook’s distance, are any of the observations you identified in parts (b) and (c) influential? Explain. -->
 </section>
 <section id="problem-4-a-new-diagnostic" class="level1">
 <h1>Problem 4: A new diagnostic</h1>
-<p>Another way to consider the influence of a point is to calculate the average absolute percent difference in the fitted value when the point is removed from the data set. This may be more interpretable to the “general public” than Cook’s distance. The average absolute percent difference is calculated as</p>
-<p><span class="math display">\[\text{Mean absolute percent difference (MAPD)} = \frac{1}{n} \sum_{i=1}^{n} |\frac{\hat{y}_i - \hat{y}_{i(i)}}{\hat{y}_i}|\]</span></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>grocery_lm_del <span class="ot">&lt;-</span> <span class="fu">lm</span>(total_labor <span class="sc">~</span> cases <span class="sc">+</span> indirect_costs <span class="sc">+</span> holiday, </span>
-<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> grocery,</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">subset =</span> <span class="sc">-</span><span class="fu">c</span>(<span class="dv">16</span>))</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>yhat_full <span class="ot">&lt;-</span> <span class="fu">fitted</span>(grocery_lm)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-4-5" class="code-annotation-target"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>yhat_del <span class="ot">&lt;-</span> <span class="fu">predict</span>(grocery_lm_del, <span class="at">newdata =</span> grocery)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-4-6" class="code-annotation-target"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>abs_pct_change <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>((yhat_full <span class="sc">-</span> yhat_del)<span class="sc">/</span>yhat_full)) <span class="sc">/</span> <span class="fu">nrow</span>(grocery) <span class="sc">*</span> <span class="dv">100</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="1">Fit the regression model to the data set with observation 16 removed (the number is the row number). You can also delete multiple observations at once, to see join influence, by entering multiple comma separated values.</span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="2">Obtain the fitted values for the full data set.</span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="5" data-code-annotation="3">Obtain the predicted values for every observation in the full data set using the model with observation 16 removed.</span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="6" data-code-annotation="4">Calculate the average absolute percent difference.</span>
-</dd>
-</dl>
-</div>
-</div>
-<p>The top four Cook’s distance values are associated with observations 16, 20, 32, 43, and 51 in Problem 7. Calculate the average absolute percent difference when each of these observations is removed from the data set. Fill in the following table with your results</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Observation (row)</th>
-<th>MAPD</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>16</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>20</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>32</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>43</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Summarize what the mean absolute percent difference indicates about the influence of each of the cases? Does is agree with your assessment based on Cook’s distance in Problem 7?</p>
+<!-- Another way to consider the influence of a point is to calculate the average absolute percent difference in the fitted value when the point is removed from the data set. This may be more interpretable to the “general public” than Cook’s distance. The average absolute percent difference is calculated as
+
+$$\text{Mean absolute percent difference (MAPD)}_{(i)} = \frac{1}{n} \sum_{j=1}^{n} \left|\frac{\hat{y}_j - \hat{y}_{j(i)}}{\hat{y}_j}\right| \times 100\%$$
+
+where $\hat{y}_{j(i)}$ is the fitted value for observation $j$ from the model fit with observation $i$ removed. Note that, like Cook's distance, this looks at the change in **all** $n$ fitted values when observation $i$ is removed.
+
+
+::: {.cell}
+
+```{.r .cell-code}
+grocery_lm_del <- lm(total_labor ~ cases + indirect_costs + holiday, 
+                     data = grocery,
+                     subset = -c(16)) # <1>
+yhat_full <- fitted(grocery_lm)  # <2>
+yhat_del <- predict(grocery_lm_del, newdata = grocery) # <3>
+abs_pct_change <- sum(abs((yhat_full - yhat_del)/yhat_full)) / nrow(grocery) * 100 # <4>
+```
+:::
+
+
+1. Fit the regression model to the data set with observation 16 removed (the number is the row number). You can also delete multiple observations at once, to see join influence, by entering multiple comma separated values.
+2. Obtain the fitted values for the full data set.
+3. Obtain the predicted values for every observation in the full data set using the model with observation 16 removed.
+4. Calculate the average absolute percent difference.
+
+
+The top four Cook’s distance values from Problem 3 are associated with observations 16, 32, 43, and 51. Calculate the average absolute percent difference when each of these observations is removed from the data set. Fill in the following table with your results (the values will be small percentages)
+
+| Observation (row) | MAPD |
+|-------------------|------|
+| 16                |      |
+| 32                |      |
+| 43                |      |
+| 51                |      |
+
+Summarize what the mean absolute percent difference indicates about the influence of each of the cases? Does it agree with your assessment based on Cook’s distance in Problem 3? -->
 </section>
 <section id="problem-5-influence-diagnostics" class="level1">
 <h1>Problem 5: Influence diagnostics</h1>
-<p>The following statements regarding regression diagnostics contain conceptual or technical errors. Identify the error in each statement and provide a corrected statement.</p>
-<ol type="a">
-<li><p>A data point is considered to have high leverage if its response value (<span class="math inline">\(Y\)</span>) is an extreme outlier compared to the rest of the sample.</p></li>
-<li><p>Cook’s Distance measures the influence of an observation by calculating the specific change in the slope of the primary predictor (<span class="math inline">\(\beta_1\)</span>) when that observation is removed from the model.</p></li>
-<li><p>Any observation identified as an outlier (having a large standardized residual) is by definition an influential point that will significantly alter the regression coefficients.</p></li>
-<li><p>Statisticians agree that a point is only truly influential if its Cook’s Distance (<span class="math inline">\(D_i\)</span>) is greater than 1.0; any value smaller than this indicates the point has no impact on the model.</p></li>
-<li><p>An influential point will always decrease the <span class="math inline">\(R^2\)</span> of a model because it adds unexplained noise to the regression line.</p></li>
-<li><p>Once a diagnostic (like DFFITS or Cook’s Distance) flags a point as influential, the correct procedure is to immediately remove the observation from the dataset and rerun the regression.</p></li>
-</ol>
+<!-- The following statements regarding regression diagnostics contain conceptual or technical errors. Identify the error in each statement and provide a corrected statement.
+
+(a) A data point is considered to have high leverage if its response value ($Y$) is an extreme outlier compared to the rest of the sample.
+
+(b) Cook’s Distance measures the influence of an observation by calculating the specific change in the slope of the primary predictor ($\beta_1$) when that observation is removed from the model.
+
+(c) Any observation identified as an outlier (having a large standardized residual) is by definition an influential point that will significantly alter the regression coefficients.
+
+(d) Statisticians agree that a point is only truly influential if its Cook’s Distance ($D_i$) is greater than 1.0; any value smaller than this indicates the point has no impact on the model.
+
+(e) An influential point will always decrease the $R^2$ of a model because it adds unexplained noise to the regression line.
+
+(f) Once a diagnostic (like DFFITS or Cook’s Distance) flags a point as influential, the correct procedure is to immediately remove the observation from the dataset and rerun the regression. -->
 </section>
 <section id="problem-6-brand-preference-experiment" class="level1">
 <h1>Problem 6: Brand preference experiment</h1>
@@ -401,52 +388,77 @@ Note
 <p>You do not need to load the data into R for this question</p>
 </div>
 </div>
-<p>Researchers designed a small-scale experiment to study how moisture content and sweetness are associated with consumer preference (a score between 0 and 100, where 100 is most preferred) for a new snack food.</p>
-<ol type="a">
-<li>Below a scatterplot matrix among all three variables. What does this reveal about the pairwise correlations between the variables?</li>
-</ol>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="hw05_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" alt="A scatterplot matrix (pairs plot) of the variables in the brand preference data." width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<ol start="2" type="a">
-<li>The code below fits a multiple linear regression model with preference as the response and moisture and sweetness as predictors and calculate the VIFs for each predictor. Do you observe any problems with multicollinearity?</li>
-</ol>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>brand_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(preference <span class="sc">~</span> moisture <span class="sc">+</span> sweetness, <span class="at">data =</span> brand_preference)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">vif</span>(brand_lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> moisture sweetness 
-        1         1 </code></pre>
-</div>
-</div>
+<!-- Researchers designed a small-scale experiment to study how moisture content and sweetness are associated with consumer preference (a score between 0 and 100, where 100 is most preferred) for a new snack food.
+
+a. Below a scatterplot matrix among all three variables. What does
+this reveal about the pairwise correlations between the variables?
+
+
+::: {.cell}
+::: {.cell-output-display}
+![](hw05_files/figure-html/unnamed-chunk-9-1.png){fig-alt='A scatterplot matrix (pairs plot) of the variables in the brand preference data.' width=672}
+:::
+:::
+
+
+
+
+b. The code below fits a multiple linear regression model with preference as the response and moisture and sweetness as predictors and calculate the VIFs for each predictor. Do you observe any problems with multicollinearity?
+
+
+::: {.cell}
+
+```{.r .cell-code}
+brand_lm <- lm(preference ~ moisture + sweetness, data = brand_preference)
+car::vif(brand_lm)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+ moisture sweetness 
+        1         1 
+```
+
+
+:::
+:::
+
+-->
 </section>
 <section id="problem-7-cosmetics" class="level1">
 <h1>Problem 7: <code>cosmetics</code></h1>
-<p>An analyst in the district sales office of a national cosmetics firm obtained data on advertising expenditures and sales last year in the district’s 44 territories. The included:</p>
-<ul>
-<li>expenditures for point-of-sale displays in beauty salons and stores (in thousand dollars),</li>
-<li>expenditures for local media advertising,</li>
-<li>prorated share of national media advertising, and</li>
-<li>sales (in thousands of cases).</li>
-</ul>
-<p>The data can be loaded via:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cosmetics &lt;- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cosmetics <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/cosmetics.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>The analyst was told to investigate the impact of increasing expenditures for point-of-sale displays while holding local and national media advertising constant.</p>
-<ol type="a">
-<li><p>Fit the multiple regression model of sales on the three advertising expenditures.</p></li>
-<li><p>Calculate the VIFs for each predictor. Do you observe any problems with multicollinearity?</p></li>
-<li><p>Suppose the analyst decides to drop the local and national media advertising variables from the model to “clear up the picture”. Fit the revised model. Is the analyst now in a better position to achieve the stated objective?</p></li>
-<li><p>This is a situation where it would be possible to design an experiment to meet the research objective. Why would this be more effective in providing suitable data to achieve the objective? (Hint: think about the experimental data from Problem 1 and if they suffered from the same problem you saw here.)</p></li>
-</ol>
+<!-- An analyst in the district sales office of a national cosmetics firm obtained data on advertising expenditures and sales last year in the district’s 44 territories. The data included:
+
+  - expenditures for point-of-sale displays in beauty salons and stores (in thousand dollars),
+  - expenditures for local media advertising,
+  - prorated share of national media advertising, and
+  - sales (in thousands of cases).
+  
+The data can be loaded via:
+
+
+::: {.cell}
+
+```{.r .cell-code}
+# cosmetics <- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")
+cosmetics <- read.csv(here::here("data/cosmetics.csv"))
+```
+:::
+
+
+The analyst was told to investigate the impact of increasing expenditures for point-of-sale displays while holding local and national media advertising constant.
+
+a. Fit the multiple regression model of sales on the three advertising expenditures.
+
+b. Calculate the VIFs for each predictor. Do you observe any problems with multicollinearity?
+
+c. Look at the $t$-tests for `pos_displays` and `local_media` in the model from part (a). Then use `anova()` to run an extra sums of squares $F$-test comparing the model from part (a) to a reduced model that includes only `national_media`. State the hypotheses, test statistic, p-value, and conclusion. Why do the individual $t$-tests and the $F$-test seem to disagree? Connect your explanation to your answer in part (b).
+
+d. Suppose the analyst decides to drop the local and national media advertising variables from the model to “clear up the picture”. Fit the revised model. Is the analyst now in a better position to achieve the stated objective?
+
+e. This is a situation where it would be possible to design an experiment to meet the research objective. Why would this be more effective in providing suitable data to achieve the objective? (Hint: think about the experimental data from Problem 6 and if they suffered from the same problem you saw here.)
+ -->
 
 
 </section>
