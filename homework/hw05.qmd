@@ -34,7 +34,7 @@ I will add problems after each class day. Be sure to check back here after each 
 :::
 
 
-# Problem 1: Fri
+# Problem 1: Lego Friends
 
 ::: callout-note
 
@@ -71,7 +71,9 @@ vcov(lego_lm)
 
 (c) Calculate a 90% confidence interval for the slope of the `Friends` theme LEGO sets and interpret your interval in context.
 
-# Problem 2: Fri
+(d) Calculate a 90% confidence interval for the difference in mean Amazon price between `Friends` and `City` sets that each have 300 pieces (`Friends` minus `City`). Start by writing out the mean function for each theme at 300 pieces and subtracting them, then identify the constants you will multiply each coefficient by. Interpret your interval in context. Does it suggest that the prices of the two themes differ at 300 pieces?
+
+# Problem 2: Madison Lakes
 
 According to the EPA, lake ice duration can be an indicator of climate change. This is because lake ice is dependent on several environmental factors, so changes in these factors will influence the formation of ice on top of lakes. As a result, the study and analysis of lake ice formation and duration can inform scientists about how quickly the climate is changing, and are critical to minimizing disruptions to lake ecosystems. We can examine the ice duration of Lake Mendota and Lake Monona, two lakes in the Madison, WI area, over 152 years. It contains the following variables:
 
@@ -106,7 +108,7 @@ ice_data <- read.csv("https://aluby.github.io/stat230/data/ice_data.csv")
 
 # Problem 3: Influence Diagnostics in R
 
-A large, national grocery retailer tracks productivity and costs of its facilities closely. Data were obtained from a single distribution center for a one-year period. Each data point for each variable represents one week of activity. The variables included are
+<!-- A large, national grocery retailer tracks productivity and costs of its facilities closely. Data were obtained from a single distribution center for a one-year period. Each data point for each variable represents one week of activity. The variables included are
 
 - `cases`: the number of cases shipped
 - `indirect_costs`: the indirect costs of the total labor hours as a percentage
@@ -116,24 +118,25 @@ A large, national grocery retailer tracks productivity and costs of its faciliti
 Before anything, run the code chunk below to load the data set, fit the multiple regression model, and create the augmented dataset. 
 
 ```{r}
-# grocery <- read.csv("https://aluby.github.io/stat230/data/grocery.csv")
-grocery <- read.csv(here::here("data/grocery.csv"))
+grocery <- read.csv("https://aluby.github.io/stat230/data/grocery.csv")
 grocery_lm <- lm(total_labor ~ cases + indirect_costs + holiday, data = grocery)
 grocery_aug <- augment(grocery_lm) |>
-  rownames_to_column(var = "index") 
+  mutate(index = row_number())
 ```
 
 a. Create plots of leverage, the standardized residuals, and Cook’s distance against the row index. (You will have to use the augmented dataset and `gf_point()`)
 b. Based on the index plot of the standardized residuals, are there any observations outlying in the Y direction? If so, identify them by their row number.
 c. Based on the index plot of the leverage, identify any outlying X observations (by row number).
 d. Suppose that management wishes to predict the total labor hours required to handle the next shipment containing 300,000 cases whose indirect costs of the total hours is 7.2 and it’s not a holiday week (`holiday = 0`). Construct a scatter plot of `cases` against `indirect_costs` and determine visually whether this prediction involves an extrapolation beyond the range of the data.
-e. Based on Cook’s distance, are any of the observations you identified in parts (b) and (c) influential? Explain.
+e. Based on Cook’s distance, are any of the observations you identified in parts (b) and (c) influential? Explain. -->
 
 # Problem 4: A new diagnostic
 
-Another way to consider the influence of a point is to calculate the average absolute percent difference in the fitted value when the point is removed from the data set. This may be more interpretable to the “general public” than Cook’s distance. The average absolute percent difference is calculated as
+<!-- Another way to consider the influence of a point is to calculate the average absolute percent difference in the fitted value when the point is removed from the data set. This may be more interpretable to the “general public” than Cook’s distance. The average absolute percent difference is calculated as
 
-$$\text{Mean absolute percent difference (MAPD)} = \frac{1}{n} \sum_{i=1}^{n} |\frac{\hat{y}_i - \hat{y}_{i(i)}}{\hat{y}_i}|$$
+$$\text{Mean absolute percent difference (MAPD)}_{(i)} = \frac{1}{n} \sum_{j=1}^{n} \left|\frac{\hat{y}_j - \hat{y}_{j(i)}}{\hat{y}_j}\right| \times 100\%$$
+
+where $\hat{y}_{j(i)}$ is the fitted value for observation $j$ from the model fit with observation $i$ removed. Note that, like Cook's distance, this looks at the change in **all** $n$ fitted values when observation $i$ is removed.
 
 ```{r}
 grocery_lm_del <- lm(total_labor ~ cases + indirect_costs + holiday, 
@@ -150,20 +153,20 @@ abs_pct_change <- sum(abs((yhat_full - yhat_del)/yhat_full)) / nrow(grocery) * 1
 4. Calculate the average absolute percent difference.
 
 
-The top four Cook’s distance values are associated with observations 16, 20, 32, 43, and 51 in Problem 7. Calculate the average absolute percent difference when each of these observations is removed from the data set. Fill in the following table with your results
+The top four Cook’s distance values from Problem 3 are associated with observations 16, 32, 43, and 51. Calculate the average absolute percent difference when each of these observations is removed from the data set. Fill in the following table with your results (the values will be small percentages)
 
 | Observation (row) | MAPD |
 |-------------------|------|
 | 16                |      |
-| 20                |      |
 | 32                |      |
 | 43                |      |
+| 51                |      |
 
-Summarize what the mean absolute percent difference indicates about the influence of each of the cases? Does is agree with your assessment based on Cook’s distance in Problem 7?
+Summarize what the mean absolute percent difference indicates about the influence of each of the cases? Does it agree with your assessment based on Cook’s distance in Problem 3? -->
 
 # Problem 5: Influence diagnostics
 
-The following statements regarding regression diagnostics contain conceptual or technical errors. Identify the error in each statement and provide a corrected statement.
+<!-- The following statements regarding regression diagnostics contain conceptual or technical errors. Identify the error in each statement and provide a corrected statement.
 
 (a) A data point is considered to have high leverage if its response value ($Y$) is an extreme outlier compared to the rest of the sample.
 
@@ -175,7 +178,7 @@ The following statements regarding regression diagnostics contain conceptual or 
 
 (e) An influential point will always decrease the $R^2$ of a model because it adds unexplained noise to the regression line.
 
-(f) Once a diagnostic (like DFFITS or Cook’s Distance) flags a point as influential, the correct procedure is to immediately remove the observation from the dataset and rerun the regression.
+(f) Once a diagnostic (like DFFITS or Cook’s Distance) flags a point as influential, the correct procedure is to immediately remove the observation from the dataset and rerun the regression. -->
 
 # Problem 6: Brand preference experiment
 
@@ -184,7 +187,7 @@ The following statements regarding regression diagnostics contain conceptual or 
 You do not need to load the data into R for this question
 :::
 
-Researchers designed a small-scale experiment to study how moisture content and sweetness are associated with consumer preference (a score between 0 and 100, where 100 is most preferred) for a new snack food.
+<!-- Researchers designed a small-scale experiment to study how moisture content and sweetness are associated with consumer preference (a score between 0 and 100, where 100 is most preferred) for a new snack food.
 
 a. Below a scatterplot matrix among all three variables. What does
 this reveal about the pairwise correlations between the variables?
@@ -209,11 +212,12 @@ b. The code below fits a multiple linear regression model with preference as the
 #| echo: true 
 brand_lm <- lm(preference ~ moisture + sweetness, data = brand_preference)
 car::vif(brand_lm)
-```
+``` 
+-->
 
 # Problem 7: `cosmetics`
 
-An analyst in the district sales office of a national cosmetics firm obtained data on advertising expenditures and sales last year in the district’s 44 territories. The included:
+<!-- An analyst in the district sales office of a national cosmetics firm obtained data on advertising expenditures and sales last year in the district’s 44 territories. The data included:
 
   - expenditures for point-of-sale displays in beauty salons and stores (in thousand dollars),
   - expenditures for local media advertising,
@@ -233,7 +237,9 @@ a. Fit the multiple regression model of sales on the three advertising expenditu
 
 b. Calculate the VIFs for each predictor. Do you observe any problems with multicollinearity?
 
-c. Suppose the analyst decides to drop the local and national media advertising variables from the model to “clear up the picture”. Fit the revised model. Is the analyst now in a better position to achieve the stated objective?
+c. Look at the $t$-tests for `pos_displays` and `local_media` in the model from part (a). Then use `anova()` to run an extra sums of squares $F$-test comparing the model from part (a) to a reduced model that includes only `national_media`. State the hypotheses, test statistic, p-value, and conclusion. Why do the individual $t$-tests and the $F$-test seem to disagree? Connect your explanation to your answer in part (b).
 
-d. This is a situation where it would be possible to design an experiment to meet the research objective. Why would this be more effective in providing suitable data to achieve the objective? (Hint: think about the experimental data from Problem 1 and if they suffered from the same problem you saw here.)
+d. Suppose the analyst decides to drop the local and national media advertising variables from the model to “clear up the picture”. Fit the revised model. Is the analyst now in a better position to achieve the stated objective?
 
+e. This is a situation where it would be possible to design an experiment to meet the research objective. Why would this be more effective in providing suitable data to achieve the objective? (Hint: think about the experimental data from Problem 6 and if they suffered from the same problem you saw here.)
+ -->
