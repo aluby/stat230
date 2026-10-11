@@ -1,0 +1,266 @@
+---
+title: "Day 13: Diagnostics for MLR"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(broom)
+library(patchwork)
+library(carData)
+library(ggResidpanel)
+library(here)
+theme_set(theme_minimal(base_size = 12))
+
+UBSprices <- read.csv("http://aloy.rbind.io/data/UBSprices.csv")
+bigmac.lm <- lm(bigmac2009 ~ bigmac2003, data = UBSprices)
+
+florida <- read.csv(here("data", "florida_2000.csv"))
+florida_lm <- lm(BUCHANAN ~ BUSH, data = florida)
+
+bikes_mlr <- lm(rides ~ temp_actual * weekend, data = bikes)
+```
+
+With your group: recap the LINE conditions from SLR and how we checked
+each one. Which of them carry over to MLR, and how would we check them
+there?
+
+```{=latex}
+\renewcommand{\arraystretch}{4}
+\begin{tabular}{|p{0.24\textwidth}|p{0.34\textwidth}|p{0.34\textwidth}|}
+\hline
+\textbf{LINE condition} & \textbf{How we checked it in SLR} & \textbf{How we check it in MLR} \\ \hline
+\textbf{L}inear & & \\ \hline
+\textbf{I}ndependent errors & & \\ \hline
+\textbf{N}ormally distributed errors & & \\ \hline
+\textbf{E}qual variance of errors & & \\ \hline
+\end{tabular}
+\renewcommand{\arraystretch}{1}
+```
+
+## Regression is not resistant to outliers
+
+Example from CS1. Solid line = fit with outliers included; dashed line = fit with outlier removed. One extreme county visibly "tilts" the line
+
+```{r}
+#| fig-height: 2
+#| fig-width: 3
+resid_df <- augment(florida_lm) |>
+  mutate(outlier = .std.resid > 3)
+
+gf_point(BUCHANAN ~ BUSH, data = filter(resid_df, outlier), shape = 17, color = "darkorange") |>
+  gf_point(BUCHANAN ~ BUSH, data = filter(resid_df, !outlier), shape = 16) |>
+  gf_lm(BUCHANAN ~ BUSH, data = resid_df, color = "darkorange") |>
+  gf_lm(BUCHANAN ~ BUSH, data = resid_df[!resid_df$outlier, ], linetype = 2)
+```
+
+**Why SLR isn't resistant:**
+
+$$\widehat\beta_1 = r \cdot \dfrac{s_y}{s_x} \quad \quad \quad \widehat\beta_0 = \bar y - \widehat\beta_1 \bar x$$
+
+
+**MLR is no better**: we're still minimizing a *sum* of squared residuals and sums aren't resistant to outliers either.
+
+$$SSE = \sum_{i=1}^n \left(y_i - (\widehat\beta_0 + \widehat\beta_1 x_{i1} + \cdots + \widehat\beta_p x_{ip})\right)^2$$
+
+## Types of outliers
+
+An observation can be unusual in $y$, in $x$, or both, and each type
+pulls the fitted line differently. Below, one added point (orange)
+plays each role against the same base cloud of points.
+
+```{r}
+#| fig-height: 2.5
+#| fig-width: 8
+set.seed(2013)
+N <- 25
+x <- rnorm(N)
+y <- x + rnorm(N, sd = 0.5)
+df <- tibble(x = x, y = y)
+xnew <- c(0, 10, 10, 10)
+ynew <- c(10, 0, predict(lm(y ~ x), newdata = list(x = 10)) + rnorm(1, sd = 0.5), 20)
+labs4 <- c("Outlier in Y", "Outlier in X", "Outlier in X and Y\n(consistent w/ trend)", "Outlier in X and Y\n(extends trend)")
+
+make_panel <- function(i) {
+  df_out <- rbind(df, tibble(x = xnew[i], y = ynew[i]))
+  gf_point(y ~ x, data = df, color = "black") |>
+    gf_point(y ~ x, data = tibble(x = xnew[i], y = ynew[i]), color = "darkorange", size = 2) |>
+    gf_lm(y ~ x, data = df, color = "black") |>
+    gf_lm(y ~ x, data = df_out, color = "darkorange") |>
+    gf_labs(title = labs4[i])
+}
+
+panels <- map(1:4, make_panel)
+wrap_plots(panels, nrow = 1)
+```
+
+Points that are able to substantially change the fitted model are
+called ________________. Not every outlier is influential -- an
+outlier that falls *along* the existing trend barely moves the line
+(panel 3 above), while one that breaks the trend can swing it a lot
+(panels 1, 2, 4).
+
+In higher dimensions, outliers can be tricky to spot -- detecting an
+outlier in the predictor space means considering the multivariate
+relationship *among all* predictors, not just one at a time.
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+ell1 <- gf_point(prestige ~ education, data = Duncan, ylab = "Y", xlab = "X1", title = "No outlier") +
+  stat_ellipse(color = "blue", linetype = 2)
+ell2 <- gf_point(prestige ~ income, data = Duncan, ylab = "Y", xlab = "X2", title = "Outlier in Y") +
+  stat_ellipse(color = "blue", linetype = 2)
+ell3 <- gf_point(income ~ education, data = Duncan, ylab = "X2", xlab = "X1", title = "Possible outlier in X") +
+  stat_ellipse(color = "blue", linetype = 2)
+ell1 | ell2 | ell3
+```
+
+How do we find outliers and decide if they're influential?
+
+-   Plot the data
+-   Plot the standardized residuals
+-   Fit the model with and without the point(s)
+-   Calculate *influence diagnostics* -- leverage, standardized
+    residuals, DFFITS, Cook's distance
+
+::: callout-tip
+## Leverage (aka "hat")
+
+Leverage measures a point's **potential to influence** the fitted
+line, based only on _____________
+
+For SLR: $h_i = \dfrac{1}{n} + \dfrac{(x_i - \bar x)^2}{\sum(x_i - \bar x)^2}$
+
+For MLR: more complicated -- it's a distance of a case from the
+average of all $p$ predictors.
+
+"Flares up" when a point's $x$ is far from the mean, indicating
+*potential* to be influential (whether it actually is depends on $y$
+too).
+
+**Cutoffs:** $2(p+1)/n$ or $3(p+1)/n$
+:::
+
+In higher dimensions, leverage is focusing on the distance from the average of all predictors.
+
+```{r}
+#| fig-height: 3.2
+#| fig-width: 9
+duncan_lm <- lm(prestige ~ income + education, data = Duncan)
+duncan_aug <- augment(duncan_lm) |>
+  mutate(lev.flag = .hat > (2 * 3) / length(.hat))
+
+le1 <- gf_point(prestige ~ education, data = duncan_aug, color = ~lev.flag) |>
+  gf_refine(scale_color_manual(values = c("black", "darkorange")), theme(legend.position = "none")) |>
+  gf_labs(x = "X1 (education)", y = "Y (prestige)")
+le2 <- gf_point(prestige ~ income, data = duncan_aug, color = ~lev.flag) |>
+  gf_refine(scale_color_manual(values = c("black", "darkorange")), theme(legend.position = "none")) |>
+  gf_labs(x = "X2 (income)", y = "Y (prestige)")
+le3 <- gf_point(income ~ education, data = duncan_aug, color = ~lev.flag) |>
+  gf_hline(yintercept = mean(Duncan$income), linetype = 2) |>
+  gf_vline(xintercept = mean(Duncan$education), linetype = 2) |>
+  gf_refine(scale_color_manual(values = c("black", "darkorange")), theme(legend.position = "none")) |>
+  gf_labs(x = "X1 (education)", y = "X2 (income)")
+
+le1 | le2 | le3
+```
+
+
+
+::: callout-tip
+## Standardized Residuals
+
+Standardized residuals divide each residual by its standard deviation, which builds in a "penalty" for high-leverage points (a high-leverage point pulls the
+line toward itself, shrinking its raw residual):
+
+$$r_i = \frac{e_i}{\widehat\sigma\sqrt{1 - h_i}}$$
+
+"Flares up" when $y_i$ is far from $\widehat y_i$.
+
+**Cutoffs:** $|r_i| > 2$ for small data sets or $|r_i| > 4$ for large data sets
+
+:::
+
+
+::: callout-tip
+## Cook's distance
+
+**Cook's distance** measures the effect of case $i$ on **all** of the
+fitted values at once:
+
+$$D_i = \sum_{j=1}^n \frac{(\widehat y_{j(i)} - \widehat y_j)^2}{(p+1)\widehat\sigma^2} = \frac{r_i^2}{p+1}\left(\frac{h_i}{1-h_i}\right)$$
+
+**Cutoff:** $D_i$ near or above ________ indicates large influence; also
+worth comparing the *relative* size of $D_i$ across cases with an
+index plot.
+
+:::
+
+## Doing this in R: `augment()`
+
+We never calculate these by hand -- `broom::augment()` computes them
+all for us:
+
+-   `.hat`: leverage
+-   `.std.resid`: standardized residuals
+-   `.cooksd`: Cook's distance
+
+```{r}
+#| eval: false
+#| echo: true
+
+augment(bikes_mlr)
+```
+
+```{r}
+augment(bikes_mlr) |> select(-weekend) |> head(6) |> knitr::kable(digits = 3)
+```
+
+## Shortcut for plots: `resid_panel()`
+
+`ggResidpanel::resid_panel()` gives us residual, leverage, and Cook's
+distance plots in one call:
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2.5
+#| echo: true
+
+
+resid_panel(bigmac.lm, plots = c("resid", "lev", "cookd"), type = "standardized", nrow = 1)
+```
+
+What do we do if a case is influential?
+
+```{mermaid}
+%%| fig-width: 5.5
+graph TD
+    %% Define the green color theme for all nodes
+    classDef default fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    A(["Do the conclusions change <br> when the case is deleted?"])
+
+    B["Proceed with the case in-<br>cluded. Study it to see if<br>anything can be learned."]
+
+    C(["Is there reason to believe<br>the case belongs to a popu-<br>lation other than the one<br>under investigation?"])
+
+    D["Omit the case and proceed."]
+
+    E(["Does the case have unusu-<br>ally 'distant' explanatory<br>variable values?"])
+
+    F["Omit the case and proceed.<br>Report conclusions for the<br>reduced range of explana-<br>tory variables."]
+
+    G["Not much can be said. More<br>data (or clarification of the<br>influential case) are need-<br>ed to resolve the questions."]
+
+    A -->|NO| B
+    A -->|YES| C
+    C -->|YES| D
+    C -->|NO| E
+    E -->|YES| F
+    E -->|NO| G
+```
+
+*Source: Display 11.8 in* Sleuth *(3rd edition)*

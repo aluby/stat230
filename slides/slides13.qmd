@@ -84,6 +84,24 @@ bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 
 :::
 
+## LINE conditions in MLR
+
+All four conditions carry over, and we check them the same way
+
+| Condition | How we check it |
+|:----------|:----------------|
+| **L**inear | Residuals vs. fitted values, *and* residuals vs. **each** predictor |
+| **I**ndependent | Data collection process (time/space); residuals vs. index |
+| **N**ormal | Q-Q plot / histogram of the residuals |
+| **E**qual variance | Residuals vs. fitted values (and vs. each predictor): even spread |
+
+. . .
+
+**What's new in MLR?**
+
+- One residual plot per predictor, not just one
+- With many predictors, an unusual case can hide: today we'll learn **leverage**, **standardized residuals**, and **Cook's distance** to find outliers and decide if they are influential
+
 ## Regression is *not* resistant to outliers
 
 Solid line = with outliers; dashed line = without outliers
@@ -135,6 +153,7 @@ Sum's aren't resistant to outliers!
 ::: {.column width="80%"}
 
 ```{r echo=FALSE, fig.width = 7, fig.height =5}
+set.seed(2013)
 N <- 25
 std.dev <- .5
 x <- rnorm(N)
@@ -153,12 +172,12 @@ p2 <- gf_point(y ~ x, data = df, title = "Outlier in X") %>%
 inf2 <- p2 %>%
   gf_lm(y ~ x, data = df, color = "black") %>%
   gf_lm(y ~ x, data = rbind(df, c(x = xnew[2], y = ynew[2])), color = "darkorange")
-p3 <- gf_point(y ~ x, data = df, title = "Outlier in Y + X") %>%
+p3 <- gf_point(y ~ x, data = df, title = "Outlier in Y + X\n(consistent w/ trend)") %>%
   gf_point(y ~ x, data = filter(df.out, type == 3), color = "darkorange")
 inf3 <- p3 %>%
   gf_lm(y ~ x, data = df, color = "black") %>%
   gf_lm(y ~ x, data = rbind(df, c(x = xnew[3], y = ynew[3])), color = "darkorange")
-p4 <- gf_point(y ~ x, data = df, title = "Outlier in Y + X") %>%
+p4 <- gf_point(y ~ x, data = df, title = "Outlier in Y + X\n(extends trend)") %>%
   gf_point(y ~ x, data = filter(df.out, type == 4), color = "darkorange")
 inf4 <- p4 %>%
   gf_lm(y ~ x, data = df, color = "black") %>%
@@ -176,7 +195,11 @@ How is each outlier *influencing* the regression line?
 
 ## Not all outliers are *influential*
 
-<font color="darkorange">Orange line</font> = SLR with outlier; Black line = SLR without outlier
+
+
+:::: {.columns}
+
+::: {.column width="80%"}
 
 ```{r}
 #| fig.width: 7
@@ -184,6 +207,13 @@ How is each outlier *influencing* the regression line?
 inf1 + inf2 + inf3 +inf4
 ```
 
+:::
+
+::: {.column width="15%" .small}
+<font color="darkorange">Orange line</font> = SLR with outlier; Black line = SLR without outlier
+:::
+
+::::
 
 ## Influential points
 
@@ -282,7 +312,7 @@ For MLR:
 :::
 ::: {.column width="85%"}
 more complicated because we're looking at a distance of a case
-from the average of p predictors
+from the average of p predictors (linear algebra alert!!)
 :::
 :::
 
@@ -394,34 +424,19 @@ p33 <- p3 |>
   gf_lm(y ~ x, data = rbind(df, c(x = xnew[3], y = ynew[3])), color = "darkorange")
 
 p44 <- p4 |>
-  gf_lm(y ~ x, data = rbind(df, c(x = xnew[1], y = ynew[4])), color = "darkorange")
+  gf_lm(y ~ x, data = rbind(df, c(x = xnew[4], y = ynew[4])), color = "darkorange")
 
 
 
 (p11 | p22 | p33 | p44 ) / stdres
 ```
 
-## Less common: DFFITS {.smaller}
-
-Measures effect the i<sup>th</sup> case has on its **own** fitted value
-
-
-$$DFFITS_i = \frac{\widehat{y}_i - \widehat{y}_{i(i)}}{\widehat{\sigma}_{(i)} \sqrt{h_i}}$$
-where the subscript $(i)$ indicates that the value is based on a model when observation i is omitted
-
-<br>
-
-**Cutoff**
-
-- 1 for small/medium data sets
-- $2\sqrt{\dfrac{p+1}{n}}$ for large data sets
-
 
 ## Cook's distance {.smaller}
 
 Measures effect the i<sup>th</sup> case has on **all** of the fitted values
 
-$$D_i= \sum_{j=1}^n\frac{ \left(\widehat{y}_{j(i)} - \widehat{y}_j \right)^2}{(p+1) \widehat{\sigma}} = \frac{r_i^2}{p+1} \left( \frac{h_i}{1-h_i} \right)$$
+$$D_i= \sum_{j=1}^n\frac{ \left(\widehat{y}_{j(i)} - \widehat{y}_j \right)^2}{(p+1) \widehat{\sigma}^2} = \frac{r_i^2}{p+1} \left( \frac{h_i}{1-h_i} \right)$$
 
 where $\widehat{y}_{j(i)}$ is the fitted value for observation j based on a model when observation i is omitted (eg black line on next slide)
 

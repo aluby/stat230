@@ -1,0 +1,187 @@
+---
+title: "13: Diagnostic plots for MLR"
+format: 
+  html: default
+  typst: default
+execute: 
+  echo: true
+  warning: false
+  message: false
+navbar: false
+knitr:
+  opts_chunk: 
+    dev: "ragg_png"
+---
+
+```{r}
+library(ggformula)
+library(broom)
+library(ggResidpanel)
+library(patchwork)
+library(dplyr)
+```
+
+# Data and model 
+
+A hospital surgical unit was interested in predicting the survival in patients undergoing a particular type of liver operation. A random selection of 54 patients was selected for analysis. For each patient, the following information was extracted from the pre-operation evaluation and used by the research team to predict survival time (in days):
+
+- `blood_clot_score`: a score based on blood clotting tests
+- `prognostic_index`: a prognostic index based on various health factors
+- `enzyme_test`: a score based on liver enzyme tests
+- `alcohol_use_heavy`: an indicator variable for heavy alcohol use (1 = heavy use, 0 = not heavy use)
+
+This model is fit using the below code:
+
+```{r}
+surgical_data <- read.csv(here::here("data/surgical_example_data.csv"))
+# surgical_data <- read.csv("https://aluby.github.io/stat230/data/surgical_example_data.csv")
+
+surgical_lm <- lm(survival_time ~ blood_clot_score + prognostic_index + enzyme_test + alcohol_use_heavy, data = surgical_data)
+```
+
+# MLR Conditions
+
+## Checking conditions
+
+```{r}
+#| fig-alt: "A panel of four standard regression diagnostic plots for the fitted model, using standardized residuals."
+resid_panel(surgical_lm, type = "standardized")
+```
+
+**Q1:** Use the augmented dataset below to make scatterplots of the standardized residuals against (1) `blood_clot_score`, (2) `prognostic_index`, (3) `enzyme_test`, (4) `alcohol_use_heavy`
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+#| fig-alt: "Plots of the standardized residuals against each predictor variable."
+surgical_aug <- augment(surgical_lm)
+
+p1 <- gf_point(.std.resid ~ blood_clot_score, data = surgical_aug) |>
+  gf_hline(yintercept = 0, linetype = 2)
+p2 <- gf_point(.std.resid ~ prognostic_index, data = surgical_aug) |>
+  gf_hline(yintercept = 0, linetype = 2)
+p3 <- gf_point(.std.resid ~ enzyme_test, data = surgical_aug) |>
+  gf_hline(yintercept = 0, linetype = 2)
+p4 <- gf_boxplot(.std.resid ~ factor(alcohol_use_heavy), data = surgical_aug) |>
+  gf_labs(x = "alcohol_use_heavy")
+
+(p1 | p2) / (p3 | p4)
+```
+
+> There are no clear curved patterns against any of the predictors, so linearity looks reasonable. Each plot has one very large positive residual (about 4.3 standard deviations), the same observation each time.
+
+**Q2:** Based on the residual plots, do you think the current multiple linear regression model is appropriate for this data? Why or why not?
+
+> Not entirely.
+>
+> - **Linearity:** the plots against the predictors show no clear curve, so this condition looks fine.
+> - **Equal variance:** in the residuals vs. fitted plot the spread increases for larger fitted values (a mild "fan" shape), so the equal variance condition is questionable.
+> - **Normality:** the Q-Q plot and histogram show a long right tail, driven by one point with a standardized residual above 4.
+> - **Independence:** the index plot shows no trend over time/order (the one outlier aside).
+>
+> Together, a right-skewed response (survival time) with increasing spread suggests a transformation may help.
+
+**Q3:** Regardless of your answer, apply a log transformation to the response variable and refit the model using the code below. Then, create the same residual plots for the new model. Do you think the log transformation improved the model fit? Why or why not?
+
+```{r}
+#| fig-alt: "Panel of residual plots for the log-transformed model."
+log_surgical_lm <- lm(log(survival_time) ~ blood_clot_score + prognostic_index + enzyme_test + alcohol_use_heavy, data = surgical_data)
+
+resid_panel(log_surgical_lm, type = "standardized")
+```
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+#| fig-alt: "Plots of the standardized residuals of the log-transformed model against each predictor variable."
+log_aug <- augment(log_surgical_lm)
+
+q1 <- gf_point(.std.resid ~ blood_clot_score, data = log_aug) |>
+  gf_hline(yintercept = 0, linetype = 2)
+q2 <- gf_point(.std.resid ~ prognostic_index, data = log_aug) |>
+  gf_hline(yintercept = 0, linetype = 2)
+q3 <- gf_point(.std.resid ~ enzyme_test, data = log_aug) |>
+  gf_hline(yintercept = 0, linetype = 2)
+q4 <- gf_boxplot(.std.resid ~ factor(alcohol_use_heavy), data = log_aug) |>
+  gf_labs(x = "alcohol_use_heavy")
+
+(q1 | q2) / (q3 | q4)
+```
+
+> Yes, the transformation helped. The spread of the residuals vs. fitted values is now roughly constant, the Q-Q plot is much closer to a straight line, and the histogram is closer to bell-shaped (the Shapiro-Wilk p-value goes from `r signif(shapiro.test(resid(surgical_lm))$p.value, 2)` to `r round(shapiro.test(resid(log_surgical_lm))$p.value, 2)`). The model also explains more variability ($R^2$ = `r round(summary(log_surgical_lm)$r.squared, 3)` vs. `r round(summary(surgical_lm)$r.squared, 3)`). There is still one fairly large standardized residual (about 3), which we investigate next.
+
+# MLR Influence analysis
+
+Let's continue working with the log-transformed model. 
+
+**Q4:** Use `resid_panel` to make plots of (a) the standardized residual vs fitted values, (b) the residual vs leverage plot, (c) cook's distance plot. Does anything stand out? 
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+#| fig-alt: "Standardized residuals vs. fitted values, residuals vs. leverage, and Cook's distance plots for the log-transformed model."
+resid_panel(log_surgical_lm, plots = c("resid", "lev", "cookd"), 
+            type = "standardized", nrow = 1)
+```
+
+> One point has a large standardized residual (above 3) and the largest Cook's distance. Two other points have noticeably higher leverage than the rest (they are far from the others in predictor space but fall near the line).
+
+**Q5:** The `resid_interact` function makes an interactive version of the plots which allow you to hover on the points to identify which point (index) they correspond to. What are the observation number (index) of any points you noticed above?
+
+```{r}
+#| eval: !expr knitr::is_html_output()
+#| fig-width: 8
+#| fig-height: 3
+resid_interact(log_surgical_lm, plots = c("cookd", "lev"))
+```
+
+The same information in a table (using the number of predictors $p = 4$ and $n = 54$):
+
+```{r}
+n <- nrow(log_aug)
+p <- 4
+
+log_aug |>
+  mutate(observation = row_number()) |>
+  filter(.hat > 2 * (p + 1) / n | abs(.std.resid) > 2 | .cooksd > 4 / n) |>
+  select(observation, .hat, .std.resid, .cooksd) |>
+  arrange(desc(.cooksd)) |>
+  knitr::kable(digits = 3)
+```
+
+> Observation 17 stands out the most: it has the largest standardized residual (about 3.05) and the largest Cook's distance (about 0.33). Observations 38 and 28 have the highest leverage (0.31 and 0.29), and observation 45 has a standardized residual of about $-2.2$.
+
+**Q6:** Do you think any of these observations are truly influential? Why or why not? It may be useful to look back through your notes to review the definitions of these influence measures and the suggested cutoffs. (For this model, $n = 54$ and $p = 4$.)
+
+> - **Leverage:** the cutoffs are $2(p+1)/n =$ `r round(2 * 5 / 54, 3)` and $3(p+1)/n =$ `r round(3 * 5 / 54, 3)`. Observations 38 and 28 exceed the larger cutoff (and a few more exceed the smaller one), so they have *potential* to be influential, but their standardized residuals are small.
+> - **Standardized residuals:** only observation 17 is above 3, and observation 45 is just beyond 2.
+> - **Cook's distance:** no observation exceeds 1; the largest is observation 17 with `r round(max(log_aug$.cooksd), 2)`. It stands out relative to the others (the next largest is `r round(sort(log_aug$.cooksd, decreasing = TRUE)[2], 2)`), but it is not large in absolute terms.
+>
+> So there is no strong evidence that any single observation is truly influential. Observation 17 is the one worth a closer look.
+
+**Q7:** Refit the log-transformed model without the most influential observation you identified in Q6, and compare the coefficient estimates to the original fit. Following the flowchart from today's notes, what would you do with this case?
+
+```{r}
+log_surgical_lm_17 <- lm(log(survival_time) ~ blood_clot_score + prognostic_index + enzyme_test + alcohol_use_heavy, 
+                         data = surgical_data[-17, ])
+
+tibble(
+  term = names(coef(log_surgical_lm)),
+  `with obs 17` = coef(log_surgical_lm),
+  `without obs 17` = coef(log_surgical_lm_17),
+  `% change` = 100 * (`without obs 17` - `with obs 17`) / `with obs 17`
+) |>
+  knitr::kable(digits = 3)
+```
+
+> The coefficients change by only a few percent (the largest change is about 9% for `enzyme_test`), the signs are the same, and the conclusions are unchanged. Following the flowchart: *do the conclusions change when the case is deleted?* No, so we proceed with the case included, and study it further (e.g., is there anything unusual about this patient?) to see if anything can be learned.
+
+***
+
+## Function quick reference
+
+| Function | Purpose |
+|----|-----------|
+| `augment()` | Add fitted values, residuals, leverage (`.hat`), standardized residuals (`.std.resid`), and Cook's distance (`.cooksd`) to the data |
+| `resid_panel()` | Make a panel of residual plots (use `type = "standardized"`) |
+| `resid_interact()` | Make interactive residual plots to identify individual observations |

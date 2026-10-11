@@ -10,12 +10,12 @@ library(ggResidpanel)
 
 # Data and model 
 
-A hospital surgical unit was interested in predicting the survival in patients undergoing a particular type of liver operation. A random selection of 108 patients was selected for analysis. For each patient, the following information was extracted from the pre-operation evaluation and used by the research team to predict survival time (in days):
+A hospital surgical unit was interested in predicting the survival in patients undergoing a particular type of liver operation. A random selection of 54 patients was selected for analysis. For each patient, the following information was extracted from the pre-operation evaluation and used by the research team to predict survival time (in days):
 
 - `blood_clot_score`: a score based on blood clotting tests
 - `prognostic_index`: a prognostic index based on various health factors
 - `enzyme_test`: a score based on liver enzyme tests
-- `alchohol_use_heavy`: an indicator variable for heavy alcohol use (1 = heavy use, 0 = not heavy use)
+- `alcohol_use_heavy`: an indicator variable for heavy alcohol use (1 = heavy use, 0 = not heavy use)
 
 The research team determined that the following multiple regression model is a reasonable starting point:
 
@@ -29,10 +29,10 @@ $$
 This model is fit using the below code:
 
 ```{r}
-# surgical_data <- read.csv("https://aluby.github.io/stat230/data/surgical_example_data.csv")
+#surgical_data <- read.csv("https://aluby.github.io/stat230/data/surgical_example_data.csv")
 surgical_data <- read.csv(here::here("data/surgical_example_data.csv"))
 
-surgical_lm <- lm(survival_time ~ blood_clot_score + prognostic_index + enzyme_test + alchohol_use_heavy, data = surgical_data)
+surgical_lm <- lm(survival_time ~ blood_clot_score + prognostic_index + enzyme_test + alcohol_use_heavy, data = surgical_data)
 ```
 
 # MLR Conditions
@@ -65,7 +65,7 @@ surgical_lm <- lm(survival_time ~ blood_clot_score + prognostic_index + enzyme_t
   
 ## Checking conditions
 
-When we have multiple predictors, we can still use residual plots to assess the conditions of the linear regression model. You can still use the `resid_panel(model, type = "standardized")` function in the `ggResidpanel` package to create a panel of residual plots that includes a plot of the residuals vs. fitted values, a histogram of the residuals, and a Q-Q plot of the residuals. 
+When we have multiple predictors, we can still use residual plots to assess the conditions of the linear regression model. You can still use the `resid_panel(model, type = "standardized")` function in the `ggResidpanel` package to create a panel of residual plots that includes a plot of the residuals vs. fitted values, a Q-Q plot of the residuals, a histogram of the residuals, and an index plot of the residuals. 
 
 ```{r}
 #| warning: false
@@ -76,9 +76,12 @@ resid_panel(surgical_lm, type = "standardized")
 
 We should also check the relationship of the standardized residuals against each of the predictor variables. To do, I recommend using the `augment()` function from the {broom} package to create the augmented dataset, and then making the scatterplots with the graphing code of your choice.
 
-**Q1:** Use the augmented dataset below to make scatterplots of the standardized residuals against (1) `blood_clot_score`, (2) `prognostic_index`, (3) `enzyme_test`, (4) `alchohol_use_heavy`
+**Q1:** Use the augmented dataset below to make scatterplots of the standardized residuals against (1) `blood_clot_score`, (2) `prognostic_index`, (3) `enzyme_test`, (4) `alcohol_use_heavy`
+
+*Hint:* for the 0/1 indicator, a boxplot is easier to read than a scatterplot.
 
 ```{r}
+#| fig-alt: "Plots of the standardized residuals against each predictor variable."
 surgical_aug <- augment(surgical_lm)
 
 # your code here
@@ -89,7 +92,8 @@ surgical_aug <- augment(surgical_lm)
 **Q3:** Regardless of your answer, apply a log transformation to the response variable and refit the model using the code below. Then, create the same residual plots for the new model. Do you think the log transformation improved the model fit? Why or why not?
 
 ```{r}
-log_surgical_lm <- lm(log(survival_time) ~ blood_clot_score + prognostic_index + enzyme_test + alchohol_use_heavy, data = surgical_data)
+#| fig-alt: "Panel of residual plots for the log-transformed model."
+log_surgical_lm <- lm(log(survival_time) ~ blood_clot_score + prognostic_index + enzyme_test + alcohol_use_heavy, data = surgical_data)
 
 # Put your residual plot code here
 ```
@@ -101,7 +105,8 @@ Let's continue working with the log-transformed model.
 **Q4:** Use `resid_panel` to make plots of (a) the standardized residual vs fitted values, (b) the residual vs leverage plot, (c) cook's distance plot. Does anything stand out? 
 
 ```{r}
-
+#| fig-alt: "Standardized residuals vs. fitted values, residuals vs. leverage, and Cook's distance plots for the log-transformed model."
+# resid_panel(model, plots = c("resid", "lev", "cookd"), type = "standardized")
 ```
 
 **Q5:** The `resid_interact` function makes an interactive version of the plots which allow you to hover on the points to identify which point (index) they correspond to. What are the observation number (index) of any points you noticed above?
@@ -116,4 +121,24 @@ resid_interact(log_surgical_lm, plots = c("cookd", "lev"))
 
 
 
-**Q6:** Do you think any of these observations are truly influential? Why or why not? It may be useful to look back through your notes to review the definitions of these influence measures and the suggested cutoffs.
+**Q6:** Do you think any of these observations are truly influential? Why or why not? It may be useful to look back through your notes to review the definitions of these influence measures and the suggested cutoffs. (For this model, $n = 54$ and $p = 4$.)
+
+**Q7:** Refit the log-transformed model without the most influential observation you identified in Q6, and compare the coefficient estimates to the original fit. Following the flowchart from today's notes, what would you do with this case?
+
+```{r}
+#| eval: false
+
+# Refit the log-transformed model, leaving out one row of the data
+log_surgical_lm2 <- lm(log(survival_time) ~ blood_clot_score + prognostic_index + enzyme_test + alcohol_use_heavy,
+                       data = surgical_data[-___, ])
+```
+
+***
+
+## Function quick reference
+
+| Function | Purpose |
+|----|-----------|
+| `augment()` | Add fitted values, residuals, leverage (`.hat`), standardized residuals (`.std.resid`), and Cook's distance (`.cooksd`) to the data |
+| `resid_panel()` | Make a panel of residual plots (use `type = "standardized"`) |
+| `resid_interact()` | Make interactive residual plots to identify individual observations |
