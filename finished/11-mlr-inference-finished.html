@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -193,7 +193,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The <code>cars</code> data set loaded below contains information on used cars for sale, including their <code>Price</code>, <code>Mileage</code>, and <code>Make</code> (a categorical variable with six levels).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aloy.github.io/stat230-materials/data/Cars.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/Cars.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="thinking-about-the-data" class="level2">
@@ -252,13 +252,8 @@ F-statistic: 254.7 on 6 and 797 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p><strong>Q3.</strong> Report the fitted regression equation and the <span class="math inline">\(R^2\)</span> value.</p>
 <blockquote class="blockquote">
-<p><span class="math display">\[
-\begin{aligned}
-\operatorname{\widehat{log(Price)}} &amp;= 10.09 + 0(\operatorname{Mileage}) + 0.65(\operatorname{Make}_{\operatorname{Cadillac}})\ - \\
-&amp;\quad 0.3(\operatorname{Make}_{\operatorname{Chevrolet}}) - 0.14(\operatorname{Make}_{\operatorname{Pontiac}}) + 0.36(\operatorname{Make}_{\operatorname{SAAB}})\ - \\
-&amp;\quad 0.4(\operatorname{Make}_{\operatorname{Saturn}})
-\end{aligned}
-\]</span></p>
+<p><span class="math inline">\(\widehat{\log(\text{Price})} = 10.09 - 7.66 \times 10^{-6} \cdot \text{Mileage} + 0.649 \cdot \text{Cadillac} -0.296 \cdot \text{Chevrolet} -0.144 \cdot \text{Pontiac} + 0.355 \cdot \text{SAAB} -0.397 \cdot \text{Saturn}\)</span></p>
+<p><span class="math inline">\(R^2 =\)</span> 0.6572: about 65.7% of the variability in log(Price) is explained by mileage and make.</p>
 </blockquote>
 <p><strong>Q4.</strong> Which level of <code>Make</code> is the baseline? The baseline level is represented by 0’s across all of the indicator variables and won’t have a coefficient in the output.</p>
 <blockquote class="blockquote">
@@ -283,7 +278,7 @@ F-statistic: 254.7 on 6 and 797 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="11-mlr-inference-finished_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="576"></p>
+<p><img src="11-mlr-inference-finished_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
@@ -299,7 +294,7 @@ F-statistic: 254.7 on 6 and 797 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="11-mlr-inference-finished_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="576"></p>
+<p><img src="11-mlr-inference-finished_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
@@ -344,8 +339,17 @@ Multiple R-squared:  0.6582,    Adjusted R-squared:  0.6535
 F-statistic: 138.7 on 11 and 792 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p><strong>Q8`.</strong> Report the fitted regression equation for Buicks and Cadillacs.</p>
+<p><strong>Q8.</strong> Report the fitted regression equation for Buicks and Cadillacs.</p>
+<blockquote class="blockquote">
+<p>Buick is the baseline, so all of the indicator variables are 0:</p>
+<p><span class="math inline">\(\widehat{\log(\text{Price})} = 10.079 - 7.1 \times 10^{-6} \cdot \text{Mileage}\)</span></p>
+<p>For Cadillacs, we add the Cadillac intercept adjustment and the Cadillac slope adjustment:</p>
+<p><span class="math inline">\(\widehat{\log(\text{Price})} = (10.079 + 0.647) + (-7.1 \times 10^{-6} + 1.58 \times 10^{-7}) \cdot \text{Mileage} = 10.725 - 6.94 \times 10^{-6} \cdot \text{Mileage}\)</span></p>
+</blockquote>
 <p><strong>Q9.</strong> What is the <span class="math inline">\(R^2\)</span> value for this model? Does this model appear to fit the data better than the previous model?</p>
+<blockquote class="blockquote">
+<p><span class="math inline">\(R^2 =\)</span> 0.6582 (compared with 0.6572 for the parallel lines model). <span class="math inline">\(R^2\)</span> never decreases when we add terms, and it barely changed. The adjusted <span class="math inline">\(R^2\)</span> actually went <em>down</em> (0.6535 vs.&nbsp;0.6546), so the interaction model does not appear to fit better.</p>
+</blockquote>
 </section>
 <section id="plotting-the-fitted-model-with-interactions" class="level2">
 <h2 class="anchored" data-anchor-id="plotting-the-fitted-model-with-interactions">Plotting the fitted model with interactions</h2>
@@ -358,7 +362,7 @@ F-statistic: 138.7 on 11 and 792 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="11-mlr-inference-finished_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="11-mlr-inference-finished_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -370,17 +374,20 @@ F-statistic: 138.7 on 11 and 792 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>We have already seen how to use the <code>anova()</code> function to compare two nested models. Here, we will use it again to compare our two car models.</p>
 <p><strong>Q10.</strong> Fill in the blanks to run the extra sums of squares F-test. What do you conclude about the interaction terms?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(car_lm2, car_lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(car_lm, car_lm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
-Model 1: log(Price) ~ Mileage * Make
-Model 2: log(Price) ~ Mileage + Make
+Model 1: log(Price) ~ Mileage + Make
+Model 2: log(Price) ~ Mileage * Make
   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
-1    792 46.160                           
-2    797 46.297 -5  -0.13714 0.4706 0.7983</code></pre>
+1    797 46.297                           
+2    792 46.160  5   0.13714 0.4706 0.7983</code></pre>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>The reduced model (no interaction) goes first. The F-statistic is 0.47 on 5 and 792 degrees of freedom, with a p-value of 0.798. There is no evidence that the interaction terms are needed: the relationship between <code>Mileage</code> and (log) <code>Price</code> does not appear to differ by <code>Make</code>, so the simpler parallel lines model is sufficient.</p>
+</blockquote>
 <section id="using-only-the-full-model" class="level3">
 <h3 class="anchored" data-anchor-id="using-only-the-full-model">Using only the full model</h3>
 <p>We can also calculate the extra sums of squares F-test using only the full model. To do this, we need to extract the SSE and degrees of freedom for both models from the ANOVA table for the full model.</p>
@@ -400,6 +407,9 @@ Residuals    792 46.160  0.0583
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>The last row (<code>Mileage:Make</code>) matches the extra sums of squares F-test above: the same F-statistic (0.4706), p-value, and degrees of freedom (5). The <code>Residuals</code> row gives the SSE and df of the full model, and the sum of squares for the <code>Mileage:Make</code> row is the difference between the two models’ SSEs (46.297 <span class="math inline">\(-\)</span> 46.16 = 0.137).</p>
+</blockquote>
 <hr>
 </section>
 </section>
@@ -922,7 +932,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>In this activity you will learn how to include build multiple regression models in R, including models with categorical predictors. The <span class="in">`cars`</span> data set loaded below contains information on used cars for sale, including their <span class="in">`Price`</span>, <span class="in">`Mileage`</span>, and <span class="in">`Make`</span> (a categorical variable with six levels).</span>
 <span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aloy.github.io/stat230-materials/data/Cars.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/Cars.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Thinking about the data</span></span>
@@ -957,112 +967,143 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>**Q3.** Report the fitted regression equation and the $R^2$ value. </span>
 <span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`r equatiomatic::extract_eq(car_lm, use_coefs = TRUE, wrap = TRUE, terms_per_line = 3)`</span></span>
-<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>**Q4.** Which level of <span class="in">`Make`</span> is the baseline? The baseline level is represented by 0's across all of the indicator variables and won't have a coefficient in the output.</span>
-<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Buick (the category without an indicator variable)</span></span>
-<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>**Q5.** What strategy did R use to create the indicator variables for <span class="in">`Make`</span>? In other words, how did R decide which level of <span class="in">`Make`</span> to use as the baseline?</span>
-<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Alphabetical order!</span></span>
-<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a>**Q6.** Which of the following models best describes the one just fit: parallel lines, different slopes, or separate lines?</span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="co"># The Mileage coefficients are tiny, so write them in scientific notation</span></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>tex_sci <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">d =</span> <span class="dv">2</span>) {</span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>  e <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">log10</span>(<span class="fu">abs</span>(x)))</span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="fu">round</span>(x <span class="sc">/</span> <span class="dv">10</span><span class="sc">^</span>e, d), <span class="st">" </span><span class="sc">\\</span><span class="st">times 10^{"</span>, e, <span class="st">"}"</span>)</span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">coef</span>(car_lm)</span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Parallel lines</span></span>
-<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="fu">## Plotting the fitted model</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; $\widehat{\log(\text{Price})} = </span><span class="in">`r round(b[1], 3)`</span><span class="at"> - </span><span class="in">`r tex_sci(abs(b[2]))`</span><span class="at"> \cdot \text{Mileage} + </span><span class="in">`r round(b[3], 3)`</span><span class="at"> \cdot \text{Cadillac} </span><span class="in">`r round(b[4], 3)`</span><span class="at"> \cdot \text{Chevrolet} </span><span class="in">`r round(b[5], 3)`</span><span class="at"> \cdot \text{Pontiac} + </span><span class="in">`r round(b[6], 3)`</span><span class="at"> \cdot \text{SAAB} </span><span class="in">`r round(b[7], 3)`</span><span class="at"> \cdot \text{Saturn}$</span></span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; $R^2 =$ </span><span class="in">`r round(summary(car_lm)$r.squared, 4)`</span><span class="at">: about </span><span class="in">`r round(100 * summary(car_lm)$r.squared, 1)`</span><span class="at">% of the variability in log(Price) is explained by mileage and make.</span></span>
 <span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>To plot a fitted regression model, we can use the <span class="in">`ggpredict()`</span> and <span class="in">`plot()`</span> functions in the {ggeffects} package. The <span class="in">`ggpredict()`</span> function creates a data frame of predicted values from the model for each <span class="in">`Make`</span> across a range of <span class="in">`Mileage`</span> values. The <span class="in">`plot()`</span> function then creates a plot of these predicted values.</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>**Q4.** Which level of <span class="in">`Make`</span> is the baseline? The baseline level is represented by 0's across all of the indicator variables and won't have a coefficient in the output.</span>
 <span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Buick (the category without an indicator variable)</span></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>**Q5.** What strategy did R use to create the indicator variables for <span class="in">`Make`</span>? In other words, how did R decide which level of <span class="in">`Make`</span> to use as the baseline?</span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Alphabetical order!</span></span>
 <span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
-<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>cars_pred <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(car_lm, <span class="at">terms =</span> <span class="sc">~</span>Mileage <span class="sc">+</span> Make)</span>
-<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars_pred)</span>
-<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>**Q6.** Which of the following models best describes the one just fit: parallel lines, different slopes, or separate lines?</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Parallel lines</span></span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## Plotting the fitted model</span></span>
 <span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>**Q7.** Does this plot confirm your answer to the previous question?</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>To plot a fitted regression model, we can use the <span class="in">`ggpredict()`</span> and <span class="in">`plot()`</span> functions in the {ggeffects} package. The <span class="in">`ggpredict()`</span> function creates a data frame of predicted values from the model for each <span class="in">`Make`</span> across a range of <span class="in">`Mileage`</span> values. The <span class="in">`plot()`</span> function then creates a plot of these predicted values.</span>
 <span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; It's kind of hard to tell, since the lines are on the original scale. Telling ggpredict to not back-transform makes it clear that yes, this is a parallel lines model.</span></span>
-<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>cars_pred <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(car_lm, <span class="at">terms =</span> <span class="sc">~</span>Mileage <span class="sc">+</span> Make, </span>
-<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>                       <span class="at">back_transform =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars_pred)</span>
-<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>cars_pred <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(car_lm, <span class="at">terms =</span> <span class="sc">~</span>Mileage <span class="sc">+</span> Make)</span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars_pred)</span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a>**Q7.** Does this plot confirm your answer to the previous question?</span>
 <span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting a model with interactions</span></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; It's kind of hard to tell, since the lines are on the original scale. Telling ggpredict to not back-transform makes it clear that yes, this is a parallel lines model.</span></span>
 <span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a>If we believe that the association between <span class="in">`Price`</span> and <span class="in">`Mileage`</span> differs by <span class="in">`Make`</span>, then we can include an interaction term in our model. To do this, we use <span class="in">`*`</span> instead of <span class="in">`+`</span> to separate the predictor variables on the right side of the <span class="in">`~`</span> in the model formula. This will include both main effects and the interaction term.</span>
-<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a>car_lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Price) <span class="sc">~</span> Mileage <span class="sc">*</span> Make, <span class="at">data =</span> cars)</span>
-<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(car_lm2)</span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a>cars_pred <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(car_lm, <span class="at">terms =</span> <span class="sc">~</span>Mileage <span class="sc">+</span> Make, </span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a>                       <span class="at">back_transform =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars_pred)</span>
 <span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a>**Q8`.** Report the fitted regression equation for Buicks and Cadillacs.</span>
-<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a>**Q9.** What is the $R^2$ value for this model? Does this model appear to fit the data better than the previous model?</span>
-<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting a model with interactions</span></span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a>If we believe that the association between <span class="in">`Price`</span> and <span class="in">`Mileage`</span> differs by <span class="in">`Make`</span>, then we can include an interaction term in our model. To do this, we use <span class="in">`*`</span> instead of <span class="in">`+`</span> to separate the predictor variables on the right side of the <span class="in">`~`</span> in the model formula. This will include both main effects and the interaction term.</span>
 <span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a><span class="fu">## Plotting the fitted model with interactions</span></span>
-<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a>To plot the interaction model, we again use the <span class="in">`ggpredict()`</span> and <span class="in">`plot()`</span> functions in the {ggeffects} package.</span>
-<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a>cars_pred2 <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(car_lm2, <span class="at">terms =</span> <span class="sc">~</span>Mileage <span class="sc">+</span> Make)</span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a>car_lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Price) <span class="sc">~</span> Mileage <span class="sc">*</span> Make, <span class="at">data =</span> cars)</span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(car_lm2)</span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a><span class="co"># Now plot the predictions</span></span>
-<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars_pred2)</span>
-<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculating extra sums of squares F-tests</span></span>
-<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a>Do we really need the interaction terms? To answer this question, we can use an extra sums of squares F-test to compare the model with interaction terms to the model without interaction terms.</span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a>**Q8.** Report the fitted regression equation for Buicks and Cadillacs.</span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(car_lm2)</span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a>We have already seen how to use the <span class="in">`anova()`</span> function to compare two nested models. Here, we will use it again to compare our two car models.</span>
-<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a>**Q10.** Fill in the blanks to run the extra sums of squares F-test. What do you conclude about the interaction terms?</span>
-<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(car_lm2, car_lm)</span>
-<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Buick is the baseline, so all of the indicator variables are 0:</span></span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; $\widehat{\log(\text{Price})} = </span><span class="in">`r round(b2[1], 3)`</span><span class="at"> - </span><span class="in">`r tex_sci(abs(b2[2]))`</span><span class="at"> \cdot \text{Mileage}$</span></span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; For Cadillacs, we add the Cadillac intercept adjustment and the Cadillac slope adjustment:</span></span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; $\widehat{\log(\text{Price})} = (</span><span class="in">`r round(b2[1], 3)`</span><span class="at"> + </span><span class="in">`r round(b2[3], 3)`</span><span class="at">) + (</span><span class="in">`r tex_sci(b2[2])`</span><span class="at"> + </span><span class="in">`r tex_sci(b2["Mileage:MakeCadillac"])`</span><span class="at">) \cdot \text{Mileage} = </span><span class="in">`r round(b2[1] + b2[3], 3)`</span><span class="at"> - </span><span class="in">`r tex_sci(abs(b2[2] + b2["Mileage:MakeCadillac"]))`</span><span class="at"> \cdot \text{Mileage}$</span></span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a>**Q9.** What is the $R^2$ value for this model? Does this model appear to fit the data better than the previous model?</span>
 <span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a><span class="fu">### Using only the full model</span></span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; $R^2 =$ </span><span class="in">`r round(summary(car_lm2)$r.squared, 4)`</span><span class="at"> (compared with </span><span class="in">`r round(summary(car_lm)$r.squared, 4)`</span><span class="at"> for the parallel lines model). $R^2$ never decreases when we add terms, and it barely changed. The adjusted $R^2$ actually went *down* (</span><span class="in">`r round(summary(car_lm2)$adj.r.squared, 4)`</span><span class="at"> vs. </span><span class="in">`r round(summary(car_lm)$adj.r.squared, 4)`</span><span class="at">), so the interaction model does not appear to fit better.</span></span>
 <span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a>We can also calculate the extra sums of squares F-test using only the full model. To do this, we need to extract the SSE and degrees of freedom for both models from the ANOVA table for the full model. </span>
-<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a>**Q11.** Run the below code and verify that the df, sums of squares, mean squares, F value, and p-value match what you got from the previous <span class="in">`anova()`</span> command.</span>
-<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(car_lm2)</span>
-<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a><span class="fu">## Plotting the fitted model with interactions</span></span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a>To plot the interaction model, we again use the <span class="in">`ggpredict()`</span> and <span class="in">`plot()`</span> functions in the {ggeffects} package.</span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a>cars_pred2 <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(car_lm2, <span class="at">terms =</span> <span class="sc">~</span>Mileage <span class="sc">+</span> Make)</span>
 <span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>***</span>
-<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a><span class="co"># Now plot the predictions</span></span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars_pred2)</span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a>The following table summarizes the functions we learned today:</span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculating extra sums of squares F-tests</span></span>
 <span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
-<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
-<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lm()`</span> <span class="pp">|</span> Fit a linear model <span class="pp">|</span></span>
-<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`summary()`</span> <span class="pp">|</span> Display detailed results from a fitted model <span class="pp">|</span></span>
-<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ggpredict()`</span> <span class="pp">|</span> Create a data frame of predicted values from a fitted model <span class="pp">|</span></span>
-<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plot()`</span> <span class="pp">|</span> Create a plot of predicted values from a fitted model <span class="pp">|</span></span>
-<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`anova()`</span> <span class="pp">|</span> Create an ANOVA table for a fitted model or compare two nested models <span class="pp">|</span></span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a>Do we really need the interaction terms? To answer this question, we can use an extra sums of squares F-test to compare the model with interaction terms to the model without interaction terms.</span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a>We have already seen how to use the <span class="in">`anova()`</span> function to compare two nested models. Here, we will use it again to compare our two car models.</span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a>**Q10.** Fill in the blanks to run the extra sums of squares F-test. What do you conclude about the interaction terms?</span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(car_lm, car_lm2)</span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The reduced model (no interaction) goes first. The F-statistic is </span><span class="in">`r round(anova(car_lm, car_lm2)$F[2], 2)`</span><span class="at"> on </span><span class="in">`r anova(car_lm, car_lm2)$Df[2]`</span><span class="at"> and </span><span class="in">`r anova(car_lm, car_lm2)$Res.Df[2]`</span><span class="at"> degrees of freedom, with a p-value of </span><span class="in">`r round(anova(car_lm, car_lm2)$"Pr(&gt;F)"[2], 3)`</span><span class="at">. There is no evidence that the interaction terms are needed: the relationship between </span><span class="in">`Mileage`</span><span class="at"> and (log) </span><span class="in">`Price`</span><span class="at"> does not appear to differ by </span><span class="in">`Make`</span><span class="at">, so the simpler parallel lines model is sufficient.</span></span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### Using only the full model</span></span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a>We can also calculate the extra sums of squares F-test using only the full model. To do this, we need to extract the SSE and degrees of freedom for both models from the ANOVA table for the full model. </span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>**Q11.** Run the below code and verify that the df, sums of squares, mean squares, F value, and p-value match what you got from the previous <span class="in">`anova()`</span> command.</span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(car_lm2)</span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The last row (</span><span class="in">`Mileage:Make`</span><span class="at">) matches the extra sums of squares F-test above: the same F-statistic (</span><span class="in">`r round(anova(car_lm2)["Mileage:Make", "F value"], 4)`</span><span class="at">), p-value, and degrees of freedom (5). The </span><span class="in">`Residuals`</span><span class="at"> row gives the SSE and df of the full model, and the sum of squares for the </span><span class="in">`Mileage:Make`</span><span class="at"> row is the difference between the two models' SSEs (</span><span class="in">`r round(anova(car_lm, car_lm2)$RSS[1], 3)`</span><span class="at"> $-$ </span><span class="in">`r round(anova(car_lm, car_lm2)$RSS[2], 3)`</span><span class="at"> = </span><span class="in">`r round(anova(car_lm2)["Mileage:Make", "Sum Sq"], 3)`</span><span class="at">).</span></span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a>***</span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a>The following table summarizes the functions we learned today:</span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lm()`</span> <span class="pp">|</span> Fit a linear model <span class="pp">|</span></span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`summary()`</span> <span class="pp">|</span> Display detailed results from a fitted model <span class="pp">|</span></span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ggpredict()`</span> <span class="pp">|</span> Create a data frame of predicted values from a fitted model <span class="pp">|</span></span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plot()`</span> <span class="pp">|</span> Create a plot of predicted values from a fitted model <span class="pp">|</span></span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`anova()`</span> <span class="pp">|</span> Create an ANOVA table for a fitted model or compare two nested models <span class="pp">|</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
