@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Inference for Logistic Regression</title>
@@ -351,7 +351,7 @@ Prof Amanda Luby
 <p><span class="math inline">\(P(Y = 1 | x) = \frac{e^{\widehat\beta_0 + \widehat\beta_1 x}}{1 + e^{\widehat\beta_0 + \widehat\beta_1 x}}\)</span></p>
 </div></div>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-3-1.png" width="1152" class="r-stretch"></section>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-3-1.png" width="1152" class="r-stretch"></section>
 <section id="logistic-regression-linear-predictor-with-a-logit-link-function" class="slide level2">
 <h2>Logistic regression: linear predictor with a logit link function</h2>
 <div class="columns">
@@ -364,7 +364,7 @@ Prof Amanda Luby
 <p><span class="math inline">\(P(Y = 1 | x) = \frac{e^{\widehat\beta_0 + \widehat\beta_1 x}}{1 + e^{\widehat\beta_0 + \widehat\beta_1 x}}\)</span></p>
 </div></div>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-4-1.png" width="1152" class="r-stretch"></section>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-4-1.png" width="1152" class="r-stretch"></section>
 <section id="linear-regression-linear-predictor-with-an-identity-link-function" class="slide level2">
 <h2>Linear regression: linear predictor with an identity link function</h2>
 <div class="columns">
@@ -377,7 +377,7 @@ Prof Amanda Luby
 <p><span class="math inline">\(\widehat y= \widehat \beta_0 + \widehat \beta_1 x\)</span></p>
 </div></div>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-5-1.png" width="1152" class="r-stretch"></section>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-5-1.png" width="1152" class="r-stretch"></section>
 <section id="generalized-linear-model" class="slide level2">
 <h2>Generalized linear model</h2>
 <p><br></p>
@@ -607,14 +607,14 @@ Prof Amanda Luby
 <p><span class="math display">\[e_i = y_i - \widehat \pi_i = \begin{cases} 1 - \widehat \pi_i &amp; \text{if } y_i = 1 \\ - \widehat \pi_i &amp; \text{if } y_i = 0 \end{cases}\]</span></p>
 <p>What will residual plot look like?</p>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-12-1.png" width="1152" class="r-stretch"></section>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-12-1.png" width="1152" class="r-stretch"></section>
 <section id="residual-plot" class="slide level2">
 <h2>Residual plot</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">resid_panel</span>(news_mod, <span class="at">plot =</span> <span class="st">"resid"</span>, <span class="at">type =</span> <span class="st">"response"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="slides20_files/figure-html/unnamed-chunk-13-1.png" width="576" class="r-stretch"></section>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-13-1.png" width="576" class="r-stretch"></section>
 <section id="binned-residuals" class="slide level2 scrollable">
 <h2>Binned residuals</h2>
 <p>Idea: If we group data points based on predictor, we can compute the mean response residual within each group and end up with something that looks more like an OLS residual plot</p>
@@ -633,7 +633,7 @@ Prof Amanda Luby
 <li>You will recreate this during the R activity today</li>
 </ul>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-14-1.png" width="480" class="r-stretch"></section>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-14-1.png" width="480" class="r-stretch"></section>
 <section id="binned-residual" class="slide level2">
 <h2>Binned residual</h2>
 <ul>
@@ -648,7 +648,7 @@ Prof Amanda Luby
 <section id="check-binned-residuals-against-x-variables" class="slide level2">
 <h2>Check binned residuals against X variables</h2>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-15-1.png" width="480" class="r-stretch"></section>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-15-1.png" width="480" class="r-stretch"></section>
 <section id="residuals-vs-categorical-predictor" class="slide level2">
 <h2>Residuals vs categorical predictor</h2>
 <ul>
@@ -681,10 +681,10 @@ Prof Amanda Luby
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides20_files/figure-html/unnamed-chunk-17-1.png" width="384"></p>
+<p><img data-src="slides20_files/figure-revealjs/unnamed-chunk-17-1.png" width="384"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides20_files/figure-html/unnamed-chunk-17-2.png" width="384"></p>
+<p><img data-src="slides20_files/figure-revealjs/unnamed-chunk-17-2.png" width="384"></p>
 </div>
 </div>
 </div>
@@ -693,7 +693,7 @@ Prof Amanda Luby
 <h2></h2>
 <p>Smoothers can help draw attention to major flaws, but there will always be variation from the horizontal!</p>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"><div class="footer">
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"><div class="footer">
 <p>Only one of these datasets was simulated from the “wrong” distribution</p>
 </div>
 </section></section>
@@ -722,7 +722,7 @@ Prof Amanda Luby
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">resid_panel</span>(news_mod, <span class="at">plot =</span> <span class="st">"index"</span>, <span class="at">type =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="slides20_files/figure-html/unnamed-chunk-19-1.png" width="384" class="r-stretch"></section>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-19-1.png" width="384" class="r-stretch"></section>
 <section id="randomness" class="slide level2">
 <h2>Randomness</h2>
 <blockquote>
@@ -948,6 +948,44 @@ Prof Amanda Luby
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
