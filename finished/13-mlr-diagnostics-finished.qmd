@@ -108,7 +108,7 @@ q4 <- gf_boxplot(.std.resid ~ factor(alcohol_use_heavy), data = log_aug) |>
 (q1 | q2) / (q3 | q4)
 ```
 
-> Yes, the transformation helped. The spread of the residuals vs. fitted values is now roughly constant, the Q-Q plot is much closer to a straight line, and the histogram is closer to bell-shaped (the Shapiro-Wilk p-value goes from `r signif(shapiro.test(resid(surgical_lm))$p.value, 2)` to `r round(shapiro.test(resid(log_surgical_lm))$p.value, 2)`). The model also explains more variability ($R^2$ = `r round(summary(log_surgical_lm)$r.squared, 3)` vs. `r round(summary(surgical_lm)$r.squared, 3)`). There is still one fairly large standardized residual (about 3), which we investigate next.
+> Yes, the transformation helped. The spread of the residuals vs. fitted values is now roughly constant, the Q-Q plot is much closer to a straight line, and the histogram is closer to bell-shaped. There is still one fairly large standardized residual (about 3), which we investigate next.
 
 # MLR Influence analysis
 
