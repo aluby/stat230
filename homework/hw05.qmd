@@ -108,7 +108,7 @@ ice_data <- read.csv("https://aluby.github.io/stat230/data/ice_data.csv")
 
 # Problem 3: Influence Diagnostics in R
 
-<!-- A large, national grocery retailer tracks productivity and costs of its facilities closely. Data were obtained from a single distribution center for a one-year period. Each data point for each variable represents one week of activity. The variables included are
+A large, national grocery retailer tracks productivity and costs of its facilities closely. Data were obtained from a single distribution center for a one-year period. Each data point for each variable represents one week of activity. The variables included are
 
 - `cases`: the number of cases shipped
 - `indirect_costs`: the indirect costs of the total labor hours as a percentage
@@ -128,11 +128,11 @@ a. Create plots of leverage, the standardized residuals, and Cook’s distance a
 b. Based on the index plot of the standardized residuals, are there any observations outlying in the Y direction? If so, identify them by their row number.
 c. Based on the index plot of the leverage, identify any outlying X observations (by row number).
 d. Suppose that management wishes to predict the total labor hours required to handle the next shipment containing 300,000 cases whose indirect costs of the total hours is 7.2 and it’s not a holiday week (`holiday = 0`). Construct a scatter plot of `cases` against `indirect_costs` and determine visually whether this prediction involves an extrapolation beyond the range of the data.
-e. Based on Cook’s distance, are any of the observations you identified in parts (b) and (c) influential? Explain. -->
+e. Based on Cook’s distance, are any of the observations you identified in parts (b) and (c) influential? Explain. 
 
 # Problem 4: A new diagnostic
 
-<!-- Another way to consider the influence of a point is to calculate the average absolute percent difference in the fitted value when the point is removed from the data set. This may be more interpretable to the “general public” than Cook’s distance. The average absolute percent difference is calculated as
+Another way to consider the influence of a point is to calculate the average absolute percent difference in the fitted value when the point is removed from the data set. This may be more interpretable to the “general public” than Cook’s distance. The average absolute percent difference is calculated as
 
 $$\text{Mean absolute percent difference (MAPD)}_{(i)} = \frac{1}{n} \sum_{j=1}^{n} \left|\frac{\hat{y}_j - \hat{y}_{j(i)}}{\hat{y}_j}\right| \times 100\%$$
 
@@ -162,11 +162,11 @@ The top four Cook’s distance values from Problem 3 are associated with observa
 | 43                |      |
 | 51                |      |
 
-Summarize what the mean absolute percent difference indicates about the influence of each of the cases? Does it agree with your assessment based on Cook’s distance in Problem 3? -->
+Summarize what the mean absolute percent difference indicates about the influence of each of the cases? Does it agree with your assessment based on Cook’s distance in Problem 3? 
 
 # Problem 5: Influence diagnostics
 
-<!-- The following statements regarding regression diagnostics contain conceptual or technical errors. Identify the error in each statement and provide a corrected statement.
+The following statements regarding regression diagnostics contain conceptual or technical errors. Identify the error in each statement and provide a corrected statement.
 
 (a) A data point is considered to have high leverage if its response value ($Y$) is an extreme outlier compared to the rest of the sample.
 
@@ -178,7 +178,7 @@ Summarize what the mean absolute percent difference indicates about the influenc
 
 (e) An influential point will always decrease the $R^2$ of a model because it adds unexplained noise to the regression line.
 
-(f) Once a diagnostic (like DFFITS or Cook’s Distance) flags a point as influential, the correct procedure is to immediately remove the observation from the dataset and rerun the regression. -->
+(f) Once a diagnostic (like DFFITS or Cook’s Distance) flags a point as influential, the correct procedure is to immediately remove the observation from the dataset and rerun the regression. 
 
 # Problem 6: Brand preference experiment
 

@@ -1,0 +1,273 @@
+---
+title: "Day 14: Multicollinearity"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(broom)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+ex1 <- read.table("http://www.cnachtsheim-text.csom.umn.edu/Kutner/Chapter%20%207%20Data%20Sets/CH07TA06.txt")
+colnames(ex1) <- c("x1", "x2", "y")
+
+ex2 <- read.table("http://www.cnachtsheim-text.csom.umn.edu/Kutner/Chapter%20%207%20Data%20Sets/CH07TA08.txt")
+colnames(ex2) <- c("x1", "x2", "y")
+
+bodyfat <- read.table("http://www.cnachtsheim-text.csom.umn.edu/Kutner/Chapter%20%207%20Data%20Sets/CH07TA01.txt")
+colnames(bodyfat) <- c("triceps_skinfold", "thigh_circumference", "midarm_circumference", "body_fat")
+```
+
+Today, we're going to explore what happens when you are using multiple predictors that are correlated with one another.
+
+## Example 1: Uncorrelated Predictors
+
+As a first example, let's consider a multiple linear regression model where the two predictor variables are uncorrelated.
+
+**Task 1.** Inspect the below correlation matrix and verify that the correlation between the two predictor variables (`x1` and `x2`) is 0.
+
+```{r}
+#| echo: false
+cor(ex1)
+```
+
+**Task 2.** The below code chunk fits a simple linear regression model with `y` as the response variable and `x1` as the predictor variables. The coefficients table was extracted using the `broom::tidy()`. (Feel free to use `broom::tidy()` in your work!)
+
+```{r}
+mod1 <- lm(y ~ x1, data = ex1)
+broom::tidy(mod1)
+```
+
+Similarly, here is the output for the simple linear regression model with `y` as the response variable and `x2` as the predictor variable.
+
+```{r}
+mod2 <- lm(y ~ x2, data = ex1)
+broom::tidy(mod2)
+```
+
+And finally, here is the output for the multiple linear regression model with `y` as the response variable and both `x1` and `x2` as the predictor variables.
+
+```{r}
+mod3 <- lm(y ~ x1 + x2, data = ex1)
+broom::tidy(mod3)
+```
+
+Compare the model summaries from the three models. What do you observe about the coefficients when both predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?
+
+\vspace{2in}
+
+## Example 2: Perfectly Correlated Predictors
+
+In many examples the predictor variables will be correlated. As an extreme example, let's consider a situation where the predictors are perfectly correlated. The data set for this small example is printed below.
+
+```{r}
+#| echo: false
+ex2
+```
+
+
+**Task 3.** Inspect the below correlation matrix and verify that the correlation between the two predictor variables (`x1` and `x2`) is 1.
+
+```{r}
+#| echo: false
+cor(ex2)
+```
+
+**Task 4.** From the previous task, you should have seen that the correlation between `x1` and `x2` is 1, as is the correlation between both predictors and `y`. This sounds like a great situation, right? We'll explore two models to unpack this.
+
+a. Consider the fitted regression equation: $\widehat{y} = -87 + x_1 + 18x_2$. Verify that the predicted values are exactly equal to the observed values.
+
+```{r}
+#| echo: false
+ex2 |>
+    mutate(yhat = "") |>
+    knitr::kable()
+```
+
+b. Consider the fitted regression equation: $\widehat{y} = -7 + 9x_1 + 2x_2$. Verify that the predicted values are exactly equal to the observed values.
+
+```{r}
+#| echo: false
+ex2 |>
+    mutate(yhat = "") |>
+    knitr::kable()
+```
+
+c. Discuss the following questions with your group:
+
+    - Would you be willing to use either model to make predictions for new observations? Why or why not?
+
+    \vspace{1in}
+
+    - Would you be willing to interpret the coefficients in either model? Why or why not?
+
+    \vspace{1in}
+
+    - Do you think the standard error of the slopes is reasonably small or large? Why?
+
+    \vspace{1in}
+
+## Example 3: A more realistic example
+
+Let's consider a more realistic example where the predictor variables are correlated, but not perfectly correlated. The data set `bodyfat` contains measurements on 20 healthy adults between 25 and 34 years of age. We're interested in predicting body fat percentage using three body measurements: triceps skinfold thickness, thigh circumference, and midarm circumference. 
+
+**Task 5.** Below is the correlation matrix for the data set. What do you observe about the correlations between the predictor variables?
+
+```{r}
+#| echo: false
+round(cor(bodyfat),3) |>
+    knitr::kable()
+```
+
+**Task 6.** There are numerous models that we could consider. Below are summary tables from several models. Compare the model summaries from the fitted models. What do you observe about the coefficients when different predictors are included in the model? What do you observe about the standard errors? The results of the hypothesis tests?
+
+\vspace{2in}
+
+
+Only triceps skinfold as a predictor:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ triceps_skinfold, data = bodyfat))
+```
+
+Only thigh circumference as a predictor:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ thigh_circumference, data = bodyfat))
+```
+
+Only midarm circumference as a predictor:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ midarm_circumference, data = bodyfat))
+```
+
+Triceps skinfold and thigh circumference as predictors:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ triceps_skinfold + thigh_circumference, data = bodyfat))
+```
+
+Triceps skinfold and midarm circumference as predictors:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ midarm_circumference + thigh_circumference, data = bodyfat))
+```
+
+Thigh circumference and midarm circumference as predictors:
+```{r}
+#| echo: false
+broom::tidy(lm(body_fat ~ ., data = bodyfat))
+```
+
+
+<i class="bi bi-sign-stop-fill"></i> Let me know when you have reached this spot. We'll regroup as a class to discuss your observations.
+
+
+# Multicollinearity
+
+**Multicollinearity** is the situation where two or more predictors
+are "nearly" perfectly correlated with each other.
+
+## Diagnosing multicollinearity
+
+-   Examine a scatterplot matrix
+-   Examine pairwise correlations between predictors
+-   Look for $\widehat\beta_i$'s with unusual ________ (opposite of
+    what you'd expect)
+-   Notice sensitivity to changes in the model / order of predictors
+-   Calculate the **Variance Inflation Factor (VIF)**
+
+::: callout-tip
+## Variance Inflation Factor
+
+$$VIF_i = \frac{1}{1 - R_i^2}$$
+
+where $R_i^2$ = $R^2$ from a model predicting $x_i$ using *all other*
+predictor variables (not $y$!).
+
+**Guidelines:**
+
+| $VIF_i$ | $R_i^2$ | Interpretation |
+|:---:|:---:|:---|
+| $> 5$   | $> .8$  | suspicions begin |
+| $> 10$  | $> .9$  | indicates a problem |
+| $> 100$ | $> .99$ | indicates a big problem |
+
+:::
+
+VIFs for first example are modest -- nothing to worry about.
+
+```{r}
+#| echo: true
+ex1_mod <- lm(y ~ x1 + x2, data = ex1)
+car::vif(ex1_mod)
+```
+
+
+VIFs for the second example:
+
+```{r}
+#| echo: true
+#| error: true
+ex2_mod <- lm(y ~ x1 + x2, data = ex2)
+car::vif(ex2_mod)
+```
+
+`car::vif()` throws an error! Why?
+
+Since $x_1$ and $x_2$ are perfectly correlated here, $R_i^2 =$___, so the denominator $1 - R_i^2=$___ and $VIF=$ ________________.
+
+## Example 3: real data (`bodyfat`)
+
+```{r}
+#| echo: true
+bodyfat_mod <- lm(body_fat ~ triceps_skinfold + thigh_circumference + midarm_circumference, 
+                    data = bodyfat)
+car::vif(bodyfat_mod)
+```
+
+
+Thigh and triceps skinfold circumference are both driven largely by
+overall body fat, so they move together.
+
+# What about predictions?
+
+Now that we've discussed the issues revolving around interpreting coefficients and drawing inference on them in the presence of multicollinearity, let's consider how multicollinearity impacts predictions. 
+
+Recall that the mean squared error (MSE) of a model measures the variability in the error terms (residuals). In other words, it is measuring the variability unexplained by the model.
+
+**Task 7.** Below are the MSE values for three of the models we considered in Task 6. What do you observe about the MSE values when different predictors are included in the model? 
+
+<br>
+
+| Predictors | MSE |
+|------------|-----|
+| triceps_skinfold |  7.95 |
+| triceps_skinfold, thigh_circumference |  6.47 |
+| triceps_skinfold, thigh_circumference, midarm_circumference |  6.15 |
+
+
+**Task 8.** Based on your observations, do you think we can use any of the models to make predictions for new observations? Why or why not?
+
+\vspace{2in}
+
+<i class="bi bi-sign-stop-fill"></i> Let me know when you have reached this spot. We'll regroup as a class to discuss your observations.
+
+## Remedial measures
+
+-   Use the model only for *prediction*, if you believe future
+    observations will preserve the same relationships among
+    predictors
+-   For polynomial terms, use `poly(x, degree)` in R, or center the
+    variable
+-   Drop some of the highly correlated variables (use caution, this
+    doesn't always work and loses information)
+-   Add cases that break the correlation between predictors --
+    reasonable in designed experiments
+-   Create composite variables (sums, averages, principal components)
+    -- can fix collinearity but be harder to interpret
+-   Use ridge regression or LASSO -- covered in Stat 270 (Statistical
+    Learning)
+
