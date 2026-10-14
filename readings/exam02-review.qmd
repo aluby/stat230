@@ -1,11 +1,13 @@
 ---
-title: "Exam02 Review"
+title: "Quiz02 Review"
 format: html
 ---
 
-This is an outline of things you should review for Exam02 scheduled for Wed of Week 6.
+This is an outline of things you should review for Quiz02 scheduled for Wed of Week 6.
 
 I recommend beginning by *carefully* reviewing your notes and activities from class and the homework questions. It's best to do this actively: by reading, thinking, solving problems, and asking questions. 
+
+See the [Quiz02 Practice Questions](quiz02-practice.pdf) for two example questions of each skill below.
 
 # Materials
 
@@ -20,16 +22,13 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   - Using proper statistical notation, write down the multiple linear regression model (including polynomial regression)
   - You should be able to express either the theoretical model or the fitted model, and know the difference between the two.
   - Don’t forget the assumptions you place on the residuals in a theoretical model!
-  - You should know how and when to use an indicator variable and interaction variable (eg parallel lines model vs different lines model)
+  - You should know how and when to use an indicator variable and interaction variable (eg parallel lines model vs different lines model) and be comfortable converting a MLR model with indicator variables into SLR models for each group
   
-*Example question:* TBD
-
 **2. Interpret the coefficients and $R^2$ of a model in context.**
 
-  - Given a fitted linear model equation, be able to interpret the y-intercept and each slope term
+  - Given a fitted linear model equation, be able to interpret the y-intercept, each slope term, and the (adjusted) $R^2$ value
   - Your interpretations should always be given in context, so don’t just talk about “x” and “y.”
   
-*Example question:* TBD
 
 **3. Check necessary conditions for a multiple regression model and discuss the implications of a model deficiency**
 
@@ -40,26 +39,22 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   - Know how to read each type of diagnostic plot (leverage, Cook's distance, standardized residuals, etc.) and identify possible problematic points
   - Understand how leverage and influence relate to each other and the impact on the regression equation
   
-*Example question:* TBD
-
-**4. Perform hypothesis tests about a single regression coefficient**
+**4. Perform hypothesis tests about a regression coefficient or a linear combination of regression coefficients**
   
   - Given R output from a fitted regression model, conduct a t-test for a coefficient
   - The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context
   - Understand and explain where the test statistic and p value came from
   - Given a research question, state the hypotheses for your test in both words and proper notation
   - Know the difference between a one-sided and two-sided p-value, and know when each is required (or given by R)
-  
-*Example question:* TBD
+  - Given the coefficient estimates and their covariance matrix (`vcov()` output), compute the estimate, standard error, and test statistic for a linear combination of coefficients 
   
 **5.  Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients**
 
   - Given R output from a fitted regression model, identify a confidence interval for each regression coefficient.
   - Know the equation for the confidence interval and how you could calculate it if you were given the estimate, standard error, and sample size.
   - Be able to interpret a confidence interval for each regression coefficient in context
-  - todo: linear combination
+  - Given the coefficient estimates and their covariance matrix (`vcov()` output), compute the estimate, standard error, and confidence interval for a linear combination of coefficients 
   
-*Example question:* TBD
 
 **6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval**
 
@@ -68,7 +63,6 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   - Given a plot with both confidence intervals and prediction intervals, be able to identify which is which
   - Which is wider, a confidence interval or prediction interval? Why does this make sense?
   
-*Example question:* TBD
 
 **7. Conduct inference to compare nested regression models.** 
 
@@ -79,17 +73,18 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   - Understand where the p-value comes from in the extra-sums-of-squares F-test (What distribution? What tail?)
   - The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context.
 
-*Example question:* TBD
-
 **8. Interpret the coefficients an MLR model when transformations have been used on the response and/or the explanatory variables**
 
-  - Given a transformation to the response variable, explanatory variable, or both, be able to identify if
-the back transformation is interpretable.
+  - Given a transformation to the response variable, explanatory variable, or both, be able to identify if the back transformation is interpretable.
   - Given a model with a log-transformed response variable, interpret the slope coefficient(s) in context.
-  - Given a model with a log-transformed explanatory variable, interpret the slope coefficient of the
-transformed variable.
+  - Given a model with a log-transformed explanatory variable, interpret the slope coefficient of the transformed variable 
 
-*Example question:* TBD
+**9. Diagnose multicollinearity and explain its consequences**
+
+  - Diagnose multicollinearity using a pairs plot/correlation matrix, unusual or unstable coefficient estimates, and the variance inflation factor (VIF)
+  - Know how the VIF for a predictor is calculated and the guidelines for when it indicates a problem
+  - Explain the consequences of multicollinearity for the coefficient estimates, their standard errors, and t-tests, and why it is less of a concern for predictions
+
 
 # Formulas
 
@@ -120,5 +115,5 @@ transformed variable.
 - $r_{i}=\frac{\hat{e}_{i}}{\hat{\sigma}\sqrt{1-h_{i}}}$
 - $h_{i}=\frac{1}{n-1}\left[\frac{X_{i}-\overline{X}}{s_{X}}\right]^{2}+\frac{1}{n} = \frac{1}{n}+\frac{{(X_{i}-\overline{X})}^{2}}{\sum(X_{i}-\overline{X})^{2}}$
 - $\sum_{i}h_{i}=p+1$
-- $D_{i}=\sum_{j=1}^{n}\frac{(\hat{Y}_{j(i)}-\hat{Y}_{j})^{2}}{(p+1)\hat{\sigma}} = \frac{r_{i}^{2}}{p+1}\left(\frac{h_{i}}{1-h_{i}}\right)$
+- $D_{i}=\sum_{j=1}^{n}\frac{(\hat{Y}_{j(i)}-\hat{Y}_{j})^{2}}{(p+1)\hat{\sigma}^{2}} = \frac{r_{i}^{2}}{p+1}\left(\frac{h_{i}}{1-h_{i}}\right)$
 - $VIF_i=1/(1-R_{i}^{2})$

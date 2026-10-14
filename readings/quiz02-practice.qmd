@@ -1,0 +1,680 @@
+---
+title: "Quiz02 Practice Questions"
+format:
+    html: default
+    pdf: default
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+library(bayesrules)
+library(ggResidpanel)
+theme_set(theme_minimal())
+
+bikes <- bikes |>
+  mutate(year = factor(year))
+
+cars <- read.csv("https://aluby.github.io/stat230/data/Cars.csv", stringsAsFactors = TRUE)
+
+nhanes <- read.csv("https://aluby.github.io/stat230/data/nhanes-sitting-depression.csv") |>
+  mutate(dep_score = log(phq9 + 1))
+
+fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt",
+                  sep = "\t", header = TRUE)
+
+duncan <- carData::Duncan |>
+  rownames_to_column("occupation")
+
+f3 <- function(x) sprintf("%.3f", x)
+nosci <- function(x, d = 2) format(signif(x, d), scientific = FALSE)
+```
+
+Practice questions for each skill on the [Quiz02 Review](exam02-review.qmd) sheet. The data sets are ones we've seen in class, but the models and questions are new.
+
+## 1. Express a MLR model using proper notation
+
+*Example question* The `bikes` data include the `year` of each day (2011 or 2012). The model below allows the relationship between temperature (`temp_actual`, in degrees F) and daily `rides` to be different in the two years.
+
+```{r}
+year_mod <- lm(rides ~ temp_actual * year, data = bikes)
+summary(year_mod)
+```
+
+(a) Using proper statistical notation, write down the theoretical model that was fit. Write it as a single equation using $x_1, x_2$, etc., define all variables, and state the assumption on the error term.
+
+(b) Write down the fitted regression equation for 2011 and for 2012 separately.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+yb <- coef(year_mod)
+```
+
+(a) $Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i1} x_{i2} + \varepsilon_i, \quad \varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)$
+
+where $Y_i$ is the number of rides on day $i$, $x_{i1}$ is the temperature (degrees F) on day $i$, and $x_{i2}$ is an indicator variable that equals 1 if day $i$ is in 2012 and 0 if it is in 2011.
+
+(b) For 2011, plug in $x_2 = 0$:
+
+$\widehat{\text{rides}} = `r f3(yb[1])` + `r f3(yb[2])` \times \text{temp}$
+
+For 2012, plug in $x_2 = 1$ and combine the intercept terms and the slope terms:
+
+$\widehat{\text{rides}} = (`r f3(yb[1])` + `r f3(yb[3])`) + (`r f3(yb[2])` + `r f3(yb[4])`) \times \text{temp} = `r f3(yb[1] + yb[3])` + `r f3(yb[2] + yb[4])` \times \text{temp}$
+
+:::
+:::
+
+*Example question* In general, higher temperatures means more bike rides. But, on very hot days, people may be less likely to bike. This relationship can be captured with a quadratic model. Below is a quadratic model for daily `rides` using temperature.
+
+```{r}
+quad_mod <- lm(rides ~ temp_actual + I(temp_actual^2), data = bikes)
+tidy(quad_mod)
+```
+
+(a) Write down the theoretical model, defining all variables and stating the assumption on the error term.
+
+(b) Write down the fitted model.
+
+(c) Is this still a *linear* regression model, even though the fitted model is a curve? Explain.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+qb <- coef(quad_mod)
+```
+
+(a) $Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i, \quad \varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)$, where $Y_i$ is the number of rides on day $i$ and $x_i$ is the temperature (degrees F) on day $i$.
+
+(b) $\widehat{\text{rides}} = `r round(qb[1], 2)` + `r round(qb[2], 3)` \times \text{temp} - `r round(abs(qb[3]), 3)` \times \text{temp}^2$
+
+(c) Yes. The model is still *linear in the* $\beta$*'s*: the mean is a sum of coefficients times (functions of) the predictor. Squaring the predictor changes the shape of the fitted curve, but we still estimate the $\beta$'s with least squares, check the same conditions, and do inference the same way. One way to think of it is we are creating a new predictor $x_2$, where $x_2 = x_1^2$. Polynomial regression is then still multiple *linear* regression.
+
+:::
+:::
+
+## 2. Interpret the coefficients and $R^2$ of a model in context
+
+*Example question* Below is a model for daily `rides` using temperature (`temp_actual`, in degrees F), `humidity` (in %), and whether the day was a weekend (`weekend`).
+
+```{r}
+humid_mod <- lm(rides ~ temp_actual + humidity + weekend, data = bikes)
+summary(humid_mod)
+```
+
+(a) Interpret the coefficient for `humidity` in context.
+
+(b) Interpret the coefficient for `weekendTRUE` in context.
+
+(c) Interpret the $R^2$ value in context.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+hb <- coef(humid_mod)
+```
+
+(a) Holding temperature and weekend/weekday constant, each additional percentage point of humidity is associated with about `r round(abs(hb["humidity"]), 1)` *fewer* rides per day, on average.
+
+(b) Holding temperature and humidity constant, weekend days have about `r round(abs(hb["weekendTRUE"]))` *fewer* rides than weekdays, on average.
+
+(c) About `r round(100 * summary(humid_mod)$adj.r.squared, 1)`% of the variability in daily rides is explained by the model with temperature, humidity, and weekend.
+
+:::
+:::
+
+*Example question* Below is a model for the `Price` of used cars (in dollars) using `Mileage` and the body `Type` of the car (convertible, coupe, hatchback, sedan, or wagon).
+
+```{r}
+type_mod <- lm(Price ~ Mileage + Type, data = cars)
+summary(type_mod)
+```
+
+(a) Which type of car is the reference level? How can you tell?
+
+(b) Interpret the coefficient for `TypeSedan` in context.
+
+(c) The `Mileage` coefficient is very small because it describes a 1-mile change. Interpret it for an increase of 10,000 miles.
+
+(d) Which of the following is the best explanation for why the adjusted $R^2$ (`r round(summary(type_mod)$adj.r.squared, 3)`) is smaller than the $R^2$ (`r round(summary(type_mod)$r.squared, 3)`)?
+
+
+    A. Adjusted $R^2$ removes outliers before computing the proportion of variability explained.
+    B. Adjusted $R^2$ includes a penalty for the number of predictors in the model.
+    C. Adjusted $R^2$ only uses the quantitative predictors.
+    D. Adjusted $R^2$ is computed on the log scale.
+
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+tb <- coef(type_mod)
+```
+
+(a) Convertible. It is the only type that does not have its own indicator variable (coefficient) in the output, so it is the group where all of the type indicators equal 0. (R chose it because it comes first alphabetically.)
+
+(b) Holding mileage constant, sedans sell for about \$`r format(round(abs(tb["TypeSedan"])), big.mark = ",")` *less* than convertibles, on average.
+
+(c) $10{,}000 \times (`r round(tb["Mileage"], 4)`) = `r round(10000 * tb["Mileage"])`$. Holding the type of car constant, every additional 10,000 miles is associated with a price that is about \$`r format(round(abs(10000 * tb["Mileage"])), big.mark = ",")` lower, on average.
+
+(d) **B.** $R^2$ never decreases when we add predictors (even useless ones), so adjusted $R^2$ adjusts for the number of predictors. That makes it a better tool for *comparing* models with different numbers of predictors.
+
+:::
+:::
+
+## 3. Check necessary conditions for a multiple regression model and discuss the implications of a model deficiency
+
+*Example question* Here are the residual plots for a model of used car `Price` using `Mileage` and engine size (`Liter`). In this data set, the cars are listed in order of make and model (e.g., all of the Buick Centurys are listed together).
+
+```{r}
+#| fig-alt: "Residual plot, Q-Q plot, index plot, and histogram of standardized residuals for the used car price model."
+liter_mod <- lm(Price ~ Mileage + Liter, data = cars)
+resid_panel(liter_mod, type = "standardized")
+```
+
+(a) Which condition(s) look violated? Say which plot(s) you used to tell.
+
+(b) Look at the index plot. What do you think is causing the "runs" of residuals that are all above (or all below) zero? What does this suggest about the model?
+
+(c) Given these violations, can you trust the p-values in the `summary()` output for this model? Can you trust the estimated coefficients? Explain.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) **Independence:** the index plot shows long runs of residuals on the same side of zero, so residuals for cars that are next to each other in the data are related. **Normality:** the Q-Q plot curves well above the line in the upper tail, and the histogram is right-skewed (and looks like it has two groups). **Equal variance** is also questionable: the residual plot has a few groups of points that fan out above the line.
+
+(b) Since the cars are listed by make and model, the runs are groups of cars of the same make/model. Cars of the same model have similar prices, so if the model over- or under-predicts one of them, it does the same for the rest. This suggests the model is missing an important predictor (like `Make`, or the model of the car), and that the observations aren't independent given only `Mileage` and `Liter`.
+
+(c) No, the p-values aren't trustworthy. The independence violation means the standard errors are too small (we have less independent information than $n$ suggests), so the p-values and confidence intervals are too optimistic. The estimated coefficients are also suspect, but for a different reason: if an important predictor is missing, the coefficients for `Mileage` and `Liter` may be picking up its effect.
+
+:::
+:::
+
+*Example question* The `Duncan` data recorded the `prestige`, `income`, and `education` ratings of 45 occupations (all measured as percentages). Here are the leverage and Cook's distance plots, plus the five occupations with the largest Cook's distances, for the model `prestige ~ income + education`.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+#| fig-alt: "Residual-leverage plot and Cook's distance plot for the Duncan prestige model."
+duncan_mod <- lm(prestige ~ income + education, data = duncan)
+resid_panel(duncan_mod, plots = c("lev", "cookd"), type = "standardized", nrow = 1)
+```
+
+```{r}
+augment(duncan_mod) |>
+  mutate(occupation = duncan$occupation) |>
+  select(occupation, prestige, income, education, .hat, .std.resid, .cooksd) |>
+  arrange(desc(.cooksd)) |>
+  head(5)
+```
+
+(a) Calculate the two leverage cutoffs we discussed in class.
+
+(b) Which occupation has the highest leverage? Is it influential? Explain why or why not.
+
+(c) Which occupation is the most influential? Explain using its leverage and standardized residual.
+
+(d) Below are the coefficients with and without that occupation. Following the flowchart from Day 13, what would you do next?
+
+```{r}
+#| echo: false
+duncan_drop <- lm(prestige ~ income + education, data = filter(duncan, occupation != "minister"))
+tibble(term = names(coef(duncan_mod)),
+       `all 45 occupations` = coef(duncan_mod),
+       `without influential point` = coef(duncan_drop)) |>
+  knitr::kable(digits = 3)
+```
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+d_aug <- augment(duncan_mod) |> mutate(occupation = duncan$occupation)
+hi_lev <- d_aug |> slice_max(.hat, n = 1)
+hi_cook <- d_aug |> slice_max(.cooksd, n = 1)
+```
+
+(a) Here $n = 45$ and $p = 2$, so $2(p+1)/n = 6/45 \approx `r round(6/45, 3)`$ and $3(p+1)/n = 9/45 = `r round(9/45, 3)`$.
+
+(b) The `r hi_lev$occupation` has the highest leverage (`r round(hi_lev$.hat, 2)`, above both cutoffs). It is *not* very influential: its standardized residual is small (`r round(hi_lev$.std.resid, 2)`) and its Cook's distance is only `r round(hi_lev$.cooksd, 2)`. Its income and education are unusual, but its prestige is about what the model predicts, so it falls along the trend and doesn't pull the fitted model much.
+
+(c) The `r hi_cook$occupation` has the largest Cook's distance (`r round(hi_cook$.cooksd, 2)`). It has both a fairly high leverage (`r round(hi_cook$.hat, 2)`, above the smaller cutoff) *and* a large standardized residual (`r round(hi_cook$.std.resid, 2)`): ministers have much higher prestige than their income would predict. It's the combination of the two that makes a point influential.
+
+(d) The coefficients change noticeably when ministers are removed (the income coefficient goes up, and the education coefficient goes down). Following the flowchart: the conclusions change, so we ask whether ministers belong to a different population than the one under investigation. If there's a good reason to think so (for example, if clergy didn't count seminary as part of education or reported $0 income), we could omit them and say so. Otherwise, we'd report both fits and say that more data are needed.
+
+:::
+:::
+
+## 4. Perform hypothesis tests about a single regression coefficient
+
+*Example question* Use the `year_mod` output from Skill 1. Is there evidence that the relationship between temperature and ridership changed from 2011 to 2012?
+
+(a) State the null and alternative hypotheses in words and using proper notation.
+
+(b) Show how the test statistic was calculated, and give its degrees of freedom.
+
+(c) Report the p-value and state your conclusion in context.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+yr_row <- tidy(year_mod) |> filter(term == "temp_actual:year2012")
+```
+
+(a) Using the model from Skill 1, the difference in slopes between 2012 and 2011 is $\beta_3$ (the interaction coefficient).
+
+$H_0: \beta_3 = 0$ (the slope for temperature is the same in both years) vs. $H_A: \beta_3 \ne 0$ (the slope for temperature is different in 2011 and 2012).
+
+(b) $t = \dfrac{\widehat\beta_3 - 0}{SE(\widehat\beta_3)} = \dfrac{`r round(yr_row$estimate, 3)`}{`r round(yr_row$std.error, 3)`} \approx `r round(yr_row$statistic, 2)`$, with $df = n - (p + 1) = 500 - 4 = 496$.
+
+(c) $p =$ `r nosci(yr_row$p.value)` (two-sided, from the output). There is strong evidence that the relationship between temperature and ridership was different in 2012: each additional degree was associated with about `r round(yr_row$estimate, 1)` *more* additional rides in 2012 than in 2011.
+
+:::
+:::
+
+*Example question* Use the `humid_mod` output from Skill 2. Before looking at the data, an analyst hypothesized that more humid days have *fewer* rides, after accounting for temperature and whether it's a weekend.
+
+(a) State $H_0$ and $H_A$ in symbols, matching the analyst's hypothesis.
+
+(b) Calculate the test statistic.
+
+(c) Is the p-value in the `summary()` output the right one to use? If not, how would you find the correct p-value? State your conclusion.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+hum_row <- tidy(humid_mod) |> filter(term == "humidity")
+```
+
+(a) Let $\beta_2$ be the coefficient for `humidity`. $H_0: \beta_2 = 0$ vs. $H_A: \beta_2 < 0$.
+
+(b) $t = \dfrac{`r round(hum_row$estimate, 3)` - 0}{`r round(hum_row$std.error, 3)`} \approx `r round(hum_row$statistic, 2)`$, with $df = 500 - 4 = 496$.
+
+(c) No: R reports a *two-sided* p-value, but the analyst's alternative is one-sided. Since the test statistic is negative (in the direction of $H_A$), the correct p-value is half of R's. R reports $p =$ `r format(hum_row$p.value, digits = 3)`, so the one-sided p-value is about `r format(hum_row$p.value / 2, digits = 2)`. There is very strong evidence that, holding temperature and weekend/weekday constant, more humid days have fewer rides on average.
+
+:::
+:::
+
+## 5. Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients
+
+*Example question* Use the `humid_mod` output from Skill 2, and the `qt()` output below.
+
+```{r}
+qt(.01, df = 496, lower.tail = FALSE)
+qt(.025, df = 496, lower.tail = FALSE)
+qt(.05, df = 496, lower.tail = FALSE)
+qt(.1, df = 496, lower.tail = FALSE)
+```
+
+(a) Construct a 90% confidence interval for the coefficient of `humidity`.
+
+(b) Interpret your interval in context.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+t90 <- qt(.05, df = 496, lower.tail = FALSE)
+ci90 <- hum_row$estimate + c(-1, 1) * t90 * hum_row$std.error
+```
+
+(a) For a 90% interval, there is 5% in each tail, so $t^* =$ `r round(t90, 3)` (from `qt(.05, df = 496, lower.tail = FALSE)`).
+
+$`r round(hum_row$estimate, 3)` \pm `r round(t90, 3)` \times `r round(hum_row$std.error, 3)` \;\Longrightarrow\; (`r round(ci90[1], 1)`, \; `r round(ci90[2], 1)`)$
+
+(b) We are 90% confident that, holding temperature and weekend/weekday constant, each additional percentage point of humidity is associated with between `r round(abs(ci90[2]), 1)` and `r round(abs(ci90[1]), 1)` *fewer* rides per day, on average.
+
+:::
+:::
+
+*Example question* Use the `year_mod` model from Skill 1. Below is the covariance matrix of the estimated coefficients.
+
+```{r}
+vcov(year_mod)
+qt(.025, df = 496, lower.tail = FALSE)
+```
+
+(a) Write the slope for temperature *in 2012* as a linear combination of the model coefficients, and calculate its estimate.
+
+(b) Calculate the standard error of the 2012 slope. Why can't you just add the two standard errors from the `summary()` output?
+
+(c) Construct a 95% confidence interval for the 2012 slope, and interpret it in context.
+
+(d) A city planner claims that, in 2012, each additional degree F was associated with 100 more rides per day, on average. Conduct a hypothesis test of this claim.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+yv <- vcov(year_mod)
+est_y <- yb[2] + yb[4]
+var_y <- yv[2, 2] + yv[4, 4] + 2 * yv[2, 4]
+se_y <- sqrt(var_y)
+t95 <- qt(.025, df = 496, lower.tail = FALSE)
+ci_y <- est_y + c(-1, 1) * t95 * se_y
+```
+
+(a) The 2012 slope is $\gamma = \beta_1 + \beta_3$ (so $c_1 = c_2 = 1$).
+
+$\widehat\gamma = `r f3(yb[2])` + `r f3(yb[4])` = `r f3(est_y)`$
+
+(b) $Var(\widehat\gamma) = Var(\widehat\beta_1) + Var(\widehat\beta_3) + 2\,Cov(\widehat\beta_1, \widehat\beta_3) = `r round(yv[2, 2], 3)` + `r round(yv[4, 4], 3)` + 2(`r round(yv[2, 4], 3)`) = `r round(var_y, 3)`$
+
+$SE(\widehat\gamma) = \sqrt{`r round(var_y, 3)`} \approx `r round(se_y, 3)`$
+
+We can't just add the standard errors because (1) variances add, not standard errors, and (2) the two estimates are correlated, so we need the covariance term. Here the covariance is negative, which makes the standard error smaller.
+
+(c) $`r round(est_y, 3)` \pm `r round(t95, 3)` \times `r round(se_y, 3)` \;\Longrightarrow\; (`r round(ci_y[1], 1)`, \; `r round(ci_y[2], 1)`)$
+
+We are 95% confident that, in 2012, each additional degree F was associated with between `r round(ci_y[1], 1)` and `r round(ci_y[2], 1)` more rides per day, on average.
+
+(d) $H_0: \beta_1 + \beta_3 = 100$ vs. $H_A: \beta_1 + \beta_3 \ne 100$.
+
+$t = \dfrac{\widehat\gamma - 100}{SE(\widehat\gamma)} = \dfrac{`r round(est_y, 3)` - 100}{`r round(se_y, 3)`} \approx `r round((est_y - 100) / se_y, 2)`$, with $df = 496$.
+
+The p-value is the area in both tails of a $t$ distribution with 496 df beyond $\pm `r round(abs((est_y - 100) / se_y), 2)`$, which is about `r round(2 * pt(-abs((est_y - 100) / se_y), 496), 2)`. There is no evidence against the planner's claim: a 2012 slope of 100 rides per degree is consistent with the data. (We could also see this from the interval in (c), which contains 100.)
+
+:::
+:::
+
+## 6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval
+
+```{r}
+#| include: false
+nd <- data.frame(temp_actual = 80, humidity = 50, weekend = TRUE)
+ci_b <- predict(humid_mod, nd, interval = "confidence")
+pi_b <- predict(humid_mod, nd, interval = "prediction")
+```
+
+*Example question* Use the `humid_mod` model from Skill 2. For a weekend day with a temperature of 80°F and 50% humidity, the predicted number of rides is `r round(ci_b[1])`. R gives these two 95% intervals: (`r round(pi_b[2])`, `r round(pi_b[3])`) and (`r round(ci_b[2])`, `r round(ci_b[3])`).
+
+(a) Which interval is the confidence interval and which is the prediction interval? How can you tell?
+
+(b) Capital Bikeshare is scheduling staff for next Saturday, which is forecast to be 80°F with 50% humidity. Which interval should they use?
+
+(c) Interpret the interval you did *not* choose in (b).
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) (`r round(ci_b[2])`, `r round(ci_b[3])`) is the confidence interval and (`r round(pi_b[2])`, `r round(pi_b[3])`) is the prediction interval. The prediction interval is wider because it accounts for both the uncertainty in the estimated mean *and* the variability of one individual day around that mean.
+
+(b) The prediction interval, since they are predicting the number of rides on one specific day.
+
+(c) We are 95% confident that the *average* number of rides, across all weekend days with a temperature of 80°F and 50% humidity, is between `r round(ci_b[2])` and `r round(ci_b[3])`.
+
+:::
+:::
+
+*Example question* The plot below shows lung function (`FEV`, in L/s) vs. `Age` for the 345 adolescents in the FEV data, along with the fitted SLR line and two shaded bands.
+
+```{r}
+#| echo: false
+#| fig-width: 6
+#| fig-height: 3.5
+#| fig-alt: "Scatterplot of FEV vs. age with a fitted line, a wide orange band, and a narrow dark band around the line."
+gf_point(FEV ~ Age, data = fev, alpha = 0.3) |>
+  gf_lm(interval = "prediction", fill = "#f15a31") |>
+  gf_lm(interval = "confidence", fill = "#003069") |>
+  gf_labs(x = "Age (years)", y = "FEV (L/s)")
+```
+
+(a) Which band (wide orange or narrow dark) shows the confidence intervals, and which shows the prediction intervals?
+
+(b) Why does it make sense that one band is so much wider than the other?
+
+(c) Where is the narrow dark band narrowest? Why?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) The narrow dark band shows the confidence intervals for the mean FEV; the wide orange band shows the prediction intervals for individual adolescents.
+
+(b) The prediction interval includes the person-to-person variability of individual observations around the mean ($\widehat\sigma$), in addition to the uncertainty in the estimated line. That extra variability doesn't shrink with more data, so most of the observed points fall inside the orange band.
+
+(c) It is narrowest near the average age (about `r round(mean(fev$Age), 1)` years). The standard error of the mean response includes $(x_0 - \bar{x})^2$, so we're most certain about where the line is near the center of the data, and less certain toward the edges (here, the older ages, where there are also fewer observations).
+
+:::
+:::
+
+## 7. Conduct inference to compare nested regression models
+
+*Example question* In the first week of class, we used the NHANES data to model a depression risk score (`dep_score`, the log of the PHQ-9 score + 1) using daily sitting time (`sedentary_hours`). The data also record each participant's `sex`. Researchers want to know whether sex is related to the depression score *at all* (as either a shift in the line, a change in the slope, or both), after accounting for sitting time. They compare these two models:
+
+- Model 1: `dep_score ~ sedentary_hours`
+- Model 2: `dep_score ~ sedentary_hours * sex`
+
+```{r}
+#| echo: false
+nh_red <- lm(dep_score ~ sedentary_hours, data = nhanes)
+nh_full <- lm(dep_score ~ sedentary_hours * sex, data = nhanes)
+nh_anova <- anova(nh_red, nh_full)
+tibble(Model = c("Model 1: dep_score ~ sedentary_hours", "Model 2: dep_score ~ sedentary_hours * sex"),
+       `Residual df` = nh_anova$Res.Df,
+       SSE = round(nh_anova$RSS, 2)) |>
+  knitr::kable()
+```
+
+(a) Are these models nested? Which is the full model and which is the reduced model?
+
+(b) Write out the full model, then state the null and alternative hypotheses using proper $\beta$ notation.
+
+(c) Calculate the F-statistic and give its degrees of freedom.
+
+(d) Describe how the p-value is found (what distribution, and which tail?). The output below may help.
+
+```{r}
+#| echo: false
+cat("pf(", round(nh_anova$F[2], 2), ", df1 = 2, df2 = ", nh_anova$Res.Df[2], ", lower.tail = FALSE)\n", sep = "")
+pf(round(nh_anova$F[2], 2), df1 = 2, df2 = nh_anova$Res.Df[2], lower.tail = FALSE)
+```
+
+(e) What do you conclude?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) Yes. Model 1 is Model 2 with the two sex terms set to 0, so Model 2 is the full model and Model 1 is the reduced model.
+
+(b) Full model: $\mu\{Y | X\} = \beta_0 + \beta_1 \text{sedentary} + \beta_2 \text{male} + \beta_3 \text{sedentary} \times \text{male}$, where male is an indicator equal to 1 for male participants and 0 for female participants (the reference level).
+
+$H_0: \beta_2 = \beta_3 = 0$ (sex is not related to the depression score after accounting for sitting time) vs. $H_A:$ at least one of $\beta_2, \beta_3 \ne 0$.
+
+(c) $d = `r nh_anova$Res.Df[1]` - `r nh_anova$Res.Df[2]` = 2$ coefficients are being tested.
+
+$F = \dfrac{(SSE_{reduced} - SSE_{full})/d}{SSE_{full}/df_{full}} = \dfrac{(`r round(nh_anova$RSS[1], 2)` - `r round(nh_anova$RSS[2], 2)`)/2}{`r round(nh_anova$RSS[2], 2)`/`r nh_anova$Res.Df[2]`} \approx `r round(nh_anova$F[2], 2)`$
+
+with 2 and `r nh_anova$Res.Df[2]` degrees of freedom.
+
+(d) The p-value is the area in the **upper tail** of an $F$ distribution with 2 and `r nh_anova$Res.Df[2]` degrees of freedom, above `r round(nh_anova$F[2], 2)`. (Only large values of $F$ are evidence against $H_0$.) From the output, $p \approx `r nosci(nh_anova[["Pr(>F)"]][2])`$.
+
+(e) There is strong evidence that sex is related to the depression risk score after accounting for sitting time (through a shift in the line, a change in the slope, or both).
+
+:::
+:::
+
+*Example question* Consider these four models for the `bikes` data:
+
+- Model A: `rides ~ temp_actual`
+- Model B: `rides ~ temp_actual + humidity`
+- Model C: `rides ~ temp_actual * year + humidity`
+- Model D: `rides ~ humidity + weekend`
+
+For each comparison, say whether the most appropriate test is a t-test, an extra-sums-of-squares F-test, or neither, and briefly explain.
+
+(a) Model A vs. Model B
+
+(b) Model A vs. Model C
+
+(c) Model B vs. Model D
+
+(d) The `summary()` output for Model C ends with an F-statistic. Which two models does that F-test compare?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) A t-test for the `humidity` coefficient in Model B. The models differ by one coefficient, so the t-test and the F-test are the same test ($F = t^2$).
+
+(b) An extra-sums-of-squares F-test. Model A is nested in Model C, and the models differ by three coefficients (`year2012`, the `temp_actual:year2012` interaction, and `humidity`), which a single t-test can't test at once.
+
+(c) Neither. The models are not nested (each has a predictor the other doesn't), so neither test applies.
+
+(d) Model C vs. the intercept-only model ($\mu\{Y|X\} = \beta_0$). It tests whether *any* of the predictors in Model C are useful.
+
+:::
+:::
+
+## 8. Interpret the coefficients an MLR model when transformations have been used on the response and/or the explanatory variables
+
+*Example question* Below is a model for the log of used car prices using engine size (`Liter`) and whether the car has cruise control (`Cruise`: 1 = yes, 0 = no).
+
+```{r}
+cruise_mod <- lm(log(Price) ~ Liter + Cruise, data = cars)
+tidy(cruise_mod)
+```
+
+(a) Interpret the `Liter` coefficient in terms of price on the original scale (dollars).
+
+(b) Interpret the `Cruise` coefficient in terms of price.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+cr <- coef(cruise_mod)
+```
+
+(a) $e^{`r round(cr["Liter"], 3)`} \approx `r round(exp(cr["Liter"]), 3)`$. Holding cruise control constant, each additional liter of engine size multiplies the predicted price by about `r round(exp(cr["Liter"]), 2)`, i.e., about a `r round(100 * (exp(cr["Liter"]) - 1))`% increase in predicted price.
+
+(b) $e^{`r round(cr["Cruise"], 3)`} \approx `r round(exp(cr["Cruise"]), 2)`$. Holding engine size constant, the predicted price of a car with cruise control is about `r round(exp(cr["Cruise"]), 2)` times the predicted price of a car without it, i.e., about `r round(100 * (exp(cr["Cruise"]) - 1))`% higher.
+
+:::
+:::
+
+*Example question* Here are two models for used car `Price` using a log transformation of `Mileage`.
+
+```{r}
+logx_mod <- lm(Price ~ log(Mileage), data = cars)
+coef(logx_mod)
+
+loglog_mod <- lm(log(Price) ~ log(Mileage), data = cars)
+coef(loglog_mod)
+```
+
+(a) For `logx_mod`, interpret the slope in terms of a *doubling* of mileage.
+
+(b) For `loglog_mod`, which of the following is the best interpretation of the slope?
+
+  A. A 1-mile increase in mileage is associated with a `r round(abs(coef(loglog_mod)[2]), 3)` dollar decrease in price, on average.
+  B. A 1% increase in mileage is associated with an estimated `r round(abs(coef(loglog_mod)[2]), 3)`% decrease in price.
+  C. A 1% increase in mileage is associated with an estimated `r round(100 * abs(coef(loglog_mod)[2]), 1)`% decrease in price.
+  D. A 1-mile increase in mileage is associated with an $e^{`r round(coef(loglog_mod)[2], 3)`}$ dollar decrease in price, on average.
+
+(c) Suppose we had used $\sqrt{\text{Price}}$ as the response instead. Could we interpret the slope on the original scale (dollars) the same way? Why or why not?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) Doubling the mileage increases $\log(\text{Mileage})$ by $\log(2) \approx 0.693$. So doubling the mileage is associated with a change in average price of about $`r round(coef(logx_mod)[2])` \times 0.693 \approx `r round(coef(logx_mod)[2] * log(2))`$ dollars, i.e., a decrease of about \$`r format(round(abs(coef(logx_mod)[2] * log(2))), big.mark = ",")`.
+
+(b) **B.** In a log-log model, the slope is (approximately) the percent change in $y$ for a 1% increase in $x$. (More precisely, a 1% increase in mileage multiplies the predicted price by $1.01^{`r round(coef(loglog_mod)[2], 3)`} \approx `r round(1.01^coef(loglog_mod)[2], 5)`$.)
+
+(c) No. There's no simple back-transformation for a square root that turns a constant change in $\sqrt{\text{Price}}$ into a constant change (or a constant percent change) in price. We could still use the model for predictions (by squaring the predicted values), but the slope doesn't have a clean interpretation on the original scale. That's one reason log transformations are so popular.
+
+:::
+:::
+
+## 9. Diagnose multicollinearity and explain its consequences
+
+*Example question* Below is a model for the log of used car prices using `Mileage`, engine size (`Liter`), and the number of cylinders (`Cyl`).
+
+```{r}
+cyl_mod <- lm(log(Price) ~ Mileage + Liter + Cyl, data = cars)
+tidy(cyl_mod)
+
+cars |>
+  select(Mileage, Liter, Cyl) |>
+  cor()
+
+car::vif(cyl_mod)
+
+summary(lm(Liter ~ Mileage + Cyl, data = cars))$r.squared
+```
+
+For comparison, here is the same model without `Cyl`:
+
+```{r}
+tidy(lm(log(Price) ~ Mileage + Liter, data = cars))
+```
+
+(a) Which pair of predictors is the most problematic in terms of multicollinearity? Why?
+
+(b) Show how the VIF for `Liter` was calculated.
+
+(c) Using the guidelines from class, how serious is the multicollinearity in this model?
+
+(d) Compare the estimate and standard error for `Liter` in the two models. What happened, and why?
+
+(e) Suppose we only want to use `cyl_mod` to *predict* the price of used cars like the ones in this data set. Is the multicollinearity a big problem for that goal? Explain.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+aux_r2 <- summary(lm(Liter ~ Mileage + Cyl, data = cars))$r.squared
+vifs <- car::vif(cyl_mod)
+lit_full <- tidy(cyl_mod) |> filter(term == "Liter")
+lit_red <- tidy(lm(log(Price) ~ Mileage + Liter, data = cars)) |> filter(term == "Liter")
+```
+
+(a) `Liter` and `Cyl`: their correlation is `r round(cor(cars$Liter, cars$Cyl), 3)`. That makes sense, since engines with more cylinders tend to be bigger. `Mileage` is essentially uncorrelated with both.
+
+(b) $\text{VIF}_{\text{Liter}} = \dfrac{1}{1 - R^2_{\text{Liter}}}$, where $R^2_{\text{Liter}}$ is the $R^2$ from the model predicting `Liter` using the *other* predictors (`Mileage` and `Cyl`): $\dfrac{1}{1 - `r round(aux_r2, 3)`} \approx `r round(1 / (1 - aux_r2), 1)`$.
+
+(c) The VIFs for `Liter` and `Cyl` are both about `r round(vifs["Liter"], 1)`, which is above 10, so this indicates a problem (but not above 100, so not a "big" problem). The VIF for `Mileage` is about 1, so it isn't affected.
+
+(d) Without `Cyl`, the `Liter` coefficient is `r round(lit_red$estimate, 3)` with a standard error of `r round(lit_red$std.error, 4)`. With `Cyl` in the model, it is `r round(lit_full$estimate, 3)` with a standard error of `r round(lit_full$std.error, 4)`: the standard error is about `r round(lit_full$std.error / lit_red$std.error, 1)` times bigger. (That's close to $\sqrt{\text{VIF}} = \sqrt{`r round(vifs["Liter"], 1)`} \approx `r round(sqrt(vifs["Liter"]), 1)`$.) Because `Liter` and `Cyl` carry almost the same information, the model can't tell their effects apart: the estimate changes depending on whether the other is included, and its standard error is inflated.
+
+(e) Not really. Multicollinearity makes the individual coefficients unstable and hard to interpret, but the predictions can still be good, as long as the cars we predict for have the same relationship between `Liter` and `Cyl` as the cars in the data.
+
+:::
+:::

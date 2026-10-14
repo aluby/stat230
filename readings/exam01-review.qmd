@@ -1,9 +1,9 @@
 ---
-title: "Exam01 Review"
+title: "Quiz01 Review"
 format: html
 ---
 
-This is an outline of things you should review for Exam01 scheduled for Monday of Week 3.
+This is an outline of things you should review for Quiz01 scheduled for Monday of Week 3.
 
 I recommend beginning by *carefully* reviewing your notes and activities from class and the homework questions. It's best to do this actively: by reading, thinking, solving problems, and asking questions.
 

@@ -184,10 +184,10 @@ The following statements regarding regression diagnostics contain conceptual or 
 
 ::: callout-note
 
-You do not need to load the data into R for this question
+You do not need to load the data into R for this question; just look at the output and answer in sentences.
 :::
 
-<!-- Researchers designed a small-scale experiment to study how moisture content and sweetness are associated with consumer preference (a score between 0 and 100, where 100 is most preferred) for a new snack food.
+Researchers designed a small-scale experiment to study how moisture content and sweetness are associated with consumer preference (a score between 0 and 100, where 100 is most preferred) for a new snack food.
 
 a. Below a scatterplot matrix among all three variables. What does
 this reveal about the pairwise correlations between the variables?
@@ -213,11 +213,10 @@ b. The code below fits a multiple linear regression model with preference as the
 brand_lm <- lm(preference ~ moisture + sweetness, data = brand_preference)
 car::vif(brand_lm)
 ``` 
--->
 
 # Problem 7: `cosmetics`
 
-<!-- An analyst in the district sales office of a national cosmetics firm obtained data on advertising expenditures and sales last year in the district’s 44 territories. The data included:
+An analyst in the district sales office of a national cosmetics firm obtained data on advertising expenditures and sales last year in the district’s 44 territories. The data included:
 
   - expenditures for point-of-sale displays in beauty salons and stores (in thousand dollars),
   - expenditures for local media advertising,
@@ -227,8 +226,7 @@ car::vif(brand_lm)
 The data can be loaded via:
 
 ```{r}
-# cosmetics <- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")
-cosmetics <- read.csv(here::here("data/cosmetics.csv"))
+cosmetics <- read.csv("https://aluby.github.io/stat230/data/cosmetics.csv")
 ```
 
 The analyst was told to investigate the impact of increasing expenditures for point-of-sale displays while holding local and national media advertising constant.
@@ -242,4 +240,10 @@ c. Look at the $t$-tests for `pos_displays` and `local_media` in the model from 
 d. Suppose the analyst decides to drop the local and national media advertising variables from the model to “clear up the picture”. Fit the revised model. Is the analyst now in a better position to achieve the stated objective?
 
 e. This is a situation where it would be possible to design an experiment to meet the research objective. Why would this be more effective in providing suitable data to achieve the objective? (Hint: think about the experimental data from Problem 6 and if they suffered from the same problem you saw here.)
- -->
+
+# Problem 8: Midterm check-in survey
+
+I want to know how the course is going! Fill out this [anonymous google form](https://forms.gle/ZCNDmF8WMdnVVnCVA) to tell me what is going well and if you think there are any changes that could be made.
+
+This form is anonymous, but if we reach a 90% response rate for the class by the end of the HW5 grace period, I'll give 1 point of extra credit on the next quiz
+
