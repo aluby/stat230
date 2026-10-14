@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.23">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Quiz02 Practice Questions – stat230</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.scss">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#express-a-mlr-model-using-proper-notation" id="toc-express-a-mlr-model-using-proper-notation" class="nav-link active" data-scroll-target="#express-a-mlr-model-using-proper-notation">1. Express a MLR model using proper notation</a></li>
+  <li><a href="#interpret-the-coefficients-and-r2-of-a-model-in-context" id="toc-interpret-the-coefficients-and-r2-of-a-model-in-context" class="nav-link" data-scroll-target="#interpret-the-coefficients-and-r2-of-a-model-in-context">2. Interpret the coefficients and <span class="math inline">\(R^2\)</span> of a model in context</a></li>
+  <li><a href="#check-necessary-conditions-for-a-multiple-regression-model-and-discuss-the-implications-of-a-model-deficiency" id="toc-check-necessary-conditions-for-a-multiple-regression-model-and-discuss-the-implications-of-a-model-deficiency" class="nav-link" data-scroll-target="#check-necessary-conditions-for-a-multiple-regression-model-and-discuss-the-implications-of-a-model-deficiency">3. Check necessary conditions for a multiple regression model and discuss the implications of a model deficiency</a></li>
+  <li><a href="#perform-hypothesis-tests-about-a-single-regression-coefficient" id="toc-perform-hypothesis-tests-about-a-single-regression-coefficient" class="nav-link" data-scroll-target="#perform-hypothesis-tests-about-a-single-regression-coefficient">4. Perform hypothesis tests about a single regression coefficient</a></li>
+  <li><a href="#construct-and-interpret-confidence-intervals-for-regression-coefficients-and-linear-combinations-of-regression-coefficients" id="toc-construct-and-interpret-confidence-intervals-for-regression-coefficients-and-linear-combinations-of-regression-coefficients" class="nav-link" data-scroll-target="#construct-and-interpret-confidence-intervals-for-regression-coefficients-and-linear-combinations-of-regression-coefficients">5. Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients</a></li>
+  <li><a href="#use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval" id="toc-use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval" class="nav-link" data-scroll-target="#use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval">6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval</a></li>
+  <li><a href="#conduct-inference-to-compare-nested-regression-models" id="toc-conduct-inference-to-compare-nested-regression-models" class="nav-link" data-scroll-target="#conduct-inference-to-compare-nested-regression-models">7. Conduct inference to compare nested regression models</a></li>
+  <li><a href="#interpret-the-coefficients-an-mlr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables" id="toc-interpret-the-coefficients-an-mlr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables" class="nav-link" data-scroll-target="#interpret-the-coefficients-an-mlr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables">8. Interpret the coefficients an MLR model when transformations have been used on the response and/or the explanatory variables</a></li>
+  <li><a href="#diagnose-multicollinearity-and-explain-its-consequences" id="toc-diagnose-multicollinearity-and-explain-its-consequences" class="nav-link" data-scroll-target="#diagnose-multicollinearity-and-explain-its-consequences">9. Diagnose multicollinearity and explain its consequences</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="quiz02-practice.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Quiz02 Practice Questions</h1>
+<p class="subtitle lead">Stat 230 - Spring 2026</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Practice questions for each skill on the <a href="../readings/exam02-review.html">Quiz02 Review</a> sheet. The data sets are ones we’ve seen in class, but the models and questions are new.</p>
+<section id="express-a-mlr-model-using-proper-notation" class="level2">
+<h2 class="anchored" data-anchor-id="express-a-mlr-model-using-proper-notation">1. Express a MLR model using proper notation</h2>
+<p><em>Example question</em> The <code>bikes</code> data include the <code>year</code> of each day (2011 or 2012). The model below allows the relationship between temperature (<code>temp_actual</code>, in degrees F) and daily <code>rides</code> to be different in the two years.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>year_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">*</span> year, <span class="at">data =</span> bikes)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(year_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rides ~ temp_actual * year, data = bikes)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4400.9  -565.7     9.0   663.2  2350.4 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)          -1946.022    370.162  -5.257 2.18e-07 ***
+temp_actual             71.587      5.833  12.272  &lt; 2e-16 ***
+year2012               193.113    539.201   0.358   0.7204    
+temp_actual:year2012    24.174      8.406   2.876   0.0042 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 951.9 on 496 degrees of freedom
+Multiple R-squared:  0.6368,    Adjusted R-squared:  0.6346 
+F-statistic: 289.9 on 3 and 496 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Using proper statistical notation, write down the theoretical model that was fit. Write it as a single equation using <span class="math inline">\(x_1, x_2\)</span>, etc., define all variables, and state the assumption on the error term.</p></li>
+<li><p>Write down the fitted regression equation for 2011 and for 2012 separately.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i1} x_{i2} + \varepsilon_i, \quad \varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)\)</span></li>
+</ol>
+<p>where <span class="math inline">\(Y_i\)</span> is the number of rides on day <span class="math inline">\(i\)</span>, <span class="math inline">\(x_{i1}\)</span> is the temperature (degrees F) on day <span class="math inline">\(i\)</span>, and <span class="math inline">\(x_{i2}\)</span> is an indicator variable that equals 1 if day <span class="math inline">\(i\)</span> is in 2012 and 0 if it is in 2011.</p>
+<ol start="2" type="a">
+<li>For 2011, plug in <span class="math inline">\(x_2 = 0\)</span>:</li>
+</ol>
+<p><span class="math inline">\(\widehat{\text{rides}} = -1946.022 + 71.587 \times \text{temp}\)</span></p>
+<p>For 2012, plug in <span class="math inline">\(x_2 = 1\)</span> and combine the intercept terms and the slope terms:</p>
+<p><span class="math inline">\(\widehat{\text{rides}} = (-1946.022 + 193.113) + (71.587 + 24.174) \times \text{temp} = -1752.909 + 95.760 \times \text{temp}\)</span></p>
+</div>
+</div>
+</div>
+<p><em>Example question</em> On very hot days, people may be less likely to bike. Below is a quadratic model for daily <code>rides</code> using temperature.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>quad_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> <span class="fu">I</span>(temp_actual<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> bikes)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(quad_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term             estimate std.error statistic   p.value
+  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)      -8708.    2316.        -3.76 0.000190 
+2 temp_actual        301.      74.2        4.05 0.0000589
+3 I(temp_actual^2)    -1.67     0.584     -2.86 0.00444  </code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Write down the theoretical model, defining all variables and stating the assumption on the error term.</p></li>
+<li><p>Write down the fitted model.</p></li>
+<li><p>Is this still a <em>linear</em> regression model, even though the fitted model is a curve? Explain.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i, \quad \varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)\)</span>, where <span class="math inline">\(Y_i\)</span> is the number of rides on day <span class="math inline">\(i\)</span> and <span class="math inline">\(x_i\)</span> is the temperature (degrees F) on day <span class="math inline">\(i\)</span>.</p></li>
+<li><p><span class="math inline">\(\widehat{\text{rides}} = -8708.39 + 300.855 \times \text{temp} - 1.668 \times \text{temp}^2\)</span></p></li>
+<li><p>Yes. The model is still <em>linear in the</em> <span class="math inline">\(\beta\)</span><em>’s</em>: the mean is a sum of coefficients times (functions of) the predictor. Squaring the predictor changes the shape of the fitted curve, but we still estimate the <span class="math inline">\(\beta\)</span>’s with least squares, check the same conditions, and do inference the same way. (The negative coefficient on <span class="math inline">\(\text{temp}^2\)</span> means the curve bends downward: ridership levels off and eventually decreases at high temperatures.)</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="interpret-the-coefficients-and-r2-of-a-model-in-context" class="level2">
+<h2 class="anchored" data-anchor-id="interpret-the-coefficients-and-r2-of-a-model-in-context">2. Interpret the coefficients and <span class="math inline">\(R^2\)</span> of a model in context</h2>
+<p><em>Example question</em> Below is a model for daily <code>rides</code> using temperature (<code>temp_actual</code>, in degrees F), <code>humidity</code> (in %), and whether the day was a weekend (<code>weekend</code>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>humid_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> humidity <span class="sc">+</span> weekend, <span class="at">data =</span> bikes)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(humid_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rides ~ temp_actual + humidity + weekend, data = bikes)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4462.4  -883.6  -104.1   811.0  2720.7 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -871.252    369.446  -2.358   0.0187 *  
+temp_actual   97.351      5.465  17.814  &lt; 2e-16 ***
+humidity     -25.366      3.628  -6.993 8.77e-12 ***
+weekendTRUE -717.710    119.105  -6.026 3.28e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1195 on 496 degrees of freedom
+Multiple R-squared:  0.4273,    Adjusted R-squared:  0.4239 
+F-statistic: 123.4 on 3 and 496 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Interpret the coefficient for <code>humidity</code> in context.</p></li>
+<li><p>Interpret the coefficient for <code>weekendTRUE</code> in context.</p></li>
+<li><p>Interpret the <span class="math inline">\(R^2\)</span> value in context.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Holding temperature and weekend/weekday constant, each additional percentage point of humidity is associated with about 25.4 <em>fewer</em> rides per day, on average.</p></li>
+<li><p>Holding temperature and humidity constant, weekend days have about 718 <em>fewer</em> rides than weekdays, on average.</p></li>
+<li><p>About 42.7% of the variability in daily rides is explained by the model with temperature, humidity, and weekend.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Below is a model for the <code>Price</code> of used cars (in dollars) using <code>Mileage</code> and the body <code>Type</code> of the car (convertible, coupe, hatchback, sedan, or wagon).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>type_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Mileage <span class="sc">+</span> Type, <span class="at">data =</span> cars)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(type_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ Mileage + Type, data = cars)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-12573  -5797  -2292   3689  26652 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    4.489e+04  1.354e+03  33.158  &lt; 2e-16 ***
+Mileage       -1.960e-01  3.489e-02  -5.616  2.7e-08 ***
+TypeCoupe     -2.327e+04  1.334e+03 -17.443  &lt; 2e-16 ***
+TypeHatchback -2.698e+04  1.551e+03 -17.391  &lt; 2e-16 ***
+TypeSedan     -1.996e+04  1.202e+03 -16.596  &lt; 2e-16 ***
+TypeWagon     -1.800e+04  1.528e+03 -11.777  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 8096 on 798 degrees of freedom
+Multiple R-squared:  0.3334,    Adjusted R-squared:  0.3292 
+F-statistic: 79.82 on 5 and 798 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Which type of car is the reference level? How can you tell?</p></li>
+<li><p>Interpret the coefficient for <code>TypeSedan</code> in context.</p></li>
+<li><p>The <code>Mileage</code> coefficient is very small because it describes a 1-mile change. Interpret it for an increase of 10,000 miles.</p></li>
+<li><p>Which of the following is the best explanation for why the adjusted <span class="math inline">\(R^2\)</span> (0.329) is smaller than the <span class="math inline">\(R^2\)</span> (0.333)?</p></li>
+</ol>
+<p>A. Adjusted <span class="math inline">\(R^2\)</span> removes outliers before computing the proportion of variability explained. B. Adjusted <span class="math inline">\(R^2\)</span> includes a penalty for the number of predictors in the model. C. Adjusted <span class="math inline">\(R^2\)</span> only uses the quantitative predictors. D. Adjusted <span class="math inline">\(R^2\)</span> is computed on the log scale.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Convertible. It is the only type that does not have its own indicator variable (coefficient) in the output, so it is the group where all of the type indicators equal 0. (R chose it because it comes first alphabetically.)</p></li>
+<li><p>Holding mileage constant, sedans sell for about $19,955 <em>less</em> than convertibles, on average.</p></li>
+<li><p><span class="math inline">\(10{,}000 \times (-0.196) = -1960\)</span>. Holding the type of car constant, every additional 10,000 miles is associated with a price that is about $1,960 lower, on average.</p></li>
+<li><p><strong>B.</strong> <span class="math inline">\(R^2\)</span> never decreases when we add predictors (even useless ones), so adjusted <span class="math inline">\(R^2\)</span> adjusts for the number of predictors. That makes it a better tool for <em>comparing</em> models with different numbers of predictors.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="check-necessary-conditions-for-a-multiple-regression-model-and-discuss-the-implications-of-a-model-deficiency" class="level2">
+<h2 class="anchored" data-anchor-id="check-necessary-conditions-for-a-multiple-regression-model-and-discuss-the-implications-of-a-model-deficiency">3. Check necessary conditions for a multiple regression model and discuss the implications of a model deficiency</h2>
+<p><em>Example question</em> Here are the residual plots for a model of used car <code>Price</code> using <code>Mileage</code> and engine size (<code>Liter</code>). In this data set, the cars are listed in order of make and model (e.g., all of the Buick Centurys are listed together).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>liter_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Mileage <span class="sc">+</span> Liter, <span class="at">data =</span> cars)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(liter_mod, <span class="at">type =</span> <span class="st">"standardized"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="quiz02-practice_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" alt="Residual plot, Q-Q plot, index plot, and histogram of standardized residuals for the used car price model." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li><p>Which condition(s) look violated? Say which plot(s) you used to tell.</p></li>
+<li><p>Look at the index plot. What do you think is causing the “runs” of residuals that are all above (or all below) zero? What does this suggest about the model?</p></li>
+<li><p>Given these violations, can you trust the p-values in the <code>summary()</code> output for this model? Can you trust the estimated coefficients? Explain.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><strong>Independence:</strong> the index plot shows long runs of residuals on the same side of zero, so residuals for cars that are next to each other in the data are related. <strong>Normality:</strong> the Q-Q plot curves well above the line in the upper tail, and the histogram is right-skewed (and looks like it has two groups). <strong>Equal variance</strong> is also questionable: the residual plot has a few groups of points that fan out above the line.</p></li>
+<li><p>Since the cars are listed by make and model, the runs are groups of cars of the same make/model. Cars of the same model have similar prices, so if the model over- or under-predicts one of them, it does the same for the rest. This suggests the model is missing an important predictor (like <code>Make</code>, or the model of the car), and that the observations aren’t independent given only <code>Mileage</code> and <code>Liter</code>.</p></li>
+<li><p>No, the p-values aren’t trustworthy. The independence violation means the standard errors are too small (we have less independent information than <span class="math inline">\(n\)</span> suggests), so the p-values and confidence intervals are too optimistic. The estimated coefficients are also suspect, but for a different reason: if an important predictor is missing, the coefficients for <code>Mileage</code> and <code>Liter</code> may be picking up its effect. A better model would add <code>Make</code> (and probably a log transformation of <code>Price</code>).</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> In the Day 13 slides, we saw the <code>Duncan</code> data, which records the <code>prestige</code>, <code>income</code>, and <code>education</code> of 45 occupations (all measured as percentages). Here are the leverage and Cook’s distance plots, plus the five occupations with the largest Cook’s distances, for the model <code>prestige ~ income + education</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>duncan_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> duncan)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(duncan_mod, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"lev"</span>, <span class="st">"cookd"</span>), <span class="at">type =</span> <span class="st">"standardized"</span>, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="quiz02-practice_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" alt="Residual-leverage plot and Cook's distance plot for the Duncan prestige model." width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(duncan_mod) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">occupation =</span> duncan<span class="sc">$</span>occupation) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(occupation, prestige, income, education, .hat, .std.resid, .cooksd) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(.cooksd)) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 7
+  occupation  prestige income education   .hat .std.resid .cooksd
+  &lt;chr&gt;          &lt;int&gt;  &lt;int&gt;     &lt;int&gt;  &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+1 minister          87     21        84 0.173       2.85   0.566 
+2 conductor         38     76        34 0.195      -1.67   0.224 
+3 reporter          52     67        87 0.0544     -2.27   0.0990
+4 RR.engineer       67     81        28 0.269       0.812  0.0810
+5 contractor        76     53        45 0.0433      1.97   0.0585</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Calculate the two leverage cutoffs we discussed in class.</p></li>
+<li><p>Which occupation has the highest leverage? Is it influential? Explain why or why not.</p></li>
+<li><p>Which occupation is the most influential? Explain using its leverage and standardized residual.</p></li>
+<li><p>Below are the coefficients with and without that occupation. Following the flowchart from Day 13, what would you do next?</p></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">all 45 occupations</th>
+<th style="text-align: right;">without minister</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-6.065</td>
+<td style="text-align: right;">-6.628</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">income</td>
+<td style="text-align: right;">0.599</td>
+<td style="text-align: right;">0.732</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">education</td>
+<td style="text-align: right;">0.546</td>
+<td style="text-align: right;">0.433</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Here <span class="math inline">\(n = 45\)</span> and <span class="math inline">\(p = 2\)</span>, so <span class="math inline">\(2(p+1)/n = 6/45 \approx 0.133\)</span> and <span class="math inline">\(3(p+1)/n = 9/45 = 0.2\)</span>.</p></li>
+<li><p>The RR.engineer has the highest leverage (0.27, above both cutoffs). It is <em>not</em> very influential: its standardized residual is small (0.81) and its Cook’s distance is only 0.08. Its income and education are unusual, but its prestige is about what the model predicts, so it falls along the trend and doesn’t pull the fitted model much.</p></li>
+<li><p>The minister has the largest Cook’s distance (0.57). It has both a fairly high leverage (0.17, above the smaller cutoff) <em>and</em> a large standardized residual (2.85): ministers have much higher prestige than their income would predict. It’s the combination of the two that makes a point influential.</p></li>
+<li><p>The coefficients change noticeably when ministers are removed (the income coefficient goes up, and the education coefficient goes down, by about 20%). Following the flowchart: the conclusions change, so we ask whether ministers belong to a different population than the one under investigation. If there’s a good reason to think so (for example, the prestige of clergy may be driven by different factors than income and education), we could omit them and say so. Otherwise, we’d report both fits and say that more data are needed.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="perform-hypothesis-tests-about-a-single-regression-coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="perform-hypothesis-tests-about-a-single-regression-coefficient">4. Perform hypothesis tests about a single regression coefficient</h2>
+<p><em>Example question</em> Use the <code>year_mod</code> output from Skill 1. Is there evidence that the relationship between temperature and ridership changed from 2011 to 2012?</p>
+<ol type="a">
+<li><p>State the null and alternative hypotheses in words and using proper notation.</p></li>
+<li><p>Show how the test statistic was calculated, and give its degrees of freedom.</p></li>
+<li><p>Report the p-value and state your conclusion in context.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Using the model from Skill 1, the difference in slopes between 2012 and 2011 is <span class="math inline">\(\beta_3\)</span> (the interaction coefficient).</li>
+</ol>
+<p><span class="math inline">\(H_0: \beta_3 = 0\)</span> (the slope for temperature is the same in both years) vs.&nbsp;<span class="math inline">\(H_A: \beta_3 \ne 0\)</span> (the slope for temperature is different in 2011 and 2012).</p>
+<ol start="2" type="a">
+<li><p><span class="math inline">\(t = \dfrac{\widehat\beta_3 - 0}{SE(\widehat\beta_3)} = \dfrac{24.174}{8.406} \approx 2.88\)</span>, with <span class="math inline">\(df = n - (p + 1) = 500 - 4 = 496\)</span>.</p></li>
+<li><p><span class="math inline">\(p =\)</span> 0.0042 (two-sided, from the output). There is strong evidence that the relationship between temperature and ridership was different in 2012: each additional degree was associated with about 24.2 <em>more</em> additional rides in 2012 than in 2011.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Use the <code>humid_mod</code> output from Skill 2. Before looking at the data, an analyst hypothesized that more humid days have <em>fewer</em> rides, after accounting for temperature and whether it’s a weekend.</p>
+<ol type="a">
+<li><p>State <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_A\)</span> in symbols, matching the analyst’s hypothesis.</p></li>
+<li><p>Calculate the test statistic.</p></li>
+<li><p>Is the p-value in the <code>summary()</code> output the right one to use? If not, how would you find the correct p-value? State your conclusion.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Let <span class="math inline">\(\beta_2\)</span> be the coefficient for <code>humidity</code>. <span class="math inline">\(H_0: \beta_2 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_A: \beta_2 &lt; 0\)</span>.</p></li>
+<li><p><span class="math inline">\(t = \dfrac{-25.366 - 0}{3.628} \approx -6.99\)</span>, with <span class="math inline">\(df = 500 - 4 = 496\)</span>.</p></li>
+<li><p>No: R reports a <em>two-sided</em> p-value, but the analyst’s alternative is one-sided. Since the test statistic is negative (in the direction of <span class="math inline">\(H_A\)</span>), the correct p-value is half of R’s. R reports <span class="math inline">\(p =\)</span> 8.77e-12, so the one-sided p-value is about 4.4e-12. There is very strong evidence that, holding temperature and weekend/weekday constant, more humid days have fewer rides on average.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="construct-and-interpret-confidence-intervals-for-regression-coefficients-and-linear-combinations-of-regression-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="construct-and-interpret-confidence-intervals-for-regression-coefficients-and-linear-combinations-of-regression-coefficients">5. Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients</h2>
+<p><em>Example question</em> Use the <code>humid_mod</code> output from Skill 2, and the <code>qt()</code> output below.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">01</span>, <span class="at">df =</span> <span class="dv">496</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.333889</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">025</span>, <span class="at">df =</span> <span class="dv">496</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.964758</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">05</span>, <span class="at">df =</span> <span class="dv">496</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.647932</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">1</span>, <span class="at">df =</span> <span class="dv">496</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.283261</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Construct a 90% confidence interval for the coefficient of <code>humidity</code>.</p></li>
+<li><p>Interpret your interval in context.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>For a 90% interval, there is 5% in each tail, so <span class="math inline">\(t^* =\)</span> 1.648 (from <code>qt(.05, df = 496, lower.tail = FALSE)</code>).</li>
+</ol>
+<p><span class="math inline">\(-25.366 \pm 1.648 \times 3.628 \;\Longrightarrow\; (-31.3, \; -19.4)\)</span></p>
+<ol start="2" type="a">
+<li>We are 90% confident that, holding temperature and weekend/weekday constant, each additional percentage point of humidity is associated with between 19.4 and 31.3 <em>fewer</em> rides per day, on average.</li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Use the <code>year_mod</code> model from Skill 1. Below is the covariance matrix of the estimated coefficients.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vcov</span>(year_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     (Intercept) temp_actual    year2012 temp_actual:year2012
+(Intercept)           137019.556 -2129.66456 -137019.556           2129.66456
+temp_actual            -2129.665    34.02686    2129.665            -34.02686
+year2012             -137019.556  2129.66456  290737.973          -4475.41705
+temp_actual:year2012    2129.665   -34.02686   -4475.417             70.66346</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">025</span>, <span class="at">df =</span> <span class="dv">496</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.964758</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Write the slope for temperature <em>in 2012</em> as a linear combination of the model coefficients, and calculate its estimate.</p></li>
+<li><p>Calculate the standard error of the 2012 slope. Why can’t you just add the two standard errors from the <code>summary()</code> output?</p></li>
+<li><p>Construct a 95% confidence interval for the 2012 slope, and interpret it in context.</p></li>
+<li><p>A city planner claims that, in 2012, each additional degree F was associated with 100 more rides per day, on average. Conduct a hypothesis test of this claim.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>The 2012 slope is <span class="math inline">\(\gamma = \beta_1 + \beta_3\)</span> (so <span class="math inline">\(c_1 = c_2 = 1\)</span>).</li>
+</ol>
+<p><span class="math inline">\(\widehat\gamma = 71.587 + 24.174 = 95.760\)</span></p>
+<ol start="2" type="a">
+<li><span class="math inline">\(Var(\widehat\gamma) = Var(\widehat\beta_1) + Var(\widehat\beta_3) + 2\,Cov(\widehat\beta_1, \widehat\beta_3) = 34.027 + 70.663 + 2(-34.027) = 36.637\)</span></li>
+</ol>
+<p><span class="math inline">\(SE(\widehat\gamma) = \sqrt{36.637} \approx 6.053\)</span></p>
+<p>We can’t just add the standard errors because (1) variances add, not standard errors, and (2) the two estimates are correlated, so we need the covariance term. Here the covariance is negative, which makes the standard error smaller.</p>
+<ol start="3" type="a">
+<li><span class="math inline">\(95.76 \pm 1.965 \times 6.053 \;\Longrightarrow\; (83.9, \; 107.7)\)</span></li>
+</ol>
+<p>We are 95% confident that, in 2012, each additional degree F was associated with between 83.9 and 107.7 more rides per day, on average.</p>
+<ol start="4" type="a">
+<li><span class="math inline">\(H_0: \beta_1 + \beta_3 = 100\)</span> vs.&nbsp;<span class="math inline">\(H_A: \beta_1 + \beta_3 \ne 100\)</span>.</li>
+</ol>
+<p><span class="math inline">\(t = \dfrac{\widehat\gamma - 100}{SE(\widehat\gamma)} = \dfrac{95.76 - 100}{6.053} \approx -0.7\)</span>, with <span class="math inline">\(df = 496\)</span>.</p>
+<p>The p-value is the area in both tails of a <span class="math inline">\(t\)</span> distribution with 496 df beyond <span class="math inline">\(\pm 0.7\)</span>, which is about 0.48. There is no evidence against the planner’s claim: a 2012 slope of 100 rides per degree is consistent with the data. (We could also see this from the interval in (c), which contains 100.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval" class="level2">
+<h2 class="anchored" data-anchor-id="use-a-regression-model-to-make-appropriate-predictions-and-communicate-the-uncertainty-of-these-predictions-through-an-interval">6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval</h2>
+<p><em>Example question</em> Use the <code>humid_mod</code> model from Skill 2. For a weekend day with a temperature of 80°F and 50% humidity, the predicted number of rides is 4931. R gives these two 95% intervals: (2563, 7299) and (4628, 5233).</p>
+<ol type="a">
+<li><p>Which interval is the confidence interval and which is the prediction interval? How can you tell?</p></li>
+<li><p>Capital Bikeshare is scheduling staff for next Saturday, which is forecast to be 80°F with 50% humidity. Which interval should they use?</p></li>
+<li><p>Interpret the interval you did <em>not</em> choose in (b).</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>(4628, 5233) is the confidence interval and (2563, 7299) is the prediction interval. The prediction interval is wider because it accounts for both the uncertainty in the estimated mean <em>and</em> the variability of one individual day around that mean.</p></li>
+<li><p>The prediction interval, since they are predicting the number of rides on one specific day.</p></li>
+<li><p>We are 95% confident that the <em>average</em> number of rides, across all weekend days with a temperature of 80°F and 50% humidity, is between 4628 and 5233.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> The plot below shows lung function (<code>FEV</code>, in L/s) vs.&nbsp;<code>Age</code> for the 345 adolescents in the FEV data, along with the fitted SLR line and two shaded bands.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="quiz02-practice_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" alt="Scatterplot of FEV vs. age with a fitted line, a wide orange band, and a narrow dark band around the line." width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li><p>Which band (wide orange or narrow dark) shows the confidence intervals, and which shows the prediction intervals?</p></li>
+<li><p>Why does it make sense that one band is so much wider than the other?</p></li>
+<li><p>Where is the narrow dark band narrowest? Why?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>The narrow dark band shows the confidence intervals for the mean FEV; the wide orange band shows the prediction intervals for individual adolescents.</p></li>
+<li><p>The prediction interval includes the person-to-person variability of individual observations around the mean (<span class="math inline">\(\widehat\sigma\)</span>), in addition to the uncertainty in the estimated line. That extra variability doesn’t shrink with more data, so most of the observed points fall inside the orange band.</p></li>
+<li><p>It is narrowest near the average age (about 12.1 years). The standard error of the mean response includes <span class="math inline">\((x_0 - \bar{x})^2\)</span>, so we’re most certain about where the line is near the center of the data, and less certain toward the edges (here, the older ages, where there are also fewer observations).</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="conduct-inference-to-compare-nested-regression-models" class="level2">
+<h2 class="anchored" data-anchor-id="conduct-inference-to-compare-nested-regression-models">7. Conduct inference to compare nested regression models</h2>
+<p><em>Example question</em> In the first week of class, we used the NHANES data to model a depression risk score (<code>dep_score</code>, the log of the PHQ-9 score + 1) using daily sitting time (<code>sedentary_hours</code>). The data also record each participant’s <code>sex</code>. Researchers want to know whether sex is related to the depression score <em>at all</em> (as either a shift in the line, a change in the slope, or both), after accounting for sitting time. They compare these two models:</p>
+<ul>
+<li>Model 1: <code>dep_score ~ sedentary_hours</code></li>
+<li>Model 2: <code>dep_score ~ sedentary_hours * sex</code></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Residual df</th>
+<th style="text-align: right;">SSE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Model 1: dep_score ~ sedentary_hours</td>
+<td style="text-align: right;">657</td>
+<td style="text-align: right;">512.88</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Model 2: dep_score ~ sedentary_hours * sex</td>
+<td style="text-align: right;">655</td>
+<td style="text-align: right;">503.90</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ol type="a">
+<li><p>Are these models nested? Which is the full model and which is the reduced model?</p></li>
+<li><p>Write out the full model, then state the null and alternative hypotheses using proper <span class="math inline">\(\beta\)</span> notation.</p></li>
+<li><p>Calculate the F-statistic and give its degrees of freedom.</p></li>
+<li><p>Describe how the p-value is found (what distribution, and which tail?). The output below may help.</p></li>
+</ol>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>pf(5.83, df1 = 2, df2 = 655, lower.tail = FALSE)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.003092683</code></pre>
+</div>
+</div>
+<ol start="5" type="a">
+<li>What do you conclude?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Yes. Model 1 is Model 2 with the two sex terms set to 0, so Model 2 is the full model and Model 1 is the reduced model.</p></li>
+<li><p>Full model: <span class="math inline">\(\mu\{Y | X\} = \beta_0 + \beta_1 \text{sedentary} + \beta_2 \text{male} + \beta_3 \text{sedentary} \times \text{male}\)</span>, where male is an indicator equal to 1 for male participants and 0 for female participants (the reference level).</p></li>
+</ol>
+<p><span class="math inline">\(H_0: \beta_2 = \beta_3 = 0\)</span> (sex is not related to the depression score after accounting for sitting time) vs.&nbsp;<span class="math inline">\(H_A:\)</span> at least one of <span class="math inline">\(\beta_2, \beta_3 \ne 0\)</span>.</p>
+<ol start="3" type="a">
+<li><span class="math inline">\(d = 657 - 655 = 2\)</span> coefficients are being tested.</li>
+</ol>
+<p><span class="math inline">\(F = \dfrac{(SSE_{reduced} - SSE_{full})/d}{SSE_{full}/df_{full}} = \dfrac{(512.88 - 503.9)/2}{503.9/655} \approx 5.83\)</span></p>
+<p>with 2 and 655 degrees of freedom.</p>
+<ol start="4" type="a">
+<li><p>The p-value is the area in the <strong>upper tail</strong> of an <span class="math inline">\(F\)</span> distribution with 2 and 655 degrees of freedom, above 5.83. (Only large values of <span class="math inline">\(F\)</span> are evidence against <span class="math inline">\(H_0\)</span>.) From the output, <span class="math inline">\(p \approx 0.0031\)</span>.</p></li>
+<li><p>There is strong evidence that sex is related to the depression risk score after accounting for sitting time (through a shift in the line, a change in the slope, or both).</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Consider these four models for the <code>bikes</code> data:</p>
+<ul>
+<li>Model A: <code>rides ~ temp_actual</code></li>
+<li>Model B: <code>rides ~ temp_actual + humidity</code></li>
+<li>Model C: <code>rides ~ temp_actual * year + humidity</code></li>
+<li>Model D: <code>rides ~ humidity + weekend</code></li>
+</ul>
+<p>For each comparison, say whether the most appropriate test is a t-test, an extra-sums-of-squares F-test, or neither, and briefly explain.</p>
+<ol type="a">
+<li><p>Model A vs.&nbsp;Model B</p></li>
+<li><p>Model A vs.&nbsp;Model C</p></li>
+<li><p>Model B vs.&nbsp;Model D</p></li>
+<li><p>The <code>summary()</code> output for Model C ends with an F-statistic. Which two models does that F-test compare?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>A t-test for the <code>humidity</code> coefficient in Model B. The models differ by one coefficient, so the t-test and the F-test are the same test (<span class="math inline">\(F = t^2\)</span>).</p></li>
+<li><p>An extra-sums-of-squares F-test. Model A is nested in Model C, and the models differ by three coefficients (<code>year2012</code>, the <code>temp_actual:year2012</code> interaction, and <code>humidity</code>), which a single t-test can’t test at once.</p></li>
+<li><p>Neither. The models are not nested (each has a predictor the other doesn’t), so neither test applies.</p></li>
+<li><p>Model C vs.&nbsp;the intercept-only model (<span class="math inline">\(\mu\{Y|X\} = \beta_0\)</span>). It tests whether <em>any</em> of the predictors in Model C are useful.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="interpret-the-coefficients-an-mlr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables" class="level2">
+<h2 class="anchored" data-anchor-id="interpret-the-coefficients-an-mlr-model-when-transformations-have-been-used-on-the-response-andor-the-explanatory-variables">8. Interpret the coefficients an MLR model when transformations have been used on the response and/or the explanatory variables</h2>
+<p><em>Example question</em> Below is a model for the log of used car prices using engine size (<code>Liter</code>) and whether the car has cruise control (<code>Cruise</code>: 1 = yes, 0 = no).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cruise_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Price) <span class="sc">~</span> Liter <span class="sc">+</span> Cruise, <span class="at">data =</span> cars)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(cruise_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)    9.12     0.0329     277.  0       
+2 Liter          0.175    0.0106      16.4 2.02e-52
+3 Cruise         0.300    0.0273      11.0 2.63e-26</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Interpret the <code>Liter</code> coefficient in terms of price on the original scale (dollars).</p></li>
+<li><p>Interpret the <code>Cruise</code> coefficient in terms of price.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(e^{0.175} \approx 1.191\)</span>. Holding cruise control constant, each additional liter of engine size multiplies the predicted price by about 1.19, i.e., about a 19% increase in predicted price.</p></li>
+<li><p><span class="math inline">\(e^{0.3} \approx 1.35\)</span>. Holding engine size constant, the predicted price of a car with cruise control is about 1.35 times the predicted price of a car without it, i.e., about 35% higher.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Here are two models for used car <code>Price</code> using a log transformation of <code>Mileage</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>logx_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> <span class="fu">log</span>(Mileage), <span class="at">data =</span> cars)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(logx_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept) log(Mileage) 
+   43013.577    -2221.761 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>loglog_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Price) <span class="sc">~</span> <span class="fu">log</span>(Mileage), <span class="at">data =</span> cars)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(loglog_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept) log(Mileage) 
+ 10.72537349  -0.08676928 </code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>For <code>logx_mod</code>, interpret the slope in terms of a <em>doubling</em> of mileage.</p></li>
+<li><p>For <code>loglog_mod</code>, which of the following is the best interpretation of the slope?</p></li>
+</ol>
+<p>A. A 1-mile increase in mileage is associated with a 0.087 dollar decrease in price, on average. B. A 1% increase in mileage is associated with an estimated 0.087% decrease in price. C. A 1% increase in mileage is associated with an estimated 8.7% decrease in price. D. A 1-mile increase in mileage is associated with an <span class="math inline">\(e^{-0.087}\)</span> dollar decrease in price, on average.</p>
+<ol start="3" type="a">
+<li>Suppose we had used <span class="math inline">\(\sqrt{\text{Price}}\)</span> as the response instead. Could we interpret the slope on the original scale (dollars) the same way? Why or why not?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Doubling the mileage increases <span class="math inline">\(\log(\text{Mileage})\)</span> by <span class="math inline">\(\log(2) \approx 0.693\)</span>. So doubling the mileage is associated with a change in average price of about <span class="math inline">\(-2222 \times 0.693 \approx -1540\)</span> dollars, i.e., a decrease of about $1,540.</p></li>
+<li><p><strong>B.</strong> In a log-log model, the slope is (approximately) the percent change in <span class="math inline">\(y\)</span> for a 1% increase in <span class="math inline">\(x\)</span>. (More precisely, a 1% increase in mileage multiplies the predicted price by <span class="math inline">\(1.01^{-0.087} \approx 0.99914\)</span>.)</p></li>
+<li><p>No.&nbsp;There’s no simple back-transformation for a square root that turns a constant change in <span class="math inline">\(\sqrt{\text{Price}}\)</span> into a constant change (or a constant percent change) in price. We could still use the model for predictions (by squaring the predicted values), but the slope doesn’t have a clean interpretation on the original scale. That’s one reason log transformations are so popular.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="diagnose-multicollinearity-and-explain-its-consequences" class="level2">
+<h2 class="anchored" data-anchor-id="diagnose-multicollinearity-and-explain-its-consequences">9. Diagnose multicollinearity and explain its consequences</h2>
+<p><em>Example question</em> Below is a model for the log of used car prices using <code>Mileage</code>, engine size (<code>Liter</code>), and the number of cylinders (<code>Cyl</code>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cyl_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Price) <span class="sc">~</span> Mileage <span class="sc">+</span> Liter <span class="sc">+</span> Cyl, <span class="at">data =</span> cars)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(cyl_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term           estimate  std.error statistic    p.value
+  &lt;chr&gt;             &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 (Intercept)  9.26       0.0651        142.   0         
+2 Mileage     -0.00000674 0.00000140     -4.80 0.00000189
+3 Liter        0.148      0.0363          4.09 0.0000468 
+4 Cyl          0.0579     0.0289          2.00 0.0454    </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cars <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Mileage, Liter, Cyl) <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Mileage       Liter         Cyl
+Mileage  1.00000000 -0.01864062 -0.02946099
+Liter   -0.01864062  1.00000000  0.95789658
+Cyl     -0.02946099  0.95789658  1.00000000</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">vif</span>(cyl_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mileage     Liter       Cyl 
+ 1.001985 12.144428 12.150755 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(Liter <span class="sc">~</span> Mileage <span class="sc">+</span> Cyl, <span class="at">data =</span> cars))<span class="sc">$</span>r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9176577</code></pre>
+</div>
+</div>
+<p>For comparison, here is the same model without <code>Cyl</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">lm</span>(<span class="fu">log</span>(Price) <span class="sc">~</span> Mileage <span class="sc">+</span> Liter, <span class="at">data =</span> cars))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term           estimate  std.error statistic  p.value
+  &lt;chr&gt;             &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  9.35       0.0441        212.   0       
+2 Mileage     -0.00000686 0.00000141     -4.88 1.30e- 6
+3 Liter        0.218      0.0104         20.9  7.77e-78</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Which pair of predictors is the most problematic in terms of multicollinearity? Why?</p></li>
+<li><p>Show how the VIF for <code>Liter</code> was calculated.</p></li>
+<li><p>Using the guidelines from class, how serious is the multicollinearity in this model?</p></li>
+<li><p>Compare the estimate and standard error for <code>Liter</code> in the two models. What happened, and why?</p></li>
+<li><p>Suppose we only want to use <code>cyl_mod</code> to <em>predict</em> the price of used cars like the ones in this data set. Is the multicollinearity a big problem for that goal? Explain.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><code>Liter</code> and <code>Cyl</code>: their correlation is 0.958. That makes sense, since engines with more cylinders tend to be bigger. <code>Mileage</code> is essentially uncorrelated with both.</p></li>
+<li><p><span class="math inline">\(\text{VIF}_{\text{Liter}} = \dfrac{1}{1 - R^2_{\text{Liter}}}\)</span>, where <span class="math inline">\(R^2_{\text{Liter}}\)</span> is the <span class="math inline">\(R^2\)</span> from the model predicting <code>Liter</code> using the <em>other</em> predictors (<code>Mileage</code> and <code>Cyl</code>): <span class="math inline">\(\dfrac{1}{1 - 0.918} \approx 12.1\)</span>.</p></li>
+<li><p>The VIFs for <code>Liter</code> and <code>Cyl</code> are both about 12.1, which is above 10, so this indicates a problem (but not above 100, so not a “big” problem). The VIF for <code>Mileage</code> is about 1, so it isn’t affected.</p></li>
+<li><p>Without <code>Cyl</code>, the <code>Liter</code> coefficient is 0.218 with a standard error of 0.0104. With <code>Cyl</code> in the model, it is 0.148 with a standard error of 0.0363: the standard error is about 3.5 times bigger. (That’s close to <span class="math inline">\(\sqrt{\text{VIF}} = \sqrt{12.1} \approx 3.5\)</span>.) Because <code>Liter</code> and <code>Cyl</code> carry almost the same information, the model can’t tell their effects apart: the estimate changes depending on whether the other is included, and its standard error is inflated.</p></li>
+<li><p>Not really. Multicollinearity makes the individual coefficients unstable and hard to interpret, but the predictions can still be good, as long as the cars we predict for have the same relationship between <code>Liter</code> and <code>Cyl</code> as the cars in the data.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

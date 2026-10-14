@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Exam02 Review – stat230</title>
+<title>Quiz02 Review – stat230</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -129,7 +129,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exam02 Review</h1>
+<h1 class="title">Quiz02 Review</h1>
 <p class="subtitle lead">Stat 230 - Spring 2026</p>
 </div>
 
@@ -147,8 +147,9 @@ window.Quarto = {
 </header>
 
 
-<p>This is an outline of things you should review for Exam02 scheduled for Wed of Week 6.</p>
+<p>This is an outline of things you should review for Quiz02 scheduled for Wed of Week 6.</p>
 <p>I recommend beginning by <em>carefully</em> reviewing your notes and activities from class and the homework questions. It’s best to do this actively: by reading, thinking, solving problems, and asking questions.</p>
+<p>See the <a href="quiz02-practice.pdf">Quiz02 Practice Questions</a> for two example questions of each skill below.</p>
 <section id="materials" class="level1">
 <h1>Materials</h1>
 <ul>
@@ -164,15 +165,13 @@ window.Quarto = {
 <li>Using proper statistical notation, write down the multiple linear regression model (including polynomial regression)</li>
 <li>You should be able to express either the theoretical model or the fitted model, and know the difference between the two.</li>
 <li>Don’t forget the assumptions you place on the residuals in a theoretical model!</li>
-<li>You should know how and when to use an indicator variable and interaction variable (eg parallel lines model vs different lines model)</li>
+<li>You should know how and when to use an indicator variable and interaction variable (eg parallel lines model vs different lines model) and be comfortable converting a MLR model with indicator variables into SLR models for each group</li>
 </ul>
-<p><em>Example question:</em> TBD</p>
 <p><strong>2. Interpret the coefficients and <span class="math inline">\(R^2\)</span> of a model in context.</strong></p>
 <ul>
-<li>Given a fitted linear model equation, be able to interpret the y-intercept and each slope term</li>
+<li>Given a fitted linear model equation, be able to interpret the y-intercept, each slope term, and the (adjusted) <span class="math inline">\(R^2\)</span> value</li>
 <li>Your interpretations should always be given in context, so don’t just talk about “x” and “y.”</li>
 </ul>
-<p><em>Example question:</em> TBD</p>
 <p><strong>3. Check necessary conditions for a multiple regression model and discuss the implications of a model deficiency</strong></p>
 <ul>
 <li>Be able to state the assumptions/conditions necessary for valid inference from a MLR model.</li>
@@ -182,24 +181,22 @@ window.Quarto = {
 <li>Know how to read each type of diagnostic plot (leverage, Cook’s distance, standardized residuals, etc.) and identify possible problematic points</li>
 <li>Understand how leverage and influence relate to each other and the impact on the regression equation</li>
 </ul>
-<p><em>Example question:</em> TBD</p>
-<p><strong>4. Perform hypothesis tests about a single regression coefficient</strong></p>
+<p><strong>4. Perform hypothesis tests about a regression coefficient or a linear combination of regression coefficients</strong></p>
 <ul>
 <li>Given R output from a fitted regression model, conduct a t-test for a coefficient</li>
 <li>The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context</li>
 <li>Understand and explain where the test statistic and p value came from</li>
 <li>Given a research question, state the hypotheses for your test in both words and proper notation</li>
 <li>Know the difference between a one-sided and two-sided p-value, and know when each is required (or given by R)</li>
+<li>Given the coefficient estimates and their covariance matrix (<code>vcov()</code> output), compute the estimate, standard error, and test statistic for a linear combination of coefficients</li>
 </ul>
-<p><em>Example question:</em> TBD</p>
 <p><strong>5. Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients</strong></p>
 <ul>
 <li>Given R output from a fitted regression model, identify a confidence interval for each regression coefficient.</li>
 <li>Know the equation for the confidence interval and how you could calculate it if you were given the estimate, standard error, and sample size.</li>
 <li>Be able to interpret a confidence interval for each regression coefficient in context</li>
-<li>todo: linear combination</li>
+<li>Given the coefficient estimates and their covariance matrix (<code>vcov()</code> output), compute the estimate, standard error, and confidence interval for a linear combination of coefficients</li>
 </ul>
-<p><em>Example question:</em> TBD</p>
 <p><strong>6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval</strong></p>
 <ul>
 <li>Be able to identify situations that are making predictions for group means vs.&nbsp;individual observations</li>
@@ -207,7 +204,6 @@ window.Quarto = {
 <li>Given a plot with both confidence intervals and prediction intervals, be able to identify which is which</li>
 <li>Which is wider, a confidence interval or prediction interval? Why does this make sense?</li>
 </ul>
-<p><em>Example question:</em> TBD</p>
 <p><strong>7. Conduct inference to compare nested regression models.</strong></p>
 <ul>
 <li>Understand what it means for two models to be nested</li>
@@ -217,14 +213,18 @@ window.Quarto = {
 <li>Understand where the p-value comes from in the extra-sums-of-squares F-test (What distribution? What tail?)</li>
 <li>The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context.</li>
 </ul>
-<p><em>Example question:</em> TBD</p>
 <p><strong>8. Interpret the coefficients an MLR model when transformations have been used on the response and/or the explanatory variables</strong></p>
 <ul>
 <li>Given a transformation to the response variable, explanatory variable, or both, be able to identify if the back transformation is interpretable.</li>
 <li>Given a model with a log-transformed response variable, interpret the slope coefficient(s) in context.</li>
-<li>Given a model with a log-transformed explanatory variable, interpret the slope coefficient of the transformed variable.</li>
+<li>Given a model with a log-transformed explanatory variable, interpret the slope coefficient of the transformed variable</li>
 </ul>
-<p><em>Example question:</em> TBD</p>
+<p><strong>9. Diagnose multicollinearity and explain its consequences</strong></p>
+<ul>
+<li>Diagnose multicollinearity using a pairs plot/correlation matrix, unusual or unstable coefficient estimates, and the variance inflation factor (VIF)</li>
+<li>Know how the VIF for a predictor is calculated and the guidelines for when it indicates a problem</li>
+<li>Explain the consequences of multicollinearity for the coefficient estimates, their standard errors, and t-tests, and why it is less of a concern for predictions</li>
+</ul>
 </section>
 <section id="formulas" class="level1">
 <h1>Formulas</h1>
@@ -256,7 +256,7 @@ window.Quarto = {
 <li><span class="math inline">\(r_{i}=\frac{\hat{e}_{i}}{\hat{\sigma}\sqrt{1-h_{i}}}\)</span></li>
 <li><span class="math inline">\(h_{i}=\frac{1}{n-1}\left[\frac{X_{i}-\overline{X}}{s_{X}}\right]^{2}+\frac{1}{n} = \frac{1}{n}+\frac{{(X_{i}-\overline{X})}^{2}}{\sum(X_{i}-\overline{X})^{2}}\)</span></li>
 <li><span class="math inline">\(\sum_{i}h_{i}=p+1\)</span></li>
-<li><span class="math inline">\(D_{i}=\sum_{j=1}^{n}\frac{(\hat{Y}_{j(i)}-\hat{Y}_{j})^{2}}{(p+1)\hat{\sigma}} = \frac{r_{i}^{2}}{p+1}\left(\frac{h_{i}}{1-h_{i}}\right)\)</span></li>
+<li><span class="math inline">\(D_{i}=\sum_{j=1}^{n}\frac{(\hat{Y}_{j(i)}-\hat{Y}_{j})^{2}}{(p+1)\hat{\sigma}^{2}} = \frac{r_{i}^{2}}{p+1}\left(\frac{h_{i}}{1-h_{i}}\right)\)</span></li>
 <li><span class="math inline">\(VIF_i=1/(1-R_{i}^{2})\)</span></li>
 </ul>
 
