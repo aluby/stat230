@@ -8,14 +8,116 @@ library(bayesrules) # data library
 library(broom)
 ```
 
-Your in-class activity today is simple. Using the `bikes` data, build:
+::: callout-note
+This activity goes with the Day 15 notes. Record your results in the table in your notes.
+:::
 
-  1. A model that prioritizes **understanding**
-  
-  2. A model that prioritizes **prediction**
-  
-You can use as many predictors as you like! 
+## Overview
+
+Today you will compare several candidate models for ridership in the `bikes` data. Run the code below to select the columns we will use and fit five models.
 
 ```{r}
-head(bikes)
+#| eval: false
+bikes <- bikes[, c("date", "season", "year", "month", "weekend", "holiday",
+                   "temp_actual", "temp_feel", "humidity", "windspeed", "rides")]
+
+bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
+bikes_B <- lm(rides ~ temp_actual + windspeed + weekend + holiday, data = bikes)
+bikes_D <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity, data = bikes)
+bikes_E <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + temp_feel, data = bikes)
+bikes_C <- lm(rides ~ temp_feel + humidity + weekend, data = bikes)
 ```
+
+## Part 1: Nested models and the $F$-test
+
+**Q1.** Which of these pairs of models are nested? For the pairs that are nested, which is the full model?
+
+- A and B
+- B and D
+- D and E
+- A and C
+- A and D
+
+The `anova()` function takes the **reduced** model first and the **full** model second.
+
+**Q2.** Fill in the blanks to run the extra sums of squares $F$-test comparing models A and B, and then models B and D. What do you conclude each time?
+
+```{r}
+#| eval: false
+anova(___, ___)
+
+anova(___, ___)
+```
+
+**Q3.** Now compare D to E (adding `temp_feel`). What does the $F$-test suggest?
+
+**Q4.** Compare the `temp_actual` row of `summary(bikes_D)` to the `temp_actual` row of `summary(bikes_E)`. What changed, and why? (*Hint:* use `cor(bikes$temp_actual, bikes$temp_feel)`.)
+
+```{r}
+#| eval: false
+summary(bikes_D)
+summary(bikes_E)
+```
+
+## Part 2: Information criteria
+
+**Q5.** Use `AIC()`, `BIC()`, and `summary(...)$adj.r.squared` to fill in the table in your notes for all five models.
+
+```{r}
+#| eval: false
+AIC(bikes_A)
+BIC(bikes_A)
+summary(bikes_A)$adj.r.squared
+
+# repeat for the other models, or use sapply:
+models <- list(A = bikes_A, B = bikes_B, D = bikes_D, E = bikes_E, C = bikes_C)
+sapply(models, AIC)
+sapply(models, BIC)
+sapply(models, function(m) summary(m)$adj.r.squared)
+```
+
+**Q6.** Compute the AIC for model A by hand using the formula $n \log(SSE/n) + 2k$, where $k$ is the number of coefficients (including the intercept). Then do the same for model B. How does your hand calculation compare to R's `AIC()`? What is the same about the two comparisons?
+
+```{r}
+#| eval: false
+n <- nrow(bikes)
+
+sse_A <- sum(residuals(bikes_A)^2)
+k_A <- length(coef(bikes_A))
+n * log(sse_A / n) + 2 * k_A
+
+# do the same for B:
+```
+
+**Q7.** Models A and C are not nested. Which model do adjusted $R^2$, AIC, and BIC prefer? Why can't we use an $F$-test to compare them?
+
+**Q8.** Do the criteria agree on adding `temp_feel` to model D (comparing D and E)? What does each one say?
+
+## Part 3: Choosing a model
+
+**Q9.** Suppose the goal is to understand how weekends and holidays are associated with ridership. Which of these five models would you use? Justify your choice using what you found above.
+
+**Q10.** (*Extension*) Let's see what happens when we add some other candidate variables to model D. Compare D to each of the models below. Are these nested comparisons? What do the $F$-test, AIC, and BIC say? Does anything about the results surprise you?
+
+```{r}
+#| eval: false
+bikes_F <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + season,
+              data = bikes)
+bikes_Y <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + year,
+              data = bikes)
+```
+
+(*Note:* `season` has four levels, so adding it adds three coefficients, i.e., $d = 3$.)
+
+***
+
+## Function quick reference
+
+| Function | Purpose |
+|----|-----------|
+| `lm()` | Fit a linear model |
+| `anova(reduced, full)` | Extra sums of squares $F$-test comparing two nested models |
+| `AIC()`, `BIC()` | Information criteria for a fitted model (smaller is better) |
+| `summary(model)$adj.r.squared` | Adjusted $R^2$ for a fitted model |
+| `length(coef(model))` | Number of coefficients, $k$ (including the intercept) |
+| `residuals(model)` | Residuals from a fitted model |

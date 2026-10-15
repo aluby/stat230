@@ -84,6 +84,32 @@ bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 
 Today &rarr; putting it all together to compare models
 
+```{r}
+#| include: false
+bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
+bikes_B <- lm(rides ~ temp_actual + windspeed + weekend + holiday, data = bikes)
+bikes_D <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity, data = bikes)
+bikes_E <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + temp_feel, data = bikes)
+bikes_C <- lm(rides ~ temp_feel + humidity + weekend, data = bikes)
+n_bikes <- nrow(bikes)
+```
+
+## Warm up (quiz review)
+
+```{r}
+#| echo: false
+anova(bikes_A, bikes_B)
+```
+
+::: task
+`bikes_A` predicts `rides` from temperature, windspeed and weekend. `bikes_B` adds `holiday`.
+
+1. Which model is the full model? Write the null hypothesis.
+2. What is $d$? What are $df_{full}$ and $SSE_{reduced}$?
+3. State your conclusion in context.
+4. If you had instead used the $t$-test for `holidayyes` in `bikes_B`, what p-value would you expect? Why?
+:::
+
 ## Idea: how do we decide what variables to include? {.smaller}
 
 ```{r}
@@ -215,6 +241,34 @@ p3 <- ggplot(df, aes(x, y)) +
 
 :::
 
+## Nested models and the extra sums of squares $F$-test
+
+::: medium
+
+**Nested:** the reduced model is a *special case* of the full model (set some $\beta$'s to 0)
+
+$$F = \frac{(SSE_{reduced} - SSE_{full})/d}{SSE_{full}/df_{full}}$$
+
+- Numerator: improvement in SSE *per parameter added*
+- Denominator: noise ($MSE_{full}$)
+- Large $F$ &rarr; the bigger model removes more squared error than we would expect from noise alone
+
+:::
+
+## Does `holiday` help?
+
+```{r}
+#| echo: true
+bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
+bikes_B <- lm(rides ~ temp_actual + windspeed + weekend + holiday, data = bikes)
+
+anova(bikes_A, bikes_B)   # reduced model first!
+```
+
+::: medium
+With $d = 1$, $F = t^2$: compare to the `holidayyes` row of `summary(bikes_B)`
+:::
+
 ## Sequential ANOVA (the `anova()` function)
 
 ::: medium
@@ -263,44 +317,84 @@ The Third Row: `weekend`
 
 model_2 <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
 
-anova(model_1, model_2)
+anova(model_2, model_1)   # reduced model first
 ```
 
+## Adding variables one at a time
 
-## Comparing non-nested models
+```{r}
+#| echo: false
+step_tab <- bind_rows(
+  tidy(anova(bikes_A, bikes_B)) |> slice(2) |> mutate(step = "A to B: add holiday"),
+  tidy(anova(bikes_B, bikes_D)) |> slice(2) |> mutate(step = "B to D: add humidity"),
+  tidy(anova(bikes_D, bikes_E)) |> slice(2) |> mutate(step = "D to E: add temp_feel")
+) |>
+  mutate(`Delta AIC` = c(AIC(bikes_B) - AIC(bikes_A), AIC(bikes_D) - AIC(bikes_B), AIC(bikes_E) - AIC(bikes_D)),
+         `Delta BIC` = c(BIC(bikes_B) - BIC(bikes_A), BIC(bikes_D) - BIC(bikes_B), BIC(bikes_E) - BIC(bikes_D))) |>
+  select(step, F = statistic, `p-value` = p.value, `Delta AIC`, `Delta BIC`)
+step_tab |> mutate(`p-value` = ifelse(`p-value` < 0.001, "<0.001", round(`p-value`, 3))) |>
+  knitr::kable(digits = 2)
+```
 
-What if I want to compare:
+. . .
+
+::: medium
+- Negative $\Delta$ AIC or $\Delta$ BIC = the bigger model is preferred
+- `temp_feel` is almost the same variable as `temp_actual` (r = `r round(cor(bikes$temp_actual, bikes$temp_feel), 2)`)
+:::
+
+## Careful: `temp_actual` and `temp_feel`
+
+```{r}
+bind_rows(
+  tidy(bikes_D) |> filter(term == "temp_actual") |> mutate(model = "D (without temp_feel)"),
+  tidy(bikes_E) |> filter(term %in% c("temp_actual", "temp_feel")) |> mutate(model = "E (with temp_feel)")
+) |>
+  select(model, term, estimate, std.error, p.value) |>
+  mutate(p.value = ifelse(p.value < 0.001, "<0.001", round(p.value, 3))) |>
+  knitr::kable(digits = 2)
+```
+
+::: medium
+Standard error of `temp_actual` goes up by a factor of about `r round(summary(bikes_E)$coef["temp_actual", "Std. Error"] / summary(bikes_D)$coef["temp_actual", "Std. Error"], 1)`
+&rarr; the overall fit barely changes, but individual $t$-tests become unreliable (multicollinearity, VIF $\approx$ 30)
+:::
+
+## Where the $F$ test falls short
 
 ```{r}
 #| echo: true
-
-
-model_2 <- lm(rides ~ temp_actual + windspeed + weekend, 
-              data = bikes)
+bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
+bikes_C <- lm(rides ~ temp_feel + humidity + weekend, data = bikes)
 ```
 
-```{r}
-#| echo: true
+::: task
+Is `bikes_C` nested in `bikes_A`? Could we use `anova(bikes_A, bikes_C)`?
+:::
 
+. . .
 
-model_3 <- lm(rides ~ temp_actual + windspeed*weekend + 
-                holiday + temp_feel , 
-              data = bikes)
-```
+::: medium
+- **Non-nested models**: neither is a special case of the other, so the $F$ test does not apply
+- **Many candidate models**: each $F$ test needs a nested pair, and repeated testing is a problem
+- We need tools that work for *any* two models fit to the same data
+:::
 
-## Comparing non-nested models
+## Adjusted $R^2$
 
-Adjusted $R^2$
+::: medium
+
+$R^2_{adj} = 1 - \dfrac{MSE}{MST}$
 
   - can be used for nested and non-nested models
   - no formal test/rules for "better enough" 
+
+:::
     
 ```{r}
 #| echo: true
-
-
-summary(model_2)$adj.r.squared
-summary(model_3)$adj.r.squared
+summary(bikes_A)$adj.r.squared
+summary(bikes_C)$adj.r.squared
 ```
 
 ## Information criteria
@@ -311,74 +405,76 @@ $$IC = \text{Measure of Fit} + \text{Penalty}$$
 
 <br>
 
-$$AIC = n \log(SSE/n) + 2p$$
+$$AIC = n \log(SSE/n) + 2k$$
 
 <br>
 
-$$BIC =  n \log(SSE/n) + \log(n) \cdot p$$
+$$BIC =  n \log(SSE/n) + \log(n) \cdot k$$
 
-## AIC in R
+<br>
+
+::: medium
+$k$ = number of coefficients in the model (**including** the intercept). Fit term gets smaller with a bigger model; the penalty gets bigger.
+:::
+
+## By hand and in R
 
 ```{r}
-#| echo: TRUE
+#| echo: true
+sse <- sum(residuals(bikes_A)^2)
+n <- nrow(bikes)
+k <- length(coef(bikes_A))
 
-AIC(model_2)
-AIC(model_3)
+n * log(sse / n) + 2 * k   # AIC by hand
+AIC(bikes_A)               # R's AIC
 ```
 
-- suggests more complicated model is worth the added complexity
+::: medium
+R's value differs from our formula by a constant that is the same for every model fit to the same data, so **comparisons and rankings are identical**.
+:::
 
-## BIC in R
+## AIC and BIC for our models
 
 ```{r}
-#| echo: TRUE
+mods <- list("A: temp + wind + weekend" = bikes_A,
+             "B: A + holiday" = bikes_B,
+             "D: B + humidity" = bikes_D,
+             "E: D + temp_feel" = bikes_E,
+             "C: temp_feel + humidity + weekend" = bikes_C)
 
-BIC(model_2)
-BIC(model_3)
+tibble(Model = names(mods),
+       k = map_int(mods, ~length(coef(.x))),
+       `Adj R2` = map_dbl(mods, ~summary(.x)$adj.r.squared),
+       AIC = map_dbl(mods, AIC),
+       BIC = map_dbl(mods, BIC)) |>
+  knitr::kable(digits = 1)
 ```
 
-- BIC imposes a larger complexity penalty, so prefers the simpler model 
-
-## Variable selection: prediction vs understanding 
-
-:::: {.columns}
-
-::: {.column width="45%"}
-**Prediction:**
-
-- More complex models might be okay if you have a lot of data.  
-
-- The model doesn't need to "make sense" as much if it predicts well.  
-
-- Watch out for overfitting!
-
-- Stat270
+::: medium
+- Big gains from adding `holiday` and `humidity` under every criterion. For `temp_feel`: BIC says no, while AIC slightly prefers the bigger model (a drop of only about 1.3, which is a small difference)
+- Model C beats model A, which no $F$ test could tell us
 :::
 
-::: {.column width="10%"}
-<!-- empty column to create gap -->
+## How do the tools relate?
+
+For the bikes data ($n = $ `r n_bikes`), adding $d = 1$ parameter, the larger model is preferred when
+
+```{r}
+df_f <- bikes_A$df.residual
+tibble(Rule = c("F test, $\\alpha = 0.05$", "AIC", "BIC"),
+       `Prefers larger model if F is bigger than` = c(qf(0.95, 1, df_f),
+                                                      df_f * (exp(2 / n_bikes) - 1),
+                                                      df_f * (n_bikes^(1 / n_bikes) - 1))) |>
+  knitr::kable(digits = 2)
+```
+
+. . .
+
+::: medium
+- All three ask: "is the drop in SSE worth the added parameter(s)?"
+- Different thresholds: AIC is the most willing to add terms, BIC the most conservative
+- $\log(n)$ is bigger than 2 when $n \ge 8$, which is why BIC penalizes more
 :::
-
-::: {.column width="45%"}
-**Understanding:**
-
-- Complexity can hurt our ability to interpret results meaningfully.
-
-- Keep effects you are interested in, even if they are insignificant, to "control" for them.
-:::
-
-::::
-
-## AIC vs BIC
-
-<br>
-
-**AIC:** for large $n$, gives an estimate of out-of-sample predictive performance (i.e. better model for **prediction**)
-
-<br>
-
-**BIC:** for large $n$, will pick the "true" model if it is one of the candidates (i.e. better model for **understanding**)
-
 
 ## Overfitting 
 
@@ -432,112 +528,33 @@ Model building is like making a suit that can generally fit everyone around a gi
 
 :::
 
-## Prediction: Training & Test Datasets   
+## Your turn
 
-If the goal is prediction, we test the model on data it hasn't seen:
+::: task
+**Activity (about 10-12 minutes)**
 
-  - Training dataset: Used to estimate ("train") your model.  
-  - Test dataset: The data held out to test your predictions.  
-  - RMSE: Root Mean Squared Error measures the average size of error (squared residuals).
-  
-$$RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$$
+Using the `bikes` models A, B, D, E, and C:
 
-## Code: make training and testing data
+1. Fill in the comparison table in your notes using `anova()`, `AIC()`, `BIC()`, and adjusted $R^2$
+2. Which model would you choose to explain how weekends and holidays affect ridership? Justify your choice.
+:::
 
-```{r}
-#| echo: true
-
-set.seed(050726)
-
-bikes_split <- initial_split(bikes, prop = .8)
-bikes_split
-
-bikes_train <- training(bikes_split)
-bikes_test <- testing(bikes_split)
-```
-
-## Code: fit both models on training data
-
-```{r}
-#| echo: true
-
-
-model_1_train <- lm(rides ~ temp_actual + windspeed + weekend + 
-                      temp_actual:weekend +  windspeed:weekend,
-                     data = bikes_train)
-model_3_train <- lm(rides ~ temp_actual + windspeed * weekend + 
-                      holiday + temp_feel,
-                      data = bikes_train)
-```
-
-
-## Code: find $\widehat{y}$ for both models, then RMSE
-
-```{r}
-#| echo: true
-
-
-model_1_test <- predict(model_1_train, newdata = bikes_test)
-model_3_test <- predict(model_3_train, newdata = bikes_test)
-
-sqrt(mean((bikes_test$rides - model_1_test)^2))
-sqrt(mean((bikes_test$rides - model_3_test)^2))
-```
-
-## Code: find RMSE for **training data**
-
-```{r}
-#| echo: true
-
-
-sqrt(mean(model_1_train$residuals^2))
-sqrt(mean(model_3_train$residuals^2))
-```
+## Summary
 
 ::: medium
 
-- RMSE is smaller on the model 3 for training data (predicting better)
-- RMSE is **bigger** using the model 3 for testing data (predicting worse)
-    - when the model is used on data it hasn't seen before, it's doing worse
-    - this is what it means to overfit
-:::
-
-
-## Tools for Model Comparison 
-
-::: medium
-
-1. ANOVA F-tests: Used for nested models to test if coefficients equal zero.  
-2. Adjusted $R^2$: Can be used for non-nested models; penalizes adding unnecessary predictors.
-3. AIC or BIC
-    - Smaller values are better.  
-    - Penalizes high numbers of coefficients to prevent over-complexity
-    
-Use on the full data if you are building an explanatory model, or on the training data *only* if you are building a predictive model 
+| Tool | Nested only? | p-value? | Notes |
+|:--|:--|:--|:--|
+| $F$ test | Yes | Yes | The formal test for nested models |
+| Adjusted $R^2$ | No | No | Easy, but no rule for "better enough" |
+| AIC | No | No | Most willing to add terms |
+| BIC | No | No | Most conservative |
 
 :::
 
-## Inference after selection
-
-- Model selection results in keeping terms with smaller p-values
-- Actual Type I error may be much bigger than than "expected" $\alpha = .05$
-- This is an active area of research! 
-
-&rarr; if you rely on AIC/BIC/RMSE and compare *lots* of models, your p-values and confidence intervals might not be valid
-
-
-## A Note on Automatic Selection
-
-I do **not** recommend using automated "Stepwise" (Forward/Backward) selection.  
-
-- Why? They are easily abused and ignore domain knowledge, outliers, and collinearity.  
-- Better Approach:
-
-   > "The single most important tool in selecting a subset of variables is the analyst’s knowledge of the area under study." — Sandy Weisberg. 
-  
-## Summary of Variable Selection
-
-- Identify research goals and use domain knowledge.  
-- Perform EDA and consider transformations.  
-- Compare models using ANOVA/Adj $R^2$/BIC (for nested) or AIC/RMSE (for prediction).  
+- Use domain knowledge first. Tools compare candidate models; they don't replace thinking.
 - **Justify your model choice!**
+
+. . . 
+
+Next time &rarr; how well does a model predict *new* data?

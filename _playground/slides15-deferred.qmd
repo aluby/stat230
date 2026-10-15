@@ -1,0 +1,234 @@
+<!-- Slides removed from slides15.qmd on 2026-10-15 and saved for the post-quiz class: prediction vs understanding,
+     AIC vs BIC heuristics, training/test data, RMSE, inference after selection, stepwise note.
+     NOTE: the single-seed RMSE demo is unrepresentative (model_3 beats model_2 in ~65% of random splits);
+     consider repeated splits / cross-validation, and the holiday-only model, before reusing. -->
+---
+title: Model Selection (part 2)
+subtitle: Prediction and train/test
+title-slide-attributes:
+  data-background-color: "#003300"
+  data-slide-number: none
+format: 
+  revealjs:
+    incremental: false
+    scrollable: true
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(countdown)
+library(tidyverse)
+library(bayesrules)
+library(ggformula)
+library(rsample)
+library(broom)
+library(gganimate)
+library(patchwork)
+library(fontawesome)
+library(here)
+library(gt)
+library(gtsummary)
+library(carData)
+
+notes_theme = theme_minimal(base_size = 12, base_family = "Source Sans 3")
+theme_set(notes_theme)
+
+regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
+  mod <- lm(formula, data = data)
+  
+  aug <- augment(mod)
+  
+  plot_fit <- makeFun(mod)
+  
+  if(is.null(scat.formula)) {
+    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
+  } else {
+    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
+  }
+  
+  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
+  
+  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
+    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
+  
+  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
+    gf_qqline(color = "#f15a31")
+  
+  (orig_data | resid_plot | qq_plot)
+}
+
+
+bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
+
+```
+
+## Where we left off
+
+- Nested F tests, adjusted $R^2$, AIC and BIC
+
+. . .
+
+Today &rarr; how well will the model predict *new* data?
+
+## Variable selection: prediction vs understanding 
+
+:::: {.columns}
+
+::: {.column width="45%"}
+**Prediction:**
+
+- More complex models might be okay if you have a lot of data.  
+
+- The model doesn't need to "make sense" as much if it predicts well.  
+
+- Watch out for overfitting!
+
+- Stat270
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+**Understanding:**
+
+- Complexity can hurt our ability to interpret results meaningfully.
+
+- Keep effects you are interested in, even if they are insignificant, to "control" for them.
+:::
+
+::::
+
+## AIC vs BIC
+
+<br>
+
+**AIC:** for large $n$, gives an estimate of out-of-sample predictive performance (i.e. better model for **prediction**)
+
+<br>
+
+**BIC:** for large $n$, will pick the "true" model if it is one of the candidates (i.e. better model for **understanding**)
+
+
+## Prediction: Training & Test Datasets   
+
+If the goal is prediction, we test the model on data it hasn't seen:
+
+  - Training dataset: Used to estimate ("train") your model.  
+  - Test dataset: The data held out to test your predictions.  
+  - RMSE: Root Mean Squared Error measures the average size of error (squared residuals).
+  
+$$RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$$
+
+## Code: make training and testing data
+
+```{r}
+#| echo: true
+
+set.seed(050726)
+
+bikes_split <- initial_split(bikes, prop = .8)
+bikes_split
+
+bikes_train <- training(bikes_split)
+bikes_test <- testing(bikes_split)
+```
+
+## Code: fit both models on training data
+
+```{r}
+#| echo: true
+
+
+model_1_train <- lm(rides ~ temp_actual + windspeed + weekend + 
+                      temp_actual:weekend +  windspeed:weekend,
+                     data = bikes_train)
+model_3_train <- lm(rides ~ temp_actual + windspeed * weekend + 
+                      holiday + temp_feel,
+                      data = bikes_train)
+```
+
+
+## Code: find $\widehat{y}$ for both models, then RMSE
+
+```{r}
+#| echo: true
+
+
+model_1_test <- predict(model_1_train, newdata = bikes_test)
+model_3_test <- predict(model_3_train, newdata = bikes_test)
+
+sqrt(mean((bikes_test$rides - model_1_test)^2))
+sqrt(mean((bikes_test$rides - model_3_test)^2))
+```
+
+## Code: find RMSE for **training data**
+
+```{r}
+#| echo: true
+
+
+sqrt(mean(model_1_train$residuals^2))
+sqrt(mean(model_3_train$residuals^2))
+```
+
+::: medium
+
+- RMSE is smaller on the model 3 for training data (predicting better)
+- RMSE is **bigger** using the model 3 for testing data (predicting worse)
+    - when the model is used on data it hasn't seen before, it's doing worse
+    - this is what it means to overfit
+:::
+
+
+## Tools for Model Comparison 
+
+::: medium
+
+1. ANOVA F-tests: Used for nested models to test if coefficients equal zero.  
+2. Adjusted $R^2$: Can be used for non-nested models; penalizes adding unnecessary predictors.
+3. AIC or BIC
+    - Smaller values are better.  
+    - Penalizes high numbers of coefficients to prevent over-complexity
+    
+Use on the full data if you are building an explanatory model, or on the training data *only* if you are building a predictive model 
+
+:::
+
+## Inference after selection
+
+- Model selection results in keeping terms with smaller p-values
+- Actual Type I error may be much bigger than than "expected" $\alpha = .05$
+- This is an active area of research! 
+
+&rarr; if you rely on AIC/BIC/RMSE and compare *lots* of models, your p-values and confidence intervals might not be valid
+
+
+## A Note on Automatic Selection
+
+I do **not** recommend using automated "Stepwise" (Forward/Backward) selection.  
+
+- Why? They are easily abused and ignore domain knowledge, outliers, and collinearity.  
+- Better Approach:
+
+   > "The single most important tool in selecting a subset of variables is the analyst’s knowledge of the area under study." — Sandy Weisberg. 
+  
+## Summary of Variable Selection
+
+- Identify research goals and use domain knowledge.  
+- Perform EDA and consider transformations.  
+- Compare models using ANOVA/Adj $R^2$/BIC (for nested) or AIC/RMSE (for prediction).  
+- **Justify your model choice!**
