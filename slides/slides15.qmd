@@ -82,16 +82,18 @@ bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 
 . . . 
 
-Today &rarr; putting it all together to compare models
+Today &rarr; putting it all together to build a model
 
 ```{r}
 #| include: false
 bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
 bikes_B <- lm(rides ~ temp_actual + windspeed + weekend + holiday, data = bikes)
-bikes_D <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity, data = bikes)
-bikes_E <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + temp_feel, data = bikes)
-bikes_C <- lm(rides ~ temp_feel + humidity + weekend, data = bikes)
+bikes_C <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity, data = bikes)
+bikes_D <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + temp_feel, data = bikes)
+bikes_E <- lm(rides ~ temp_feel + humidity + weekend + holiday, data = bikes)
 n_bikes <- nrow(bikes)
+
+fmt_p <- function(p) ifelse(p < 0.001, "<0.001", format(round(p, 3), nsmall = 3))
 ```
 
 ## Warm up (quiz review)
@@ -110,11 +112,9 @@ anova(bikes_A, bikes_B)
 4. If you had instead used the $t$-test for `holidayyes` in `bikes_B`, what p-value would you expect? Why?
 :::
 
-## Idea: how do we decide what variables to include? {.smaller}
-
-```{r}
-bikes |> head(10) |> knitr::kable()
-```
+::: notes
+Timing: warm-up + sums of squares review ~12 min.
+:::
 
 ## Review: SST/SSReg/SSE
 
@@ -233,6 +233,7 @@ p3 <- ggplot(df, aes(x, y)) +
 
 - Linear Regression tilt and shifts the line until the total area of the **red squares** are as small as possible ("least squares")
 - $R^2$: proportion of the blue area (SSTotal) that is successfully covered by the green squares (SSRegr) 
+- $R^2_{adj} = 1 - \frac{MSE}{MST}$: same idea, but each model is "charged" for the number of $\beta$'s it uses
 - $h_i$: a point becomes more influential as it moves further away from $\bar{x}$ because the corresponding red square grows quadratically
 - Overall F test: $F = \frac{MSReg}{MSE}$
     - is the "average" green square significantly larger than the "average" red square?
@@ -241,135 +242,137 @@ p3 <- ggplot(df, aes(x, y)) +
 
 :::
 
-## Nested models and the extra sums of squares $F$-test
+## Today: building an *explanatory* model
 
-::: medium
-
-**Nested:** the reduced model is a *special case* of the full model (set some $\beta$'s to 0)
-
-$$F = \frac{(SSE_{reduced} - SSE_{full})/d}{SSE_{full}/df_{full}}$$
-
-- Numerator: improvement in SSE *per parameter added*
-- Denominator: noise ($MSE_{full}$)
-- Large $F$ &rarr; the bigger model removes more squared error than we would expect from noise alone
-
+:::: {.columns align=center}
+::: {.column width="25%"}
+**Question:**
 :::
 
-## Does `holiday` help?
+::: {.column width="75%"}
+How are weekends and holidays associated with ridership, after accounting for the weather?
+:::
+::::
+
+<br>
+
+. . .
+
+Two reasons to build a model:
+
+- **Explanatory:** understand the relationship between the response and particular predictors. We care about the *coefficients* (today!)
+- **Predictive:** make accurate predictions for *new* data. We care about the *predictions* (after the quiz)
+
+## Idea: how do we decide what variables to include? {.smaller}
+
+```{r}
+bikes |> head(10) |> knitr::kable()
+```
+
+::: {.task .medium}
+Which variables would you include to answer our question? Why?
+:::
+
+## A recipe for explanatory models
+
+::: {.incremental}
+1. **Start with the question.** Which variables are you interested in? Which do you need to adjust for? These stay in the model, even if they aren't "significant"
+2. **Look before you fit.** Check for predictors that carry (almost) the same information
+3. **Fit a *small* set of candidate models** (not every possible combination!)
+4. **Compare the candidates**: $F$ test for nested models; adjusted $R^2$, AIC, or BIC for any models
+5. **Check the conditions** for the model you choose
+6. **Interpret and justify** your choice
+:::
+
+::: notes
+Timing: framing + recipe ~5 min. Keep coming back to this slide; each section below is one step.
+:::
+
+## Step 1: Our candidate models
+
+- **Interested in:** `weekend`, `holiday`
+- **Adjust for:** weather (temperature, windspeed, humidity)
+
+```{r}
+tibble(Model = c("A", "B", "C", "D", "E"),
+       Predictors = c("temp_actual + windspeed + weekend",
+                      "A + holiday",
+                      "B + humidity",
+                      "C + temp_feel",
+                      "temp_feel + humidity + weekend + holiday")) |>
+  knitr::kable()
+```
+
+## Step 2: Look before you fit
 
 ```{r}
 #| echo: true
-bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
-bikes_B <- lm(rides ~ temp_actual + windspeed + weekend + holiday, data = bikes)
-
-anova(bikes_A, bikes_B)   # reduced model first!
+bikes |>
+  select(temp_actual, temp_feel, windspeed, humidity) |>
+  cor() |>
+  round(2)
 ```
 
-::: medium
-With $d = 1$, $F = t^2$: compare to the `holidayyes` row of `summary(bikes_B)`
+. . .
+
+`temp_actual` and `temp_feel` are almost the same variable &rarr; we'd expect multicollinearity if we include both
+
+::: notes
+Timing: Steps 1-3 ~13 min (min 17-30).
 :::
 
-## Sequential ANOVA (the `anova()` function)
-
-::: medium
-
-When you use `anova()` on a single model, R provides a table of **extra Sum of Squares (SS)** for terms added sequentially
-
+## Step 3: Compare nested models with an $F$ test
 
 ```{r}
-#| echo: true
-model_1 <- lm(rides ~ temp_actual + windspeed + weekend + temp_actual:weekend + 
-                windspeed:weekend, data = bikes)
-anova(model_1)
-```
-
-:::
-
-## Breaking down the `anova()` table
-
-::: {.medium .nonincremental}
-
-The First Row: `temp_actual`  
-
-  - Df: Including this variable adds 1 term to the model.  
-  - Sum Sq: $SSE(\text{null}) - SSE(\text{temp_actual})$.  
-  
-The Second Row: `windspeed` 
-
-  - Sum Sq: Represents the extra SS for adding `windspeed` to a model already containing `temp_actual`.  
-  - $SSE(\text{temp_actual}) - SSE(\text{temp_actual, windspeed})$  
-
-
-The Third Row: `weekend`   
-
-  - Sum Sq: Represents the extra SS for adding `weekend` to a model already containing `temp_actual` and `windspeed`.  
-  - $SSE(\text{temp_actual, windspeed}) - SSE(\text{temp_actual, windspeed, weekend})$  
-  
-:::
-
-## Confirm results with a nested F test
-
-"intermediate" p values in the table may not be valid; confirm proposed and full model with a nested F test:
-
-```{r}
-#| echo: true
-
-
-model_2 <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
-
-anova(model_2, model_1)   # reduced model first
-```
-
-## Adding variables one at a time
-
-```{r}
-#| echo: false
 step_tab <- bind_rows(
   tidy(anova(bikes_A, bikes_B)) |> slice(2) |> mutate(step = "A to B: add holiday"),
-  tidy(anova(bikes_B, bikes_D)) |> slice(2) |> mutate(step = "B to D: add humidity"),
-  tidy(anova(bikes_D, bikes_E)) |> slice(2) |> mutate(step = "D to E: add temp_feel")
+  tidy(anova(bikes_B, bikes_C)) |> slice(2) |> mutate(step = "B to C: add humidity"),
+  tidy(anova(bikes_C, bikes_D)) |> slice(2) |> mutate(step = "C to D: add temp_feel")
 ) |>
-  mutate(`Delta AIC` = c(AIC(bikes_B) - AIC(bikes_A), AIC(bikes_D) - AIC(bikes_B), AIC(bikes_E) - AIC(bikes_D)),
-         `Delta BIC` = c(BIC(bikes_B) - BIC(bikes_A), BIC(bikes_D) - BIC(bikes_B), BIC(bikes_E) - BIC(bikes_D))) |>
-  select(step, F = statistic, `p-value` = p.value, `Delta AIC`, `Delta BIC`)
-step_tab |> mutate(`p-value` = ifelse(`p-value` < 0.001, "<0.001", round(`p-value`, 3))) |>
-  knitr::kable(digits = 2)
+  select(step, df = df, F = statistic, `p-value` = p.value) |>
+  mutate(`p-value` = fmt_p(`p-value`))
+
+knitr::kable(step_tab, digits = 2)
 ```
 
 . . .
 
 ::: medium
-- Negative $\Delta$ AIC or $\Delta$ BIC = the bigger model is preferred
-- `temp_feel` is almost the same variable as `temp_actual` (r = `r round(cor(bikes$temp_actual, bikes$temp_feel), 2)`)
+- `holiday`: we keep it no matter what (it's part of our question), but the data also support it
+- `humidity`: big improvement in SSE
+- `temp_feel`: not much evidence that it helps once we have `temp_actual`
 :::
 
 ## Careful: `temp_actual` and `temp_feel`
 
 ```{r}
 bind_rows(
-  tidy(bikes_D) |> filter(term == "temp_actual") |> mutate(model = "D (without temp_feel)"),
-  tidy(bikes_E) |> filter(term %in% c("temp_actual", "temp_feel")) |> mutate(model = "E (with temp_feel)")
+  tidy(bikes_C) |> filter(term == "temp_actual") |> mutate(model = "C (without temp_feel)"),
+  tidy(bikes_D) |> filter(term %in% c("temp_actual", "temp_feel")) |> mutate(model = "D (with temp_feel)")
 ) |>
   select(model, term, estimate, std.error, p.value) |>
-  mutate(p.value = ifelse(p.value < 0.001, "<0.001", round(p.value, 3))) |>
+  mutate(p.value = fmt_p(p.value)) |>
   knitr::kable(digits = 2)
 ```
 
 ::: medium
-Standard error of `temp_actual` goes up by a factor of about `r round(summary(bikes_E)$coef["temp_actual", "Std. Error"] / summary(bikes_D)$coef["temp_actual", "Std. Error"], 1)`
-&rarr; the overall fit barely changes, but individual $t$-tests become unreliable (multicollinearity, VIF $\approx$ 30)
+Standard error of `temp_actual` goes up by a factor of about `r round(summary(bikes_D)$coef["temp_actual", "Std. Error"] / summary(bikes_C)$coef["temp_actual", "Std. Error"], 1)` (VIF $\approx$ `r round(car::vif(bikes_D)["temp_actual"])`)
+
+&rarr; temperature clearly matters, but in model D *neither* temperature variable looks significant on its own 🫠
+
+&rarr; pick one temperature variable
 :::
 
-## Where the $F$ test falls short
+## When the $F$ test can't help
 
 ```{r}
 #| echo: true
-bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
-bikes_C <- lm(rides ~ temp_feel + humidity + weekend, data = bikes)
+bikes_C <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity, data = bikes)
+bikes_E <- lm(rides ~ temp_feel + humidity + weekend + holiday, data = bikes)
 ```
 
 ::: task
-Is `bikes_C` nested in `bikes_A`? Could we use `anova(bikes_A, bikes_C)`?
+Is `bikes_E` nested in `bikes_C`? Could we use `anova(bikes_E, bikes_C)`?
 :::
 
 . . .
@@ -384,8 +387,9 @@ Is `bikes_C` nested in `bikes_A`? Could we use `anova(bikes_A, bikes_C)`?
 
 ::: medium
 
-$R^2_{adj} = 1 - \dfrac{MSE}{MST}$
+$R^2_{adj} = 1 - \dfrac{MSE}{MST} = 1 - \dfrac{SSE/(n-(p+1))}{SST/(n-1)}$
 
+  - $R^2$ always goes up when we add predictors; $R^2_{adj}$ can go down
   - can be used for nested and non-nested models
   - no formal test/rules for "better enough" 
 
@@ -393,11 +397,15 @@ $R^2_{adj} = 1 - \dfrac{MSE}{MST}$
     
 ```{r}
 #| echo: true
-summary(bikes_A)$adj.r.squared
 summary(bikes_C)$adj.r.squared
+summary(bikes_E)$adj.r.squared
 ```
 
-## Information criteria
+::: notes
+Timing: adjusted R^2 + AIC/BIC ~10 min (min 30-40). Adjusted R^2 is on the quiz; AIC/BIC are not.
+:::
+
+## Information criteria: AIC and BIC
 
 The following "information criteria" can be used to compare nested or non-nested models (smaller values are better)
 
@@ -407,137 +415,95 @@ $$IC = \text{Measure of Fit} + \text{Penalty}$$
 
 $$AIC = n \log(SSE/n) + 2k$$
 
-<br>
-
 $$BIC =  n \log(SSE/n) + \log(n) \cdot k$$
 
-<br>
-
 ::: medium
-$k$ = number of coefficients in the model (**including** the intercept). Fit term gets smaller with a bigger model; the penalty gets bigger.
+$k$ = number of coefficients in the model (**including** the intercept). Fit term gets smaller with a bigger model; the penalty gets bigger. BIC penalizes more than AIC (since $\log(n) > 2$ when $n \ge 8$)
+
+In R: `AIC(model)` and `BIC(model)`
 :::
 
-## By hand and in R
-
-```{r}
-#| echo: true
-sse <- sum(residuals(bikes_A)^2)
-n <- nrow(bikes)
-k <- length(coef(bikes_A))
-
-n * log(sse / n) + 2 * k   # AIC by hand
-AIC(bikes_A)               # R's AIC
-```
-
-::: medium
-R's value differs from our formula by a constant that is the same for every model fit to the same data, so **comparisons and rankings are identical**.
-:::
-
-## AIC and BIC for our models
+## Step 4: Compare all of our candidates
 
 ```{r}
 mods <- list("A: temp + wind + weekend" = bikes_A,
              "B: A + holiday" = bikes_B,
-             "D: B + humidity" = bikes_D,
-             "E: D + temp_feel" = bikes_E,
-             "C: temp_feel + humidity + weekend" = bikes_C)
+             "C: B + humidity" = bikes_C,
+             "D: C + temp_feel" = bikes_D,
+             "E: temp_feel + humidity + weekend + holiday" = bikes_E)
 
 tibble(Model = names(mods),
        k = map_int(mods, ~length(coef(.x))),
        `Adj R2` = map_dbl(mods, ~summary(.x)$adj.r.squared),
        AIC = map_dbl(mods, AIC),
        BIC = map_dbl(mods, BIC)) |>
-  knitr::kable(digits = 1)
+  knitr::kable(digits = c(0, 0, 3, 1, 1))
 ```
 
 ::: medium
-- Big gains from adding `holiday` and `humidity` under every criterion. For `temp_feel`: BIC says no, while AIC slightly prefers the bigger model (a drop of only about 1.3, which is a small difference)
-- Model C beats model A, which no $F$ test could tell us
-:::
-
-## How do the tools relate?
-
-For the bikes data ($n = $ `r n_bikes`), adding $d = 1$ parameter, the larger model is preferred when
-
-```{r}
-df_f <- bikes_A$df.residual
-tibble(Rule = c("F test, $\\alpha = 0.05$", "AIC", "BIC"),
-       `Prefers larger model if F is bigger than` = c(qf(0.95, 1, df_f),
-                                                      df_f * (exp(2 / n_bikes) - 1),
-                                                      df_f * (n_bikes^(1 / n_bikes) - 1))) |>
-  knitr::kable(digits = 2)
-```
-
-. . .
-
-::: medium
-- All three ask: "is the drop in SSE worth the added parameter(s)?"
-- Different thresholds: AIC is the most willing to add terms, BIC the most conservative
-- $\log(n)$ is bigger than 2 when $n \ge 8$, which is why BIC penalizes more
-:::
-
-## Overfitting 
-
-::: medium
-
-The goal when building a model is to capture the trends in the data while still making something that can applied to new data. When a model is **overfit**, a model will perform very well on the data used to fit it but perform very poorly on any new data.
-:::
-
-```{r}
-#| fig-width: 8
-#| fig-height: 2
-
-
-library(ggplot2)
-library(patchwork)
-
-# 1. Generate Synthetic Data (A simple curve with noise)
-set.seed(123)
-n <- 30
-x <- seq(0, 1, length.out = n)
-y <- sin(2 * pi * x) + rnorm(n, sd = 0.3)
-df <- data.frame(x = x, y = y)
-
-# Helper function to generate plots
-plot_fit <- function(degree, title) {
-  ggplot(df, aes(x, y)) +
-    geom_point(alpha = 0.6, color = "black") +
-    stat_smooth(method = "lm", formula = y ~ poly(x, degree), 
-                se = FALSE, color = "#f15a31", linewidth = 1) +
-    labs(title = title) +
-    theme_minimal() +
-    theme(plot.title = element_text(face = "bold"))
-}
-
-# 2. Underfit: Linear model (too simple to capture the curve)
-p1 <- plot_fit(1, "Underfit")
-
-# 3. Just Right: Degree 3 (captures the signal but ignores noise)
-p2 <- plot_fit(3, "Balanced")
-
-# 4. Overfit: Degree 15 (chases every random noise point)
-p3 <- plot_fit(15, "Overfitt")
-
-# 5. Combine using Patchwork
-(p1 | p2 | p3)
-```
-
-::: medium
-
-Model building is like making a suit that can generally fit everyone around a given size, not making a custom-tailored suit that can only fit one person perfectly. 
-
+- Model C beats model E under every criterion, which no $F$ test could tell us
+- C vs D: adjusted $R^2$ and AIC *slightly* prefer D, BIC prefers C. When the tools disagree (and there's multicollinearity!), choose the simpler model
 :::
 
 ## Your turn
 
 ::: task
-**Activity (about 10-12 minutes)**
+**Activity (about 15 minutes)**
 
-Using the `bikes` models A, B, D, E, and C:
+Work through Parts 1-3 of the activity and fill in the comparison table in your notes.
 
-1. Fill in the comparison table in your notes using `anova()`, `AIC()`, `BIC()`, and adjusted $R^2$
-2. Which model would you choose to explain how weekends and holidays affect ridership? Justify your choice.
+Which model would you choose to answer our question? Justify your choice.
 :::
+
+```{r}
+countdown(minutes = 15)
+```
+
+## Steps 5 and 6: Check and interpret
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2.5
+library(ggResidpanel)
+resid_panel(bikes_C, plots = c("resid", "qq", "index"), type = "standardized", nrow = 1)
+```
+
+```{r}
+tidy(bikes_C, conf.int = TRUE) |>
+  filter(term %in% c("weekendTRUE", "holidayyes")) |>
+  select(term, estimate, conf.low, conf.high) |>
+  knitr::kable(digits = 0)
+```
+
+::: task
+Using model C, answer our question in context.
+:::
+
+::: notes
+Timing: steps 5-6 + flowchart + summary ~10 min (min 60-70). Holiday CI is wide: only 12 holidays in the data.
+:::
+
+## Comparing two models
+
+```{mermaid}
+graph TD
+    classDef default fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    A(["Are the models nested?"])
+    B(["Do they differ by<br>one coefficient?"])
+    C["t-test for that coefficient<br>(same as the F test)"]
+    D["Extra sums of squares F test<br>anova(reduced, full)"]
+    E["Adjusted R², AIC, or BIC<br>(no p-value)"]
+    F["If the tools disagree,<br>choose the simpler model"]
+
+    A -->|YES| B
+    A -->|NO| E
+    B -->|YES| C
+    B -->|NO| D
+    C --> F
+    D --> F
+    E --> F
+```
 
 ## Summary
 
@@ -557,4 +523,57 @@ Using the `bikes` models A, B, D, E, and C:
 
 . . . 
 
-Next time &rarr; how well does a model predict *new* data?
+Next time &rarr; Quiz 2! After that: how well does a model predict *new* data?
+
+## Appendix: Sequential ANOVA (the `anova()` function) {visibility="hidden"}
+
+::: medium
+
+When you use `anova()` on a single model, R provides a table of **extra Sum of Squares (SS)** for terms added sequentially
+
+```{r}
+#| echo: true
+model_1 <- lm(rides ~ temp_actual + windspeed + weekend + temp_actual:weekend + 
+                windspeed:weekend, data = bikes)
+anova(model_1)
+```
+
+:::
+
+## Appendix: How do the tools relate? {visibility="hidden"}
+
+For the bikes data ($n = $ `r n_bikes`), adding $d = 1$ parameter, the larger model is preferred when
+
+```{r}
+df_f <- bikes_A$df.residual
+tibble(Rule = c("F test, $\\alpha = 0.05$", "AIC", "BIC"),
+       `Prefers larger model if F is bigger than` = c(qf(0.95, 1, df_f),
+                                                      df_f * (exp(2 / n_bikes) - 1),
+                                                      df_f * (n_bikes^(1 / n_bikes) - 1))) |>
+  knitr::kable(digits = 2)
+```
+
+## Appendix: Overfitting (move to prediction day) {visibility="hidden"}
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2
+
+set.seed(123)
+n <- 30
+x <- seq(0, 1, length.out = n)
+y <- sin(2 * pi * x) + rnorm(n, sd = 0.3)
+df <- data.frame(x = x, y = y)
+
+plot_fit <- function(degree, title) {
+  ggplot(df, aes(x, y)) +
+    geom_point(alpha = 0.6, color = "black") +
+    stat_smooth(method = "lm", formula = y ~ poly(x, degree), 
+                se = FALSE, color = "#f15a31", linewidth = 1) +
+    labs(title = title) +
+    theme_minimal() +
+    theme(plot.title = element_text(face = "bold"))
+}
+
+(plot_fit(1, "Underfit") | plot_fit(3, "Balanced") | plot_fit(15, "Overfit"))
+```

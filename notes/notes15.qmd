@@ -17,9 +17,9 @@ bikes <- bikes |> select(date, season, year, month, weekend, holiday,
 
 bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
 bikes_B <- lm(rides ~ temp_actual + windspeed + weekend + holiday, data = bikes)
-bikes_D <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity, data = bikes)
-bikes_E <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + temp_feel, data = bikes)
-bikes_C <- lm(rides ~ temp_feel + humidity + weekend, data = bikes)
+bikes_C <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity, data = bikes)
+bikes_D <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + temp_feel, data = bikes)
+bikes_E <- lm(rides ~ temp_feel + humidity + weekend + holiday, data = bikes)
 n_bikes <- nrow(bikes)
 ```
 
@@ -29,27 +29,145 @@ n_bikes <- nrow(bikes)
 `bikes_B` adds `holiday`.
 
 ```{r}
+#| echo: true
 anova(bikes_A, bikes_B)
 ```
 
-**1.** Which model is the full model? Write the null hypothesis.
+**1.** Which model is the full model? Write the null and alternative hypothesis for the test in the ANOVA table above.
 
-\vspace{.75in}
+\vspace{1in}
 
 **2.** What is $d$? What are $df_{full}$ and $SSE_{reduced}$?
 
-\vspace{.5in}
+\vspace{.75in}
 
 **3.** State your conclusion in context.
 
-\vspace{.75in}
+\vspace{1in}
 
 **4.** What p-value would you expect for the `holidayyes` row of
 `summary(bikes_B)`? Why?
 
 \vspace{.75in}
 
-## Nested models
+## Review: sums of squares
+
+```{r}
+#| fig-width: 7.5
+#| fig-height: 2.6
+x <- c(1, 2.5, 4, 6, 8, 9.5)
+y <- c(1.5, 4, 3.5, 7, 7.5, 10)
+df <- data.frame(x = x, y = y)
+
+fit <- lm(y ~ x, data = df)
+df$y_hat <- predict(fit)
+df$y_mean <- mean(df$y)
+
+make_squares <- function(data, y1_col, y2_col, color) {
+  data$diff <- data[[y1_col]] - data[[y2_col]]
+  geom_rect(data = data, aes(
+    xmin = x,
+    xmax = x + abs(diff),
+    ymin = pmin(data[[y1_col]], data[[y2_col]]),
+    ymax = pmax(data[[y1_col]], data[[y2_col]])
+  ), fill = color, alpha = 0.3, color = color)
+}
+
+p1 <- ggplot(df, aes(x, y)) +
+  geom_hline(aes(yintercept = y_mean), linetype = "dashed", color = "blue") +
+  make_squares(df, "y", "y_mean", "blue") +
+  geom_point() +
+  labs(title = "SST") +
+  coord_fixed()
+
+p2 <- ggplot(df, aes(x, y)) +
+  geom_hline(aes(yintercept = y_mean), linetype = "dashed", color = "blue") +
+  geom_line(aes(y = y_hat), color = "darkgreen") +
+  make_squares(df, "y_hat", "y_mean", "darkgreen") +
+  geom_point(alpha = 0.2) +
+  labs(title = "SSReg") +
+  coord_fixed()
+
+p3 <- ggplot(df, aes(x, y)) +
+  geom_line(aes(y = y_hat), color = "darkgreen") +
+  make_squares(df, "y", "y_hat", "red") +
+  geom_point() +
+  labs(title = "SSE") +
+  coord_fixed()
+
+p1 | p2 | p3
+```
+
+-   Least squares makes the total area of the ______________ squares
+    as small as possible
+-   $R^2$: proportion of the ______________ area (SST) covered by the
+    ______________ squares (SSReg)
+-   $R^2_{adj} = 1 - \frac{MSE}{MST}$: same idea, but each model is
+    "charged" for the number of ______________ it uses
+-   Overall $F$ test, $F = \frac{MSReg}{MSE}$: is the "average"
+    ______________ square bigger than the "average" ______________ square?
+-   Extra sums of squares $F$ test: are the ______________ squares for a
+    larger model significantly smaller than for a smaller model?
+
+## Today: building an *explanatory* model
+
+**Question:** How are weekends and holidays associated with ridership,
+after accounting for the weather?
+
+Two reasons to build a model:
+
+-   **Explanatory:** ___________________________________________________
+-   **Predictive:** ___________________________________________________
+
+Today we're building an explanatory model. (Predictive models come after
+the quiz!)
+
+**Which variables would you include to answer our question? Why?**
+
+\vspace{.75in}
+
+## A recipe for explanatory models
+
+1.  **Start with the question.** Which variables are you interested in?
+    Which do you need to adjust for? These stay in the model, even if
+    ___________________________
+2.  **Look before you fit.** Check for predictors that
+    ___________________________
+3.  **Fit a *small* set of candidate models** (not every possible
+    combination!)
+4.  **Compare the candidates**: ______________ for nested models;
+    ______________ for any models
+5.  **Check the conditions** for the model you choose
+6.  **Interpret and justify** your choice
+
+## Step 1: Our candidate models
+
+-   **Interested in:** `weekend`, `holiday`
+-   **Adjust for:** weather (temperature, windspeed, humidity)
+
+| Model | Predictors |
+|:--|:--|
+| A | `temp_actual + windspeed + weekend` |
+| B | A + `holiday` |
+| C | B + `humidity` |
+| D | C + `temp_feel` |
+| E | `temp_feel + humidity + weekend + holiday` |
+
+## Step 2: Look before you fit
+
+```{r}
+#| echo: true
+bikes |>
+  select(temp_actual, temp_feel, windspeed, humidity) |>
+  cor() |>
+  round(2)
+```
+
+Which pair of predictors could cause a problem? What problem?
+
+\vspace{.5in}
+
+## Step 3: Compare nested models with an $F$ test
 
 Two models are **nested** if the reduced model is a ____________________ of the
 full model (we get it by setting some $\beta$'s equal to ______).
@@ -58,12 +176,10 @@ full model (we get it by setting some $\beta$'s equal to ______).
 
 | Model 1 | Model 2 | Nested? |
 |:--|:--|:--|
-| `temp_actual + windspeed` | `temp_actual + windspeed + weekend` | yes / no |
-| `temp_actual + weekend` | `temp_feel + weekend` | yes / no |
-| `temp_actual + weekend` | `temp_actual * weekend` | yes / no |
-| `windspeed + weekend` | `temp_actual + windspeed` | yes / no |
-
-## The extra sums of squares $F$-test
+| A | B | yes / no |
+| B | D | yes / no |
+| C | E | yes / no |
+| A | C | yes / no |
 
 $$F = \frac{(SSE_{reduced} - SSE_{full}) / d}{SSE_{full} / df_{full}}$$
 
@@ -71,67 +187,46 @@ $$F = \frac{(SSE_{reduced} - SSE_{full}) / d}{SSE_{full} / df_{full}}$$
 -   Denominator: ______________________________________________
 -   A large $F$ means: ______________________________________________
 
-**Example:** Does `holiday` help?
-
-```{r}
-#| echo: true
-anova(bikes_A, bikes_B)   # reduced model first!
-```
-
-With $d = 1$, $F = t^2$. Check: $t$ for `holidayyes` in `bikes_B` is
-`r round(summary(bikes_B)$coef["holidayyes", "t value"], 2)`, and
-$t^2 =$ `r round(summary(bikes_B)$coef["holidayyes", "t value"]^2, 2)`.
-
-## Adding variables one at a time
+**Adding variables one at a time:**
 
 ```{r}
 step_tab <- bind_rows(
   tidy(anova(bikes_A, bikes_B)) |> slice(2) |> mutate(step = "A to B: add holiday"),
-  tidy(anova(bikes_B, bikes_D)) |> slice(2) |> mutate(step = "B to D: add humidity"),
-  tidy(anova(bikes_D, bikes_E)) |> slice(2) |> mutate(step = "D to E: add temp_feel")
+  tidy(anova(bikes_B, bikes_C)) |> slice(2) |> mutate(step = "B to C: add humidity"),
+  tidy(anova(bikes_C, bikes_D)) |> slice(2) |> mutate(step = "C to D: add temp_feel")
 ) |>
-  mutate(`Delta AIC` = c(AIC(bikes_B) - AIC(bikes_A), AIC(bikes_D) - AIC(bikes_B), AIC(bikes_E) - AIC(bikes_D)),
-         `Delta BIC` = c(BIC(bikes_B) - BIC(bikes_A), BIC(bikes_D) - BIC(bikes_B), BIC(bikes_E) - BIC(bikes_D))) |>
-  select(step, F = statistic, `p-value` = p.value, `Delta AIC`, `Delta BIC`) |>
+  select(step, d = df, F = statistic, `p-value` = p.value) |>
   mutate(`p-value` = fmt_p(`p-value`))
 knitr::kable(step_tab, digits = 2)
 ```
 
-*(We'll define AIC and BIC in a few minutes. For now: a negative change
-means the bigger model is preferred.)*
-
-`temp_feel` is almost the same variable as `temp_actual`
-($r =$ `r round(cor(bikes$temp_actual, bikes$temp_feel), 2)`). What does
-the $F$-test say about adding it?
+What do the $F$ tests say about each step?
 
 \vspace{.75in}
 
+## Careful: `temp_actual` and `temp_feel`
+
 ```{r}
 bind_rows(
-  tidy(bikes_D) |> filter(term == "temp_actual") |> mutate(model = "D (without temp_feel)"),
-  tidy(bikes_E) |> filter(term %in% c("temp_actual", "temp_feel")) |> mutate(model = "E (with temp_feel)")
+  tidy(bikes_C) |> filter(term == "temp_actual") |> mutate(model = "C (without temp_feel)"),
+  tidy(bikes_D) |> filter(term %in% c("temp_actual", "temp_feel")) |> mutate(model = "D (with temp_feel)")
 ) |>
   select(model, term, estimate, std.error, p.value) |>
   mutate(p.value = fmt_p(p.value)) |>
   knitr::kable(digits = 2)
 ```
 
-What happened to the standard error of `temp_actual`? Why?
+What happened to the standard error of `temp_actual`? Why? What should we
+do?
 
 \vspace{.75in}
 
-## Where the $F$-test falls short
+## When the $F$ test can't help
 
-```{r}
-#| echo: true
-bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
-bikes_C <- lm(rides ~ temp_feel + humidity + weekend, data = bikes)
-```
-
-**Is `bikes_C` nested in `bikes_A`?** ________ Can we use `anova(bikes_A, bikes_C)`?
+**Is `bikes_E` nested in `bikes_C`?** ________ Can we use `anova(bikes_E, bikes_C)`?
 ________
 
-Two situations where the $F$-test can't help:
+Two situations where the $F$ test can't help:
 
 1.  _______________________________________________________________
 
@@ -141,15 +236,16 @@ We need tools that work for *any* two models fit to the same data.
 
 ## Adjusted $R^2$
 
-$$R^2_{adj} = 1 - \frac{MSE}{MST}$$
+$$R^2_{adj} = 1 - \frac{MSE}{MST} = 1 - \frac{SSE/(n-(p+1))}{SST/(n-1)}$$
 
+-   $R^2$ always goes up when we add predictors; $R^2_{adj}$ ______________
 -   can be used for nested **and** non-nested models
 -   no formal test or rule for "better enough"
 
 ```{r}
-tibble(Model = c("A: temp_actual + windspeed + weekend",
-                 "C: temp_feel + humidity + weekend"),
-       `Adj R2` = c(summary(bikes_A)$adj.r.squared, summary(bikes_C)$adj.r.squared)) |>
+tibble(Model = c("C: temp_actual + windspeed + weekend + holiday + humidity",
+                 "E: temp_feel + humidity + weekend + holiday"),
+       `Adj R2` = c(summary(bikes_C)$adj.r.squared, summary(bikes_E)$adj.r.squared)) |>
   knitr::kable(digits = 3)
 ```
 
@@ -161,140 +257,114 @@ $$IC = \text{Measure of Fit} + \text{Penalty}$$
 
 $$AIC = n \log(SSE/n) + 2k \qquad\qquad BIC = n \log(SSE/n) + \log(n) \cdot k$$
 
-where $k$ = number of coefficients (**including** the intercept).
+where $k$ = number of coefficients (**including** the intercept). In R:
+`AIC(model)` and `BIC(model)`.
 
 -   Smaller values are ______________.
 -   When we add a predictor, the fit term gets ______________ and the penalty gets ______________.
 -   BIC penalizes more than AIC whenever $\log(n) >$ ______, i.e. $n \ge$ ______.
 
-## By hand
+## Example: adjusted $R^2$ and $F$ tests by hand
 
-A researcher fits three nested models to $n = 40$ observations. Fill in the
-table, then answer the questions. (Use $\log$ = natural log.)
+A researcher fits four nested models to $n = 40$ observations. Fill in the
+table, then answer the questions.
 
-| Model | Predictors | $k$ | SSE | $\hat\sigma^2 = SSE/(n-k)$ | $R^2_{adj}$ | AIC | BIC |
-|:--|:--|:--|:--|:--|:--|:--|:--|
-| M0 | none | 1 | 980 | | | | |
-| M1 | $x_1$ | 2 | 520 | | | | |
-| M2 | $x_1, x_2$ | 3 | 410 | | | | |
-| M3 | $x_1, x_2, x_3$ | 4 | 398 | | | | |
+| Model | Predictors | $p$ | SSE | $\hat\sigma^2 = SSE/(n-(p+1))$ | $R^2_{adj}$ |
+|:--|:--|:--|:--|:--|:--|
+| M0 | none | 0 | 980 | | |
+| M1 | $x_1$ | 1 | 520 | | |
+| M2 | $x_1, x_2$ | 2 | 410 | | |
+| M3 | $x_1, x_2, x_3$ | 3 | 398 | | |
 
 $R^2_{adj} = 1 - \hat\sigma^2 / \hat\sigma^2_{M0}$ (since $MST = SSE_{M0}/(n-1)$).
 
-\vspace{2.25in}
+\vspace{2in}
 
-**(a)** Which model is best by $R^2_{adj}$? By AIC? By BIC?
+**(a)** Which model is best by $R^2_{adj}$?
 
 \vspace{.5in}
 
-**(b)** Use an $F$-test to compare M2 to M1 and M3 to M2. State $d$ and $df_{full}$ each time.
+**(b)** Use an $F$ test to compare M2 to M1 and M3 to M2. State $d$ and $df_{full}$ each time.
 
 \vspace{1.5in}
 
-**(c)** Do the tools agree? Explain any disagreement.
+**(c)** Do the two tools agree? Which model would you choose?
 
 \vspace{.75in}
 
-## How do the tools relate?
+## Step 4: Compare all of our candidates
 
-For the `bikes` data ($n = $ `r n_bikes`) and one extra parameter ($d = 1$),
-the bigger model is preferred when $F$ is bigger than:
+::: {.callout-tip}
+## Activity
 
-```{r}
-df_f <- bikes_A$df.residual
-tibble(Rule = c("F-test, alpha = 0.05", "AIC", "BIC"),
-       `F needed` = c(qf(0.95, 1, df_f),
-                      df_f * (exp(2 / n_bikes) - 1),
-                      df_f * (n_bikes^(1 / n_bikes) - 1))) |>
-  knitr::kable(digits = 2)
-```
-
-**Which is the most willing to add terms?** ________ **Most conservative?** ________
-
-All three ask the same question: ____________________________________________.
-
-## AIC and BIC in R
-
-```{r}
-#| echo: true
-sse <- sum(residuals(bikes_A)^2)
-n <- nrow(bikes)
-k <- length(coef(bikes_A))
-
-n * log(sse / n) + 2 * k   # AIC by hand
-AIC(bikes_A)               # R's AIC
-```
-
-R's value differs from our formula by a constant that is the same for every
-model fit to the same data, so ________________________ are identical.
-
-```{r}
-mods <- list("A: temp + wind + weekend" = bikes_A,
-             "B: A + holiday" = bikes_B,
-             "D: B + humidity" = bikes_D,
-             "E: D + temp_feel" = bikes_E,
-             "C: temp_feel + humidity + weekend" = bikes_C)
-
-tibble(Model = names(mods),
-       k = map_int(mods, ~length(coef(.x))),
-       `Adj R2` = map_dbl(mods, ~summary(.x)$adj.r.squared),
-       AIC = map_dbl(mods, AIC),
-       BIC = map_dbl(mods, BIC)) |>
-  knitr::kable(digits = 1)
-```
-
-Summarize what each criterion says about the bikes models:
-
-\vspace{1in}
-
-## Why penalize? Overfitting
-
-```{r}
-#| fig-height: 2
-#| fig-width: 7.5
-set.seed(123)
-n <- 30
-x <- seq(0, 1, length.out = n)
-y <- sin(2 * pi * x) + rnorm(n, sd = 0.3)
-df <- data.frame(x = x, y = y)
-
-plot_fit <- function(degree, title) {
-  ggplot(df, aes(x, y)) +
-    geom_point(alpha = 0.6) +
-    stat_smooth(method = "lm", formula = y ~ poly(x, degree),
-                se = FALSE, color = "#f15a31", linewidth = 1) +
-    labs(title = title) +
-    theme(axis.title = element_blank(), axis.text = element_blank())
-}
-
-plot_fit(1, "Underfit") | plot_fit(3, "Balanced") | plot_fit(15, "Overfit")
-```
-
-A model that is too ________________ will do very well on the data used to
-fit it but poorly on new data. The penalty in AIC and BIC discourages this.
-
-## Activity: comparing bikes models
-
-Work through the R activity (Part 1) and record your results here.
+Work through Parts 1-3 of the R activity and record your results here.
+:::
 
 | Model | $k$ | $R^2_{adj}$ | AIC | BIC |
 |:--|:--|:--|:--|:--|
 | A: `temp_actual + windspeed + weekend` | | | | |
 | B: A + `holiday` | | | | |
-| D: B + `humidity` | | | | |
-| E: D + `temp_feel` | | | | |
-| C: `temp_feel + humidity + weekend` | | | | |
+| C: B + `humidity` | | | | |
+| D: C + `temp_feel` | | | | |
+| E: `temp_feel + humidity + weekend + holiday` | | | | |
 
-Which model would you choose to explain how weekends and holidays affect
-ridership? Justify your choice.
+Which model would you choose to answer our question? Justify your choice.
 
 \vspace{1.25in}
+
+::: callout-important
+## Stop here
+
+Let Amanda know when your group finishes!
+:::
+
+## Steps 5 and 6: Check and interpret
+
+```{r}
+#| fig-width: 7.5
+#| fig-height: 2.4
+ggResidpanel::resid_panel(bikes_C, plots = c("resid", "qq", "index"), type = "standardized", nrow = 1)
+```
+
+```{r}
+tidy(bikes_C, conf.int = TRUE) |>
+  filter(term %in% c("weekendTRUE", "holidayyes")) |>
+  select(term, estimate, conf.low, conf.high) |>
+  knitr::kable(digits = 0)
+```
+
+**Example:** Using model C, answer our question in context.
+
+\vspace{1in}
+
+## Comparing two models
+
+```{mermaid}
+%%| fig-width: 5
+graph TD
+    classDef default fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    A(["Are the models nested?"])
+    B(["Do they differ by<br>one coefficient?"])
+    C["t-test for that coefficient<br>(same as the F test)"]
+    D["Extra sums of squares F test<br>anova(reduced, full)"]
+    E["Adjusted R², AIC, or BIC<br>(no p-value)"]
+    F["If the tools disagree,<br>choose the simpler model"]
+
+    A -->|YES| B
+    A -->|NO| E
+    B -->|YES| C
+    B -->|NO| D
+    C --> F
+    D --> F
+    E --> F
+```
 
 ## Summary
 
 | Tool | Nested only? | Gives a p-value? | Notes |
 |:--|:--|:--|:--|
-| $F$-test | | | |
+| $F$ test | | | |
 | Adjusted $R^2$ | | | |
 | AIC | | | |
 | BIC | | | |
@@ -302,4 +372,3 @@ ridership? Justify your choice.
 -   Use domain knowledge first. These tools compare candidate models; they
     don't replace thinking.
 -   **Justify your model choice!**
--   Next time: how well does a model predict *new* data?
