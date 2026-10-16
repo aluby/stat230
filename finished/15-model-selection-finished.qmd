@@ -1,0 +1,230 @@
+---
+title: "15: Model Selection"
+format:
+  html: default
+  typst: default
+execute:
+  echo: true
+  warning: false
+  message: false
+navbar: false
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+---
+
+```{r}
+library(ggformula)
+library(bayesrules) # data library
+library(broom)
+```
+
+::: callout-note
+This activity goes with the Day 15 notes. Record your results in the table in your notes.
+:::
+
+## Overview
+
+Today you will build a model to answer this question: **How are weekends and holidays associated with ridership, after accounting for the weather?** Run the code below to select the columns we will use and fit five candidate models.
+
+```{r}
+bikes <- bikes[, c("date", "season", "year", "month", "weekend", "holiday",
+                   "temp_actual", "temp_feel", "humidity", "windspeed", "rides")]
+
+bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
+bikes_B <- lm(rides ~ temp_actual + windspeed + weekend + holiday, data = bikes)
+bikes_C <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity, data = bikes)
+bikes_D <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + temp_feel, data = bikes)
+bikes_E <- lm(rides ~ temp_feel + humidity + weekend + holiday, data = bikes)
+```
+
+## Part 1: Look before you fit
+
+**Q1.** Make a correlation matrix of the weather variables. Which pair of predictors could cause problems if we include both in the same model? What problem?
+
+```{r}
+bikes |>
+  dplyr::select(temp_actual, temp_feel, windspeed, humidity) |>
+  cor()
+```
+
+> `temp_actual` and `temp_feel` are almost perfectly correlated ($r =$ `r round(cor(bikes$temp_actual, bikes$temp_feel), 2)`). Including both would cause **multicollinearity**: they carry nearly the same information, so the model can't separate their effects, and the standard errors of their coefficients will be inflated. The other pairs of weather variables are only weakly or moderately correlated (all $|r| \le 0.32$).
+
+## Part 2: Nested models and the $F$ test
+
+**Q2.** Which of these pairs of models are nested? For the pairs that are nested, which is the full model?
+
+- A and B
+- B and C
+- C and D
+- C and E
+- A and C
+
+> - A and B: nested; B is full (adds `holiday`)
+> - B and C: nested; C is full (adds `humidity`)
+> - C and D: nested; D is full (adds `temp_feel`)
+> - C and E: **not nested**. E uses `temp_feel` but not `temp_actual` or `windspeed`, so neither model is a special case of the other.
+> - A and C: nested; C is full (adds `holiday` and `humidity`, so $d = 2$)
+
+The `anova()` function takes the **reduced** model first and the **full** model second.
+
+**Q3.** Fill in the blanks to run the extra sums of squares $F$ test comparing models A and B, and then models B and C. What do you conclude each time?
+
+```{r}
+anova(bikes_A, bikes_B)
+
+anova(bikes_B, bikes_C)
+```
+
+```{r}
+#| include: false
+aAB <- anova(bikes_A, bikes_B)
+aBC <- anova(bikes_B, bikes_C)
+aCD <- anova(bikes_C, bikes_D)
+```
+
+> **A vs. B:** $H_0: \beta_{holiday} = 0$ vs. $H_A: \beta_{holiday} \ne 0$. $F =$ `r round(aAB$F[2], 2)` on 1 and `r aAB$Res.Df[2]` df, p-value `r round(aAB$"Pr(>F)"[2], 3)`. We reject $H_0$: holidays are associated with ridership, adjusting for temperature, windspeed, and weekend.
+>
+> **B vs. C:** $H_0: \beta_{humidity} = 0$. $F =$ `r round(aBC$F[2], 1)` on 1 and `r aBC$Res.Df[2]` df, p-value < 0.001. We reject $H_0$: adding `humidity` removes a large amount of squared error (SSE falls from `r format(round(aBC$RSS[1]), big.mark = ",")` to `r format(round(aBC$RSS[2]), big.mark = ",")`).
+
+**Q4.** Now compare C to D (adding `temp_feel`). What does the $F$ test suggest?
+
+```{r}
+anova(bikes_C, bikes_D)
+```
+
+> $F =$ `r round(aCD$F[2], 2)` on 1 and `r aCD$Res.Df[2]` df, p-value `r round(aCD$"Pr(>F)"[2], 3)`. At the 5% level, we do **not** reject $H_0$: there is only weak evidence that `temp_feel` helps once `temp_actual` is already in the model. (This is borderline, which is a hint that something odd is going on. See Q5.)
+
+**Q5.** Compare the `temp_actual` row of `summary(bikes_C)` to the `temp_actual` row of `summary(bikes_D)`. What changed, and why? How does this connect to your answer to Q1?
+
+```{r}
+summary(bikes_C)
+summary(bikes_D)
+```
+
+```{r}
+#| include: false
+sC <- summary(bikes_C)$coef
+sD <- summary(bikes_D)$coef
+```
+
+> In model C, `temp_actual` is hugely significant (estimate `r round(sC["temp_actual", "Estimate"], 1)`, SE `r round(sC["temp_actual", "Std. Error"], 1)`, p < 0.001). In model D, once `temp_feel` is added, the standard error jumps to `r round(sD["temp_actual", "Std. Error"], 1)` (about `r round(sD["temp_actual", "Std. Error"] / sC["temp_actual", "Std. Error"], 1)` times bigger), the estimate drops to `r round(sD["temp_actual", "Estimate"], 1)`, and the p-value rises to `r round(sD["temp_actual", "Pr(>|t|)"], 3)`. `temp_feel` also looks "insignificant" (p = `r round(sD["temp_feel", "Pr(>|t|)"], 3)`), even though temperature clearly matters.
+>
+> This is multicollinearity, which we predicted in Q1 ($r =$ `r round(cor(bikes$temp_actual, bikes$temp_feel), 2)`; the VIFs are about `r round(car::vif(bikes_D)["temp_actual"])`). The two variables carry nearly the same information, so the model can't tell which one deserves the credit. The overall fit barely changed, but the individual coefficients and $t$-tests became unreliable. The solution is to pick *one* temperature variable.
+
+## Part 3: Comparing models that aren't nested
+
+**Q6.** Use `summary(...)$adj.r.squared`, `AIC()`, and `BIC()` to fill in the table in your notes for all five models.
+
+```{r}
+models <- list(A = bikes_A, B = bikes_B, C = bikes_C, D = bikes_D, E = bikes_E)
+
+tibble::tibble(Model = names(models),
+               k = sapply(models, function(m) length(coef(m))),
+               adj_R2 = sapply(models, function(m) summary(m)$adj.r.squared),
+               AIC = sapply(models, AIC),
+               BIC = sapply(models, BIC)) |>
+  knitr::kable(digits = c(0, 0, 3, 1, 1))
+```
+
+> This is the answer for the table in the notes. Smaller AIC and BIC are better; larger adjusted $R^2$ is better.
+
+**Q7.** Models C and E are not nested. Which model do adjusted $R^2$, AIC, and BIC prefer? Why can't we use an $F$ test to compare them?
+
+> Model C is preferred by all three: it has the higher adjusted $R^2$ (`r round(summary(bikes_C)$adj.r.squared, 3)` vs. `r round(summary(bikes_E)$adj.r.squared, 3)`) and the lower AIC (`r round(AIC(bikes_C), 1)` vs. `r round(AIC(bikes_E), 1)`) and BIC (`r round(BIC(bikes_C), 1)` vs. `r round(BIC(bikes_E), 1)`). We can't use an $F$ test because the models are not nested: the $F$ test compares a model to a special case of itself, but neither C nor E is a special case of the other.
+
+**Q8.** Do the criteria agree on adding `temp_feel` to model C (comparing C and D)? What does each one say? Which model would you choose?
+
+```{r}
+#| include: false
+cd <- c(adj = summary(bikes_D)$adj.r.squared - summary(bikes_C)$adj.r.squared,
+        AIC = AIC(bikes_D) - AIC(bikes_C),
+        BIC = BIC(bikes_D) - BIC(bikes_C))
+```
+
+> They do not agree. Adjusted $R^2$ barely changes (`r round(summary(bikes_C)$adj.r.squared, 3)` for C vs. `r round(summary(bikes_D)$adj.r.squared, 3)` for D) and very slightly favors D. AIC is only `r round(abs(cd["AIC"]), 1)` lower for D (a small difference), while BIC is `r round(cd["BIC"], 1)` *higher* for D, so BIC prefers C. The $F$ test (Q4) was borderline (p = `r round(aCD$"Pr(>F)"[2], 3)`).
+>
+> When the tools disagree and there is multicollinearity, choose the **simpler** model: **model C**.
+
+## Part 4: Interpreting your model
+
+**Q9.** Which of the five models would you use to answer our question? Justify your choice using what you found above.
+
+> Model C (`temp_actual + windspeed + weekend + holiday + humidity`):
+>
+> - It contains our two variables of interest (`weekend` and `holiday`), and adjusts for the weather.
+> - Adding `holiday` (A to B) and `humidity` (B to C) both improved the fit significantly ($F$ tests).
+> - Adding `temp_feel` (D) doesn't help much and causes multicollinearity.
+> - It beats the non-nested alternative E under every criterion.
+>
+> (A reasonable alternative answer is B or C, as long as the choice is justified. Models A and E are weaker choices: A leaves out `holiday` and E has a worse fit.)
+
+**Q10.** Use `confint()` on your chosen model. Interpret the coefficients for `weekend` and `holiday` (and their confidence intervals) in context. Why do you think the interval for `holiday` is so wide? (*Hint:* `table(bikes$holiday)`)
+
+```{r}
+confint(bikes_C)
+table(bikes$holiday)
+```
+
+```{r}
+#| include: false
+cC <- coef(bikes_C)
+ciC <- confint(bikes_C)
+```
+
+> **Weekend:** Holding temperature, windspeed, humidity, and holiday constant, weekend days have about `r abs(round(cC["weekendTRUE"]))` fewer rides than weekdays. We are 95% confident the true difference is between `r abs(round(ciC["weekendTRUE", 2]))` and `r abs(round(ciC["weekendTRUE", 1]))` fewer rides.
+>
+> **Holiday:** Holding the other variables constant, holidays have about `r abs(round(cC["holidayyes"]))` fewer rides than non-holidays. We are 95% confident the true difference is between `r abs(round(ciC["holidayyes", 2]))` and `r abs(round(ciC["holidayyes", 1]))` fewer rides.
+>
+> The holiday interval is much wider because there are only `r sum(bikes$holiday == "yes")` holidays among the `r nrow(bikes)` days in the data, so we have very little information about the holiday effect.
+
+**Q11.** (*Extension*) Let's see what happens when we add some other candidate variables to model C. Compare C to each of the models below. Are these nested comparisons? What do the $F$ test, adjusted $R^2$, AIC, and BIC say? Does adding them change your answer to our question?
+
+```{r}
+bikes_F <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + season,
+              data = bikes)
+bikes_Y <- lm(rides ~ temp_actual + windspeed + weekend + holiday + humidity + year,
+              data = bikes)
+```
+
+(*Note:* `season` has four levels, so adding it adds three coefficients, i.e., $d = 3$.)
+
+```{r}
+anova(bikes_C, bikes_F)
+anova(bikes_C, bikes_Y)
+
+tibble::tibble(Model = c("C", "C + season", "C + year"),
+               adj_R2 = sapply(list(bikes_C, bikes_F, bikes_Y), function(m) summary(m)$adj.r.squared),
+               AIC = sapply(list(bikes_C, bikes_F, bikes_Y), AIC),
+               BIC = sapply(list(bikes_C, bikes_F, bikes_Y), BIC)) |>
+  knitr::kable(digits = c(0, 3, 1, 1))
+
+confint(bikes_F)[c("weekendTRUE", "holidayyes"), ]
+confint(bikes_Y)[c("weekendTRUE", "holidayyes"), ]
+```
+
+```{r}
+#| include: false
+aCF <- anova(bikes_C, bikes_F)
+aCY <- anova(bikes_C, bikes_Y)
+```
+
+> Both comparisons are nested (C is contained in each larger model). Both additions are strongly supported by every tool:
+>
+> - **Adding `season`** ($d = 3$): $F =$ `r round(aCF$F[2], 1)`, p < 0.001; adjusted $R^2$ rises from `r round(summary(bikes_C)$adj.r.squared, 3)` to `r round(summary(bikes_F)$adj.r.squared, 3)`; AIC and BIC both drop by more than 55.
+> - **Adding `year`** ($d = 1$): $F =$ `r round(aCY$F[2], 1)`, p < 0.001; adjusted $R^2$ jumps to `r round(summary(bikes_Y)$adj.r.squared, 3)`; AIC and BIC both drop by more than 340. Ridership grew a lot from 2011 to 2012, and the index plot of residuals for model C shows this trend over time.
+>
+> Our conclusions about weekends and holidays do not change much: the estimates are nearly the same (about `r abs(round(coef(bikes_Y)["weekendTRUE"]))` fewer rides on weekends and `r abs(round(coef(bikes_Y)["holidayyes"]))` fewer on holidays with `year` in the model), but the confidence intervals get narrower when we explain more of the variability (the weekend interval with `year` is `r round(confint(bikes_Y)["weekendTRUE", 1])` to `r round(confint(bikes_Y)["weekendTRUE", 2])`). Since the question is about the weekend and holiday effects "after accounting for" other things, a model with `year` (and possibly `season`) is arguably the better final model.
+
+***
+
+## Function quick reference
+
+| Function | Purpose |
+|----|-----------|
+| `lm()` | Fit a linear model |
+| `cor()` | Correlation matrix for a set of quantitative variables |
+| `anova(reduced, full)` | Extra sums of squares $F$ test comparing two nested models |
+| `summary(model)$adj.r.squared` | Adjusted $R^2$ for a fitted model |
+| `AIC()`, `BIC()` | Information criteria for a fitted model (smaller is better) |
+| `confint()` | Confidence intervals for the coefficients of a fitted model |

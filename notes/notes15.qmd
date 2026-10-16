@@ -169,9 +169,6 @@ Which pair of predictors could cause a problem? What problem?
 
 ## Step 3: Compare nested models with an $F$ test
 
-Two models are **nested** if the reduced model is a ____________________ of the
-full model (we get it by setting some $\beta$'s equal to ______).
-
 **Which pairs are nested?** Circle one for each.
 
 | Model 1 | Model 2 | Nested? |
@@ -255,9 +252,10 @@ Which model does adjusted $R^2$ prefer? ________________
 
 $$IC = \text{Measure of Fit} + \text{Penalty}$$
 
-$$AIC = n \log(SSE/n) + 2k \qquad\qquad BIC = n \log(SSE/n) + \log(n) \cdot k$$
+$$AIC = n \log(SSE/n) + 2(p+1) \qquad\qquad BIC = n \log(SSE/n) + \log(n) \cdot (p+1)$$
 
-where $k$ = number of coefficients (**including** the intercept). In R:
+where $p$ = number of predictors. In R:
+
 `AIC(model)` and `BIC(model)`.
 
 -   Smaller values are ______________.
@@ -271,8 +269,8 @@ table, then answer the questions.
 
 | Model | Predictors | $p$ | SSE | $\hat\sigma^2 = SSE/(n-(p+1))$ | $R^2_{adj}$ |
 |:--|:--|:--|:--|:--|:--|
-| M0 | none | 0 | 980 | | |
-| M1 | $x_1$ | 1 | 520 | | |
+| M0 | none | 0 | 980 | 25.13 | 0 |
+| M1 | $x_1$ | 1 | 520 | 13.68 | 0.455 |
 | M2 | $x_1, x_2$ | 2 | 410 | | |
 | M3 | $x_1, x_2, x_3$ | 3 | 398 | | |
 
@@ -284,7 +282,7 @@ $R^2_{adj} = 1 - \hat\sigma^2 / \hat\sigma^2_{M0}$ (since $MST = SSE_{M0}/(n-1)$
 
 \vspace{.5in}
 
-**(b)** Use an $F$ test to compare M2 to M1 and M3 to M2. State $d$ and $df_{full}$ each time.
+**(b)** Use an $F$ test to compare M3 to M2. State $d$ and $df_{full}$. (reminder: $F = \frac{(SSE_{reduced} - SSE_{full}) / d}{SSE_{full} / df_{full}}$)
 
 \vspace{1.5in}
 
