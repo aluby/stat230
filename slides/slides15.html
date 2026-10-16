@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Model Selection</title>
@@ -190,6 +190,11 @@
       margin-right: 0; 
     }
   </style>
+  <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+  <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -223,7 +228,119 @@ Prof Amanda Luby
 <li>Multicollinearity</li>
 </ul>
 <div class="fragment">
-<p>Today → putting it all together to compare models</p>
+<p>Today → putting it all together to build a model</p>
+</div>
+</section>
+<section id="warm-up-quiz-review" class="slide level2 scrollable">
+<h2>Warm up (quiz review)</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: rides ~ temp_actual + windspeed + weekend
+Model 2: rides ~ temp_actual + windspeed + weekend + holiday
+  Res.Df       RSS Df Sum of Sq      F   Pr(&gt;F)   
+1    496 755019445                                
+2    495 743486506  1  11532939 7.6784 0.005799 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="task">
+<p><code>bikes_A</code> predicts <code>rides</code> from temperature, windspeed and weekend. <code>bikes_B</code> adds <code>holiday</code>.</p>
+<ol type="1">
+<li>Which model is the full model? Write the null hypothesis.</li>
+<li>What is <span class="math inline">\(d\)</span>? What are <span class="math inline">\(df_{full}\)</span> and <span class="math inline">\(SSE_{reduced}\)</span>?</li>
+<li>State your conclusion in context.</li>
+<li>If you had instead used the <span class="math inline">\(t\)</span>-test for <code>holidayyes</code> in <code>bikes_B</code>, what p-value would you expect? Why?</li>
+</ol>
+</div>
+<aside class="notes">
+<p>Timing: warm-up + sums of squares review ~12 min.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="review-sstssregsse" class="slide level2">
+<h2>Review: SST/SSReg/SSE</h2>
+
+<img data-src="slides15_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<section id="but-we-work-with-sum-of-squares" class="slide level2">
+<h2>But, we work with sum of <strong>squares</strong></h2>
+
+<img data-src="slides15_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section id="section" class="slide level2">
+<h2></h2>
+
+<img data-src="slides15_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"><div class="r-stack">
+<div class="fragment fade-in-then-out">
+<p>Linear Regression tilt and shifts the line until the total area of the <strong>red squares</strong> are as small as possible (“least squares”)</p>
+</div>
+<div class="fragment fade-in-then-out">
+<p><span class="math inline">\(R^2\)</span>: proportion of the blue area (SSTotal) that is successfully covered by the green squares (SSRegr)</p>
+</div>
+<div class="fragment fade-in-then-out">
+<p><span class="math inline">\(R^2_{adj} = 1 - \frac{MSE}{MST}\)</span>: same idea, but each model is “charged” for the number of <span class="math inline">\(\beta\)</span>’s it uses</p>
+</div>
+<div class="fragment fade-in-then-out">
+<p><span class="math inline">\(h_i\)</span>: a point becomes more influential as it moves further away from <span class="math inline">\(\bar{x}\)</span> because the corresponding red square grows quadratically</p>
+</div>
+<div class="fragment fade-in-then-out">
+<p>Overall F test: <span class="math inline">\(F = \frac{MSReg}{MSE}\)</span></p>
+<ul>
+<li>is the “average” green square significantly larger than the “average” red square?</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Sequential sum-of-squares F test: <span class="math inline">\(F=\frac{(SSE(reduced)-SSE(full))/(df_{reduced}-df_{full})}{SSE(full)/df_{full}}\)</span></p>
+<ul>
+<li>are the red squares for a “larger” model significantly smaller than the red squares for a “smaller” model?</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<div class="medium">
+<ul>
+<li>Linear Regression tilt and shifts the line until the total area of the <strong>red squares</strong> are as small as possible (“least squares”)</li>
+<li><span class="math inline">\(R^2\)</span>: proportion of the blue area (SSTotal) that is successfully covered by the green squares (SSRegr)</li>
+<li><span class="math inline">\(R^2_{adj} = 1 - \frac{MSE}{MST}\)</span>: same idea, but each model is “charged” for the number of <span class="math inline">\(\beta\)</span>’s it uses</li>
+<li><span class="math inline">\(h_i\)</span>: a point becomes more influential as it moves further away from <span class="math inline">\(\bar{x}\)</span> because the corresponding red square grows quadratically</li>
+<li>Overall F test: <span class="math inline">\(F = \frac{MSReg}{MSE}\)</span>
+<ul>
+<li>is the “average” green square significantly larger than the “average” red square?</li>
+</ul></li>
+<li>Sequential sum-of-squares F test: <span class="math inline">\(F=\frac{(SSE(reduced)-SSE(full))/(df_{reduced}-df_{full})}{SSE(full)/df_{full}}\)</span>
+<ul>
+<li>are the red squares for a “larger” model significantly smaller than the red squares for a “smaller” model?</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="today-building-an-explanatory-model" class="slide level2">
+<h2>Today: building an <em>explanatory</em> model</h2>
+<div class="columns" data-align="center">
+<div class="column" style="width:25%;">
+<p><strong>Question:</strong></p>
+</div><div class="column" style="width:75%;">
+<p>How are weekends and holidays associated with ridership, after accounting for the weather?</p>
+</div></div>
+<p><br></p>
+<div class="fragment">
+<p>Two reasons to build a model:</p>
+<ul>
+<li><strong>Explanatory:</strong> understand the relationship between the response and particular predictors. We care about the <em>coefficients</em> (today!)</li>
+<li><strong>Predictive:</strong> make accurate predictions for <em>new</em> data. We care about the <em>predictions</em> (after the quiz)</li>
+</ul>
 </div>
 </section>
 <section id="idea-how-do-we-decide-what-variables-to-include" class="slide level2 smaller">
@@ -418,339 +535,562 @@ Prof Amanda Luby
 </table>
 </div>
 </div>
-</section>
-<section id="review-sstssregsse" class="slide level2">
-<h2>Review: SST/SSReg/SSE</h2>
-
-<img data-src="slides15_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
-<section id="but-we-work-with-sum-of-squares" class="slide level2">
-<h2>But, we work with sum of <strong>squares</strong></h2>
-
-<img data-src="slides15_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
-<section id="section" class="slide level2">
-<h2></h2>
-<div class="medium">
-<ul>
-<li>Linear Regression tilt and shifts the line until the total area of the <strong>red squares</strong> are as small as possible (“least squares”)</li>
-<li><span class="math inline">\(R^2\)</span>: proportion of the blue area (SSTotal) that is successfully covered by the green squares (SSRegr)</li>
-<li><span class="math inline">\(h_i\)</span>: a point becomes more influential as it moves further away from <span class="math inline">\(\bar{x}\)</span> because the corresponding red square grows quadratically</li>
-<li>Overall F test: <span class="math inline">\(F = \frac{MSReg}{MSE}\)</span>
-<ul>
-<li>is the “average” green square significantly larger than the “average” red square?</li>
-</ul></li>
-<li>Sequential sum-of-squares F test: <span class="math inline">\(F=\frac{(SSE(reduced)-SSE(full))/(df_{reduced}-df_{full})}{SSE(full)/df_{full}}\)</span>
-<ul>
-<li>are the red squares for a “larger” model significantly smaller than the red squares for a “smaller” model?</li>
-</ul></li>
-</ul>
+<div class="task medium">
+<p>Which variables would you include to answer our question? Why?</p>
 </div>
 </section>
-<section id="sequential-anova-the-anova-function" class="slide level2">
-<h2>Sequential ANOVA (the <code>anova()</code> function)</h2>
-<div class="medium">
-<p>When you use <code>anova()</code> on a single model, R provides a table of <strong>extra Sum of Squares (SS)</strong> for terms added sequentially</p>
+<section id="a-recipe-for-explanatory-models" class="slide level2 scrollable">
+<h2>A recipe for explanatory models</h2>
+<ol type="1">
+<li class="fragment"><strong>Start with the question.</strong> Which variables are you interested in? Which do you need to adjust for? These stay in the model, even if they aren’t “significant”</li>
+<li class="fragment"><strong>Look before you fit.</strong> Check for predictors that carry (almost) the same information</li>
+<li class="fragment"><strong>Fit a <em>small</em> set of candidate models</strong> (not every possible combination!)</li>
+<li class="fragment"><strong>Compare the candidates</strong>: <span class="math inline">\(F\)</span> test for nested models; adjusted <span class="math inline">\(R^2\)</span>, AIC, or BIC for any models</li>
+<li class="fragment"><strong>Check the conditions</strong> for the model you choose</li>
+<li class="fragment"><strong>Interpret and justify</strong> your choice</li>
+</ol>
+<aside class="notes">
+<p>Timing: framing + recipe ~5 min. Keep coming back to this slide; each section below is one step.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="step-1-our-candidate-models" class="slide level2">
+<h2>Step 1: Our candidate models</h2>
+<ul>
+<li><strong>Interested in:</strong> <code>weekend</code>, <code>holiday</code></li>
+<li><strong>Adjust for:</strong> weather (temperature, windspeed, humidity)</li>
+</ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> temp_actual<span class="sc">:</span>weekend <span class="sc">+</span> </span>
-<span id="cb1-2"><a></a>                windspeed<span class="sc">:</span>weekend, <span class="at">data =</span> bikes)</span>
-<span id="cb1-3"><a></a><span class="fu">anova</span>(model_1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Predictors</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">temp_actual + windspeed + weekend</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">A + holiday</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">B + humidity</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">D</td>
+<td style="text-align: left;">C + temp_feel</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">E</td>
+<td style="text-align: left;">temp_feel + humidity + weekend + holiday</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="step-2-look-before-you-fit" class="slide level2">
+<h2>Step 2: Look before you fit</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>bikes <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a></a>  <span class="fu">select</span>(temp_actual, temp_feel, windspeed, humidity) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a></a>  <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
-
-Response: rides
-                     Df    Sum Sq   Mean Sq  F value    Pr(&gt;F)    
-temp_actual           1 411018312 411018312 269.0759 &lt; 2.2e-16 ***
-windspeed             1  22504757  22504757  14.7329   0.00014 ***
-weekend               1  48801976  48801976  31.9485  2.68e-08 ***
-temp_actual:weekend   1       110       110   0.0001   0.99323    
-windspeed:weekend     1    425250    425250   0.2784   0.59799    
-Residuals           494 754594085   1527518                       
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<pre><code>            temp_actual temp_feel windspeed humidity
+temp_actual        1.00      0.98     -0.11     0.27
+temp_feel          0.98      1.00     -0.15     0.27
+windspeed         -0.11     -0.15      1.00    -0.32
+humidity           0.27      0.27     -0.32     1.00</code></pre>
 </div>
 </div>
+<div class="fragment">
+<p><code>temp_actual</code> and <code>temp_feel</code> are almost the same variable → we’d expect multicollinearity if we include both</p>
+<aside class="notes">
+<p>Timing: Steps 1-3 ~13 min (min 17-30).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
-<section id="breaking-down-the-anova-table" class="slide level2">
-<h2>Breaking down the <code>anova()</code> table</h2>
+<section id="step-3-compare-nested-models-with-an-f-test" class="slide level2">
+<h2>Step 3: Compare nested models with an <span class="math inline">\(F\)</span> test</h2>
+<p><strong>Which pairs are nested?</strong> Circle one for each.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model 1</th>
+<th style="text-align: left;">Model 2</th>
+<th style="text-align: left;">Nested?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">yes / no</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: left;">yes / no</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: left;">yes / no</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">yes / no</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><span class="math display">\[F = \frac{(SSE_{reduced} - SSE_{full}) / d}{SSE_{full} / df_{full}}\]</span></p>
+<ul>
+<li>Numerator: improvement per <span class="math inline">\(\beta\)</span> added</li>
+<li>Denominator: average variance/noise in the full model</li>
+<li>A large <span class="math inline">\(F\)</span> means: the bigger model reduces SSE by much more than we’d expect from noise alone.</li>
+</ul>
+</div>
+</section>
+<section id="step-3-compare-nested-models-with-an-f-test-1" class="slide level2">
+<h2>Step 3: Compare nested models with an <span class="math inline">\(F\)</span> test</h2>
+<p>Adding variables one at a time:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">step</th>
+<th style="text-align: right;">df</th>
+<th style="text-align: right;">F</th>
+<th style="text-align: left;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A to B: add holiday</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7.68</td>
+<td style="text-align: left;">0.006</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B to C: add humidity</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">85.43</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C to D: add temp_feel</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.28</td>
+<td style="text-align: left;">0.071</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="fragment">
 <div class="medium">
-<p>The First Row: <code>temp_actual</code></p>
 <ul>
-<li>Df: Including this variable adds 1 term to the model.<br>
-</li>
-<li>Sum Sq: <span class="math inline">\(SSE(\text{null}) - SSE(\text{temp_actual})\)</span>.</li>
+<li><code>holiday</code>: we keep it no matter what (it’s part of our question), but the data also support it</li>
+<li><code>humidity</code>: big improvement in SSE</li>
+<li><code>temp_feel</code>: not much evidence that it helps once we have <code>temp_actual</code></li>
 </ul>
-<p>The Second Row: <code>windspeed</code></p>
-<ul>
-<li>Sum Sq: Represents the extra SS for adding <code>windspeed</code> to a model already containing <code>temp_actual</code>.<br>
-</li>
-<li><span class="math inline">\(SSE(\text{temp_actual}) - SSE(\text{temp_actual, windspeed})\)</span></li>
-</ul>
-<p>The Third Row: <code>weekend</code></p>
-<ul>
-<li>Sum Sq: Represents the extra SS for adding <code>weekend</code> to a model already containing <code>temp_actual</code> and <code>windspeed</code>.<br>
-</li>
-<li><span class="math inline">\(SSE(\text{temp_actual, windspeed}) - SSE(\text{temp_actual, windspeed, weekend})\)</span></li>
-</ul>
-</div>
-</section>
-<section id="confirm-results-with-a-nested-f-test" class="slide level2">
-<h2>Confirm results with a nested F test</h2>
-<p>“intermediate” p values in the table may not be valid; confirm proposed and full model with a nested F test:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend, <span class="at">data =</span> bikes)</span>
-<span id="cb3-2"><a></a></span>
-<span id="cb3-3"><a></a><span class="fu">anova</span>(model_1, model_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
-
-Model 1: rides ~ temp_actual + windspeed + weekend + temp_actual:weekend + 
-    windspeed:weekend
-Model 2: rides ~ temp_actual + windspeed + weekend
-  Res.Df       RSS Df Sum of Sq      F Pr(&gt;F)
-1    494 754594085                           
-2    496 755019445 -2   -425360 0.1392 0.8701</code></pre>
 </div>
 </div>
 </section>
-<section id="comparing-non-nested-models" class="slide level2">
-<h2>Comparing non-nested models</h2>
-<p>What if I want to compare:</p>
+<section id="careful-temp_actual-and-temp_feel" class="slide level2">
+<h2>Careful: <code>temp_actual</code> and <code>temp_feel</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend, </span>
-<span id="cb5-2"><a></a>              <span class="at">data =</span> bikes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">model</th>
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: left;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">C (without temp_feel)</td>
+<td style="text-align: left;">temp_actual</td>
+<td style="text-align: right;">94.88</td>
+<td style="text-align: right;">5.21</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">D (with temp_feel)</td>
+<td style="text-align: left;">temp_actual</td>
+<td style="text-align: right;">46.31</td>
+<td style="text-align: right;">27.30</td>
+<td style="text-align: left;">0.090</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">D (with temp_feel)</td>
+<td style="text-align: left;">temp_feel</td>
+<td style="text-align: right;">45.07</td>
+<td style="text-align: right;">24.87</td>
+<td style="text-align: left;">0.071</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>model_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed<span class="sc">*</span>weekend <span class="sc">+</span> </span>
-<span id="cb6-2"><a></a>                holiday <span class="sc">+</span> temp_feel , </span>
-<span id="cb6-3"><a></a>              <span class="at">data =</span> bikes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="medium">
+<p>Standard error of <code>temp_actual</code> goes up by a factor of about 5.2 (VIF <span class="math inline">\(\approx\)</span> 30)</p>
+<p>→ temperature clearly matters, but in model D <em>neither</em> temperature variable looks significant on its own 🫠</p>
+<p>→ pick one temperature variable</p>
 </div>
 </section>
-<section id="comparing-non-nested-models-1" class="slide level2">
-<h2>Comparing non-nested models</h2>
-<p>Adjusted <span class="math inline">\(R^2\)</span></p>
+<section id="when-the-f-test-cant-help" class="slide level2">
+<h2>When the <span class="math inline">\(F\)</span> test can’t help</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>bikes_C <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity, <span class="at">data =</span> bikes)</span>
+<span id="cb4-2"><a></a>bikes_E <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_feel <span class="sc">+</span> humidity <span class="sc">+</span> weekend <span class="sc">+</span> holiday, <span class="at">data =</span> bikes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="task">
+<p>Is <code>bikes_E</code> nested in <code>bikes_C</code>? Could we use <code>anova(bikes_E, bikes_C)</code>?</p>
+</div>
+<div class="fragment">
+<div class="medium">
 <ul>
+<li><strong>Non-nested models</strong>: neither is a special case of the other, so the <span class="math inline">\(F\)</span> test does not apply</li>
+<li><strong>Many candidate models</strong>: each <span class="math inline">\(F\)</span> test needs a nested pair, and repeated testing is a problem</li>
+<li>We need tools that work for <em>any</em> two models fit to the same data</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="adjusted-r2" class="slide level2">
+<h2>Adjusted <span class="math inline">\(R^2\)</span></h2>
+<div class="medium">
+<p><span class="math inline">\(R^2_{adj} = 1 - \dfrac{MSE}{MST} = 1 - \dfrac{SSE/(n-(p+1))}{SST/(n-1)}\)</span></p>
+<ul>
+<li><span class="math inline">\(R^2\)</span> always goes up when we add predictors; <span class="math inline">\(R^2_{adj}\)</span> can go down</li>
 <li>can be used for nested and non-nested models</li>
 <li>no formal test/rules for “better enough”</li>
 </ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">summary</span>(model_2)<span class="sc">$</span>adj.r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3861159</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">summary</span>(model_3)<span class="sc">$</span>adj.r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">summary</span>(bikes_C)<span class="sc">$</span>adj.r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3962171</code></pre>
+<pre><code>[1] 0.4825335</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">summary</span>(bikes_E)<span class="sc">$</span>adj.r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4453567</code></pre>
 </div>
 </div>
 </section>
-<section id="information-criteria" class="slide level2">
-<h2>Information criteria</h2>
+<section id="information-criteria-aic-and-bic" class="slide level2">
+<h2>Information criteria: AIC and BIC</h2>
 <p>The following “information criteria” can be used to compare nested or non-nested models (smaller values are better)</p>
 <p><span class="math display">\[IC = \text{Measure of Fit} + \text{Penalty}\]</span></p>
 <p><br></p>
-<p><span class="math display">\[AIC = n \log(SSE/n) + 2p\]</span></p>
-<p><br></p>
-<p><span class="math display">\[BIC =  n \log(SSE/n) + \log(n) \cdot p\]</span></p>
-</section>
-<section id="aic-in-r" class="slide level2">
-<h2>AIC in R</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">AIC</span>(model_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 8542.762</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">AIC</span>(model_3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 8537.432</code></pre>
-</div>
-</div>
-<ul>
-<li>suggests more complicated model is worth the added complexity</li>
-</ul>
-</section>
-<section id="bic-in-r" class="slide level2">
-<h2>BIC in R</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">BIC</span>(model_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 8563.835</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">BIC</span>(model_3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 8571.149</code></pre>
-</div>
-</div>
-<ul>
-<li>BIC imposes a larger complexity penalty, so prefers the simpler model</li>
-</ul>
-</section>
-<section id="variable-selection-prediction-vs-understanding" class="slide level2">
-<h2>Variable selection: prediction vs understanding</h2>
-<div class="columns">
-<div class="column" style="width:45%;">
-<p><strong>Prediction:</strong></p>
-<ul>
-<li><p>More complex models might be okay if you have a lot of data.</p></li>
-<li><p>The model doesn’t need to “make sense” as much if it predicts well.</p></li>
-<li><p>Watch out for overfitting!</p></li>
-<li><p>Stat270</p></li>
-</ul>
-</div><div class="column" style="width:10%;">
-<!-- empty column to create gap -->
-</div><div class="column" style="width:45%;">
-<p><strong>Understanding:</strong></p>
-<ul>
-<li><p>Complexity can hurt our ability to interpret results meaningfully.</p></li>
-<li><p>Keep effects you are interested in, even if they are insignificant, to “control” for them.</p></li>
-</ul>
-</div></div>
-</section>
-<section id="aic-vs-bic" class="slide level2">
-<h2>AIC vs BIC</h2>
-<p><br></p>
-<p><strong>AIC:</strong> for large <span class="math inline">\(n\)</span>, gives an estimate of out-of-sample predictive performance (i.e.&nbsp;better model for <strong>prediction</strong>)</p>
-<p><br></p>
-<p><strong>BIC:</strong> for large <span class="math inline">\(n\)</span>, will pick the “true” model if it is one of the candidates (i.e.&nbsp;better model for <strong>understanding</strong>)</p>
-</section>
-<section id="overfitting" class="slide level2">
-<h2>Overfitting</h2>
+<p><span class="math display">\[AIC = n \log(SSE/n) + 2(p+1)\]</span></p>
+<p><span class="math display">\[BIC =  n \log(SSE/n) + \log(n) \cdot (p+1)\]</span></p>
 <div class="medium">
-<p>The goal when building a model is to capture the trends in the data while still making something that can applied to new data. When a model is <strong>overfit</strong>, a model will perform very well on the data used to fit it but perform very poorly on any new data.</p>
+<p><span class="math inline">\(p\)</span> = number of predictors in the model. Fit term gets smaller with a bigger model; the penalty gets bigger. BIC penalizes more than AIC (since <span class="math inline">\(\log(n) &gt; 2\)</span> when <span class="math inline">\(n \ge 8\)</span>)</p>
+<p>In R: <code>AIC(model)</code> and <code>BIC(model)</code></p>
 </div>
+</section>
+<section id="example-adjusted-r2-and-f-tests-by-hand" class="slide level2">
+<h2>Example: adjusted <span class="math inline">\(R^2\)</span> and <span class="math inline">\(F\)</span> tests by hand</h2>
+<p>A researcher fits four nested models to <span class="math inline">\(n = 40\)</span> observations. Fill in the table, then answer the questions.</p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Predictors</th>
+<th style="text-align: left;"><span class="math inline">\(p\)</span></th>
+<th style="text-align: left;">SSE</th>
+<th style="text-align: left;"><span class="math inline">\(\hat\sigma^2 = SSE/(n-(p+1))\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(R^2_{adj}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">M0</td>
+<td style="text-align: left;">none</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">980</td>
+<td style="text-align: left;">25.13</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">M1</td>
+<td style="text-align: left;"><span class="math inline">\(x_1\)</span></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">520</td>
+<td style="text-align: left;">13.68</td>
+<td style="text-align: left;">0.455</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">M2</td>
+<td style="text-align: left;"><span class="math inline">\(x_1, x_2\)</span></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">410</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">M3</td>
+<td style="text-align: left;"><span class="math inline">\(x_1, x_2, x_3\)</span></td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">398</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(R^2_{adj} = 1 - \hat\sigma^2 / \hat\sigma^2_{M0}\)</span> (since <span class="math inline">\(MST = SSE_{M0}/(n-1)\)</span>). <span class="math inline">\(F = \frac{(SSE_{reduced} - SSE_{full}) / d}{SSE_{full} / df_{full}}\)</span></p>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<p><strong>(a)</strong> Which model is best by <span class="math inline">\(R^2_{adj}\)</span>?</p>
+<p><br></p>
+<p><strong>(b)</strong> Use an <span class="math inline">\(F\)</span> test to compare M3 to M2. State <span class="math inline">\(d\)</span> and <span class="math inline">\(df_{full}\)</span>. (reminder: <span class="math inline">\(F = \frac{(SSE_{reduced} - SSE_{full}) / d}{SSE_{full} / df_{full}}\)</span>)</p>
+<p><br></p>
+<p><strong>(c)</strong> Do the two tools agree? Which model would you choose?</p>
+<p><br></p>
+</section>
+<section id="step-4-compare-all-of-our-candidates" class="slide level2">
+<h2>Step 4: Compare all of our candidates</h2>
+<div class="task">
+<p>Open up the R activity for today and work through parts 1-3 in your groups</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer_6766e827" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-compare-all-of-our-candidates-1" class="slide level2">
+<h2>Step 4: Compare all of our candidates</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 64%">
+<col style="width: 4%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">k</th>
+<th style="text-align: right;">Adj R2</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A: temp + wind + weekend</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.386</td>
+<td style="text-align: right;">8542.8</td>
+<td style="text-align: right;">8563.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B: A + holiday</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.394</td>
+<td style="text-align: right;">8537.1</td>
+<td style="text-align: right;">8562.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C: B + humidity</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.483</td>
+<td style="text-align: right;">8459.3</td>
+<td style="text-align: right;">8488.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">D: C + temp_feel</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.485</td>
+<td style="text-align: right;">8458.0</td>
+<td style="text-align: right;">8491.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">E: temp_feel + humidity + weekend + holiday</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.445</td>
+<td style="text-align: right;">8493.0</td>
+<td style="text-align: right;">8518.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="medium">
+<ul>
+<li>Model C beats model E under every criterion, which no <span class="math inline">\(F\)</span> test could tell us</li>
+<li>C vs D: adjusted <span class="math inline">\(R^2\)</span> and AIC <em>slightly</em> prefer D, BIC prefers C. When the tools disagree (and there’s multicollinearity!), choose the simpler model</li>
+</ul>
+</div>
+</section>
+<section id="steps-5-and-6-check-and-interpret" class="slide level2">
+<h2>Steps 5 and 6: Check and interpret</h2>
 
-<img data-src="slides15_files/figure-revealjs/unnamed-chunk-12-1.png" width="768" class="r-stretch"><div class="medium">
-<p>Model building is like making a suit that can generally fit everyone around a given size, not making a custom-tailored suit that can only fit one person perfectly.</p>
+<img data-src="slides15_files/figure-revealjs/unnamed-chunk-16-1.png" width="768" class="r-stretch"><div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">weekendTRUE</td>
+<td style="text-align: right;">-777</td>
+<td style="text-align: right;">-1000</td>
+<td style="text-align: right;">-554</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">holidayyes</td>
+<td style="text-align: right;">-1093</td>
+<td style="text-align: right;">-1751</td>
+<td style="text-align: right;">-435</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="task">
+<p>Using model C, answer our question in context.</p>
 </div>
 </section>
-<section id="prediction-training-test-datasets" class="slide level2">
-<h2>Prediction: Training &amp; Test Datasets</h2>
-<p>If the goal is prediction, we test the model on data it hasn’t seen:</p>
-<ul>
-<li>Training dataset: Used to estimate (“train”) your model.<br>
-</li>
-<li>Test dataset: The data held out to test your predictions.<br>
-</li>
-<li>RMSE: Root Mean Squared Error measures the average size of error (squared residuals).</li>
-</ul>
-<p><span class="math display">\[RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}\]</span></p>
-</section>
-<section id="code-make-training-and-testing-data" class="slide level2">
-<h2>Code: make training and testing data</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">set.seed</span>(<span class="dv">050726</span>)</span>
-<span id="cb19-2"><a></a></span>
-<span id="cb19-3"><a></a>bikes_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(bikes, <span class="at">prop =</span> .<span class="dv">8</span>)</span>
-<span id="cb19-4"><a></a>bikes_split</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;Training/Testing/Total&gt;
-&lt;400/100/500&gt;</code></pre>
+<section id="comparing-two-models" class="slide level2">
+<h2>Comparing two models</h2>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    classDef default fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    A(["Are the models nested?"])
+    B(["Do they differ by&lt;br&gt;one coefficient?"])
+    C["t-test for that coefficient&lt;br&gt;(same as the F test)"]
+    D["Extra sums of squares F test&lt;br&gt;anova(reduced, full)"]
+    E["Adjusted R², AIC, or BIC&lt;br&gt;(no p-value)"]
+    F["If the tools disagree,&lt;br&gt;choose the simpler model"]
+
+    A --&gt;|YES| B
+    A --&gt;|NO| E
+    B --&gt;|YES| C
+    B --&gt;|NO| D
+    C --&gt; F
+    D --&gt; F
+    E --&gt; F
+</pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>bikes_train <span class="ot">&lt;-</span> <span class="fu">training</span>(bikes_split)</span>
-<span id="cb21-2"><a></a>bikes_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(bikes_split)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p></p></figure><p></p>
 </div>
-</section>
-<section id="code-fit-both-models-on-training-data" class="slide level2">
-<h2>Code: fit both models on training data</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>model_1_train <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> </span>
-<span id="cb22-2"><a></a>                      temp_actual<span class="sc">:</span>weekend <span class="sc">+</span>  windspeed<span class="sc">:</span>weekend,</span>
-<span id="cb22-3"><a></a>                     <span class="at">data =</span> bikes_train)</span>
-<span id="cb22-4"><a></a>model_3_train <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">*</span> weekend <span class="sc">+</span> </span>
-<span id="cb22-5"><a></a>                      holiday <span class="sc">+</span> temp_feel,</span>
-<span id="cb22-6"><a></a>                      <span class="at">data =</span> bikes_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="code-find-widehaty-for-both-models-then-rmse" class="slide level2">
-<h2>Code: find <span class="math inline">\(\widehat{y}\)</span> for both models, then RMSE</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>model_1_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_1_train, <span class="at">newdata =</span> bikes_test)</span>
-<span id="cb23-2"><a></a>model_3_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_3_train, <span class="at">newdata =</span> bikes_test)</span>
-<span id="cb23-3"><a></a></span>
-<span id="cb23-4"><a></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((bikes_test<span class="sc">$</span>rides <span class="sc">-</span> model_1_test)<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1260.845</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">sqrt</span>(<span class="fu">mean</span>((bikes_test<span class="sc">$</span>rides <span class="sc">-</span> model_3_test)<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1483.219</code></pre>
 </div>
 </div>
 </section>
-<section id="code-find-rmse-for-training-data" class="slide level2">
-<h2>Code: find RMSE for <strong>training data</strong></h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(model_1_train<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1221.714</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(model_3_train<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1195.609</code></pre>
-</div>
-</div>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
 <div class="medium">
-<ul>
-<li>RMSE is smaller on the model 3 for training data (predicting better)</li>
-<li>RMSE is <strong>bigger</strong> using the model 3 for testing data (predicting worse)
-<ul>
-<li>when the model is used on data it hasn’t seen before, it’s doing worse</li>
-<li>this is what it means to overfit</li>
-</ul></li>
-</ul>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tool</th>
+<th style="text-align: left;">Nested only?</th>
+<th style="text-align: left;">p-value?</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(F\)</span> test</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">The formal test for nested models</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Adjusted <span class="math inline">\(R^2\)</span></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Easy, but no rule for “better enough”</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AIC</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Most willing to add terms</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BIC</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Most conservative</td>
+</tr>
+</tbody>
+</table>
 </div>
-</section>
-<section id="tools-for-model-comparison" class="slide level2 scrollable">
-<h2>Tools for Model Comparison</h2>
-<div class="medium">
-<ol type="1">
-<li>ANOVA F-tests: Used for nested models to test if coefficients equal zero.<br>
-</li>
-<li>Adjusted <span class="math inline">\(R^2\)</span>: Can be used for non-nested models; penalizes adding unnecessary predictors.</li>
-<li>AIC or BIC
 <ul>
-<li>Smaller values are better.<br>
-</li>
-<li>Penalizes high numbers of coefficients to prevent over-complexity</li>
-</ul></li>
-</ol>
-<p>Use on the full data if you are building an explanatory model, or on the training data <em>only</em> if you are building a predictive model</p>
-</div>
-</section>
-<section id="inference-after-selection" class="slide level2">
-<h2>Inference after selection</h2>
-<ul>
-<li>Model selection results in keeping terms with smaller p-values</li>
-<li>Actual Type I error may be much bigger than than “expected” <span class="math inline">\(\alpha = .05\)</span></li>
-<li>This is an active area of research!</li>
-</ul>
-<p>→ if you rely on AIC/BIC/RMSE and compare <em>lots</em> of models, your p-values and confidence intervals might not be valid</p>
-</section>
-<section id="a-note-on-automatic-selection" class="slide level2">
-<h2>A Note on Automatic Selection</h2>
-<p>I do <strong>not</strong> recommend using automated “Stepwise” (Forward/Backward) selection.</p>
-<ul>
-<li><p>Why? They are easily abused and ignore domain knowledge, outliers, and collinearity.<br>
-</p></li>
-<li><p>Better Approach:</p>
-<blockquote>
-<p>“The single most important tool in selecting a subset of variables is the analyst’s knowledge of the area under study.” — Sandy Weisberg.</p>
-</blockquote></li>
-</ul>
-</section>
-<section id="summary-of-variable-selection" class="slide level2">
-<h2>Summary of Variable Selection</h2>
-<ul>
-<li>Identify research goals and use domain knowledge.<br>
-</li>
-<li>Perform EDA and consider transformations.<br>
-</li>
-<li>Compare models using ANOVA/Adj <span class="math inline">\(R^2\)</span>/BIC (for nested) or AIC/RMSE (for prediction).<br>
-</li>
+<li>Use domain knowledge first. Tools compare candidate models; they don’t replace thinking.</li>
 <li><strong>Justify your model choice!</strong></li>
 </ul>
-
-
+<div class="fragment">
+<p>Next time → Quiz 2! After that: how well does a model predict <em>new</em> data?</p>
+</div>
 </section>
+
+
+
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -243,7 +243,7 @@ F-statistic: 289.9 on 3 and 496 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div>
-<p><em>Example question</em> On very hot days, people may be less likely to bike. Below is a quadratic model for daily <code>rides</code> using temperature.</p>
+<p><em>Example question</em> In general, higher temperatures means more bike rides. But, on very hot days, people may be less likely to bike. This relationship can be captured with a quadratic model. Below is a quadratic model for daily <code>rides</code> using temperature.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>quad_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> <span class="fu">I</span>(temp_actual<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> bikes)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(quad_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -276,7 +276,7 @@ F-statistic: 289.9 on 3 and 496 DF,  p-value: &lt; 2.2e-16</code></pre>
 <ol type="a">
 <li><p><span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i, \quad \varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)\)</span>, where <span class="math inline">\(Y_i\)</span> is the number of rides on day <span class="math inline">\(i\)</span> and <span class="math inline">\(x_i\)</span> is the temperature (degrees F) on day <span class="math inline">\(i\)</span>.</p></li>
 <li><p><span class="math inline">\(\widehat{\text{rides}} = -8708.39 + 300.855 \times \text{temp} - 1.668 \times \text{temp}^2\)</span></p></li>
-<li><p>Yes. The model is still <em>linear in the</em> <span class="math inline">\(\beta\)</span><em>’s</em>: the mean is a sum of coefficients times (functions of) the predictor. Squaring the predictor changes the shape of the fitted curve, but we still estimate the <span class="math inline">\(\beta\)</span>’s with least squares, check the same conditions, and do inference the same way. (The negative coefficient on <span class="math inline">\(\text{temp}^2\)</span> means the curve bends downward: ridership levels off and eventually decreases at high temperatures.)</p></li>
+<li><p>Yes. The model is still <em>linear in the</em> <span class="math inline">\(\beta\)</span><em>’s</em>: the mean is a sum of coefficients times (functions of) the predictor. Squaring the predictor changes the shape of the fitted curve, but we still estimate the <span class="math inline">\(\beta\)</span>’s with least squares, check the same conditions, and do inference the same way. One way to think of it is we are creating a new predictor <span class="math inline">\(x_2\)</span>, where <span class="math inline">\(x_2 = x_1^2\)</span>. Polynomial regression is then still multiple <em>linear</em> regression.</p></li>
 </ol>
 </div>
 </div>
@@ -331,7 +331,7 @@ F-statistic: 123.4 on 3 and 496 DF,  p-value: &lt; 2.2e-16</code></pre>
 <ol type="a">
 <li><p>Holding temperature and weekend/weekday constant, each additional percentage point of humidity is associated with about 25.4 <em>fewer</em> rides per day, on average.</p></li>
 <li><p>Holding temperature and humidity constant, weekend days have about 718 <em>fewer</em> rides than weekdays, on average.</p></li>
-<li><p>About 42.7% of the variability in daily rides is explained by the model with temperature, humidity, and weekend.</p></li>
+<li><p>About 42.4% of the variability in daily rides is explained by the model with temperature, humidity, and weekend.</p></li>
 </ol>
 </div>
 </div>
@@ -369,9 +369,9 @@ F-statistic: 79.82 on 5 and 798 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>Which type of car is the reference level? How can you tell?</p></li>
 <li><p>Interpret the coefficient for <code>TypeSedan</code> in context.</p></li>
 <li><p>The <code>Mileage</code> coefficient is very small because it describes a 1-mile change. Interpret it for an increase of 10,000 miles.</p></li>
-<li><p>Which of the following is the best explanation for why the adjusted <span class="math inline">\(R^2\)</span> (0.329) is smaller than the <span class="math inline">\(R^2\)</span> (0.333)?</p></li>
+<li><p>Which of the following is the best explanation for why the adjusted <span class="math inline">\(R^2\)</span> (0.329) is smaller than the <span class="math inline">\(R^2\)</span> (0.333)?</p>
+<p>A. Adjusted <span class="math inline">\(R^2\)</span> removes outliers before computing the proportion of variability explained. B. Adjusted <span class="math inline">\(R^2\)</span> includes a penalty for the number of predictors in the model. C. Adjusted <span class="math inline">\(R^2\)</span> only uses the quantitative predictors. D. Adjusted <span class="math inline">\(R^2\)</span> is computed on the log scale.</p></li>
 </ol>
-<p>A. Adjusted <span class="math inline">\(R^2\)</span> removes outliers before computing the proportion of variability explained. B. Adjusted <span class="math inline">\(R^2\)</span> includes a penalty for the number of predictors in the model. C. Adjusted <span class="math inline">\(R^2\)</span> only uses the quantitative predictors. D. Adjusted <span class="math inline">\(R^2\)</span> is computed on the log scale.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -428,12 +428,12 @@ F-statistic: 79.82 on 5 and 798 DF,  p-value: &lt; 2.2e-16</code></pre>
 <ol type="a">
 <li><p><strong>Independence:</strong> the index plot shows long runs of residuals on the same side of zero, so residuals for cars that are next to each other in the data are related. <strong>Normality:</strong> the Q-Q plot curves well above the line in the upper tail, and the histogram is right-skewed (and looks like it has two groups). <strong>Equal variance</strong> is also questionable: the residual plot has a few groups of points that fan out above the line.</p></li>
 <li><p>Since the cars are listed by make and model, the runs are groups of cars of the same make/model. Cars of the same model have similar prices, so if the model over- or under-predicts one of them, it does the same for the rest. This suggests the model is missing an important predictor (like <code>Make</code>, or the model of the car), and that the observations aren’t independent given only <code>Mileage</code> and <code>Liter</code>.</p></li>
-<li><p>No, the p-values aren’t trustworthy. The independence violation means the standard errors are too small (we have less independent information than <span class="math inline">\(n\)</span> suggests), so the p-values and confidence intervals are too optimistic. The estimated coefficients are also suspect, but for a different reason: if an important predictor is missing, the coefficients for <code>Mileage</code> and <code>Liter</code> may be picking up its effect. A better model would add <code>Make</code> (and probably a log transformation of <code>Price</code>).</p></li>
+<li><p>No, the p-values aren’t trustworthy. The independence violation means the standard errors are too small (we have less independent information than <span class="math inline">\(n\)</span> suggests), so the p-values and confidence intervals are too optimistic. The estimated coefficients are also suspect, but for a different reason: if an important predictor is missing, the coefficients for <code>Mileage</code> and <code>Liter</code> may be picking up its effect.</p></li>
 </ol>
 </div>
 </div>
 </div>
-<p><em>Example question</em> In the Day 13 slides, we saw the <code>Duncan</code> data, which records the <code>prestige</code>, <code>income</code>, and <code>education</code> of 45 occupations (all measured as percentages). Here are the leverage and Cook’s distance plots, plus the five occupations with the largest Cook’s distances, for the model <code>prestige ~ income + education</code>.</p>
+<p><em>Example question</em> The <code>Duncan</code> data recorded the <code>prestige</code>, <code>income</code>, and <code>education</code> ratings of 45 occupations (all measured as percentages). Here are the leverage and Cook’s distance plots, plus the five occupations with the largest Cook’s distances, for the model <code>prestige ~ income + education</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>duncan_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(prestige <span class="sc">~</span> income <span class="sc">+</span> education, <span class="at">data =</span> duncan)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(duncan_mod, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"lev"</span>, <span class="st">"cookd"</span>), <span class="at">type =</span> <span class="st">"standardized"</span>, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -475,7 +475,7 @@ F-statistic: 79.82 on 5 and 798 DF,  p-value: &lt; 2.2e-16</code></pre>
 <tr class="header">
 <th style="text-align: left;">term</th>
 <th style="text-align: right;">all 45 occupations</th>
-<th style="text-align: right;">without minister</th>
+<th style="text-align: right;">without influential point</th>
 </tr>
 </thead>
 <tbody>
@@ -514,7 +514,7 @@ F-statistic: 79.82 on 5 and 798 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>Here <span class="math inline">\(n = 45\)</span> and <span class="math inline">\(p = 2\)</span>, so <span class="math inline">\(2(p+1)/n = 6/45 \approx 0.133\)</span> and <span class="math inline">\(3(p+1)/n = 9/45 = 0.2\)</span>.</p></li>
 <li><p>The RR.engineer has the highest leverage (0.27, above both cutoffs). It is <em>not</em> very influential: its standardized residual is small (0.81) and its Cook’s distance is only 0.08. Its income and education are unusual, but its prestige is about what the model predicts, so it falls along the trend and doesn’t pull the fitted model much.</p></li>
 <li><p>The minister has the largest Cook’s distance (0.57). It has both a fairly high leverage (0.17, above the smaller cutoff) <em>and</em> a large standardized residual (2.85): ministers have much higher prestige than their income would predict. It’s the combination of the two that makes a point influential.</p></li>
-<li><p>The coefficients change noticeably when ministers are removed (the income coefficient goes up, and the education coefficient goes down, by about 20%). Following the flowchart: the conclusions change, so we ask whether ministers belong to a different population than the one under investigation. If there’s a good reason to think so (for example, the prestige of clergy may be driven by different factors than income and education), we could omit them and say so. Otherwise, we’d report both fits and say that more data are needed.</p></li>
+<li><p>The coefficients change noticeably when ministers are removed (the income coefficient goes up, and the education coefficient goes down). Following the flowchart: the conclusions change, so we ask whether ministers belong to a different population than the one under investigation. If there’s a good reason to think so (for example, if clergy didn’t count seminary as part of education or reported $0 income), we could omit them and say so. Otherwise, we’d report both fits and say that more data are needed.</p></li>
 </ol>
 </div>
 </div>
