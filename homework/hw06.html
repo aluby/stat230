@@ -189,7 +189,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There are only three homework problems for this week. (two from Friday’s material on model selection and some case study EDA). I recommend doing P1 before the exam on Wed and P3 (Case study EDA) before the exam on Friday.</p>
+<p>There are only three homework problems for this week. (two from Friday’s material on model selection and some case study EDA). I recommend doing P1 before the quiz on Wed and P3 (Case study EDA) before the work day on Friday.</p>
 </div>
 </div>
 <section id="problem-1-model-comparisons-hypothetical-example1" class="level1">
@@ -282,7 +282,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td>ABC</td>
-<td>5160</td>
+<td>4800</td>
 <td>24</td>
 <td></td>
 <td></td>
@@ -295,7 +295,7 @@ window.Quarto = {
 <li><p>Which model is the best according to adjusted <span class="math inline">\(R^2\)</span>?</p></li>
 <li><p>Which model is the best according to AIC?</p></li>
 <li><p>Which model is the best according to BIC?</p></li>
-<li><p>Which model has the smallest <span class="math inline">\(\hat\sigma^2\)</span>?</p></li>
+<li><p>Do the criteria agree? If so, explain why.</p></li>
 </ol>
 </section>
 <section id="problem-2-model-comparisons-data-example2" class="level1">
@@ -311,7 +311,7 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Total) <span class="co"># Drops original "Total" variable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="a">
-<li><p>The dataset only includes 30 variables; so we’ll only consider a model with at most 5 predictors (to have at least 6 times the number of observations as predictors, somewhat arbitrarily). Create a scatterplot matrix of the numeric variables and create a pool of predictor variables that you want to include in your model. Also, be careful for collinearity!</p></li>
+<li><p>The dataset only includes 30 islands; so we’ll only consider a model with at most 5 predictors (to have at least 6 times the number of observations as predictors, somewhat arbitrarily). Create a scatterplot matrix of the numeric variables and create a pool of predictor variables that you want to include in your model. Also, be careful of collinearity!</p></li>
 <li><p>Propose a candidate model to consider that can be used to answer the research question.</p></li>
 <li><p>Check the validity of the regression assumptions. Make any transformations, etc. that are necessary.</p></li>
 </ol>
@@ -325,15 +325,16 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><code>NonNative</code> has three zeros (islands with no non-native species). If you apply a log transformation, use something like <code>log(NonNative + 1)</code> to avoid errors.</p>
 <p>Stanta Cruz has a value of 0 for <code>DistSc</code>, so if you want to apply a log transformation, you’ll need to add some small value to it first. You can change the value as shown below:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ex1220[ex1220<span class="sc">$</span>Island <span class="sc">==</span> <span class="st">"Santa Cruz"</span>, <span class="st">"DistSc"</span>] <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># where 0.2 is the small value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>islands[islands<span class="sc">$</span>Island <span class="sc">==</span> <span class="st">"Santa Cruz"</span>, <span class="st">"DistSc"</span>] <span class="ot">&lt;-</span> <span class="fl">0.2</span> <span class="co"># where 0.2 is the small value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 <ol start="4" type="a">
 <li><p>Report the coefficient table (ie <code>broom::tidy()</code>) for both native and non-native species</p></li>
-<li><p>Now, fit a “null model” that only includes <code>Area</code> (or a transformation) as a predictor. Compare this “null model” to your proposed model with an F test.</p></li>
+<li><p>Now, fit a reduced model that only includes <code>Area</code> (or a transformation) as a predictor. Compare this reduced model to your proposed model with an F test.</p></li>
 <li><p>Summarize your findings to answer the original research question</p></li>
 </ol>
 </section>
@@ -341,8 +342,8 @@ window.Quarto = {
 <h1>Problem 3: Case Study EDA</h1>
 <p>For your chosen case study option, answer the following questions with <strong>EDA only</strong> (that is, only graphs and summary statistics). You should not fit any models for this question.</p>
 <ol type="a">
-<li><p>Explore the relationship between the response variable and predictor variables. If you could only pick <strong>one</strong> predictor variable, which would you choose?</p></li>
-<li><p>Which additional predictor variables do you think will be important to include in the final model?</p></li>
+<li><p>Given the research, what is the response variable and what are the important predictors to include?</p></li>
+<li><p>Explore the relationship between the response variable and predictor variables. Which predictor is the “best”?</p></li>
 <li><p>Does your EDA suggest any transformations might be necessary? If so, try some transformations and comment on whether the linearity has improved.</p></li>
 <li><p>Among the predictors you think might be important, do you see any worrisome collinearity?</p></li>
 </ol>
