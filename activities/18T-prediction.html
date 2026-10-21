@@ -319,7 +319,7 @@ train_test_rmse</code></pre>
 <h2 class="anchored" data-anchor-id="part-3-these-results-depend-on-the-random-seed">Part 3: These results depend on the random seed</h2>
 <p>The results above depend on which days happened to land in the test set. Since we chose our 80/20 train/test split based on a random sample, if we had a <em>different</em> random sample, we would get different results. Edit the code below to use a different <code>set.seed</code> value and then re-generate the RMSE table.</p>
 <div class="cell">
-<pre class="{webr}"><code>set.seed(230)
+<pre class="{webr}"><code>set.seed(75)
 bikes_split &lt;- initial_split(bikes, prop = 0.8)
 bikes_split
 
@@ -535,7 +535,7 @@ ic </code></pre>
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1007,7 +1007,7 @@ ic </code></pre>
 <span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>The results above depend on which days happened to land in the test set. Since we chose our 80/20 train/test split based on a random sample, if we had a *different* random sample, we would get different results. Edit the code below to use a different <span class="in">`set.seed`</span> value and then re-generate the RMSE table.</span>
 <span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(230)</span></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(75)</span></span>
 <span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="in">bikes_split &lt;- initial_split(bikes, prop = 0.8)</span></span>
 <span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a><span class="in">bikes_split</span></span>
 <span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a></span>

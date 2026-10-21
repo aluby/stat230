@@ -603,7 +603,7 @@ window.Quarto = {
 
 </tr>
 
-<tr data-index="35" data-listing-file-modified-sort="1792605322164" data-listing-reading-time-sort="7" data-listing-word-count-sort="1335" data-listing-title-sort="Model Selection for Prediction" data-listing-filename-sort="18T-prediction.qmd">
+<tr data-index="35" data-listing-file-modified-sort="1792608712968" data-listing-reading-time-sort="7" data-listing-word-count-sort="1335" data-listing-title-sort="Model Selection for Prediction" data-listing-filename-sort="18T-prediction.qmd">
 <td>
 <a href="./activities/18T-prediction.html" class="title listing-title">Model Selection for Prediction</a>
 </td>
@@ -693,7 +693,7 @@ window.Quarto = {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
