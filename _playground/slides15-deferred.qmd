@@ -226,6 +226,9 @@ I do **not** recommend using automated "Stepwise" (Forward/Backward) selection.
 
    > "The single most important tool in selecting a subset of variables is the analyst’s knowledge of the area under study." — Sandy Weisberg. 
   
+## Best subsets regression 
+
+
 ## Summary of Variable Selection
 
 - Identify research goals and use domain knowledge.  

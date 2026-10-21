@@ -30,10 +30,14 @@ There is a [homework template](../files/hw-template.qmd) available if you'd like
 ::: callout-important
 ## Important!
 
-Please attempt Problem 1 before class on Monday of Week 7. 
+Please attempt Problem 2 before class on Monday of Week 7. 
 :::
 
-# Problem 1: Empirical proportions, odds, and odds ratios
+# Problem 1: Model Selection for Prediction
+
+Work through the (link to tutorial) and answer questions A-G
+
+# Problem 2: Empirical proportions, odds, and odds ratios
 
 ::: callout-note
 
@@ -81,13 +85,13 @@ $$\text{Odds}(Y=1) = \frac{P(Y=1)}{1-P(Y=1)} = \frac{P(Y=1)}{P(Y=0)}$$
 
 (i) If the Training Program had no effect at all on employment, what would you expect the Odds Ratio to be? Why?
 
-# Problem 3: Med School
+# Problem 3: Med School (5 parts)
 
 ::: callout-note
 You do not need to load data into R for this problem
 :::
 
-We have data on 55 medical school applicants from a liberal arts college in the Midwest. Below is R output from a binary logistic regression model where a student’s MCAT score is used to model their acceptance into a program (1 = accepted to medical school, 0 = not accepted).
+<!-- We have data on 55 medical school applicants from a liberal arts college in the Midwest. Below is R output from a binary logistic regression model where a student’s MCAT score is used to model their acceptance into a program (1 = accepted to medical school, 0 = not accepted).
 
 ```{r}
 #| echo: false
@@ -97,110 +101,24 @@ medschool_glm <- glm(Acceptance ~ MCAT, data = medschool, family = "binomial")
 broom::tidy(medschool_glm)
 ```
 
-<!-- Note: remove this table output next time!! forgot to add family = binomial to code -->
-
-```
-# A tibble: 2 × 5
-  term        estimate std.error statistic p.value
-  <chr>          <dbl>     <dbl>     <dbl>   <dbl>
-1 (Intercept)  -1.01      0.478      -2.12 0.0388 
-2 MCAT          0.0430    0.0131      3.29 0.00179
-```
-
 a. Report the fitted logistic regression model ($\text{logit}(\widehat\pi) = ...$).
 b. For somebody who scored 30 on the MCAT, find the probability they were accepted.
 c. For somebody who scored 30 on the MCAT, find the odds of being accepted (to not being accepted).
 d. Compare the odds of acceptance for somebody who scored a 35 to somebody who scored a 30 on the MCAT and give a sentence interpreting this number. (Hint: use the ratio.)
 e. Interpret the coefficient for MCAT in context.
+ -->
 
-# Problem 4: Cars
+# Problem 4: Cars (R, 3 parts)
 
-A marketing research firm was engaged by an automobile manufacturer to conduct a pilot study to examine the feasibility of using logistic regression for ascertaining the likelihood that a family will purchase a new car during the next year. A random sample of 33 suburban families was selected. Data on annual family income (in thousand dollars) and the current age of the oldest family automobile (in years) were obtained. A follow-up interview conducted 12 months later was used to determine whether the family actually purchased a new car (Y = 1) or did not purchase a new car (Y = 0) during the year.
+<!-- A marketing research firm was engaged by an automobile manufacturer to conduct a pilot study to examine the feasibility of using logistic regression for ascertaining the likelihood that a family will purchase a new car during the next year. A random sample of 33 suburban families was selected. Data on annual family income (in thousand dollars) and the current age of the oldest family automobile (in years) were obtained. A follow-up interview conducted 12 months later was used to determine whether the family actually purchased a new car (Y = 1) or did not purchase a new car (Y = 0) during the year.
 You can load the data into R via:
 
 ```{r}
-# car_purchase <- read.csv("https://aluby.github.io/stat230/data/car_purchase.csv")
-car_purchase <- read.csv(here::here("data/car_purchase.csv"))
+car_purchase <- read.csv("https://aluby.github.io/stat230/data/car_purchase.csv")
 ```
 
 a. Fit the logistic regression model that uses income and car_age to predict whether a family would purchase a new car in the next year (y). Report the fitted logit function (i.e., linear predictor).
 b. Interpret the slope for income in terms of the odds of purchasing a new car.
 c. What is the estimated probability that a family with annual income $90 thousand and an oldest
 car of 3 years will purchase a new car in the next year?
-
-# Problem 5: Cars Inference
-
-Use the problem above for this question. 
-
-(a) Create three three residual plots of the Pearson residuals with a smoother to assess this model:
-
-  - residuals vs $\hat \eta$
-  - residuals vs `income`
-  - residuals vs `oldest_auto`
-  
-What do these plots suggest about the adequacy of the logistic regression model?
-
-(b) Create three binned residual plots to assess this model:
-
-  - residuals vs $\hat \eta$
-  - residuals vs `income`
-  - residuals vs `oldest_auto`
-
-What do these plots suggest about the adequacy of the logistic regression model?
-
-
-# Problem 6: Moths
-
-An article in the *Journal of Animal Ecology* by [Bishop (1972)](https://doi.org/10.2307/3513) investigated whether moths provide evidence of "survival of the fittest" with their camouflage traits. Researchers glued equal numbers of light and dark morph moths in lifelike positions on tree trunks at 7 locations from 0 to 51.2 km from Liverpool. They then recorded the numbers of moths removed after 24 hours, presumably by predators. The hypothesis was that, since tree trunks near Liverpool were blackened by pollution, light morph moths would be more likely to be removed near Liverpool. The following variables are used in this analysis: 
-
-  - `morph` = light or dark
-  - `distance` = kilometers from Liverpool
-  - `placed` = number of moths of a specific morph glued to trees at that location
-  - `removed` = number of moths of a specific morph removed after 24 hours
-  - `log_odds_removed` = log odds of being removed
-
-The model with `log_odds_removed` as the response and `distance`, `morph`, the interaction `distance*morph` as the predictor variables is shown below. 
-
-```{r echo = F}
-moth <- read_csv(here("data/moths.csv"))
-moth <- mutate(moth, 
-               notremoved = Placed - Removed, 
-               log_odds_removed = log(Removed / notremoved),
-               prop_removed = Removed / Placed, 
-               dark = ifelse(Morph=="dark",1,0), 
-               distance = Distance, 
-               morph = Morph)
-```
-
-```{r echo=T}
-model1 <- lm(log_odds_removed ~ distance + morph + distance * morph, data = moth)
-```
-
-```{r}
-#| echo: false
-#| fig-width: 8
-#| fig-height: 3
-#| fig-alt: "Response residuals plotted against each predictor in the model, one panel per predictor."
-
-ggResidpanel::resid_xpanel(model1, yvar = "response")
-```
-
-```{r echo = F}
-knitr::kable(tidy(model1, conf.int = TRUE),format = "markdown", digits = 3)
-```
-
-(a) If you examine the R code that I used to fit this model, you'll see that I used `lm()` instead of `glm()`. Why is this approach OK in this case?
- 
-(b) Write out the logistic regression equation (in terms of the log-odds) for *light* and *dark* moths (two separate equations)
-    
-(c) Use the model to interpret the following in terms of the **odds** of a moth being removed (you can assume all conditions are satisfactory)
-  
-  - 95% confidence interval for the coefficient of `distance` for a dark moth 
-  - 95% confidence interval for the coefficient of `morphlight` given the tree is in Liverpool (`distance = 0`)
-    
-(d) Now, report 80% confidence intervals for the same quantities as part (c). (You do not need to re-interpret)
-  
-(e) Use the model to calculate the predicted odds of being removed for a light moth that is glued to the trunk of a tree that is 6.2 km from Liverpool. 
-
-(f) Calculate the predicted probability that the moth described in the previous question is removed.
-
+ -->

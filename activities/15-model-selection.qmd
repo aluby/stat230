@@ -6,6 +6,7 @@ title: "15: Model Selection"
 library(ggformula)
 library(bayesrules) # data library
 library(broom)
+library(tidyverse)
 ```
 
 ::: callout-note
@@ -18,8 +19,9 @@ Today you will build a model to answer this question: **How are weekends and hol
 
 ```{r}
 #| eval: false
-bikes <- bikes[, c("date", "season", "year", "month", "weekend", "holiday",
-                   "temp_actual", "temp_feel", "humidity", "windspeed", "rides")]
+bikes <- bikes |> 
+  select("date", "season", "year", "month", "weekend", "holiday",
+                   "temp_actual", "temp_feel", "humidity", "windspeed", "rides")
 
 bikes_A <- lm(rides ~ temp_actual + windspeed + weekend, data = bikes)
 bikes_B <- lm(rides ~ temp_actual + windspeed + weekend + holiday, data = bikes)
@@ -49,9 +51,11 @@ bikes |>
 - C and E
 - A and C
 
-The `anova()` function takes the **reduced** model first and the **full** model second.
+
 
 **Q3.** Fill in the blanks to run the extra sums of squares $F$ test comparing models A and B, and then models B and C. What do you conclude each time?
+
+*Reminder:* The `anova()` function takes the **reduced** model first and the **full** model second.
 
 ```{r}
 #| eval: false
