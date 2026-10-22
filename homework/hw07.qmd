@@ -35,7 +35,7 @@ Please attempt Problem 2 before class on Monday of Week 7.
 
 # Problem 1: Model Selection for Prediction
 
-Work through the (link to tutorial) and answer questions A-G
+Work through the tutorial on [model selection for prediction](https://aluby.github.io/stat230/activities/18-prediction-tutorial.html) and answer questions A-G. (You do not need to include your code, but should include tables of output when asked for)
 
 # Problem 2: Empirical proportions, odds, and odds ratios
 

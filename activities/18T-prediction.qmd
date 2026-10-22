@@ -143,7 +143,7 @@ train_test_rmse
 The results above depend on which days happened to land in the test set. Since we chose our 80/20 train/test split based on a random sample, if we had a *different* random sample, we would get different results. Edit the code below to use a different `set.seed` value and then re-generate the RMSE table.
 
 ```{webr}
-set.seed(230)
+set.seed(75)
 bikes_split <- initial_split(bikes, prop = 0.8)
 bikes_split
 
