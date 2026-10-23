@@ -229,8 +229,7 @@ window.Quarto = {
 <p>Cities and counties spend a lot of money on parks, trails, and recreation centers, and one argument for this spending is that access to places to be active improves public health. Of course, counties with more parks also tend to be wealthier, more urban, and better educated, and all of those are associated with health too. Your job is to estimate how access to green space is associated with life expectancy <em>after accounting for</em> socioeconomic and demographic differences between counties.</p>
 <p>The data come from the <a href="https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation">County Health Rankings &amp; Roadmaps</a> 2025 data release (University of Wisconsin Population Health Institute). There is one row for each of 989 U.S. counties with a population of at least 50,000.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># greenspace &lt;- read.csv("https://aluby.github.io/stat230/data/county_greenspace.csv")</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>greenspace <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/county_greenspace.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>greenspace <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/county_greenspace.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Variables:</p>
 <ul>
@@ -265,7 +264,7 @@ window.Quarto = {
 </ul>
 <p>Things to watch out for:</p>
 <ul>
-<li>Consider transformations (look closely at <code>median_income</code>)</li>
+<li>Consider transformations (especially for money or count-related variables)</li>
 <li>It may be helpful to <em>first</em> find a model for life expectancy that only uses the socioeconomic and demographic variables, and then add the green space variables</li>
 <li>Many of the socioeconomic variables are correlated with each other. Be aware of multicollinearity.</li>
 <li>Watch out for outliers! If you discuss unusual counties, refer to them by name and look into <em>why</em> they are unusual</li>
@@ -277,8 +276,7 @@ window.Quarto = {
 <p>Ticket sales are a major source of revenue for Major League Baseball teams, so front offices care a lot about what brings fans to the ballpark. Is it winning this season? Building a reputation by winning last season? Or exciting baseball, like home runs and stolen bases? Your job is to estimate how team success is associated with attendance <em>after accounting for</em> other differences between teams and seasons.</p>
 <p>The data come from the <a href="https://sabr.org/lahman-database/">Lahman Baseball Database</a> (available in the <code>Lahman</code> R package). There is one row for each MLB team in each season from 2012–2019 and 2022–2023 (300 team-seasons). The 2020 season (no fans) and 2021 season (capacity limits) are not included.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mlb &lt;- read.csv("https://aluby.github.io/stat230/data/mlb_attendance.csv")</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mlb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/mlb_attendance.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mlb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/mlb_attendance.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Variables:</p>
 <ul>
@@ -337,7 +335,7 @@ window.Quarto = {
 <ul>
 <li>4 pages or less (including figures but not including references). You may include up to 2 pages of appendices that do not count towards this limit.</li>
 <li>Introduction: this is where you introduce the problem and why it is important to study. This should focus on the data and the “real-world” questions.</li>
-<li>EDA: this is where you discuss the variables of interest and present your EDA (e.g.&nbsp;graphs) to motivate your model</li>
+<li>EDA: this is where you discuss the variables of interest and present your EDA (e.g.&nbsp;graphs) to motivate your model. It may be a good place to introduce transformations.</li>
 <li>Results: this is where you present your candidate models, your model selection approach, your final model, and interpret the results. You should explain your results both statistically and in context.</li>
 <li>Discussion: this is a shorter section that summarizes the main points of your analysis and explains your answer to the research question.</li>
 <li>Appendices: this is an optional section where you can include graphs or results that you used, but aren’t central to the point you are trying to make in the remainder of the report. (Eg residual plots that were “normal” or a list of transformations that you considered)</li>
@@ -345,7 +343,7 @@ window.Quarto = {
 </section>
 <section id="best-practices-for-small-group-work" class="level1">
 <h1>Best practices for small group work</h1>
-<p>You will work in groups of two for this project.</p>
+<p>You will work in groups of 2-3 for this project.</p>
 <p>While you are permitted to do some work separately (e.g., the homework components, revising a section at a time when your schedules don’t permit meeting together), I discourage you from completing substantial portions of the final report individually. Each partner should contribute substantively to each component of the report, and each partner is assumed to be an equal contributor to the final product. You should be in regular contact with your partner(s) and should meet at least once outside of class. If you are having issues communicating with your partner(s), please email me as soon as possible.</p>
 </section>
 <section id="academic-integrity" class="level1">
@@ -516,7 +514,7 @@ window.Quarto = {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
