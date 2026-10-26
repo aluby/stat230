@@ -75,7 +75,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0e22b05e5ce3ed5c9d0e2453666dc67e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,6 +105,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
 <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
@@ -137,7 +141,6 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.scss">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -195,29 +198,8 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#warm-up-quiz-review" id="toc-warm-up-quiz-review" class="nav-link active" data-scroll-target="#warm-up-quiz-review">Warm up (quiz review)</a></li>
-  <li><a href="#review-sums-of-squares" id="toc-review-sums-of-squares" class="nav-link" data-scroll-target="#review-sums-of-squares">Review: sums of squares</a></li>
-  <li><a href="#today-building-an-explanatory-model" id="toc-today-building-an-explanatory-model" class="nav-link" data-scroll-target="#today-building-an-explanatory-model">Today: building an <em>explanatory</em> model</a></li>
-  <li><a href="#a-recipe-for-explanatory-models" id="toc-a-recipe-for-explanatory-models" class="nav-link" data-scroll-target="#a-recipe-for-explanatory-models">A recipe for explanatory models</a></li>
-  <li><a href="#step-1-our-candidate-models" id="toc-step-1-our-candidate-models" class="nav-link" data-scroll-target="#step-1-our-candidate-models">Step 1: Our candidate models</a></li>
-  <li><a href="#step-2-look-before-you-fit" id="toc-step-2-look-before-you-fit" class="nav-link" data-scroll-target="#step-2-look-before-you-fit">Step 2: Look before you fit</a></li>
-  <li><a href="#step-3-compare-nested-models-with-an-f-test" id="toc-step-3-compare-nested-models-with-an-f-test" class="nav-link" data-scroll-target="#step-3-compare-nested-models-with-an-f-test">Step 3: Compare nested models with an <span class="math inline">\(F\)</span> test</a></li>
-  <li><a href="#careful-temp_actual-and-temp_feel" id="toc-careful-temp_actual-and-temp_feel" class="nav-link" data-scroll-target="#careful-temp_actual-and-temp_feel">Careful: <code>temp_actual</code> and <code>temp_feel</code></a></li>
-  <li><a href="#when-the-f-test-cant-help" id="toc-when-the-f-test-cant-help" class="nav-link" data-scroll-target="#when-the-f-test-cant-help">When the <span class="math inline">\(F\)</span> test can’t help</a></li>
-  <li><a href="#adjusted-r2" id="toc-adjusted-r2" class="nav-link" data-scroll-target="#adjusted-r2">Adjusted <span class="math inline">\(R^2\)</span></a></li>
-  <li><a href="#information-criteria-aic-and-bic" id="toc-information-criteria-aic-and-bic" class="nav-link" data-scroll-target="#information-criteria-aic-and-bic">Information criteria: AIC and BIC</a></li>
-  <li><a href="#example-adjusted-r2-and-f-tests-by-hand" id="toc-example-adjusted-r2-and-f-tests-by-hand" class="nav-link" data-scroll-target="#example-adjusted-r2-and-f-tests-by-hand">Example: adjusted <span class="math inline">\(R^2\)</span> and <span class="math inline">\(F\)</span> tests by hand</a></li>
-  <li><a href="#step-4-compare-all-of-our-candidates" id="toc-step-4-compare-all-of-our-candidates" class="nav-link" data-scroll-target="#step-4-compare-all-of-our-candidates">Step 4: Compare all of our candidates</a></li>
-  <li><a href="#steps-5-and-6-check-and-interpret" id="toc-steps-5-and-6-check-and-interpret" class="nav-link" data-scroll-target="#steps-5-and-6-check-and-interpret">Steps 5 and 6: Check and interpret</a></li>
-  <li><a href="#comparing-two-models" id="toc-comparing-two-models" class="nav-link" data-scroll-target="#comparing-two-models">Comparing two models</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
-  </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="notes15.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
-    </div>
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="notes15.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -786,9 +768,34 @@ humidity           0.27      0.27     -0.32     1.00</code></pre>
 </ul>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../notes";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
