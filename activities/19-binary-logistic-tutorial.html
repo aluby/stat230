@@ -237,6 +237,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGli
   <button class="mcq-opt" data-correct="false" data-feedback="That's <code>title_has_excl</code>. <code>type_num</code> is the response variable.">C. The title has an exclamation point</button>
   <div class="mcq-feedback"></div>
 </div>
+<p><strong>Q1.</strong> Before we do anything else, how do you think <code>title_has_excl</code> and <code>title_caps_percent</code> are related to <code>type_num</code>? (Write your answer down in your notes)</p>
 </section>
 <section id="part-2-probability-odds-and-odds-ratios" class="level1">
 <h1>Part 2: Probability, odds, and odds ratios</h1>
@@ -323,12 +324,12 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiMTYgLyAxOCAgICMgcHJvYmFi
   <button class="mcq-opt" data-correct="false" data-feedback="16 is a ratio (a multiplier), not a difference.">C. The probability of being fake is 16 percentage points higher for articles with an exclamation point in the title.</button>
   <div class="mcq-feedback"></div>
 </div>
-<p><strong>Q1.</strong> What would an odds ratio of exactly 1 mean in this context? What about an odds ratio less than 1?</p>
+<p><strong>Q2.</strong> What would an odds ratio of exactly 1 mean in this context? What about an odds ratio less than 1?</p>
 </section>
 </section>
 <section id="part-3-why-not-linear-regression" class="level1">
 <h1>Part 3: Why not linear regression?</h1>
-<p>Now let’s use a quantitative predictor: <code>title_caps_percent</code>. Here’s what happens if we fit our usual linear regression model to a 0/1 response:</p>
+<p>Now let’s use a quantitative predictor: <code>title_caps_percent</code>. Here’s what happens if we fit our usual linear regression model to a 0/1 response. We’ll treat <span class="math inline">\(\hat y\)</span> as the probability of a 1.</p>
 <div class="cell">
 <div>
 <div id="webr-4" class="exercise-cell">
@@ -408,7 +409,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibmV3c19nbG0gPC0gZ2xtKHR5
 </div>
 <p>So the fitted model is</p>
 <p><span class="math display">\[\log\left(\frac{\widehat\pi(x)}{1-\widehat\pi(x)}\right) = -0.932 + 0.098 x\]</span></p>
-<p>where <span class="math inline">\(x\)</span> is <code>title_caps_percent</code>. (The slides rounded these to <span class="math inline">\(-0.93\)</span> and <span class="math inline">\(0.1\)</span>, so the numbers below are slightly different from the slides.)</p>
+<p>where <span class="math inline">\(x\)</span> is <code>title_caps_percent</code>.</p>
 </section>
 </section>
 <section id="part-5-interpreting-widehatbeta_1" class="level1">
@@ -521,7 +522,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBzZXEoMCwgNjAsIGJ5
 </script>
 </div>
 </div>
-<p><strong>Q2.</strong> Describe the shape of the fitted model on each of the three scales. Why does the probability curve flatten out near 1?</p>
+<p><strong>Q3.</strong> Describe the shape of the fitted model on each of the three scales. Why does the probability curve flatten out near 1?</p>
 </section>
 </section>
 <section id="part-7-connecting-back-to-odds-ratios" class="level1">
@@ -545,7 +546,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZXhjbF9nbG0gPC0gZ2xtKHR5
   <button class="mcq-opt" data-correct="false" data-feedback="There are 16 fake articles with an exclamation point, but that's a coincidence of this data set. Here 16 is a ratio of two odds: 8 / 0.5.">C. The number of fake articles with an exclamation point</button>
   <div class="mcq-feedback"></div>
 </div>
-<p><strong>Q3.</strong> What does <span class="math inline">\(e^{\widehat\beta_0} = 0.5\)</span> represent in context?</p>
+<p><strong>Q4.</strong> What does <span class="math inline">\(e^{\widehat\beta_0} = 0.5\)</span> represent in context?</p>
 </section>
 <section id="part-8-your-turn" class="level1">
 <h1>Part 8: Your turn</h1>
@@ -560,9 +561,9 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibmV3c19nbG1fMiA8LSBnbG0o
 </script>
 </div>
 </div>
-<p><strong>Q4.</strong> Write out the fitted model (on the log-odds scale) for articles (A) with an exclamation point in the title and (B) without an exclamation point in the title.</p>
-<p><strong>Q5.</strong> Write out interpretations for all slope coefficients in the model in terms of the <strong>odds</strong> of being fake news.</p>
-<p><strong>Q6.</strong> Use <code>predict()</code> to find the estimated probability that an article with an exclamation point, 10% capital letters, and 12 words in the title is fake.</p>
+<p><strong>Q5.</strong> Write out the fitted model (on the log-odds scale) for articles (A) with an exclamation point in the title and (B) without an exclamation point in the title.</p>
+<p><strong>Q6.</strong> Write out interpretations for all slope coefficients in the model in terms of the <strong>odds</strong> of being fake news.</p>
+<p><strong>Q7.</strong> Use <code>predict()</code> to find the estimated probability that an article with an exclamation point, 10% capital letters, and 12 words in the title is fake.</p>
 <div class="cell">
 <div>
 <div id="webr-12" class="exercise-cell">
@@ -573,8 +574,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyB5b3VyIGNvZGUgaGVyZSJ9
 </script>
 </div>
 </div>
-<p><strong>Q7.</strong> Based on what we know about OLS (<strong>o</strong>rdinary <strong>l</strong>east <strong>s</strong>quares, which includes both SLR and MLR), which predictors appear to be most important for this model?</p>
-<p><strong>Q8.</strong> What questions do you have about the <code>summary()</code> output? (Write them down! We’ll talk about them next class.)</p>
+<p><strong>Q8.</strong> Based on what we know about OLS (<strong>o</strong>rdinary <strong>l</strong>east <strong>s</strong>quares, which includes both SLR and MLR), which predictors appear to be most important for this model?</p>
+<p><strong>Q9.</strong> What questions do you have about the <code>summary()</code> output? (Write them down! We’ll talk about them next class.)</p>
 <hr>
 <section id="function-quick-reference" class="level2">
 <h2 class="anchored" data-anchor-id="function-quick-reference">Function quick reference</h2>
