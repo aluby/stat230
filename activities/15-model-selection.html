@@ -184,7 +184,8 @@ window.Quarto = {
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggformula)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesrules) <span class="co"># data library</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -203,14 +204,15 @@ Note
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>Today you will build a model to answer this question: <strong>How are weekends and holidays associated with ridership, after accounting for the weather?</strong> Run the code below to select the columns we will use and fit five candidate models.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> bikes[, <span class="fu">c</span>(<span class="st">"date"</span>, <span class="st">"season"</span>, <span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"weekend"</span>, <span class="st">"holiday"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"temp_actual"</span>, <span class="st">"temp_feel"</span>, <span class="st">"humidity"</span>, <span class="st">"windspeed"</span>, <span class="st">"rides"</span>)]</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>bikes_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend, <span class="at">data =</span> bikes)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>bikes_B <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday, <span class="at">data =</span> bikes)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>bikes_C <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity, <span class="at">data =</span> bikes)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>bikes_D <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity <span class="sc">+</span> temp_feel, <span class="at">data =</span> bikes)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>bikes_E <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_feel <span class="sc">+</span> humidity <span class="sc">+</span> weekend <span class="sc">+</span> holiday, <span class="at">data =</span> bikes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> bikes <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"date"</span>, <span class="st">"season"</span>, <span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"weekend"</span>, <span class="st">"holiday"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"temp_actual"</span>, <span class="st">"temp_feel"</span>, <span class="st">"humidity"</span>, <span class="st">"windspeed"</span>, <span class="st">"rides"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>bikes_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend, <span class="at">data =</span> bikes)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>bikes_B <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday, <span class="at">data =</span> bikes)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>bikes_C <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity, <span class="at">data =</span> bikes)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>bikes_D <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity <span class="sc">+</span> temp_feel, <span class="at">data =</span> bikes)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>bikes_E <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_feel <span class="sc">+</span> humidity <span class="sc">+</span> weekend <span class="sc">+</span> holiday, <span class="at">data =</span> bikes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="part-1-look-before-you-fit" class="level2">
@@ -232,8 +234,8 @@ Note
 <li>C and E</li>
 <li>A and C</li>
 </ul>
-<p>The <code>anova()</code> function takes the <strong>reduced</strong> model first and the <strong>full</strong> model second.</p>
 <p><strong>Q3.</strong> Fill in the blanks to run the extra sums of squares <span class="math inline">\(F\)</span> test comparing models A and B, and then models B and C. What do you conclude each time?</p>
+<p><em>Reminder:</em> The <code>anova()</code> function takes the <strong>reduced</strong> model first and the <strong>full</strong> model second.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(___, ___)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -786,126 +788,130 @@ Note
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggformula)</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesrules) <span class="co"># data library</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>This activity goes with the Day 15 notes. Record your results in the table in your notes.</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>Today you will build a model to answer this question: **How are weekends and holidays associated with ridership, after accounting for the weather?** Run the code below to select the columns we will use and fit five candidate models.</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> bikes[, <span class="fu">c</span>(<span class="st">"date"</span>, <span class="st">"season"</span>, <span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"weekend"</span>, <span class="st">"holiday"</span>,</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"temp_actual"</span>, <span class="st">"temp_feel"</span>, <span class="st">"humidity"</span>, <span class="st">"windspeed"</span>, <span class="st">"rides"</span>)]</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>bikes_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend, <span class="at">data =</span> bikes)</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>bikes_B <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday, <span class="at">data =</span> bikes)</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>bikes_C <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity, <span class="at">data =</span> bikes)</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>bikes_D <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity <span class="sc">+</span> temp_feel, <span class="at">data =</span> bikes)</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>bikes_E <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_feel <span class="sc">+</span> humidity <span class="sc">+</span> weekend <span class="sc">+</span> holiday, <span class="at">data =</span> bikes)</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 1: Look before you fit</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>This activity goes with the Day 15 notes. Record your results in the table in your notes.</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>Today you will build a model to answer this question: **How are weekends and holidays associated with ridership, after accounting for the weather?** Run the code below to select the columns we will use and fit five candidate models.</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> bikes <span class="sc">|&gt;</span> </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"date"</span>, <span class="st">"season"</span>, <span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"weekend"</span>, <span class="st">"holiday"</span>,</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"temp_actual"</span>, <span class="st">"temp_feel"</span>, <span class="st">"humidity"</span>, <span class="st">"windspeed"</span>, <span class="st">"rides"</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>bikes_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend, <span class="at">data =</span> bikes)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>bikes_B <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday, <span class="at">data =</span> bikes)</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>bikes_C <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity, <span class="at">data =</span> bikes)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>bikes_D <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity <span class="sc">+</span> temp_feel, <span class="at">data =</span> bikes)</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>bikes_E <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_feel <span class="sc">+</span> humidity <span class="sc">+</span> weekend <span class="sc">+</span> holiday, <span class="at">data =</span> bikes)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>**Q1.** Make a correlation matrix of the weather variables. Which pair of predictors could cause problems if we include both in the same model? What problem?</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 1: Look before you fit</span></span>
 <span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">|&gt;</span></span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(temp_actual, temp_feel, windspeed, humidity) <span class="sc">|&gt;</span></span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 2: Nested models and the $F$ test</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>**Q1.** Make a correlation matrix of the weather variables. Which pair of predictors could cause problems if we include both in the same model? What problem?</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">|&gt;</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(temp_actual, temp_feel, windspeed, humidity) <span class="sc">|&gt;</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>**Q2.** Which of these pairs of models are nested? For the pairs that are nested, which is the full model?</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 2: Nested models and the $F$ test</span></span>
 <span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A and B</span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>B and C</span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>C and D</span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>C and E</span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A and C</span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>The <span class="in">`anova()`</span> function takes the **reduced** model first and the **full** model second.</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>**Q2.** Which of these pairs of models are nested? For the pairs that are nested, which is the full model?</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A and B</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>B and C</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>C and D</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>C and E</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A and C</span>
 <span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>**Q3.** Fill in the blanks to run the extra sums of squares $F$ test comparing models A and B, and then models B and C. What do you conclude each time?</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(___, ___)</span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(___, ___)</span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>**Q4.** Now compare C to D (adding <span class="in">`temp_feel`</span>). What does the $F$ test suggest?</span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>**Q5.** Compare the <span class="in">`temp_actual`</span> row of <span class="in">`summary(bikes_C)`</span> to the <span class="in">`temp_actual`</span> row of <span class="in">`summary(bikes_D)`</span>. What changed, and why? How does this connect to your answer to Q1?</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>**Q3.** Fill in the blanks to run the extra sums of squares $F$ test comparing models A and B, and then models B and C. What do you conclude each time?</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>*Reminder:* The `anova()` function takes the **reduced** model first and the **full** model second.</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(___, ___)</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(___, ___)</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bikes_C)</span>
-<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bikes_D)</span>
-<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 3: Comparing models that aren't nested</span></span>
-<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>**Q6.** Use <span class="in">`summary(...)$adj.r.squared`</span>, <span class="in">`AIC()`</span>, and <span class="in">`BIC()`</span> to fill in the table in your notes for all five models.</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>**Q4.** Now compare C to D (adding <span class="in">`temp_feel`</span>). What does the $F$ test suggest?</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>**Q5.** Compare the <span class="in">`temp_actual`</span> row of <span class="in">`summary(bikes_C)`</span> to the <span class="in">`temp_actual`</span> row of <span class="in">`summary(bikes_D)`</span>. What changed, and why? How does this connect to your answer to Q1?</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bikes_C)</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bikes_D)</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bikes_A)<span class="sc">$</span>adj.r.squared</span>
-<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(bikes_A)</span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(bikes_A)</span>
-<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="co"># repeat for the other models, or use sapply:</span></span>
-<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> bikes_A, <span class="at">B =</span> bikes_B, <span class="at">C =</span> bikes_C, <span class="at">D =</span> bikes_D, <span class="at">E =</span> bikes_E)</span>
-<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(models, <span class="cf">function</span>(m) <span class="fu">summary</span>(m)<span class="sc">$</span>adj.r.squared)</span>
-<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(models, AIC)</span>
-<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(models, BIC)</span>
-<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>**Q7.** Models C and E are not nested. Which model do adjusted $R^2$, AIC, and BIC prefer? Why can't we use an $F$ test to compare them?</span>
-<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>**Q8.** Do the criteria agree on adding <span class="in">`temp_feel`</span> to model C (comparing C and D)? What does each one say? Which model would you choose?</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 3: Comparing models that aren't nested</span></span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>**Q6.** Use <span class="in">`summary(...)$adj.r.squared`</span>, <span class="in">`AIC()`</span>, and <span class="in">`BIC()`</span> to fill in the table in your notes for all five models.</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bikes_A)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(bikes_A)</span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(bikes_A)</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a><span class="co"># repeat for the other models, or use sapply:</span></span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> bikes_A, <span class="at">B =</span> bikes_B, <span class="at">C =</span> bikes_C, <span class="at">D =</span> bikes_D, <span class="at">E =</span> bikes_E)</span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(models, <span class="cf">function</span>(m) <span class="fu">summary</span>(m)<span class="sc">$</span>adj.r.squared)</span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(models, AIC)</span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(models, BIC)</span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 4: Interpreting your model</span></span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>**Q7.** Models C and E are not nested. Which model do adjusted $R^2$, AIC, and BIC prefer? Why can't we use an $F$ test to compare them?</span>
 <span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>**Q9.** Which of the five models would you use to answer our question? Justify your choice using what you found above.</span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>**Q8.** Do the criteria agree on adding <span class="in">`temp_feel`</span> to model C (comparing C and D)? What does each one say? Which model would you choose?</span>
 <span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a>**Q10.** Use <span class="in">`confint()`</span> on your chosen model. Interpret the coefficients for <span class="in">`weekend`</span> and <span class="in">`holiday`</span> (and their confidence intervals) in context. Why do you think the interval for <span class="in">`holiday`</span> is so wide? (*Hint:* <span class="in">`table(bikes$holiday)`</span>)</span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 4: Interpreting your model</span></span>
 <span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(___)</span>
-<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a>**Q11.** (*Extension*) Let's see what happens when we add some other candidate variables to model C. Compare C to each of the models below. Are these nested comparisons? What do the $F$ test, adjusted $R^2$, AIC, and BIC say? Does adding them change your answer to our question?</span>
-<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>bikes_F <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity <span class="sc">+</span> season,</span>
-<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> bikes)</span>
-<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>bikes_Y <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity <span class="sc">+</span> year,</span>
-<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> bikes)</span>
-<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>(*Note:* <span class="in">`season`</span> has four levels, so adding it adds three coefficients, i.e., $d = 3$.)</span>
-<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>***</span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>**Q9.** Which of the five models would you use to answer our question? Justify your choice using what you found above.</span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>**Q10.** Use <span class="in">`confint()`</span> on your chosen model. Interpret the coefficients for <span class="in">`weekend`</span> and <span class="in">`holiday`</span> (and their confidence intervals) in context. Why do you think the interval for <span class="in">`holiday`</span> is so wide? (*Hint:* <span class="in">`table(bikes$holiday)`</span>)</span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(___)</span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>**Q11.** (*Extension*) Let's see what happens when we add some other candidate variables to model C. Compare C to each of the models below. Are these nested comparisons? What do the $F$ test, adjusted $R^2$, AIC, and BIC say? Does adding them change your answer to our question?</span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>bikes_F <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity <span class="sc">+</span> season,</span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> bikes)</span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>bikes_Y <span class="ot">&lt;-</span> <span class="fu">lm</span>(rides <span class="sc">~</span> temp_actual <span class="sc">+</span> windspeed <span class="sc">+</span> weekend <span class="sc">+</span> holiday <span class="sc">+</span> humidity <span class="sc">+</span> year,</span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> bikes)</span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
+<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a>(*Note:* <span class="in">`season`</span> has four levels, so adding it adds three coefficients, i.e., $d = 3$.)</span>
 <span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
-<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
-<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lm()`</span> <span class="pp">|</span> Fit a linear model <span class="pp">|</span></span>
-<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cor()`</span> <span class="pp">|</span> Correlation matrix for a set of quantitative variables <span class="pp">|</span></span>
-<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`anova(reduced, full)`</span> <span class="pp">|</span> Extra sums of squares $F$ test comparing two nested models <span class="pp">|</span></span>
-<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`summary(model)$adj.r.squared`</span> <span class="pp">|</span> Adjusted $R^2$ for a fitted model <span class="pp">|</span></span>
-<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`AIC()`</span>, <span class="in">`BIC()`</span> <span class="pp">|</span> Information criteria for a fitted model (smaller is better) <span class="pp">|</span></span>
-<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`confint()`</span> <span class="pp">|</span> Confidence intervals for the coefficients of a fitted model <span class="pp">|</span></span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a>***</span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
+<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
+<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lm()`</span> <span class="pp">|</span> Fit a linear model <span class="pp">|</span></span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cor()`</span> <span class="pp">|</span> Correlation matrix for a set of quantitative variables <span class="pp">|</span></span>
+<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`anova(reduced, full)`</span> <span class="pp">|</span> Extra sums of squares $F$ test comparing two nested models <span class="pp">|</span></span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`summary(model)$adj.r.squared`</span> <span class="pp">|</span> Adjusted $R^2$ for a fitted model <span class="pp">|</span></span>
+<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`AIC()`</span>, <span class="in">`BIC()`</span> <span class="pp">|</span> Information criteria for a fitted model (smaller is better) <span class="pp">|</span></span>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`confint()`</span> <span class="pp">|</span> Confidence intervals for the coefficients of a fitted model <span class="pp">|</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

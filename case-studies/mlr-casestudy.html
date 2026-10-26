@@ -104,6 +104,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.scss">
 </head>
@@ -121,10 +150,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#building-your-model" id="toc-building-your-model" class="nav-link" data-scroll-target="#building-your-model">Building your model</a></li>
   <li><a href="#project-prompt" id="toc-project-prompt" class="nav-link" data-scroll-target="#project-prompt">Project Prompt</a>
   <ul class="collapse">
-  <li><a href="#option-1-does-pollution-kill-people" id="toc-option-1-does-pollution-kill-people" class="nav-link" data-scroll-target="#option-1-does-pollution-kill-people">Option 1: Does pollution kill people?</a></li>
-  <li><a href="#option-2-nascar-driver-ratings-again" id="toc-option-2-nascar-driver-ratings-again" class="nav-link" data-scroll-target="#option-2-nascar-driver-ratings-again">Option 2: NASCAR driver ratings (again)</a></li>
+  <li><a href="#option-1-does-green-space-improve-health" id="toc-option-1-does-green-space-improve-health" class="nav-link" data-scroll-target="#option-1-does-green-space-improve-health">Option 1: Does green space improve health?</a></li>
+  <li><a href="#option-2-do-fans-reward-winning" id="toc-option-2-do-fans-reward-winning" class="nav-link" data-scroll-target="#option-2-do-fans-reward-winning">Option 2: Do fans reward winning?</a></li>
+  <li><a href="#a-complete-analysis-will-both-options" id="toc-a-complete-analysis-will-both-options" class="nav-link" data-scroll-target="#a-complete-analysis-will-both-options">A complete analysis will (both options):</a></li>
   </ul></li>
   <li><a href="#format" id="toc-format" class="nav-link" data-scroll-target="#format">Format</a></li>
   <li><a href="#best-practices-for-small-group-work" id="toc-best-practices-for-small-group-work" class="nav-link" data-scroll-target="#best-practices-for-small-group-work">Best practices for small group work</a></li>
@@ -160,10 +191,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Overview</h1>
 <p>The goals of this case study are twofold:</p>
 <ol type="1">
-<li>To gain experience with model selection for multiple regression</li>
+<li>To gain experience building an <em>explanatory</em> multiple regression model, including choosing among candidate models</li>
 <li>To present complex results in an easy-to-digest manner</li>
 </ol>
-<p>There are two options for this short report: (a) investigating the relationship between <strong>pollution and mortality</strong> OR (b) modeling <strong>Nascar driver ratings</strong>.</p>
+<p>There are two options for this short report: (a) investigating whether <strong>green space is associated with life expectancy</strong> OR (b) modeling <strong>MLB attendance</strong>.</p>
 <p>You will submit your work to this case study in two parts:</p>
 <ol type="1">
 <li>individual submission as part of HW6 (due Friday of Week 6 at beginning of class)
@@ -178,103 +209,126 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>You should all do an equal amount of contribution to parts (1) and (2). Equal does not necessarily mean identical, but all group members should have a deep understanding of the statistical approaches used and have contributed to the writing of the report.</p>
 </section>
+<section id="building-your-model" class="level1">
+<h1>Building your model</h1>
+<p>Both options ask an <strong>explanatory</strong> question: how is a variable of interest associated with the response <em>after accounting for</em> other variables? Follow the recipe from Day 15:</p>
+<ol type="1">
+<li><strong>Start with the question.</strong> Sort the predictors into (a) the variable(s) of interest and (b) the variables you need to adjust for. Use background reading to decide what belongs in (b). These variables stay in your model even if they are not “significant.”</li>
+<li><strong>Look before you fit.</strong> Use EDA to check for transformations and for predictors that are highly correlated with each other.</li>
+<li><strong>Fit a <em>small</em> set of candidate models</strong> (3–5 models). Do not fit every possible combination, and do not remove predictors one at a time based on their p-values.</li>
+<li><strong>Compare the candidates.</strong> Use extra sums of squares <span class="math inline">\(F\)</span> tests for nested models and adjusted <span class="math inline">\(R^2\)</span>/AIC/BIC for any models. If the tools disagree, explain which you chose and why.</li>
+<li><strong>Check the conditions</strong> for the model you choose, including unusual and influential cases.</li>
+<li><strong>Interpret and justify</strong> your choice in context.</li>
+</ol>
+<p>Your Results section must include a <strong>table of your candidate models</strong> (like the one from Day 15) that lists the predictors in each model and the comparison tools you used.</p>
+</section>
 <section id="project-prompt" class="level1">
 <h1>Project Prompt</h1>
-<section id="option-1-does-pollution-kill-people" class="level2">
-<h2 class="anchored" data-anchor-id="option-1-does-pollution-kill-people">Option 1: Does pollution kill people?<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h2>
-<p>The following dataset consists of 15 variables for each of 60 cities between the years 1959-1961.</p>
-<ul>
-<li>Response variable: Total age-adjusted mortality from all causes, in deaths per 100,000 population</li>
-<li>Possible predictors include weather, pollution, and demographic features of each city (described in more detail below).</li>
-</ul>
-<p>We wish to investigate the relationship between the pollution variables and mortality, after the other climate and socioeconomic variables are accounted for. (<em>Note:</em> these data may suffer from some spatial dependence. If you come across this, you should note it in your model but do not need to “fix” it)</p>
+<section id="option-1-does-green-space-improve-health" class="level2">
+<h2 class="anchored" data-anchor-id="option-1-does-green-space-improve-health">Option 1: Does green space improve health?</h2>
+<p>Cities and counties spend a lot of money on parks, trails, and recreation centers, and one argument for this spending is that access to places to be active improves public health. Of course, counties with more parks also tend to be wealthier, more urban, and better educated, and all of those are associated with health too. Your job is to estimate how access to green space is associated with life expectancy <em>after accounting for</em> socioeconomic and demographic differences between counties.</p>
+<p>The data come from the <a href="https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation">County Health Rankings &amp; Roadmaps</a> 2025 data release (University of Wisconsin Population Health Institute). There is one row for each of 989 U.S. counties with a population of at least 50,000.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Sleuth3)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pollution <span class="ot">&lt;-</span> ex1217</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># greenspace &lt;- read.csv("https://aluby.github.io/stat230/data/county_greenspace.csv")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>greenspace <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/county_greenspace.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Variables:</p>
 <ul>
-<li><code>CITY</code> a character vector indicating the city</li>
-<li><code>Mortality</code> total age-adjusted mortality from all causes</li>
-<li><code>Precip</code> mean annual precipitation (inches)</li>
-<li><code>Humidity</code> percent relative humidity (annual average at 1:00pm)</li>
-<li><code>JanTemp</code> mean January temperature (degrees F)</li>
-<li><code>JulyTemp</code> mean July temperature (degrees F)</li>
-<li><code>Over65</code> percentage of the population aged 65 years or over</li>
-<li><code>House</code> population per household</li>
-<li><code>Educ</code> median number of school years completed for persons 25 years or older</li>
-<li><code>Sound</code> percentage of the housing that is sound with all facilities</li>
-<li><code>Density</code> population density (in persons per square mile of urbanized area)</li>
-<li><code>NonWhite</code> percentage of population that is nonwhite</li>
-<li><code>WhiteCol</code> percentage of employment in white collar occupations</li>
-<li><code>Poor</code> percentage of households with annual income under $3,000 in 1960</li>
-<li><code>HC</code> relative pollution potential of hydrocarbons</li>
-<li><code>NOX</code> relative pollution potential of oxides of nitrogen</li>
-<li><code>SO2</code> relative pollution potential of sulfur dioxide</li>
-</ul>
-<p>Some questions your report should address:</p>
+<li><code>fips</code>, <code>state</code>, <code>county</code> identify the county</li>
+<li><code>region</code> Census region (Northeast, South, North Central, West)</li>
+<li><code>population</code> county population</li>
+<li><strong>Response:</strong> <code>life_expectancy</code> average number of years people are expected to live</li>
+<li><strong>Variables of interest:</strong>
 <ul>
-<li>How is pollution, or potential pollution as measured by <code>NOX</code>, <code>SO2</code>, and <code>HC</code>, associated with mortality after accoutning for weather and socioeconomic/demographic factors?</li>
-<li>Which, if any, pollution variables have the strongest association with mortality after accounting for wetaher and other socioeconomic factors?</li>
-<li>Does your model suggest that stronger regulations on potential pollutants could reduce mortality?</li>
+<li><code>pct_park_access</code> percentage of the population living within a half mile of a park</li>
+<li><code>pct_exercise_access</code> percentage of the population with adequate access to locations for physical activity (parks, gyms, recreation centers, etc.)</li>
+</ul></li>
+<li><strong>Other possible predictors:</strong>
+<ul>
+<li><code>median_income</code> median household income (dollars)</li>
+<li><code>pct_child_poverty</code> percentage of people under age 18 in poverty</li>
+<li><code>pct_some_college</code> percentage of adults ages 25–44 with some post-secondary education</li>
+<li><code>pct_uninsured</code> percentage of the population under age 65 without health insurance</li>
+<li><code>pct_unemployed</code> percentage of the population ages 16 and older unemployed but seeking work</li>
+<li><code>pct_housing_problems</code> percentage of households with at least one severe housing problem (overcrowding, high housing costs, or lack of kitchen or plumbing facilities)</li>
+<li><code>pct_65_older</code> percentage of the population ages 65 and older</li>
+<li><code>pct_rural</code> percentage of the population living in a census-defined rural area</li>
+<li><code>pct_nonwhite</code> percentage of the population that does not identify as non-Hispanic white</li>
+</ul></li>
+</ul>
+<p>See the <a href="https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation">2025 data dictionary and technical documentation</a> for more details on how each measure is defined and which years it comes from.</p>
+<p>Your report should address the following:</p>
+<ul>
+<li>How is access to green space associated with life expectancy after accounting for socioeconomic and demographic differences between counties?</li>
+<li><code>pct_park_access</code> and <code>pct_exercise_access</code> measure similar things. Which one (or both?) belongs in your model, and how does that choice affect your answer?</li>
+<li>Does your model suggest that increasing access to parks or exercise opportunities would increase life expectancy? (Think carefully about what an observational, county-level study can tell us.)</li>
 </ul>
 <p>Things to watch out for:</p>
 <ul>
-<li>Consider transformations</li>
-<li>It may be helpful to <em>first</em> find a model for mortality that only uses weather and demographic facotrs, adn then add in the pollution variables and perform fruther checks and refinement</li>
-<li>Watch out for outliers!</li>
+<li>Consider transformations (look closely at <code>median_income</code>)</li>
+<li>It may be helpful to <em>first</em> find a model for life expectancy that only uses the socioeconomic and demographic variables, and then add the green space variables</li>
+<li>Many of the socioeconomic variables are correlated with each other. Be aware of multicollinearity.</li>
+<li>Watch out for outliers! If you discuss unusual counties, refer to them by name and look into <em>why</em> they are unusual</li>
+<li>Counties near each other tend to be similar, so these data may suffer from some spatial dependence. If you come across this, note it as a limitation but you do not need to “fix” it</li>
 </ul>
-<p>A complete analysis will:</p>
+</section>
+<section id="option-2-do-fans-reward-winning" class="level2">
+<h2 class="anchored" data-anchor-id="option-2-do-fans-reward-winning">Option 2: Do fans reward winning?</h2>
+<p>Ticket sales are a major source of revenue for Major League Baseball teams, so front offices care a lot about what brings fans to the ballpark. Is it winning this season? Building a reputation by winning last season? Or exciting baseball, like home runs and stolen bases? Your job is to estimate how team success is associated with attendance <em>after accounting for</em> other differences between teams and seasons.</p>
+<p>The data come from the <a href="https://sabr.org/lahman-database/">Lahman Baseball Database</a> (available in the <code>Lahman</code> R package). There is one row for each MLB team in each season from 2012–2019 and 2022–2023 (300 team-seasons). The 2020 season (no fans) and 2021 season (capacity limits) are not included.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mlb &lt;- read.csv("https://aluby.github.io/stat230/data/mlb_attendance.csv")</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mlb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/mlb_attendance.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Variables:</p>
+<ul>
+<li><code>team</code> team name, <code>franchise</code> franchise ID (use this to follow a team across seasons, since some teams changed names)</li>
+<li><strong>Response:</strong> <code>attendance_per_game</code> average home attendance per game</li>
+<li><strong>Variables of interest:</strong>
+<ul>
+<li><code>win_pct</code> proportion of games won this season</li>
+<li><code>prev_win_pct</code> proportion of games won the previous season</li>
+<li><code>prev_playoffs</code> 1 if the team made the playoffs the previous season, 0 otherwise</li>
+</ul></li>
+<li><strong>Other possible predictors:</strong>
+<ul>
+<li><code>year</code> season</li>
+<li><code>league</code> American League (AL) or National League (NL)</li>
+<li><code>division</code> East (E), Central (C), or West (W)</li>
+<li><code>runs_per_game</code> runs scored per game</li>
+<li><code>hr_per_game</code> home runs hit per game</li>
+<li><code>sb_per_game</code> stolen bases per game</li>
+<li><code>runs_allowed_per_game</code> runs allowed per game</li>
+<li><code>strikeouts_per_game</code> strikeouts by the team’s pitchers per game</li>
+<li><code>park_factor</code> ballpark factor for batters (100 = neutral; above 100 means the park favors hitters)</li>
+</ul></li>
+</ul>
+<p>Your report should address the following:</p>
+<ul>
+<li>How is a team’s success (this season and last season) associated with attendance after accounting for other differences between teams and seasons?</li>
+<li>Is attendance more strongly associated with winning <em>this</em> season or with winning <em>last</em> season?</li>
+<li>After accounting for winning, is “exciting” baseball (home runs, stolen bases, strikeouts) associated with attendance?</li>
+</ul>
+<p>Things to watch out for:</p>
+<ul>
+<li>Consider transformations, but only use one if it improves the residual plots (check the residuals, not just the shape of each variable)</li>
+<li>Winning percentage is largely determined by runs scored and runs allowed. Be aware of multicollinearity and think about which of these variables answer <em>your</em> question</li>
+<li>It may be helpful to <em>first</em> find a model using only the “other” variables, and then add the success variables</li>
+<li>Watch out for outliers! If you discuss unusual team-seasons, refer to them by team and year and look into <em>why</em> they are unusual</li>
+<li>Each team appears in the data many times, so these observations are not fully independent. If you come across this, note it as a limitation but you do not need to “fix” it</li>
+</ul>
+</section>
+<section id="a-complete-analysis-will-both-options" class="level2">
+<h2 class="anchored" data-anchor-id="a-complete-analysis-will-both-options">A complete analysis will (both options):</h2>
 <ul>
 <li>address the questions that are posed</li>
 <li>consider transformations and check model assumptions prior to inference</li>
-<li>consider outlier effects prior to inference and only remove cases that have a justifiable reason for removal – if outliers are discussed, refer to them by city name and explain why they are unusual cases and, if applicable, why you chose to remove them from your model/data</li>
-<li>refine the model (i.e.&nbsp;reduce the number of model predictors) to address the questions of interest – use appropriate regression tools taught in class (tests, etc) to justify the remove of predictors</li>
-</ul>
-</section>
-<section id="option-2-nascar-driver-ratings-again" class="level2">
-<h2 class="anchored" data-anchor-id="option-2-nascar-driver-ratings-again">Option 2: NASCAR driver ratings (again)</h2>
-<p>In NASCAR, the Driver Rating is a composite metric used to evaluate overall performance. It provides a comprehensive assessment of a driver’s competitiveness, efficiency, and consistency by combining multiple factors—such as wins, finish position, and average running position—into a single numerical value.</p>
-<p>The exact formula has evolved over time, but the goal of this project is to build a statistical approximation of this metric using season-level data from 2007–2022. While consistency (Average Position) is a major factor, we want to investigate how much “extra” value is added by aggressive performance metrics like leading laps or setting fastest laps, after accounting for a driver’s typical finishing position.</p>
-<p>To load the NASCAR driver dataset:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#nascar &lt;- read.csv("https://aluby.github.io/stat230/data/nascar_driver_statistics.csv") </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>nascar <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/nascar_driver_statistics.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Variables of interest:</p>
+<li>consider outlier effects prior to inference and only remove cases that have a justifiable reason for removal
 <ul>
-<li>Response: <code>DriverRating</code> (The season average of race-by-race ratings)</li>
-<li>Consistency Predictors: <code>AvgPos</code> (Average running position), <code>AvgFinish</code> (Average finishing position)</li>
-<li>Performance Predictors: <code>Wins</code>, <code>LapsLed</code>, <code>FastestLaps</code>, <code>QualityPasses</code> (Passes of cars in the Top 15 while under green flag conditions)</li>
-</ul>
-<p>(<em>Note:</em> there are other predictors as well! I suggest doing a bit of background reading to understand what these variables mean.)</p>
-<p>Your report should address the following:</p>
-<ul>
-<li>How are performance-based metrics—specifically <code>LapsLed</code> and <code>FastestLaps</code>—associated with a driver’s holistic <code>DriverRating</code> after accounting for their consistency?<br>
-</li>
-<li>Which specific performance variables have the strongest association with the rating once consistency is controlled for?</li>
-<li>Given that many of these variables (like <code>AvgPos</code> and <code>AvgFinish</code>) measure similar things, how does multicollinearity affect the stability of your model?</li>
-</ul>
-<p>Things to watch out for:</p>
-<ul>
-<li>Consider transformations!</li>
-<li>Many of the variables measure similar things. Be aware of multicollinearity.</li>
-<li>It may be helpful to first find a model using only “consistency” variables, then add “performance” variables</li>
-<li>consider outlier effects prior to inference and only remove cases that have a justifiable reason for removal – if outliers are discussed, refer to them by city name and explain why they are unusual cases and, if applicable, why you chose to remove them from your model/data</li>
-</ul>
-<p>A Complete Analysis Will:</p>
-<ul>
-<li>Address the research questions</li>
-<li>Check MLR conditions and use transformations if necessary<br>
-</li>
-<li>Evaluate leverage and influence: Identify specific drivers who are “unusual” cases.
-<ul>
-<li>Refer to them by name and explain why they might be exerting high leverage on your model.</li>
+<li>if outliers are discussed, refer to them by name and explain why they are unusual cases and, if applicable, why you chose to remove them from your model/data</li>
 </ul></li>
-<li>Refine the model: Use model selection tools to reduce the number of predictors, ensuring you keep only those that provide explanatory power</li>
-<li>Interpret results in context: Provide a clear summary of how “aggressive” driving (leading laps/fastest laps) impacts a driver’s rating compared to “safe” driving (consistent finishing).</li>
+<li>compare a small set of candidate models (see <a href="#building-your-model">Building your model</a>) and justify your final model using both the comparison tools and the context of the question</li>
+<li>interpret the coefficients for your variables of interest, with confidence intervals, in context</li>
 </ul>
 </section>
 </section>
@@ -284,7 +338,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>4 pages or less (including figures but not including references). You may include up to 2 pages of appendices that do not count towards this limit.</li>
 <li>Introduction: this is where you introduce the problem and why it is important to study. This should focus on the data and the “real-world” questions.</li>
 <li>EDA: this is where you discuss the variables of interest and present your EDA (e.g.&nbsp;graphs) to motivate your model</li>
-<li>Results: this is where you present your model selection approach, final model, and interpret the results. You should explain your results both statistically and in context.</li>
+<li>Results: this is where you present your candidate models, your model selection approach, your final model, and interpret the results. You should explain your results both statistically and in context.</li>
 <li>Discussion: this is a shorter section that summarizes the main points of your analysis and explains your answer to the research question.</li>
 <li>Appendices: this is an optional section where you can include graphs or results that you used, but aren’t central to the point you are trying to make in the remainder of the report. (Eg residual plots that were “normal” or a list of transformations that you considered)</li>
 </ul>
@@ -320,41 +374,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Rubric</h1>
 <p><em>Note:</em> I recommend going through this checklist as a team before your final submission</p>
 <ul>
-<li>Title and authors (5%)
+<li>Title and authors (2%)
 <ul class="task-list">
-<li><label><input type="checkbox">Has a title and lists the authors</label></li>
-<li><label><input type="checkbox">Informative and engaging</label></li>
+<li><label><input type="checkbox">Has an informative title and lists the authors</label></li>
 </ul></li>
 <li>Introduction (10%)
 <ul class="task-list">
 <li><label><input type="checkbox">Introduces and motivates the topic being addressed</label></li>
-<li><label><input type="checkbox">Includes at least one reference for context/motivation for this study that are well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)</label></li>
+<li><label><input type="checkbox">Includes at least one reference for context/motivation for this study that is well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)</label></li>
 <li><label><input type="checkbox">Explains the questions addressed in the report</label></li>
 <li><label><input type="checkbox">Gives appropriate background information (and avoids making broad and unsubstantiated claims)</label></li>
 </ul></li>
 <li>EDA (10%)
 <ul class="task-list">
-<li><label><input type="checkbox">At least one visual summary that directly connects to the model</label></li>
+<li><label><input type="checkbox">At least one visual summary of the response and the variable(s) of interest that directly connects to the model</label></li>
+<li><label><input type="checkbox">Discusses relationships among the predictors (e.g., correlations) that affect model building</label></li>
 <li><label><input type="checkbox">Describes the data accurately and concisely</label></li>
 </ul></li>
-<li>Results (45%)
-<ul class="task-list">
-<li><label><input type="checkbox">Focus is on conveying the results of the analysis and is not a step-by-step description</label></li>
-<li><label><input type="checkbox">Model building process is appropriate and discussed</label></li>
-<li><label><input type="checkbox">Statistical inference is appropriately performed</label>
+<li>Results (48%)
 <ul>
-<li>A complete model statement is given (give the equation!)</li>
-<li>An appropriate model is chosen</li>
-<li>Model assumptions are assessed and satisfactory</li>
-<li>Estimates and uncertainties (confidence intervals) of model coefficients are given and <em>both</em> are interpreted in context</li>
-<li>The model and estimates are interpreted correctly and in the context of the question being addressed</li>
-<li>Technical language is used correctly</li>
+<li><label><input type="checkbox">Focus is on conveying the results of the analysis and is not a step-by-step description</label></li>
+<li>Model building (15%)
+<ul class="task-list">
+<li><label><input type="checkbox">Identifies the variable(s) of interest and the variables being adjusted for, with a justification based on context</label></li>
+<li><label><input type="checkbox">Includes a table of a small number of candidate models</label></li>
+<li><label><input type="checkbox">Uses appropriate comparison tools (<span class="math inline">\(F\)</span> tests for nested models; adjusted <span class="math inline">\(R^2\)</span>/AIC/BIC for any models) and justifies the final model choice</label></li>
+<li><label><input type="checkbox">Variables of interest remain in the final model; any predictor that is dropped is justified by a comparison tool <em>and</em> by context</label></li>
+</ul></li>
+<li>Model conditions (10%)
+<ul class="task-list">
+<li><label><input type="checkbox">Transformations are considered and justified</label></li>
+<li><label><input type="checkbox">Model assumptions are assessed and satisfactory</label></li>
+<li><label><input type="checkbox">Unusual and influential cases are identified by name and handled appropriately</label></li>
+</ul></li>
+<li>Inference and interpretation (23%)
+<ul class="task-list">
+<li><label><input type="checkbox">A complete model statement is given (give the equation!)</label></li>
+<li><label><input type="checkbox">Estimates and uncertainties (confidence intervals) of the coefficients for the variables of interest are given and <em>both</em> are interpreted in context (including back-transforming if needed)</label></li>
+<li><label><input type="checkbox">The model and estimates are interpreted correctly and in the context of the question being addressed</label></li>
+<li><label><input type="checkbox">Technical language is used correctly</label></li>
 </ul></li>
 </ul></li>
 <li>Discussion (15%)
 <ul class="task-list">
 <li><label><input type="checkbox">Summarizes the main findings and answers the question posed in the introduction (no new results should appear here!)</label></li>
-<li><label><input type="checkbox">Describes any limitations of your analysis and any necessary caveats</label></li>
+<li><label><input type="checkbox">Describes any limitations of your analysis and any necessary caveats (e.g., observational data, dependence between observations)</label></li>
 <li><label><input type="checkbox">Describes any follow-up questions that would be interesting to investigate</label></li>
 </ul></li>
 <li>Quarto appendix (separate file) (5%)
@@ -373,18 +437,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="questions" class="level1">
 <h1>Questions?</h1>
-<p>If you have questions, please post them on the Case Study 1 thread on our Ed discussion page!</p>
+<p>If you have questions, please post them on the Case Study 2 thread on our Ed discussion page!</p>
 
 
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>This data comes from an exercise from <em>The Statistical Sleuth</em><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -458,7 +516,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

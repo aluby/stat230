@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.23">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>quiz02-key – stat230</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.scss">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">stat230</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../slides.html"> 
+<span class="menu-text">Slides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../readings.html"> 
+<span class="menu-text">Readings</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#quiz-2-key-instructor-only-keep-out-of-the-published-repo" id="toc-quiz-2-key-instructor-only-keep-out-of-the-published-repo" class="nav-link active" data-scroll-target="#quiz-2-key-instructor-only-keep-out-of-the-published-repo">Quiz 2 key (instructor only; keep out of the published repo)</a>
+  <ul class="collapse">
+  <li><a href="#parallel-lines-model-18-pts" id="toc-parallel-lines-model-18-pts" class="nav-link" data-scroll-target="#parallel-lines-model-18-pts">1. Parallel-lines model (18 pts)</a></li>
+  <li><a href="#do-the-slopes-differ-by-era-22-pts" id="toc-do-the-slopes-differ-by-era-22-pts" class="nav-link" data-scroll-target="#do-the-slopes-differ-by-era-22-pts">2. Do the slopes differ by era? (22 pts)</a></li>
+  <li><a href="#ci-for-a-combination-of-coefficients-18-pts" id="toc-ci-for-a-combination-of-coefficients-18-pts" class="nav-link" data-scroll-target="#ci-for-a-combination-of-coefficients-18-pts">3. CI for a combination of coefficients (18 pts)</a></li>
+  <li><a href="#diagnostics-22-pts" id="toc-diagnostics-22-pts" class="nav-link" data-scroll-target="#diagnostics-22-pts">4. Diagnostics (22 pts)</a></li>
+  <li><a href="#quadratic-in-year-20-pts" id="toc-quadratic-in-year-20-pts" class="nav-link" data-scroll-target="#quadratic-in-year-20-pts">5. Quadratic in year (20 pts)</a></li>
+  <li><a href="#notes-on-length-and-fit-with-the-course" id="toc-notes-on-length-and-fit-with-the-course" class="nav-link" data-scroll-target="#notes-on-length-and-fit-with-the-course">Notes on length and fit with the course</a></li>
+  <li><a href="#data-caveats" id="toc-data-caveats" class="nav-link" data-scroll-target="#data-caveats">Data caveats</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<section id="quiz-2-key-instructor-only-keep-out-of-the-published-repo" class="level1">
+<h1>Quiz 2 key (instructor only; keep out of the published repo)</h1>
+<p>All numbers below were computed with an independent numpy OLS implementation (not R) from a transcribed copy of <code>game_films.csv</code> (60 theatrical films with a US-dollar budget). <strong>After you render, confirm that the printed output matches these values.</strong> If a few rows of the real file differ from my copy, the key numbers will shift slightly (the structure should not).</p>
+<p>Cutoffs used: leverage 2(p+1)/n; |standardized residual| &gt; 2; Cook’s D near 1. Era counts: 28 (1990s-2000s), 15 (2010s), 17 (2020s).</p>
+<section id="parallel-lines-model-18-pts" class="level2">
+<h2 class="anchored" data-anchor-id="parallel-lines-model-18-pts">1. Parallel-lines model (18 pts)</h2>
+<p>Fitted: log(box) = 0.0008 + 0.9692 log(budget) + 1.1637 (2010s) + 1.1966 (2020s). RSE 1.435 on 56 df, R² = 0.436, adj R² = 0.405.</p>
+<p><strong>(a) 4 pts.</strong> 2010s line: intercept 0.0008 + 1.1637 = 1.1645, slope 0.9692, i.e.&nbsp;log(box_office)-hat = 1.165 + 0.969 log(budget). 1 pt for hat/log response, 1 for intercept, 1 for slope, 1 for using the 2010s indicator correctly (not just the baseline line).</p>
+<p><strong>(b) 6 pts.</strong> exp(1.1966) = 3.31. For films with the same budget, 2020s films are predicted to earn about 3.3 times as much worldwide as 1990s-2000s films (about 231% more). Common errors: “increases by 1.2” (log scale), “1.2 million dollars”, forgetting “same budget”, forgetting the reference group. Accept “median” or “typical” box office.</p>
+<p><strong>(c) 3 pts.</strong> B. 1.1^0.9692 = 1.0968, about a 9.7% increase. (C is the near-miss distractor because the slope is close to 1.)</p>
+<p><strong>(d) 5 pts.</strong> R² can never go down when predictors are added, so the biggest model always has the biggest R². Adjusted R² penalizes extra parameters. Adj R²: 0.332 (budget only), <strong>0.405 (parallel)</strong>, 0.388 (separate), so adjusted R² prefers the parallel-lines model. 2 pts for the R² reasoning, 1 for the penalty idea, 2 for naming parallel lines.</p>
+</section>
+<section id="do-the-slopes-differ-by-era-22-pts" class="level2">
+<h2 class="anchored" data-anchor-id="do-the-slopes-differ-by-era-22-pts">2. Do the slopes differ by era? (22 pts)</h2>
+<p>Separate-lines: R² = 0.440, RSE 1.456 on 54 df. anova(par, sep): Res.Df 56 / 54, RSS 115.34 / 114.45, Df 2, Sum of Sq 0.887, <strong>F = 0.209, p = 0.812</strong>. anova(base, par): Res.Df 58 / 56, RSS 134.13 / 115.34, Sum of Sq 18.79, <strong>F = 4.563, p = 0.0146</strong>.</p>
+<p><strong>(a) 4 pts.</strong> H0: β4 = β5 = 0 (same slope in every era; parallel lines are enough). Ha: at least one of β4, β5 is not 0. (Penalize “β4 ≠ β5” or “both ≠ 0”.)</p>
+<p><strong>(b) 5 pts.</strong> F = [(115.34 − 114.45)/(56 − 54)] / [114.45/54] = (0.887/2)/(2.119) ≈ 0.21 (small rounding differences are fine).</p>
+<p><strong>(c) 4 pts.</strong> p = 0.81 &gt; 0.05, so we fail to reject H0. There is no evidence that the effect of budget on box office differs across eras; the parallel-lines model is adequate (and simpler).</p>
+<p><strong>(d) 4 pts.</strong> There is one question (“do the slopes differ?”) involving two coefficients. Individual t-tests test one coefficient at a time (holding the other in the model), so two separate tests are not the same as one test of both being 0 (and with related terms each t-test can be non-significant while the pair is jointly significant). The F-test answers the single question with a single p-value. Accept any version of “joint test / one question, two coefficients.”</p>
+<p><strong>(e) 5 pts.</strong> H0: β2 = β3 = 0 (after accounting for budget, era has no effect on log box office). F = 4.56 on 2 and 56 df, p = 0.0146 &lt; 0.05, so reject H0: there is evidence that box office differs by era even after accounting for budget.</p>
+</section>
+<section id="ci-for-a-combination-of-coefficients-18-pts" class="level2">
+<h2 class="anchored" data-anchor-id="ci-for-a-combination-of-coefficients-18-pts">3. CI for a combination of coefficients (18 pts)</h2>
+<p><strong>(a) 3 pts.</strong> β1 + β5.</p>
+<p><strong>(b) 3 pts.</strong> 0.7916 + 0.2696 = 1.0612.</p>
+<p><strong>(c) 6 pts.</strong> Var(b1 + b5) = Var(b1) + Var(b5) + 2Cov(b1, b5) = 0.1250 + 0.2274 + 2(−0.1250) = 0.1024, so SE = sqrt(0.1024) ≈ 0.320. (2 pts for the formula, 2 for picking the right entries, 2 for the number. A common error: adding SEs, 0.3536 + 0.4768, or leaving out the covariance.)</p>
+<p><strong>(d) 6 pts.</strong> t* = 2.005 (the −2.005 on the table; 0.025 area to the left). 1.0612 ± 2.005(0.320) = (0.42, 1.70). Interpretation: among 2020s films, we are 95% confident that each 1% increase in budget is associated with a 0.42% to 1.70% increase in typical box office. (Accept “median/typical/predicted”; deduct for the log-scale slope interpretation with no percent language.) Optional follow-up for discussion: the interval contains 1 (box office proportional to budget).</p>
+</section>
+<section id="diagnostics-22-pts" class="level2">
+<h2 class="anchored" data-anchor-id="diagnostics-22-pts">4. Diagnostics (22 pts)</h2>
+<p>Parallel-lines model, p = 3, n = 60, cutoff = 2(4)/60 = 0.133.</p>
+<p><strong>(a) 6 pts.</strong> <em>Equal variance is not met:</em> residuals are widely spread at small fitted values (standardized residuals from about −3.2 to +2.7 in the lowest third of fitted values) and much tighter at large fitted values (roughly ±1.1 to 1.7), a funnel that narrows to the right (SD of standardized residuals about 1.5, 0.7, 0.6 across thirds). <em>Normality:</em> the Q-Q plot has a noticeable lower-tail departure (a few very negative residuals, the flops), so normality is questionable but only mildly violated in the middle. Accept “reasonably met” for normality if the student describes the tail departures; the equal variance conclusion is the one to grade firmly. <strong>Check these against your rendered plots.</strong></p>
+<p><strong>(b) 8 pts (cutoff 2 pts, table 6 pts at 0.75 each).</strong> Cutoff 0.133.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Film</th>
+<th>Leverage</th>
+<th>Std. resid</th>
+<th>Cook’s D</th>
+<th>High leverage?</th>
+<th>Outlier?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Werewolves Within</td>
+<td>0.141</td>
+<td>−2.31</td>
+<td>0.220</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Pokémon: The First Movie</td>
+<td>0.109</td>
+<td>2.65</td>
+<td>0.215</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>Postal</td>
+<td>0.047</td>
+<td>−3.24</td>
+<td>0.130</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Iron Lung</td>
+<td>0.221</td>
+<td>1.30</td>
+<td>0.121</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p><strong>(c) 8 pts.</strong> <em>Postal:</em> a large negative residual (standardized −3.24) with low leverage, so it has an ordinary budget/era combination but earned far less than the model predicts (about $0.15M vs.&nbsp;a prediction of about $14M); it is an outlier in the y direction. <em>Iron Lung:</em> the smallest budget in the data (extreme x-value, so high leverage 0.221), but it sits close to the trend (standardized residual 1.30), so it does not pull the fitted plane very far; high leverage alone is not a problem. Neither is influential: all Cook’s D values are well under 1 (the largest is 0.22). Do not remove either; at most re-fit without Postal as a sensitivity check and report both results. Deduct if a student says “remove because it’s an outlier.” 3 pts each film’s description, 2 pts for the decision with a justification.</p>
+</section>
+<section id="quadratic-in-year-20-pts" class="level2">
+<h2 class="anchored" data-anchor-id="quadratic-in-year-20-pts">5. Quadratic in year (20 pts)</h2>
+<p>Uncentered (yr = year − 1993): log(budget) 1.2310 (SE 0.214, p &lt; 0.001), yr −0.1846 (SE 0.0794, p = 0.0238), yr² 0.00610 (SE 0.00216, p = 0.0065), intercept 0.4066; R² = 0.450, adj R² = 0.421, RSE 1.417. VIFs: log(budget) 1.17, yr 18.1, yr² 17.4. Centered (yr_c = year − 2010): intercept −0.9753, yr_c 0.0220 (SE 0.0199, p = 0.273), yr_c² identical to above; VIFs 1.17, 1.13, 1.09. corr(yr, yr²) = 0.97 vs.&nbsp;0.12 centered.</p>
+<p><strong>(a) 6 pts.</strong> VIFs of about 18 and 17 are well above 10, so yes, there is a multicollinearity problem between <code>yr</code> and <code>I(yr^2)</code> (budget is fine, 1.2). The reason: all years are positive (1993 onward), so yr² increases almost in lockstep with yr (correlation about 0.97), making them nearly redundant. Accept any “a square of an all-positive variable moves with the variable” explanation.</p>
+<p><strong>(b) 7 pts.</strong> <em>Changed:</em> the intercept, the <code>yr</code> coefficient and its SE/p-value (since the baseline year moved and the linear term now describes the slope in 2010), and the VIFs for yr/yr² (now about 1.1). <em>Unchanged:</em> the <code>log(budget)</code> estimate/SE/p-value, the quadratic coefficient, SE and p-value, R², adjusted R², residual SE, and the F statistic. Why: centering is just a shift of the x variable, so the two models describe exactly the same curve (identical fitted values and residuals); only the way the curve is parametrized changes. Collinearity inflated the SEs of the linear and quadratic terms in the uncentered model, but here the quadratic term’s standard error is the same, because the highest-order term is not changed by shifting x. (Do not require this last sentence; it is a nice extension.)</p>
+<p><strong>(c) 7 pts.</strong> H0: β(yr²) = 0 (no curvature after accounting for budget), Ha: β(yr²) ≠ 0. t = 2.825 (df = 56), p = 0.0065 &lt; 0.05: reject H0; there is evidence of curvature in the year-trend. (Optional: the positive coefficient means the curve opens upward; box office for a given budget was lowest around 2008.) 2 pts hypotheses, 2 pts t and p, 3 pts conclusion in context.</p>
+</section>
+<section id="notes-on-length-and-fit-with-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="notes-on-length-and-fit-with-the-course">Notes on length and fit with the course</h2>
+<ul>
+<li>Total 100 pts, 19 parts. Estimated 45-55 minutes for a typical sophomore; cut candidates are 2(d), 2(e), 4(c).</li>
+<li>Topic coverage: log-log interpretation, adjusted R², categorical predictors (parallel lines and interactions), extra-sum-of-squares F-tests, CIs for linear combinations, MLR diagnostics, multicollinearity and centering.</li>
+<li>Why not the cappuccino data: it only has one quantitative predictor (so no quadratic or VIF question) and Quiz 1 already used it.</li>
+</ul>
+</section>
+<section id="data-caveats" class="level2">
+<h2 class="anchored" data-anchor-id="data-caveats">Data caveats</h2>
+<ul>
+<li>I couldn’t run R or Quarto in my environment, so none of the code has been rendered. Please render once and check every printed number against this key.</li>
+<li><code>budget</code> is the midpoint of <code>budget_low</code> and <code>budget_high</code> (some films have a single estimate); the filter drops films with no budget or a non-dollar budget (8 of 68 theatrical rows in my copy).</li>
+<li>The film titles include “Pokémon” with an accent; if your LaTeX complains, replace it with <code>Pok\'emon</code> in the fill-in table.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
