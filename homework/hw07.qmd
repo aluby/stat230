@@ -85,7 +85,20 @@ $$\text{Odds}(Y=1) = \frac{P(Y=1)}{1-P(Y=1)} = \frac{P(Y=1)}{P(Y=0)}$$
 
 (i) If the Training Program had no effect at all on employment, what would you expect the Odds Ratio to be? Why?
 
-# Problem 3: Med School (5 parts)
+# Problem 3: `fakenews` Your Turn from Monday's class (graded on completion)
+
+
+**Q5.** Write out the fitted model (on the log-odds scale) for articles (A) with an exclamation point in the title and (B) without an exclamation point in the title.
+
+**Q6.** Write out interpretations for all slope coefficients in the model in terms of the **odds** of being fake news.
+
+**Q7.** Use `predict()` to find the estimated probability that an article with an exclamation point, 10% capital letters, and 12 words in the title is fake.
+
+**Q8.** Based on what we know about OLS (**o**rdinary **l**east **s**quares, which includes both SLR and MLR), which predictors appear to be most important for this model?
+
+**Q9.** What questions do you have about the `summary()` output? (Write them down! We'll talk about them next class.)
+
+# Problem 4: Med School (5 parts)
 
 ::: callout-note
 You do not need to load data into R for this problem
@@ -108,7 +121,7 @@ d. Compare the odds of acceptance for somebody who scored a 35 to somebody who s
 e. Interpret the coefficient for MCAT in context.
  -->
 
-# Problem 4: Cars (R, 3 parts)
+# Problem 5: Cars (R, 3 parts)
 
 <!-- A marketing research firm was engaged by an automobile manufacturer to conduct a pilot study to examine the feasibility of using logistic regression for ascertaining the likelihood that a family will purchase a new car during the next year. A random sample of 33 suburban families was selected. Data on annual family income (in thousand dollars) and the current age of the oldest family automobile (in years) were obtained. A follow-up interview conducted 12 months later was used to determine whether the family actually purchased a new car (Y = 1) or did not purchase a new car (Y = 0) during the year.
 You can load the data into R via:
@@ -122,3 +135,6 @@ b. Interpret the slope for income in terms of the odds of purchasing a new car.
 c. What is the estimated probability that a family with annual income $90 thousand and an oldest
 car of 3 years will purchase a new car in the next year?
  -->
+
+
+
