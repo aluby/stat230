@@ -40,17 +40,202 @@ document.addEventListener("click", function (e) {
 </script>
 ```
 
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(tidymodels)
+library(ggformula)
+library(patchwork)
+theme_set(theme_minimal(base_size = 14))
+```
+
 ::: callout-important
 ## Today's plan
 
 I've lost my voice! 🫠 Instead of a lecture, you'll work through this tutorial with your group at your own pace. It covers the same material as the [Day 19 slides](../slides/slides19.qmd) and the [Day 19 activity](19-binary-logistic.qmd).
 
-- **Code chunks:** click **Run Code** to run them. You can edit the code and run it again.
+- **Code chunks:** you can use these as usual
 - **Check-in questions:** click an answer to see whether you're right (and why). Try to answer *before* you click!
-- **Numbered questions (Q1, Q2, ...):** write your answers in your notes.
+- **Numbered questions (Q1, Q2, ...):** remember write your answers in your notes.
 
-Raise your hand if your group gets stuck. I can't talk, but I can write!
+I will wander around and be here to answer any questions you have! 
 :::
+
+# Part 0: What we've done so far
+
+## 1. SLR: Quantitative outcome and one quantitative predictor
+
+```{r}
+#| echo: false
+movies <- read.csv("https://aloy.github.io/stat230-materials/data/movie_scores.csv")
+
+gf_point(audience ~ critics, data = movies) |>
+  gf_lm()
+```
+
+## 2. MLR: Quantitative outcome with quantitative and categorical predictors:
+
+```{r}
+#| echo: false
+fev <- read.table("https://aloy.github.io/stat230-materials/data/FEVdataAge10to19.txt", sep = "\t", header = TRUE) |>
+  mutate(Smoke = factor(Smoke, levels = c(0, 1), labels = c("Nonsmoker", "Smoker")))
+
+mod_parallel <- lm(FEV ~ Age + Smoke, data = fev)
+mod_diff_slope <- lm(FEV ~ Age + Age:Smoke, data = fev)
+mod_separate <- lm(FEV ~ Age * Smoke, data = fev)
+
+fev_fit_plot <- function(mod) {
+  ggplot(augment(mod, data = fev), aes(x = Age, y = FEV, color = Smoke, shape = Smoke)) +
+    geom_point(alpha = 0.5) +
+    geom_line(aes(y = .fitted), linewidth = 1) +
+    scale_color_manual(values = c("#f15a31", "#000036")) +
+    labs(y = "FEV (in L/s)") + 
+    theme(legend.position = "bottom")
+}
+
+fev_fit_plot(mod_parallel) + fev_fit_plot(mod_separate)
+
+```
+
+## 3. Today: a **binary** outcome
+
+```{r}
+#| label: cartoon-settings
+#| message: false
+#| echo: false
+set.seed(8675309)
+n <- 50
+x <- rnorm(n, mean = 0, sd = 1)
+b0 <- 0
+b1 <- 5
+prob <- 1 / (1 + exp(-(b0 + b1 * x)))
+y <- rbinom(n, 1, prob)
+df <- tibble(x = x, y = as.factor(y))
+
+df_fit <- logistic_reg() |>
+  fit(y ~ x, data = df)
+
+new_df_aug <- augment(
+  df_fit,
+  new_data = tibble(x = seq(1.2 * min(x), 1.2 * max(x), length.out = 500))
+)
+```
+
+$$
+y = 
+\begin{cases}
+1 & \text{eg. Yes, Win, True, Heads, Success}\\
+0 & \text{eg. No, Lose, False, Tails, Failure}
+\end{cases}
+$$
+
+```{r}
+#| label: binary-outcome-scatter
+#| message: false
+#| echo: false
+#| fig-width: 10
+ggplot(df, aes(x = x, y = y)) +
+  geom_point(alpha = 0.5) +
+  theme_minimal(base_size = 24)
+```
+
+If we can model the relationship between predictors ($x$) and a binary outcome ($y$), we can use the model to do a special kind of prediction called *classification*.
+
+### Example: Is the e-mail spam or not? 
+
+$$
+\mathbf{x}: \text{word and character counts in an e-mail.}
+$$
+
+![](images/spam.png){fig-align="center" width="70%"}
+
+$$
+y
+= 
+\begin{cases}
+1 & \text{it's spam}\\
+0 & \text{it's legit}
+\end{cases}
+$$
+
+### Example: Is it cancer or not?
+
+$$
+\mathbf{x}: \text{features in a medical image.}
+$$
+
+![](images/head-neck.jpg){fig-align="center"}
+
+$$
+y
+= 
+\begin{cases}
+1 & \text{it's cancer}\\
+0 & \text{it's healthy}
+\end{cases}
+$$
+
+### Example: Will they default?
+
+$$
+\mathbf{x}: \text{financial and demographic info about a loan applicant.}
+$$
+
+![](images/fico.jpg){fig-align="center" width="60%"}
+
+$$
+y
+= 
+\begin{cases}
+1 & \text{applicant is at risk of defaulting on loan}\\
+0 & \text{applicant is safe}
+\end{cases}
+$$
+
+### Modeling probabilities instead of responses 
+
+This data is hard to model! Instead of modeling $y$ directly, we model the **probability** that $y=1$:
+
+```{r}
+#| message: false
+#| echo: false
+#| fig-asp: 0.4
+ggplot(df, aes(x = x, y = as.numeric(y) - 1)) +
+  geom_point(alpha = 0.5) +
+  geom_line(
+    data = new_df_aug,
+    aes(y = .pred_1),
+    color = "#d1805f",
+    linewidth = 1.5
+  ) +
+  theme_minimal(base_size = 24) +
+  scale_y_continuous(
+    limits = c(-0.1, 1.1),
+    breaks = c(0, 1),
+    minor_breaks = NULL
+  ) +
+  labs(y = "y")
+```
+
+So, our prediction questions turn into: 
+
+-   "Given new email, what's the probability that it's spam?''
+-   "Given new image, what's the probability that it's cancer?''
+-   "Given new loan application, what's the probability that they default?''
+
+Why don't we model y directly?
+
+-   **Recall regression with a numerical outcome**:
+
+    -   Our models do not output *guarantees* for $y$, they output predictions that describe behavior *on average*
+
+-   **Similar when modeling a binary outcome**:
+
+    -   Our models cannot directly guarantee that $y$ will be zero or one. The correct analog to "on average" for a 0/1 outcome is "what's the probability?"
+
+Today, we'll work through an example with the goal of predicting whether an article is fake news or not.
 
 # Part 1: The data
 
