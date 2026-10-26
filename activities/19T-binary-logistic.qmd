@@ -84,6 +84,9 @@ head(news[, c("type", "type_num", "title_has_excl", "title_caps_percent", "title
 </div>
 ```
 
+**Q1.** Before we do anything else, how do you think `title_has_excl` and `title_caps_percent` are related to `type_num`? (Write your answer down in your notes)
+
+
 # Part 2: Probability, odds, and odds ratios
 
 ## Probability vs. odds
@@ -150,11 +153,11 @@ $$OR = \frac{\text{Odds}(\text{fake} \mid \text{exclamation})}{\text{Odds}(\text
 </div>
 ```
 
-**Q1.** What would an odds ratio of exactly 1 mean in this context? What about an odds ratio less than 1?
+**Q2.** What would an odds ratio of exactly 1 mean in this context? What about an odds ratio less than 1?
 
 # Part 3: Why not linear regression?
 
-Now let's use a quantitative predictor: `title_caps_percent`. Here's what happens if we fit our usual linear regression model to a 0/1 response:
+Now let's use a quantitative predictor: `title_caps_percent`. Here's what happens if we fit our usual linear regression model to a 0/1 response. We'll treat $\hat y$ as the probability of a 1. 
 
 ```{webr}
 gf_jitter(type_num ~ title_caps_percent, data = news, width = 0.2, height = 0.05) |>
@@ -216,7 +219,7 @@ So the fitted model is
 
 $$\log\left(\frac{\widehat\pi(x)}{1-\widehat\pi(x)}\right) = -0.932 + 0.098 x$$
 
-where $x$ is `title_caps_percent`. (The slides rounded these to $-0.93$ and $0.1$, so the numbers below are slightly different from the slides.)
+where $x$ is `title_caps_percent`. 
 
 # Part 5: Interpreting $\widehat\beta_1$
 
@@ -327,7 +330,7 @@ gf_line(value ~ x, data = three_scales, color = "#003300", linewidth = 1) |>
   gf_labs(x = "title_caps_percent", y = "")
 ```
 
-**Q2.** Describe the shape of the fitted model on each of the three scales. Why does the probability curve flatten out near 1?
+**Q3.** Describe the shape of the fitted model on each of the three scales. Why does the probability curve flatten out near 1?
 
 # Part 7: Connecting back to odds ratios
 
@@ -350,7 +353,7 @@ exp(coef(excl_glm))
 </div>
 ```
 
-**Q3.** What does $e^{\widehat\beta_0} = 0.5$ represent in context?
+**Q4.** What does $e^{\widehat\beta_0} = 0.5$ represent in context?
 
 # Part 8: Your turn
 
@@ -361,19 +364,19 @@ news_glm_2 <- glm(type_num ~ ___ + ___ + ___, data = news, family = binomial)
 summary(___)
 ```
 
-**Q4.** Write out the fitted model (on the log-odds scale) for articles (A) with an exclamation point in the title and (B) without an exclamation point in the title.
+**Q5.** Write out the fitted model (on the log-odds scale) for articles (A) with an exclamation point in the title and (B) without an exclamation point in the title.
 
-**Q5.** Write out interpretations for all slope coefficients in the model in terms of the **odds** of being fake news.
+**Q6.** Write out interpretations for all slope coefficients in the model in terms of the **odds** of being fake news.
 
-**Q6.** Use `predict()` to find the estimated probability that an article with an exclamation point, 10% capital letters, and 12 words in the title is fake.
+**Q7.** Use `predict()` to find the estimated probability that an article with an exclamation point, 10% capital letters, and 12 words in the title is fake.
 
 ```{webr}
 # your code here
 ```
 
-**Q7.** Based on what we know about OLS (**o**rdinary **l**east **s**quares, which includes both SLR and MLR), which predictors appear to be most important for this model?
+**Q8.** Based on what we know about OLS (**o**rdinary **l**east **s**quares, which includes both SLR and MLR), which predictors appear to be most important for this model?
 
-**Q8.** What questions do you have about the `summary()` output? (Write them down! We'll talk about them next class.)
+**Q9.** What questions do you have about the `summary()` output? (Write them down! We'll talk about them next class.)
 
 ***
 

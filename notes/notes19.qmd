@@ -24,7 +24,7 @@ f3 <- function(x) sprintf("%.3f", x)
 
 ::: {.callout-note}
 These are reference notes for Day 19. They cover the same material as the
-Day 19 slides and the self-paced tutorial.
+Day 19 slides and the self-paced tutorial. Whenever you run into a check-in or a question in the tutorial, write your answer down here.
 :::
 
 ## Where we're going
@@ -43,8 +43,12 @@ using features of the article.
 -   `title_has_excl`: whether the title has an exclamation point
 -   `title_caps_percent`: percent of the title in capital letters
 
-A "success" ($Y = 1$) is a **fake** article. Always check how your response
+A "success" ($Y = 1$) is a _____________ article. Always check how your response
 is coded before modeling!
+
+**Q1.** Before we do anything else, how do you think `title_has_excl` and `title_caps_percent` are related to `type_num`?
+
+\vspace{2in}
 
 ## Probability and odds
 
@@ -60,7 +64,6 @@ $$\text{odds} = \frac{\pi}{1 - \pi} = \frac{P(\text{event})}{P(\text{not event})
 
 Probabilities are between 0 and 1; odds are between 0 and $\infty$.
 
-\pagebreak
 
 ## Example: exclamation points
 
@@ -72,14 +75,14 @@ table(news$title_has_excl, news$type) |>
 
 | | Title has exclamation | No exclamation |
 |:--|:--|:--|
-| $P(\text{fake})$ | $16/18 = 0.889$ | $44/132 = 0.333$ |
-| $\text{Odds}(\text{fake})$ | $16/2 = 8$ | $44/88 = 0.5$ |
+| $P(\text{fake})$ | $16/18 = 0.889$ | ________________________ |
+| $\text{Odds}(\text{fake})$ | $16/2 = 8$ | ________________________ |
 
 Shortcut: from a table, odds = (number of successes) / (number of failures).
 
 The **odds ratio** compares the odds in two groups:
 
-$$OR = \frac{\text{Odds}(\text{fake} \mid \text{exclamation})}{\text{Odds}(\text{fake} \mid \text{no exclamation})} = \frac{8}{0.5} = 16$$
+$$OR = \frac{\text{Odds}(\text{fake} \mid \text{exclamation})}{\text{Odds}(\text{fake} \mid \text{no exclamation})} = \frac{8}{\underline{\hspace{1.5cm}}} = 16$$
 
 **Interpretation:** The odds of being fake are 16 times as high for articles
 with an exclamation point in the title as for articles without one.
@@ -89,21 +92,21 @@ with an exclamation point in the title as for articles without one.
 
 An odds ratio is **not** a ratio of probabilities. It is *not* correct to say
 that articles with an exclamation point are "16 times as likely" to be fake:
-the ratio of probabilities is $0.889/0.333 = 2.67$.
+the ratio of probabilities is only about 2.67.
 :::
 
-**Q1.** An odds ratio of exactly 1 means ______________________________________
+**Q2.** An odds ratio of exactly 1 means: 
 
-___________________________________________________________________________.
+\vspace{.5in}
 
-An odds ratio less than 1 means _____________________________________________
+An odds ratio less than 1 means: 
 
-___________________________________________________________________________.
+\vspace{.5in}
 
 ## Why not linear regression?
 
 ```{r}
-#| fig-width: 6.5
+#| fig-width: 8
 #| fig-height: 2.4
 lm_fit <- lm(type_num ~ title_caps_percent, data = news)
 
@@ -133,9 +136,9 @@ line.
 
 | Scale | Formula | Range | Linear in the $x$'s? |
 |:--|:--|:--|:--|
-| Probability | $\pi$ | 0 to 1 | No |
-| Odds | $\pi / (1 - \pi)$ | 0 to $\infty$ | No (exponential) |
-| Log-odds | $\log(\pi / (1 - \pi))$ | $-\infty$ to $\infty$ | **Yes** |
+| Probability | $\pi$ | 0 to 1 | ________ |
+| Odds | $\pi / (1 - \pi)$ | 0 to $\infty$ | ________ |
+| Log-odds | $\log(\pi / (1 - \pi))$ | $-\infty$ to $\infty$ | ________ |
 
 ## Fitting the model in R
 
@@ -150,8 +153,7 @@ kable_coef(news_glm, terms = c("Intercept", "title_caps_percent"))
 
 $$\widehat\eta = \log\left(\frac{\widehat\pi(x)}{1-\widehat\pi(x)}\right) = `r f3(b[1])` + `r f3(b[2])` x$$
 
-where $x$ is `title_caps_percent`. (The slides rounded these to $-0.93$ and
-$0.1$, so some numbers there are slightly different.)
+where $x$ is `title_caps_percent`. 
 
 ## Interpreting the slope
 
@@ -164,12 +166,14 @@ So $e^{\widehat\beta_1}$ is an **odds ratio**. Here,
 $e^{`r f3(b[2])`} \approx `r f3(exp(b[2]))`$:
 
 > For each additional percentage point of capital letters in the title, the
-> odds of the article being fake are multiplied by about `r f2(exp(b[2]))`
-> (an increase of about `r round(100 * (exp(b[2]) - 1))`%).
+> __________ of the article being fake __________________ by about `r f2(exp(b[2]))`
+> (an increase of about ______________________________).
 
 For a $c$-unit increase in $x$, the odds are multiplied by $e^{c\widehat\beta_1}$.
-For example, 10 more percentage points of capital letters multiplies the odds
-by $e^{10(`r f3(b[2])`)} \approx `r f2(exp(10 * b[2]))`$ (**not** $10 \times `r f2(exp(b[2]))`$).
+
+What happens to the odds of fake news if the percent of capital letters increases by 10 percentage points? 
+
+> The odds ___________________________ by _________________________________
 
 ::: {.callout-warning}
 ## Common mistakes
@@ -195,8 +199,8 @@ eta20 <- b[1] + b[2] * 20
 3.  **Probability:** $\widehat\pi = \dfrac{\widehat\omega}{1 + \widehat\omega} = \dfrac{e^{\widehat\eta}}{1 + e^{\widehat\eta}} = \dfrac{`r f2(exp(eta20))`}{1 + `r f2(exp(eta20))`} = `r f3(exp(eta20) / (1 + exp(eta20)))`$
 
 The intercept works the same way: at $x = 0$, the log-odds are
-`r f3(b[1])`, the odds are $e^{`r f3(b[1])`} = `r f3(exp(b[1]))`$, and the
-probability is `r f3(exp(b[1]) / (1 + exp(b[1])))`.
+___________________, the odds are ___________________, and the
+probability is ___________________.
 
 **In R**, `predict()` does this for you, but by default it gives the
 **log-odds**. Use `type = "response"` to get probabilities:
@@ -206,6 +210,8 @@ probability is `r f3(exp(b[1]) / (1 + exp(b[1])))`.
 predict(news_glm, newdata = data.frame(title_caps_percent = 20))
 predict(news_glm, newdata = data.frame(title_caps_percent = 20), type = "response")
 ```
+
+*Note:* The first line of output (without type = "response") is on which scale? _____________________
 
 ## The fitted model on three scales
 
@@ -223,13 +229,9 @@ tibble(x = seq(0, 60, by = 0.5),
   labs(x = "title_caps_percent", y = "")
 ```
 
-**Q2.** On the log-odds scale, the fitted model is a ____________________. On
-the odds scale, it is a(n) ____________________ curve. On the probability
-scale, it is a(n) ____________________ curve.
+**Q3.** Describe the shape of the fitted model on each of the three scales. Why does the probability curve flatten out near 1?
 
-The probability curve flattens out near 1 because ____________________________
-
-___________________________________________________________________________.
+\vspace{2in}
 
 ## Moving between the three scales
 
@@ -241,7 +243,6 @@ ___________________________________________________________________________.
 | probability $\pi$ | odds | $\dfrac{\pi}{1 - \pi}$ | `p / (1 - p)` |
 | odds | log-odds | $\log(\text{odds})$ | `log(odds)` |
 
-\pagebreak
 
 ## A binary predictor gives back the odds ratio
 
@@ -254,21 +255,16 @@ exp(coef(excl_glm))
 -   $e^{\widehat\beta_1} = `r round(exp(coef(excl_glm))[2], 1)`$ is exactly the
     odds ratio we computed from the table.
 
-**Q3.** What does $e^{\widehat\beta_0} = `r round(exp(coef(excl_glm))[1], 2)`$ represent in context?
+**Q4.** What does $e^{\widehat\beta_0} = `r round(exp(coef(excl_glm))[1], 2)`$ represent in context?
 
-\vspace{.35in}
-
-\noindent\rule{\linewidth}{0.4pt}
-
-\vspace{.35in}
-
-\noindent\rule{\linewidth}{0.4pt}
+\vspace{.5in}
+\vfill
 
 ## Your turn: three predictors
 
-Fit `glm(type_num ~ title_has_excl + title_caps_percent + title_words, data = news, family = binomial)`.
+`glm(type_num ~ title_has_excl + title_caps_percent + title_words, data = news, family = binomial)`.
 
-**Q4.** Write out the fitted model on the log-odds scale for articles with and
+**Q5.** Write out the fitted model on the log-odds scale for articles with and
 without an exclamation point in the title.
 
 (A) With an exclamation point:
@@ -279,7 +275,9 @@ $\log\left(\dfrac{\widehat\pi}{1 - \widehat\pi}\right) =$ __________ $+$ _______
 
 $\log\left(\dfrac{\widehat\pi}{1 - \widehat\pi}\right) =$ __________ $+$ __________ $\times$ `title_caps_percent` $+$ __________ $\times$ `title_words`
 
-**Q5.** Interpret each slope coefficient in terms of the **odds** of being fake news.
+\pagebreak 
+
+**Q6.** Interpret each slope coefficient in terms of the **odds** of being fake news. (*Note:* templates on last page if you get stuck; but try it on your own first)
 
 `title_has_excl`:
 
@@ -293,15 +291,17 @@ $\log\left(\dfrac{\widehat\pi}{1 - \widehat\pi}\right) =$ __________ $+$ _______
 
 \vspace{.6in}
 
-**Q6.** The estimated probability that an article with an exclamation point, 10% capital letters, and 12 words in the title is fake: ______________
+**Q7.** The estimated probability that an article with an exclamation point, 10% capital letters, and 12 words in the title is fake: ______________
 
-**Q7.** Which predictors appear to be most important for this model? Why?
+**Q8.** Which predictors appear to be most important for this model? Why?
 
-\vspace{.75in}
+\vspace{1.5in}
 
-**Q8.** What questions do you have about the `summary()` output?
+**Q9.** What questions do you have about the `summary()` output?
 
-\vspace{.75in}
+\vspace{1.5in}
+
+\pagebreak 
 
 ## Interpretation templates
 
