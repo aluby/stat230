@@ -28,6 +28,7 @@
       "/activities/15-model-selection.html",
       "/activities/18-case-studies.html",
       "/activities/19-binary-logistic.html",
+      "/activities/19T-binary-logistic.html",
       "/activities/20-logistic-inference.html",
       "/activities/21-r-logistic.html",
       "/activities/22-binomial-logistic.html",
@@ -36,23 +37,7 @@
       "/activities/26-poisson-intro.html",
       "/activities/27-poisson.html",
       "/activities/28-quasibinomial.html",
-      "/activities/group-expectations.html",
-      "/activities/18T-prediction.html"
-    ]
-  },
-  {
-    "listing": "/readings.html",
-    "items": [
-      "/readings/latex-for-stat230.html",
-      "/readings/exam01-practice.html",
-      "/readings/intro-review.html",
-      "/readings/exam01-review.html",
-      "/readings/quiz02-practice.html",
-      "/readings/exam02-review.html",
-      "/readings/exam03-review.html",
-      "/readings/r-functions-reference.html",
-      "/readings/revisions.html",
-      "/readings/r-for-stat230.html"
+      "/activities/group-expectations.html"
     ]
   },
   {
@@ -82,6 +67,21 @@
       "/slides/slides02.html",
       "/slides/slides-cheat-sheet.html",
       "/slides/slides01.html"
+    ]
+  },
+  {
+    "listing": "/readings.html",
+    "items": [
+      "/readings/latex-for-stat230.html",
+      "/readings/exam01-practice.html",
+      "/readings/intro-review.html",
+      "/readings/exam01-review.html",
+      "/readings/quiz02-practice.html",
+      "/readings/exam02-review.html",
+      "/readings/exam03-review.html",
+      "/readings/r-functions-reference.html",
+      "/readings/revisions.html",
+      "/readings/r-for-stat230.html"
     ]
   }
 ]

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -149,9 +149,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#problem-5-cars-inference" id="toc-problem-5-cars-inference" class="nav-link active" data-scroll-target="#problem-5-cars-inference">Problem 5: Cars Inference</a></li>
-  <li><a href="#problem-6-moths" id="toc-problem-6-moths" class="nav-link" data-scroll-target="#problem-6-moths">Problem 6: Moths</a></li>
-  <li><a href="#problem-1-tires" id="toc-problem-1-tires" class="nav-link" data-scroll-target="#problem-1-tires">Problem 1: Tires</a></li>
+  <li><a href="#problem-1-tires" id="toc-problem-1-tires" class="nav-link active" data-scroll-target="#problem-1-tires">Problem 1: Tires</a></li>
   <li><a href="#problem-2-checking-conditions" id="toc-problem-2-checking-conditions" class="nav-link" data-scroll-target="#problem-2-checking-conditions">Problem 2: Checking conditions</a></li>
   <li><a href="#problem-3-budworm" id="toc-problem-3-budworm" class="nav-link" data-scroll-target="#problem-3-budworm">Problem 3: budworm</a></li>
   <li><a href="#problem-4-monday" id="toc-problem-4-monday" class="nav-link" data-scroll-target="#problem-4-monday"><del>Problem 4: Monday</del></a></li>
@@ -197,130 +195,6 @@ window.Quarto = {
 <p>Please attempt Case Study problems before class on Friday of Week 8</p>
 </div>
 </div>
-<section id="problem-5-cars-inference" class="level1">
-<h1>Problem 5: Cars Inference</h1>
-<p>Use the problem above for this question.</p>
-<ol type="a">
-<li>Create three three residual plots of the Pearson residuals with a smoother to assess this model:</li>
-</ol>
-<ul>
-<li>residuals vs <span class="math inline">\(\hat \eta\)</span></li>
-<li>residuals vs <code>income</code></li>
-<li>residuals vs <code>oldest_auto</code></li>
-</ul>
-<p>What do these plots suggest about the adequacy of the logistic regression model?</p>
-<ol start="2" type="a">
-<li>Create three binned residual plots to assess this model:</li>
-</ol>
-<ul>
-<li>residuals vs <span class="math inline">\(\hat \eta\)</span></li>
-<li>residuals vs <code>income</code></li>
-<li>residuals vs <code>oldest_auto</code></li>
-</ul>
-<p>What do these plots suggest about the adequacy of the logistic regression model?</p>
-</section>
-<section id="problem-6-moths" class="level1">
-<h1>Problem 6: Moths</h1>
-<p>An article in the <em>Journal of Animal Ecology</em> by <a href="https://doi.org/10.2307/3513">Bishop (1972)</a> investigated whether moths provide evidence of “survival of the fittest” with their camouflage traits. Researchers glued equal numbers of light and dark morph moths in lifelike positions on tree trunks at 7 locations from 0 to 51.2 km from Liverpool. They then recorded the numbers of moths removed after 24 hours, presumably by predators. The hypothesis was that, since tree trunks near Liverpool were blackened by pollution, light morph moths would be more likely to be removed near Liverpool. The following variables are used in this analysis:</p>
-<ul>
-<li><code>morph</code> = light or dark</li>
-<li><code>distance</code> = kilometers from Liverpool</li>
-<li><code>placed</code> = number of moths of a specific morph glued to trees at that location</li>
-<li><code>removed</code> = number of moths of a specific morph removed after 24 hours</li>
-<li><code>log_odds_removed</code> = log odds of being removed</li>
-</ul>
-<p>The model with <code>log_odds_removed</code> as the response and <code>distance</code>, <code>morph</code>, the interaction <code>distance*morph</code> as the predictor variables is shown below.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_odds_removed <span class="sc">~</span> distance <span class="sc">+</span> morph <span class="sc">+</span> distance <span class="sc">*</span> morph, <span class="at">data =</span> moth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="hw08_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Response residuals plotted against each predictor in the model, one panel per predictor." width="768"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 11%">
-<col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 10%">
-<col style="width: 11%">
-<col style="width: 13%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std.error</th>
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">p.value</th>
-<th style="text-align: right;">conf.low</th>
-<th style="text-align: right;">conf.high</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">-1.123</td>
-<td style="text-align: right;">0.240</td>
-<td style="text-align: right;">-4.687</td>
-<td style="text-align: right;">0.001</td>
-<td style="text-align: right;">-1.657</td>
-<td style="text-align: right;">-0.589</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">distance</td>
-<td style="text-align: right;">0.018</td>
-<td style="text-align: right;">0.007</td>
-<td style="text-align: right;">2.437</td>
-<td style="text-align: right;">0.035</td>
-<td style="text-align: right;">0.002</td>
-<td style="text-align: right;">0.035</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">morphlight</td>
-<td style="text-align: right;">0.374</td>
-<td style="text-align: right;">0.339</td>
-<td style="text-align: right;">1.103</td>
-<td style="text-align: right;">0.296</td>
-<td style="text-align: right;">-0.381</td>
-<td style="text-align: right;">1.129</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">distance:morphlight</td>
-<td style="text-align: right;">-0.028</td>
-<td style="text-align: right;">0.011</td>
-<td style="text-align: right;">-2.612</td>
-<td style="text-align: right;">0.026</td>
-<td style="text-align: right;">-0.051</td>
-<td style="text-align: right;">-0.004</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<ol type="a">
-<li><p>If you examine the R code that I used to fit this model, you’ll see that I used <code>lm()</code> instead of <code>glm()</code>. Why is this approach OK in this case?</p></li>
-<li><p>Write out the logistic regression equation (in terms of the log-odds) for <em>light</em> and <em>dark</em> moths (two separate equations)</p></li>
-<li><p>Use the model to interpret the following in terms of the <strong>odds</strong> of a moth being removed (you can assume all conditions are satisfactory)</p></li>
-</ol>
-<ul>
-<li>95% confidence interval for the coefficient of <code>distance</code> for a dark moth</li>
-<li>95% confidence interval for the coefficient of <code>morphlight</code> given the tree is in Liverpool (<code>distance = 0</code>)</li>
-</ul>
-<ol start="4" type="a">
-<li><p>Now, report 80% confidence intervals for the same quantities as part (c). (You do not need to re-interpret)</p></li>
-<li><p>Use the model to calculate the predicted odds of being removed for a light moth that is glued to the trunk of a tree that is 6.2 km from Liverpool.</p></li>
-<li><p>Calculate the predicted probability that the moth described in the previous question is removed.</p></li>
-</ol>
-</section>
 <section id="problem-1-tires" class="level1">
 <h1>Problem 1: Tires</h1>
 <blockquote class="blockquote">
@@ -328,7 +202,7 @@ window.Quarto = {
 </blockquote>
 <p>Load the data with:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tires <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex2018[<span class="sc">-</span><span class="dv">1</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tires <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex2018[<span class="sc">-</span><span class="dv">1</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="a">
 <li>The excerpt below is from the <em>Statistical Sleuth</em>. What is the response varibale and what are the predictor variables?</li>
@@ -346,11 +220,11 @@ window.Quarto = {
 <li>The book also suggests an interaction between vehicle type and number of passengers. Explain why this graph suggests an interaction between vehicle type (make) and number of passengers in the model for odds of tire failure.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Make <span class="sc">~</span> Passengers, <span class="at">col =</span> <span class="sc">~</span>Cause, <span class="at">data =</span> tires)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Make <span class="sc">~</span> Passengers, <span class="at">col =</span> <span class="sc">~</span>Cause, <span class="at">data =</span> tires)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hw08_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" alt="Boxplots of Passengers, one for each level of Make, colored by Cause." width="576"></p>
+<p><img src="hw08_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="Boxplots of Passengers, one for each level of Make, colored by Cause." width="576"></p>
 </figure>
 </div>
 </div>
@@ -375,7 +249,7 @@ window.Quarto = {
 <p>An experiment in the 1980’s looked at the levels of resistance to a certain toxin in the adult Budworm, a type of moth. Batches of 20 moths each of each sex were exposed to different doses of pyrethroid <em>trans</em>-cypermethrin and the number in each batch that were dead or knocked down were recorded (<code>numdead</code>).</p>
 <p>You can load the data using the following code:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>budworm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/budworm.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>budworm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/budworm.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="a">
 <li><p>We are interested in predicting the probability of a moth dying or being knocked down based on the dose and sex. Create an appropriate EDA to investigate this relationship. What do you conclude?</p></li>
@@ -395,7 +269,7 @@ window.Quarto = {
 </blockquote>
 <p>Each row in the dataset represents a separate tank of rainbow trout embryos.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>trout <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex2116</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trout <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex2116</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="a">
 <li><p>Make a plot of the empirical log-odds of cancer vs dose. Comment on what you see</p></li>
@@ -490,7 +364,7 @@ window.Quarto = {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
