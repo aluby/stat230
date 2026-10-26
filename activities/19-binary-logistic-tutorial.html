@@ -117,7 +117,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#part-0-what-weve-done-so-far" id="toc-part-0-what-weve-done-so-far" class="nav-link active" data-scroll-target="#part-0-what-weve-done-so-far">Part 0: What we’ve done so far</a></li>
+  <li><a href="#part-0-what-weve-done-so-far" id="toc-part-0-what-weve-done-so-far" class="nav-link active" data-scroll-target="#part-0-what-weve-done-so-far">Part 0: What we’ve done so far</a>
+  <ul class="collapse">
+  <li><a href="#slr-quantitative-outcome-and-one-quantitative-predictor" id="toc-slr-quantitative-outcome-and-one-quantitative-predictor" class="nav-link" data-scroll-target="#slr-quantitative-outcome-and-one-quantitative-predictor">1. SLR: Quantitative outcome and one quantitative predictor</a></li>
+  <li><a href="#mlr-quantitative-outcome-with-quantitative-and-categorical-predictors" id="toc-mlr-quantitative-outcome-with-quantitative-and-categorical-predictors" class="nav-link" data-scroll-target="#mlr-quantitative-outcome-with-quantitative-and-categorical-predictors">2. MLR: Quantitative outcome with quantitative and categorical predictors:</a></li>
+  <li><a href="#today-a-binary-outcome" id="toc-today-a-binary-outcome" class="nav-link" data-scroll-target="#today-a-binary-outcome">3. Today: a <strong>binary</strong> outcome</a>
+  <ul class="collapse">
+  <li><a href="#example-is-the-e-mail-spam-or-not" id="toc-example-is-the-e-mail-spam-or-not" class="nav-link" data-scroll-target="#example-is-the-e-mail-spam-or-not">Example: Is the e-mail spam or not?</a></li>
+  <li><a href="#example-is-it-cancer-or-not" id="toc-example-is-it-cancer-or-not" class="nav-link" data-scroll-target="#example-is-it-cancer-or-not">Example: Is it cancer or not?</a></li>
+  <li><a href="#example-will-they-default" id="toc-example-will-they-default" class="nav-link" data-scroll-target="#example-will-they-default">Example: Will they default?</a></li>
+  <li><a href="#modeling-probabilities-instead-of-responses" id="toc-modeling-probabilities-instead-of-responses" class="nav-link" data-scroll-target="#modeling-probabilities-instead-of-responses">Modeling probabilities instead of responses</a></li>
+  </ul></li>
+  </ul></li>
   <li><a href="#part-1-the-data" id="toc-part-1-the-data" class="nav-link" data-scroll-target="#part-1-the-data">Part 1: The data</a></li>
   <li><a href="#part-2-probability-odds-and-odds-ratios" id="toc-part-2-probability-odds-and-odds-ratios" class="nav-link" data-scroll-target="#part-2-probability-odds-and-odds-ratios">Part 2: Probability, odds, and odds ratios</a>
   <ul class="collapse">
@@ -209,18 +220,138 @@ document.addEventListener("click", function (e) {
 </div>
 <section id="part-0-what-weve-done-so-far" class="level1">
 <h1>Part 0: What we’ve done so far</h1>
-<ol type="1">
-<li>SLR: Quantitative outcome and one quantitative predictor</li>
-</ol>
-<p>[example graph]</p>
-<ol start="2" type="1">
-<li>MLR: Quantitative outcome with quantitative and categorical predictors:</li>
-</ol>
-<p>[example of parallel lines vs different slopes model]</p>
-<ol start="3" type="1">
-<li>Today: a <strong>binary</strong> outcome</li>
-</ol>
-<p>[add math, example, graph]</p>
+<section id="slr-quantitative-outcome-and-one-quantitative-predictor" class="level2">
+<h2 class="anchored" data-anchor-id="slr-quantitative-outcome-and-one-quantitative-predictor">1. SLR: Quantitative outcome and one quantitative predictor</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19T-binary-logistic_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="mlr-quantitative-outcome-with-quantitative-and-categorical-predictors" class="level2">
+<h2 class="anchored" data-anchor-id="mlr-quantitative-outcome-with-quantitative-and-categorical-predictors">2. MLR: Quantitative outcome with quantitative and categorical predictors:</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19T-binary-logistic_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="today-a-binary-outcome" class="level2">
+<h2 class="anchored" data-anchor-id="today-a-binary-outcome">3. Today: a <strong>binary</strong> outcome</h2>
+<p><span class="math display">\[
+y =
+\begin{cases}
+1 &amp; \text{eg. Yes, Win, True, Heads, Success}\\
+0 &amp; \text{eg. No, Lose, False, Tails, Failure}
+\end{cases}
+\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19T-binary-logistic_files/figure-html/binary-outcome-scatter-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If we can model the relationship between predictors (<span class="math inline">\(x\)</span>) and a binary outcome (<span class="math inline">\(y\)</span>), we can use the model to do a special kind of prediction called <em>classification</em>.</p>
+<section id="example-is-the-e-mail-spam-or-not" class="level3">
+<h3 class="anchored" data-anchor-id="example-is-the-e-mail-spam-or-not">Example: Is the e-mail spam or not?</h3>
+<p><span class="math display">\[
+\mathbf{x}: \text{word and character counts in an e-mail.}
+\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/spam.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+<p><span class="math display">\[
+y
+=
+\begin{cases}
+1 &amp; \text{it's spam}\\
+0 &amp; \text{it's legit}
+\end{cases}
+\]</span></p>
+</section>
+<section id="example-is-it-cancer-or-not" class="level3">
+<h3 class="anchored" data-anchor-id="example-is-it-cancer-or-not">Example: Is it cancer or not?</h3>
+<p><span class="math display">\[
+\mathbf{x}: \text{features in a medical image.}
+\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/head-neck.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p><span class="math display">\[
+y
+=
+\begin{cases}
+1 &amp; \text{it's cancer}\\
+0 &amp; \text{it's healthy}
+\end{cases}
+\]</span></p>
+</section>
+<section id="example-will-they-default" class="level3">
+<h3 class="anchored" data-anchor-id="example-will-they-default">Example: Will they default?</h3>
+<p><span class="math display">\[
+\mathbf{x}: \text{financial and demographic info about a loan applicant.}
+\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/fico.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<p><span class="math display">\[
+y
+=
+\begin{cases}
+1 &amp; \text{applicant is at risk of defaulting on loan}\\
+0 &amp; \text{applicant is safe}
+\end{cases}
+\]</span></p>
+</section>
+<section id="modeling-probabilities-instead-of-responses" class="level3">
+<h3 class="anchored" data-anchor-id="modeling-probabilities-instead-of-responses">Modeling probabilities instead of responses</h3>
+<p>This data is hard to model! Instead of modeling <span class="math inline">\(y\)</span> directly, we model the <strong>probability</strong> that <span class="math inline">\(y=1\)</span>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19T-binary-logistic_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So, our prediction questions turn into:</p>
+<ul>
+<li>“Given new email, what’s the probability that it’s spam?’’</li>
+<li>“Given new image, what’s the probability that it’s cancer?’’</li>
+<li>“Given new loan application, what’s the probability that they default?’’</li>
+</ul>
+<p>Why don’t we model y directly?</p>
+<ul>
+<li><p><strong>Recall regression with a numerical outcome</strong>:</p>
+<ul>
+<li>Our models do not output <em>guarantees</em> for <span class="math inline">\(y\)</span>, they output predictions that describe behavior <em>on average</em></li>
+</ul></li>
+<li><p><strong>Similar when modeling a binary outcome</strong>:</p>
+<ul>
+<li>Our models cannot directly guarantee that <span class="math inline">\(y\)</span> will be zero or one. The correct analog to “on average” for a 0/1 outcome is “what’s the probability?”</li>
+</ul></li>
+</ul>
+<p>Today, we’ll work through an example with the goal of predicting whether an article is fake news or not.</p>
+</section>
+</section>
 </section>
 <section id="part-1-the-data" class="level1">
 <h1>Part 1: The data</h1>

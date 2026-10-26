@@ -105,6 +105,27 @@
     "text": "ImportantToday’s plan\n\n\n\nI’ve lost my voice! 🫠 Instead of a lecture, you’ll work through this tutorial with your group at your own pace. It covers the same material as the Day 19 slides and the Day 19 activity.\n\nCode chunks: you can use these as usual\nCheck-in questions: click an answer to see whether you’re right (and why). Try to answer before you click!\nNumbered questions (Q1, Q2, …): remember write your answers in your notes.\n\nI will wander around and be here to answer any questions you have!"
   },
   {
+    "objectID": "activities/19-binary-logistic-tutorial.html#slr-quantitative-outcome-and-one-quantitative-predictor",
+    "href": "activities/19-binary-logistic-tutorial.html#slr-quantitative-outcome-and-one-quantitative-predictor",
+    "title": "19: Odds, Odds Ratios, and Logistic Regression",
+    "section": "1. SLR: Quantitative outcome and one quantitative predictor",
+    "text": "1. SLR: Quantitative outcome and one quantitative predictor"
+  },
+  {
+    "objectID": "activities/19-binary-logistic-tutorial.html#mlr-quantitative-outcome-with-quantitative-and-categorical-predictors",
+    "href": "activities/19-binary-logistic-tutorial.html#mlr-quantitative-outcome-with-quantitative-and-categorical-predictors",
+    "title": "19: Odds, Odds Ratios, and Logistic Regression",
+    "section": "2. MLR: Quantitative outcome with quantitative and categorical predictors:",
+    "text": "2. MLR: Quantitative outcome with quantitative and categorical predictors:"
+  },
+  {
+    "objectID": "activities/19-binary-logistic-tutorial.html#today-a-binary-outcome",
+    "href": "activities/19-binary-logistic-tutorial.html#today-a-binary-outcome",
+    "title": "19: Odds, Odds Ratios, and Logistic Regression",
+    "section": "3. Today: a binary outcome",
+    "text": "3. Today: a binary outcome\n\\[\ny =\n\\begin{cases}\n1 & \\text{eg. Yes, Win, True, Heads, Success}\\\\\n0 & \\text{eg. No, Lose, False, Tails, Failure}\n\\end{cases}\n\\]\n\n\n\n\n\n\n\n\n\nIf we can model the relationship between predictors (\\(x\\)) and a binary outcome (\\(y\\)), we can use the model to do a special kind of prediction called classification.\n\nExample: Is the e-mail spam or not?\n\\[\n\\mathbf{x}: \\text{word and character counts in an e-mail.}\n\\]\n\n\n\n\n\n\\[\ny\n=\n\\begin{cases}\n1 & \\text{it's spam}\\\\\n0 & \\text{it's legit}\n\\end{cases}\n\\]\n\n\nExample: Is it cancer or not?\n\\[\n\\mathbf{x}: \\text{features in a medical image.}\n\\]\n\n\n\n\n\n\\[\ny\n=\n\\begin{cases}\n1 & \\text{it's cancer}\\\\\n0 & \\text{it's healthy}\n\\end{cases}\n\\]\n\n\nExample: Will they default?\n\\[\n\\mathbf{x}: \\text{financial and demographic info about a loan applicant.}\n\\]\n\n\n\n\n\n\\[\ny\n=\n\\begin{cases}\n1 & \\text{applicant is at risk of defaulting on loan}\\\\\n0 & \\text{applicant is safe}\n\\end{cases}\n\\]\n\n\nModeling probabilities instead of responses\nThis data is hard to model! Instead of modeling \\(y\\) directly, we model the probability that \\(y=1\\):\n\n\n\n\n\n\n\n\n\nSo, our prediction questions turn into:\n\n“Given new email, what’s the probability that it’s spam?’’\n“Given new image, what’s the probability that it’s cancer?’’\n“Given new loan application, what’s the probability that they default?’’\n\nWhy don’t we model y directly?\n\nRecall regression with a numerical outcome:\n\nOur models do not output guarantees for \\(y\\), they output predictions that describe behavior on average\n\nSimilar when modeling a binary outcome:\n\nOur models cannot directly guarantee that \\(y\\) will be zero or one. The correct analog to “on average” for a 0/1 outcome is “what’s the probability?”\n\n\nToday, we’ll work through an example with the goal of predicting whether an article is fake news or not."
+  },
+  {
     "objectID": "activities/19-binary-logistic-tutorial.html#probability-vs.-odds",
     "href": "activities/19-binary-logistic-tutorial.html#probability-vs.-odds",
     "title": "19: Odds, Odds Ratios, and Logistic Regression",
@@ -159,6 +180,27 @@
     "title": "19: Odds, Odds Ratios, and Logistic Regression",
     "section": "",
     "text": "ImportantToday’s plan\n\n\n\nI’ve lost my voice! 🫠 Instead of a lecture, you’ll work through this tutorial with your group at your own pace. It covers the same material as the Day 19 slides and the Day 19 activity.\n\nCode chunks: you can use these as usual\nCheck-in questions: click an answer to see whether you’re right (and why). Try to answer before you click!\nNumbered questions (Q1, Q2, …): remember write your answers in your notes.\n\nI will wander around and be here to answer any questions you have!"
+  },
+  {
+    "objectID": "activities/19T-binary-logistic.html#slr-quantitative-outcome-and-one-quantitative-predictor",
+    "href": "activities/19T-binary-logistic.html#slr-quantitative-outcome-and-one-quantitative-predictor",
+    "title": "19: Odds, Odds Ratios, and Logistic Regression",
+    "section": "1. SLR: Quantitative outcome and one quantitative predictor",
+    "text": "1. SLR: Quantitative outcome and one quantitative predictor"
+  },
+  {
+    "objectID": "activities/19T-binary-logistic.html#mlr-quantitative-outcome-with-quantitative-and-categorical-predictors",
+    "href": "activities/19T-binary-logistic.html#mlr-quantitative-outcome-with-quantitative-and-categorical-predictors",
+    "title": "19: Odds, Odds Ratios, and Logistic Regression",
+    "section": "2. MLR: Quantitative outcome with quantitative and categorical predictors:",
+    "text": "2. MLR: Quantitative outcome with quantitative and categorical predictors:"
+  },
+  {
+    "objectID": "activities/19T-binary-logistic.html#today-a-binary-outcome",
+    "href": "activities/19T-binary-logistic.html#today-a-binary-outcome",
+    "title": "19: Odds, Odds Ratios, and Logistic Regression",
+    "section": "3. Today: a binary outcome",
+    "text": "3. Today: a binary outcome\n\\[\ny =\n\\begin{cases}\n1 & \\text{eg. Yes, Win, True, Heads, Success}\\\\\n0 & \\text{eg. No, Lose, False, Tails, Failure}\n\\end{cases}\n\\]\n\n\n\n\n\n\n\n\n\nIf we can model the relationship between predictors (\\(x\\)) and a binary outcome (\\(y\\)), we can use the model to do a special kind of prediction called classification.\n\nExample: Is the e-mail spam or not?\n\\[\n\\mathbf{x}: \\text{word and character counts in an e-mail.}\n\\]\n\n\n\n\n\n\\[\ny\n=\n\\begin{cases}\n1 & \\text{it's spam}\\\\\n0 & \\text{it's legit}\n\\end{cases}\n\\]\n\n\nExample: Is it cancer or not?\n\\[\n\\mathbf{x}: \\text{features in a medical image.}\n\\]\n\n\n\n\n\n\\[\ny\n=\n\\begin{cases}\n1 & \\text{it's cancer}\\\\\n0 & \\text{it's healthy}\n\\end{cases}\n\\]\n\n\nExample: Will they default?\n\\[\n\\mathbf{x}: \\text{financial and demographic info about a loan applicant.}\n\\]\n\n\n\n\n\n\\[\ny\n=\n\\begin{cases}\n1 & \\text{applicant is at risk of defaulting on loan}\\\\\n0 & \\text{applicant is safe}\n\\end{cases}\n\\]\n\n\nModeling probabilities instead of responses\nThis data is hard to model! Instead of modeling \\(y\\) directly, we model the probability that \\(y=1\\):\n\n\n\n\n\n\n\n\n\nSo, our prediction questions turn into:\n\n“Given new email, what’s the probability that it’s spam?’’\n“Given new image, what’s the probability that it’s cancer?’’\n“Given new loan application, what’s the probability that they default?’’\n\nWhy don’t we model y directly?\n\nRecall regression with a numerical outcome:\n\nOur models do not output guarantees for \\(y\\), they output predictions that describe behavior on average\n\nSimilar when modeling a binary outcome:\n\nOur models cannot directly guarantee that \\(y\\) will be zero or one. The correct analog to “on average” for a 0/1 outcome is “what’s the probability?”\n\n\nToday, we’ll work through an example with the goal of predicting whether an article is fake news or not."
   },
   {
     "objectID": "activities/19T-binary-logistic.html#probability-vs.-odds",
