@@ -149,7 +149,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#part-1-the-data" id="toc-part-1-the-data" class="nav-link active" data-scroll-target="#part-1-the-data">Part 1: The data</a></li>
+  <li><a href="#part-0-what-weve-done-so-far" id="toc-part-0-what-weve-done-so-far" class="nav-link active" data-scroll-target="#part-0-what-weve-done-so-far">Part 0: What we’ve done so far</a></li>
+  <li><a href="#part-1-the-data" id="toc-part-1-the-data" class="nav-link" data-scroll-target="#part-1-the-data">Part 1: The data</a></li>
   <li><a href="#part-2-probability-odds-and-odds-ratios" id="toc-part-2-probability-odds-and-odds-ratios" class="nav-link" data-scroll-target="#part-2-probability-odds-and-odds-ratios">Part 2: Probability, odds, and odds ratios</a>
   <ul class="collapse">
   <li><a href="#probability-vs.-odds" id="toc-probability-vs.-odds" class="nav-link" data-scroll-target="#probability-vs.-odds">Probability vs.&nbsp;odds</a></li>
@@ -238,6 +239,21 @@ document.addEventListener("click", function (e) {
 <p>I will wander around and be here to answer any questions you have!</p>
 </div>
 </div>
+<section id="part-0-what-weve-done-so-far" class="level1">
+<h1>Part 0: What we’ve done so far</h1>
+<ol type="1">
+<li>SLR: Quantitative outcome and one quantitative predictor</li>
+</ol>
+<p>[example graph]</p>
+<ol start="2" type="1">
+<li>MLR: Quantitative outcome with quantitative and categorical predictors:</li>
+</ol>
+<p>[example of parallel lines vs different slopes model]</p>
+<ol start="3" type="1">
+<li>Today: a <strong>binary</strong> outcome</li>
+</ol>
+<p>[add math, example, graph]</p>
+</section>
 <section id="part-1-the-data" class="level1">
 <h1>Part 1: The data</h1>
 <p>This data set has information on 150 news articles, some that are real and some that are fake. Our goal is to build a statistical model to explain <code>type</code> based on features of the article.</p>
@@ -726,7 +742,7 @@ summary(___)</code></pre>
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1107,344 +1123,358 @@ summary(___)</code></pre>
 <span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>I will wander around and be here to answer any questions you have! </span>
 <span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 1: The data</span></span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 0: What we've done so far</span></span>
 <span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>This data set has information on 150 news articles, some that are real and some that are fake. Our goal is to build a statistical model to explain <span class="in">`type`</span> based on features of the article.</span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>SLR: Quantitative outcome and one quantitative predictor</span>
 <span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`type`</span>: "real" or "fake" / <span class="in">`type_num`</span>: 0 (real) or 1 (fake)</span>
-<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`title`</span> and <span class="in">`url`</span> of article</span>
-<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`title_words`</span>: how many words in the title</span>
-<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`title_has_excl`</span>: whether title has an exclamation point</span>
-<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`title_caps_percent`</span>: percent of title in capital letters</span>
-<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`negative`</span>: percent of words that have negative sentiment</span>
-<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`positive`</span>: percent of words that have positive sentiment</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">example graph</span><span class="co">]</span></span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>MLR: Quantitative outcome with quantitative and categorical predictors:</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">example of parallel lines vs different slopes model</span><span class="co">]</span></span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Today: a **binary** outcome</span>
 <span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>Run the code chunk below to load the data. (Every chunk after this one needs <span class="in">`news`</span>, so start here!)</span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">add math, example, graph</span><span class="co">]</span></span>
 <span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a><span class="in">#| autorun: true</span></span>
-<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggformula)</span></span>
-<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a><span class="in">news &lt;- read.csv("https://aluby.github.io/stat230/data/fake_news_bayesrules.csv")</span></span>
-<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a><span class="in">head(news[, c("type", "type_num", "title_has_excl", "title_caps_percent", "title_words")])</span></span>
-<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
-<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 1&lt;/div&gt;</span></span>
-<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;Before we model anything: what does &lt;code&gt;type_num = 1&lt;/code&gt; mean?&lt;/p&gt;</span></span>
-<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="Look at the first few rows: the articles with &lt;code&gt;type = &amp;quot;fake&amp;quot;&lt;/code&gt; have &lt;code&gt;type_num = 1&lt;/code&gt;."&gt;A. The article is real&lt;/button&gt;</span></span>
-<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="A &amp;quot;success&amp;quot; (Y = 1) is a fake article. Always check how your response is coded before modeling! Everything today is about the probability (and odds) of an article being &lt;em&gt;fake&lt;/em&gt;."&gt;B. The article is fake&lt;/button&gt;</span></span>
-<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="That's &lt;code&gt;title_has_excl&lt;/code&gt;. &lt;code&gt;type_num&lt;/code&gt; is the response variable."&gt;C. The title has an exclamation point&lt;/button&gt;</span></span>
-<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
-<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
-<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a>**Q1.** Before we do anything else, how do you think <span class="in">`title_has_excl`</span> and <span class="in">`title_caps_percent`</span> are related to <span class="in">`type_num`</span>? (Write your answer down in your notes)</span>
-<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 1: The data</span></span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a>This data set has information on 150 news articles, some that are real and some that are fake. Our goal is to build a statistical model to explain <span class="in">`type`</span> based on features of the article.</span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`type`</span>: "real" or "fake" / <span class="in">`type_num`</span>: 0 (real) or 1 (fake)</span>
+<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`title`</span> and <span class="in">`url`</span> of article</span>
+<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`title_words`</span>: how many words in the title</span>
+<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`title_has_excl`</span>: whether title has an exclamation point</span>
+<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`title_caps_percent`</span>: percent of title in capital letters</span>
+<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`negative`</span>: percent of words that have negative sentiment</span>
+<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`positive`</span>: percent of words that have positive sentiment</span>
+<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a>Run the code chunk below to load the data. (Every chunk after this one needs <span class="in">`news`</span>, so start here!)</span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a><span class="in">#| autorun: true</span></span>
+<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggformula)</span></span>
+<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a><span class="in">news &lt;- read.csv("https://aluby.github.io/stat230/data/fake_news_bayesrules.csv")</span></span>
+<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a><span class="in">head(news[, c("type", "type_num", "title_has_excl", "title_caps_percent", "title_words")])</span></span>
+<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 2: Probability, odds, and odds ratios</span></span>
-<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Probability vs. odds</span></span>
-<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a>If $\pi$ is the probability of an event, then the **odds** of the event are</span>
-<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a>$$\text{odds} = \frac{\pi}{1 - \pi} = \frac{P(\text{event})}{P(\text{not event})}$$</span>
-<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-100"><a href="#cb13-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Probability $\pi$ <span class="pp">|</span> Odds $\pi/(1-\pi)$ <span class="pp">|</span> How we'd say it <span class="pp">|</span></span>
-<span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span></span>
-<span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.5 <span class="pp">|</span> 1 <span class="pp">|</span> "even odds" <span class="pp">|</span></span>
-<span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.75 <span class="pp">|</span> 3 <span class="pp">|</span> "3 to 1" <span class="pp">|</span></span>
-<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.2 <span class="pp">|</span> 0.25 <span class="pp">|</span> "1 to 4" <span class="pp">|</span></span>
+<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 1&lt;/div&gt;</span></span>
+<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;Before we model anything: what does &lt;code&gt;type_num = 1&lt;/code&gt; mean?&lt;/p&gt;</span></span>
+<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="Look at the first few rows: the articles with &lt;code&gt;type = &amp;quot;fake&amp;quot;&lt;/code&gt; have &lt;code&gt;type_num = 1&lt;/code&gt;."&gt;A. The article is real&lt;/button&gt;</span></span>
+<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="A &amp;quot;success&amp;quot; (Y = 1) is a fake article. Always check how your response is coded before modeling! Everything today is about the probability (and odds) of an article being &lt;em&gt;fake&lt;/em&gt;."&gt;B. The article is fake&lt;/button&gt;</span></span>
+<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="That's &lt;code&gt;title_has_excl&lt;/code&gt;. &lt;code&gt;type_num&lt;/code&gt; is the response variable."&gt;C. The title has an exclamation point&lt;/button&gt;</span></span>
+<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb13-100"><a href="#cb13-100" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a>**Q1.** Before we do anything else, how do you think <span class="in">`title_has_excl`</span> and <span class="in">`title_caps_percent`</span> are related to <span class="in">`type_num`</span>? (Write your answer down in your notes)</span>
+<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-105"><a href="#cb13-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a>Probabilities live between 0 and 1. Odds live between 0 and $\infty$.</span>
+<span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 2: Probability, odds, and odds ratios</span></span>
 <span id="cb13-107"><a href="#cb13-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-108"><a href="#cb13-108" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fake news and exclamation points</span></span>
+<span id="cb13-108"><a href="#cb13-108" aria-hidden="true" tabindex="-1"></a><span class="fu">## Probability vs. odds</span></span>
 <span id="cb13-109"><a href="#cb13-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-110"><a href="#cb13-110" aria-hidden="true" tabindex="-1"></a>Here's a table of article type by whether the title has an exclamation point:</span>
+<span id="cb13-110"><a href="#cb13-110" aria-hidden="true" tabindex="-1"></a>If $\pi$ is the probability of an event, then the **odds** of the event are</span>
 <span id="cb13-111"><a href="#cb13-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-114"><a href="#cb13-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-115"><a href="#cb13-115" aria-hidden="true" tabindex="-1"></a><span class="in">table(news$title_has_excl, news$type) |&gt;</span></span>
-<span id="cb13-116"><a href="#cb13-116" aria-hidden="true" tabindex="-1"></a><span class="in">  addmargins()</span></span>
-<span id="cb13-117"><a href="#cb13-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-118"><a href="#cb13-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-119"><a href="#cb13-119" aria-hidden="true" tabindex="-1"></a>For titles **with** an exclamation point (the <span class="in">`TRUE`</span> row):</span>
-<span id="cb13-120"><a href="#cb13-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-121"><a href="#cb13-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$P(\text{fake} \mid \text{exclamation}) = 16/18 \approx 0.889$</span>
-<span id="cb13-122"><a href="#cb13-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\text{Odds}(\text{fake} \mid \text{exclamation}) = \dfrac{16/18}{2/18} = \dfrac{16}{2} = 8$</span>
+<span id="cb13-112"><a href="#cb13-112" aria-hidden="true" tabindex="-1"></a>$$\text{odds} = \frac{\pi}{1 - \pi} = \frac{P(\text{event})}{P(\text{not event})}$$</span>
+<span id="cb13-113"><a href="#cb13-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-114"><a href="#cb13-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Probability $\pi$ <span class="pp">|</span> Odds $\pi/(1-\pi)$ <span class="pp">|</span> How we'd say it <span class="pp">|</span></span>
+<span id="cb13-115"><a href="#cb13-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span></span>
+<span id="cb13-116"><a href="#cb13-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.5 <span class="pp">|</span> 1 <span class="pp">|</span> "even odds" <span class="pp">|</span></span>
+<span id="cb13-117"><a href="#cb13-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.75 <span class="pp">|</span> 3 <span class="pp">|</span> "3 to 1" <span class="pp">|</span></span>
+<span id="cb13-118"><a href="#cb13-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 0.2 <span class="pp">|</span> 0.25 <span class="pp">|</span> "1 to 4" <span class="pp">|</span></span>
+<span id="cb13-119"><a href="#cb13-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-120"><a href="#cb13-120" aria-hidden="true" tabindex="-1"></a>Probabilities live between 0 and 1. Odds live between 0 and $\infty$.</span>
+<span id="cb13-121"><a href="#cb13-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-122"><a href="#cb13-122" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fake news and exclamation points</span></span>
 <span id="cb13-123"><a href="#cb13-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-124"><a href="#cb13-124" aria-hidden="true" tabindex="-1"></a>Notice the shortcut: the odds are just (number fake) / (number real). You can use the chunk below as a calculator.</span>
+<span id="cb13-124"><a href="#cb13-124" aria-hidden="true" tabindex="-1"></a>Here's a table of article type by whether the title has an exclamation point:</span>
 <span id="cb13-125"><a href="#cb13-125" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-128"><a href="#cb13-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-129"><a href="#cb13-129" aria-hidden="true" tabindex="-1"></a><span class="in">16 / 18   # probability</span></span>
-<span id="cb13-130"><a href="#cb13-130" aria-hidden="true" tabindex="-1"></a><span class="in">16 / 2    # odds</span></span>
+<span id="cb13-129"><a href="#cb13-129" aria-hidden="true" tabindex="-1"></a><span class="in">table(news$title_has_excl, news$type) |&gt;</span></span>
+<span id="cb13-130"><a href="#cb13-130" aria-hidden="true" tabindex="-1"></a><span class="in">  addmargins()</span></span>
 <span id="cb13-131"><a href="#cb13-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-132"><a href="#cb13-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-133"><a href="#cb13-133" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb13-134"><a href="#cb13-134" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
-<span id="cb13-135"><a href="#cb13-135" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 2&lt;/div&gt;</span></span>
-<span id="cb13-136"><a href="#cb13-136" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;What are the odds that an article is fake, for titles &lt;strong&gt;without&lt;/strong&gt; an exclamation point?&lt;/p&gt;</span></span>
-<span id="cb13-137"><a href="#cb13-137" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="44/132 = 0.333 is the &lt;em&gt;probability&lt;/em&gt; of fake. The odds compare fake to real: 44/88."&gt;A. 0.333&lt;/button&gt;</span></span>
-<span id="cb13-138"><a href="#cb13-138" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="Odds = (number fake) / (number real) = 44/88 = 0.5. Equivalently, (1/3)/(2/3) = 0.5. A fake article without an exclamation point is half as likely as a real one."&gt;B. 0.5&lt;/button&gt;</span></span>
-<span id="cb13-139"><a href="#cb13-139" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="88/44 = 2 are the odds of being &lt;em&gt;real&lt;/em&gt;. Make sure &amp;quot;fake&amp;quot; is on top."&gt;C. 2&lt;/button&gt;</span></span>
-<span id="cb13-140"><a href="#cb13-140" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="44 is a count, not odds. Odds compare the number fake to the number real."&gt;D. 44&lt;/button&gt;</span></span>
-<span id="cb13-141"><a href="#cb13-141" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
-<span id="cb13-142"><a href="#cb13-142" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
-<span id="cb13-143"><a href="#cb13-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-144"><a href="#cb13-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-145"><a href="#cb13-145" aria-hidden="true" tabindex="-1"></a><span class="fu">## Odds ratios</span></span>
+<span id="cb13-133"><a href="#cb13-133" aria-hidden="true" tabindex="-1"></a>For titles **with** an exclamation point (the <span class="in">`TRUE`</span> row):</span>
+<span id="cb13-134"><a href="#cb13-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-135"><a href="#cb13-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$P(\text{fake} \mid \text{exclamation}) = 16/18 \approx 0.889$</span>
+<span id="cb13-136"><a href="#cb13-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\text{Odds}(\text{fake} \mid \text{exclamation}) = \dfrac{16/18}{2/18} = \dfrac{16}{2} = 8$</span>
+<span id="cb13-137"><a href="#cb13-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-138"><a href="#cb13-138" aria-hidden="true" tabindex="-1"></a>Notice the shortcut: the odds are just (number fake) / (number real). You can use the chunk below as a calculator.</span>
+<span id="cb13-139"><a href="#cb13-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-142"><a href="#cb13-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-143"><a href="#cb13-143" aria-hidden="true" tabindex="-1"></a><span class="in">16 / 18   # probability</span></span>
+<span id="cb13-144"><a href="#cb13-144" aria-hidden="true" tabindex="-1"></a><span class="in">16 / 2    # odds</span></span>
+<span id="cb13-145"><a href="#cb13-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-146"><a href="#cb13-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-147"><a href="#cb13-147" aria-hidden="true" tabindex="-1"></a>To compare the two groups, we divide their odds. This is the **odds ratio (OR)**:</span>
-<span id="cb13-148"><a href="#cb13-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-149"><a href="#cb13-149" aria-hidden="true" tabindex="-1"></a>$$OR = \frac{\text{Odds}(\text{fake} \mid \text{exclamation})}{\text{Odds}(\text{fake} \mid \text{no exclamation})} = \frac{8}{0.5} = 16$$</span>
-<span id="cb13-150"><a href="#cb13-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-151"><a href="#cb13-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb13-152"><a href="#cb13-152" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
-<span id="cb13-153"><a href="#cb13-153" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 3&lt;/div&gt;</span></span>
-<span id="cb13-154"><a href="#cb13-154" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;Which is the correct interpretation of OR = 16?&lt;/p&gt;</span></span>
-<span id="cb13-155"><a href="#cb13-155" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="This is the most common mistake! &amp;quot;16 times as likely&amp;quot; is a statement about &lt;em&gt;probabilities&lt;/em&gt;. The probability ratio is 0.889/0.333 = 2.67, which is very different from 16."&gt;A. Articles with an exclamation point in the title are 16 times as likely to be fake.&lt;/button&gt;</span></span>
-<span id="cb13-156"><a href="#cb13-156" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="An odds ratio compares &lt;em&gt;odds&lt;/em&gt;, so the interpretation has to be about odds."&gt;B. The odds of being fake are 16 times as high for articles with an exclamation point in the title as for articles without one.&lt;/button&gt;</span></span>
-<span id="cb13-157"><a href="#cb13-157" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="16 is a ratio (a multiplier), not a difference."&gt;C. The probability of being fake is 16 percentage points higher for articles with an exclamation point in the title.&lt;/button&gt;</span></span>
-<span id="cb13-158"><a href="#cb13-158" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
-<span id="cb13-159"><a href="#cb13-159" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
-<span id="cb13-160"><a href="#cb13-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-161"><a href="#cb13-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-162"><a href="#cb13-162" aria-hidden="true" tabindex="-1"></a>**Q2.** What would an odds ratio of exactly 1 mean in this context? What about an odds ratio less than 1?</span>
-<span id="cb13-163"><a href="#cb13-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-164"><a href="#cb13-164" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 3: Why not linear regression?</span></span>
-<span id="cb13-165"><a href="#cb13-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-166"><a href="#cb13-166" aria-hidden="true" tabindex="-1"></a>Now let's use a quantitative predictor: <span class="in">`title_caps_percent`</span>. Here's what happens if we fit our usual linear regression model to a 0/1 response. We'll treat $\hat y$ as the probability of a 1. </span>
-<span id="cb13-167"><a href="#cb13-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-170"><a href="#cb13-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-171"><a href="#cb13-171" aria-hidden="true" tabindex="-1"></a><span class="in">gf_jitter(type_num ~ title_caps_percent, data = news, width = 0.2, height = 0.05) |&gt;</span></span>
-<span id="cb13-172"><a href="#cb13-172" aria-hidden="true" tabindex="-1"></a><span class="in">  gf_lm(color = "#f15a31") |&gt;</span></span>
-<span id="cb13-173"><a href="#cb13-173" aria-hidden="true" tabindex="-1"></a><span class="in">  gf_labs(y = "Fake = 1")</span></span>
-<span id="cb13-174"><a href="#cb13-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-175"><a href="#cb13-175" aria-hidden="true" tabindex="-1"></a><span class="in">lm_fit &lt;- lm(type_num ~ title_caps_percent, data = news)</span></span>
-<span id="cb13-176"><a href="#cb13-176" aria-hidden="true" tabindex="-1"></a><span class="in">predict(lm_fit, newdata = data.frame(title_caps_percent = c(0, 43.75)))</span></span>
-<span id="cb13-177"><a href="#cb13-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-178"><a href="#cb13-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-179"><a href="#cb13-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb13-180"><a href="#cb13-180" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
-<span id="cb13-181"><a href="#cb13-181" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 4&lt;/div&gt;</span></span>
-<span id="cb13-182"><a href="#cb13-182" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;The linear model predicts 1.17 for a title that is 43.75% capital letters (the largest value in the data). What's the problem?&lt;/p&gt;</span></span>
-<span id="cb13-183"><a href="#cb13-183" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="A probability can't be bigger than 1 (or less than 0), but a straight line keeps going forever. That's why we need a model with a different shape."&gt;A. The response is a probability, and the line predicts values above 1.&lt;/button&gt;</span></span>
-<span id="cb13-184"><a href="#cb13-184" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="A large slope isn't the problem. The issue is the &lt;em&gt;shape&lt;/em&gt; of the model: a line can go outside the range [0, 1]."&gt;B. The slope is too large.&lt;/button&gt;</span></span>
-<span id="cb13-185"><a href="#cb13-185" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="More data won't fix it: any line with a nonzero slope eventually goes above 1 or below 0."&gt;C. We need more data.&lt;/button&gt;</span></span>
-<span id="cb13-186"><a href="#cb13-186" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
-<span id="cb13-187"><a href="#cb13-187" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
-<span id="cb13-188"><a href="#cb13-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-189"><a href="#cb13-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-190"><a href="#cb13-190" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 4: The logistic regression model</span></span>
-<span id="cb13-191"><a href="#cb13-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-192"><a href="#cb13-192" aria-hidden="true" tabindex="-1"></a>The trick is to model a version of the probability that isn't stuck between 0 and 1: the **log-odds** (also called the **logit**).</span>
-<span id="cb13-193"><a href="#cb13-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-194"><a href="#cb13-194" aria-hidden="true" tabindex="-1"></a>$$\log\left(\frac{\pi(x)}{1-\pi(x)}\right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p$$</span>
-<span id="cb13-195"><a href="#cb13-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a>where $\pi(x) = P(Y = 1 \mid x)$.</span>
-<span id="cb13-197"><a href="#cb13-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-198"><a href="#cb13-198" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Scale <span class="pp">|</span> Formula <span class="pp">|</span> Range <span class="pp">|</span></span>
-<span id="cb13-199"><a href="#cb13-199" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span></span>
-<span id="cb13-200"><a href="#cb13-200" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Probability <span class="pp">|</span> $\pi$ <span class="pp">|</span> 0 to 1 <span class="pp">|</span></span>
-<span id="cb13-201"><a href="#cb13-201" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Odds <span class="pp">|</span> $\dfrac{\pi}{1-\pi}$ <span class="pp">|</span> 0 to $\infty$ <span class="pp">|</span></span>
-<span id="cb13-202"><a href="#cb13-202" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Log-odds <span class="pp">|</span> $\log\left(\dfrac{\pi}{1-\pi}\right)$ <span class="pp">|</span> $-\infty$ to $\infty$ <span class="pp">|</span></span>
+<span id="cb13-147"><a href="#cb13-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb13-148"><a href="#cb13-148" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb13-149"><a href="#cb13-149" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 2&lt;/div&gt;</span></span>
+<span id="cb13-150"><a href="#cb13-150" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;What are the odds that an article is fake, for titles &lt;strong&gt;without&lt;/strong&gt; an exclamation point?&lt;/p&gt;</span></span>
+<span id="cb13-151"><a href="#cb13-151" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="44/132 = 0.333 is the &lt;em&gt;probability&lt;/em&gt; of fake. The odds compare fake to real: 44/88."&gt;A. 0.333&lt;/button&gt;</span></span>
+<span id="cb13-152"><a href="#cb13-152" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="Odds = (number fake) / (number real) = 44/88 = 0.5. Equivalently, (1/3)/(2/3) = 0.5. A fake article without an exclamation point is half as likely as a real one."&gt;B. 0.5&lt;/button&gt;</span></span>
+<span id="cb13-153"><a href="#cb13-153" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="88/44 = 2 are the odds of being &lt;em&gt;real&lt;/em&gt;. Make sure &amp;quot;fake&amp;quot; is on top."&gt;C. 2&lt;/button&gt;</span></span>
+<span id="cb13-154"><a href="#cb13-154" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="44 is a count, not odds. Odds compare the number fake to the number real."&gt;D. 44&lt;/button&gt;</span></span>
+<span id="cb13-155"><a href="#cb13-155" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb13-156"><a href="#cb13-156" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb13-157"><a href="#cb13-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-158"><a href="#cb13-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-159"><a href="#cb13-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Odds ratios</span></span>
+<span id="cb13-160"><a href="#cb13-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-161"><a href="#cb13-161" aria-hidden="true" tabindex="-1"></a>To compare the two groups, we divide their odds. This is the **odds ratio (OR)**:</span>
+<span id="cb13-162"><a href="#cb13-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-163"><a href="#cb13-163" aria-hidden="true" tabindex="-1"></a>$$OR = \frac{\text{Odds}(\text{fake} \mid \text{exclamation})}{\text{Odds}(\text{fake} \mid \text{no exclamation})} = \frac{8}{0.5} = 16$$</span>
+<span id="cb13-164"><a href="#cb13-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-165"><a href="#cb13-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb13-166"><a href="#cb13-166" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb13-167"><a href="#cb13-167" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 3&lt;/div&gt;</span></span>
+<span id="cb13-168"><a href="#cb13-168" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;Which is the correct interpretation of OR = 16?&lt;/p&gt;</span></span>
+<span id="cb13-169"><a href="#cb13-169" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="This is the most common mistake! &amp;quot;16 times as likely&amp;quot; is a statement about &lt;em&gt;probabilities&lt;/em&gt;. The probability ratio is 0.889/0.333 = 2.67, which is very different from 16."&gt;A. Articles with an exclamation point in the title are 16 times as likely to be fake.&lt;/button&gt;</span></span>
+<span id="cb13-170"><a href="#cb13-170" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="An odds ratio compares &lt;em&gt;odds&lt;/em&gt;, so the interpretation has to be about odds."&gt;B. The odds of being fake are 16 times as high for articles with an exclamation point in the title as for articles without one.&lt;/button&gt;</span></span>
+<span id="cb13-171"><a href="#cb13-171" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="16 is a ratio (a multiplier), not a difference."&gt;C. The probability of being fake is 16 percentage points higher for articles with an exclamation point in the title.&lt;/button&gt;</span></span>
+<span id="cb13-172"><a href="#cb13-172" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb13-173"><a href="#cb13-173" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb13-174"><a href="#cb13-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-175"><a href="#cb13-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-176"><a href="#cb13-176" aria-hidden="true" tabindex="-1"></a>**Q2.** What would an odds ratio of exactly 1 mean in this context? What about an odds ratio less than 1?</span>
+<span id="cb13-177"><a href="#cb13-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-178"><a href="#cb13-178" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 3: Why not linear regression?</span></span>
+<span id="cb13-179"><a href="#cb13-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-180"><a href="#cb13-180" aria-hidden="true" tabindex="-1"></a>Now let's use a quantitative predictor: <span class="in">`title_caps_percent`</span>. Here's what happens if we fit our usual linear regression model to a 0/1 response. We'll treat $\hat y$ as the probability of a 1. </span>
+<span id="cb13-181"><a href="#cb13-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-184"><a href="#cb13-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-185"><a href="#cb13-185" aria-hidden="true" tabindex="-1"></a><span class="in">gf_jitter(type_num ~ title_caps_percent, data = news, width = 0.2, height = 0.05) |&gt;</span></span>
+<span id="cb13-186"><a href="#cb13-186" aria-hidden="true" tabindex="-1"></a><span class="in">  gf_lm(color = "#f15a31") |&gt;</span></span>
+<span id="cb13-187"><a href="#cb13-187" aria-hidden="true" tabindex="-1"></a><span class="in">  gf_labs(y = "Fake = 1")</span></span>
+<span id="cb13-188"><a href="#cb13-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-189"><a href="#cb13-189" aria-hidden="true" tabindex="-1"></a><span class="in">lm_fit &lt;- lm(type_num ~ title_caps_percent, data = news)</span></span>
+<span id="cb13-190"><a href="#cb13-190" aria-hidden="true" tabindex="-1"></a><span class="in">predict(lm_fit, newdata = data.frame(title_caps_percent = c(0, 43.75)))</span></span>
+<span id="cb13-191"><a href="#cb13-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-192"><a href="#cb13-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-193"><a href="#cb13-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb13-194"><a href="#cb13-194" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb13-195"><a href="#cb13-195" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 4&lt;/div&gt;</span></span>
+<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;The linear model predicts 1.17 for a title that is 43.75% capital letters (the largest value in the data). What's the problem?&lt;/p&gt;</span></span>
+<span id="cb13-197"><a href="#cb13-197" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="A probability can't be bigger than 1 (or less than 0), but a straight line keeps going forever. That's why we need a model with a different shape."&gt;A. The response is a probability, and the line predicts values above 1.&lt;/button&gt;</span></span>
+<span id="cb13-198"><a href="#cb13-198" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="A large slope isn't the problem. The issue is the &lt;em&gt;shape&lt;/em&gt; of the model: a line can go outside the range [0, 1]."&gt;B. The slope is too large.&lt;/button&gt;</span></span>
+<span id="cb13-199"><a href="#cb13-199" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="More data won't fix it: any line with a nonzero slope eventually goes above 1 or below 0."&gt;C. We need more data.&lt;/button&gt;</span></span>
+<span id="cb13-200"><a href="#cb13-200" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb13-201"><a href="#cb13-201" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb13-202"><a href="#cb13-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-203"><a href="#cb13-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-204"><a href="#cb13-204" aria-hidden="true" tabindex="-1"></a>Because the log-odds can be any number, it's OK for the right-hand side to be a line.</span>
+<span id="cb13-204"><a href="#cb13-204" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 4: The logistic regression model</span></span>
 <span id="cb13-205"><a href="#cb13-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-206"><a href="#cb13-206" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb13-207"><a href="#cb13-207" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
-<span id="cb13-208"><a href="#cb13-208" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 5&lt;/div&gt;</span></span>
-<span id="cb13-209"><a href="#cb13-209" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;In logistic regression, the response is a &lt;strong&gt;linear&lt;/strong&gt; function of the predictors on which scale?&lt;/p&gt;</span></span>
-<span id="cb13-210"><a href="#cb13-210" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="If the probability were linear in x, we'd be back to the problem in Part 3."&gt;A. Probability&lt;/button&gt;</span></span>
-<span id="cb13-211"><a href="#cb13-211" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="Close! The odds are an &lt;em&gt;exponential&lt;/em&gt; function of x. We have to take one more step (the log)."&gt;B. Odds&lt;/button&gt;</span></span>
-<span id="cb13-212"><a href="#cb13-212" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="The log-odds (logit) is linear in the predictors. To talk about odds or probabilities, we have to transform back."&gt;C. Log-odds&lt;/button&gt;</span></span>
-<span id="cb13-213"><a href="#cb13-213" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
-<span id="cb13-214"><a href="#cb13-214" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
-<span id="cb13-215"><a href="#cb13-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-216"><a href="#cb13-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-217"><a href="#cb13-217" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting the model in R</span></span>
-<span id="cb13-218"><a href="#cb13-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-219"><a href="#cb13-219" aria-hidden="true" tabindex="-1"></a>We use <span class="in">`glm()`</span> with <span class="in">`family = binomial`</span>. The syntax is otherwise the same as <span class="in">`lm()`</span>.</span>
-<span id="cb13-220"><a href="#cb13-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-223"><a href="#cb13-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-224"><a href="#cb13-224" aria-hidden="true" tabindex="-1"></a><span class="in">news_glm &lt;- glm(type_num ~ title_caps_percent, data = news, family = binomial)</span></span>
-<span id="cb13-225"><a href="#cb13-225" aria-hidden="true" tabindex="-1"></a><span class="in">coef(news_glm)</span></span>
-<span id="cb13-226"><a href="#cb13-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-227"><a href="#cb13-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-228"><a href="#cb13-228" aria-hidden="true" tabindex="-1"></a>So the fitted model is</span>
-<span id="cb13-229"><a href="#cb13-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-230"><a href="#cb13-230" aria-hidden="true" tabindex="-1"></a>$$\log\left(\frac{\widehat\pi(x)}{1-\widehat\pi(x)}\right) = -0.932 + 0.098 x$$</span>
-<span id="cb13-231"><a href="#cb13-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-232"><a href="#cb13-232" aria-hidden="true" tabindex="-1"></a>where $x$ is <span class="in">`title_caps_percent`</span>. </span>
-<span id="cb13-233"><a href="#cb13-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-234"><a href="#cb13-234" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 5: Interpreting $\widehat\beta_1$</span></span>
-<span id="cb13-235"><a href="#cb13-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-236"><a href="#cb13-236" aria-hidden="true" tabindex="-1"></a>$\widehat\beta_1 = 0.098$ is the expected change in the **log-odds** of being fake for a 1-unit increase in <span class="in">`title_caps_percent`</span>. But we don't think in log-odds! Exponentiating both sides gives the odds:</span>
-<span id="cb13-237"><a href="#cb13-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-238"><a href="#cb13-238" aria-hidden="true" tabindex="-1"></a>$$\widehat{\text{odds}}(x) = e^{\widehat\beta_0 + \widehat\beta_1 x} = e^{\widehat\beta_0} \, e^{\widehat\beta_1 x}$$</span>
-<span id="cb13-239"><a href="#cb13-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-240"><a href="#cb13-240" aria-hidden="true" tabindex="-1"></a>If $x$ increases by 1, the odds get *multiplied* by</span>
+<span id="cb13-206"><a href="#cb13-206" aria-hidden="true" tabindex="-1"></a>The trick is to model a version of the probability that isn't stuck between 0 and 1: the **log-odds** (also called the **logit**).</span>
+<span id="cb13-207"><a href="#cb13-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-208"><a href="#cb13-208" aria-hidden="true" tabindex="-1"></a>$$\log\left(\frac{\pi(x)}{1-\pi(x)}\right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p$$</span>
+<span id="cb13-209"><a href="#cb13-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-210"><a href="#cb13-210" aria-hidden="true" tabindex="-1"></a>where $\pi(x) = P(Y = 1 \mid x)$.</span>
+<span id="cb13-211"><a href="#cb13-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-212"><a href="#cb13-212" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Scale <span class="pp">|</span> Formula <span class="pp">|</span> Range <span class="pp">|</span></span>
+<span id="cb13-213"><a href="#cb13-213" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span>:--<span class="pp">|</span></span>
+<span id="cb13-214"><a href="#cb13-214" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Probability <span class="pp">|</span> $\pi$ <span class="pp">|</span> 0 to 1 <span class="pp">|</span></span>
+<span id="cb13-215"><a href="#cb13-215" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Odds <span class="pp">|</span> $\dfrac{\pi}{1-\pi}$ <span class="pp">|</span> 0 to $\infty$ <span class="pp">|</span></span>
+<span id="cb13-216"><a href="#cb13-216" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Log-odds <span class="pp">|</span> $\log\left(\dfrac{\pi}{1-\pi}\right)$ <span class="pp">|</span> $-\infty$ to $\infty$ <span class="pp">|</span></span>
+<span id="cb13-217"><a href="#cb13-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-218"><a href="#cb13-218" aria-hidden="true" tabindex="-1"></a>Because the log-odds can be any number, it's OK for the right-hand side to be a line.</span>
+<span id="cb13-219"><a href="#cb13-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-220"><a href="#cb13-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb13-221"><a href="#cb13-221" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb13-222"><a href="#cb13-222" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 5&lt;/div&gt;</span></span>
+<span id="cb13-223"><a href="#cb13-223" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;In logistic regression, the response is a &lt;strong&gt;linear&lt;/strong&gt; function of the predictors on which scale?&lt;/p&gt;</span></span>
+<span id="cb13-224"><a href="#cb13-224" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="If the probability were linear in x, we'd be back to the problem in Part 3."&gt;A. Probability&lt;/button&gt;</span></span>
+<span id="cb13-225"><a href="#cb13-225" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="Close! The odds are an &lt;em&gt;exponential&lt;/em&gt; function of x. We have to take one more step (the log)."&gt;B. Odds&lt;/button&gt;</span></span>
+<span id="cb13-226"><a href="#cb13-226" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="The log-odds (logit) is linear in the predictors. To talk about odds or probabilities, we have to transform back."&gt;C. Log-odds&lt;/button&gt;</span></span>
+<span id="cb13-227"><a href="#cb13-227" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb13-228"><a href="#cb13-228" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb13-229"><a href="#cb13-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-230"><a href="#cb13-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-231"><a href="#cb13-231" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting the model in R</span></span>
+<span id="cb13-232"><a href="#cb13-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-233"><a href="#cb13-233" aria-hidden="true" tabindex="-1"></a>We use <span class="in">`glm()`</span> with <span class="in">`family = binomial`</span>. The syntax is otherwise the same as <span class="in">`lm()`</span>.</span>
+<span id="cb13-234"><a href="#cb13-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-237"><a href="#cb13-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-238"><a href="#cb13-238" aria-hidden="true" tabindex="-1"></a><span class="in">news_glm &lt;- glm(type_num ~ title_caps_percent, data = news, family = binomial)</span></span>
+<span id="cb13-239"><a href="#cb13-239" aria-hidden="true" tabindex="-1"></a><span class="in">coef(news_glm)</span></span>
+<span id="cb13-240"><a href="#cb13-240" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-241"><a href="#cb13-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-242"><a href="#cb13-242" aria-hidden="true" tabindex="-1"></a>$$\frac{\widehat{\text{odds}}(x + 1)}{\widehat{\text{odds}}(x)} = \frac{e^{\widehat\beta_0} e^{\widehat\beta_1 (x+1)}}{e^{\widehat\beta_0} e^{\widehat\beta_1 x}} = e^{\widehat\beta_1}$$</span>
+<span id="cb13-242"><a href="#cb13-242" aria-hidden="true" tabindex="-1"></a>So the fitted model is</span>
 <span id="cb13-243"><a href="#cb13-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-244"><a href="#cb13-244" aria-hidden="true" tabindex="-1"></a>So $e^{\widehat\beta_1}$ is an **odds ratio**.</span>
+<span id="cb13-244"><a href="#cb13-244" aria-hidden="true" tabindex="-1"></a>$$\log\left(\frac{\widehat\pi(x)}{1-\widehat\pi(x)}\right) = -0.932 + 0.098 x$$</span>
 <span id="cb13-245"><a href="#cb13-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-248"><a href="#cb13-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-249"><a href="#cb13-249" aria-hidden="true" tabindex="-1"></a><span class="in">exp(coef(news_glm))</span></span>
-<span id="cb13-250"><a href="#cb13-250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-246"><a href="#cb13-246" aria-hidden="true" tabindex="-1"></a>where $x$ is <span class="in">`title_caps_percent`</span>. </span>
+<span id="cb13-247"><a href="#cb13-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-248"><a href="#cb13-248" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 5: Interpreting $\widehat\beta_1$</span></span>
+<span id="cb13-249"><a href="#cb13-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-250"><a href="#cb13-250" aria-hidden="true" tabindex="-1"></a>$\widehat\beta_1 = 0.098$ is the expected change in the **log-odds** of being fake for a 1-unit increase in <span class="in">`title_caps_percent`</span>. But we don't think in log-odds! Exponentiating both sides gives the odds:</span>
 <span id="cb13-251"><a href="#cb13-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-252"><a href="#cb13-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb13-253"><a href="#cb13-253" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
-<span id="cb13-254"><a href="#cb13-254" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 6&lt;/div&gt;</span></span>
-<span id="cb13-255"><a href="#cb13-255" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;Which is the correct interpretation of the slope?&lt;/p&gt;</span></span>
-<span id="cb13-256"><a href="#cb13-256" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="0.098 is a change in the &lt;em&gt;log-odds&lt;/em&gt;, not the probability. In logistic regression, the change in probability isn't constant: it depends on x."&gt;A. For each additional percentage point of capital letters, the probability of fake news increases by 0.098.&lt;/button&gt;</span></span>
-<span id="cb13-257"><a href="#cb13-257" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="On the odds scale the change is &lt;em&gt;multiplicative&lt;/em&gt;, so we use e&lt;sup&gt;0.098&lt;/sup&gt;, not 0.098."&gt;B. For each additional percentage point of capital letters, the odds of fake news increase by 0.098.&lt;/button&gt;</span></span>
-<span id="cb13-258"><a href="#cb13-258" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="e&lt;sup&gt;0.098&lt;/sup&gt; &amp;asymp; 1.10, so the odds increase by about 10% for each additional percentage point of capital letters in the title."&gt;C. For each additional percentage point of capital letters, the odds of fake news are multiplied by about 1.10.&lt;/button&gt;</span></span>
-<span id="cb13-259"><a href="#cb13-259" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="1.10 multiplies the &lt;em&gt;odds&lt;/em&gt;, not the probability."&gt;D. For each additional percentage point of capital letters, the probability of fake news is multiplied by about 1.10.&lt;/button&gt;</span></span>
-<span id="cb13-260"><a href="#cb13-260" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
-<span id="cb13-261"><a href="#cb13-261" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
-<span id="cb13-262"><a href="#cb13-262" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-263"><a href="#cb13-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-264"><a href="#cb13-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb13-265"><a href="#cb13-265" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
-<span id="cb13-266"><a href="#cb13-266" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 7&lt;/div&gt;</span></span>
-<span id="cb13-267"><a href="#cb13-267" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;What happens to the odds of fake news if the percent of capital letters increases by &lt;strong&gt;10&lt;/strong&gt; percentage points? (You can use the chunk above as a calculator.)&lt;/p&gt;</span></span>
-<span id="cb13-268"><a href="#cb13-268" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="Odds ratios multiply; they don't add. Each 1-point increase multiplies the odds by 1.10, so 10 increases multiply them by 1.10 ten times."&gt;A. The odds are multiplied by 10 &amp;times; 1.10 = 11.0&lt;/button&gt;</span></span>
-<span id="cb13-269"><a href="#cb13-269" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="0.977 is the change in the &lt;em&gt;log-odds&lt;/em&gt; (10 &amp;times; 0.098). Exponentiate to get to the odds scale."&gt;B. The odds increase by 10 &amp;times; 0.098 = 0.977&lt;/button&gt;</span></span>
-<span id="cb13-270"><a href="#cb13-270" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="e&lt;sup&gt;10 &amp;times; 0.0977&lt;/sup&gt; = e&lt;sup&gt;0.977&lt;/sup&gt; &amp;asymp; 2.66. (This is the same as 1.1027&lt;sup&gt;10&lt;/sup&gt;.) The odds are about 2.66 times as high."&gt;C. The odds are multiplied by e&lt;sup&gt;10 &amp;times; 0.0977&lt;/sup&gt; &amp;asymp; 2.66&lt;/button&gt;</span></span>
-<span id="cb13-271"><a href="#cb13-271" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
-<span id="cb13-272"><a href="#cb13-272" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
-<span id="cb13-273"><a href="#cb13-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-274"><a href="#cb13-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-275"><a href="#cb13-275" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 6: From log-odds to probabilities</span></span>
-<span id="cb13-276"><a href="#cb13-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-277"><a href="#cb13-277" aria-hidden="true" tabindex="-1"></a>What's the probability that an article with **20%** capital letters in the title is fake? Work from the inside out:</span>
-<span id="cb13-278"><a href="#cb13-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-279"><a href="#cb13-279" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Log-odds:** $\widehat\eta = -0.932 + 0.098(20) \approx 1.023$</span>
-<span id="cb13-280"><a href="#cb13-280" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Odds:** $\widehat\omega = e^{\widehat\eta} = e^{1.023} \approx 2.78$</span>
-<span id="cb13-281"><a href="#cb13-281" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Probability:** $\widehat\pi = \dfrac{\widehat\omega}{1 + \widehat\omega} = \dfrac{e^{\widehat\eta}}{1 + e^{\widehat\eta}} \approx 0.736$</span>
-<span id="cb13-282"><a href="#cb13-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-285"><a href="#cb13-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-286"><a href="#cb13-286" aria-hidden="true" tabindex="-1"></a><span class="in">b &lt;- unname(coef(news_glm))</span></span>
-<span id="cb13-287"><a href="#cb13-287" aria-hidden="true" tabindex="-1"></a><span class="in">eta &lt;- b[1] + b[2] * 20       # log-odds</span></span>
-<span id="cb13-288"><a href="#cb13-288" aria-hidden="true" tabindex="-1"></a><span class="in">odds &lt;- exp(eta)              # odds</span></span>
-<span id="cb13-289"><a href="#cb13-289" aria-hidden="true" tabindex="-1"></a><span class="in">prob &lt;- odds / (1 + odds)     # probability</span></span>
-<span id="cb13-290"><a href="#cb13-290" aria-hidden="true" tabindex="-1"></a><span class="in">c(log_odds = eta, odds = odds, prob = prob)</span></span>
-<span id="cb13-291"><a href="#cb13-291" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-252"><a href="#cb13-252" aria-hidden="true" tabindex="-1"></a>$$\widehat{\text{odds}}(x) = e^{\widehat\beta_0 + \widehat\beta_1 x} = e^{\widehat\beta_0} \, e^{\widehat\beta_1 x}$$</span>
+<span id="cb13-253"><a href="#cb13-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-254"><a href="#cb13-254" aria-hidden="true" tabindex="-1"></a>If $x$ increases by 1, the odds get *multiplied* by</span>
+<span id="cb13-255"><a href="#cb13-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-256"><a href="#cb13-256" aria-hidden="true" tabindex="-1"></a>$$\frac{\widehat{\text{odds}}(x + 1)}{\widehat{\text{odds}}(x)} = \frac{e^{\widehat\beta_0} e^{\widehat\beta_1 (x+1)}}{e^{\widehat\beta_0} e^{\widehat\beta_1 x}} = e^{\widehat\beta_1}$$</span>
+<span id="cb13-257"><a href="#cb13-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-258"><a href="#cb13-258" aria-hidden="true" tabindex="-1"></a>So $e^{\widehat\beta_1}$ is an **odds ratio**.</span>
+<span id="cb13-259"><a href="#cb13-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-262"><a href="#cb13-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-263"><a href="#cb13-263" aria-hidden="true" tabindex="-1"></a><span class="in">exp(coef(news_glm))</span></span>
+<span id="cb13-264"><a href="#cb13-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-265"><a href="#cb13-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-266"><a href="#cb13-266" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb13-267"><a href="#cb13-267" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb13-268"><a href="#cb13-268" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 6&lt;/div&gt;</span></span>
+<span id="cb13-269"><a href="#cb13-269" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;Which is the correct interpretation of the slope?&lt;/p&gt;</span></span>
+<span id="cb13-270"><a href="#cb13-270" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="0.098 is a change in the &lt;em&gt;log-odds&lt;/em&gt;, not the probability. In logistic regression, the change in probability isn't constant: it depends on x."&gt;A. For each additional percentage point of capital letters, the probability of fake news increases by 0.098.&lt;/button&gt;</span></span>
+<span id="cb13-271"><a href="#cb13-271" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="On the odds scale the change is &lt;em&gt;multiplicative&lt;/em&gt;, so we use e&lt;sup&gt;0.098&lt;/sup&gt;, not 0.098."&gt;B. For each additional percentage point of capital letters, the odds of fake news increase by 0.098.&lt;/button&gt;</span></span>
+<span id="cb13-272"><a href="#cb13-272" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="e&lt;sup&gt;0.098&lt;/sup&gt; &amp;asymp; 1.10, so the odds increase by about 10% for each additional percentage point of capital letters in the title."&gt;C. For each additional percentage point of capital letters, the odds of fake news are multiplied by about 1.10.&lt;/button&gt;</span></span>
+<span id="cb13-273"><a href="#cb13-273" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="1.10 multiplies the &lt;em&gt;odds&lt;/em&gt;, not the probability."&gt;D. For each additional percentage point of capital letters, the probability of fake news is multiplied by about 1.10.&lt;/button&gt;</span></span>
+<span id="cb13-274"><a href="#cb13-274" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb13-275"><a href="#cb13-275" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb13-276"><a href="#cb13-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-277"><a href="#cb13-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-278"><a href="#cb13-278" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb13-279"><a href="#cb13-279" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb13-280"><a href="#cb13-280" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 7&lt;/div&gt;</span></span>
+<span id="cb13-281"><a href="#cb13-281" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;What happens to the odds of fake news if the percent of capital letters increases by &lt;strong&gt;10&lt;/strong&gt; percentage points? (You can use the chunk above as a calculator.)&lt;/p&gt;</span></span>
+<span id="cb13-282"><a href="#cb13-282" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="Odds ratios multiply; they don't add. Each 1-point increase multiplies the odds by 1.10, so 10 increases multiply them by 1.10 ten times."&gt;A. The odds are multiplied by 10 &amp;times; 1.10 = 11.0&lt;/button&gt;</span></span>
+<span id="cb13-283"><a href="#cb13-283" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="0.977 is the change in the &lt;em&gt;log-odds&lt;/em&gt; (10 &amp;times; 0.098). Exponentiate to get to the odds scale."&gt;B. The odds increase by 10 &amp;times; 0.098 = 0.977&lt;/button&gt;</span></span>
+<span id="cb13-284"><a href="#cb13-284" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="e&lt;sup&gt;10 &amp;times; 0.0977&lt;/sup&gt; = e&lt;sup&gt;0.977&lt;/sup&gt; &amp;asymp; 2.66. (This is the same as 1.1027&lt;sup&gt;10&lt;/sup&gt;.) The odds are about 2.66 times as high."&gt;C. The odds are multiplied by e&lt;sup&gt;10 &amp;times; 0.0977&lt;/sup&gt; &amp;asymp; 2.66&lt;/button&gt;</span></span>
+<span id="cb13-285"><a href="#cb13-285" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb13-286"><a href="#cb13-286" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb13-287"><a href="#cb13-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-288"><a href="#cb13-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-289"><a href="#cb13-289" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 6: From log-odds to probabilities</span></span>
+<span id="cb13-290"><a href="#cb13-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-291"><a href="#cb13-291" aria-hidden="true" tabindex="-1"></a>What's the probability that an article with **20%** capital letters in the title is fake? Work from the inside out:</span>
 <span id="cb13-292"><a href="#cb13-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-293"><a href="#cb13-293" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb13-294"><a href="#cb13-294" aria-hidden="true" tabindex="-1"></a>To go from odds to probability: $\pi = \dfrac{\text{odds}}{1 + \text{odds}}$. For example, odds of 3 ("3 to 1") is a probability of $3/4 = 0.75$.</span>
-<span id="cb13-295"><a href="#cb13-295" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb13-293"><a href="#cb13-293" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Log-odds:** $\widehat\eta = -0.932 + 0.098(20) \approx 1.023$</span>
+<span id="cb13-294"><a href="#cb13-294" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Odds:** $\widehat\omega = e^{\widehat\eta} = e^{1.023} \approx 2.78$</span>
+<span id="cb13-295"><a href="#cb13-295" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Probability:** $\widehat\pi = \dfrac{\widehat\omega}{1 + \widehat\omega} = \dfrac{e^{\widehat\eta}}{1 + e^{\widehat\eta}} \approx 0.736$</span>
 <span id="cb13-296"><a href="#cb13-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-297"><a href="#cb13-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb13-298"><a href="#cb13-298" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
-<span id="cb13-299"><a href="#cb13-299" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 8&lt;/div&gt;</span></span>
-<span id="cb13-300"><a href="#cb13-300" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;What is the estimated probability that an article with &lt;strong&gt;no&lt;/strong&gt; capital letters in the title (x = 0) is fake? Edit the code above to check!&lt;/p&gt;</span></span>
-<span id="cb13-301"><a href="#cb13-301" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="&amp;minus;0.932 is the &lt;em&gt;log-odds&lt;/em&gt;. Probabilities can't be negative!"&gt;A. &amp;minus;0.932&lt;/button&gt;</span></span>
-<span id="cb13-302"><a href="#cb13-302" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="e&lt;sup&gt;&amp;minus;0.932&lt;/sup&gt; &amp;asymp; 0.394 is the &lt;em&gt;odds&lt;/em&gt;. One more step: odds / (1 + odds)."&gt;B. 0.394&lt;/button&gt;</span></span>
-<span id="cb13-303"><a href="#cb13-303" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="Log-odds &amp;minus;0.932 &amp;rarr; odds e&lt;sup&gt;&amp;minus;0.932&lt;/sup&gt; &amp;asymp; 0.394 &amp;rarr; probability 0.394 / 1.394 &amp;asymp; 0.283."&gt;C. 0.283&lt;/button&gt;</span></span>
-<span id="cb13-304"><a href="#cb13-304" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="That would be the probability if the log-odds were 0 (odds of 1). Here the log-odds are &amp;minus;0.932."&gt;D. 0.5&lt;/button&gt;</span></span>
-<span id="cb13-305"><a href="#cb13-305" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
-<span id="cb13-306"><a href="#cb13-306" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
-<span id="cb13-307"><a href="#cb13-307" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-308"><a href="#cb13-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-309"><a href="#cb13-309" aria-hidden="true" tabindex="-1"></a><span class="fu">## Letting R do it: `predict()`</span></span>
+<span id="cb13-299"><a href="#cb13-299" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-300"><a href="#cb13-300" aria-hidden="true" tabindex="-1"></a><span class="in">b &lt;- unname(coef(news_glm))</span></span>
+<span id="cb13-301"><a href="#cb13-301" aria-hidden="true" tabindex="-1"></a><span class="in">eta &lt;- b[1] + b[2] * 20       # log-odds</span></span>
+<span id="cb13-302"><a href="#cb13-302" aria-hidden="true" tabindex="-1"></a><span class="in">odds &lt;- exp(eta)              # odds</span></span>
+<span id="cb13-303"><a href="#cb13-303" aria-hidden="true" tabindex="-1"></a><span class="in">prob &lt;- odds / (1 + odds)     # probability</span></span>
+<span id="cb13-304"><a href="#cb13-304" aria-hidden="true" tabindex="-1"></a><span class="in">c(log_odds = eta, odds = odds, prob = prob)</span></span>
+<span id="cb13-305"><a href="#cb13-305" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-306"><a href="#cb13-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-307"><a href="#cb13-307" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb13-308"><a href="#cb13-308" aria-hidden="true" tabindex="-1"></a>To go from odds to probability: $\pi = \dfrac{\text{odds}}{1 + \text{odds}}$. For example, odds of 3 ("3 to 1") is a probability of $3/4 = 0.75$.</span>
+<span id="cb13-309"><a href="#cb13-309" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb13-310"><a href="#cb13-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-311"><a href="#cb13-311" aria-hidden="true" tabindex="-1"></a><span class="in">`predict()`</span> works for <span class="in">`glm()`</span> models too, but be careful about the scale:</span>
-<span id="cb13-312"><a href="#cb13-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-315"><a href="#cb13-315" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-316"><a href="#cb13-316" aria-hidden="true" tabindex="-1"></a><span class="in">predict(news_glm, newdata = data.frame(title_caps_percent = 20))</span></span>
-<span id="cb13-317"><a href="#cb13-317" aria-hidden="true" tabindex="-1"></a><span class="in">predict(news_glm, newdata = data.frame(title_caps_percent = 20), type = "response")</span></span>
-<span id="cb13-318"><a href="#cb13-318" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-319"><a href="#cb13-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-320"><a href="#cb13-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb13-321"><a href="#cb13-321" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
-<span id="cb13-322"><a href="#cb13-322" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 9&lt;/div&gt;</span></span>
-<span id="cb13-323"><a href="#cb13-323" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;The first line of output (without &lt;code&gt;type = "response"&lt;/code&gt;) is on which scale?&lt;/p&gt;</span></span>
-<span id="cb13-324"><a href="#cb13-324" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="It's bigger than 1, so it can't be a probability. That's the second line."&gt;A. Probability&lt;/button&gt;</span></span>
-<span id="cb13-325"><a href="#cb13-325" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="The odds would be e&lt;sup&gt;1.023&lt;/sup&gt; &amp;asymp; 2.78. R never gives you the odds directly."&gt;B. Odds&lt;/button&gt;</span></span>
-<span id="cb13-326"><a href="#cb13-326" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="By default, &lt;code&gt;predict()&lt;/code&gt; gives the log-odds (the &amp;quot;link&amp;quot; scale). Add &lt;code&gt;type = &amp;quot;response&amp;quot;&lt;/code&gt; to get probabilities."&gt;C. Log-odds&lt;/button&gt;</span></span>
-<span id="cb13-327"><a href="#cb13-327" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
-<span id="cb13-328"><a href="#cb13-328" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
-<span id="cb13-329"><a href="#cb13-329" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-330"><a href="#cb13-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-331"><a href="#cb13-331" aria-hidden="true" tabindex="-1"></a><span class="fu">## The fitted model on all three scales</span></span>
-<span id="cb13-332"><a href="#cb13-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-333"><a href="#cb13-333" aria-hidden="true" tabindex="-1"></a>Run the chunk below to see the same fitted model on all three scales.</span>
-<span id="cb13-334"><a href="#cb13-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-337"><a href="#cb13-337" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-338"><a href="#cb13-338" aria-hidden="true" tabindex="-1"></a><span class="in">x &lt;- seq(0, 60, by = 0.5)</span></span>
-<span id="cb13-339"><a href="#cb13-339" aria-hidden="true" tabindex="-1"></a><span class="in">b &lt;- coef(news_glm)</span></span>
-<span id="cb13-340"><a href="#cb13-340" aria-hidden="true" tabindex="-1"></a><span class="in">log_odds &lt;- b[1] + b[2] * x</span></span>
-<span id="cb13-341"><a href="#cb13-341" aria-hidden="true" tabindex="-1"></a><span class="in">three_scales &lt;- data.frame(</span></span>
-<span id="cb13-342"><a href="#cb13-342" aria-hidden="true" tabindex="-1"></a><span class="in">  x = rep(x, 3),</span></span>
-<span id="cb13-343"><a href="#cb13-343" aria-hidden="true" tabindex="-1"></a><span class="in">  value = c(log_odds, exp(log_odds), exp(log_odds) / (1 + exp(log_odds))),</span></span>
-<span id="cb13-344"><a href="#cb13-344" aria-hidden="true" tabindex="-1"></a><span class="in">  scale = rep(c("1. log-odds", "2. odds", "3. probability"), each = length(x))</span></span>
-<span id="cb13-345"><a href="#cb13-345" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb13-346"><a href="#cb13-346" aria-hidden="true" tabindex="-1"></a><span class="in">gf_line(value ~ x, data = three_scales, color = "#003300", linewidth = 1) |&gt;</span></span>
-<span id="cb13-347"><a href="#cb13-347" aria-hidden="true" tabindex="-1"></a><span class="in">  gf_facet_wrap(~scale, scales = "free_y") |&gt;</span></span>
-<span id="cb13-348"><a href="#cb13-348" aria-hidden="true" tabindex="-1"></a><span class="in">  gf_labs(x = "title_caps_percent", y = "")</span></span>
-<span id="cb13-349"><a href="#cb13-349" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-350"><a href="#cb13-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-351"><a href="#cb13-351" aria-hidden="true" tabindex="-1"></a>**Q3.** Describe the shape of the fitted model on each of the three scales. Why does the probability curve flatten out near 1?</span>
-<span id="cb13-352"><a href="#cb13-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-353"><a href="#cb13-353" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 7: Connecting back to odds ratios</span></span>
-<span id="cb13-354"><a href="#cb13-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-355"><a href="#cb13-355" aria-hidden="true" tabindex="-1"></a>What if the predictor is the 0/1 variable <span class="in">`title_has_excl`</span>?</span>
-<span id="cb13-356"><a href="#cb13-356" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-359"><a href="#cb13-359" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-360"><a href="#cb13-360" aria-hidden="true" tabindex="-1"></a><span class="in">excl_glm &lt;- glm(type_num ~ title_has_excl, data = news, family = binomial)</span></span>
-<span id="cb13-361"><a href="#cb13-361" aria-hidden="true" tabindex="-1"></a><span class="in">coef(excl_glm)</span></span>
-<span id="cb13-362"><a href="#cb13-362" aria-hidden="true" tabindex="-1"></a><span class="in">exp(coef(excl_glm))</span></span>
+<span id="cb13-311"><a href="#cb13-311" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb13-312"><a href="#cb13-312" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb13-313"><a href="#cb13-313" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 8&lt;/div&gt;</span></span>
+<span id="cb13-314"><a href="#cb13-314" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;What is the estimated probability that an article with &lt;strong&gt;no&lt;/strong&gt; capital letters in the title (x = 0) is fake? Edit the code above to check!&lt;/p&gt;</span></span>
+<span id="cb13-315"><a href="#cb13-315" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="&amp;minus;0.932 is the &lt;em&gt;log-odds&lt;/em&gt;. Probabilities can't be negative!"&gt;A. &amp;minus;0.932&lt;/button&gt;</span></span>
+<span id="cb13-316"><a href="#cb13-316" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="e&lt;sup&gt;&amp;minus;0.932&lt;/sup&gt; &amp;asymp; 0.394 is the &lt;em&gt;odds&lt;/em&gt;. One more step: odds / (1 + odds)."&gt;B. 0.394&lt;/button&gt;</span></span>
+<span id="cb13-317"><a href="#cb13-317" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="Log-odds &amp;minus;0.932 &amp;rarr; odds e&lt;sup&gt;&amp;minus;0.932&lt;/sup&gt; &amp;asymp; 0.394 &amp;rarr; probability 0.394 / 1.394 &amp;asymp; 0.283."&gt;C. 0.283&lt;/button&gt;</span></span>
+<span id="cb13-318"><a href="#cb13-318" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="That would be the probability if the log-odds were 0 (odds of 1). Here the log-odds are &amp;minus;0.932."&gt;D. 0.5&lt;/button&gt;</span></span>
+<span id="cb13-319"><a href="#cb13-319" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb13-320"><a href="#cb13-320" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb13-321"><a href="#cb13-321" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-322"><a href="#cb13-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-323"><a href="#cb13-323" aria-hidden="true" tabindex="-1"></a><span class="fu">## Letting R do it: `predict()`</span></span>
+<span id="cb13-324"><a href="#cb13-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-325"><a href="#cb13-325" aria-hidden="true" tabindex="-1"></a><span class="in">`predict()`</span> works for <span class="in">`glm()`</span> models too, but be careful about the scale:</span>
+<span id="cb13-326"><a href="#cb13-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-329"><a href="#cb13-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-330"><a href="#cb13-330" aria-hidden="true" tabindex="-1"></a><span class="in">predict(news_glm, newdata = data.frame(title_caps_percent = 20))</span></span>
+<span id="cb13-331"><a href="#cb13-331" aria-hidden="true" tabindex="-1"></a><span class="in">predict(news_glm, newdata = data.frame(title_caps_percent = 20), type = "response")</span></span>
+<span id="cb13-332"><a href="#cb13-332" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-333"><a href="#cb13-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-334"><a href="#cb13-334" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb13-335"><a href="#cb13-335" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb13-336"><a href="#cb13-336" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 9&lt;/div&gt;</span></span>
+<span id="cb13-337"><a href="#cb13-337" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;The first line of output (without &lt;code&gt;type = "response"&lt;/code&gt;) is on which scale?&lt;/p&gt;</span></span>
+<span id="cb13-338"><a href="#cb13-338" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="It's bigger than 1, so it can't be a probability. That's the second line."&gt;A. Probability&lt;/button&gt;</span></span>
+<span id="cb13-339"><a href="#cb13-339" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="The odds would be e&lt;sup&gt;1.023&lt;/sup&gt; &amp;asymp; 2.78. R never gives you the odds directly."&gt;B. Odds&lt;/button&gt;</span></span>
+<span id="cb13-340"><a href="#cb13-340" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="By default, &lt;code&gt;predict()&lt;/code&gt; gives the log-odds (the &amp;quot;link&amp;quot; scale). Add &lt;code&gt;type = &amp;quot;response&amp;quot;&lt;/code&gt; to get probabilities."&gt;C. Log-odds&lt;/button&gt;</span></span>
+<span id="cb13-341"><a href="#cb13-341" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb13-342"><a href="#cb13-342" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb13-343"><a href="#cb13-343" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-344"><a href="#cb13-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-345"><a href="#cb13-345" aria-hidden="true" tabindex="-1"></a><span class="fu">## The fitted model on all three scales</span></span>
+<span id="cb13-346"><a href="#cb13-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-347"><a href="#cb13-347" aria-hidden="true" tabindex="-1"></a>Run the chunk below to see the same fitted model on all three scales.</span>
+<span id="cb13-348"><a href="#cb13-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-351"><a href="#cb13-351" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-352"><a href="#cb13-352" aria-hidden="true" tabindex="-1"></a><span class="in">x &lt;- seq(0, 60, by = 0.5)</span></span>
+<span id="cb13-353"><a href="#cb13-353" aria-hidden="true" tabindex="-1"></a><span class="in">b &lt;- coef(news_glm)</span></span>
+<span id="cb13-354"><a href="#cb13-354" aria-hidden="true" tabindex="-1"></a><span class="in">log_odds &lt;- b[1] + b[2] * x</span></span>
+<span id="cb13-355"><a href="#cb13-355" aria-hidden="true" tabindex="-1"></a><span class="in">three_scales &lt;- data.frame(</span></span>
+<span id="cb13-356"><a href="#cb13-356" aria-hidden="true" tabindex="-1"></a><span class="in">  x = rep(x, 3),</span></span>
+<span id="cb13-357"><a href="#cb13-357" aria-hidden="true" tabindex="-1"></a><span class="in">  value = c(log_odds, exp(log_odds), exp(log_odds) / (1 + exp(log_odds))),</span></span>
+<span id="cb13-358"><a href="#cb13-358" aria-hidden="true" tabindex="-1"></a><span class="in">  scale = rep(c("1. log-odds", "2. odds", "3. probability"), each = length(x))</span></span>
+<span id="cb13-359"><a href="#cb13-359" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb13-360"><a href="#cb13-360" aria-hidden="true" tabindex="-1"></a><span class="in">gf_line(value ~ x, data = three_scales, color = "#003300", linewidth = 1) |&gt;</span></span>
+<span id="cb13-361"><a href="#cb13-361" aria-hidden="true" tabindex="-1"></a><span class="in">  gf_facet_wrap(~scale, scales = "free_y") |&gt;</span></span>
+<span id="cb13-362"><a href="#cb13-362" aria-hidden="true" tabindex="-1"></a><span class="in">  gf_labs(x = "title_caps_percent", y = "")</span></span>
 <span id="cb13-363"><a href="#cb13-363" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-364"><a href="#cb13-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-365"><a href="#cb13-365" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb13-366"><a href="#cb13-366" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
-<span id="cb13-367"><a href="#cb13-367" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 10&lt;/div&gt;</span></span>
-<span id="cb13-368"><a href="#cb13-368" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;Compare &lt;code&gt;exp(coef(excl_glm))&lt;/code&gt; to your work in Part 2. What is e&lt;sup&gt;&amp;beta;&lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt; = 16?&lt;/p&gt;</span></span>
-<span id="cb13-369"><a href="#cb13-369" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="The probability ratio was 0.889 / 0.333 = 2.67."&gt;A. The ratio of the probabilities of fake news&lt;/button&gt;</span></span>
-<span id="cb13-370"><a href="#cb13-370" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="It's exactly the odds ratio we computed by hand from the table! And e&lt;sup&gt;&amp;beta;&lt;sub&gt;0&lt;/sub&gt;&lt;/sup&gt; = 0.5 is the odds of fake news for titles &lt;em&gt;without&lt;/em&gt; an exclamation point (the reference group)."&gt;B. The odds ratio from the table in Part 2&lt;/button&gt;</span></span>
-<span id="cb13-371"><a href="#cb13-371" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="There are 16 fake articles with an exclamation point, but that's a coincidence of this data set. Here 16 is a ratio of two odds: 8 / 0.5."&gt;C. The number of fake articles with an exclamation point&lt;/button&gt;</span></span>
-<span id="cb13-372"><a href="#cb13-372" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
-<span id="cb13-373"><a href="#cb13-373" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
-<span id="cb13-374"><a href="#cb13-374" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-375"><a href="#cb13-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-376"><a href="#cb13-376" aria-hidden="true" tabindex="-1"></a>**Q4.** What does $e^{\widehat\beta_0} = 0.5$ represent in context?</span>
-<span id="cb13-377"><a href="#cb13-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-378"><a href="#cb13-378" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 8: Your turn</span></span>
-<span id="cb13-379"><a href="#cb13-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-380"><a href="#cb13-380" aria-hidden="true" tabindex="-1"></a>Now, fit a logistic regression model using all three variables we've discussed today (<span class="in">`title_has_excl`</span>, <span class="in">`title_caps_percent`</span>, and <span class="in">`title_words`</span>) and report the <span class="in">`summary()`</span>.</span>
-<span id="cb13-381"><a href="#cb13-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-384"><a href="#cb13-384" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-385"><a href="#cb13-385" aria-hidden="true" tabindex="-1"></a><span class="in">news_glm_2 &lt;- glm(type_num ~ ___ + ___ + ___, data = news, family = binomial)</span></span>
-<span id="cb13-386"><a href="#cb13-386" aria-hidden="true" tabindex="-1"></a><span class="in">summary(___)</span></span>
-<span id="cb13-387"><a href="#cb13-387" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-388"><a href="#cb13-388" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-389"><a href="#cb13-389" aria-hidden="true" tabindex="-1"></a>**Q5.** Write out the fitted model (on the log-odds scale) for articles (A) with an exclamation point in the title and (B) without an exclamation point in the title.</span>
-<span id="cb13-390"><a href="#cb13-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-391"><a href="#cb13-391" aria-hidden="true" tabindex="-1"></a>**Q6.** Write out interpretations for all slope coefficients in the model in terms of the **odds** of being fake news.</span>
-<span id="cb13-392"><a href="#cb13-392" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-393"><a href="#cb13-393" aria-hidden="true" tabindex="-1"></a>**Q7.** Use <span class="in">`predict()`</span> to find the estimated probability that an article with an exclamation point, 10% capital letters, and 12 words in the title is fake.</span>
-<span id="cb13-394"><a href="#cb13-394" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-397"><a href="#cb13-397" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
-<span id="cb13-398"><a href="#cb13-398" aria-hidden="true" tabindex="-1"></a><span class="in"># your code here</span></span>
-<span id="cb13-399"><a href="#cb13-399" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-400"><a href="#cb13-400" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-401"><a href="#cb13-401" aria-hidden="true" tabindex="-1"></a>**Q8.** Based on what we know about OLS (**o**rdinary **l**east **s**quares, which includes both SLR and MLR), which predictors appear to be most important for this model?</span>
+<span id="cb13-365"><a href="#cb13-365" aria-hidden="true" tabindex="-1"></a>**Q3.** Describe the shape of the fitted model on each of the three scales. Why does the probability curve flatten out near 1?</span>
+<span id="cb13-366"><a href="#cb13-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-367"><a href="#cb13-367" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 7: Connecting back to odds ratios</span></span>
+<span id="cb13-368"><a href="#cb13-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-369"><a href="#cb13-369" aria-hidden="true" tabindex="-1"></a>What if the predictor is the 0/1 variable <span class="in">`title_has_excl`</span>?</span>
+<span id="cb13-370"><a href="#cb13-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-373"><a href="#cb13-373" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-374"><a href="#cb13-374" aria-hidden="true" tabindex="-1"></a><span class="in">excl_glm &lt;- glm(type_num ~ title_has_excl, data = news, family = binomial)</span></span>
+<span id="cb13-375"><a href="#cb13-375" aria-hidden="true" tabindex="-1"></a><span class="in">coef(excl_glm)</span></span>
+<span id="cb13-376"><a href="#cb13-376" aria-hidden="true" tabindex="-1"></a><span class="in">exp(coef(excl_glm))</span></span>
+<span id="cb13-377"><a href="#cb13-377" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-378"><a href="#cb13-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-379"><a href="#cb13-379" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb13-380"><a href="#cb13-380" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;div class="mcq"&gt;</span></span>
+<span id="cb13-381"><a href="#cb13-381" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-title"&gt;Check-in 10&lt;/div&gt;</span></span>
+<span id="cb13-382"><a href="#cb13-382" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;p&gt;Compare &lt;code&gt;exp(coef(excl_glm))&lt;/code&gt; to your work in Part 2. What is e&lt;sup&gt;&amp;beta;&lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt; = 16?&lt;/p&gt;</span></span>
+<span id="cb13-383"><a href="#cb13-383" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="The probability ratio was 0.889 / 0.333 = 2.67."&gt;A. The ratio of the probabilities of fake news&lt;/button&gt;</span></span>
+<span id="cb13-384"><a href="#cb13-384" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="true" data-feedback="It's exactly the odds ratio we computed by hand from the table! And e&lt;sup&gt;&amp;beta;&lt;sub&gt;0&lt;/sub&gt;&lt;/sup&gt; = 0.5 is the odds of fake news for titles &lt;em&gt;without&lt;/em&gt; an exclamation point (the reference group)."&gt;B. The odds ratio from the table in Part 2&lt;/button&gt;</span></span>
+<span id="cb13-385"><a href="#cb13-385" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;button class="mcq-opt" data-correct="false" data-feedback="There are 16 fake articles with an exclamation point, but that's a coincidence of this data set. Here 16 is a ratio of two odds: 8 / 0.5."&gt;C. The number of fake articles with an exclamation point&lt;/button&gt;</span></span>
+<span id="cb13-386"><a href="#cb13-386" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;div class="mcq-feedback"&gt;&lt;/div&gt;</span></span>
+<span id="cb13-387"><a href="#cb13-387" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/div&gt;</span></span>
+<span id="cb13-388"><a href="#cb13-388" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-389"><a href="#cb13-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-390"><a href="#cb13-390" aria-hidden="true" tabindex="-1"></a>**Q4.** What does $e^{\widehat\beta_0} = 0.5$ represent in context?</span>
+<span id="cb13-391"><a href="#cb13-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-392"><a href="#cb13-392" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 8: Your turn</span></span>
+<span id="cb13-393"><a href="#cb13-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-394"><a href="#cb13-394" aria-hidden="true" tabindex="-1"></a>Now, fit a logistic regression model using all three variables we've discussed today (<span class="in">`title_has_excl`</span>, <span class="in">`title_caps_percent`</span>, and <span class="in">`title_words`</span>) and report the <span class="in">`summary()`</span>.</span>
+<span id="cb13-395"><a href="#cb13-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-398"><a href="#cb13-398" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-399"><a href="#cb13-399" aria-hidden="true" tabindex="-1"></a><span class="in">news_glm_2 &lt;- glm(type_num ~ ___ + ___ + ___, data = news, family = binomial)</span></span>
+<span id="cb13-400"><a href="#cb13-400" aria-hidden="true" tabindex="-1"></a><span class="in">summary(___)</span></span>
+<span id="cb13-401"><a href="#cb13-401" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-402"><a href="#cb13-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-403"><a href="#cb13-403" aria-hidden="true" tabindex="-1"></a>**Q9.** What questions do you have about the <span class="in">`summary()`</span> output? (Write them down! We'll talk about them next class.)</span>
+<span id="cb13-403"><a href="#cb13-403" aria-hidden="true" tabindex="-1"></a>**Q5.** Write out the fitted model (on the log-odds scale) for articles (A) with an exclamation point in the title and (B) without an exclamation point in the title.</span>
 <span id="cb13-404"><a href="#cb13-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-405"><a href="#cb13-405" aria-hidden="true" tabindex="-1"></a>***</span>
+<span id="cb13-405"><a href="#cb13-405" aria-hidden="true" tabindex="-1"></a>**Q6.** Write out interpretations for all slope coefficients in the model in terms of the **odds** of being fake news.</span>
 <span id="cb13-406"><a href="#cb13-406" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-407"><a href="#cb13-407" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
+<span id="cb13-407"><a href="#cb13-407" aria-hidden="true" tabindex="-1"></a>**Q7.** Use <span class="in">`predict()`</span> to find the estimated probability that an article with an exclamation point, 10% capital letters, and 12 words in the title is fake.</span>
 <span id="cb13-408"><a href="#cb13-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-409"><a href="#cb13-409" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
-<span id="cb13-410"><a href="#cb13-410" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
-<span id="cb13-411"><a href="#cb13-411" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`table(x, y) |&gt; addmargins()`</span> <span class="pp">|</span> Two-way table with row and column totals <span class="pp">|</span></span>
-<span id="cb13-412"><a href="#cb13-412" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`glm(formula, data, family = binomial)`</span> <span class="pp">|</span> Fit a binary logistic regression model <span class="pp">|</span></span>
-<span id="cb13-413"><a href="#cb13-413" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`coef(model)`</span>, <span class="in">`exp(coef(model))`</span> <span class="pp">|</span> Coefficients on the log-odds scale; odds ratios <span class="pp">|</span></span>
-<span id="cb13-414"><a href="#cb13-414" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`summary(model)`</span> <span class="pp">|</span> View model summary and Wald tests <span class="pp">|</span></span>
-<span id="cb13-415"><a href="#cb13-415" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`predict(model, newdata)`</span> <span class="pp">|</span> Predictions on the log-odds scale <span class="pp">|</span></span>
-<span id="cb13-416"><a href="#cb13-416" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`predict(model, newdata, type = "response")`</span> <span class="pp">|</span> Predictions on the probability scale <span class="pp">|</span></span>
+<span id="cb13-411"><a href="#cb13-411" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr}</span></span>
+<span id="cb13-412"><a href="#cb13-412" aria-hidden="true" tabindex="-1"></a><span class="in"># your code here</span></span>
+<span id="cb13-413"><a href="#cb13-413" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-414"><a href="#cb13-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-415"><a href="#cb13-415" aria-hidden="true" tabindex="-1"></a>**Q8.** Based on what we know about OLS (**o**rdinary **l**east **s**quares, which includes both SLR and MLR), which predictors appear to be most important for this model?</span>
+<span id="cb13-416"><a href="#cb13-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-417"><a href="#cb13-417" aria-hidden="true" tabindex="-1"></a>**Q9.** What questions do you have about the <span class="in">`summary()`</span> output? (Write them down! We'll talk about them next class.)</span>
+<span id="cb13-418"><a href="#cb13-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-419"><a href="#cb13-419" aria-hidden="true" tabindex="-1"></a>***</span>
+<span id="cb13-420"><a href="#cb13-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-421"><a href="#cb13-421" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
+<span id="cb13-422"><a href="#cb13-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-423"><a href="#cb13-423" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
+<span id="cb13-424"><a href="#cb13-424" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
+<span id="cb13-425"><a href="#cb13-425" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`table(x, y) |&gt; addmargins()`</span> <span class="pp">|</span> Two-way table with row and column totals <span class="pp">|</span></span>
+<span id="cb13-426"><a href="#cb13-426" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`glm(formula, data, family = binomial)`</span> <span class="pp">|</span> Fit a binary logistic regression model <span class="pp">|</span></span>
+<span id="cb13-427"><a href="#cb13-427" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`coef(model)`</span>, <span class="in">`exp(coef(model))`</span> <span class="pp">|</span> Coefficients on the log-odds scale; odds ratios <span class="pp">|</span></span>
+<span id="cb13-428"><a href="#cb13-428" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`summary(model)`</span> <span class="pp">|</span> View model summary and Wald tests <span class="pp">|</span></span>
+<span id="cb13-429"><a href="#cb13-429" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`predict(model, newdata)`</span> <span class="pp">|</span> Predictions on the log-odds scale <span class="pp">|</span></span>
+<span id="cb13-430"><a href="#cb13-430" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`predict(model, newdata, type = "response")`</span> <span class="pp">|</span> Predictions on the probability scale <span class="pp">|</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
