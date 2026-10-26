@@ -1,0 +1,324 @@
+---
+title: "Day 19: Odds, odds ratios, and logistic regression"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+library(patchwork)
+library(here)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+news <- read.csv(here("data", "fake_news_bayesrules.csv"))
+
+news_glm <- glm(type_num ~ title_caps_percent, data = news, family = binomial)
+excl_glm <- glm(type_num ~ title_has_excl, data = news, family = binomial)
+b <- unname(coef(news_glm))
+
+f2 <- function(x) sprintf("%.2f", x)
+f3 <- function(x) sprintf("%.3f", x)
+```
+
+::: {.callout-note}
+These are reference notes for Day 19. They cover the same material as the
+Day 19 slides and the self-paced tutorial. Whenever you run into a check-in or a question in the tutorial, write your answer down here.
+:::
+
+## Where we're going
+
+So far, our response variable has always been **quantitative**. Today the
+response is **binary** (yes/no, success/failure), so we need a new model:
+**logistic regression**.
+
+## Data: fake news
+
+150 news articles, some real and some fake. Our goal is to explain `type`
+using features of the article.
+
+-   `type`: "real" or "fake"; `type_num`: 0 (real) or 1 (fake)
+-   `title_words`: number of words in the title
+-   `title_has_excl`: whether the title has an exclamation point
+-   `title_caps_percent`: percent of the title in capital letters
+
+A "success" ($Y = 1$) is a _____________ article. Always check how your response
+is coded before modeling!
+
+**Q1.** Before we do anything else, how do you think `title_has_excl` and `title_caps_percent` are related to `type_num`?
+
+\vspace{2in}
+
+## Probability and odds
+
+If $\pi$ is the probability of an event, the **odds** of the event are
+
+$$\text{odds} = \frac{\pi}{1 - \pi} = \frac{P(\text{event})}{P(\text{not event})} \qquad\qquad \pi = \frac{\text{odds}}{1 + \text{odds}}$$
+
+| Probability $\pi$ | Odds $\pi/(1-\pi)$ | How we'd say it |
+|:--|:--|:--|
+| 0.5 | 1 | "even odds" |
+| 0.75 | 3 | "3 to 1" |
+| 0.2 | 0.25 | "1 to 4" |
+
+Probabilities are between 0 and 1; odds are between 0 and $\infty$.
+
+
+## Example: exclamation points
+
+```{r}
+table(news$title_has_excl, news$type) |>
+  addmargins() |>
+  knitr::kable()
+```
+
+| | Title has exclamation | No exclamation |
+|:--|:--|:--|
+| $P(\text{fake})$ | $16/18 = 0.889$ | ________________________ |
+| $\text{Odds}(\text{fake})$ | $16/2 = 8$ | ________________________ |
+
+Shortcut: from a table, odds = (number of successes) / (number of failures).
+
+The **odds ratio** compares the odds in two groups:
+
+$$OR = \frac{\text{Odds}(\text{fake} \mid \text{exclamation})}{\text{Odds}(\text{fake} \mid \text{no exclamation})} = \frac{8}{\underline{\hspace{1.5cm}}} = 16$$
+
+**Interpretation:** The odds of being fake are 16 times as high for articles
+with an exclamation point in the title as for articles without one.
+
+::: {.callout-warning}
+## Common mistake
+
+An odds ratio is **not** a ratio of probabilities. It is *not* correct to say
+that articles with an exclamation point are "16 times as likely" to be fake:
+the ratio of probabilities is only about 2.67.
+:::
+
+**Q2.** An odds ratio of exactly 1 means: 
+
+\vspace{.5in}
+
+An odds ratio less than 1 means: 
+
+\vspace{.5in}
+
+## Why not linear regression?
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2.4
+lm_fit <- lm(type_num ~ title_caps_percent, data = news)
+
+p_lm <- gf_jitter(type_num ~ title_caps_percent, data = news, width = 0.2, height = 0.05, alpha = 0.5) |>
+  gf_lm(color = "#f15a31") |>
+  gf_labs(y = "Fake = 1", title = "Linear regression")
+p_glm <- gf_jitter(type_num ~ title_caps_percent, data = news, width = 0.2, height = 0.05, alpha = 0.5) |>
+  gf_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE, color = "#f15a31") |>
+  gf_labs(y = "Fake = 1", title = "Logistic regression")
+p_lm + p_glm
+```
+
+A line keeps going forever, so it predicts "probabilities" outside of
+$[0, 1]$: the linear model predicts
+`r f2(predict(lm_fit, data.frame(title_caps_percent = max(news$title_caps_percent))))`
+for the title with the most capital letters
+(`r max(news$title_caps_percent)`%). Logistic regression gives an S-shaped
+curve that stays between 0 and 1.
+
+## The logistic regression model
+
+$$\log\left(\frac{\pi(x)}{1-\pi(x)}\right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p$$
+
+where $\pi(x) = P(Y = 1 \mid x)$. The left side is called the **log-odds** or
+the **logit**. It can be any number, so it's OK for the right side to be a
+line.
+
+| Scale | Formula | Range | Linear in the $x$'s? |
+|:--|:--|:--|:--|
+| Probability | $\pi$ | 0 to 1 | ________ |
+| Odds | $\pi / (1 - \pi)$ | 0 to $\infty$ | ________ |
+| Log-odds | $\log(\pi / (1 - \pi))$ | $-\infty$ to $\infty$ | ________ |
+
+## Fitting the model in R
+
+```{r}
+#| echo: true
+news_glm <- glm(type_num ~ title_caps_percent, data = news, family = binomial)
+```
+
+```{r}
+kable_coef(news_glm, terms = c("Intercept", "title_caps_percent"))
+```
+
+$$\widehat\eta = \log\left(\frac{\widehat\pi(x)}{1-\widehat\pi(x)}\right) = `r f3(b[1])` + `r f3(b[2])` x$$
+
+where $x$ is `title_caps_percent`. 
+
+## Interpreting the slope
+
+$\widehat\beta_1 = `r f3(b[2])`$ is the change in the **log-odds** for a
+1-unit increase in $x$. To get to the odds scale, exponentiate:
+
+$$\widehat{\text{odds}}(x) = e^{\widehat\beta_0 + \widehat\beta_1 x} \qquad\Longrightarrow\qquad \frac{\widehat{\text{odds}}(x+1)}{\widehat{\text{odds}}(x)} = \frac{e^{\widehat\beta_0} e^{\widehat\beta_1 (x+1)}}{e^{\widehat\beta_0} e^{\widehat\beta_1 x}} = e^{\widehat\beta_1}$$
+
+So $e^{\widehat\beta_1}$ is an **odds ratio**. Here,
+$e^{`r f3(b[2])`} \approx `r f3(exp(b[2]))`$:
+
+> For each additional percentage point of capital letters in the title, the
+> __________ of the article being fake __________________ by about `r f2(exp(b[2]))`
+> (an increase of about ______________________________).
+
+For a $c$-unit increase in $x$, the odds are multiplied by $e^{c\widehat\beta_1}$.
+
+What happens to the odds of fake news if the percent of capital letters increases by 10 percentage points? 
+
+> The odds ___________________________ by _________________________________
+
+::: {.callout-warning}
+## Common mistakes
+
+-   $\widehat\beta_1$ is **not** the change in the probability. In logistic
+    regression, the change in probability for a 1-unit increase in $x$
+    depends on $x$.
+-   $e^{\widehat\beta_1}$ **multiplies** the odds; it is not added to them.
+-   $e^{\widehat\beta_1}$ multiplies the **odds**, not the probability.
+:::
+
+## From log-odds to probability
+
+What's the estimated probability that an article with **20%** capital letters
+in the title is fake? Work from the inside out:
+
+```{r}
+eta20 <- b[1] + b[2] * 20
+```
+
+1.  **Log-odds:** $\widehat\eta = `r f3(b[1])` + `r f3(b[2])`(20) = `r f3(eta20)`$
+2.  **Odds:** $\widehat\omega = e^{\widehat\eta} = e^{`r f3(eta20)`} = `r f2(exp(eta20))`$
+3.  **Probability:** $\widehat\pi = \dfrac{\widehat\omega}{1 + \widehat\omega} = \dfrac{e^{\widehat\eta}}{1 + e^{\widehat\eta}} = \dfrac{`r f2(exp(eta20))`}{1 + `r f2(exp(eta20))`} = `r f3(exp(eta20) / (1 + exp(eta20)))`$
+
+The intercept works the same way: at $x = 0$, the log-odds are
+___________________, the odds are ___________________, and the
+probability is ___________________.
+
+**In R**, `predict()` does this for you, but by default it gives the
+**log-odds**. Use `type = "response"` to get probabilities:
+
+```{r}
+#| echo: true
+predict(news_glm, newdata = data.frame(title_caps_percent = 20))
+predict(news_glm, newdata = data.frame(title_caps_percent = 20), type = "response")
+```
+
+*Note:* The first line of output (without type = "response") is on which scale? _____________________
+
+## The fitted model on three scales
+
+```{r}
+#| fig-width: 7.5
+#| fig-height: 2.4
+tibble(x = seq(0, 60, by = 0.5),
+       `1. log-odds` = b[1] + b[2] * x,
+       `2. odds` = exp(`1. log-odds`),
+       `3. probability` = `2. odds` / (1 + `2. odds`)) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x = x, y = value)) +
+  geom_line(color = "#003300", linewidth = 1) +
+  facet_wrap(vars(name), scales = "free_y") +
+  labs(x = "title_caps_percent", y = "")
+```
+
+**Q3.** Describe the shape of the fitted model on each of the three scales. Why does the probability curve flatten out near 1?
+
+\vspace{2in}
+
+## Moving between the three scales
+
+| From | To | Formula | In R |
+|:--|:--|:--|:--|
+| log-odds $\eta$ | odds | $e^{\eta}$ | `exp(eta)` |
+| odds | probability | $\dfrac{\text{odds}}{1 + \text{odds}}$ | `odds / (1 + odds)` |
+| log-odds $\eta$ | probability | $\dfrac{e^{\eta}}{1 + e^{\eta}}$ | `exp(eta) / (1 + exp(eta))` |
+| probability $\pi$ | odds | $\dfrac{\pi}{1 - \pi}$ | `p / (1 - p)` |
+| odds | log-odds | $\log(\text{odds})$ | `log(odds)` |
+
+
+## A binary predictor gives back the odds ratio
+
+```{r}
+#| echo: true
+excl_glm <- glm(type_num ~ title_has_excl, data = news, family = binomial)
+exp(coef(excl_glm))
+```
+
+-   $e^{\widehat\beta_1} = `r round(exp(coef(excl_glm))[2], 1)`$ is exactly the
+    odds ratio we computed from the table.
+
+**Q4.** What does $e^{\widehat\beta_0} = `r round(exp(coef(excl_glm))[1], 2)`$ represent in context?
+
+\vspace{.5in}
+\vfill
+
+## Your turn: three predictors
+
+`glm(type_num ~ title_has_excl + title_caps_percent + title_words, data = news, family = binomial)`.
+
+**Q5.** Write out the fitted model on the log-odds scale for articles with and
+without an exclamation point in the title.
+
+(A) With an exclamation point:
+
+$\log\left(\dfrac{\widehat\pi}{1 - \widehat\pi}\right) =$ __________ $+$ __________ $\times$ `title_caps_percent` $+$ __________ $\times$ `title_words`
+
+(B) Without an exclamation point:
+
+$\log\left(\dfrac{\widehat\pi}{1 - \widehat\pi}\right) =$ __________ $+$ __________ $\times$ `title_caps_percent` $+$ __________ $\times$ `title_words`
+
+\pagebreak 
+
+**Q6.** Interpret each slope coefficient in terms of the **odds** of being fake news. (*Note:* templates on last page if you get stuck; but try it on your own first)
+
+`title_has_excl`:
+
+\vspace{.6in}
+
+`title_caps_percent`:
+
+\vspace{.6in}
+
+`title_words`:
+
+\vspace{.6in}
+
+**Q7.** The estimated probability that an article with an exclamation point, 10% capital letters, and 12 words in the title is fake: ______________
+
+**Q8.** Which predictors appear to be most important for this model? Why?
+
+\vspace{1.5in}
+
+**Q9.** What questions do you have about the `summary()` output?
+
+\vspace{1.5in}
+
+\pagebreak 
+
+## Interpretation templates
+
+| Quantity | Interpretation |
+|:--|:--|
+| $\widehat\beta_j$ | Change in the log-odds of success for a 1-unit increase in $x_j$, holding other predictors constant |
+| $e^{\widehat\beta_j}$, quantitative $x_j$ | For a 1-unit increase in $x_j$, the odds of success are multiplied by $e^{\widehat\beta_j}$, holding other predictors constant |
+| $e^{\widehat\beta_j}$, indicator $x_j$ | The odds of success are $e^{\widehat\beta_j}$ times as high for the indicated group as for the reference group, holding other predictors constant |
+| $e^{\widehat\beta_0}$ | The odds of success when all predictors equal 0 (or for the reference group) |
+
+## R function reference
+
+| Function | Purpose |
+|:--|:--|
+| `table(x, y) |> addmargins()` | Two-way table with row and column totals |
+| `glm(y ~ x, data, family = binomial)` | Fit a binary logistic regression model |
+| `coef(model)`, `exp(coef(model))` | Coefficients on the log-odds scale; odds ratios |
+| `summary(model)` | Model summary and Wald tests |
+| `predict(model, newdata)` | Predictions on the log-odds scale |
+| `predict(model, newdata, type = "response")` | Predictions on the probability scale |

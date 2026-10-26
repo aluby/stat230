@@ -132,7 +132,7 @@ hb <- coef(humid_mod)
 
 (b) Holding temperature and humidity constant, weekend days have about `r round(abs(hb["weekendTRUE"]))` *fewer* rides than weekdays, on average.
 
-(c) About `r round(100 * summary(humid_mod)$adj.r.squared, 1)`% of the variability in daily rides is explained by the model with temperature, humidity, and weekend.
+(c) About `r round(100 * summary(humid_mod)$r.squared, 1)`% of the variability in daily rides is explained by the model with temperature, humidity, and weekend. (To interpret the variability explained by the model, we shoudl use "regular" $R^2$ instead of adjusted)
 
 :::
 :::
