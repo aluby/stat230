@@ -1,0 +1,316 @@
+---
+title: "Final Project"
+format: html
+execute:
+  echo: true
+navbar: false
+---
+
+::: {.callout-important}
+## Instructor notes (delete before publishing)
+
+- This replaces both Case Study 3 and the old final project prompt. The rubric merges the two.
+- Starter data are in `data/` (`apm.csv`, `nyc_trees.csv`, `college_completion.csv`, `epl_cards.csv`), each with a build script (`nyc_trees.R`, `college_completion.R`, `epl_cards.R`) that documents the source and the cleaning. The raw downloads are not in the repo.
+- Dates in the timeline are placeholders based on the old final project and the old Case Study 3 schedule.
+:::
+
+# Overview
+
+The final project is your chance to use the methods from this course to answer a question you care about. You will build a **logistic** (binary or binomial) or **Poisson** regression model, choose among candidate models, and report your findings in a short, polished paper.
+
+You can either:
+
+  - start from one of the four **starter datasets** below, or
+  - find your own data (see [Finding your own data](#finding-your-own-data)).
+
+You will work in groups of 2 or 3 people assigned by me with your input. The expectation is that each student shares equal responsibility for the report. You will turn in one report per group. Please let me know if you are having trouble communicating with your group.
+
+# Timeline
+
+  - Friday of Week 7: Project partner form
+  - Friday of Week 8: Study proposal due (with dataset)
+  - Friday of Week 9: Analysis check-in (individual, as part of HW8)
+  - Monday of Week 10: Rough draft of paper due (optional)
+  - Wednesday of Week 10: Mini-mini poster session
+  - Monday of finals: Final report due
+      - 1% extra credit for submitting to USCLAP (requires a rough draft due Monday of Week 10 and using a dataset *not* from the starter list)
+      - 1% extra credit for submitting final report 24 hours early
+
+# Stage 1: Study Proposal
+
+Identify the research question(s) and data that will guide your project. Your dataset should have at least 100 observations and at least 5 variables (a response variable and at least four predictors). The response should be binary (0/1), a count of successes out of a known number of trials (binomial), or a count (Poisson).
+
+You should submit:
+
+1. A paragraph identifying your research question(s) and data. Be explicit about which variable is the response, which predictor(s) are your **variables of interest**, and which predictors you will **adjust for**. Describe how the data were collected, with a link or citation.
+2. One informative and well-labeled plot or table, with a paragraph describing it. This is not supposed to be an exhaustive analysis. The purpose is to make sure your data are ready for analysis and to start thinking about modeling issues.
+3. A link to your data, in a format readable by R.
+
+If you are using a starter dataset, your proposal should still state *your* research question. You do not have to use the example questions, and you do not have to use every variable.
+
+# Stage 2: Analysis check-in
+
+As part of HW8, each group member will individually:
+
+1. Make an EDA plot that checks the form of the relationship between the response and one quantitative predictor (an empirical logit plot for logistic regression, or a plot of log mean counts for Poisson regression).
+2. Fit one candidate model and interpret the coefficient for your variable of interest on the odds or rate scale, with a confidence interval.
+3. Check for overdispersion (binomial or Poisson responses) or describe how you will check model fit (binary responses).
+4. List the 3–5 candidate models you plan to compare in the final report.
+
+It's OK with me if your group works on this together as long as you actually do it together. You should not send code back and forth to complete this portion.
+
+# Stage 3: Final Report
+
+We will follow the USCLAP guidelines for the format of the report: <https://www.causeweb.org/usproc/usclap>
+
+## Building your model
+
+Use the same recipe as Case Study 2:
+
+1. **Start with the question.** Identify your variable(s) of interest and the variables you need to adjust for.
+2. **Look before you fit.** Use EDA to check the form of each quantitative predictor (empirical logits or log mean counts) and to look for collinear predictors.
+3. **Fit a *small* set of candidate models** (3–5 models).
+4. **Compare the candidates** with drop-in-deviance tests for nested models and AIC/BIC for any models.
+5. **Check the conditions**: independence, the form of each predictor, overdispersion (binomial and Poisson), and unusual or influential cases.
+6. **Interpret and justify** your choice, with coefficients on the odds-ratio or rate-ratio scale and confidence intervals.
+
+## Format
+
+ - 3 pages or less (including figures but not including references). You may include up to 2 pages of appendices of graphs or coefficient tables that do not count towards this limit. Note that these should be *supporting graphs*, not discussed in the main text.
+ - Abstract: a one-paragraph summary of the problem and your findings (200 words or fewer).
+ - Introduction: introduce the problem and why it is important to study. This should focus on the data and the "real-world" questions. Give enough background that a reader doesn't need to refer to your sources, but take care not to plagiarize them. Cite sources as needed.
+ - Data and EDA: describe how the data were collected and the variables of interest, and present *key* figures that help the reader understand your data and "see what's coming" in the Results section.
+ - Methods: state your model, your candidate models, and how you chose among them.
+ - Results: present your final model and interpret the results, both statistically and in context.
+ - Discussion: a shorter section that summarizes the main points of your analysis and answers your research question.
+ - Appendices: graphs or results that you used but that aren't central to your main point (e.g., diagnostic plots, a list of models you considered).
+
+## Poster session
+
+On the last day of class, each group will present a one-page poster summarizing their question, data, and main finding.
+
+# Starter datasets
+
+Each option below gives some background, the data, and example questions. These are starting points: you are welcome to ask a different question with the same data.
+
+## Option 1: Race and jury selection (logistic regression)
+
+In the trial of Curtis Flowers, Mississippi prosecutor Doug Evans was accused of using "peremptory strikes" to remove Black jurors from juries. The APM Reports investigative team collected data on every potential juror in trials that Evans prosecuted, and used logistic regression to argue that he struck Black jurors at much higher rates, even after accounting for other reasons a juror might be struck. In 2019, the US Supreme Court overturned Flowers's conviction on these grounds.
+
+Background reading:
+
+  - APM study: <https://features.apmreports.org/in-the-dark/mississippi-district-attorney-striking-blacks-from-juries>
+  - APM methodology (the logistic regression model starts on page 9; variable descriptions are in the Appendix): <https://www.apmreports.org/files/peremptory_strike_methodology.pdf>
+  - APM update: <https://www.apmreports.org/in-the-dark/season-two/curtis-flowers-updates>
+
+```{r}
+# apm <- read.csv("https://aluby.github.io/stat230/data/apm.csv")
+apm <- read.csv(here::here("data/apm.csv"))
+```
+
+- **Unit:** one potential juror (2,295 jurors from 89 trials, 1992–2017)
+- **Response:** `struck_state_bin` (1 = struck by the state)
+- **Possible predictors:** `is_black`, `accused`, `fam_accused`, `death_hesitation`, `know_def`, `same_race`, `fam_law_enforcement`, `know_vic`, `know_wit`, `fam_crime_victim`, `crime_victim`, `prior_info`, `gender`, `defendant_race`
+
+Example questions:
+
+  - Can you replicate the APM model? Is it sufficient, or would you change it (for example, using `defendant_race` instead of `same_race`)?
+  - Does the association between juror race and being struck depend on other juror characteristics (interactions)?
+
+Watch out for: jurors are grouped within trials, so they are not fully independent. Note this as a limitation.
+
+## Option 2: Caring for city trees (logistic regression)
+
+Street trees cool neighborhoods, absorb stormwater, and improve air quality, but life on a city sidewalk is hard on a tree. In 2015, more than 2,000 volunteers and NYC Parks staff surveyed every street tree in New York City. They recorded each tree's species and size, rated its health, and noted damage (for example, wires or lights wrapped around the trunk, or roots trapped by paving stones), signs that residents were caring for it ("stewardship"), and whether it had a guard around it.
+
+- **Source:** [2015 Street Tree Census](https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/uvpi-gqnh), NYC Open Data (NYC Department of Parks & Recreation). The data dictionary is attached on the dataset page.
+
+```{r}
+# trees <- read.csv("https://aluby.github.io/stat230/data/nyc_trees.csv")
+trees <- read.csv(here::here("data/nyc_trees.csv"))
+```
+
+- **Unit:** one living street tree. To reduce dependence between neighboring trees, the data are a random sample of 10,000 trees with at most one tree per block.
+- **Response:** `good_health` (1 = rated in good health, 0 = fair or poor)
+- **Possible predictors:**
+    - `diameter` trunk diameter at breast height (inches)
+    - `species` the eight most common species, plus `other`
+    - `on_curb` 1 = planted along the curb, 0 = set back from the curb
+    - `stewardship` signs that people care for the tree (`none`, `1-2 signs`, `3+ signs`)
+    - `guards` tree guard (`none`, `helpful`, `harmful`, `unsure`)
+    - `sidewalk_damage` 1 = the sidewalk next to the tree is damaged (cracked or raised)
+    - `root_problem` 1 = roots constrained by paving stones, a metal grate, or something else
+    - `trunk_problem` 1 = wires, lights, or something else wrapped around the trunk
+    - `branch_problem` 1 = lights, shoes, or something else in the branches
+    - `borough` NYC borough
+    - `surveyor` who rated the tree (`volunteer`, `census staff`, or `parks staff`)
+
+Example questions:
+
+  - Which kinds of damage are most strongly associated with poor tree health, after accounting for species and size?
+  - Are trees with signs of stewardship more likely to be healthy? 
+  - Do volunteers and staff rate tree health differently?
+
+Watch out for: R will choose alphabetical reference levels for `stewardship` and `guards`, so set the reference level to `none`. The stewardship and guard associations are small, so think about the size of the effect, not just its p-value. Health is a visual rating by the surveyor, and nearby trees may still be similar.
+
+## Option 3: Who graduates from college? (binomial logistic regression)
+
+Colleges vary widely in what fraction of their students finish a degree. Some of this reflects the students a college admits, and some might reflect what the college does. The US Department of Education's College Scorecard reports, for each institution, how many students in an entering cohort completed a degree within six years, along with information about the students, cost, and resources.
+
+- **Source:** [College Scorecard](https://collegescorecard.ed.gov/data/), US Department of Education ([data documentation](https://collegescorecard.ed.gov/data/documentation/))
+
+```{r}
+# college <- read.csv("https://aluby.github.io/stat230/data/college_completion.csv")
+college <- read.csv(here::here("data/college_completion.csv"))
+```
+
+- **Unit:** one public or private nonprofit four-year college (1,341 institutions that mainly award bachelor's degrees and had an entering cohort of at least 50 full-time, first-time students)
+- **Response:** `completers` (number of students in the entering cohort who completed a degree within six years) out of `cohort_size`
+- **Possible predictors:**
+    - `control` public or private nonprofit
+    - `hbcu` 1 = historically Black college or university
+    - `region` and `locale` (city, suburb, town, rural)
+    - `admission_rate` proportion of applicants admitted
+    - `sat_avg` average SAT score of admitted students (missing for 374 schools, many of which are test-optional)
+    - `pct_pell` percentage of undergraduates receiving a Pell grant (a common measure of how many low-income students a college enrolls)
+    - `enrollment` undergraduate enrollment
+    - `cost` average annual cost of attendance (dollars)
+    - `faculty_salary` average monthly faculty salary (dollars)
+    - `instruction_spending` instructional spending per full-time-equivalent student (dollars)
+    - `pct_fulltime_faculty` percentage of faculty who are full-time
+    - `name` and `state` identify the institution
+
+Example questions:
+
+  - After accounting for selectivity and resources, do colleges that enroll more Pell grant recipients have lower completion rates?
+  - Are public and private nonprofit colleges with similar students and resources equally likely to graduate their students?
+
+Watch out for: overdispersion. Colleges differ in many ways that no model captures, so expect to use a quasibinomial model. Several predictors (enrollment, spending) are very right-skewed. If you use `sat_avg`, you will lose about a quarter of the colleges, and those colleges are not a random subset.
+
+## Option 4: Do crowds sway referees? (Poisson regression)
+
+Home teams win more often in almost every sport, and one explanation is that crowds pressure referees into favoring the home team. When COVID-19 forced soccer leagues to play in empty stadiums, researchers got a rare natural experiment: the teams, players, and referees were the same, but the crowds were gone.
+
+- **Source:** [football-data.co.uk](https://www.football-data.co.uk/englandm.php) match results and statistics for the English Premier League
+
+```{r}
+# epl <- read.csv("https://aluby.github.io/stat230/data/epl_cards.csv")
+epl <- read.csv(here::here("data/epl_cards.csv"))
+```
+
+- **Unit:** one team in one Premier League match, 2017–18 through 2022–23 (2,280 matches, so 4,560 rows: one for the home team and one for the away team)
+- **Response:** `yellow_cards` the team received (or `fouls` the team was called for, which is also a referee decision)
+- **Possible predictors:**
+    - `home` 1 = home team, 0 = away team
+    - `fans` 1 = fans in the stadium, 0 = no fans (matches from the June 2020 restart through mid-May 2021)
+    - `fouls` and `opp_fouls` fouls called on the team and on its opponent
+    - `shots`, `opp_shots`, and `corners`
+    - `win_prob` and `opp_win_prob` the betting market's pre-match probability that the team (or its opponent) wins, a measure of how strong each team was expected to be
+    - `season`, `date`, `referee`, `team`, `opponent`, and `match_id` (to link the two rows from the same match)
+
+Example questions:
+
+  - Do away teams receive more yellow cards than home teams? Did this difference shrink when stadiums were empty?
+  - Did referees call fouls differently on home and away teams when fans were absent?
+  - After accounting for team strength, did matches without fans have fewer cards overall?
+
+Watch out for: the two rows for each match are not independent; consider how this affects your conclusions. Fouls are called by the referee, so think carefully about whether adjusting for them helps or hurts when your question is about referee bias. The no-fans period is only about one season, so some differences may be too small to detect with this much data. That is a legitimate finding if you report it with a confidence interval.
+
+# Finding your own data
+
+If you find your own dataset, it should come from a source that documents how the data were collected. Some good places to start:
+
+  - Government data portals: [data.gov](https://data.gov), [CDC data](https://data.cdc.gov), city open data portals (e.g., [Minneapolis](https://opendata.minneapolismn.gov/), [NYC](https://opendata.cityofnewyork.us/))
+  - Surveys: [General Social Survey](https://gss.norc.org/), [Pew Research Center](https://www.pewresearch.org/tools-and-resources/), [ICPSR](https://www.icpsr.umich.edu/)
+  - Data journalism: [The Pudding](https://github.com/the-pudding/data), [ProPublica Data Store](https://www.propublica.org/datastore/), [FiveThirtyEight](https://github.com/fivethirtyeight/data)
+  - Research data repositories: [Dryad](https://datadryad.org/), [Harvard Dataverse](https://dataverse.harvard.edu/)
+
+Some things to keep in mind:
+
+  - You should not use textbook data for your own dataset.
+  - I discourage you from using data found on Kaggle, since many datasets uploaded there do not document how they were collected (and some are fake). If you choose a Kaggle dataset, you should find the original source.
+  - Many datasets have structures that require methods beyond this class. These kinds of data generally violate the independence assumption of our models:
+    - Time series data (measurements of a single observational unit over time)
+    - Spatial data
+    - Longitudinal data (repeated measurements on the same individual). (*Note*: this can work if you average the repeated measurements or only look at one or two time points)
+
+# Best practices for small group work
+
+You will work in groups of two or three for this project.
+
+While you are permitted to do some work separately (e.g., the check-in, revising a section at a time when your schedules don’t permit meeting together), I discourage you from completing substantial portions of the final report individually. Each partner should contribute substantively to each component of the report, and each partner is assumed to be an equal contributor to the final product. You should be in regular contact with your partner(s) and should meet at least once outside of class. If you are having issues communicating with your partner(s), please email me as soon as possible.
+
+# Academic Integrity
+
+For this project, you may use the following resources:
+
+  - Your own course notes (from any class!) and any Stat230 materials of your own or provided by Amanda
+  - Web searches/AI where your search/prompts are general questions about coding (e.g., how do I subset a data set in R where I want only certain numerical values?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty.
+  - Web searches/AI where your search/prompts are background research about your project topic. If you use AI, you MUST provide a document shows your “conversation.” You must also find a real source (published by a reputable source, ideally peer-reviewed) and don't rely purely on AI. Failure to do so will be considered academic dishonesty.
+  - Web searches/AI where your search/prompts are general questions about formatting (e.g., how do I make a table in GoogleDocs?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty
+  - The writing center for help editing your write up.
+  - Your in-class group
+  - Amanda
+  - Noah
+  - StatLab / Math Skills Center for R coding help or help with statistical models
+
+For this project you may NOT use the following resources:
+
+  - Other humans (including other folks in this class)
+  - Web searches/AI where your searches/prompts are the specific questions you are being asked in the project about coding (e.g., How do I fit a logistic regression model in R with whether a juror was struck as the response variable?).
+  - Web searches/AI where your search/prompts are the specific formatting questions you are being asked to do for the project (e.g., please write a caption for this table).
+  - AI to write or edit any portion of your proposal, check-in, or final report.
+
+# Rubric
+
+*Note:* I recommend going through this checklist as a team before your final submission
+
+- Title and authors (2%)
+    - [ ] Has an informative title and lists the authors
+- Abstract (3%)
+    - [ ] A brief, one-paragraph executive summary of the problem and your findings (200 words or fewer)
+- Introduction (10%)
+    - [ ] Introduces and motivates the topic being addressed
+    - [ ] Includes at least one reference for context/motivation for this study that is well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)
+    - [ ] Explains the questions addressed in the report
+    - [ ] Gives appropriate background information (and avoids making broad and unsubstantiated claims)
+- Data and EDA (15%)
+    - [ ] Describes how the data were collected (cite your sources and describe methods)
+    - [ ] Identifies the observational units, the response, and the predictors, with any definitions needed for context
+    - [ ] At least one visual summary of the response and the variable(s) of interest that directly connects to the model
+    - [ ] Checks the form of quantitative predictors (empirical logit or log mean count plots)
+    - [ ] Describes the data accurately and concisely
+- Methods (15%)
+    - [ ] The model type (logistic, binomial logistic, or Poisson) is appropriate for the response and the research question
+    - [ ] Clearly and correctly states the theoretical model
+    - [ ] Identifies the variable(s) of interest and the variables being adjusted for, with a justification based on context
+    - [ ] Summarizes a small set of candidate models and how they were compared (drop-in-deviance tests, AIC/BIC), not every model tried
+    - [ ] Assesses the conditions (independence, form of predictors, overdispersion if applicable, unusual cases), with any adjustments (e.g., quasi-likelihood) justified and diagnostics referenced in the appendix
+- Results (25%)
+    - [ ] Focus is on conveying the results of the analysis and is not a step-by-step description
+    - [ ] Presents the fitted model using correct notation and context
+    - [ ] Includes a polished coefficient table (estimates, SEs, test results and/or CIs)
+    - [ ] Interprets the coefficients for the variables of interest as odds ratios or rate ratios, with confidence intervals, in context
+    - [ ] Statistical inference is appropriately performed
+    - [ ] All technical language is used correctly
+- Discussion (10%)
+    - [ ] Summarizes the main findings and answers the question posed in the introduction (no new results should appear here!)
+    - [ ] Describes any limitations of your analysis and any necessary caveats (e.g., observational data, dependence between observations)
+    - [ ] Describes any follow-up questions that would be interesting to investigate
+- Report appendix (included in your PDF) (5%)
+    - [ ] Includes justification that the selected model is appropriate
+    - [ ] Contains relevant diagnostics, figures, or tables
+    - [ ] No unnecessary or irrelevant content is included
+- Quarto appendix (separate file) (5%)
+    - [ ] R code used for the analysis is shown and implemented correctly, using general conventions from class
+    - [ ] R code is approximately ordered as the results are presented in the report
+- Overall presentation (10%)
+    - [ ] A separate references section is included, with any standard citation style
+    - [ ] The report is structured according to the instructions
+    - [ ] The text is neatly presented, broken into readable paragraphs and laid out in a coherent manner
+    - [ ] All figures and tables are clean, labeled, captioned, appropriately sized, referenced in the text, and relevant
+    - [ ] Peer evaluations were completed for group members and satisfactory from group members
+
+# Questions?
+
+If you have questions, please post them on the Final Project thread on our Ed discussion page!

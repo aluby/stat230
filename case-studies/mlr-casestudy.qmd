@@ -48,8 +48,7 @@ Cities and counties spend a lot of money on parks, trails, and recreation center
 The data come from the [County Health Rankings & Roadmaps](https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation) 2025 data release (University of Wisconsin Population Health Institute). There is one row for each of 989 U.S. counties with a population of at least 50,000.
 
 ```{r}
-# greenspace <- read.csv("https://aluby.github.io/stat230/data/county_greenspace.csv")
-greenspace <- read.csv(here::here("data/county_greenspace.csv"))
+greenspace <- read.csv("https://aluby.github.io/stat230/data/county_greenspace.csv")
 ```
 
 Variables:
@@ -82,7 +81,7 @@ Your report should address the following:
 
 Things to watch out for:
 
-- Consider transformations (look closely at `median_income`)
+- Consider transformations (especially for money or count-related variables)
 - It may be helpful to *first* find a model for life expectancy that only uses the socioeconomic and demographic variables, and then add the green space variables
 - Many of the socioeconomic variables are correlated with each other. Be aware of multicollinearity.
 - Watch out for outliers! If you discuss unusual counties, refer to them by name and look into *why* they are unusual
@@ -95,8 +94,7 @@ Ticket sales are a major source of revenue for Major League Baseball teams, so f
 The data come from the [Lahman Baseball Database](https://sabr.org/lahman-database/) (available in the `Lahman` R package). There is one row for each MLB team in each season from 2012–2019 and 2022–2023 (300 team-seasons). The 2020 season (no fans) and 2021 season (capacity limits) are not included.
 
 ```{r}
-# mlb <- read.csv("https://aluby.github.io/stat230/data/mlb_attendance.csv")
-mlb <- read.csv(here::here("data/mlb_attendance.csv"))
+mlb <- read.csv("https://aluby.github.io/stat230/data/mlb_attendance.csv")
 ```
 
 Variables:
@@ -145,14 +143,14 @@ Things to watch out for:
 
  - 4 pages or less (including figures but not including references). You may include up to 2 pages of appendices that do not count towards this limit.
  - Introduction: this is where you introduce the problem and why it is important to study. This should focus on the data and the "real-world" questions.
- - EDA: this is where you discuss the variables of interest and present your EDA (e.g. graphs) to motivate your model
+ - EDA: this is where you discuss the variables of interest and present your EDA (e.g. graphs) to motivate your model. It may be a good place to introduce transformations. 
  - Results: this is where you present your candidate models, your model selection approach, your final model, and interpret the results. You should explain your results both statistically and in context.
  - Discussion: this is a shorter section that summarizes the main points of your analysis and explains your answer to the research question.
  - Appendices: this is an optional section where you can include graphs or results that you used, but aren't central to the point you are trying to make in the remainder of the report. (Eg residual plots that were "normal" or a list of transformations that you considered)
 
 # Best practices for small group work
 
-You will work in groups of two for this project.
+You will work in groups of 2-3 for this project.
 
 While you are permitted to do some work separately (e.g., the homework components, revising a section at a time when your schedules don’t permit meeting together), I discourage you from completing substantial portions of the final report individually. Each partner should contribute substantively to each component of the report, and each partner is assumed to be an equal contributor to the final product. You should be in regular contact with your partner(s) and should meet at least once outside of class. If you are having issues communicating with your partner(s), please email me as soon as possible.
 

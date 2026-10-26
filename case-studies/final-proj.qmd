@@ -21,22 +21,19 @@ one report. Please let me know if you are having trouble communicating with your
 
 Due dates: 
   
-  - Monday of Week 8: Project partner form
-  - Friday of Week 9: Study proposal due
-  - Wednesday of Week 10: Data presentations
-  - Monday end of term: Final report due
-      - 1% extra credit for submitting to USCLAP (requires a rough draft due the last day of class and using a dataset *not* from our list)
+  - Friday of Week 7: Project parter form
+  - Friday of Week 8: Study proposal due (with dataset)
+  - Monday of Week 10: Rough draft of paper due (optional)
+  - Wednesday of Week 10: Mini-mini poster session
+  - Monday of finals: Final report due
+      - 1% extra credit for submitting to USCLAP (requires a rough draft due Monday of Week 10 and using a dataset *not* from our list)
       - 1% extra credit for submitting final report 24 hours early
-      - Extra credit on last HW if you meet with Noah at least once as a group to discuss either your study proposal or final report
   
 # Stage 1: Study Proposal
 
 Identify the research questions and data that will guide your project. Your dataset should have
 at least 100 observations/cases and at least 5 variables (at least four predictor variables and a
-response variable). You should not use textbook data. You should carefully consider the questions
-that you intend to ask with your data, as well as the design of the study and how the data were
-or will be collected. It is essential that the methods used to analyze your dataset ultimately be
-appropriate to both the question of interest and the data at hand.
+response variable). The response variable should be binary (0/1) or a count variable, and you should plan to use either logistic or Poisson regression. You should not use textbook data. You should carefully consider the questions that you intend to ask with your data, as well as the design of the study and how the data were or will be collected. It is essential that the methods used to analyze your dataset ultimately be appropriate to both the question of interest and the data at hand.
 
 Examples of previous project abstracts will be posted on Moodle to give you an idea of what kinds of things people have done in the past. I will also post some online sources of data (but you may obtain data from a source not listed there).
 
@@ -68,38 +65,15 @@ modeling issues that may arise.
 
 3. A link to your data. The dataset should be in a format readable by R.
 
-We will do "data presentations" on the last day of class. 
+We will do "data presentations" in a mini-mini poster session on the last day of class.
 
 # Stage 2: Final Report
 
 We will follow the USCLAP guidelines for the format of the report: https://www.causeweb.org/usproc/usclap 
 
-## Data Presentation/Lightning Talk
-
-Each group will have **3 minutes** to present and **2 minutes** for questions/transitions. This is extremely short! You will not have time to discuss your progress in any amount of detail, so you should focus on your data and primary modeling approach. 
-
-Slide 1: Data overview 
-
-  - Source?
-  - Response/predictor variables? 
-  - General research question?
-
-Slide 2: Modeling approach
-
-  - Theoretical equation with your response and predictors
-  - Can include transformations, but don't need to show in detail
-  - Do not talk about the validity of the model
-
-Slide 3: 1 result/challenge so far: 
-
-This can be anything you've spent some time thinking about! Some ideas: 
-
-   - Cool EDA showing the relationship you will estimate
-   - Data issue you ran into
-   - Fun paper that you read as background information
-   - Report 1-2 interesting coefficients related to your research question
-   - Discuss an influential point and whether or not you will remove it
-   - Discuss a problematic residual plot and what you will do to fix it
+## Data Presentation/Lightning Talk/Poster session
+ 
+[TBD]
 
 ## Format
 

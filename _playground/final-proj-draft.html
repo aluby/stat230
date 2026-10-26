@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Final Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="final-proj-draft_files/libs/clipboard/clipboard.min.js"></script>
+<script src="final-proj-draft_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="final-proj-draft_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="final-proj-draft_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="final-proj-draft_files/libs/quarto-html/popper.min.js"></script>
+<script src="final-proj-draft_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="final-proj-draft_files/libs/quarto-html/anchor.min.js"></script>
+<link href="final-proj-draft_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="final-proj-draft_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="final-proj-draft_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="final-proj-draft_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="final-proj-draft_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Final Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Instructor notes (delete before publishing)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>This replaces both Case Study 3 and the old final project prompt. The rubric merges the two.</li>
+<li>Starter data are in <code>data/</code> (<code>apm.csv</code>, <code>nyc_trees.csv</code>, <code>college_completion.csv</code>, <code>epl_cards.csv</code>), each with a build script (<code>nyc_trees.R</code>, <code>college_completion.R</code>, <code>epl_cards.R</code>) that documents the source and the cleaning. The raw downloads are not in the repo.</li>
+<li>Dates in the timeline are placeholders based on the old final project and the old Case Study 3 schedule.</li>
+</ul>
+</div>
+</div>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>The final project is your chance to use the methods from this course to answer a question you care about. You will build a <strong>logistic</strong> (binary or binomial) or <strong>Poisson</strong> regression model, choose among candidate models, and report your findings in a short, polished paper.</p>
+<p>You can either:</p>
+<ul>
+<li>start from one of the four <strong>starter datasets</strong> below, or</li>
+<li>find your own data (see <a href="#finding-your-own-data">Finding your own data</a>).</li>
+</ul>
+<p>You will work in groups of 2 or 3 people assigned by me with your input. The expectation is that each student shares equal responsibility for the report. You will turn in one report per group. Please let me know if you are having trouble communicating with your group.</p>
+</section>
+<section id="timeline" class="level1">
+<h1>Timeline</h1>
+<ul>
+<li>Friday of Week 7: Project partner form</li>
+<li>Friday of Week 8: Study proposal due (with dataset)</li>
+<li>Friday of Week 9: Analysis check-in (individual, as part of HW8)</li>
+<li>Monday of Week 10: Rough draft of paper due (optional)</li>
+<li>Wednesday of Week 10: Mini-mini poster session</li>
+<li>Monday of finals: Final report due
+<ul>
+<li>1% extra credit for submitting to USCLAP (requires a rough draft due Monday of Week 10 and using a dataset <em>not</em> from the starter list)</li>
+<li>1% extra credit for submitting final report 24 hours early</li>
+</ul></li>
+</ul>
+</section>
+<section id="stage-1-study-proposal" class="level1">
+<h1>Stage 1: Study Proposal</h1>
+<p>Identify the research question(s) and data that will guide your project. Your dataset should have at least 100 observations and at least 5 variables (a response variable and at least four predictors). The response should be binary (0/1), a count of successes out of a known number of trials (binomial), or a count (Poisson).</p>
+<p>You should submit:</p>
+<ol type="1">
+<li>A paragraph identifying your research question(s) and data. Be explicit about which variable is the response, which predictor(s) are your <strong>variables of interest</strong>, and which predictors you will <strong>adjust for</strong>. Describe how the data were collected, with a link or citation.</li>
+<li>One informative and well-labeled plot or table, with a paragraph describing it. This is not supposed to be an exhaustive analysis. The purpose is to make sure your data are ready for analysis and to start thinking about modeling issues.</li>
+<li>A link to your data, in a format readable by R.</li>
+</ol>
+<p>If you are using a starter dataset, your proposal should still state <em>your</em> research question. You do not have to use the example questions, and you do not have to use every variable.</p>
+</section>
+<section id="stage-2-analysis-check-in" class="level1">
+<h1>Stage 2: Analysis check-in</h1>
+<p>As part of HW8, each group member will individually:</p>
+<ol type="1">
+<li>Make an EDA plot that checks the form of the relationship between the response and one quantitative predictor (an empirical logit plot for logistic regression, or a plot of log mean counts for Poisson regression).</li>
+<li>Fit one candidate model and interpret the coefficient for your variable of interest on the odds or rate scale, with a confidence interval.</li>
+<li>Check for overdispersion (binomial or Poisson responses) or describe how you will check model fit (binary responses).</li>
+<li>List the 3–5 candidate models you plan to compare in the final report.</li>
+</ol>
+<p>It’s OK with me if your group works on this together as long as you actually do it together. You should not send code back and forth to complete this portion.</p>
+</section>
+<section id="stage-3-final-report" class="level1">
+<h1>Stage 3: Final Report</h1>
+<p>We will follow the USCLAP guidelines for the format of the report: <a href="https://www.causeweb.org/usproc/usclap" class="uri">https://www.causeweb.org/usproc/usclap</a></p>
+<section id="building-your-model" class="level2">
+<h2 class="anchored" data-anchor-id="building-your-model">Building your model</h2>
+<p>Use the same recipe as Case Study 2:</p>
+<ol type="1">
+<li><strong>Start with the question.</strong> Identify your variable(s) of interest and the variables you need to adjust for.</li>
+<li><strong>Look before you fit.</strong> Use EDA to check the form of each quantitative predictor (empirical logits or log mean counts) and to look for collinear predictors.</li>
+<li><strong>Fit a <em>small</em> set of candidate models</strong> (3–5 models).</li>
+<li><strong>Compare the candidates</strong> with drop-in-deviance tests for nested models and AIC/BIC for any models.</li>
+<li><strong>Check the conditions</strong>: independence, the form of each predictor, overdispersion (binomial and Poisson), and unusual or influential cases.</li>
+<li><strong>Interpret and justify</strong> your choice, with coefficients on the odds-ratio or rate-ratio scale and confidence intervals.</li>
+</ol>
+</section>
+<section id="format" class="level2">
+<h2 class="anchored" data-anchor-id="format">Format</h2>
+<ul>
+<li>3 pages or less (including figures but not including references). You may include up to 2 pages of appendices of graphs or coefficient tables that do not count towards this limit. Note that these should be <em>supporting graphs</em>, not discussed in the main text.</li>
+<li>Abstract: a one-paragraph summary of the problem and your findings (200 words or fewer).</li>
+<li>Introduction: introduce the problem and why it is important to study. This should focus on the data and the “real-world” questions. Give enough background that a reader doesn’t need to refer to your sources, but take care not to plagiarize them. Cite sources as needed.</li>
+<li>Data and EDA: describe how the data were collected and the variables of interest, and present <em>key</em> figures that help the reader understand your data and “see what’s coming” in the Results section.</li>
+<li>Methods: state your model, your candidate models, and how you chose among them.</li>
+<li>Results: present your final model and interpret the results, both statistically and in context.</li>
+<li>Discussion: a shorter section that summarizes the main points of your analysis and answers your research question.</li>
+<li>Appendices: graphs or results that you used but that aren’t central to your main point (e.g., diagnostic plots, a list of models you considered).</li>
+</ul>
+</section>
+<section id="poster-session" class="level2">
+<h2 class="anchored" data-anchor-id="poster-session">Poster session</h2>
+<p>On the last day of class, each group will present a one-page poster summarizing their question, data, and main finding.</p>
+</section>
+</section>
+<section id="starter-datasets" class="level1">
+<h1>Starter datasets</h1>
+<p>Each option below gives some background, the data, and example questions. These are starting points: you are welcome to ask a different question with the same data.</p>
+<section id="option-1-race-and-jury-selection-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="option-1-race-and-jury-selection-logistic-regression">Option 1: Race and jury selection (logistic regression)</h2>
+<p>In the trial of Curtis Flowers, Mississippi prosecutor Doug Evans was accused of using “peremptory strikes” to remove Black jurors from juries. The APM Reports investigative team collected data on every potential juror in trials that Evans prosecuted, and used logistic regression to argue that he struck Black jurors at much higher rates, even after accounting for other reasons a juror might be struck. In 2019, the US Supreme Court overturned Flowers’s conviction on these grounds.</p>
+<p>Background reading:</p>
+<ul>
+<li>APM study: <a href="https://features.apmreports.org/in-the-dark/mississippi-district-attorney-striking-blacks-from-juries" class="uri">https://features.apmreports.org/in-the-dark/mississippi-district-attorney-striking-blacks-from-juries</a></li>
+<li>APM methodology (the logistic regression model starts on page 9; variable descriptions are in the Appendix): <a href="https://www.apmreports.org/files/peremptory_strike_methodology.pdf" class="uri">https://www.apmreports.org/files/peremptory_strike_methodology.pdf</a></li>
+<li>APM update: <a href="https://www.apmreports.org/in-the-dark/season-two/curtis-flowers-updates" class="uri">https://www.apmreports.org/in-the-dark/season-two/curtis-flowers-updates</a></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apm &lt;- read.csv("https://aluby.github.io/stat230/data/apm.csv")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>apm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/apm.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><strong>Unit:</strong> one potential juror (2,295 jurors from 89 trials, 1992–2017)</li>
+<li><strong>Response:</strong> <code>struck_state_bin</code> (1 = struck by the state)</li>
+<li><strong>Possible predictors:</strong> <code>is_black</code>, <code>accused</code>, <code>fam_accused</code>, <code>death_hesitation</code>, <code>know_def</code>, <code>same_race</code>, <code>fam_law_enforcement</code>, <code>know_vic</code>, <code>know_wit</code>, <code>fam_crime_victim</code>, <code>crime_victim</code>, <code>prior_info</code>, <code>gender</code>, <code>defendant_race</code></li>
+</ul>
+<p>Example questions:</p>
+<ul>
+<li>Can you replicate the APM model? Is it sufficient, or would you change it (for example, using <code>defendant_race</code> instead of <code>same_race</code>)?</li>
+<li>Does the association between juror race and being struck depend on other juror characteristics (interactions)?</li>
+</ul>
+<p>Watch out for: jurors are grouped within trials, so they are not fully independent. Note this as a limitation.</p>
+</section>
+<section id="option-2-caring-for-city-trees-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="option-2-caring-for-city-trees-logistic-regression">Option 2: Caring for city trees (logistic regression)</h2>
+<p>Street trees cool neighborhoods, absorb stormwater, and improve air quality, but life on a city sidewalk is hard on a tree. In 2015, more than 2,000 volunteers and NYC Parks staff surveyed every street tree in New York City. They recorded each tree’s species and size, rated its health, and noted damage (for example, wires or lights wrapped around the trunk, or roots trapped by paving stones), signs that residents were caring for it (“stewardship”), and whether it had a guard around it.</p>
+<ul>
+<li><strong>Source:</strong> <a href="https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/uvpi-gqnh">2015 Street Tree Census</a>, NYC Open Data (NYC Department of Parks &amp; Recreation). The data dictionary is attached on the dataset page.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># trees &lt;- read.csv("https://aluby.github.io/stat230/data/nyc_trees.csv")</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>trees <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/nyc_trees.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><strong>Unit:</strong> one living street tree. To reduce dependence between neighboring trees, the data are a random sample of 10,000 trees with at most one tree per block.</li>
+<li><strong>Response:</strong> <code>good_health</code> (1 = rated in good health, 0 = fair or poor)</li>
+<li><strong>Possible predictors:</strong>
+<ul>
+<li><code>diameter</code> trunk diameter at breast height (inches)</li>
+<li><code>species</code> the eight most common species, plus <code>other</code></li>
+<li><code>on_curb</code> 1 = planted along the curb, 0 = set back from the curb</li>
+<li><code>stewardship</code> signs that people care for the tree (<code>none</code>, <code>1-2 signs</code>, <code>3+ signs</code>)</li>
+<li><code>guards</code> tree guard (<code>none</code>, <code>helpful</code>, <code>harmful</code>, <code>unsure</code>)</li>
+<li><code>sidewalk_damage</code> 1 = the sidewalk next to the tree is damaged (cracked or raised)</li>
+<li><code>root_problem</code> 1 = roots constrained by paving stones, a metal grate, or something else</li>
+<li><code>trunk_problem</code> 1 = wires, lights, or something else wrapped around the trunk</li>
+<li><code>branch_problem</code> 1 = lights, shoes, or something else in the branches</li>
+<li><code>borough</code> NYC borough</li>
+<li><code>surveyor</code> who rated the tree (<code>volunteer</code>, <code>census staff</code>, or <code>parks staff</code>)</li>
+</ul></li>
+</ul>
+<p>Example questions:</p>
+<ul>
+<li>Which kinds of damage are most strongly associated with poor tree health, after accounting for species and size?</li>
+<li>Are trees with signs of stewardship more likely to be healthy?</li>
+<li>Do volunteers and staff rate tree health differently?</li>
+</ul>
+<p>Watch out for: R will choose alphabetical reference levels for <code>stewardship</code> and <code>guards</code>, so set the reference level to <code>none</code>. The stewardship and guard associations are small, so think about the size of the effect, not just its p-value. Health is a visual rating by the surveyor, and nearby trees may still be similar.</p>
+</section>
+<section id="option-3-who-graduates-from-college-binomial-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="option-3-who-graduates-from-college-binomial-logistic-regression">Option 3: Who graduates from college? (binomial logistic regression)</h2>
+<p>Colleges vary widely in what fraction of their students finish a degree. Some of this reflects the students a college admits, and some might reflect what the college does. The US Department of Education’s College Scorecard reports, for each institution, how many students in an entering cohort completed a degree within six years, along with information about the students, cost, and resources.</p>
+<ul>
+<li><strong>Source:</strong> <a href="https://collegescorecard.ed.gov/data/">College Scorecard</a>, US Department of Education (<a href="https://collegescorecard.ed.gov/data/documentation/">data documentation</a>)</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># college &lt;- read.csv("https://aluby.github.io/stat230/data/college_completion.csv")</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/college_completion.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><strong>Unit:</strong> one public or private nonprofit four-year college (1,341 institutions that mainly award bachelor’s degrees and had an entering cohort of at least 50 full-time, first-time students)</li>
+<li><strong>Response:</strong> <code>completers</code> (number of students in the entering cohort who completed a degree within six years) out of <code>cohort_size</code></li>
+<li><strong>Possible predictors:</strong>
+<ul>
+<li><code>control</code> public or private nonprofit</li>
+<li><code>hbcu</code> 1 = historically Black college or university</li>
+<li><code>region</code> and <code>locale</code> (city, suburb, town, rural)</li>
+<li><code>admission_rate</code> proportion of applicants admitted</li>
+<li><code>sat_avg</code> average SAT score of admitted students (missing for 374 schools, many of which are test-optional)</li>
+<li><code>pct_pell</code> percentage of undergraduates receiving a Pell grant (a common measure of how many low-income students a college enrolls)</li>
+<li><code>enrollment</code> undergraduate enrollment</li>
+<li><code>cost</code> average annual cost of attendance (dollars)</li>
+<li><code>faculty_salary</code> average monthly faculty salary (dollars)</li>
+<li><code>instruction_spending</code> instructional spending per full-time-equivalent student (dollars)</li>
+<li><code>pct_fulltime_faculty</code> percentage of faculty who are full-time</li>
+<li><code>name</code> and <code>state</code> identify the institution</li>
+</ul></li>
+</ul>
+<p>Example questions:</p>
+<ul>
+<li>After accounting for selectivity and resources, do colleges that enroll more Pell grant recipients have lower completion rates?</li>
+<li>Are public and private nonprofit colleges with similar students and resources equally likely to graduate their students?</li>
+</ul>
+<p>Watch out for: overdispersion. Colleges differ in many ways that no model captures, so expect to use a quasibinomial model. Several predictors (enrollment, spending) are very right-skewed. If you use <code>sat_avg</code>, you will lose about a quarter of the colleges, and those colleges are not a random subset.</p>
+</section>
+<section id="option-4-do-crowds-sway-referees-poisson-regression" class="level2">
+<h2 class="anchored" data-anchor-id="option-4-do-crowds-sway-referees-poisson-regression">Option 4: Do crowds sway referees? (Poisson regression)</h2>
+<p>Home teams win more often in almost every sport, and one explanation is that crowds pressure referees into favoring the home team. When COVID-19 forced soccer leagues to play in empty stadiums, researchers got a rare natural experiment: the teams, players, and referees were the same, but the crowds were gone.</p>
+<ul>
+<li><strong>Source:</strong> <a href="https://www.football-data.co.uk/englandm.php">football-data.co.uk</a> match results and statistics for the English Premier League</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># epl &lt;- read.csv("https://aluby.github.io/stat230/data/epl_cards.csv")</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>epl <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/epl_cards.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><strong>Unit:</strong> one team in one Premier League match, 2017–18 through 2022–23 (2,280 matches, so 4,560 rows: one for the home team and one for the away team)</li>
+<li><strong>Response:</strong> <code>yellow_cards</code> the team received (or <code>fouls</code> the team was called for, which is also a referee decision)</li>
+<li><strong>Possible predictors:</strong>
+<ul>
+<li><code>home</code> 1 = home team, 0 = away team</li>
+<li><code>fans</code> 1 = fans in the stadium, 0 = no fans (matches from the June 2020 restart through mid-May 2021)</li>
+<li><code>fouls</code> and <code>opp_fouls</code> fouls called on the team and on its opponent</li>
+<li><code>shots</code>, <code>opp_shots</code>, and <code>corners</code></li>
+<li><code>win_prob</code> and <code>opp_win_prob</code> the betting market’s pre-match probability that the team (or its opponent) wins, a measure of how strong each team was expected to be</li>
+<li><code>season</code>, <code>date</code>, <code>referee</code>, <code>team</code>, <code>opponent</code>, and <code>match_id</code> (to link the two rows from the same match)</li>
+</ul></li>
+</ul>
+<p>Example questions:</p>
+<ul>
+<li>Do away teams receive more yellow cards than home teams? Did this difference shrink when stadiums were empty?</li>
+<li>Did referees call fouls differently on home and away teams when fans were absent?</li>
+<li>After accounting for team strength, did matches without fans have fewer cards overall?</li>
+</ul>
+<p>Watch out for: the two rows for each match are not independent; consider how this affects your conclusions. Fouls are called by the referee, so think carefully about whether adjusting for them helps or hurts when your question is about referee bias. The no-fans period is only about one season, so some differences may be too small to detect with this much data. That is a legitimate finding if you report it with a confidence interval.</p>
+</section>
+</section>
+<section id="finding-your-own-data" class="level1">
+<h1>Finding your own data</h1>
+<p>If you find your own dataset, it should come from a source that documents how the data were collected. Some good places to start:</p>
+<ul>
+<li>Government data portals: <a href="https://data.gov">data.gov</a>, <a href="https://data.cdc.gov">CDC data</a>, city open data portals (e.g., <a href="https://opendata.minneapolismn.gov/">Minneapolis</a>, <a href="https://opendata.cityofnewyork.us/">NYC</a>)</li>
+<li>Surveys: <a href="https://gss.norc.org/">General Social Survey</a>, <a href="https://www.pewresearch.org/tools-and-resources/">Pew Research Center</a>, <a href="https://www.icpsr.umich.edu/">ICPSR</a></li>
+<li>Data journalism: <a href="https://github.com/the-pudding/data">The Pudding</a>, <a href="https://www.propublica.org/datastore/">ProPublica Data Store</a>, <a href="https://github.com/fivethirtyeight/data">FiveThirtyEight</a></li>
+<li>Research data repositories: <a href="https://datadryad.org/">Dryad</a>, <a href="https://dataverse.harvard.edu/">Harvard Dataverse</a></li>
+</ul>
+<p>Some things to keep in mind:</p>
+<ul>
+<li>You should not use textbook data for your own dataset.</li>
+<li>I discourage you from using data found on Kaggle, since many datasets uploaded there do not document how they were collected (and some are fake). If you choose a Kaggle dataset, you should find the original source.</li>
+<li>Many datasets have structures that require methods beyond this class. These kinds of data generally violate the independence assumption of our models:
+<ul>
+<li>Time series data (measurements of a single observational unit over time)</li>
+<li>Spatial data</li>
+<li>Longitudinal data (repeated measurements on the same individual). (<em>Note</em>: this can work if you average the repeated measurements or only look at one or two time points)</li>
+</ul></li>
+</ul>
+</section>
+<section id="best-practices-for-small-group-work" class="level1">
+<h1>Best practices for small group work</h1>
+<p>You will work in groups of two or three for this project.</p>
+<p>While you are permitted to do some work separately (e.g., the check-in, revising a section at a time when your schedules don’t permit meeting together), I discourage you from completing substantial portions of the final report individually. Each partner should contribute substantively to each component of the report, and each partner is assumed to be an equal contributor to the final product. You should be in regular contact with your partner(s) and should meet at least once outside of class. If you are having issues communicating with your partner(s), please email me as soon as possible.</p>
+</section>
+<section id="academic-integrity" class="level1">
+<h1>Academic Integrity</h1>
+<p>For this project, you may use the following resources:</p>
+<ul>
+<li>Your own course notes (from any class!) and any Stat230 materials of your own or provided by Amanda</li>
+<li>Web searches/AI where your search/prompts are general questions about coding (e.g., how do I subset a data set in R where I want only certain numerical values?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty.</li>
+<li>Web searches/AI where your search/prompts are background research about your project topic. If you use AI, you MUST provide a document shows your “conversation.” You must also find a real source (published by a reputable source, ideally peer-reviewed) and don’t rely purely on AI. Failure to do so will be considered academic dishonesty.</li>
+<li>Web searches/AI where your search/prompts are general questions about formatting (e.g., how do I make a table in GoogleDocs?). If you use AI, you MUST provide a document shows your “conversation.” Failure to do so will be considered academic dishonesty</li>
+<li>The writing center for help editing your write up.</li>
+<li>Your in-class group</li>
+<li>Amanda</li>
+<li>Noah</li>
+<li>StatLab / Math Skills Center for R coding help or help with statistical models</li>
+</ul>
+<p>For this project you may NOT use the following resources:</p>
+<ul>
+<li>Other humans (including other folks in this class)</li>
+<li>Web searches/AI where your searches/prompts are the specific questions you are being asked in the project about coding (e.g., How do I fit a logistic regression model in R with whether a juror was struck as the response variable?).</li>
+<li>Web searches/AI where your search/prompts are the specific formatting questions you are being asked to do for the project (e.g., please write a caption for this table).</li>
+<li>AI to write or edit any portion of your proposal, check-in, or final report.</li>
+</ul>
+</section>
+<section id="rubric" class="level1">
+<h1>Rubric</h1>
+<p><em>Note:</em> I recommend going through this checklist as a team before your final submission</p>
+<ul>
+<li>Title and authors (2%)
+<ul class="task-list">
+<li><label><input type="checkbox">Has an informative title and lists the authors</label></li>
+</ul></li>
+<li>Abstract (3%)
+<ul class="task-list">
+<li><label><input type="checkbox">A brief, one-paragraph executive summary of the problem and your findings (200 words or fewer)</label></li>
+</ul></li>
+<li>Introduction (10%)
+<ul class="task-list">
+<li><label><input type="checkbox">Introduces and motivates the topic being addressed</label></li>
+<li><label><input type="checkbox">Includes at least one reference for context/motivation for this study that is well-connected to your questions. Use in-text citations for your peer-reviewed citations (eg. Luby 2024)</label></li>
+<li><label><input type="checkbox">Explains the questions addressed in the report</label></li>
+<li><label><input type="checkbox">Gives appropriate background information (and avoids making broad and unsubstantiated claims)</label></li>
+</ul></li>
+<li>Data and EDA (15%)
+<ul class="task-list">
+<li><label><input type="checkbox">Describes how the data were collected (cite your sources and describe methods)</label></li>
+<li><label><input type="checkbox">Identifies the observational units, the response, and the predictors, with any definitions needed for context</label></li>
+<li><label><input type="checkbox">At least one visual summary of the response and the variable(s) of interest that directly connects to the model</label></li>
+<li><label><input type="checkbox">Checks the form of quantitative predictors (empirical logit or log mean count plots)</label></li>
+<li><label><input type="checkbox">Describes the data accurately and concisely</label></li>
+</ul></li>
+<li>Methods (15%)
+<ul class="task-list">
+<li><label><input type="checkbox">The model type (logistic, binomial logistic, or Poisson) is appropriate for the response and the research question</label></li>
+<li><label><input type="checkbox">Clearly and correctly states the theoretical model</label></li>
+<li><label><input type="checkbox">Identifies the variable(s) of interest and the variables being adjusted for, with a justification based on context</label></li>
+<li><label><input type="checkbox">Summarizes a small set of candidate models and how they were compared (drop-in-deviance tests, AIC/BIC), not every model tried</label></li>
+<li><label><input type="checkbox">Assesses the conditions (independence, form of predictors, overdispersion if applicable, unusual cases), with any adjustments (e.g., quasi-likelihood) justified and diagnostics referenced in the appendix</label></li>
+</ul></li>
+<li>Results (25%)
+<ul class="task-list">
+<li><label><input type="checkbox">Focus is on conveying the results of the analysis and is not a step-by-step description</label></li>
+<li><label><input type="checkbox">Presents the fitted model using correct notation and context</label></li>
+<li><label><input type="checkbox">Includes a polished coefficient table (estimates, SEs, test results and/or CIs)</label></li>
+<li><label><input type="checkbox">Interprets the coefficients for the variables of interest as odds ratios or rate ratios, with confidence intervals, in context</label></li>
+<li><label><input type="checkbox">Statistical inference is appropriately performed</label></li>
+<li><label><input type="checkbox">All technical language is used correctly</label></li>
+</ul></li>
+<li>Discussion (10%)
+<ul class="task-list">
+<li><label><input type="checkbox">Summarizes the main findings and answers the question posed in the introduction (no new results should appear here!)</label></li>
+<li><label><input type="checkbox">Describes any limitations of your analysis and any necessary caveats (e.g., observational data, dependence between observations)</label></li>
+<li><label><input type="checkbox">Describes any follow-up questions that would be interesting to investigate</label></li>
+</ul></li>
+<li>Report appendix (included in your PDF) (5%)
+<ul class="task-list">
+<li><label><input type="checkbox">Includes justification that the selected model is appropriate</label></li>
+<li><label><input type="checkbox">Contains relevant diagnostics, figures, or tables</label></li>
+<li><label><input type="checkbox">No unnecessary or irrelevant content is included</label></li>
+</ul></li>
+<li>Quarto appendix (separate file) (5%)
+<ul class="task-list">
+<li><label><input type="checkbox">R code used for the analysis is shown and implemented correctly, using general conventions from class</label></li>
+<li><label><input type="checkbox">R code is approximately ordered as the results are presented in the report</label></li>
+</ul></li>
+<li>Overall presentation (10%)
+<ul class="task-list">
+<li><label><input type="checkbox">A separate references section is included, with any standard citation style</label></li>
+<li><label><input type="checkbox">The report is structured according to the instructions</label></li>
+<li><label><input type="checkbox">The text is neatly presented, broken into readable paragraphs and laid out in a coherent manner</label></li>
+<li><label><input type="checkbox">All figures and tables are clean, labeled, captioned, appropriately sized, referenced in the text, and relevant</label></li>
+<li><label><input type="checkbox">Peer evaluations were completed for group members and satisfactory from group members</label></li>
+</ul></li>
+</ul>
+</section>
+<section id="questions" class="level1">
+<h1>Questions?</h1>
+<p>If you have questions, please post them on the Final Project thread on our Ed discussion page!</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
