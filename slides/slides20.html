@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Inference for Logistic Regression</title>
@@ -211,6 +211,19 @@ Prof Amanda Luby
 </div>
 
 </section>
+<section id="last-time" class="slide level2">
+<h2>Last Time</h2>
+<ul>
+<li>Intro to logistic regression</li>
+<li>Moving between log odds ↔︎ odds ↔︎ probability scales</li>
+<li>Interpreting coefficients</li>
+</ul>
+<h3 id="today">Today</h3>
+<ul>
+<li>Generalized linear model</li>
+<li>Inference for a single coefficient</li>
+</ul>
+</section>
 <section id="running-example" class="slide level2">
 <h2>Running Example</h2>
 <p>This dataset has information on 150 news articles, some that are real and some that are fake. Our goal is to build a statistical model to explain <code>type</code> based on features of the article</p>
@@ -327,79 +340,6 @@ Prof Amanda Luby
 </div>
 </div>
 </section>
-<section id="last-time" class="slide level2">
-<h2>Last Time</h2>
-<ul>
-<li>Intro to logistic regression</li>
-<li>Moving between log odds ↔︎ odds ↔︎ probability scales</li>
-<li>Interpreting coefficients</li>
-</ul>
-<h3 id="today">Today</h3>
-<ul>
-<li>Generalized linear model</li>
-<li>Inference for a single coefficient</li>
-</ul>
-</section>
-<section id="fitted-regression-model-3-scales" class="slide level2">
-<h2>Fitted regression model: 3 scales</h2>
-<div class="columns">
-<div class="column small" style="width:33%;">
-<p><span class="math inline">\(\log(\frac{\widehat p}{1-\widehat p}) = \widehat\beta_0 + \widehat\beta_1 x\)</span></p>
-</div><div class="column small" style="width:33%;">
-<p><span class="math inline">\(\text{odds}(x) = e^{\widehat\beta_0 + \widehat\beta_1 x}\)</span></p>
-</div><div class="column small" style="width:33%;">
-<p><span class="math inline">\(P(Y = 1 | x) = \frac{e^{\widehat\beta_0 + \widehat\beta_1 x}}{1 + e^{\widehat\beta_0 + \widehat\beta_1 x}}\)</span></p>
-</div></div>
-
-<img data-src="slides20_files/figure-html/unnamed-chunk-3-1.png" width="1152" class="r-stretch"></section>
-<section id="logistic-regression-linear-predictor-with-a-logit-link-function" class="slide level2">
-<h2>Logistic regression: linear predictor with a logit link function</h2>
-<div class="columns">
-<div class="column small" style="width:33%;">
-<p><span class="math inline">\(\widehat \eta = \log(\frac{\widehat p}{1-\widehat p}) = \widehat\beta_0 + \widehat\beta_1 x\)</span></p>
-</div><div class="column small" style="width:33%;">
-<p>Link function: logit</p>
-<p><span class="math inline">\(\widehat \eta \to P(Y=1)\)</span></p>
-</div><div class="column small" style="width:33%;">
-<p><span class="math inline">\(P(Y = 1 | x) = \frac{e^{\widehat\beta_0 + \widehat\beta_1 x}}{1 + e^{\widehat\beta_0 + \widehat\beta_1 x}}\)</span></p>
-</div></div>
-
-<img data-src="slides20_files/figure-html/unnamed-chunk-4-1.png" width="1152" class="r-stretch"></section>
-<section id="linear-regression-linear-predictor-with-an-identity-link-function" class="slide level2">
-<h2>Linear regression: linear predictor with an identity link function</h2>
-<div class="columns">
-<div class="column small" style="width:33%;">
-<p><span class="math inline">\(\widehat \eta = \widehat y = \widehat\beta_0 + \widehat\beta_1 x\)</span></p>
-</div><div class="column small" style="width:33%;">
-<p>Link function: identity</p>
-<p><span class="math inline">\(f(\eta) = \eta\)</span></p>
-</div><div class="column small" style="width:33%;">
-<p><span class="math inline">\(\widehat y= \widehat \beta_0 + \widehat \beta_1 x\)</span></p>
-</div></div>
-
-<img data-src="slides20_files/figure-html/unnamed-chunk-5-1.png" width="1152" class="r-stretch"></section>
-<section id="generalized-linear-model" class="slide level2">
-<h2>Generalized linear model</h2>
-<p><br></p>
-<p><strong>Linear Predictor</strong></p>
-<p><span class="math inline">\(\eta = \beta_0 + \beta_1 x_1 + ... + \beta_p x_p\)</span></p>
-<p><br></p>
-<p><strong>Link Function</strong></p>
-<p><span class="math inline">\(\theta = g(\eta)\)</span></p>
-<p><br></p>
-<p><strong>Response distribution</strong></p>
-<p><span class="math inline">\(Y\)</span> is a random variable with mean <span class="math inline">\(\theta\)</span></p>
-</section>
-<section id="binary-logistic-regression" class="slide level2">
-<h2>Binary logistic regression</h2>
-<p>If <span class="math inline">\(Y\)</span> follows a Bernoulli distribution</p>
-<p><span class="math display">\[{\rm E}(Y | X) = \pi(X)\]</span></p>
-<p>We link this mean function to the explanatory variables using the logit link</p>
-<p><span class="math display">\[\begin{align*}
-\eta &amp;= {\rm logit}(\pi(X))\\
-&amp;= \log \left( \dfrac{\pi(X)}{1 - \pi(X)} \right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p
-\end{align*}\]</span></p>
-</section>
 <section id="fake-news-model-from-activity" class="slide level2">
 <h2>Fake news model (from activity)</h2>
 <div class="small">
@@ -422,6 +362,70 @@ Prof Amanda Luby
 4 title_caps_percent   0.0498    0.0295      1.69 0.0908  </code></pre>
 </div>
 </div>
+</section>
+<section id="warm-up" class="slide level2 task">
+<h2>Warm up:</h2>
+<p>Write the fitted model on the log odds scale</p>
+</section>
+<section id="fitted-regression-model-3-scales" class="slide level2">
+<h2>Fitted regression model: 3 scales</h2>
+<div class="columns">
+<div class="column small" style="width:33%;">
+<p><span class="math inline">\(\log(\frac{\widehat p}{1-\widehat p}) = \widehat\beta_0 + \widehat\beta_1 x\)</span></p>
+</div><div class="column small" style="width:33%;">
+<p><span class="math inline">\(\text{odds}(x) = e^{\widehat\beta_0 + \widehat\beta_1 x}\)</span></p>
+</div><div class="column small" style="width:33%;">
+<p><span class="math inline">\(P(Y = 1 | x) = \frac{e^{\widehat\beta_0 + \widehat\beta_1 x}}{1 + e^{\widehat\beta_0 + \widehat\beta_1 x}}\)</span></p>
+</div></div>
+
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-6-1.png" width="1152" class="r-stretch"></section>
+<section id="logistic-regression-linear-predictor-with-a-logit-link-function" class="slide level2">
+<h2>Logistic regression: linear predictor with a logit link function</h2>
+<div class="columns">
+<div class="column small" style="width:33%;">
+<p><span class="math inline">\(\widehat \eta = \log(\frac{\widehat p}{1-\widehat p}) = \widehat\beta_0 + \widehat\beta_1 x\)</span></p>
+</div><div class="column small" style="width:33%;">
+<p>Link function: logit</p>
+<p><span class="math inline">\(\widehat \eta \to P(Y=1)\)</span></p>
+</div><div class="column small" style="width:33%;">
+<p><span class="math inline">\(P(Y = 1 | x) = \frac{e^{\widehat\beta_0 + \widehat\beta_1 x}}{1 + e^{\widehat\beta_0 + \widehat\beta_1 x}}\)</span></p>
+</div></div>
+
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-7-1.png" width="1152" class="r-stretch"></section>
+<section id="linear-regression-linear-predictor-with-an-identity-link-function" class="slide level2">
+<h2>Linear regression: linear predictor with an identity link function</h2>
+<div class="columns">
+<div class="column small" style="width:33%;">
+<p><span class="math inline">\(\widehat \eta = \widehat y = \widehat\beta_0 + \widehat\beta_1 x\)</span></p>
+</div><div class="column small" style="width:33%;">
+<p>Link function: identity</p>
+<p><span class="math inline">\(f(\eta) = \eta\)</span></p>
+</div><div class="column small" style="width:33%;">
+<p><span class="math inline">\(\widehat y= \widehat \beta_0 + \widehat \beta_1 x\)</span></p>
+</div></div>
+
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-8-1.png" width="1152" class="r-stretch"></section>
+<section id="generalized-linear-model" class="slide level2">
+<h2>Generalized linear model</h2>
+<p><br></p>
+<p><strong>Linear Predictor</strong></p>
+<p><span class="math inline">\(\eta = \beta_0 + \beta_1 x_1 + ... + \beta_p x_p\)</span></p>
+<p><br></p>
+<p><strong>Link Function</strong></p>
+<p><span class="math inline">\(\theta = g(\eta)\)</span></p>
+<p><br></p>
+<p><strong>Response distribution</strong></p>
+<p><span class="math inline">\(Y\)</span> is a random variable with mean <span class="math inline">\(\theta\)</span></p>
+</section>
+<section id="binary-logistic-regression" class="slide level2">
+<h2>Binary logistic regression</h2>
+<p>If <span class="math inline">\(Y\)</span> follows a Bernoulli distribution</p>
+<p><span class="math display">\[{\rm E}(Y | X) = \pi(X)\]</span></p>
+<p>We link this mean function to the explanatory variables using the logit link</p>
+<p><span class="math display">\[\begin{align*}
+\eta &amp;= {\rm logit}(\pi(X))\\
+&amp;= \log \left( \dfrac{\pi(X)}{1 - \pi(X)} \right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p
+\end{align*}\]</span></p>
 </section>
 <section>
 <section id="wald-based-inference" class="title-slide slide level1 center">
@@ -531,7 +535,7 @@ Prof Amanda Luby
 <p><br></p>
 <div class="fragment" data-fragment-index="1">
 <p>Exponentiating the endpoints to get the CI for the odds ratio for a one-word increase in title length:</p>
-<p><span class="math display">\[e^{0.008} = 1.008 \quad \text{to} \quad e^{0.0724} = 1.267\]</span></p>
+<p><span class="math display">\[e^{0.008} = 1.008 \quad \text{to} \quad e^{0.237} = 1.267\]</span></p>
 </div>
 <p><br></p>
 <div class="fragment" data-fragment-index="2">
@@ -601,74 +605,100 @@ Prof Amanda Luby
 <li><p><strong>R</strong>andomness: we have a random sample from the population or the data were collected from a randomized experiment</p></li>
 </ol>
 </section>
-<section id="residuals" class="slide level2">
-<h2>“Residuals”</h2>
-<p>In logistic regression, we’ll work with residuals on the response scale:</p>
-<p><span class="math display">\[e_i = y_i - \widehat \pi_i = \begin{cases} 1 - \widehat \pi_i &amp; \text{if } y_i = 1 \\ - \widehat \pi_i &amp; \text{if } y_i = 0 \end{cases}\]</span></p>
-<p>What will residual plot look like?</p>
+<section id="why-not-just-plot-y-vs.-x" class="slide level2">
+<h2>Why not just plot <span class="math inline">\(Y\)</span> vs.&nbsp;<span class="math inline">\(x\)</span>?</h2>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-12-1.png" width="1152" class="r-stretch"></section>
-<section id="residual-plot" class="slide level2">
-<h2>Residual plot</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">resid_panel</span>(news_mod, <span class="at">plot =</span> <span class="st">"resid"</span>, <span class="at">type =</span> <span class="st">"response"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="slides20_files/figure-html/unnamed-chunk-13-1.png" width="576" class="r-stretch"></section>
-<section id="binned-residuals" class="slide level2 scrollable">
-<h2>Binned residuals</h2>
-<p>Idea: If we group data points based on predictor, we can compute the mean response residual within each group and end up with something that looks more like an OLS residual plot</p>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-12-1.png" width="672" class="r-stretch"><ul>
+<li>Binary points pile up on two horizontal lines, so we can’t “see” a trend</li>
+<li>We need to check whether the <strong>log odds</strong> is linear in <span class="math inline">\(x\)</span>, not whether the probability is</li>
+</ul>
+</section>
+<section id="empirical-logits" class="slide level2 scrollable">
+<h2>Empirical logits</h2>
+<p>If linearity holds, then <span class="math inline">\(\text{logit}(\pi) = \beta_0 + \beta_1 x\)</span>, so the <em>observed</em> log odds for articles with similar <span class="math inline">\(x\)</span> should fall close to a line</p>
 <ol type="1">
-<li class="fragment">Calculate response residual</li>
-<li class="fragment">Order observations either by the values of the predicted log odds/probabilities, or by quantitative predictor variable</li>
-<li class="fragment">Use the ordered data to create g bins of approximately equal size. (Default: <span class="math inline">\(g = \sqrt{n}\)</span>)</li>
-<li class="fragment">Calculate average residual value in each bin</li>
-<li class="fragment">Plot average residuals vs.&nbsp;average predicted log odds, probability, or predictor value</li>
+<li class="fragment">Group the observations into bins of similar <span class="math inline">\(x\)</span> values (e.g., <span class="math inline">\(g\)</span> bins of about equal size)</li>
+<li class="fragment">In each bin, find the number of successes (<span class="math inline">\(Y = 1\)</span>) and failures (<span class="math inline">\(Y = 0\)</span>) and calculate the <strong>empirical logit</strong> <span class="math display">\[\log\left(\frac{\#\text{successes} + 0.5}{\#\text{failures} + 0.5}\right)\]</span> (the <span class="math inline">\(0.5\)</span> keeps us from taking the log of 0)</li>
+<li class="fragment">Plot the empirical logit against the mean <span class="math inline">\(x\)</span> in each bin</li>
+<li class="fragment">Look for a straight-line pattern</li>
 </ol>
 </section>
-<section id="binned-residual-plot" class="slide level2">
-<h2>Binned residual plot</h2>
+<section id="empirical-logit-plot-title_words" class="slide level2">
+<h2>Empirical logit plot: <code>title_words</code></h2>
 <ul>
-<li>Using 13 bins</li>
+<li>Using 13 bins (about 11-12 articles each)</li>
 <li>You will recreate this during the R activity today</li>
 </ul>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-14-1.png" width="480" class="r-stretch"></section>
-<section id="binned-residual" class="slide level2">
-<h2>Binned residual</h2>
-<ul>
-<li>Nonlinear trend may be indication that squared term or log transformation of predictor variable required</li>
-<li>If bins have large average residuals (in magnitude)
-<ul>
-<li>Look at averages of other predictor variables across bins</li>
-<li>Interaction may be required if large magnitude residuals correspond to certain combinations of predictor variables</li>
-</ul></li>
-</ul>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-14-1.png" width="480" class="r-stretch"><div class="fragment">
+<p>The points are noisy (each is based on only ~11 articles), but there is no clear curvature: a straight line is a reasonable summary</p>
+</div>
 </section>
-<section id="check-binned-residuals-against-x-variables" class="slide level2">
-<h2>Check binned residuals against X variables</h2>
+<section id="empirical-logit-plot-title_caps_percent" class="slide level2">
+<h2>Empirical logit plot: <code>title_caps_percent</code></h2>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-15-1.png" width="480" class="r-stretch"></section>
-<section id="residuals-vs-categorical-predictor" class="slide level2">
-<h2>Residuals vs categorical predictor</h2>
-<ul>
-<li>Calculate average residual for each level of the predictor</li>
-<li>All of the means should be close to 0</li>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-15-1.png" width="480" class="r-stretch"><ul>
+<li>92 of the 150 titles have <strong>0%</strong> capital letters, so equal-size bins won’t work. We chose bins by hand: exactly 0, (0-10], (10-15], (15-20], and over 20</li>
+<li>Bins with only 6-12 articles are very noisy. Look at the overall trend, not individual points</li>
 </ul>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  title_has_excl `avg residual`
-  &lt;lgl&gt;                   &lt;dbl&gt;
-1 FALSE               -2.27e-12
-2 TRUE                 9.10e- 9</code></pre>
-</div>
+</section>
+<section id="what-to-look-for" class="slide level2">
+<h2>What to look for</h2>
+<div class="medium">
+<ul>
+<li><strong>Roughly straight</strong> trend → the linearity condition is reasonable</li>
+<li><strong>Curved</strong> trend → try transforming <span class="math inline">\(x\)</span> (e.g., <span class="math inline">\(\log x\)</span>) or adding a squared term</li>
+<li>Expect lots of scatter when bins are small; don’t over-interpret one point</li>
+<li>These plots look at one predictor at a time (ignoring the others), so use Pearson residuals (next) to check linearity <em>after adjusting</em> for the other predictors</li>
+</ul>
 </div>
 </section>
-<section id="pearson-residual" class="slide level2">
-<h2>Pearson residual</h2>
-<p>Standardize the distance between the observation (0 or 1) and the expected value (probability)</p>
+<section id="categorical-predictors" class="slide level2">
+<h2>Categorical predictors</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">title_has_excl</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">fake</th>
+<th style="text-align: right;">real</th>
+<th style="text-align: right;">empirical logit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">-0.69</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRUE</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.89</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>With only two groups, two points always fall on a line, so there is no linearity condition to check for a binary predictor</li>
+<li>Empirical logits are still useful for <em>comparing</em> groups (e.g., color the points by <code>title_has_excl</code> to see whether we need an interaction)</li>
+</ul>
+</section>
+<section id="pearson-residuals" class="slide level2">
+<h2>Pearson residuals</h2>
+<p>The raw difference between the observation (0 or 1) and the fitted probability is <span class="math inline">\(y_i - \widehat \pi_i\)</span></p>
+<p>The <strong>Pearson residual</strong> standardizes that distance by the standard deviation of a 0/1 outcome with probability <span class="math inline">\(\widehat \pi_i\)</span>:</p>
 <p><span class="math display">\[r_{p_i} = \frac{y_i - \widehat \pi_i}{\sqrt{\widehat{\pi_i}(1-\widehat \pi_i)}}\]</span></p>
+<div class="small">
+<p>Since <span class="math inline">\(Y\)</span> is 0 or 1, Pearson residuals for binary data are <em>not</em> approximately normal. We won’t use a QQ plot, and we need a smoother to see any pattern</p>
+</div>
 </section>
 <section id="pearson-residuals-in-r" class="slide level2">
 <h2>Pearson residuals in R</h2>
@@ -676,15 +706,15 @@ Prof Amanda Luby
 <li>If the model is correct, then the expected (average) Pearson residual within each bin should be close to 0</li>
 <li>A smoother should be approximately horizontal line at 0</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">resid_panel</span>(news_mod, <span class="at">plot =</span> <span class="st">"resid"</span>, <span class="at">type =</span> <span class="st">"pearson"</span>)</span>
-<span id="cb7-2"><a></a><span class="fu">resid_panel</span>(news_mod, <span class="at">plot =</span> <span class="st">"resid"</span>, <span class="at">type =</span> <span class="st">"pearson"</span>, <span class="at">smoother =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">resid_panel</span>(news_mod, <span class="at">plot =</span> <span class="st">"resid"</span>, <span class="at">type =</span> <span class="st">"pearson"</span>)</span>
+<span id="cb5-2"><a></a><span class="fu">resid_panel</span>(news_mod, <span class="at">plot =</span> <span class="st">"resid"</span>, <span class="at">type =</span> <span class="st">"pearson"</span>, <span class="at">smoother =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides20_files/figure-html/unnamed-chunk-17-1.png" width="384"></p>
+<p><img data-src="slides20_files/figure-revealjs/unnamed-chunk-17-1.png" width="384"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="slides20_files/figure-html/unnamed-chunk-17-2.png" width="384"></p>
+<p><img data-src="slides20_files/figure-revealjs/unnamed-chunk-17-2.png" width="384"></p>
 </div>
 </div>
 </div>
@@ -693,7 +723,7 @@ Prof Amanda Luby
 <h2></h2>
 <p>Smoothers can help draw attention to major flaws, but there will always be variation from the horizontal!</p>
 
-<img data-src="slides20_files/figure-html/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"><div class="footer">
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"><div class="footer">
 <p>Only one of these datasets was simulated from the “wrong” distribution</p>
 </div>
 </section></section>
@@ -719,10 +749,10 @@ Prof Amanda Luby
 <section id="independence-index-plot" class="slide level2">
 <h2>Independence: index plot</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">resid_panel</span>(news_mod, <span class="at">plot =</span> <span class="st">"index"</span>, <span class="at">type =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">resid_panel</span>(news_mod, <span class="at">plot =</span> <span class="st">"index"</span>, <span class="at">type =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="slides20_files/figure-html/unnamed-chunk-19-1.png" width="384" class="r-stretch"></section>
+<img data-src="slides20_files/figure-revealjs/unnamed-chunk-19-1.png" width="384" class="r-stretch"></section>
 <section id="randomness" class="slide level2">
 <h2>Randomness</h2>
 <blockquote>
@@ -948,6 +978,44 @@ Prof Amanda Luby
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
