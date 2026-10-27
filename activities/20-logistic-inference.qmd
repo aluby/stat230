@@ -45,83 +45,73 @@ To calculate Wald-based confidence intervals for each regression coefficient, we
 tidy(news_mod, conf.int = TRUE, conf.level = 0.9)
 ```
 
-## Residual plots
+## Checking conditions
 
-Like in linear regression, we can construct residual plots to assess the fit of our binary logistic regression model. The interpretation of these plots is harder, however, since the response variable is binary; thus, we can't expect to see a random scatter of points around zero like we did in linear regression. To help with the interpretation, we'll explore both binned residual plots and Pearson residual plots with a LOESS smoother.
+Like in linear regression, we can make plots to assess the fit of our binary logistic regression model. The interpretation of these plots is harder, however, since the response variable is binary; thus, we can't expect to see a random scatter of points around zero like we did in linear regression. We'll use two tools:
 
-### Binned residual plots
+1. **Empirical logit plots** to check the *linearity* condition (is the log odds a linear function of each predictor?)
+2. **Pearson residual plots** with a LOESS smoother to check linearity *after adjusting for the other predictors*, and to look for outliers and patterns over time
 
-To construct a binned residual plot we follow these steps:
+### Empirical logit plots
 
-1. Calculate response residuals
-2. Order observations either by the values of the predicted log odds/probabilities, or by quantitative predictor variable
-3. Use the ordered data to create $g$ bins of approximately equal size. (A reasonable starting point is $g = \sqrt{n}$)
-4. Calculate average residual value in each bin
-5. Plot average residuals vs. average predicted log odds, probability, or predictor value
+To construct an empirical logit plot for a quantitative predictor we follow these steps:
 
+1. Order the observations by the predictor and use the ordered data to create $g$ bins of approximately equal size. (A reasonable starting point is $g = \sqrt{n}$)
+2. In each bin, count the number of successes ($Y = 1$) and failures ($Y = 0$)
+3. Calculate the empirical logit in each bin: $\log\left(\frac{\#\text{successes} + 0.5}{\#\text{failures} + 0.5}\right)$. (The $0.5$ keeps us from taking the log of zero in a bin with no successes or no failures.)
+4. Plot the empirical logits against the mean value of the predictor in each bin
+5. Look for a straight-line pattern. A curved pattern suggests that the predictor needs a transformation
 
-Let's implement these steps in R. First, we augment (add columns to) our data set with the predicted values and response residuals:
-
-```{r}
-news_aug <- augment(news_mod, type.predict= "link", type.residuals = "pearson") |>
-  mutate(.resp.resid = resid(news_mod, type= "response"))
-```
-
-:::{.callout-note}
-## Adapting the code
-To adapt this code for your own binary logistic regression model, simply replace `news_mod` with the name of your model object in both the `augment()` function and the `resid()` function.
-:::
-
-Next, we create the binned residual plot by following steps 2-4 outlined above:
+Let's implement these steps for `title_words` using 13 bins. First, we create the bins and summarize each one:
 
 ```{r}
-binned_resids <- news_aug |> 
-  mutate(bin = ntile(news_mod$linear.predictors, 13)) |>
-  group_by(bin) |>
-  summarize(mean_linear_pred = mean(.fitted),
-            avg_resid = mean(.resp.resid),
-            .groups = "drop")
-```
-
-:::{.callout-note}
-## Adapting the code
-To adapt this code for your own binary logistic regression model, replace `news_aug` with the name of your augmented data set and then replace `news_mod$linear.predictors` with the linear predictors from your model object (by changing the model name to the left of the `$`). Additionally, you can adjust the number of bins (currently set to 13) based on your data size.
-:::
-
-Finally, we plot the binned residuals:
-
-```{r}
-#| fig-alt: "Scatterplot of average response residual on the y-axis against predicted log odds on the x-axis, with a horizontal reference line at zero."
-gf_point(avg_resid ~ mean_linear_pred, data = binned_resids,
-         xlab = "Predicted log odds", ylab = "Average response residual") |>
-  gf_hline(yintercept = 0, linetype = 2)
-```
-
-
-The above process creates a binned residual plot of the response residuals against the predicted log odds. You can also create similar plots using predicted probabilities or individual predictor variables by adjusting the code accordingly.
-
-Below we create a binned residual plot where 13 bins were created from the `title_words` variable. Notice that now we need to calculate both the mean value of the predictor and the mean value of the residual.
-
-```{r}
-#| fig-alt: "Scatterplot of average response residual on the y-axis against the mean predictor value within each bin on the x-axis, with a horizontal reference line at zero."
-news_aug |>
-  mutate(bin = ntile(title_words, 13)) |>  # Creating 65 bins for age
+words_el <- news |>
+  mutate(bin = ntile(title_words, 13)) |>
   group_by(bin) |>
   summarize(mean_x = mean(title_words),
-            avg_resid = mean(.resp.resid)) |>
-  gf_point(
-    avg_resid ~ mean_x,
-    xlab = "Mean age in bin", 
-    ylab = "Average response residual"
-  ) |>
-  gf_hline(yintercept = 0, linetype = 2) 
+            n = n(),
+            successes = sum(type_num),
+            failures = n - successes,
+            emp_logit = log((successes + 0.5) / (failures + 0.5)),
+            .groups = "drop")
+
+words_el
 ```
 
+:::{.callout-note}
+## Adapting the code
+To adapt this code for your own binary logistic regression model, replace `news` with the name of your data set, `title_words` with your predictor (in both `ntile()` and `mean()`), and `type_num` with your 0/1 response. You can adjust the number of bins (currently 13) based on your data size.
+:::
 
+Next, we plot the empirical logits against the mean predictor value, and add a straight line to help us judge whether the pattern is linear:
+
+```{r}
+#| fig-alt: "Scatterplot of the empirical logit on the y-axis against the mean number of title words in each bin on the x-axis, with a straight line overlaid."
+gf_point(emp_logit ~ mean_x, data = words_el,
+         xlab = "Mean title words in bin", ylab = "Empirical logit") |>
+  gf_lm()
+```
+
+Each point is based on only about 11 articles, so expect some scatter around the line. Look for the overall trend, not for individual points.
+
+### Categorical predictors
+
+For a categorical predictor, we calculate the empirical logit for each level of the predictor (no bins are needed):
+
+```{r}
+news |>
+  group_by(title_has_excl) |>
+  summarize(n = n(),
+            successes = sum(type_num),
+            failures = n - successes,
+            emp_logit = log((successes + 0.5) / (failures + 0.5)))
+```
+
+With only two levels, the two points always fall on a straight line, so there is no linearity condition to check for a binary predictor. These plots are more useful for *comparing* groups (for example, to decide whether an interaction is needed).
 
 ## Pearson residuals
 
-To create a Pearson residual plot with a LOESS smoother, we can use the `resid_panel` command from the `ggResidPanel` Package, similar to what we did in linear regression. The only difference is that we need to specify `type = "pearson"` to indicate that we want to plot Pearson residuals.
+To create a Pearson residual plot with a LOESS smoother, we can use the `resid_panel` command from the `ggResidPanel` Package, similar to what we did in linear regression. The only difference is that we need to specify `type = "pearson"` to indicate that we want to plot Pearson residuals. For binary data the points fall in two curved bands (one for each value of $Y$), so the **smoother** is what we look at. If the model is adequate, it should be roughly a horizontal line at 0.
 
 Below we recreate the residual plots from the slides:
 
@@ -142,9 +132,11 @@ resid_xpanel(news_mod, yvar = "residual", type = "pearson", smoother = TRUE, nro
 
 ## Your turn
 
-- Make binned residual plots for the binned residuals against `title_caps_percent`. What do you conclude? 
+- Make an empirical logit plot for `title_caps_percent`. Start with 13 equal-size bins using `ntile()` and look at the `mean_x` column of your summary. What do you notice? Why is this a problem?
+- Now create the bins by hand with `cut()`, for example `mutate(bin = cut(title_caps_percent, breaks = c(-Inf, 0, 10, 15, 20, Inf)))`, and make the plot again. What do you conclude about the linearity of `title_caps_percent`?
+- Look at the Pearson residual plots above. Do they agree with your empirical logit plots? Is there any evidence of a violation of the linearity condition?
 - Report 95% confidence intervals and provide interpretations on the **odds** scale for all predictor variables
-- Discuss together: why do we need to make residual plots and check conditions?
+- Discuss together: why do we need to make plots and check conditions?
 
 ***
 
@@ -154,11 +146,12 @@ The following table summarizes the functions discussed above:
 
 | Function | Purpose |
 |----|-----------|
-| `augment(model, type.predict, type.residuals)` | Add predicted values and residuals to data set |
-| `resid_panel(model, plot = "resid", type = "pearson", smooth = TRUE)` | Create residual plot with LOESS smoother |
+| `mutate(bin = ntile(x, g))` | Divide observations into $g$ bins of (about) equal size, ordered by `x` |
+| `cut(x, breaks)` | Create bins from specific cut points you choose |
 | `group_by(variable)` | Group data by variable for summarization |
 | `summarize()` | Summarize data by calculating statistics like mean, count, etc. |
+| `log((successes + 0.5) / (failures + 0.5))` | Empirical logit |
 | `gf_point(y ~ x, data, xlab, ylab)` | Create scatter plot of y vs. x with labels |
-
-
-
+| `gf_lm()` | Add a straight line to a scatterplot |
+| `resid_panel(model, plot = "resid", type = "pearson", smoother = TRUE)` | Create Pearson residual plot with LOESS smoother |
+| `resid_xpanel(model, type = "pearson", smoother = TRUE)` | Pearson residuals against each predictor |

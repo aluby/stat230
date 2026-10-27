@@ -1,0 +1,292 @@
+---
+title: "Day 20: Inference for logistic regression"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+library(patchwork)
+library(here)
+library(ggResidpanel)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+news <- read.csv(here("data", "fake_news_bayesrules.csv"))
+
+news_mod <- glm(type_num ~ title_words + title_has_excl + title_caps_percent,
+                data = news, family = "binomial")
+news_tidy <- tidy(news_mod, conf.int = FALSE)
+b <- coef(news_mod)
+se <- summary(news_mod)$coefficients[, "Std. Error"]
+
+f2 <- function(x) sprintf("%.2f", x)
+f3 <- function(x) sprintf("%.3f", x)
+```
+
+Last time we introduced logistic regression and learned to interpret the slope. Today:
+
+1.  Logistic regression as a **generalized linear model**
+2.  **Inference** for a single coefficient (Wald tests and confidence intervals)
+3.  **Checking conditions** with empirical logit plots and Pearson residuals
+
+**Running example: Fake News**. Our goal is to explain whether an article is fake (`type_num` = 1) using
+
+-   `title_words`: number of words in the title
+-   `title_has_excl`: whether the title has an exclamation point
+-   `title_caps_percent`: percent of the title in capital letters
+
+
+```{r}
+kable_coef(news_mod, terms = c("Intercept", "title_words", "title_has_exclTRUE", "title_caps_percent"))
+```
+
+**Warm up:** Write the fitted model on the log-odds scale.
+
+\vspace{1in}
+
+## Fitted regression model: 3 scales
+
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2.5
+tibble(
+  x = seq(0, 60, by = .5),
+  log_odds = -0.9318 + 0.09772 * x,
+  odds = exp(log_odds),
+  prob = exp(log_odds)/(1 + exp(log_odds))
+) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x = x, y = value)) + 
+  geom_line(color = "#003300", linewidth = 1.5) + 
+  facet_wrap(vars(name), scales = "free_y") + 
+  labs(y = "")
+```
+
+
+
+::: callout-note
+## Generalized linear models
+
+Both linear regression and logistic regression have three parts:
+
+-   **Linear predictor:** $\eta = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p$
+-   **Link function:** connects $\eta$ to the mean of $Y$, $\mu = g(\eta)$
+-   **Response distribution:** the distribution of $Y$ with mean $\mu$
+
+:::
+
+
+## Maximum likelihood (ML) estimation
+
+In linear regression we found the $\hat\beta$'s that minimized the sum of squared errors. The coefficients in logistic regression are estimated by finding the $\widehat{\beta}_0, \ldots, \widehat{\beta}_p$ that maximize the probability of the observed outcomes (called the *Likelihood*)
+
+
+
+$$L(\beta) = P(Y_1 = y_1, \ldots Y_n = y_n | \beta, X) = \prod_{i=1}^{n} \pi(X)^{y_i} \Big[ 1 - \pi(X) \Big]^{1- y_i}$$
+
+
+where
+
+$$\pi(X) = \dfrac{e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}$$
+
+
+If the sample is large and the model is correct, the ML estimators are
+
+1.  essentially unbiased
+2.  as precise as any other unbiased estimator
+3.  approximately **normal**
+
+That last fact is what lets us do inference.
+
+::: callout-note
+## Wald test for a coefficient
+
+**Hypotheses:** $H_0$: ___________________ vs. $H_a$: ___________________
+
+**Test statistic:** $z =$ ___________________
+
+**Reference distribution:** ___________________
+
+::: 
+
+::: callout-note
+## Wald-based Confidence Interval
+
+A normal-based confidence interval for ___________________ is: 
+
+$$\widehat\beta_i \pm z^*_{1-\alpha/2} \cdot SE(\widehat\beta_i)$$
+
+To get a CI for the **odds ratio**, exponentiate the endpoints:
+
+$$e^{\widehat\beta_i - z^* SE(\widehat\beta_i)} \quad \text{to} \quad e^{\widehat\beta_i + z^* SE(\widehat\beta_i)}$$
+
+For a $C$-unit change in $x$, multiply the endpoints of the CI for $\beta_i$ by ______ *before* exponentiating.
+
+:::
+
+
+**Example:** 95% CI for the effect of one more word in the title ($z^* = 1.96$).
+
+\vspace{1in}
+
+Exponentiate the endpoints to get 
+
+**Interpretation:** We are 95% confident that ...
+
+\vspace{1in}
+
+**Example:** What about a 10-word increase in the title?
+
+\vspace{1.25in}
+
+```{r}
+tidy(news_mod, conf.int = TRUE) |>
+  filter(term == "title_words") |>
+  select(term, estimate, conf.low, conf.high) |>
+  mutate(or_low = exp(conf.low), or_high = exp(conf.high),
+         or_low_10 = exp(10 * conf.low), or_high_10 = exp(10 * conf.high)) |>
+  knitr::kable(digits = 3)
+```
+
+(Note: `tidy(..., conf.int = TRUE)` uses a profile-likelihood interval, so its endpoints differ slightly from the Wald interval above.)
+
+## Conditions for logistic regression
+
+For inference to be valid we need
+
+1.  **L**inearity: the ______________ is a linear function of the predictors
+2.  **I**ndependence: no pairs, clusters, ordering in time or space
+3.  **R**andomness: a random sample (or a randomized experiment)
+
+If linearity fails, the model doesn't describe the data. If independence or randomness fail, we can still interpret the coefficients, but our CIs will be too narrow and our p-values too small.
+
+## Checking linearity: empirical logits
+
+We can't just plot a 0/1 response against $x$ and look for a line, and ordinary residual plots for binary data are hard to read. Instead we plot the **observed log odds** for groups of similar $x$ values.
+
+1.  Divide the observations into $g$ bins of similar $x$ values
+2.  In each bin, count the successes and failures
+3.  **Empirical logit** $=$ $\log\left(\dfrac{\#\text{successes} + 0.5}{\#\text{failures} + 0.5}\right)$
+4.  Plot the empirical logit against the mean of $x$ in each bin and look for a straight line
+
+Why do we add 0.5? ______________________________________
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2.6
+emp_logit_plot <- function(data, xvar, bins, xlab) {
+  data |>
+    mutate(bin = bins) |>
+    group_by(bin) |>
+    summarize(mean_x = mean({{ xvar }}),
+              n = n(),
+              successes = sum(type_num),
+              emp_logit = log((successes + 0.5) / (n - successes + 0.5)),
+              .groups = "drop") |>
+    gf_point(emp_logit ~ mean_x, xlab = xlab, ylab = "Empirical logit") |>
+    gf_lm(color = "#f15a31", linewidth = 1)
+}
+
+p1 <- emp_logit_plot(news, title_words, ntile(news$title_words, 13), "Mean title words in bin")
+p2 <- emp_logit_plot(news, title_caps_percent,
+                     cut(news$title_caps_percent, c(-Inf, 0, 10, 15, 20, Inf)),
+                     "Mean % caps in bin")
+p1 | p2
+```
+
+**Q3.** The left plot uses 13 bins of about 11 articles each. Is there evidence that the linearity condition is violated for `title_words`?
+
+\vspace{.75in}
+
+**Q4.** `r sum(news$title_caps_percent == 0)` of the 150 titles have 0% capital letters, so we couldn't use equal-size bins for `title_caps_percent` (the right plot uses 5 bins chosen by hand). What do you conclude about linearity?
+
+\vspace{.75in}
+
+**What to look for:**
+
+-   A roughly straight trend means linearity is ______________.
+-   A curved trend means we should try ______________ (for example, ______________).
+-   Each point is based on few observations, so expect scatter. Look at the overall trend, not at individual points.
+-   These plots look at one predictor at a time. They don't adjust for the other predictors, which is why we also use Pearson residuals.
+
+**Categorical predictors.** For `title_has_excl` we calculate the empirical logit in each group:
+
+```{r}
+news |>
+  group_by(title_has_excl) |>
+  summarize(n = n(), fake = sum(type_num), real = n - fake,
+            `empirical logit` = log((fake + 0.5) / (real + 0.5))) |>
+  knitr::kable(digits = 2)
+```
+
+With only two groups, there is no linearity condition to check: ________________________________.
+
+## Checking linearity after adjusting: Pearson residuals
+
+The raw difference between the observed outcome and the fitted probability is $y_i - \widehat\pi_i$. The **Pearson residual** standardizes it:
+
+$$r_{p_i} = \frac{y_i - \widehat\pi_i}{\sqrt{\widehat\pi_i (1 - \widehat\pi_i)}}$$
+
+For binary data the Pearson residuals fall in two curved bands (one for $y = 0$, one for $y = 1$), so the individual points aren't informative. We add a **smoother**:
+
+```{r}
+#| fig-width: 4
+#| fig-height: 2.4
+resid_panel(news_mod, plot = "resid", type = "pearson", smoother = TRUE)
+```
+
+```{r}
+#| fig-width: 7.5
+#| fig-height: 2.4
+resid_xpanel(news_mod, yvar = "residual", type = "pearson", smoother = TRUE, nrow = 1)
+```
+
+-   If the model is adequate, the smoother should be roughly a ______________ line at ______.
+-   There will always be some variation from the horizontal. Smoothers help us notice **major** flaws.
+-   Pearson residuals for binary data are *not* approximately normal, so we don't use a QQ plot.
+
+**Q5.** Do the Pearson residual plots agree with the empirical logit plots? Is there evidence of a violation of linearity?
+
+\vspace{1in}
+
+## Independence and randomness
+
+-   Independence is best assessed from the *description of the data*: Are the observations grouped (e.g., several articles from the same site)? Measured over time? Spatially related?
+-   An **index plot** of the residuals shows whether the data are ordered in some way (a trend or pattern across the index is a warning sign).
+-   Randomness: how were the articles chosen? The fake news articles were posted to Facebook in September 2016, in the run-up to the election, so we need to be careful about what population our conclusions apply to.
+
+```{r}
+#| fig-width: 4
+#| fig-height: 2.2
+resid_panel(news_mod, plot = "index", type = "pearson")
+```
+
+**Q6.** What does the index plot suggest about independence? What population do you think we can generalize to?
+
+\vspace{1in}
+
+## Summary
+
+| Condition | How we check it |
+|:--|:--|
+| Linearity | |
+| Independence | |
+| Randomness | |
+
+-   Inference for each coefficient uses a ______ test and a ______-based CI.
+-   Exponentiate the CI endpoints to talk about the **odds ratio**; multiply by $C$ first for a $C$-unit change.
+
+## R function reference
+
+| Function | Purpose |
+|:--|:--|
+| `glm(y ~ x, data, family = "binomial")` | Fit a binary logistic regression |
+| `tidy(model, conf.int = TRUE)` | Coefficient table with confidence intervals |
+| `mutate(bin = ntile(x, g))` | Create $g$ equal-size bins of `x` |
+| `cut(x, breaks)` | Create bins from cut points you choose |
+| `log((successes + 0.5) / (failures + 0.5))` | Empirical logit |
+| `resid_panel(model, plot = "resid", type = "pearson", smoother = TRUE)` | Pearson residual plot with a smoother |
+| `resid_xpanel(model, type = "pearson", smoother = TRUE)` | Pearson residuals against each predictor |

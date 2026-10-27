@@ -8,12 +8,16 @@ fmt_p <- function(p, digits = 3) {
 }
 
 # Coefficient table from a fitted model, with readable term names and p-values
+# The test statistic is labeled "t" for lm (and quasi- GLMs, which use t tests)
+# and "z" for other glm families (e.g., binomial, poisson), which use Wald z tests
 kable_coef <- function(model, terms = NULL, digits = 3) {
   tab <- broom::tidy(model)
   if (!is.null(terms)) tab$term <- terms
+  stat_label <- "t"
+  if (inherits(model, "glm") && !grepl("^quasi", model$family$family)) stat_label <- "z"
   tab$estimate <- formatC(tab$estimate, format = "f", digits = digits)
   tab$std.error <- formatC(tab$std.error, format = "f", digits = digits)
   tab$statistic <- formatC(tab$statistic, format = "f", digits = 2)
   tab$p.value <- fmt_p(tab$p.value)
-  knitr::kable(tab, col.names = c("term", "estimate", "std. error", "t", "p-value"))
+  knitr::kable(tab, col.names = c("term", "estimate", "std. error", stat_label, "p-value"))
 }

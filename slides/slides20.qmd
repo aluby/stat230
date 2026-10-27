@@ -71,6 +71,18 @@ bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 
 ```
 
+
+## Last Time
+
+- Intro to logistic regression
+- Moving between log odds &harr; odds &harr; probability scales
+- Interpreting coefficients
+
+### Today
+
+- Generalized linear model
+- Inference for a single coefficient
+
 ## Running Example
 
 This dataset has information on 150 news articles, some that are real and some that are fake. Our goal is to build a statistical model to explain `type` based on features of the article
@@ -99,16 +111,33 @@ knitr::kable(head(news))
 
 :::
 
-## Last Time
+## Fake news model (from activity)
 
-- Intro to logistic regression
-- Moving between log odds &harr; odds &harr; probability scales
-- Interpreting coefficients
 
-### Today
+```{r}
+news_mod <- glm(type_num ~ title_words + title_has_excl + title_caps_percent, 
+                data = news, family = "binomial")
+```
 
-- Generalized linear model
-- Inference for a single coefficient
+::: small
+
+```{r}
+equatiomatic::extract_eq(news_mod, intercept = "beta", terms_per_line = 2,
+                         swap_var_names = c("type_num" = "type", "title_words" = "words",
+                                            "title_has_excl" = "excl", "title_caps_percent" = "pct_caps"))
+```
+
+:::
+
+```{r}
+tidy(news_mod)
+```
+
+::: task
+## Warm up: 
+
+Write the fitted model on the log odds scale
+:::
 
 ## Fitted regression model: 3 scales
 
@@ -247,27 +276,7 @@ We link this mean function to the explanatory variables using the logit link
 &= \log \left( \dfrac{\pi(X)}{1 - \pi(X)} \right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p
 \end{align*}
 
-## Fake news model (from activity)
 
-
-```{r}
-news_mod <- glm(type_num ~ title_words + title_has_excl + title_caps_percent, 
-                data = news, family = "binomial")
-```
-
-::: small
-
-```{r}
-equatiomatic::extract_eq(news_mod, intercept = "beta", terms_per_line = 2,
-                         swap_var_names = c("type_num" = "type", "title_words" = "words",
-                                            "title_has_excl" = "excl", "title_caps_percent" = "pct_caps"))
-```
-
-:::
-
-```{r}
-tidy(news_mod)
-```
 
 # Wald-based inference 
 
@@ -410,7 +419,7 @@ $0.120 \pm 1.96 \cdot (0.058) = (0.008,\ 0.237)$
 ::: {.fragment fragment-index=1}
 Exponentiating the endpoints to get the CI for the odds ratio for a one-word increase in title length:
 
-$$e^{0.008} = 1.008 \quad \text{to} \quad e^{0.0724} = 1.267$$
+$$e^{0.008} = 1.008 \quad \text{to} \quad e^{0.237} = 1.267$$
 :::
 <br>
 
@@ -471,141 +480,113 @@ LINE conditions must be met for inference to be valid
 
 3. **R**andomness: we have a random sample from the population or the data were collected from a randomized experiment
 
-## "Residuals"
-
-In logistic regression, we'll work with residuals on the response scale: 
-
-$$e_i = y_i - \widehat \pi_i = \begin{cases} 1 - \widehat \pi_i & \text{if } y_i = 1 \\ - \widehat \pi_i & \text{if } y_i = 0 \end{cases}$$
-
-What will residual plot look like? 
+## Why not just plot $Y$ vs. $x$?
 
 ```{r}
-#| fig-width: 12
-#| fig-height: 4
-p1 <- tibble(
+#| fig-width: 7
+#| fig-height: 3.5
+tibble(
   x = seq(0, 50, by = .5),
   log_odds = -0.9318 + 0.09772 * x,
-  odds = exp(log_odds),
   prob = exp(log_odds)/(1 + exp(log_odds))
 ) |>
   ggplot(aes(x = x, y = prob)) + 
-  geom_line(color = "#003300", linewidth = 1.5) +
+  geom_line(color = "#003300", linewidth = 1.5) + 
   geom_jitter(data = news, aes(x = title_caps_percent, y = type_num), height = .05, width = .1) +
-  labs(y = "Probability")
-
-p2 <- tibble(
-  x = seq(0, 50, by = .5),
-  log_odds = -0.9318 + 0.09772 * x,
-  odds = exp(log_odds),
-  prob = exp(log_odds)/(1 + exp(log_odds))
-) |>
-  ggplot(aes(x = x, y = prob)) + 
-  labs(y = "residual") +
-  ylim(c(-1,1))
-
-p1 + p2
+  labs(x = "title_caps_percent", y = "Probability")
 ```
 
-## Residual plot
+- Binary points pile up on two horizontal lines, so we can't "see" a trend
+- We need to check whether the **log odds** is linear in $x$, not whether the probability is
 
-```{r}
-#| echo: true
-#| fig-width: 6
-#| fig-height: 4
-resid_panel(news_mod, plot = "resid", type = "response")
-```
+## Empirical logits
 
-## Binned residuals
-
-Idea: If we group data points based on predictor, we can compute the mean response residual within each group and end up with something that looks more like an OLS residual plot
+If linearity holds, then $\text{logit}(\pi) = \beta_0 + \beta_1 x$, so the *observed* log odds for articles with similar $x$ should fall close to a line
 
 ::: incremental
-1. Calculate response residual
-2. Order observations either by the values of the predicted log odds/probabilities, or by quantitative predictor variable
-3. Use the ordered data to create g bins of approximately equal size. (Default: $g = \sqrt{n}$)
-4. Calculate average residual value in each bin
-5. Plot average residuals vs. average predicted log odds, probability, or predictor value
+1. Group the observations into bins of similar $x$ values (e.g., $g$ bins of about equal size)
+2. In each bin, find the number of successes ($Y = 1$) and failures ($Y = 0$) and calculate the **empirical logit**
+$$\log\left(\frac{\#\text{successes} + 0.5}{\#\text{failures} + 0.5}\right)$$
+(the $0.5$ keeps us from taking the log of 0)
+3. Plot the empirical logit against the mean $x$ in each bin
+4. Look for a straight-line pattern
 :::
 
-## Binned residual plot 
+```{r}
+#| include: false
+emp_logit_plot <- function(data, xvar, bins, xlab) {
+  data |>
+    mutate(bin = bins) |>
+    group_by(bin) |>
+    summarize(mean_x = mean({{ xvar }}),
+              n = n(),
+              successes = sum(type_num),
+              emp_logit = log((successes + 0.5) / (n - successes + 0.5)),
+              .groups = "drop") |>
+    gf_point(emp_logit ~ mean_x, xlab = xlab, ylab = "Empirical logit") |>
+    gf_lm(color = "#f15a31", linewidth = 1) 
+}
+```
 
-- Using 13 bins
+## Empirical logit plot: `title_words`
+
+- Using 13 bins (about 11-12 articles each)
 - You will recreate this during the R activity today
 
 ```{r}
 #| fig-width: 5
 #| fig-height: 3
-news_aug <- augment(news_mod, type.predict= "link", type.residuals = "pearson") |>
-  mutate(.resp.resid = resid(news_mod, type= "response"))
-
-binned_resids <- news_aug |> 
-  mutate(bin = ntile(news_mod$linear.predictors, 13)) |>
-  group_by(bin) |>
-  summarize(mean_linear_pred = mean(.fitted),
-            avg_resid = mean(.resp.resid),
-            .groups = "drop")
-
-gf_point(avg_resid ~ mean_linear_pred, data = binned_resids,
-         xlab = "Predicted log odds", ylab = "Average response residual") |>
-  gf_hline(yintercept = 0, linetype = 2) 
+emp_logit_plot(news, title_words, ntile(news$title_words, 13), "Mean title words in bin")
 ```
 
-## Binned residual 
+::: fragment
+The points are noisy (each is based on only ~11 articles), but there is no clear curvature: a straight line is a reasonable summary
+:::
 
-- Nonlinear trend may be indication that squared term or log transformation of predictor variable required
-- If bins have large average residuals (in magnitude)
-  - Look at averages of other predictor variables across bins
-  - Interaction may be required if large magnitude residuals correspond to certain combinations of predictor variables
-
-## Check binned residuals against X variables
+## Empirical logit plot: `title_caps_percent`
 
 ```{r}
 #| fig-width: 5
 #| fig-height: 3
-news_aug <- augment(news_mod, type.predict= "link", type.residuals = "pearson") |>
-  mutate(.resp.resid = resid(news_mod, type= "response"))
-
-p1 <- news_aug |> 
-  mutate(bin = ntile(title_words, 13)) |>
-  group_by(bin) |>
-  summarize(mean_x = mean(title_words),
-            avg_resid = mean(.resp.resid),
-            .groups = "drop") |>
-  gf_point(avg_resid ~ mean_x,
-         xlab = "title words", ylab = "Average response residual") |>
-  gf_hline(yintercept = 0, linetype = 2) 
-
-
-p2 <- news_aug |> 
-  mutate(bin = ntile(title_caps_percent, 13)) |>
-  group_by(bin) |>
-  summarize(mean_x = mean(title_caps_percent),
-            avg_resid = mean(.resp.resid),
-            .groups = "drop") |>
-  gf_point(avg_resid ~ mean_x,
-         xlab = "title words", ylab = "Average response residual") |>
-  gf_hline(yintercept = 0, linetype = 2) 
-
-
-p1 + p2
+emp_logit_plot(news, title_caps_percent, cut(news$title_caps_percent, c(-Inf, 0, 10, 15, 20, Inf)), "Mean % caps in bin")
 ```
 
-## Residuals vs categorical predictor
+- `r sum(news$title_caps_percent == 0)` of the 150 titles have **0%** capital letters, so equal-size bins won't work. We chose bins by hand: exactly 0, (0-10], (10-15], (15-20], and over 20
+- Bins with only 6-12 articles are very noisy. Look at the overall trend, not individual points
 
-- Calculate average residual for each level of the predictor
-- All of the means should be close to 0
+## What to look for
+
+::: medium
+- **Roughly straight** trend &rarr; the linearity condition is reasonable
+- **Curved** trend &rarr; try transforming $x$ (e.g., $\log x$) or adding a squared term
+- Expect lots of scatter when bins are small; don't over-interpret one point
+- These plots look at one predictor at a time (ignoring the others), so use Pearson residuals (next) to check linearity *after adjusting* for the other predictors
+:::
+
+## Categorical predictors
 
 ```{r}
-news_aug |>
+news |>
   group_by(title_has_excl) |>
-  summarize(`avg residual` = mean(.resp.resid))
+  summarize(n = n(), fake = sum(type_num), real = n - fake,
+            `empirical logit` = log((fake + 0.5) / (real + 0.5))) |>
+  knitr::kable(digits = 2)
 ```
 
-## Pearson residual
+- With only two groups, two points always fall on a line, so there is no linearity condition to check for a binary predictor
+- Empirical logits are still useful for *comparing* groups (e.g., color the points by `title_has_excl` to see whether we need an interaction)
 
-Standardize the distance between the observation (0 or 1) and the expected value (probability)
+## Pearson residuals
+
+The raw difference between the observation (0 or 1) and the fitted probability is $y_i - \widehat \pi_i$
+
+The **Pearson residual** standardizes that distance by the standard deviation of a 0/1 outcome with probability $\widehat \pi_i$:
 
 $$r_{p_i} = \frac{y_i - \widehat \pi_i}{\sqrt{\widehat{\pi_i}(1-\widehat \pi_i)}}$$
+
+::: small
+Since $Y$ is 0 or 1, Pearson residuals for binary data are *not* approximately normal. We won't use a QQ plot, and we need a smoother to see any pattern
+:::
 
 ## Pearson residuals in R 
 
