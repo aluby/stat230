@@ -108,7 +108,6 @@ We have data on 55 medical school applicants from a liberal arts college in the 
 
 ```{r}
 #| echo: false
-#| eval: false
 medschool <- read.csv("http://aloy.rbind.io/data/medschool.csv")
 medschool_glm <- glm(Acceptance ~ MCAT, data = medschool, family = "binomial")
 broom::tidy(medschool_glm)
