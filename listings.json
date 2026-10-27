@@ -42,6 +42,21 @@
     ]
   },
   {
+    "listing": "/readings.html",
+    "items": [
+      "/readings/latex-for-stat230.html",
+      "/readings/exam01-practice.html",
+      "/readings/intro-review.html",
+      "/readings/exam01-review.html",
+      "/readings/quiz02-practice.html",
+      "/readings/exam02-review.html",
+      "/readings/exam03-review.html",
+      "/readings/r-functions-reference.html",
+      "/readings/revisions.html",
+      "/readings/r-for-stat230.html"
+    ]
+  },
+  {
     "listing": "/slides.html",
     "items": [
       "/slides/slides28.html",
@@ -68,21 +83,6 @@
       "/slides/slides02.html",
       "/slides/slides-cheat-sheet.html",
       "/slides/slides01.html"
-    ]
-  },
-  {
-    "listing": "/readings.html",
-    "items": [
-      "/readings/latex-for-stat230.html",
-      "/readings/exam01-practice.html",
-      "/readings/intro-review.html",
-      "/readings/exam01-review.html",
-      "/readings/quiz02-practice.html",
-      "/readings/exam02-review.html",
-      "/readings/exam03-review.html",
-      "/readings/r-functions-reference.html",
-      "/readings/revisions.html",
-      "/readings/r-for-stat230.html"
     ]
   }
 ]
