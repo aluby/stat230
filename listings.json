@@ -30,6 +30,7 @@
       "/activities/19-binary-logistic.html",
       "/activities/19T-binary-logistic.html",
       "/activities/20-logistic-inference.html",
+      "/activities/20T-logistic-inference.html",
       "/activities/21-r-logistic.html",
       "/activities/22-binomial-logistic.html",
       "/activities/23-overdispersion.html",
@@ -82,7 +83,8 @@
       "/readings/exam03-review.html",
       "/readings/r-functions-reference.html",
       "/readings/revisions.html",
-      "/readings/r-for-stat230.html"
+      "/readings/r-for-stat230.html",
+      "/readings/logistic-videos.html"
     ]
   }
 ]
