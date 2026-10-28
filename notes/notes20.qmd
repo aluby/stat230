@@ -25,7 +25,7 @@ f2 <- function(x) sprintf("%.2f", x)
 f3 <- function(x) sprintf("%.3f", x)
 ```
 
-Last time we introduced logistic regression and learned to interpret the slope. Today:
+Last time we introduced logistic regression, moved between log odds/odds/probability scales and learned to interpret the slope. Today:
 
 1.  Logistic regression as a **generalized linear model**
 2.  **Inference** for a single coefficient (Wald tests and confidence intervals)
@@ -42,7 +42,7 @@ Last time we introduced logistic regression and learned to interpret the slope. 
 kable_coef(news_mod, terms = c("Intercept", "title_words", "title_has_exclTRUE", "title_caps_percent"))
 ```
 
-**Warm up:** Write the fitted model on the log-odds scale.
+**Warm up:** Write the fitted model on the log-odds scale. (Single model statement; not per group)
 
 \vspace{1in}
 
@@ -73,7 +73,7 @@ tibble(
 Both linear regression and logistic regression have three parts:
 
 -   **Linear predictor:** $\eta = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p$
--   **Link function:** connects $\eta$ to the mean of $Y$, $\mu = g(\eta)$
+-   **Link function:** connects $\eta$ to the mean of $Y$, $\theta = g(\eta)$
 -   **Response distribution:** the distribution of $Y$ with mean $\mu$
 
 :::
@@ -153,8 +153,6 @@ tidy(news_mod, conf.int = TRUE) |>
 
 (Note: `tidy(..., conf.int = TRUE)` uses a profile-likelihood interval, so its endpoints differ slightly from the Wald interval above.)
 
-## Conditions for logistic regression
-
 For inference to be valid we need
 
 1.  **L**inearity: the ______________ is a linear function of the predictors
@@ -162,8 +160,6 @@ For inference to be valid we need
 3.  **R**andomness: a random sample (or a randomized experiment)
 
 If linearity fails, the model doesn't describe the data. If independence or randomness fail, we can still interpret the coefficients, but our CIs will be too narrow and our p-values too small.
-
-## Checking linearity: empirical logits
 
 We can't just plot a 0/1 response against $x$ and look for a line, and ordinary residual plots for binary data are hard to read. Instead we plot the **observed log odds** for groups of similar $x$ values.
 
@@ -176,7 +172,7 @@ Why do we add 0.5? ______________________________________
 
 ```{r}
 #| fig-width: 7
-#| fig-height: 2.6
+#| fig-height: 2
 emp_logit_plot <- function(data, xvar, bins, xlab) {
   data |>
     mutate(bin = bins) |>
@@ -197,11 +193,11 @@ p2 <- emp_logit_plot(news, title_caps_percent,
 p1 | p2
 ```
 
-**Q3.** The left plot uses 13 bins of about 11 articles each. Is there evidence that the linearity condition is violated for `title_words`?
+The left plot uses 13 bins of about 11 articles each. Is there evidence that the linearity condition is violated for `title_words`?
 
 \vspace{.75in}
 
-**Q4.** `r sum(news$title_caps_percent == 0)` of the 150 titles have 0% capital letters, so we couldn't use equal-size bins for `title_caps_percent` (the right plot uses 5 bins chosen by hand). What do you conclude about linearity?
+`r sum(news$title_caps_percent == 0)` of the 150 titles have 0% capital letters, so we couldn't use equal-size bins for `title_caps_percent` (the right plot uses 5 bins chosen by hand). What do you conclude about linearity?
 
 \vspace{.75in}
 
@@ -210,7 +206,7 @@ p1 | p2
 -   A roughly straight trend means linearity is ______________.
 -   A curved trend means we should try ______________ (for example, ______________).
 -   Each point is based on few observations, so expect scatter. Look at the overall trend, not at individual points.
--   These plots look at one predictor at a time. They don't adjust for the other predictors, which is why we also use Pearson residuals.
+-   These plots look at one predictor at a time. They don't adjust for the other predictors, which is why we also use Pearson residuals (coming next!).
 
 **Categorical predictors.** For `title_has_excl` we calculate the empirical logit in each group:
 
@@ -224,54 +220,53 @@ news |>
 
 With only two groups, there is no linearity condition to check: ________________________________.
 
-## Checking linearity after adjusting: Pearson residuals
+::: callout-note
+## Pearson Residual
 
 The raw difference between the observed outcome and the fitted probability is $y_i - \widehat\pi_i$. The **Pearson residual** standardizes it:
 
 $$r_{p_i} = \frac{y_i - \widehat\pi_i}{\sqrt{\widehat\pi_i (1 - \widehat\pi_i)}}$$
+:::
 
 For binary data the Pearson residuals fall in two curved bands (one for $y = 0$, one for $y = 1$), so the individual points aren't informative. We add a **smoother**:
 
 ```{r}
-#| fig-width: 4
-#| fig-height: 2.4
+#| fig-width: 3
+#| fig-height: 2
+#| echo: true
 resid_panel(news_mod, plot = "resid", type = "pearson", smoother = TRUE)
 ```
 
+We can also look at Pearson residuals against each predictor variable: 
+
 ```{r}
 #| fig-width: 7.5
-#| fig-height: 2.4
+#| fig-height: 2
+#| echo: true
 resid_xpanel(news_mod, yvar = "residual", type = "pearson", smoother = TRUE, nrow = 1)
 ```
 
 -   If the model is adequate, the smoother should be roughly a ______________ line at ______.
 -   There will always be some variation from the horizontal. Smoothers help us notice **major** flaws.
--   Pearson residuals for binary data are *not* approximately normal, so we don't use a QQ plot.
+-   Pearson residuals can also flag outliers: $|r_{p}| > 3/4$
 
-**Q5.** Do the Pearson residual plots agree with the empirical logit plots? Is there evidence of a violation of linearity?
-
-\vspace{1in}
 
 ## Independence and randomness
 
--   Independence is best assessed from the *description of the data*: Are the observations grouped (e.g., several articles from the same site)? Measured over time? Spatially related?
--   An **index plot** of the residuals shows whether the data are ordered in some way (a trend or pattern across the index is a warning sign).
+-   Independence is best assessed from the *description of the data*: Are the observations grouped? Measured over time? Spatially related?
+-   An **index plot** of the residuals shows whether the data are ordered in some way 
 -   Randomness: how were the articles chosen? The fake news articles were posted to Facebook in September 2016, in the run-up to the election, so we need to be careful about what population our conclusions apply to.
 
 ```{r}
-#| fig-width: 4
-#| fig-height: 2.2
+#| fig-width: 3
+#| fig-height: 2
 resid_panel(news_mod, plot = "index", type = "pearson")
 ```
-
-**Q6.** What does the index plot suggest about independence? What population do you think we can generalize to?
-
-\vspace{1in}
 
 ## Summary
 
 | Condition | How we check it |
-|:--|:--|
+|:--|:------------------|
 | Linearity | |
 | Independence | |
 | Randomness | |

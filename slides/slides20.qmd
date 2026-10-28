@@ -267,7 +267,7 @@ $Y$ is a random variable with mean $\theta$
 
 If $Y$ follows a Bernoulli distribution
 
-$${\rm E}(Y | X) = \pi(X)$$
+$$\theta = {\rm E}(Y | X) = \pi(X)$$
 
 We link this mean function to the explanatory variables using the logit link
 
@@ -368,7 +368,7 @@ $$\widehat{\beta}_i \pm z^*_{1-\alpha/2} SE(\widehat{\beta}_i)$$
 
 . . .
 
-CI for the multiplicative effect on odds of success for a 1- unit change in $x$ (odds ratio of Success for $x+1$ vs. $x$):
+To get a CI for the **odds ratio**, exponentiate the endpoints: (odds ratio of Success for (x+1) compared to x)
 
 $$e^{\widehat{\beta}_i - z^*_{1-\alpha/2} SE(\widehat{\beta}_i)} \quad \text{to} \quad e^{\widehat{\beta}_i + z^*_{1-\alpha/2} SE(\widehat{\beta}_i)}$$
 
@@ -464,7 +464,7 @@ We are 95% confident that a 10-word increase in title length is associated with 
 
 ## Recall
 
-LINE conditions must be met for inference to be valid
+For OLS, LINE conditions must be met for inference to be valid
 
 - If Linearity fails, the line doesn't actually describe the relationship and everything breaks
 
@@ -556,11 +556,13 @@ emp_logit_plot(news, title_caps_percent, cut(news$title_caps_percent, c(-Inf, 0,
 
 ## What to look for
 
-::: medium
+::: {incremental}
+
 - **Roughly straight** trend &rarr; the linearity condition is reasonable
 - **Curved** trend &rarr; try transforming $x$ (e.g., $\log x$) or adding a squared term
 - Expect lots of scatter when bins are small; don't over-interpret one point
 - These plots look at one predictor at a time (ignoring the others), so use Pearson residuals (next) to check linearity *after adjusting* for the other predictors
+
 :::
 
 ## Categorical predictors
@@ -584,9 +586,7 @@ The **Pearson residual** standardizes that distance by the standard deviation of
 
 $$r_{p_i} = \frac{y_i - \widehat \pi_i}{\sqrt{\widehat{\pi_i}(1-\widehat \pi_i)}}$$
 
-::: small
-Since $Y$ is 0 or 1, Pearson residuals for binary data are *not* approximately normal. We won't use a QQ plot, and we need a smoother to see any pattern
-:::
+
 
 ## Pearson residuals in R 
 
@@ -600,6 +600,13 @@ Since $Y$ is 0 or 1, Pearson residuals for binary data are *not* approximately n
 #| fig-height: 2.5
 resid_panel(news_mod, plot = "resid", type = "pearson")
 resid_panel(news_mod, plot = "resid", type = "pearson", smoother = TRUE)
+```
+
+## We can also look at Pearson residuals against each predictor variable: 
+
+```{r}
+#| echo: true
+resid_xpanel(news_mod, yvar = "residual", type = "pearson", smoother = TRUE, nrow = 1)
 ```
 
 ## 
@@ -678,4 +685,17 @@ resid_panel(news_mod, plot = "index", type = "pearson")
 
 > A dataset containing data behind the study "FakeNewsNet: A Data Repository with News Content, Social Context and Spatialtemporal Information for Studying Fake News on Social Media" https://arxiv.org/abs/1809.01286. The news articles in this dataset were posted to Facebook in September 2016, in the run-up to the U.S. presidential election.
 
+## Summary
 
+::: medium
+
+| Condition | How we check it |
+|:--|:------|
+| Linearity | Empirical logit plots; Pearson residual plots with a smoother |
+| Independence | Data description; index plot |
+| Randomness | How the data were collected: random sample or experiment; what population|
+
+-   Inference for each coefficient uses a Wald z-test and a Wald-based CI.
+-   Exponentiate the CI endpoints to talk about the **odds ratio**; multiply by $C$ first for a $C$-unit change.
+
+:::
