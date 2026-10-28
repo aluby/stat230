@@ -2,6 +2,10 @@
 title: "20: Inference for Logistic Regression"
 ---
 
+:::{.callout-note}
+This is the quarto version of the R activity. If you prefer to use the tutorial version, you can use <https://aluby.github.io/stat230/activities/20-logistic-inference-tutorial>
+:::
+
 ```{r}
 library(dplyr)
 library(broom)

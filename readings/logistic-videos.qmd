@@ -1,0 +1,28 @@
+---
+title: Videos about logistic regression
+format: html
+---
+
+# StatQuest Videos
+
+Emphasis on conceptual understanding and "big picture" ideas
+
+{{< video https://youtu.be/yIYKR4sgzI8?si=UCC8pFpoto1bZAY7 >}}
+
+{{< video https://youtu.be/ARfXDSkQf1Y?si=oHO6k3bRkclAKTaL >}}
+
+{{< video https://youtu.be/8nm0G-1uJzA?si=qxhavr9dnK_ASdjl >}}
+
+{{< video https://youtu.be/vN5cNN2-HWE?si=i79ES2eNxpRkHfmp >}}
+
+{{< video https://youtu.be/C4N3_XJJ-jU?si=TBCwkcai53PMhGla >}}
+
+[Entire Playlist](https://youtube.com/playlist?list=PLblh5JKOoLUKxzEP5HA2d-Li7IJkHfXSe&si=TI5eGwpro4BkTCba)  
+
+# Intro to Modern Statistics
+
+*Note:* this is at a slightly lower level than the textbook we are using in class. Use for seeing another explanation/more examples/practice problems
+
+[Intro to Logistic Regression](https://openintro-ims.netlify.app/model-logistic)
+
+[Inference for Logistic Regression](https://openintro-ims.netlify.app/inf-model-logistic)
