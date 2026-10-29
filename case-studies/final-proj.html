@@ -130,10 +130,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#starter-datasets" id="toc-starter-datasets" class="nav-link" data-scroll-target="#starter-datasets">Starter Datasets</a>
   <ul class="collapse">
-  <li><a href="#option-1-race-and-jury-selection-logistic-regression" id="toc-option-1-race-and-jury-selection-logistic-regression" class="nav-link" data-scroll-target="#option-1-race-and-jury-selection-logistic-regression">Option 1: Race and jury selection (logistic regression)</a></li>
-  <li><a href="#option-2-caring-for-city-trees-logistic-regression" id="toc-option-2-caring-for-city-trees-logistic-regression" class="nav-link" data-scroll-target="#option-2-caring-for-city-trees-logistic-regression">Option 2: Caring for city trees (logistic regression)</a></li>
-  <li><a href="#option-3-who-graduates-from-college-binomial-logistic-regression" id="toc-option-3-who-graduates-from-college-binomial-logistic-regression" class="nav-link" data-scroll-target="#option-3-who-graduates-from-college-binomial-logistic-regression">Option 3: Who graduates from college? (binomial logistic regression)</a></li>
-  <li><a href="#option-4-do-crowds-sway-referees-poisson-regression" id="toc-option-4-do-crowds-sway-referees-poisson-regression" class="nav-link" data-scroll-target="#option-4-do-crowds-sway-referees-poisson-regression">Option 4: Do crowds sway referees? (Poisson regression)</a></li>
+  <li><a href="#option-1-caring-for-city-trees-logistic-regression" id="toc-option-1-caring-for-city-trees-logistic-regression" class="nav-link" data-scroll-target="#option-1-caring-for-city-trees-logistic-regression">Option 1: Caring for city trees (logistic regression)</a></li>
+  <li><a href="#option-2-who-graduates-from-college-binomial-logistic-regression" id="toc-option-2-who-graduates-from-college-binomial-logistic-regression" class="nav-link" data-scroll-target="#option-2-who-graduates-from-college-binomial-logistic-regression">Option 2: Who graduates from college? (binomial logistic regression)</a></li>
+  <li><a href="#option-3-do-crowds-sway-referees-poisson-regression" id="toc-option-3-do-crowds-sway-referees-poisson-regression" class="nav-link" data-scroll-target="#option-3-do-crowds-sway-referees-poisson-regression">Option 3: Do crowds sway referees? (Poisson regression)</a></li>
   </ul></li>
   <li><a href="#finding-your-own-data" id="toc-finding-your-own-data" class="nav-link" data-scroll-target="#finding-your-own-data">Finding your own data</a></li>
   <li><a href="#best-practices-for-small-group-work" id="toc-best-practices-for-small-group-work" class="nav-link" data-scroll-target="#best-practices-for-small-group-work">Best practices for small group work</a></li>
@@ -243,38 +242,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="starter-datasets" class="level1">
 <h1>Starter Datasets</h1>
 <p>Each option below gives some background, the data, and example questions. These are starting points: you are welcome to ask a different question with the same data.</p>
-<section id="option-1-race-and-jury-selection-logistic-regression" class="level2">
-<h2 class="anchored" data-anchor-id="option-1-race-and-jury-selection-logistic-regression">Option 1: Race and jury selection (logistic regression)</h2>
-<p>In the trial of Curtis Flowers, Mississippi prosecutor Doug Evans was accused of using “peremptory strikes” to remove Black jurors from juries. The APM Reports investigative team collected data on every potential juror in trials that Evans prosecuted, and used logistic regression to argue that he struck Black jurors at much higher rates, even after accounting for other reasons a juror might be struck. In 2019, the US Supreme Court overturned Flowers’s conviction on these grounds.</p>
-<p>Background reading:</p>
-<ul>
-<li>APM study: <a href="https://features.apmreports.org/in-the-dark/mississippi-district-attorney-striking-blacks-from-juries" class="uri">https://features.apmreports.org/in-the-dark/mississippi-district-attorney-striking-blacks-from-juries</a></li>
-<li>APM methodology (the logistic regression model starts on page 9; variable descriptions are in the Appendix): <a href="https://www.apmreports.org/files/peremptory_strike_methodology.pdf" class="uri">https://www.apmreports.org/files/peremptory_strike_methodology.pdf</a></li>
-<li>APM update: <a href="https://www.apmreports.org/in-the-dark/season-two/curtis-flowers-updates" class="uri">https://www.apmreports.org/in-the-dark/season-two/curtis-flowers-updates</a></li>
-</ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>apm <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/apm.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ul>
-<li><strong>Unit:</strong> one potential juror (2,295 jurors from 89 trials, 1992–2017)</li>
-<li><strong>Response:</strong> <code>struck_state_bin</code> (1 = struck by the state)</li>
-<li><strong>Possible predictors:</strong> <code>is_black</code>, <code>accused</code>, <code>fam_accused</code>, <code>death_hesitation</code>, <code>know_def</code>, <code>same_race</code>, <code>fam_law_enforcement</code>, <code>know_vic</code>, <code>know_wit</code>, <code>fam_crime_victim</code>, <code>crime_victim</code>, <code>prior_info</code>, <code>gender</code>, <code>defendant_race</code></li>
-</ul>
-<p>Example questions:</p>
-<ul>
-<li>Can you replicate the APM model? Is it sufficient, or would you change it (for example, using <code>defendant_race</code> instead of <code>same_race</code>)?</li>
-<li>Does the association between juror race and being struck depend on other juror characteristics (interactions)?</li>
-</ul>
-<p>Watch out for: jurors are grouped within trials, so they are not fully independent.</p>
-</section>
-<section id="option-2-caring-for-city-trees-logistic-regression" class="level2">
-<h2 class="anchored" data-anchor-id="option-2-caring-for-city-trees-logistic-regression">Option 2: Caring for city trees (logistic regression)</h2>
+<section id="option-1-caring-for-city-trees-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="option-1-caring-for-city-trees-logistic-regression">Option 1: Caring for city trees (logistic regression)</h2>
 <p>Street trees cool neighborhoods, absorb stormwater, and improve air quality, but life on a city sidewalk is hard on a tree. In 2015, more than 2,000 volunteers and NYC Parks staff surveyed every street tree in New York City. They recorded each tree’s species and size, rated its health, and noted damage (for example, wires or lights wrapped around the trunk, or roots trapped by paving stones), signs that residents were caring for it (“stewardship”), and whether it had a guard around it.</p>
 <ul>
 <li><strong>Source:</strong> <a href="https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/uvpi-gqnh">2015 Street Tree Census</a>, NYC Open Data (NYC Department of Parks &amp; Recreation). The data dictionary is attached on the dataset page.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>trees <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/nyc_trees.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>trees <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/nyc_trees.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><strong>Unit:</strong> one living street tree. To reduce dependence between neighboring trees, the data are a random sample of 10,000 trees with at most one tree per block.</li>
@@ -302,14 +277,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Watch out for: The stewardship and guard associations are small, so think about the size of the effect, not just its p-value. Health is a visual rating by the surveyor, and nearby trees may still be similar.</p>
 </section>
-<section id="option-3-who-graduates-from-college-binomial-logistic-regression" class="level2">
-<h2 class="anchored" data-anchor-id="option-3-who-graduates-from-college-binomial-logistic-regression">Option 3: Who graduates from college? (binomial logistic regression)</h2>
+<section id="option-2-who-graduates-from-college-binomial-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="option-2-who-graduates-from-college-binomial-logistic-regression">Option 2: Who graduates from college? (binomial logistic regression)</h2>
 <p>Colleges vary widely in what fraction of their students finish a degree. Some of this reflects the students a college admits, and some might reflect what the college does. The US Department of Education’s College Scorecard reports, for each institution, how many students in an entering cohort completed a degree within six years, along with information about the students, cost, and resources.</p>
 <ul>
 <li><strong>Source:</strong> <a href="https://collegescorecard.ed.gov/data/">College Scorecard</a>, US Department of Education (<a href="https://collegescorecard.ed.gov/data/documentation/">data documentation</a>)</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/college_completion.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>college <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/college_completion.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><strong>Unit:</strong> one public or private nonprofit four-year college (1,341 institutions that mainly award bachelor’s degrees and had an entering cohort of at least 50 full-time, first-time students)</li>
@@ -337,14 +312,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Watch out for: Colleges differ in many ways that no model captures. Several predictors (enrollment, spending) are very right-skewed. If you use <code>sat_avg</code>, you will lose about a quarter of the colleges, and those colleges are not a random subset.</p>
 </section>
-<section id="option-4-do-crowds-sway-referees-poisson-regression" class="level2">
-<h2 class="anchored" data-anchor-id="option-4-do-crowds-sway-referees-poisson-regression">Option 4: Do crowds sway referees? (Poisson regression)</h2>
+<section id="option-3-do-crowds-sway-referees-poisson-regression" class="level2">
+<h2 class="anchored" data-anchor-id="option-3-do-crowds-sway-referees-poisson-regression">Option 3: Do crowds sway referees? (Poisson regression)</h2>
 <p>Home teams win more often in almost every sport, and one explanation is that crowds pressure referees into favoring the home team. When COVID-19 forced soccer leagues to play in empty stadiums, researchers got a rare natural experiment: the teams, players, and referees were the same, but the crowds were gone.</p>
 <ul>
 <li><strong>Source:</strong> <a href="https://www.football-data.co.uk/englandm.php">football-data.co.uk</a> match results and statistics for the English Premier League</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>epl <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/epl_cards.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>epl <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/epl_cards.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><strong>Unit:</strong> one team in one Premier League match, 2017–18 through 2022–23 (2,280 matches, so 4,560 rows: one for the home team and one for the away team)</li>
@@ -570,7 +545,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
