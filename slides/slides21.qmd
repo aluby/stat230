@@ -70,11 +70,10 @@ regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
 bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
 
 news <- bayesrules::fake_news |>
-  mutate(has_excl = ifelse(title_has_excl | text_excl > 0, TRUE, FALSE)) |>
-  select(title, url, type, title_words, has_excl, title_caps_percent, negative, positive) |>
+  select(title, url, type, title_words, title_has_excl, title_caps_percent, negative, positive) |>
   mutate(type_num = as.numeric(type == "fake"))
 
-news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent, 
+news_mod <- glm(type_num ~ title_words + title_has_excl + title_caps_percent, 
                 data = news, family = "binomial")
 
 ```
@@ -93,7 +92,7 @@ equatiomatic::extract_eq(news_mod, intercept = "beta", terms_per_line = 2,
 tidy(news_mod)
 ```
 
-## Do we need an interaction term between `title_caps_percent` and `has_excl`? 
+## Do we need an interaction term between `title_caps_percent` and `title_has_excl`? 
 
  - EDA 
  
@@ -102,26 +101,33 @@ tidy(news_mod)
 ## EDA (original data)
 
 ```{r}
-gf_jitter(type_num ~ title_caps_percent, color = ~has_excl, data = news, height = .25, width = 1, alpha = .5)
+gf_jitter(type_num ~ title_caps_percent, color = ~title_has_excl, data = news, height = .25, width = 1, alpha = .5)
 ```
 
 ## EDA (aggregated data)
 
-First, make an "aggregated dataset" 
+First, make an "aggregated dataset" of **empirical logits**: bin `title_caps_percent`, then find the empirical logit for each bin *within each group*
 
 ```{r}
 #| output-location: slide
 #| echo: true
 news_agg <- news |>
-  mutate(tcp_bin = ntile(title_caps_percent, 13)) |>
-  group_by(tcp_bin, has_excl) |>
+  mutate(tcp_bin = cut(title_caps_percent, c(-Inf, 0, 10, Inf))) |>
+  group_by(tcp_bin, title_has_excl) |>
   summarize(
-    prop_fake = mean(type_num),
-    log_odds = log(prop_fake/(1-prop_fake))
+    mean_x = mean(title_caps_percent),
+    n = n(),
+    n_fake = sum(type_num),
+    emp_logit = log((n_fake + 0.5) / (n - n_fake + 0.5)),
+    .groups = "drop"
   )
 
 news_agg
 ```
+
+::: small
+`r sum(news$title_caps_percent == 0)` of the 150 titles have 0% capital letters, so we choose the bins by hand. Only `r sum(news$title_has_excl)` titles have an exclamation point, so some cells are tiny
+:::
 
 ## Plot empirical log odds
 
@@ -129,19 +135,20 @@ news_agg
 #| echo: true
 #| fig-width: 8
 #| fig-height: 4
-gf_point(log_odds ~ tcp_bin, color = ~has_excl, data = news_agg) |>
-  gf_lm()
+gf_point(emp_logit ~ mean_x, color = ~title_has_excl, size = ~n, data = news_agg) |>
+  gf_line()
 ```
 
+- Size of the point = number of articles in the bin
 - Is there a nonlinear relationship? 
-- Should we try a different lines model?
+- Do the lines look parallel, or should we try a different lines model?
 
 ## Model with interaction
 
 ```{r}
 #| echo: true
 news_mod2 <- glm(type_num ~ title_words + 
-                   has_excl*title_caps_percent, 
+                   title_has_excl*title_caps_percent, 
                 data = news, family = "binomial")
 ```
 
@@ -177,12 +184,12 @@ Do we need the interaction term? Write out null and alternative hypothesis.
 ## 
 
 ::: task
-Do we need `has_excl` at all? Write out the null and alternative hypothesis for this question.
+Do we need `title_has_excl` at all? Write out the null and alternative hypothesis for this question.
 :::
 
 ## Likelihood Ratio Test
 
-In OLS, we used: 
+In OLS, we used the extra sums of squares $F$-test to compare nested models
 
 For logistic regression, we use a **likelihood ratio test**
 
@@ -254,6 +261,19 @@ $\chi^2_{df}$ where $df=$ number of extra terms in the full model
 
 **Idea:** how much did the full model increase the likelihood over the small model? (High likelihood = good, low likelihood = less good)
 
+## What is deviance?
+
+::: medium
+For binary logistic regression, the **deviance** of a model is
+$$\text{Deviance} = -2 \log L(\text{model})$$
+where $L$ is the maximum value of the likelihood
+
+- Deviance plays the role that SSE played in OLS: **smaller = better fit**
+- A bigger model always has deviance that is smaller (or the same) as a smaller model
+- The LRT statistic is the **drop in deviance**: $\Lambda = \text{Dev(reduced)} - \text{Dev(full)}$
+- We use deviance to compare models. (We will *not* use "deviance residuals" to check conditions)
+:::
+
 ## `anova` table
 
 Deviance = $-2 \log L$
@@ -300,6 +320,37 @@ Test for one coefficient $H_0: \beta_i = 0$ against $H_A: \beta_i \ne 0$:
     - Hopefully they are close
     - If not, the LRT is usually more accurate
 
+```{r}
+#| echo: true
+lrt_p <- function(term) {
+  reduced <- update(news_mod, as.formula(paste(". ~ . -", term)))
+  anova(reduced, news_mod, test = "LRT")[2, "Pr(>Chi)"]
+}
+
+terms <- c("title_words", "title_has_excl", "title_caps_percent")
+tibble(term = terms,
+       `z-test p-value` = summary(news_mod)$coefficients[-1, "Pr(>|z|)"],
+       `LRT p-value` = map_dbl(terms, lrt_p)) |>
+  knitr::kable(digits = 4)
+```
+
+## Separate tests vs. a joint test
+
+Is `title_has_excl` needed at all? It appears in 2 terms of the interaction model: the main effect and the interaction
+
+```{r}
+tidy(news_mod2) |>
+  filter(str_detect(term, "excl")) |>
+  select(term, estimate, std.error, p.value) |>
+  knitr::kable(digits = 3)
+```
+
+::: fragment
+- Neither term looks useful on its own (both p-values are large)
+- But the joint LRT ($d = 2$) has p-value $=$ `r round(anova(reduced_model, news_mod2, test = "LRT")[2, "Pr(>Chi)"], 3)`
+- Same lesson as the $F$-test in MLR: individual tests ask whether a term helps *given the others* are in the model; the joint test asks whether the **pair** helps
+:::
+
 ## AIC and BIC for logistic regression
 
 The following "information criteria" can be used to compare nested or non-nested models (smaller values are better)
@@ -308,13 +359,13 @@ $$IC = \text{Measure of Fit} + \text{Penalty}$$
 
 <br>
 
-$$AIC = n \log(L) + 2p$$
+$$AIC = -2 \log(L) + 2k$$
 
 <br>
 
-$$BIC =  n \log(L) + \log(n) \cdot p$$
+$$BIC =  -2 \log(L) + \log(n) \cdot k$$
 
-where L is the likelihood of the model 
+where $L$ is the maximized likelihood of the model and $k$ is the number of coefficients (including the intercept). For binary logistic regression, $-2\log(L)$ is the deviance
 
 ## In R
 

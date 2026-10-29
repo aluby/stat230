@@ -1,0 +1,250 @@
+---
+title: "Day 21: Model comparison for logistic regression"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+library(patchwork)
+library(here)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+news <- read.csv(here("data", "fake_news_bayesrules.csv"))
+
+news_mod <- glm(type_num ~ title_words + title_has_excl + title_caps_percent,
+                data = news, family = "binomial")
+news_mod2 <- glm(type_num ~ title_words + title_has_excl * title_caps_percent,
+                 data = news, family = "binomial")
+reduced_model <- glm(type_num ~ title_words + title_caps_percent,
+                     data = news, family = "binomial")
+null_model <- glm(type_num ~ 1, data = news, family = "binomial")
+
+f2 <- function(x) sprintf("%.2f", x)
+f3 <- function(x) sprintf("%.3f", x)
+```
+
+::: {.callout-note}
+These are guided notes for Day 21. They cover the same material as the Day 21 slides and R activity. Fill in the blanks as we go.
+:::
+
+## Where we're going
+
+Last time we learned how to do inference for **one** coefficient (Wald test and CI) and how to check conditions. Today we compare **models**:
+
+1.  Do we need an interaction term?
+2.  The **likelihood ratio test** (LRT): the logistic version of the extra sums of squares $F$-test
+3.  AIC and BIC for logistic regression
+
+## The model from last time
+
+```{r}
+kable_coef(news_mod, terms = c("Intercept", "title_words", "title_has_exclTRUE", "title_caps_percent"))
+```
+
+**Question:** is the association between `title_caps_percent` and the odds of being fake news *different* for titles with and without an exclamation point? That is, do we need an **interaction** between `title_has_excl` and `title_caps_percent`?
+
+## EDA: empirical logits by group
+
+```{r}
+#| fig-width: 5.5
+#| fig-height: 2.8
+news_agg <- news |>
+  mutate(tcp_bin = cut(title_caps_percent, c(-Inf, 0, 10, Inf))) |>
+  group_by(tcp_bin, title_has_excl) |>
+  summarize(mean_x = mean(title_caps_percent), n = n(), n_fake = sum(type_num),
+            emp_logit = log((n_fake + 0.5) / (n - n_fake + 0.5)), .groups = "drop")
+
+gf_point(emp_logit ~ mean_x, color = ~title_has_excl, size = ~n, data = news_agg,
+         xlab = "Mean title_caps_percent in bin", ylab = "Empirical logit") |>
+  gf_line()
+```
+
+Size of the point = number of articles in the bin. Only `r sum(news$title_has_excl)` of the 150 titles have an exclamation point, so some cells are tiny.
+
+**Q1.** Do the lines look parallel? How confident are you in your answer?
+
+\vspace{.75in}
+
+## The model with an interaction
+
+$$\text{logit}(\pi_i) = \beta_0 + \beta_1\, \text{words}_i + \beta_2\, \text{excl}_i + \beta_3\, \text{caps}_i + \beta_4\, (\text{excl}_i \times \text{caps}_i)$$
+
+```{r}
+kable_coef(news_mod2, terms = c("Intercept", "title_words", "title_has_exclTRUE", "title_caps_percent",
+                                "title_has_exclTRUE:title_caps_percent"))
+```
+
+**Q2.** Write the fitted model on the log-odds scale for each group.
+
+With an exclamation point ($excl = 1$):
+
+\vspace{.75in}
+
+Without an exclamation point ($excl = 0$):
+
+\vspace{.75in}
+
+**Q3.** What is $\beta_4$? ______________________________ On the odds scale, $e^{\beta_4}$ is the ______________________________.
+
+\vspace{.5in}
+
+## The likelihood ratio test (LRT)
+
+In linear regression we compared nested models with the ______________________________ $F$-test. For logistic regression we use a **likelihood ratio test**.
+
+The **deviance** of a model is $-2 \log L$, where $L$ is the maximized likelihood. Like SSE in OLS, a smaller deviance means a ______________ fit. A bigger model always has a deviance that is the same or ______________.
+
+**Hypotheses:** $H_0$: ______________________________ vs. $H_a$: at least one of these $\beta$'s $\ne 0$
+
+**Test statistic:** $\Lambda = \text{Dev(reduced)} - \text{Dev(full)}$
+
+**Reference distribution:** $\chi^2$ with $df =$ ______________________________
+
+**p-value:** the area ______________ $\Lambda$ (upper tail)
+
+In R, give the **reduced** model first:
+
+```{r}
+#| eval: false
+anova(reduced_model, full_model, test = "LRT")
+```
+
+| Resid DF | Resid Dev | Df | Deviance | Pr(\>Chi) |
+|:--|:--|:--|:--|:--|
+| $n -$ (# coefs in reduced) | Dev(reduced) | | | |
+| $n -$ (# coefs in full) | Dev(full) | # extra coefs | $\Lambda$ | p-value |
+
+## Example 1: do we need the interaction?
+
+```{r}
+anova(news_mod, news_mod2, test = "LRT")
+```
+
+**Hypotheses:**
+
+\vspace{.5in}
+
+**Test statistic, df, and p-value:**
+
+\vspace{.5in}
+
+**Conclusion in context:**
+
+\vspace{.75in}
+
+## Example 2: the overall test
+
+The `summary()` output gives the deviance of the model, and of an intercept-only model:
+
+```{r}
+tibble(model = c("Null (intercept only)", "news_mod (3 predictors)"),
+       `Resid DF` = c(null_model$df.residual, news_mod$df.residual),
+       `Resid Dev` = c(deviance(null_model), deviance(news_mod))) |>
+  knitr::kable(digits = 2)
+```
+
+**Q4.** Test $H_0: \beta_1 = \beta_2 = \beta_3 = 0$ against $H_a$: at least one $\ne 0$. Fill in the ANOVA table below, then find $\Lambda$, $df$, and the p-value (use `1 - pchisq(Lambda, df)`).
+
+|     | Resid DF | Resid Dev | Df  | Deviance | Pr(\>Chi) |
+|:--|:--|:--|:--|:--|:--|
+| 1   |          |           |     |          |           |
+| 2   |          |           |     |          |           |
+
+\vspace{1in}
+
+```{r}
+#| eval: false
+1 - pchisq(lambda, df)
+```
+
+**Conclusion:**
+
+\vspace{.5in}
+
+## $z$-test vs. LRT
+
+For one coefficient, $H_0: \beta_i = 0$:
+
+-   In OLS, the $t$-test and $F$-test give *exactly* the same p-value.
+-   In logistic regression the $z$-test (Wald) and the LRT are ______________ equivalent. Hopefully they are close. If not, the ______________ is usually more accurate.
+
+```{r}
+lrt_p <- function(term) {
+  reduced <- update(news_mod, as.formula(paste(". ~ . -", term)))
+  anova(reduced, news_mod, test = "LRT")[2, "Pr(>Chi)"]
+}
+
+terms <- c("title_words", "title_has_excl", "title_caps_percent")
+tibble(term = terms,
+       `z-test p-value` = summary(news_mod)$coefficients[-1, "Pr(>|z|)"],
+       `LRT p-value` = map_dbl(terms, lrt_p)) |>
+  knitr::kable(digits = 4)
+```
+
+The LRT can also test **several coefficients at once**, which the $z$-test cannot.
+
+## Example 3: is `title_has_excl` needed at all?
+
+`title_has_excl` appears in two terms of `news_mod2`. To drop it entirely we have to remove both the main effect and the interaction.
+
+$H_0$: ______________________________
+
+```{r}
+anova(reduced_model, news_mod2, test = "LRT")
+```
+
+```{r}
+tidy(news_mod2) |>
+  filter(str_detect(term, "excl")) |>
+  select(term, estimate, std.error, p.value) |>
+  mutate(p.value = fmt_p(p.value)) |>
+  knitr::kable(digits = 3)
+```
+
+**Q5.** The individual $z$-tests for these two terms have large p-values. The joint LRT has a small p-value. Why? (Think back to the $F$-test in MLR.)
+
+\vspace{1in}
+
+**Conclusion in context:**
+
+\vspace{.5in}
+
+## AIC and BIC for logistic regression
+
+$$AIC = -2\log(L) + 2k \qquad\qquad BIC = -2\log(L) + \log(n) \cdot k$$
+
+where $L$ is the maximized likelihood and $k$ is the number of coefficients (including the intercept). For binary logistic regression, $-2\log(L)$ is the ______________. Smaller is better, and both can compare nested **or** non-nested models.
+
+```{r}
+data.frame(AIC(reduced_model, news_mod, news_mod2),
+           BIC = BIC(reduced_model, news_mod, news_mod2)$BIC) |>
+  knitr::kable(digits = 2)
+```
+
+**Q6.** Which model do AIC and BIC prefer? Do they agree with the LRTs?
+
+\vspace{.75in}
+
+## Summary
+
+| To compare... | Use | Notes |
+|:--|:--|:--|
+| one coefficient to 0 | | |
+| several coefficients to 0, nested models | | |
+| non-nested models, or many models | | |
+
+-   Deviance is $-2\log L$. It plays the role of ______ in OLS.
+-   We use deviance to compare models. We will **not** use "deviance residuals" to check conditions.
+
+## R function reference
+
+| Function | Purpose |
+|:--|:--|
+| `anova(reduced, full, test = "LRT")` | Likelihood ratio test for nested models |
+| `deviance(model)` | Deviance ($-2\log L$) of a model |
+| `pchisq(x, df)` | $\chi^2$ probability; use `1 - pchisq()` for a p-value |
+| `update(model, . ~ . - term)` | Refit a model without one term |
+| `AIC(m1, m2, ...)`, `BIC(m1, m2, ...)` | Information criteria for one or more models |
