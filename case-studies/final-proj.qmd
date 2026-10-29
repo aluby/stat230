@@ -96,32 +96,9 @@ On the last day of class, each group will present a one-page poster summarizing 
 
 Each option below gives some background, the data, and example questions. These are starting points: you are welcome to ask a different question with the same data.
 
-## Option 1: Race and jury selection (logistic regression)
 
-In the trial of Curtis Flowers, Mississippi prosecutor Doug Evans was accused of using "peremptory strikes" to remove Black jurors from juries. The APM Reports investigative team collected data on every potential juror in trials that Evans prosecuted, and used logistic regression to argue that he struck Black jurors at much higher rates, even after accounting for other reasons a juror might be struck. In 2019, the US Supreme Court overturned Flowers's conviction on these grounds.
 
-Background reading:
-
-  - APM study: <https://features.apmreports.org/in-the-dark/mississippi-district-attorney-striking-blacks-from-juries>
-  - APM methodology (the logistic regression model starts on page 9; variable descriptions are in the Appendix): <https://www.apmreports.org/files/peremptory_strike_methodology.pdf>
-  - APM update: <https://www.apmreports.org/in-the-dark/season-two/curtis-flowers-updates>
-
-```{r}
-apm <- read.csv("https://aluby.github.io/stat230/data/apm.csv")
-```
-
-- **Unit:** one potential juror (2,295 jurors from 89 trials, 1992–2017)
-- **Response:** `struck_state_bin` (1 = struck by the state)
-- **Possible predictors:** `is_black`, `accused`, `fam_accused`, `death_hesitation`, `know_def`, `same_race`, `fam_law_enforcement`, `know_vic`, `know_wit`, `fam_crime_victim`, `crime_victim`, `prior_info`, `gender`, `defendant_race`
-
-Example questions:
-
-  - Can you replicate the APM model? Is it sufficient, or would you change it (for example, using `defendant_race` instead of `same_race`)?
-  - Does the association between juror race and being struck depend on other juror characteristics (interactions)?
-
-Watch out for: jurors are grouped within trials, so they are not fully independent. 
-
-## Option 2: Caring for city trees (logistic regression)
+## Option 1: Caring for city trees (logistic regression)
 
 Street trees cool neighborhoods, absorb stormwater, and improve air quality, but life on a city sidewalk is hard on a tree. In 2015, more than 2,000 volunteers and NYC Parks staff surveyed every street tree in New York City. They recorded each tree's species and size, rated its health, and noted damage (for example, wires or lights wrapped around the trunk, or roots trapped by paving stones), signs that residents were caring for it ("stewardship"), and whether it had a guard around it.
 
@@ -154,7 +131,7 @@ Example questions:
 
 Watch out for: The stewardship and guard associations are small, so think about the size of the effect, not just its p-value. Health is a visual rating by the surveyor, and nearby trees may still be similar.
 
-## Option 3: Who graduates from college? (binomial logistic regression)
+## Option 2: Who graduates from college? (binomial logistic regression)
 
 Colleges vary widely in what fraction of their students finish a degree. Some of this reflects the students a college admits, and some might reflect what the college does. The US Department of Education's College Scorecard reports, for each institution, how many students in an entering cohort completed a degree within six years, along with information about the students, cost, and resources.
 
@@ -187,7 +164,7 @@ Example questions:
 
 Watch out for: Colleges differ in many ways that no model captures. Several predictors (enrollment, spending) are very right-skewed. If you use `sat_avg`, you will lose about a quarter of the colleges, and those colleges are not a random subset.
 
-## Option 4: Do crowds sway referees? (Poisson regression)
+## Option 3: Do crowds sway referees? (Poisson regression)
 
 Home teams win more often in almost every sport, and one explanation is that crowds pressure referees into favoring the home team. When COVID-19 forced soccer leagues to play in empty stadiums, researchers got a rare natural experiment: the teams, players, and referees were the same, but the crowds were gone.
 
