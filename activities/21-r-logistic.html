@@ -190,8 +190,7 @@ window.Quarto = {
 </div>
 <p>In this activity we’ll compare models for the fake news data using likelihood ratio tests (LRTs) and information criteria. To load the data, run the following code chunk:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># news &lt;- read.csv("https://aluby.github.io/stat230/data/fake_news_bayesrules.csv")</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>news <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/fake_news_bayesrules.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>news <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/fake_news_bayesrules.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We’ll start from the same model we used last time:</p>
 <div class="cell">
@@ -212,28 +211,43 @@ window.Quarto = {
 <p>Our question today: <strong>do we need an interaction between <code>title_has_excl</code> and <code>title_caps_percent</code>?</strong> In other words, is the association between the percent of capital letters and the odds of being fake news different for titles with and without an exclamation point?</p>
 <section id="part-1-exploratory-data-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="part-1-exploratory-data-analysis">Part 1: Exploratory data analysis</h2>
-<p>To check whether the slopes might differ, we make an empirical logit plot with a line for each group. We bin <code>title_caps_percent</code> and calculate the empirical logit <strong>within each bin and each group</strong>.</p>
+<p>First, a boxplot of <code>title_caps_percent</code> for real and fake articles, separately for titles with and without an exclamation point:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>news_agg <span class="ot">&lt;-</span> news <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tcp_bin =</span> <span class="fu">cut</span>(title_caps_percent, <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="cn">Inf</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tcp_bin, title_has_excl) <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_x =</span> <span class="fu">mean</span>(title_caps_percent),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_fake =</span> <span class="fu">sum</span>(type_num),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">emp_logit =</span> <span class="fu">log</span>((n_fake <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">/</span> (n <span class="sc">-</span> n_fake <span class="sc">+</span> <span class="fl">0.5</span>)),</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>news_agg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(type <span class="sc">~</span> title_caps_percent, <span class="at">color =</span> <span class="sc">~</span>title_has_excl, <span class="at">fill =</span> <span class="sc">~</span>title_has_excl, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> news, <span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="21-r-logistic_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Boxplots of title_caps_percent for real and fake news articles, colored by whether the title has an exclamation point." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To check whether the slopes might differ, we also make an empirical logit plot with a line for each group. We bin <code>title_caps_percent</code> and calculate the empirical logit <strong>within each bin and each group</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>news_agg <span class="ot">&lt;-</span> news <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tcp_bin =</span> <span class="fu">cut</span>(title_caps_percent, <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="cn">Inf</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tcp_bin, title_has_excl) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_x =</span> <span class="fu">mean</span>(title_caps_percent),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_fake =</span> <span class="fu">sum</span>(type_num),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">emp_logit =</span> <span class="fu">log</span>((n_fake <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">/</span> (n <span class="sc">-</span> n_fake <span class="sc">+</span> <span class="fl">0.5</span>)),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>news_agg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 6
+<pre><code># A tibble: 8 × 6
   tcp_bin   title_has_excl mean_x     n n_fake emp_logit
   &lt;fct&gt;     &lt;lgl&gt;           &lt;dbl&gt; &lt;int&gt;  &lt;int&gt;     &lt;dbl&gt;
 1 (-Inf,0]  FALSE            0       91     25    -0.959
 2 (-Inf,0]  TRUE             0        1      0    -1.10 
-3 (0,10]    FALSE            8.05    18      9     0    
-4 (0,10]    TRUE             7.17     4      4     2.20 
-5 (10, Inf] FALSE           14.5     23     10    -0.251
-6 (10, Inf] TRUE            22.9     13     12     2.12 </code></pre>
+3 (5,10]    FALSE            8.05    18      9     0    
+4 (5,10]    TRUE             7.17     4      4     2.20 
+5 (10,15]   FALSE           12.5     15      5    -0.647
+6 (10,15]   TRUE            12.3      3      3     1.95 
+7 (15, Inf] FALSE           18.4      8      5     0.452
+8 (15, Inf] TRUE            26.1     10      9     1.85 </code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -246,32 +260,32 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>About 61% of the titles have exactly 0% capital letters, so equal-size bins would put most bins at the same x value. We create the bins by hand instead.</p>
+<p>About 61% of the titles have exactly 0% capital letters, so equal-size bins would put most bins at the same x value. We create the bins by hand instead. (No titles fall in the (0, 5] bin, so it doesn’t appear in the summary.)</p>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(emp_logit <span class="sc">~</span> mean_x, <span class="at">color =</span> <span class="sc">~</span>title_has_excl, <span class="at">size =</span> <span class="sc">~</span>n, <span class="at">data =</span> news_agg,</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">"Mean title_caps_percent in bin"</span>, <span class="at">ylab =</span> <span class="st">"Empirical logit"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(emp_logit <span class="sc">~</span> mean_x, <span class="at">color =</span> <span class="sc">~</span>title_has_excl, <span class="at">size =</span> <span class="sc">~</span>n, <span class="at">data =</span> news_agg,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">"Mean title_caps_percent in bin"</span>, <span class="at">ylab =</span> <span class="st">"Empirical logit"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="21-r-logistic_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" alt="Empirical logit against mean percent capital letters, with one line for titles with an exclamation point and one for titles without. Point size shows the number of articles in each bin." width="672"></p>
+<p><img src="21-r-logistic_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" alt="Empirical logit against mean percent capital letters, with one straight line for titles with an exclamation point and one for titles without. Point size shows the number of articles in each bin." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p><strong>Q1.</strong> How many articles are in each of the six cells? Which group has very few observations?</p>
-<p><strong>Q2.</strong> Based on this plot, do you think we need an interaction (different slopes for the two groups)? How confident are you, given how little data there is for titles with exclamation points?</p>
+<p><strong>Q1.</strong> How many articles are in each of the cells of <code>news_agg</code>? Which group has very few observations?</p>
+<p><strong>Q2.</strong> Based on these plots, do you think we need an interaction (different slopes for the two groups)? How confident are you, given how little data there is for titles with exclamation points?</p>
 </section>
 <section id="part-2-the-interaction-model" class="level2">
 <h2 class="anchored" data-anchor-id="part-2-the-interaction-model">Part 2: The interaction model</h2>
 <p>Fill in the blanks to fit the model with an interaction between <code>title_has_excl</code> and <code>title_caps_percent</code> (and keep <code>title_words</code> as a main effect).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>news_mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> ___ <span class="sc">*</span> ___,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(news_mod2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>news_mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> ___ <span class="sc">*</span> ___,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(news_mod2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Q3.</strong> Write out the fitted model on the log-odds scale for titles <strong>with</strong> an exclamation point and for titles <strong>without</strong> one.</p>
 <p><strong>Q4.</strong> Interpret the coefficient for the interaction term <code>title_has_exclTRUE:title_caps_percent</code> on the <strong>odds</strong> scale. (<em>Hint:</em> <span class="math inline">\(e^{\widehat\beta}\)</span> is a ratio of odds ratios.)</p>
@@ -280,52 +294,50 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="part-3-lrt-for-the-interaction">Part 3: LRT for the interaction</h2>
 <p>The likelihood ratio test compares a <strong>reduced</strong> model to a <strong>full</strong> model that contains all of the reduced model’s terms (plus some more). In R, we use <code>anova()</code> with <code>test = "LRT"</code>, and give the reduced model first.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(___, ___, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(___, ___, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Q5.</strong> Fill in the blanks to test whether we need the interaction term. Write out the null and alternative hypotheses, then report the test statistic (<span class="math inline">\(\Lambda\)</span>, the <code>Deviance</code> column), the degrees of freedom, the p-value, and your conclusion in context.</p>
 <p><strong>Q6.</strong> The coefficient table from <code>tidy(news_mod2)</code> also contains a z-test for the interaction term. Compare its p-value to the LRT p-value. Are they close?</p>
 <p>We can also verify that the LRT statistic is the <strong>drop in deviance</strong>. The deviance of a model is <span class="math inline">\(-2\log L\)</span>, and a smaller deviance means a better fit:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod)   <span class="co"># reduced model</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod2)  <span class="co"># full model</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod) <span class="sc">-</span> <span class="fu">deviance</span>(news_mod2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod)   <span class="co"># reduced model</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod2)  <span class="co"># full model</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod) <span class="sc">-</span> <span class="fu">deviance</span>(news_mod2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="part-4-do-we-need-title_has_excl-at-all" class="level2">
 <h2 class="anchored" data-anchor-id="part-4-do-we-need-title_has_excl-at-all">Part 4: Do we need <code>title_has_excl</code> at all?</h2>
 <p>The variable <code>title_has_excl</code> appears in <strong>two</strong> terms of the interaction model (the main effect and the interaction), so to ask whether we need it at all we must remove both. Fit this reduced model and use an LRT to compare it to <code>news_mod2</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>reduced_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> title_caps_percent,</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(reduced_model, news_mod2, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>reduced_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> title_caps_percent,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(reduced_model, news_mod2, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><strong>Q7.</strong> Write out the null and alternative hypotheses (in terms of <span class="math inline">\(\beta\)</span>’s) for this test. How many degrees of freedom does the test have, and why? What do you conclude?</p>
-<p><strong>Q8.</strong> Look at the z-tests for the <code>title_has_exclTRUE</code> and <code>title_has_exclTRUE:title_caps_percent</code> rows of <code>tidy(news_mod2)</code>. Neither is significant, but the LRT is. How can that be? (<em>Hint:</em> think back to the F-test in Day 11.)</p>
 </section>
 <section id="part-5-the-overall-test" class="level2">
 <h2 class="anchored" data-anchor-id="part-5-the-overall-test">Part 5: The overall test</h2>
 <p>The output of <code>summary()</code> gives us the deviance of the model we fit (the residual deviance) and the deviance of an intercept-only model (the null deviance).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(news_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(news_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Q9.</strong> Use the null deviance and residual deviance to calculate the LRT statistic for <span class="math inline">\(H_0: \beta_1 = \beta_2 = \beta_3 = 0\)</span> (all slopes are 0) by hand. Then use <code>pchisq()</code> to find the p-value. The degrees of freedom is the difference in the two models’ degrees of freedom.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> ___</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> ___</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(lambda, df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> ___</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> ___</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(lambda, df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Check your work by fitting an intercept-only model and comparing:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>null_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(null_model, news_mod, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>null_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(null_model, news_mod, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="part-6-aic-and-bic" class="level2">
 <h2 class="anchored" data-anchor-id="part-6-aic-and-bic">Part 6: AIC and BIC</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(reduced_model, news_mod, news_mod2)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(reduced_model, news_mod, news_mod2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(reduced_model, news_mod, news_mod2)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(reduced_model, news_mod, news_mod2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Q10.</strong> Which of the three models do AIC and BIC prefer? Do they agree with the LRTs? Which model would you use to explain the fake news data?</p>
 </section>
@@ -339,7 +351,7 @@ window.Quarto = {
 <li>Compare AIC and BIC for the two models. Do the criteria agree? Which model would you choose, and why?</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
@@ -841,182 +853,187 @@ window.Quarto = {
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "21: Model Comparison for Logistic Regression"</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggformula)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>In this activity we'll compare models for the fake news data using likelihood ratio tests (LRTs) and information criteria. To load the data, run the following code chunk:</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># news &lt;- read.csv("https://aluby.github.io/stat230/data/fake_news_bayesrules.csv")</span></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>news <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/fake_news_bayesrules.csv"</span>))</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>We'll start from the same model we used last time:</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>news_mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> title_has_excl <span class="sc">+</span> title_caps_percent,</span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(news_mod)</span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>Our question today: **do we need an interaction between `title_has_excl` and `title_caps_percent`?** In other words, is the association between the percent of capital letters and the odds of being fake news different for titles with and without an exclamation point?</span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 1: Exploratory data analysis</span></span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>To check whether the slopes might differ, we make an empirical logit plot with a line for each group. We bin <span class="in">`title_caps_percent`</span> and calculate the empirical logit **within each bin and each group**.</span>
-<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>news_agg <span class="ot">&lt;-</span> news <span class="sc">|&gt;</span></span>
-<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tcp_bin =</span> <span class="fu">cut</span>(title_caps_percent, <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="cn">Inf</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tcp_bin, title_has_excl) <span class="sc">|&gt;</span></span>
-<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_x =</span> <span class="fu">mean</span>(title_caps_percent),</span>
-<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_fake =</span> <span class="fu">sum</span>(type_num),</span>
-<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>            <span class="at">emp_logit =</span> <span class="fu">log</span>((n_fake <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">/</span> (n <span class="sc">-</span> n_fake <span class="sc">+</span> <span class="fl">0.5</span>)),</span>
-<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>news_agg</span>
-<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
-<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why `cut()` and not `ntile()`?</span></span>
-<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>About 61% of the titles have exactly 0% capital letters, so equal-size bins would put most bins at the same x value. We create the bins by hand instead.</span>
-<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-alt: "Empirical logit against mean percent capital letters, with one line for titles with an exclamation point and one for titles without. Point size shows the number of articles in each bin."</span></span>
-<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(emp_logit <span class="sc">~</span> mean_x, <span class="at">color =</span> <span class="sc">~</span>title_has_excl, <span class="at">size =</span> <span class="sc">~</span>n, <span class="at">data =</span> news_agg,</span>
-<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">"Mean title_caps_percent in bin"</span>, <span class="at">ylab =</span> <span class="st">"Empirical logit"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>()</span>
-<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>**Q1.** How many articles are in each of the six cells? Which group has very few observations?</span>
-<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>**Q2.** Based on this plot, do you think we need an interaction (different slopes for the two groups)? How confident are you, given how little data there is for titles with exclamation points?</span>
-<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 2: The interaction model</span></span>
-<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a>Fill in the blanks to fit the model with an interaction between <span class="in">`title_has_excl`</span> and <span class="in">`title_caps_percent`</span> (and keep <span class="in">`title_words`</span> as a main effect).</span>
-<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a>news_mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> ___ <span class="sc">*</span> ___,</span>
-<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(news_mod2)</span>
-<span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-85"><a href="#cb17-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-86"><a href="#cb17-86" aria-hidden="true" tabindex="-1"></a>**Q3.** Write out the fitted model on the log-odds scale for titles **with** an exclamation point and for titles **without** one.</span>
-<span id="cb17-87"><a href="#cb17-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-88"><a href="#cb17-88" aria-hidden="true" tabindex="-1"></a>**Q4.** Interpret the coefficient for the interaction term `title_has_exclTRUE:title_caps_percent` on the **odds** scale. (*Hint:* $e^{\widehat\beta}$ is a ratio of odds ratios.)</span>
-<span id="cb17-89"><a href="#cb17-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-90"><a href="#cb17-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 3: LRT for the interaction</span></span>
-<span id="cb17-91"><a href="#cb17-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-92"><a href="#cb17-92" aria-hidden="true" tabindex="-1"></a>The likelihood ratio test compares a **reduced** model to a **full** model that contains all of the reduced model's terms (plus some more). In R, we use <span class="in">`anova()`</span> with <span class="in">`test = "LRT"`</span>, and give the reduced model first.</span>
-<span id="cb17-93"><a href="#cb17-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-96"><a href="#cb17-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-97"><a href="#cb17-97" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb17-98"><a href="#cb17-98" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(___, ___, <span class="at">test =</span> <span class="st">"LRT"</span>)</span>
-<span id="cb17-99"><a href="#cb17-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-100"><a href="#cb17-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-101"><a href="#cb17-101" aria-hidden="true" tabindex="-1"></a>**Q5.** Fill in the blanks to test whether we need the interaction term. Write out the null and alternative hypotheses, then report the test statistic ($\Lambda$, the <span class="in">`Deviance`</span> column), the degrees of freedom, the p-value, and your conclusion in context.</span>
-<span id="cb17-102"><a href="#cb17-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a>**Q6.** The coefficient table from <span class="in">`tidy(news_mod2)`</span> also contains a z-test for the interaction term. Compare its p-value to the LRT p-value. Are they close?</span>
-<span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-105"><a href="#cb17-105" aria-hidden="true" tabindex="-1"></a>We can also verify that the LRT statistic is the **drop in deviance**. The deviance of a model is $-2\log L$, and a smaller deviance means a better fit:</span>
-<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-109"><a href="#cb17-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-110"><a href="#cb17-110" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb17-111"><a href="#cb17-111" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod)   <span class="co"># reduced model</span></span>
-<span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod2)  <span class="co"># full model</span></span>
-<span id="cb17-113"><a href="#cb17-113" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod) <span class="sc">-</span> <span class="fu">deviance</span>(news_mod2)</span>
-<span id="cb17-114"><a href="#cb17-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-116"><a href="#cb17-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 4: Do we need `title_has_excl` at all?</span></span>
-<span id="cb17-117"><a href="#cb17-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-118"><a href="#cb17-118" aria-hidden="true" tabindex="-1"></a>The variable <span class="in">`title_has_excl`</span> appears in **two** terms of the interaction model (the main effect and the interaction), so to ask whether we need it at all we must remove both. Fit this reduced model and use an LRT to compare it to <span class="in">`news_mod2`</span>:</span>
-<span id="cb17-119"><a href="#cb17-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-122"><a href="#cb17-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-123"><a href="#cb17-123" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb17-124"><a href="#cb17-124" aria-hidden="true" tabindex="-1"></a>reduced_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> title_caps_percent,</span>
-<span id="cb17-125"><a href="#cb17-125" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb17-126"><a href="#cb17-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-127"><a href="#cb17-127" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(reduced_model, news_mod2, <span class="at">test =</span> <span class="st">"LRT"</span>)</span>
-<span id="cb17-128"><a href="#cb17-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-129"><a href="#cb17-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-130"><a href="#cb17-130" aria-hidden="true" tabindex="-1"></a>**Q7.** Write out the null and alternative hypotheses (in terms of $\beta$'s) for this test. How many degrees of freedom does the test have, and why? What do you conclude?</span>
-<span id="cb17-131"><a href="#cb17-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-132"><a href="#cb17-132" aria-hidden="true" tabindex="-1"></a>**Q8.** Look at the z-tests for the <span class="in">`title_has_exclTRUE`</span> and <span class="in">`title_has_exclTRUE:title_caps_percent`</span> rows of <span class="in">`tidy(news_mod2)`</span>. Neither is significant, but the LRT is. How can that be? (*Hint:* think back to the F-test in Day 11.)</span>
-<span id="cb17-133"><a href="#cb17-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-134"><a href="#cb17-134" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 5: The overall test</span></span>
-<span id="cb17-135"><a href="#cb17-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-136"><a href="#cb17-136" aria-hidden="true" tabindex="-1"></a>The output of <span class="in">`summary()`</span> gives us the deviance of the model we fit (the residual deviance) and the deviance of an intercept-only model (the null deviance).</span>
-<span id="cb17-137"><a href="#cb17-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-141"><a href="#cb17-141" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(news_mod)</span>
-<span id="cb17-143"><a href="#cb17-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-145"><a href="#cb17-145" aria-hidden="true" tabindex="-1"></a>**Q9.** Use the null deviance and residual deviance to calculate the LRT statistic for $H_0: \beta_1 = \beta_2 = \beta_3 = 0$ (all slopes are 0) by hand. Then use <span class="in">`pchisq()`</span> to find the p-value. The degrees of freedom is the difference in the two models' degrees of freedom.</span>
-<span id="cb17-146"><a href="#cb17-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-149"><a href="#cb17-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-150"><a href="#cb17-150" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb17-151"><a href="#cb17-151" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> ___</span>
-<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> ___</span>
-<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(lambda, df)</span>
-<span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a>Check your work by fitting an intercept-only model and comparing:</span>
-<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a>null_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb17-163"><a href="#cb17-163" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(null_model, news_mod, <span class="at">test =</span> <span class="st">"LRT"</span>)</span>
-<span id="cb17-164"><a href="#cb17-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-165"><a href="#cb17-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 6: AIC and BIC</span></span>
-<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-170"><a href="#cb17-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-171"><a href="#cb17-171" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(reduced_model, news_mod, news_mod2)</span>
-<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(reduced_model, news_mod, news_mod2)</span>
-<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a>**Q10.** Which of the three models do AIC and BIC prefer? Do they agree with the LRTs? Which model would you use to explain the fake news data?</span>
-<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your turn</span></span>
-<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a>The dataset also has the sentiment of the article: <span class="in">`negative`</span> and <span class="in">`positive`</span> (the percent of words with negative and positive sentiment).</span>
-<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-182"><a href="#cb17-182" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fit a model that adds both variables to <span class="in">`news_mod`</span>.</span>
-<span id="cb17-183"><a href="#cb17-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use an LRT to test whether the two sentiment variables help ($d = 2$).</span>
-<span id="cb17-184"><a href="#cb17-184" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare the LRT result to the individual z-tests for <span class="in">`negative`</span> and <span class="in">`positive`</span>.</span>
-<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare AIC and BIC for the two models. Do the criteria agree? Which model would you choose, and why?</span>
-<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-190"><a href="#cb17-190" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span>
-<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a>***</span>
-<span id="cb17-194"><a href="#cb17-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
-<span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
-<span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
-<span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`glm(y ~ x, data, family = "binomial")`</span> <span class="pp">|</span> Fit a binary logistic regression model <span class="pp">|</span></span>
-<span id="cb17-200"><a href="#cb17-200" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cut(x, breaks)`</span> <span class="pp">|</span> Create bins from specific cut points <span class="pp">|</span></span>
-<span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`anova(reduced, full, test = "LRT")`</span> <span class="pp">|</span> Likelihood ratio test comparing two nested models <span class="pp">|</span></span>
-<span id="cb17-202"><a href="#cb17-202" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`deviance(model)`</span> <span class="pp">|</span> Deviance ($-2 \log L$) of a fitted model <span class="pp">|</span></span>
-<span id="cb17-203"><a href="#cb17-203" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pchisq(x, df)`</span> <span class="pp">|</span> Probability from a $\chi^2$ distribution (use <span class="in">`1 - pchisq()`</span> for a p-value) <span class="pp">|</span></span>
-<span id="cb17-204"><a href="#cb17-204" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`AIC()`</span>, <span class="in">`BIC()`</span> <span class="pp">|</span> Information criteria for one or more fitted models (smaller is better) <span class="pp">|</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "21: Model Comparison for Logistic Regression"</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggformula)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>In this activity we'll compare models for the fake news data using likelihood ratio tests (LRTs) and information criteria. To load the data, run the following code chunk:</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>news <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/fake_news_bayesrules.csv"</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>We'll start from the same model we used last time:</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>news_mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> title_has_excl <span class="sc">+</span> title_caps_percent,</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(news_mod)</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>Our question today: **do we need an interaction between `title_has_excl` and `title_caps_percent`?** In other words, is the association between the percent of capital letters and the odds of being fake news different for titles with and without an exclamation point?</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 1: Exploratory data analysis</span></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>First, a boxplot of <span class="in">`title_caps_percent`</span> for real and fake articles, separately for titles with and without an exclamation point:</span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-alt: "Boxplots of title_caps_percent for real and fake news articles, colored by whether the title has an exclamation point."</span></span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(type <span class="sc">~</span> title_caps_percent, <span class="at">color =</span> <span class="sc">~</span>title_has_excl, <span class="at">fill =</span> <span class="sc">~</span>title_has_excl, </span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> news, <span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>To check whether the slopes might differ, we also make an empirical logit plot with a line for each group. We bin <span class="in">`title_caps_percent`</span> and calculate the empirical logit **within each bin and each group**.</span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>news_agg <span class="ot">&lt;-</span> news <span class="sc">|&gt;</span></span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tcp_bin =</span> <span class="fu">cut</span>(title_caps_percent, <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="cn">Inf</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tcp_bin, title_has_excl) <span class="sc">|&gt;</span></span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_x =</span> <span class="fu">mean</span>(title_caps_percent),</span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_fake =</span> <span class="fu">sum</span>(type_num),</span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>            <span class="at">emp_logit =</span> <span class="fu">log</span>((n_fake <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">/</span> (n <span class="sc">-</span> n_fake <span class="sc">+</span> <span class="fl">0.5</span>)),</span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>news_agg</span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why `cut()` and not `ntile()`?</span></span>
+<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a>About 61% of the titles have exactly 0% capital letters, so equal-size bins would put most bins at the same x value. We create the bins by hand instead. (No titles fall in the (0, 5] bin, so it doesn't appear in the summary.)</span>
+<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-alt: "Empirical logit against mean percent capital letters, with one straight line for titles with an exclamation point and one for titles without. Point size shows the number of articles in each bin."</span></span>
+<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(emp_logit <span class="sc">~</span> mean_x, <span class="at">color =</span> <span class="sc">~</span>title_has_excl, <span class="at">data =</span> news_agg,</span>
+<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">"Mean title_caps_percent in bin"</span>, <span class="at">ylab =</span> <span class="st">"Empirical logit"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a>**Q1.** How many articles are in each of the cells of <span class="in">`news_agg`</span>? Which group has very few observations?</span>
+<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a>**Q2.** Based on these plots, do you think we need an interaction (different slopes for the two groups)? How confident are you, given how little data there is for titles with exclamation points?</span>
+<span id="cb18-81"><a href="#cb18-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-82"><a href="#cb18-82" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 2: The interaction model</span></span>
+<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a>Fill in the blanks to fit the model with an interaction between <span class="in">`title_has_excl`</span> and <span class="in">`title_caps_percent`</span> (and keep <span class="in">`title_words`</span> as a main effect).</span>
+<span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a>news_mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> ___ <span class="sc">*</span> ___,</span>
+<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-93"><a href="#cb18-93" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(news_mod2)</span>
+<span id="cb18-94"><a href="#cb18-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-96"><a href="#cb18-96" aria-hidden="true" tabindex="-1"></a>**Q3.** Write out the fitted model on the log-odds scale for titles **with** an exclamation point and for titles **without** one.</span>
+<span id="cb18-97"><a href="#cb18-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a>**Q4.** Interpret the coefficient for the interaction term `title_has_exclTRUE:title_caps_percent` on the **odds** scale. (*Hint:* $e^{\widehat\beta}$ is a ratio of odds ratios.)</span>
+<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 3: LRT for the interaction</span></span>
+<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a>The likelihood ratio test compares a **reduced** model to a **full** model that contains all of the reduced model's terms (plus some more). In R, we use <span class="in">`anova()`</span> with <span class="in">`test = "LRT"`</span>, and give the reduced model first.</span>
+<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-106"><a href="#cb18-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-107"><a href="#cb18-107" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb18-108"><a href="#cb18-108" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(___, ___, <span class="at">test =</span> <span class="st">"LRT"</span>)</span>
+<span id="cb18-109"><a href="#cb18-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-110"><a href="#cb18-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-111"><a href="#cb18-111" aria-hidden="true" tabindex="-1"></a>**Q5.** Fill in the blanks to test whether we need the interaction term. Write out the null and alternative hypotheses, then report the test statistic ($\Lambda$, the <span class="in">`Deviance`</span> column), the degrees of freedom, the p-value, and your conclusion in context.</span>
+<span id="cb18-112"><a href="#cb18-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-113"><a href="#cb18-113" aria-hidden="true" tabindex="-1"></a>**Q6.** The coefficient table from <span class="in">`tidy(news_mod2)`</span> also contains a z-test for the interaction term. Compare its p-value to the LRT p-value. Are they close?</span>
+<span id="cb18-114"><a href="#cb18-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-115"><a href="#cb18-115" aria-hidden="true" tabindex="-1"></a>We can also verify that the LRT statistic is the **drop in deviance**. The deviance of a model is $-2\log L$, and a smaller deviance means a better fit:</span>
+<span id="cb18-116"><a href="#cb18-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod)   <span class="co"># reduced model</span></span>
+<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod2)  <span class="co"># full model</span></span>
+<span id="cb18-123"><a href="#cb18-123" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(news_mod) <span class="sc">-</span> <span class="fu">deviance</span>(news_mod2)</span>
+<span id="cb18-124"><a href="#cb18-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 4: Do we need `title_has_excl` at all?</span></span>
+<span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a>The variable <span class="in">`title_has_excl`</span> appears in **two** terms of the interaction model (the main effect and the interaction), so to ask whether we need it at all we must remove both. Fit this reduced model and use an LRT to compare it to <span class="in">`news_mod2`</span>:</span>
+<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a>reduced_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> title_caps_percent,</span>
+<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb18-136"><a href="#cb18-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(reduced_model, news_mod2, <span class="at">test =</span> <span class="st">"LRT"</span>)</span>
+<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 5: The overall test</span></span>
+<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-143"><a href="#cb18-143" aria-hidden="true" tabindex="-1"></a>The output of <span class="in">`summary()`</span> gives us the deviance of the model we fit (the residual deviance) and the deviance of an intercept-only model (the null deviance).</span>
+<span id="cb18-144"><a href="#cb18-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-147"><a href="#cb18-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(news_mod)</span>
+<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-151"><a href="#cb18-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a>**Q9.** Use the null deviance and residual deviance to calculate the LRT statistic for $H_0: \beta_1 = \beta_2 = \beta_3 = 0$ (all slopes are 0) by hand. Then use <span class="in">`pchisq()`</span> to find the p-value. The degrees of freedom is the difference in the two models' degrees of freedom.</span>
+<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> ___</span>
+<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> ___</span>
+<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(lambda, df)</span>
+<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-163"><a href="#cb18-163" aria-hidden="true" tabindex="-1"></a>Check your work by fitting an intercept-only model and comparing:</span>
+<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-167"><a href="#cb18-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-168"><a href="#cb18-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a>null_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb18-170"><a href="#cb18-170" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(null_model, news_mod, <span class="at">test =</span> <span class="st">"LRT"</span>)</span>
+<span id="cb18-171"><a href="#cb18-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 6: AIC and BIC</span></span>
+<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-178"><a href="#cb18-178" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb18-179"><a href="#cb18-179" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(reduced_model, news_mod, news_mod2)</span>
+<span id="cb18-180"><a href="#cb18-180" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(reduced_model, news_mod, news_mod2)</span>
+<span id="cb18-181"><a href="#cb18-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-182"><a href="#cb18-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-183"><a href="#cb18-183" aria-hidden="true" tabindex="-1"></a>**Q10.** Which of the three models do AIC and BIC prefer? Do they agree with the LRTs? Which model would you use to explain the fake news data?</span>
+<span id="cb18-184"><a href="#cb18-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-185"><a href="#cb18-185" aria-hidden="true" tabindex="-1"></a><span class="fu">## Your turn</span></span>
+<span id="cb18-186"><a href="#cb18-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-187"><a href="#cb18-187" aria-hidden="true" tabindex="-1"></a>The dataset also has the sentiment of the article: <span class="in">`negative`</span> and <span class="in">`positive`</span> (the percent of words with negative and positive sentiment).</span>
+<span id="cb18-188"><a href="#cb18-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fit a model that adds both variables to <span class="in">`news_mod`</span>.</span>
+<span id="cb18-190"><a href="#cb18-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use an LRT to test whether the two sentiment variables help ($d = 2$).</span>
+<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare the LRT result to the individual z-tests for <span class="in">`negative`</span> and <span class="in">`positive`</span>.</span>
+<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare AIC and BIC for the two models. Do the criteria agree? Which model would you choose, and why?</span>
+<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span>
+<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>***</span>
+<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## Function quick reference</span></span>
+<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span></span>
+<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|-----------|</span></span>
+<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`glm(y ~ x, data, family = "binomial")`</span> <span class="pp">|</span> Fit a binary logistic regression model <span class="pp">|</span></span>
+<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cut(x, breaks)`</span> <span class="pp">|</span> Create bins from specific cut points <span class="pp">|</span></span>
+<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`anova(reduced, full, test = "LRT")`</span> <span class="pp">|</span> Likelihood ratio test comparing two nested models <span class="pp">|</span></span>
+<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`deviance(model)`</span> <span class="pp">|</span> Deviance ($-2 \log L$) of a fitted model <span class="pp">|</span></span>
+<span id="cb18-210"><a href="#cb18-210" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pchisq(x, df)`</span> <span class="pp">|</span> Probability from a $\chi^2$ distribution (use <span class="in">`1 - pchisq()`</span> for a p-value) <span class="pp">|</span></span>
+<span id="cb18-211"><a href="#cb18-211" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`AIC()`</span>, <span class="in">`BIC()`</span> <span class="pp">|</span> Information criteria for one or more fitted models (smaller is better) <span class="pp">|</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

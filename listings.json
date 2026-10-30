@@ -31,6 +31,7 @@
       "/activities/19T-binary-logistic.html",
       "/activities/20-logistic-inference.html",
       "/activities/20T-logistic-inference.html",
+      "/activities/21T-r-logistic.html",
       "/activities/21-r-logistic.html",
       "/activities/22-binomial-logistic.html",
       "/activities/23-overdispersion.html",
@@ -40,22 +41,6 @@
       "/activities/28-quasibinomial.html",
       "/activities/group-expectations.html",
       "/activities/18T-prediction.html"
-    ]
-  },
-  {
-    "listing": "/readings.html",
-    "items": [
-      "/readings/latex-for-stat230.html",
-      "/readings/exam01-practice.html",
-      "/readings/intro-review.html",
-      "/readings/exam01-review.html",
-      "/readings/quiz02-practice.html",
-      "/readings/exam02-review.html",
-      "/readings/exam03-review.html",
-      "/readings/r-functions-reference.html",
-      "/readings/revisions.html",
-      "/readings/r-for-stat230.html",
-      "/readings/logistic-videos.html"
     ]
   },
   {
@@ -85,6 +70,22 @@
       "/slides/slides02.html",
       "/slides/slides-cheat-sheet.html",
       "/slides/slides01.html"
+    ]
+  },
+  {
+    "listing": "/readings.html",
+    "items": [
+      "/readings/latex-for-stat230.html",
+      "/readings/exam01-practice.html",
+      "/readings/intro-review.html",
+      "/readings/exam01-review.html",
+      "/readings/quiz02-practice.html",
+      "/readings/exam02-review.html",
+      "/readings/exam03-review.html",
+      "/readings/r-functions-reference.html",
+      "/readings/revisions.html",
+      "/readings/r-for-stat230.html",
+      "/readings/logistic-videos.html"
     ]
   }
 ]
