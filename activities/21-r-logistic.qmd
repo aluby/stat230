@@ -11,8 +11,7 @@ library(ggformula)
 In this activity we'll compare models for the fake news data using likelihood ratio tests (LRTs) and information criteria. To load the data, run the following code chunk:
 
 ```{r}
-# news <- read.csv("https://aluby.github.io/stat230/data/fake_news_bayesrules.csv")
-news <- read.csv(here::here("data/fake_news_bayesrules.csv"))
+news <- read.csv("https://aluby.github.io/stat230/data/fake_news_bayesrules.csv")
 ```
 
 We'll start from the same model we used last time:
@@ -28,11 +27,20 @@ Our question today: **do we need an interaction between `title_has_excl` and `ti
 
 ## Part 1: Exploratory data analysis
 
-To check whether the slopes might differ, we make an empirical logit plot with a line for each group. We bin `title_caps_percent` and calculate the empirical logit **within each bin and each group**.
+First, a boxplot of `title_caps_percent` for real and fake articles, separately for titles with and without an exclamation point:
+
+```{r}
+#| fig-alt: "Boxplots of title_caps_percent for real and fake news articles, colored by whether the title has an exclamation point."
+gf_boxplot(type ~ title_caps_percent, color = ~title_has_excl, fill = ~title_has_excl, 
+           data = news, alpha = .5) +
+  theme(legend.position = "bottom")
+```
+
+To check whether the slopes might differ, we also make an empirical logit plot with a line for each group. We bin `title_caps_percent` and calculate the empirical logit **within each bin and each group**.
 
 ```{r}
 news_agg <- news |>
-  mutate(tcp_bin = cut(title_caps_percent, c(-Inf, 0, 10, Inf))) |>
+  mutate(tcp_bin = cut(title_caps_percent, c(-Inf, 0, 5, 10, 15, Inf))) |>
   group_by(tcp_bin, title_has_excl) |>
   summarize(mean_x = mean(title_caps_percent),
             n = n(),
@@ -45,19 +53,19 @@ news_agg
 
 :::{.callout-note}
 ## Why `cut()` and not `ntile()`?
-About 61% of the titles have exactly 0% capital letters, so equal-size bins would put most bins at the same x value. We create the bins by hand instead.
+About 61% of the titles have exactly 0% capital letters, so equal-size bins would put most bins at the same x value. We create the bins by hand instead. (No titles fall in the (0, 5] bin, so it doesn't appear in the summary.)
 :::
 
 ```{r}
-#| fig-alt: "Empirical logit against mean percent capital letters, with one line for titles with an exclamation point and one for titles without. Point size shows the number of articles in each bin."
-gf_point(emp_logit ~ mean_x, color = ~title_has_excl, size = ~n, data = news_agg,
+#| fig-alt: "Empirical logit against mean percent capital letters, with one straight line for titles with an exclamation point and one for titles without. Point size shows the number of articles in each bin."
+gf_point(emp_logit ~ mean_x, color = ~title_has_excl, data = news_agg,
          xlab = "Mean title_caps_percent in bin", ylab = "Empirical logit") |>
-  gf_line()
+  gf_smooth(method = "lm")
 ```
 
-**Q1.** How many articles are in each of the six cells? Which group has very few observations?
+**Q1.** How many articles are in each of the cells of `news_agg`? Which group has very few observations?
 
-**Q2.** Based on this plot, do you think we need an interaction (different slopes for the two groups)? How confident are you, given how little data there is for titles with exclamation points?
+**Q2.** Based on these plots, do you think we need an interaction (different slopes for the two groups)? How confident are you, given how little data there is for titles with exclamation points?
 
 ## Part 2: The interaction model
 
@@ -109,9 +117,6 @@ reduced_model <- glm(type_num ~ title_words + title_caps_percent,
 anova(reduced_model, news_mod2, test = "LRT")
 ```
 
-**Q7.** Write out the null and alternative hypotheses (in terms of $\beta$'s) for this test. How many degrees of freedom does the test have, and why? What do you conclude?
-
-**Q8.** Look at the z-tests for the `title_has_exclTRUE` and `title_has_exclTRUE:title_caps_percent` rows of `tidy(news_mod2)`. Neither is significant, but the LRT is. How can that be? (*Hint:* think back to the F-test in Day 11.)
 
 ## Part 5: The overall test
 

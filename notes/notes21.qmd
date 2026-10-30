@@ -252,5 +252,4 @@ data.frame(AIC(reduced_model, news_mod, news_mod2),
 | `anova(reduced, full, test = "LRT")` | Likelihood ratio test for nested models |
 | `deviance(model)` | Deviance ($-2\log L$) of a model |
 | `pchisq(x, df)` | $\chi^2$ probability; use `1 - pchisq()` for a p-value |
-| `update(model, . ~ . - term)` | Refit a model without one term |
 | `AIC(m1, m2, ...)`, `BIC(m1, m2, ...)` | Information criteria for one or more models |
