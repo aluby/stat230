@@ -104,6 +104,13 @@ tidy(news_mod)
 gf_jitter(type_num ~ title_caps_percent, color = ~title_has_excl, data = news, height = .25, width = 1, alpha = .5)
 ```
 
+## EDA (original data)
+
+```{r}
+gf_boxplot(type ~ title_caps_percent, color = ~title_has_excl, fill = ~title_has_excl, data = news, height = .25, width = 1, alpha = .5) + 
+  theme(legend.position = "bottom")
+```
+
 ## EDA (aggregated data)
 
 First, make an "aggregated dataset" of **empirical logits**: bin `title_caps_percent`, then find the empirical logit for each bin *within each group*
@@ -112,7 +119,7 @@ First, make an "aggregated dataset" of **empirical logits**: bin `title_caps_per
 #| output-location: slide
 #| echo: true
 news_agg <- news |>
-  mutate(tcp_bin = cut(title_caps_percent, c(-Inf, 0, 10, Inf))) |>
+  mutate(tcp_bin = cut(title_caps_percent, c(-Inf, 0, 5,  10, 15, Inf))) |>
   group_by(tcp_bin, title_has_excl) |>
   summarize(
     mean_x = mean(title_caps_percent),
@@ -136,7 +143,7 @@ news_agg
 #| fig-width: 8
 #| fig-height: 4
 gf_point(emp_logit ~ mean_x, color = ~title_has_excl, size = ~n, data = news_agg) |>
-  gf_line()
+  gf_smooth(method = "lm")
 ```
 
 - Size of the point = number of articles in the bin
@@ -271,7 +278,7 @@ where $L$ is the maximum value of the likelihood
 - Deviance plays the role that SSE played in OLS: **smaller = better fit**
 - A bigger model always has deviance that is smaller (or the same) as a smaller model
 - The LRT statistic is the **drop in deviance**: $\Lambda = \text{Dev(reduced)} - \text{Dev(full)}$
-- We use deviance to compare models. (We will *not* use "deviance residuals" to check conditions)
+- We use deviance to compare models
 :::
 
 ## `anova` table
@@ -321,7 +328,7 @@ Test for one coefficient $H_0: \beta_i = 0$ against $H_A: \beta_i \ne 0$:
     - If not, the LRT is usually more accurate
 
 ```{r}
-#| echo: true
+#| echo: false
 lrt_p <- function(term) {
   reduced <- update(news_mod, as.formula(paste(". ~ . -", term)))
   anova(reduced, news_mod, test = "LRT")[2, "Pr(>Chi)"]
@@ -336,7 +343,7 @@ tibble(term = terms,
 
 ## Separate tests vs. a joint test
 
-Is `title_has_excl` needed at all? It appears in 2 terms of the interaction model: the main effect and the interaction
+Is `title_has_excl` needed at all? 
 
 ```{r}
 tidy(news_mod2) |>
@@ -345,10 +352,16 @@ tidy(news_mod2) |>
   knitr::kable(digits = 3)
 ```
 
+## Is `title_has_excl` needed at all? 
+
+```{r}
+anova(reduced_model, news_mod2)
+```
+
 ::: fragment
 - Neither term looks useful on its own (both p-values are large)
 - But the joint LRT ($d = 2$) has p-value $=$ `r round(anova(reduced_model, news_mod2, test = "LRT")[2, "Pr(>Chi)"], 3)`
-- Same lesson as the $F$-test in MLR: individual tests ask whether a term helps *given the others* are in the model; the joint test asks whether the **pair** helps
+- Same as the $F$-test in MLR: individual tests ask whether a term helps *given the others* are in the model; the LRT test asks whether the **combination** helps
 :::
 
 ## AIC and BIC for logistic regression
@@ -373,8 +386,8 @@ where $L$ is the maximized likelihood of the model and $k$ is the number of coef
 #| echo: true
 
 
-AIC(news_mod, news_mod2, reduced_model)
+AIC(reduced_model, news_mod, news_mod2)
 
-BIC(news_mod, news_mod2, reduced_model)
+BIC(reduced_model, news_mod, news_mod2)
 ```
 

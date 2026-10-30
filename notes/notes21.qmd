@@ -26,12 +26,6 @@ f2 <- function(x) sprintf("%.2f", x)
 f3 <- function(x) sprintf("%.3f", x)
 ```
 
-::: {.callout-note}
-These are guided notes for Day 21. They cover the same material as the Day 21 slides and R activity. Fill in the blanks as we go.
-:::
-
-## Where we're going
-
 Last time we learned how to do inference for **one** coefficient (Wald test and CI) and how to check conditions. Today we compare **models**:
 
 1.  Do we need an interaction term?
@@ -46,27 +40,30 @@ kable_coef(news_mod, terms = c("Intercept", "title_words", "title_has_exclTRUE",
 
 **Question:** is the association between `title_caps_percent` and the odds of being fake news *different* for titles with and without an exclamation point? That is, do we need an **interaction** between `title_has_excl` and `title_caps_percent`?
 
-## EDA: empirical logits by group
 
 ```{r}
-#| fig-width: 5.5
-#| fig-height: 2.8
+#| fig-width: 8
+#| fig-height: 2.5
 news_agg <- news |>
   mutate(tcp_bin = cut(title_caps_percent, c(-Inf, 0, 10, Inf))) |>
   group_by(tcp_bin, title_has_excl) |>
   summarize(mean_x = mean(title_caps_percent), n = n(), n_fake = sum(type_num),
             emp_logit = log((n_fake + 0.5) / (n - n_fake + 0.5)), .groups = "drop")
 
-gf_point(emp_logit ~ mean_x, color = ~title_has_excl, size = ~n, data = news_agg,
-         xlab = "Mean title_caps_percent in bin", ylab = "Empirical logit") |>
-  gf_line()
+p1 <- gf_boxplot(type ~ title_caps_percent, color = ~title_has_excl, fill = ~title_has_excl, data = news, height = .25, width = 1, alpha = .5) + 
+  theme(legend.position = "bottom") + 
+  scale_color_viridis_d(end = .75, option = "plasma") + 
+  scale_fill_viridis_d(end = .75, option = "plasma") 
+
+p2 <- gf_point(emp_logit ~ mean_x, color = ~title_has_excl, data = news_agg) |>
+  gf_smooth(method = "lm") + 
+  theme(legend.position = "bottom") + 
+  scale_color_viridis_d(end = .75, option = "plasma") 
+
+p1 + p2 
 ```
 
-Size of the point = number of articles in the bin. Only `r sum(news$title_has_excl)` of the 150 titles have an exclamation point, so some cells are tiny.
 
-**Q1.** Do the lines look parallel? How confident are you in your answer?
-
-\vspace{.75in}
 
 ## The model with an interaction
 
@@ -77,7 +74,7 @@ kable_coef(news_mod2, terms = c("Intercept", "title_words", "title_has_exclTRUE"
                                 "title_has_exclTRUE:title_caps_percent"))
 ```
 
-**Q2.** Write the fitted model on the log-odds scale for each group.
+**Q1.** Write the fitted model on the log-odds scale for each group separately.
 
 With an exclamation point ($excl = 1$):
 
@@ -87,15 +84,27 @@ Without an exclamation point ($excl = 0$):
 
 \vspace{.75in}
 
-**Q3.** What is $\beta_4$? ______________________________ On the odds scale, $e^{\beta_4}$ is the ______________________________.
+**Q2.** Do we need an interaction term? Write out the null and alternative hypothesis. 
 
-\vspace{.5in}
+\vspace{1.5in}
+
+**Q3.** Do we need `title_has_excl` at all? Write out the null and alternative hypothesis for this question.
+
+\vspace{1.5in}
 
 ## The likelihood ratio test (LRT)
 
 In linear regression we compared nested models with the ______________________________ $F$-test. For logistic regression we use a **likelihood ratio test**.
 
+::: callout-note
+## Deviance
+
 The **deviance** of a model is $-2 \log L$, where $L$ is the maximized likelihood. Like SSE in OLS, a smaller deviance means a ______________ fit. A bigger model always has a deviance that is the same or ______________.
+
+:::
+
+::: callout-note
+## Likelihood Ratio Test
 
 **Hypotheses:** $H_0$: ______________________________ vs. $H_a$: at least one of these $\beta$'s $\ne 0$
 
@@ -105,17 +114,20 @@ The **deviance** of a model is $-2 \log L$, where $L$ is the maximized likelihoo
 
 **p-value:** the area ______________ $\Lambda$ (upper tail)
 
+:::
+
 In R, give the **reduced** model first:
 
 ```{r}
 #| eval: false
+#| echo: true
 anova(reduced_model, full_model, test = "LRT")
 ```
 
 | Resid DF | Resid Dev | Df | Deviance | Pr(\>Chi) |
 |:--|:--|:--|:--|:--|
-| $n -$ (# coefs in reduced) | Dev(reduced) | | | |
-| $n -$ (# coefs in full) | Dev(full) | # extra coefs | $\Lambda$ | p-value |
+| $n -$ (p+1 in reduced) | Dev(reduced) | | | |
+| $n -$ (p+1 in full) | Dev(full) | # extra coefs | $\Lambda$ | p-value |
 
 ## Example 1: do we need the interaction?
 
@@ -140,13 +152,13 @@ anova(news_mod, news_mod2, test = "LRT")
 The `summary()` output gives the deviance of the model, and of an intercept-only model:
 
 ```{r}
-tibble(model = c("Null (intercept only)", "news_mod (3 predictors)"),
-       `Resid DF` = c(null_model$df.residual, news_mod$df.residual),
-       `Resid Dev` = c(deviance(null_model), deviance(news_mod))) |>
-  knitr::kable(digits = 2)
+#| echo: true
+
+summary(news_mod)
 ```
 
-**Q4.** Test $H_0: \beta_1 = \beta_2 = \beta_3 = 0$ against $H_a$: at least one $\ne 0$. Fill in the ANOVA table below, then find $\Lambda$, $df$, and the p-value (use `1 - pchisq(Lambda, df)`).
+**Q4.** Fill in the ANOVA table below for the test $H_0: \beta_1 = \beta_2 = \beta_3 = 0$ against $H_A$ at least 1 $\ne 0$
+
 
 |     | Resid DF | Resid Dev | Df  | Deviance | Pr(\>Chi) |
 |:--|:--|:--|:--|:--|:--|
@@ -157,6 +169,7 @@ tibble(model = c("Null (intercept only)", "news_mod (3 predictors)"),
 
 ```{r}
 #| eval: false
+#| echo: true
 1 - pchisq(lambda, df)
 ```
 
@@ -196,13 +209,6 @@ $H_0$: ______________________________
 anova(reduced_model, news_mod2, test = "LRT")
 ```
 
-```{r}
-tidy(news_mod2) |>
-  filter(str_detect(term, "excl")) |>
-  select(term, estimate, std.error, p.value) |>
-  mutate(p.value = fmt_p(p.value)) |>
-  knitr::kable(digits = 3)
-```
 
 **Q5.** The individual $z$-tests for these two terms have large p-values. The joint LRT has a small p-value. Why? (Think back to the $F$-test in MLR.)
 
@@ -230,14 +236,14 @@ data.frame(AIC(reduced_model, news_mod, news_mod2),
 
 ## Summary
 
-| To compare... | Use | Notes |
-|:--|:--|:--|
-| one coefficient to 0 | | |
-| several coefficients to 0, nested models | | |
-| non-nested models, or many models | | |
+| To compare... | Use | 
+|:--|:-------------|
+| one coefficient to 0 | |
+| several coefficients to 0, nested models | |
+| non-nested models, or many models | |
 
 -   Deviance is $-2\log L$. It plays the role of ______ in OLS.
--   We use deviance to compare models. We will **not** use "deviance residuals" to check conditions.
+-   We use deviance to compare models
 
 ## R function reference
 
