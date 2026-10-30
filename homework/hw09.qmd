@@ -114,7 +114,27 @@ p1 + p2 + p3 + p4 + p5 + p6
 
 **7.** Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of ~~stumps~~ stags is 10. Give a 95% confidence interval for this estimate by treating the $\log(\hat{\mu})$ as approximately normally distributed. Why is this justified?
 
-# Problem 3: Reflections
+# Problem 3: Trout
+
+> An experiment at the Marine/Freshwater Biomedical Sciences Center at Oregon State University investigated the carcinogenic effects of aflatoxicol, a metabolite of Aflatoxin B1, which is a toxic by-product produced by a mold that infects cottonseed meal, peanuts, and grains. Twenty tanks of rainbow trout embryos were exposed to one of five doses of Aflatoxicol for one hour. The data below represent the numbers of fish in each tank and the numbers of these that had liver tumors after one year.
+
+Each row in the dataset represents a separate tank of rainbow trout embryos. 
+
+```{r}
+trout <- Sleuth3::ex2116
+```
+
+**1.** Make a plot of the empirical log-odds of cancer vs dose (one point per tank), and another of the empirical log-odds vs $1/\sqrt{\text{dose}}$. Which predictor looks more appropriate for a linear model on the log-odds scale?
+
+**2.** Fit the binomial logistic model for the odds of cancer using $\frac{1}{\sqrt{\text{dose}}}$ as the sole predictor. (*Note:* to do this, the predictor in the `glm` command should be written as `I(1/sqrt(Dose))`, and the response is `cbind(Tumor, Total - Tumor)`.) Report the fitted model, then plot the Pearson residuals vs $\frac{1}{\sqrt{\text{dose}}}$ with a smoother. Is there evidence of nonlinearity between the log odds and the predictor variable?
+
+**3.** Give the dose at which your model estimates a 50% chance of getting a tumor. (*Hint:* what log-odds does this correspond to?)
+
+**4.** Calculate the Pearson $X^2$ statistic (the sum of the squared Pearson residuals) and use it to calculate $X^2 / \text{df}$ and the p-value for the goodness-of-fit test. Does the binomial model fit these data adequately? What does a value of $X^2 / \text{df}$ greater than 1 suggest?
+
+**5.** Refit the model from part 2 using the quasibinomial procedure. Give the dispersion parameter estimate (how does it compare to your $X^2 / \text{df}$ from part 4?). Compare the standard errors from the quasibinomial model to the standard binomial model.
+
+# Problem 4: Reflections
 
 (a) Start by reviewing either HW2 or Case Study 1. (Look at your submission on gradescope) What was something you found difficult initially, but now seems "easy"? 
 

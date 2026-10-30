@@ -117,7 +117,7 @@ Example questions:
   - Can you replicate the APM model? Is it sufficient, or would you change it (for example, using `defendant_race` instead of `same_race`)?
   - Does the association between juror race and being struck depend on other juror characteristics (interactions)?
 
-Watch out for: jurors are grouped within trials, so they are not fully independent. Note this as a limitation.
+Watch out for: jurors are grouped within trials, so they are not fully independent. 
 
 ## Option 2: Caring for city trees (logistic regression)
 
@@ -151,7 +151,7 @@ Example questions:
   - Are trees with signs of stewardship more likely to be healthy? 
   - Do volunteers and staff rate tree health differently?
 
-Watch out for: R will choose alphabetical reference levels for `stewardship` and `guards`, so set the reference level to `none`. The stewardship and guard associations are small, so think about the size of the effect, not just its p-value. Health is a visual rating by the surveyor, and nearby trees may still be similar.
+Watch out for: The stewardship and guard associations are small, so think about the size of the effect, not just its p-value. Health is a visual rating by the surveyor, and nearby trees may still be similar.
 
 ## Option 3: Who graduates from college? (binomial logistic regression)
 
@@ -185,7 +185,7 @@ Example questions:
   - After accounting for selectivity and resources, do colleges that enroll more Pell grant recipients have lower completion rates?
   - Are public and private nonprofit colleges with similar students and resources equally likely to graduate their students?
 
-Watch out for: overdispersion. Colleges differ in many ways that no model captures, so expect to use a quasibinomial model. Several predictors (enrollment, spending) are very right-skewed. If you use `sat_avg`, you will lose about a quarter of the colleges, and those colleges are not a random subset.
+Watch out for: Colleges differ in many ways that no model captures. Several predictors (enrollment, spending) are very right-skewed. If you use `sat_avg`, you will lose about a quarter of the colleges, and those colleges are not a random subset.
 
 ## Option 4: Do crowds sway referees? (Poisson regression)
 

@@ -27,34 +27,44 @@ Due: Friday of Week 8 at start of class
 
 There is a [homework template](../files/hw-template.qmd) available if you'd like to use that as a starter file, and copy and paste the code as needed.
 
-::: callout-important
-## Important!
+# Problem 1: Cars Inference
 
-Please attempt Case Study problems before class on Friday of Week 8
-:::
+Use Problem 5 from HW7 (Cars) for this problem.
+```{r}
+car_purchase <- read.csv("https://aluby.github.io/stat230/data/car_purchase.csv")
+cars_glm <- glm(y ~ income + car_age, data = car_purchase, family = "binomial")
+```
 
-# Problem 5: Cars Inference
 
-Use the problem above for this question. 
-
-(a) Create three three residual plots of the Pearson residuals with a smoother to assess this model:
+(a) Create three residual plots of the Pearson residuals with a smoother to assess this model:
 
   - residuals vs $\hat \eta$
   - residuals vs `income`
-  - residuals vs `oldest_auto`
+  - residuals vs `car_age`
   
 What do these plots suggest about the adequacy of the logistic regression model?
 
-(b) Create three binned residual plots to assess this model:
+(b) Create empirical logit plots of the log odds of purchasing a new car against each predictor:
 
-  - residuals vs $\hat \eta$
-  - residuals vs `income`
-  - residuals vs `oldest_auto`
+  - empirical logit vs `income` (use 5 bins of about the same size)
+  - empirical logit vs `car_age` (`car_age` only takes a few values, so you can group the largest values together)
 
-What do these plots suggest about the adequacy of the logistic regression model?
+What do these plots suggest about the linearity condition? (This is a small data set, so expect some scatter: look at the overall trend.)
+
+(c) Report a 90% confidence interval in context (on the odds scale) for `income`. Do you trust this interval?
+
+(d) Use a likelihood ratio test to test whether `car_age` is needed in the model. State the hypotheses, the test statistic, degrees of freedom, p-value, and a conclusion in context. How does the p-value compare to the $z$-test for `car_age` in the `tidy()` output?
+
+(e) Compare the AIC and BIC of the model with both predictors to the model with `income` only. Which model do the criteria prefer? Do they agree with your conclusion in (d)?
 
 
-# Problem 6: Moths
+# Problem 2: Moths
+
+::: callout-important
+## Important!
+
+Please attempt this problem before class on Wednesday of Week 8.
+:::
 
 An article in the *Journal of Animal Ecology* by [Bishop (1972)](https://doi.org/10.2307/3513) investigated whether moths provide evidence of "survival of the fittest" with their camouflage traits. Researchers glued equal numbers of light and dark morph moths in lifelike positions on tree trunks at 7 locations from 0 to 51.2 km from Liverpool. They then recorded the numbers of moths removed after 24 hours, presumably by predators. The hypothesis was that, since tree trunks near Liverpool were blackened by pollution, light morph moths would be more likely to be removed near Liverpool. The following variables are used in this analysis: 
 
@@ -81,15 +91,6 @@ moth <- mutate(moth,
 model1 <- lm(log_odds_removed ~ distance + morph + distance * morph, data = moth)
 ```
 
-```{r}
-#| echo: false
-#| fig-width: 8
-#| fig-height: 3
-#| fig-alt: "Response residuals plotted against each predictor in the model, one panel per predictor."
-
-ggResidpanel::resid_xpanel(model1, yvar = "response")
-```
-
 ```{r echo = F}
 knitr::kable(tidy(model1, conf.int = TRUE),format = "markdown", digits = 3)
 ```
@@ -100,20 +101,17 @@ knitr::kable(tidy(model1, conf.int = TRUE),format = "markdown", digits = 3)
     
 (c) Use the model to interpret the following in terms of the **odds** of a moth being removed (you can assume all conditions are satisfactory)
   
-  - 95% confidence interval for the coefficient of `distance` for a dark moth 
-  - 95% confidence interval for the coefficient of `morphlight` given the tree is in Liverpool (`distance = 0`)
-    
-(d) Now, report 80% confidence intervals for the same quantities as part (c). (You do not need to re-interpret)
+  - 80% confidence interval for the coefficient of `distance` for a dark moth 
+  - 80% confidence interval for the coefficient of `morphlight` given the tree is in Liverpool (`distance = 0`)
   
-(e) Use the model to calculate the predicted odds of being removed for a light moth that is glued to the trunk of a tree that is 6.2 km from Liverpool. 
+(d) Use the model to calculate the predicted odds of being removed for a light moth that is glued to the trunk of a tree that is 6.2 km from Liverpool. 
 
-(f) Calculate the predicted probability that the moth described in the previous question is removed.
+(e) Calculate the predicted probability that the moth described in the previous question is removed.
 
 
+# Problem 3: Tires
 
-# Problem 1: Tires
-
-> The Ford Explorer is a popular sports utility vehicle made int he US and sold throughout the world. Early in its production, concern arose ove ra potential accident risk associated with tires of the prescribed size when the vehicle was carrying heavy loads, but the risk was thought to be acceptable if a low tire pressure was recommended. The problem was apparently exacerbated by a particular type of Firestone tire that was overly prone to read separation, especially in warm temperatures. This type of tire was a common one used on Explorers in model years 1995 and later. By the end of 1999 more than 30 lawsuits had been filed over accidents that were thought to be associated with this problem. US federal data on fatal car accidents were analyzed at that time, showing that the odds of a fatal accident being associated with tire failure were three times as great for Explorers as for other SUVs. Additional data from 1999 and other variables may be used to further explore the odds ratio. 
+> The Ford Explorer is a popular sports utility vehicle made in the US and sold throughout the world. Early in its production, concern arose over a potential accident risk associated with tires of the prescribed size when the vehicle was carrying heavy loads, but the risk was thought to be acceptable if a low tire pressure was recommended. The problem was apparently exacerbated by a particular type of Firestone tire that was overly prone to tread separation, especially in warm temperatures. This type of tire was a common one used on Explorers in model years 1995 and later. By the end of 1999 more than 30 lawsuits had been filed over accidents that were thought to be associated with this problem. US federal data on fatal car accidents were analyzed at that time, showing that the odds of a fatal accident being associated with tire failure were three times as great for Explorers as for other SUVs. Additional data from 1999 and other variables may be used to further explore the odds ratio. 
 
 Load the data with:
 
@@ -121,7 +119,7 @@ Load the data with:
 tires <- Sleuth3::ex2018[-1,]
 ```
 
-(a) The excerpt below is from the *Statistical Sleuth*. What is the response varibale and what are the predictor variables?
+(a) The excerpt below is from the *Statistical Sleuth*. What is the response variable and what are the predictor variables?
 
 > It is of interest to see whether the odds that a fatal accident is tire-related depend on whether the vehicle is a Ford, after accounting for the age of the car and the number of passengers.
 
@@ -141,23 +139,25 @@ gf_boxplot(Make ~ Passengers, col = ~Cause, data = tires)
 
 (d) Fit the logistic regression of the cause of tire failure on age, age$^2$, the number of passengers, vehicle make, and the interaction of passengers and make. Write down the separate fitted log odds model for Fords and non-Ford vehicles.
 
-(e)  What is the effect of vehicle type on the odds of tire failure? Give your answer as an odds ratio **formula** involving model coefficients and the variable passengers (i.e., the answer is a function of the number of passengers). Clearly state what the odds ratio is measuring (odds of ? for make xxx vs. make yyy)
+(e)  What is the effect of vehicle type on the odds of tire failure? Give your answer as an odds ratio **formula** involving model coefficients and the variable passengers (i.e., the answer is a function of the number of passengers). Clearly state what the odds ratio is measuring (odds of ? for make xxx vs. make yyy). *(Note: R uses Ford as the reference level of `Make`, so the coefficients are for `MakeOther`.)*
 
-(f) Compute the odds ratios from part (d) for passenger levels of 0, 1, 2, 3, and 4 passengers. Explain what these odds ratios tell you about tire-related accidents, vehicle type, and number of passengers.
+(f) Compute the odds ratios from part (e) for passenger levels of 0, 1, 2, 3, and 4 passengers. Explain what these odds ratios tell you about tire-related accidents, vehicle type, and number of passengers.
+
+(g) Use a likelihood ratio test to test whether the interaction between passengers and make is needed. State the hypotheses, the test statistic, degrees of freedom, p-value, and a conclusion in context.
 
 
-# Problem 2: Checking conditions
+# Problem 4: Checking conditions
 
-Use the model you fit in Problem 1. 
+Use the model you fit in Problem 3. 
 
-(a) Create a binned residual plot. Which condition does this address and does it appear to be satisfied?
+(a) Create empirical logit plots of the log odds of a tire-related accident against `Passengers` (with a separate line for each make) and against `VehicleAge`. You will need to group the predictors (for example, `Passengers` into 0, 1, 2, and 3+). Which condition does this address and does it appear to be satisfied? (Only 27 of the 2,320 accidents were tire-related, so expect the plots to be noisy. Use the +0.5 adjustment so that empty cells don't give infinite logits.)
 
-(b) Create a plot of Pearson residuals against each predictor variable. Which condition does this address and does it appear to be satisfied?
+(b) Create a plot of Pearson residuals against each predictor variable, with a smoother. Which condition does this address and does it appear to be satisfied?
 
 (c) The data consists of fatal accidents reported to the US federal government.  Describe a scenario in which this dataset might violate the independence assumption.
 
 
-# Problem 3: budworm
+<!-- # Problem 5: Budworm
 
 An experiment in the 1980’s looked at the levels of resistance to a certain toxin in the adult Budworm, a type of moth. Batches of 20 moths each of each sex were exposed to different doses of pyrethroid *trans*-cypermethrin and the number in each batch that were dead or knocked down were recorded (`numdead`).
 
@@ -173,47 +173,39 @@ budworm <- read.csv("https://aluby.github.io/stat230/data/budworm.csv")
 budworm <- read.csv(here::here("data/budworm.csv"))
 ```
 
-(a) We are interested in predicting the probability of a moth dying or being knocked down based on the dose and sex. Create an appropriate EDA to investigate this relationship. What do you conclude?
+Each row is one batch of `N` = 20 moths. To model the proportion that died, use `cbind(numdead, N - numdead)` as the response in `glm()`.
+
+(a) We are interested in predicting the probability of a moth dying or being knocked down based on the dose and sex. Create an appropriate EDA (for example, empirical logits against dose, colored by sex) to investigate this relationship. What do you conclude?
 
 (b) Fit a binomial logistic regression model using `sex` and `dose` as predictors of the proportion of moths that were dead or knocked down. Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.
 
-(c) Create a plots of the deviance residuals versus the predictors for the model from part (a). Is there any evidence of non-linearity?
+(c) Create plots of the Pearson residuals versus the predictors for the model from part (b), with a smoother. Is there any evidence of non-linearity?
 
 (d) Fit a binomial logistic regression model using `sex` and `log2(dose)` as predictors of the proportion of moths that were dead or knocked down. (Note: `log2()` is $log_2$.) Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.
 
-(e) Create a plots of the deviance residuals versus the predictors for the model from part (c). Is there any evidence of non-linearity?
+(e) Create plots of the Pearson residuals versus the predictors for the model from part (d). Is there any evidence of non-linearity?
+ -->
 
-# ~~Problem 4: Monday~~
+# Problem 6: Esophageal cancer (6 parts, Wed)
 
-# Problem ~~5~~ 4: Wednesday
-
-> An experiment at the Marine/Freshater Biomedical Sciences Center at Oregon State University investigated the carcinogenic effects of aflatoxicol, a metabolite of Aflatoxin B1, which is a toxic by-product produced by a mold that infects cottonseed meal peanuts, and grains. Twenty tanks of rainbow trout embryos were exposed to one of five doses of Aflatoxicol for one hour. The data below represent the numbers of fish in each tank and the numbers of these that had liver tumors after one year :(  
-
-Each row in the dataset represents a separate tank of rainbow trout embryos. 
+<!-- The `esoph` data (built into R) come from a case-control study of esophageal cancer in Ille-et-Vilaine, France. Each row is a group of men with the same age group, daily alcohol consumption, and daily tobacco consumption. `ncases` is the number of men in that group with esophageal cancer and `ncontrols` is the number without. (If you'd like to see more info about the data, run `?esoph` in R) The predictors are stored as ordered categories, so we create numeric versions using the midpoint of each category:
 
 ```{r}
-trout <- Sleuth3::ex2116
+esoph_data <- esoph |>
+  mutate(agemid = c(29.5, 39.5, 49.5, 59.5, 69.5, 79.5)[as.integer(agegp)],  # age (years)
+         alcmid = c(20, 60, 100, 140)[as.integer(alcgp)],                    # alcohol (g/day)
+         tobmid = c(5, 15, 25, 35)[as.integer(tobgp)],                       # tobacco (g/day)
+         ntotal = ncases + ncontrols)                                        # create "total" 
 ```
 
-(a) Make a plot of the empirical log-odds of cancer vs dose. Comment on what you see
+(a) Create empirical logit plots of the log odds of esophageal cancer against `alcmid` and against `agemid`. Does either relationship look nonlinear?
 
-(b) Now make a plot of the empirical log-odds of cancer vs $1/\sqrt{\text{dose}}$. Comment on what you see
+(b) Fit a binomial logistic regression model using `agemid` and `alcmid` as predictors of the proportion of men with esophageal cancer (the response is `cbind(ncases, ncontrols)`). Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.
 
-(c) Fit the binomial logistic model for the odds of cancer using $\frac{1}{\sqrt{\text{dose}}}$ as the sole predictor. (*Note:* to do this, the predictor in the `glm` command should be written as `I(1/sqrt(Dose))`) Plot the Pearson residuals vs $\frac{1}{\sqrt{\text{dose}}}$. Is there evidence of nonlinearity between the log odds and the predictor variable?
+(c) Create plots of the Pearson residuals versus the predictors for the model from part (b), with a smoother. Is there any evidence of non-linearity? (Many groups contain only a handful of men, so the individual points will be noisy. Focus on the smoother.)
 
-(d) Give the dose at which your model estimates 50% chance of getting a tumor (*Hint:* what log-odds does this correspond to?)
+(d) Add $\text{agemid}^2$ and `tobmid` to the model from part (b). Use a likelihood ratio test to test whether these two terms are needed. Then compare the AIC and BIC of the two models. Do the criteria agree with the test?
 
-(e) Refit the model in part (c) using the quasibinomial procedure. Give the dispersion parameter estimate. Compare the standard errors from the quasibinomial model to the standard binomial model. 
+(e) Using the model from part (d), interpret the effect of alcohol consumption on the **odds** of esophageal cancer for a 40 g/day increase (about one alcohol category), holding the other variables fixed.
 
-# Problem ~~6~~ 5: Case Study (5 points each)
-
-1. Summarize the main point of the "circles" visualization in the first APM reports article, then construct your own EDA that shows the same main point. 
-
-2. Verify the findings of the APM methodology report that claims that the predictors in Group B are not
-significant after accounting for the predictors in Group A in the logistic model for the probability of a
-juror being struck by the state.
-
-3. Confirm that your model using predictors in Group A match the coefficients table and the odds ratio
-table on page 10 of the Methodology report.
-
-
+(f) This was a case-control study: the researchers chose a set of men with cancer (cases) and a set of men without (controls), rather than sampling men at random from a population. Explain why it would not make sense to use this model to estimate the probability that a man with a given age, alcohol, and tobacco level has esophageal cancer, even though the odds ratio in part (e) is still meaningful. -->
