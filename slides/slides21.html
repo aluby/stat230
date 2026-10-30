@@ -217,7 +217,7 @@ Prof Amanda Luby
 <div class="cell">
 <div class="cell-output-display">
 <p><span class="math display">\[
-\log\left[ \frac { P( \operatorname{type} = \operatorname{1} ) }{ 1 - P( \operatorname{type} = \operatorname{1} ) } \right] = \beta_{0} + \beta_{1}(\operatorname{words}) + \beta_{2}(\operatorname{has\_excl}_{\operatorname{TRUE}}) + \beta_{3}(\operatorname{pct\_caps})
+\log\left[ \frac { P( \operatorname{type} = \operatorname{1} ) }{ 1 - P( \operatorname{type} = \operatorname{1} ) } \right] = \beta_{0} + \beta_{1}(\operatorname{words}) + \beta_{2}(\operatorname{excl}_{\operatorname{TRUE}}) + \beta_{3}(\operatorname{pct\_caps})
 \]</span></p>
 </div>
 </div>
@@ -227,15 +227,15 @@ Prof Amanda Luby
 <pre><code># A tibble: 4 × 5
   term               estimate std.error statistic  p.value
   &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)         -2.50      0.677      -3.69 0.000224
-2 title_words          0.128     0.0568      2.25 0.0244  
-3 has_exclTRUE         1.01      0.429       2.36 0.0183  
-4 title_caps_percent   0.0683    0.0265      2.58 0.00980 </code></pre>
+1 (Intercept)         -2.23      0.672      -3.32 0.000894
+2 title_words          0.120     0.0581      2.07 0.0383  
+3 title_has_exclTRUE   2.00      0.849       2.35 0.0186  
+4 title_caps_percent   0.0498    0.0295      1.69 0.0908  </code></pre>
 </div>
 </div>
 </section>
-<section id="do-we-need-an-interaction-term-between-title_caps_percent-and-has_excl" class="slide level2">
-<h2>Do we need an interaction term between <code>title_caps_percent</code> and <code>has_excl</code>?</h2>
+<section id="do-we-need-an-interaction-term-between-title_caps_percent-and-title_has_excl" class="slide level2">
+<h2>Do we need an interaction term between <code>title_caps_percent</code> and <code>title_has_excl</code>?</h2>
 <ul>
 <li><p>EDA</p></li>
 <li><p>Formal Test</p></li>
@@ -245,64 +245,71 @@ Prof Amanda Luby
 <h2>EDA (original data)</h2>
 
 <img data-src="slides21_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<section id="eda-original-data-1" class="slide level2">
+<h2>EDA (original data)</h2>
+
+<img data-src="slides21_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
 <section id="eda-aggregated-data" class="slide level2">
 <h2>EDA (aggregated data)</h2>
-<p>First, make an “aggregated dataset”</p>
+<p>First, make an “aggregated dataset” of <strong>empirical logits</strong>: bin <code>title_caps_percent</code>, then find the empirical logit for each bin <em>within each group</em></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>news_agg <span class="ot">&lt;-</span> news <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a></a>  <span class="fu">mutate</span>(<span class="at">tcp_bin =</span> <span class="fu">ntile</span>(title_caps_percent, <span class="dv">13</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a></a>  <span class="fu">group_by</span>(tcp_bin, has_excl) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a></a>  <span class="fu">mutate</span>(<span class="at">tcp_bin =</span> <span class="fu">cut</span>(title_caps_percent, <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="dv">5</span>,  <span class="dv">10</span>, <span class="dv">15</span>, <span class="cn">Inf</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a></a>  <span class="fu">group_by</span>(tcp_bin, title_has_excl) <span class="sc">|&gt;</span></span>
 <span id="cb2-4"><a></a>  <span class="fu">summarize</span>(</span>
-<span id="cb2-5"><a></a>    <span class="at">prop_fake =</span> <span class="fu">mean</span>(type_num),</span>
-<span id="cb2-6"><a></a>    <span class="at">log_odds =</span> <span class="fu">log</span>(prop_fake<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>prop_fake))</span>
-<span id="cb2-7"><a></a>  )</span>
-<span id="cb2-8"><a></a></span>
-<span id="cb2-9"><a></a>news_agg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-5"><a></a>    <span class="at">mean_x =</span> <span class="fu">mean</span>(title_caps_percent),</span>
+<span id="cb2-6"><a></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-7"><a></a>    <span class="at">n_fake =</span> <span class="fu">sum</span>(type_num),</span>
+<span id="cb2-8"><a></a>    <span class="at">emp_logit =</span> <span class="fu">log</span>((n_fake <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">/</span> (n <span class="sc">-</span> n_fake <span class="sc">+</span> <span class="fl">0.5</span>)),</span>
+<span id="cb2-9"><a></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb2-10"><a></a>  )</span>
+<span id="cb2-11"><a></a></span>
+<span id="cb2-12"><a></a>news_agg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
+<div class="small">
+<p>92 of the 150 titles have 0% capital letters, so we choose the bins by hand. Only 18 titles have an exclamation point, so some cells are tiny</p>
+</div>
 </section>
 <section id="eda-aggregated-data-output" class="slide level2 output-location-slide"><h2>EDA (aggregated data)</h2><div class="cell output-location-slide">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 26 × 4
-# Groups:   tcp_bin [13]
-   tcp_bin has_excl prop_fake log_odds
-     &lt;int&gt; &lt;lgl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
- 1       1 FALSE        0.3     -0.847
- 2       1 TRUE         0.5      0    
- 3       2 FALSE        0.375   -0.511
- 4       2 TRUE         0.25    -1.10 
- 5       3 FALSE        0     -Inf    
- 6       3 TRUE         0     -Inf    
- 7       4 FALSE        0.273   -0.981
- 8       4 TRUE         0     -Inf    
- 9       5 FALSE        0.3     -0.847
-10       5 TRUE         1      Inf    
-# ℹ 16 more rows</code></pre>
+<pre><code># A tibble: 8 × 6
+  tcp_bin   title_has_excl mean_x     n n_fake emp_logit
+  &lt;fct&gt;     &lt;lgl&gt;           &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+1 (-Inf,0]  FALSE            0       91     25    -0.959
+2 (-Inf,0]  TRUE             0        1      0    -1.10 
+3 (5,10]    FALSE            8.05    18      9     0    
+4 (5,10]    TRUE             7.17     4      4     2.20 
+5 (10,15]   FALSE           12.5     15      5    -0.647
+6 (10,15]   TRUE            12.3      3      3     1.95 
+7 (15, Inf] FALSE           18.4      8      5     0.452
+8 (15, Inf] TRUE            26.1     10      9     1.85 </code></pre>
 </div>
 </div></section><section id="plot-empirical-log-odds" class="slide level2">
 <h2>Plot empirical log odds</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">gf_point</span>(log_odds <span class="sc">~</span> tcp_bin, <span class="at">color =</span> <span class="sc">~</span>has_excl, <span class="at">data =</span> news_agg) <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a></a>  <span class="fu">gf_lm</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">gf_point</span>(emp_logit <span class="sc">~</span> mean_x, <span class="at">color =</span> <span class="sc">~</span>title_has_excl, <span class="at">size =</span> <span class="sc">~</span>n, <span class="at">data =</span> news_agg) <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a></a>  <span class="fu">gf_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="slides21_files/figure-revealjs/unnamed-chunk-6-1.png" width="768" class="r-stretch"><ul>
+<img data-src="slides21_files/figure-revealjs/unnamed-chunk-7-1.png" width="768" class="r-stretch"><ul>
+<li>Size of the point = number of articles in the bin</li>
 <li>Is there a nonlinear relationship?</li>
-<li>Should we try a different lines model?</li>
+<li>Do the lines look parallel, or should we try a different lines model?</li>
 </ul>
 </section>
 <section id="model-with-interaction" class="slide level2">
 <h2>Model with interaction</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>news_mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> title_words <span class="sc">+</span> </span>
-<span id="cb5-2"><a></a>                   has_excl<span class="sc">*</span>title_caps_percent, </span>
+<span id="cb5-2"><a></a>                   title_has_excl<span class="sc">*</span>title_caps_percent, </span>
 <span id="cb5-3"><a></a>                <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="xsmall">
 <div class="cell">
 <div class="cell-output-display">
 <p><span class="math display">\[
-\log\left[ \frac { P( \operatorname{type} = \operatorname{1} ) }{ 1 - P( \operatorname{type} = \operatorname{1} ) } \right] = \beta_{0} + \beta_{1}(\operatorname{words}) + \beta_{2}(\operatorname{has\_excl}_{\operatorname{TRUE}}) + \beta_{3}(\operatorname{pct\_caps}) + \beta_{4}(\operatorname{has\_excl}_{\operatorname{TRUE}} \times \operatorname{pct\_caps})
+\log\left[ \frac { P( \operatorname{type} = \operatorname{1} ) }{ 1 - P( \operatorname{type} = \operatorname{1} ) } \right] = \beta_{0} + \beta_{1}(\operatorname{words}) + \beta_{2}(\operatorname{excl}_{\operatorname{TRUE}}) + \beta_{3}(\operatorname{pct\_caps}) + \beta_{4}(\operatorname{excl}_{\operatorname{TRUE}} \times \operatorname{pct\_caps})
 \]</span></p>
 </div>
 </div>
@@ -311,13 +318,13 @@ Prof Amanda Luby
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
-  term                            estimate std.error statistic  p.value
-  &lt;chr&gt;                              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)                      -2.51      0.680     -3.69  0.000225
-2 title_words                       0.135     0.0582     2.31  0.0208  
-3 has_exclTRUE                      0.805     0.541      1.49  0.137   
-4 title_caps_percent                0.0527    0.0361     1.46  0.145   
-5 has_exclTRUE:title_caps_percent   0.0355    0.0562     0.630 0.528   </code></pre>
+  term                                  estimate std.error statistic  p.value
+  &lt;chr&gt;                                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)                            -2.27      0.677     -3.36  0.000786
+2 title_words                             0.127     0.0593     2.14  0.0322  
+3 title_has_exclTRUE                      1.28      1.39       0.924 0.355   
+4 title_caps_percent                      0.0415    0.0325     1.28  0.202   
+5 title_has_exclTRUE:title_caps_percent   0.0597    0.0996     0.599 0.549   </code></pre>
 </div>
 </div>
 </div>
@@ -337,12 +344,12 @@ Prof Amanda Luby
 <section id="section-2" class="slide level2">
 <h2></h2>
 <div class="task">
-<p>Do we need <code>has_excl</code> at all? Write out the null and alternative hypothesis for this question.</p>
+<p>Do we need <code>title_has_excl</code> at all? Write out the null and alternative hypothesis for this question.</p>
 </div>
 </section>
 <section id="likelihood-ratio-test" class="slide level2">
 <h2>Likelihood Ratio Test</h2>
-<p>In OLS, we used:</p>
+<p>In OLS, we used the extra sums of squares <span class="math inline">\(F\)</span>-test to compare nested models</p>
 <p>For logistic regression, we use a <strong>likelihood ratio test</strong></p>
 <div class="medium">
 <div class="cell">
@@ -357,10 +364,10 @@ Prof Amanda Luby
 <pre><code>Analysis of Deviance Table
 
 Model 1: type_num ~ title_words + title_caps_percent
-Model 2: type_num ~ title_words + has_excl * title_caps_percent
+Model 2: type_num ~ title_words + title_has_excl * title_caps_percent
   Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)  
 1       147     178.01                       
-2       145     171.98  2   6.0352  0.04892 *
+2       145     170.44  2   7.5695  0.02271 *
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -395,6 +402,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div></div>
 <p><strong>Idea:</strong> how much did the full model increase the likelihood over the small model? (High likelihood = good, low likelihood = less good)</p>
+</section>
+<section id="what-is-deviance" class="slide level2">
+<h2>What is deviance?</h2>
+<div class="medium">
+<p>For binary logistic regression, the <strong>deviance</strong> of a model is <span class="math display">\[\text{Deviance} = -2 \log L(\text{model})\]</span> where <span class="math inline">\(L\)</span> is the maximum value of the likelihood</p>
+<ul>
+<li>Deviance plays the role that SSE played in OLS: <strong>smaller = better fit</strong></li>
+<li>A bigger model always has deviance that is smaller (or the same) as a smaller model</li>
+<li>The LRT statistic is the <strong>drop in deviance</strong>: <span class="math inline">\(\Lambda = \text{Dev(reduced)} - \text{Dev(full)}\)</span></li>
+<li>We use deviance to compare models</li>
+</ul>
+</div>
 </section>
 <section id="anova-table" class="slide level2">
 <h2><code>anova</code> table</h2>
@@ -444,23 +463,23 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-glm(formula = type_num ~ title_words + has_excl + title_caps_percent, 
+glm(formula = type_num ~ title_words + title_has_excl + title_caps_percent, 
     family = "binomial", data = news)
 
 Coefficients:
                    Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)        -2.49834    0.67708  -3.690 0.000224 ***
-title_words         0.12783    0.05681   2.250 0.024431 *  
-has_exclTRUE        1.01269    0.42916   2.360 0.018290 *  
-title_caps_percent  0.06832    0.02645   2.583 0.009802 ** 
+(Intercept)        -2.23184    0.67187  -3.322 0.000894 ***
+title_words         0.12034    0.05808   2.072 0.038260 *  
+title_has_exclTRUE  1.99783    0.84918   2.353 0.018640 *  
+title_caps_percent  0.04982    0.02946   1.691 0.090783 .  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
     Null deviance: 201.90  on 149  degrees of freedom
-Residual deviance: 172.39  on 146  degrees of freedom
-AIC: 180.39
+Residual deviance: 170.86  on 146  degrees of freedom
+AIC: 178.86
 
 Number of Fisher Scoring iterations: 4</code></pre>
 </div>
@@ -514,33 +533,118 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <li>If not, the LRT is usually more accurate</li>
 </ul></li>
 </ul>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">z-test p-value</th>
+<th style="text-align: right;">LRT p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">title_words</td>
+<td style="text-align: right;">0.0383</td>
+<td style="text-align: right;">0.0355</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">title_has_excl</td>
+<td style="text-align: right;">0.0186</td>
+<td style="text-align: right;">0.0075</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">title_caps_percent</td>
+<td style="text-align: right;">0.0908</td>
+<td style="text-align: right;">0.0869</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="separate-tests-vs.-a-joint-test" class="slide level2">
+<h2>Separate tests vs.&nbsp;a joint test</h2>
+<p>Is <code>title_has_excl</code> needed at all?</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">title_has_exclTRUE</td>
+<td style="text-align: right;">1.281</td>
+<td style="text-align: right;">1.386</td>
+<td style="text-align: right;">0.355</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">title_has_exclTRUE:title_caps_percent</td>
+<td style="text-align: right;">0.060</td>
+<td style="text-align: right;">0.100</td>
+<td style="text-align: right;">0.549</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="is-title_has_excl-needed-at-all" class="slide level2">
+<h2>Is <code>title_has_excl</code> needed at all?</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: type_num ~ title_words + title_caps_percent
+Model 2: type_num ~ title_words + title_has_excl * title_caps_percent
+  Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)  
+1       147     178.01                       
+2       145     170.44  2   7.5695  0.02271 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Neither term looks useful on its own (both p-values are large)</li>
+<li>But the joint LRT (<span class="math inline">\(d = 2\)</span>) has p-value <span class="math inline">\(=\)</span> 0.023</li>
+<li>Same as the <span class="math inline">\(F\)</span>-test in MLR: individual tests ask whether a term helps <em>given the others</em> are in the model; the LRT test asks whether the <strong>combination</strong> helps</li>
+</ul>
+</div>
 </section>
 <section id="aic-and-bic-for-logistic-regression" class="slide level2">
 <h2>AIC and BIC for logistic regression</h2>
 <p>The following “information criteria” can be used to compare nested or non-nested models (smaller values are better)</p>
 <p><span class="math display">\[IC = \text{Measure of Fit} + \text{Penalty}\]</span></p>
 <p><br></p>
-<p><span class="math display">\[AIC = n \log(L) + 2p\]</span></p>
+<p><span class="math display">\[AIC = -2 \log(L) + 2k\]</span></p>
 <p><br></p>
-<p><span class="math display">\[BIC =  n \log(L) + \log(n) \cdot p\]</span></p>
-<p>where L is the likelihood of the model</p>
+<p><span class="math display">\[BIC =  -2 \log(L) + \log(n) \cdot k\]</span></p>
+<p>where <span class="math inline">\(L\)</span> is the maximized likelihood of the model and <span class="math inline">\(k\)</span> is the number of coefficients (including the intercept). For binary logistic regression, <span class="math inline">\(-2\log(L)\)</span> is the deviance</p>
 </section>
 <section id="in-r" class="slide level2">
 <h2>In R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">AIC</span>(news_mod, news_mod2, reduced_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">AIC</span>(reduced_model, news_mod, news_mod2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              df      AIC
-news_mod       4 180.3919
-news_mod2      5 181.9776
-reduced_model  3 184.0128</code></pre>
+reduced_model  3 184.0128
+news_mod       4 178.8595
+news_mod2      5 180.4433</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">BIC</span>(news_mod, news_mod2, reduced_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">BIC</span>(reduced_model, news_mod, news_mod2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              df      BIC
-news_mod       4 192.4345
-news_mod2      5 197.0307
-reduced_model  3 193.0447</code></pre>
+reduced_model  3 193.0447
+news_mod       4 190.9021
+news_mod2      5 195.4965</code></pre>
 </div>
 </div>
 
