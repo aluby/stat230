@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -151,7 +151,8 @@ window.Quarto = {
   <ul>
   <li><a href="#problem-1-possums" id="toc-problem-1-possums" class="nav-link active" data-scroll-target="#problem-1-possums">Problem 1: <code>possums</code></a></li>
   <li><a href="#problem-2-more-possums" id="toc-problem-2-more-possums" class="nav-link" data-scroll-target="#problem-2-more-possums">Problem 2: More <code>possums</code></a></li>
-  <li><a href="#problem-3-reflections" id="toc-problem-3-reflections" class="nav-link" data-scroll-target="#problem-3-reflections">Problem 3: Reflections</a></li>
+  <li><a href="#problem-3-trout" id="toc-problem-3-trout" class="nav-link" data-scroll-target="#problem-3-trout">Problem 3: Trout</a></li>
+  <li><a href="#problem-4-reflections" id="toc-problem-4-reflections" class="nav-link" data-scroll-target="#problem-4-reflections">Problem 4: Reflections</a></li>
   </ul>
 </nav>
     </div>
@@ -264,8 +265,23 @@ Note
 <p><strong>6.</strong> Drop <code>Acacia</code>, <code>Shrubs</code>, and <code>Stumps</code> from your model. On the basis of the likelihood ratio test, is there evidence against this reduced model?</p>
 <p><strong>7.</strong> Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of <del>stumps</del> stags is 10. Give a 95% confidence interval for this estimate by treating the <span class="math inline">\(\log(\hat{\mu})\)</span> as approximately normally distributed. Why is this justified?</p>
 </section>
-<section id="problem-3-reflections" class="level1">
-<h1>Problem 3: Reflections</h1>
+<section id="problem-3-trout" class="level1">
+<h1>Problem 3: Trout</h1>
+<blockquote class="blockquote">
+<p>An experiment at the Marine/Freshwater Biomedical Sciences Center at Oregon State University investigated the carcinogenic effects of aflatoxicol, a metabolite of Aflatoxin B1, which is a toxic by-product produced by a mold that infects cottonseed meal, peanuts, and grains. Twenty tanks of rainbow trout embryos were exposed to one of five doses of Aflatoxicol for one hour. The data below represent the numbers of fish in each tank and the numbers of these that had liver tumors after one year.</p>
+</blockquote>
+<p>Each row in the dataset represents a separate tank of rainbow trout embryos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trout <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex2116</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>1.</strong> Make a plot of the empirical log-odds of cancer vs dose (one point per tank), and another of the empirical log-odds vs <span class="math inline">\(1/\sqrt{\text{dose}}\)</span>. Which predictor looks more appropriate for a linear model on the log-odds scale?</p>
+<p><strong>2.</strong> Fit the binomial logistic model for the odds of cancer using <span class="math inline">\(\frac{1}{\sqrt{\text{dose}}}\)</span> as the sole predictor. (<em>Note:</em> to do this, the predictor in the <code>glm</code> command should be written as <code>I(1/sqrt(Dose))</code>, and the response is <code>cbind(Tumor, Total - Tumor)</code>.) Report the fitted model, then plot the Pearson residuals vs <span class="math inline">\(\frac{1}{\sqrt{\text{dose}}}\)</span> with a smoother. Is there evidence of nonlinearity between the log odds and the predictor variable?</p>
+<p><strong>3.</strong> Give the dose at which your model estimates a 50% chance of getting a tumor. (<em>Hint:</em> what log-odds does this correspond to?)</p>
+<p><strong>4.</strong> Calculate the Pearson <span class="math inline">\(X^2\)</span> statistic (the sum of the squared Pearson residuals) and use it to calculate <span class="math inline">\(X^2 / \text{df}\)</span> and the p-value for the goodness-of-fit test. Does the binomial model fit these data adequately? What does a value of <span class="math inline">\(X^2 / \text{df}\)</span> greater than 1 suggest?</p>
+<p><strong>5.</strong> Refit the model from part 2 using the quasibinomial procedure. Give the dispersion parameter estimate (how does it compare to your <span class="math inline">\(X^2 / \text{df}\)</span> from part 4?). Compare the standard errors from the quasibinomial model to the standard binomial model.</p>
+</section>
+<section id="problem-4-reflections" class="level1">
+<h1>Problem 4: Reflections</h1>
 <ol type="a">
 <li><p>Start by reviewing either HW2 or Case Study 1. (Look at your submission on gradescope) What was something you found difficult initially, but now seems “easy”?</p></li>
 <li><p>Write 2-3 sentences describing how you have grown this term. (Some ideas to get you started: overcoming a technical hurdle; managing group work; incorporating R and math; study skills; time management; etc.)</p></li>
