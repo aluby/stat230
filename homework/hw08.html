@@ -185,8 +185,21 @@ window.Quarto = {
 <h1>Problem 1: Cars Inference</h1>
 <p>Use Problem 5 from HW7 (Cars) for this problem.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>car_purchase <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/car_purchase.csv"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>car_purchase <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aluby.github.io/stat230/data/car_purchase.csv"</span>)[<span class="sc">-</span><span class="dv">33</span>,]</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cars_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> income <span class="sc">+</span> car_age, <span class="at">data =</span> car_purchase, <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For some reason, <code>resid_xpanel</code> did not like an odd number of data points. Homework updated on Monday around 4pm to remove the last data point (<code>[-33 ,]</code>) so that <code>resid_xpanel</code> will work.</p>
+</div>
 </div>
 <ol type="a">
 <li>Create three residual plots of the Pearson residuals with a smoother to assess this model:</li>
@@ -234,7 +247,7 @@ window.Quarto = {
 <li><code>removed</code> = number of moths of a specific morph removed after 24 hours</li>
 <li><code>log_odds_removed</code> = log odds of being removed</li>
 </ul>
-<p>The model with <code>log_odds_removed</code> as the response and <code>distance</code>, <code>morph</code>, the interaction <code>distance*morph</code> as the predictor variables is shown below.</p>
+<p>The model with <code>log_odds_removed</code> as the response and <code>distance</code>, <code>morph</code>, the interaction <code>distance*morph</code> as the predictor variables is shown below. The confidence intervals in the table are the 80% intervals.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_odds_removed <span class="sc">~</span> distance <span class="sc">+</span> morph <span class="sc">+</span> distance <span class="sc">*</span> morph, <span class="at">data =</span> moth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -268,8 +281,8 @@ window.Quarto = {
 <td style="text-align: right;">0.240</td>
 <td style="text-align: right;">-4.687</td>
 <td style="text-align: right;">0.001</td>
-<td style="text-align: right;">-1.657</td>
-<td style="text-align: right;">-0.589</td>
+<td style="text-align: right;">-1.452</td>
+<td style="text-align: right;">-0.795</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">distance</td>
@@ -277,8 +290,8 @@ window.Quarto = {
 <td style="text-align: right;">0.007</td>
 <td style="text-align: right;">2.437</td>
 <td style="text-align: right;">0.035</td>
-<td style="text-align: right;">0.002</td>
-<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.028</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">morphlight</td>
@@ -286,8 +299,8 @@ window.Quarto = {
 <td style="text-align: right;">0.339</td>
 <td style="text-align: right;">1.103</td>
 <td style="text-align: right;">0.296</td>
-<td style="text-align: right;">-0.381</td>
-<td style="text-align: right;">1.129</td>
+<td style="text-align: right;">-0.091</td>
+<td style="text-align: right;">0.839</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">distance:morphlight</td>
@@ -295,8 +308,8 @@ window.Quarto = {
 <td style="text-align: right;">0.011</td>
 <td style="text-align: right;">-2.612</td>
 <td style="text-align: right;">0.026</td>
-<td style="text-align: right;">-0.051</td>
-<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">-0.042</td>
+<td style="text-align: right;">-0.013</td>
 </tr>
 </tbody>
 </table>
@@ -505,7 +518,7 @@ esoph_data <- esoph |>
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
