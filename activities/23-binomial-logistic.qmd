@@ -74,7 +74,7 @@ oro_glm1 <- glm(y/n ~ variety + root, weights = n, family = binomial, data = oro
 
 **4.** Interpret the coefficient for `varietyoa75` in context.
 
-**5.** We can create plots of the Pearson or deviance residuals using the `resid_panel` function from the `car` package and setting `type = "pearson"` or `type = "deviance"`. Create deviance residual plots for the fitted model. Do you see any model deficiencies?
+**5.** We can create plots of the Pearson or deviance residuals using the `resid_panel` function from the `car` package and setting `type = "pearson"`. Create pearson residual plots for the fitted model. Do you see any model deficiencies?
 
 ```{r}
 #| eval: false
@@ -84,12 +84,12 @@ oro_glm1 <- glm(y/n ~ variety + root, weights = n, family = binomial, data = oro
 ggResidpanel::resid_panel(oro_glm1, type = ___, plots = c("resid", "qq"), smoother = TRUE)
 ```
 
-**6.** Next, use the output from the `summary()` function to perform a Goodness of Fit test. What do you conclude?
+**6.** Next, use the Pearson residuals to perform a Goodness of Fit test. What do you conclude?
 
 ```{r}
 #| eval: false
 
-summary(oro_glm1)
+# your code here
 ```
 
 ## Adding an interaction term
@@ -103,7 +103,7 @@ You should have found evidence of lack of fit, so we may be missing a term. The 
 oro_glm2 <- glm(___ ~ variety*root, weights = ___, family = binomial, data = orobanche)
 ```
 
-**7.** Create deviance residual plots for the fitted model. Do you see any model deficiencies?
+**7.** Create pearson residual plots for the fitted model. Do you see any model deficiencies?
 
 ```{r}
 #| eval: false
@@ -116,7 +116,7 @@ ggResidpanel::resid_panel(oro_glm2, type = ___, plots = c("resid", "qq"), smooth
 
 **10.** Do the results from 8 and 9 agree? What do you conclude? 
 
-**11.** Now, perform an overall Goodness of Fit test using the `summary()` output. What do you conclude? 
+**11.** Now, perform an overall Goodness of Fit test. What do you conclude? Does it agree with your results from 8 and 9?
 
 ***
 

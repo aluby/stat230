@@ -139,11 +139,15 @@ model2 <- glm(Removed ~ distance + morph + distance * morph,
 
 The sum of independent and identically distributed success/failure trials follows a Binomial(n, p) distribution.
 
+- Theoretical mean: $E(Y) = np$
+- Theoretical variance: $Var(Y) = np(1-p)$
+- A binary response is the special case where $n=1$ 
+
 :::
 
 ## Binomial logistic regression
 
-$$\pi_i = P(success | x_1, ..., x_3)$$
+$$\pi_i = P(success | x_1, ..., x_p)$$
 
 Log-odds scale: 
 
@@ -223,11 +227,11 @@ p2 <- ggResidpanel::resid_xpanel(model3, type = "pearson", smoother = TRUE, nrow
 p1 / p2
 ```
 
-## Deviance
+## Pearson $\chi^2$
 
 ::: medium
 
-Deviance can be used to assess the **overall fit** of a binomial logistic regression model
+Pearson's $\chi^2$ statistic can be used to assess the **overall fit** of a binomial logistic regression model
 
 
 
@@ -236,51 +240,23 @@ Observed Count | Predicted P(Success) | True P(Success) | Predicted Count
 $Y_i$ | $\widehat{\pi}_i$ | $\pi_i$ | $m_i \widehat\pi_i$
 
 
-<br>
-
-<br>
-
-**Deviance:** $D = 2 \sum \left[ Y_i \log \left( \dfrac{Y_i}{m_i\widehat{\pi}_i} \right)  + (m_i - Y_i)  \log \left( \dfrac{m_i - Y_i}{m_i - m_i \widehat{\pi}_i} \right) \right]$
+**Pearson $\chi^2$:** $X^2 = \sum \dfrac{(Y_i - m_i\widehat{\pi}_i)^2}{m_i\widehat{\pi}_i (1 - \widehat{\pi}_i)} = \sum {\rm Pres}_i^2$
 
 :::
-<br>
-
 
 ::: small
 
-$D$ is small when the predicted counts are close to the observed counts (good), and large when they are far away (bad) 
+$X^2$ is small when the predicted counts are close to the observed counts (good), and large when they are far away (bad) 
 
 <br>
 
-$D \overset{\cdot}{\sim} \chi^2$ with $\text{d.f.}= n-(p+1)$, **if** the model is correct and all $m_i$ are large enough (>5)
+$X^2 \overset{\cdot}{\sim} \chi^2$ with $\text{d.f.}= n-(p+1)$, **if** the model is correct and all $m_i$ are large enough (>5)
 
 $n =$ \# of binomial observations (\# of proportions, not # of moths)
 :::
 
-## Deviance residuals
 
-::: medium
 
-${\rm Dres}_i = {\rm sign}(Y_i - n_i \widehat{\pi}_i) \sqrt{2 \left[ Y_i \log \left( \dfrac{Y_i}{n_i \widehat{\pi}_i} \right) + (n_i - Y_i) \log \left( \frac{n_i - Y_i}{n_i - n_i \widehat{\pi}_i} \right) \right]}$
-
-:::
-
-For large enough $n_i$, deviance residuals tend to behave like they come from $N(0,1)$
-
-How to use?
-
-- Plot against fitted values, predictors
-
-- Check for curvature, outliers
-
-## Deviance residuals
-
-```{r}
-p1 <- ggResidpanel::resid_panel(model3, type = "deviance", plots = c("resid", "qq"), smoother = TRUE)
-p2 <- ggResidpanel::resid_xpanel(model3, type = "deviance", smoother = TRUE, nrow = 1)
-
-p1/p2
-```
 
 ## Goodness-of-fit test
 
@@ -301,23 +277,18 @@ H<sub>a</sub>: ${\rm logit}(\pi_i) = \alpha_i$
 
 ::: medium
 
-```{r eval=FALSE}
-summary(moth_glm)
-```
-```
-Call:
-glm(formula = Removed/Placed ~ Distance * Morph,
-    family = binomial, data = case2102, weights = Placed)
-
-    Null deviance: 35.385  on 13  degrees of freedom
-*Residual deviance: 13.230  on 10  degrees of freedom
+```{r}
+#| echo: true
+X2 <- sum(residuals(model3, type = "pearson")^2)
+X2
+df.residual(model3)
 ```
 
 <br>
 
 ```{r}
 #| echo: true
-1- pchisq(13.230, 10)
+1 - pchisq(X2, 10)
 ```
 
 :::
@@ -328,10 +299,10 @@ glm(formula = Removed/Placed ~ Distance * Morph,
 Note: This test is *only valid for the binomial logistic regression*, it is not valid for binary logistic regression.
 :::
 
-## Goodness of fit test
+## Goodness-of-fit test
 
 ```{r}
-lambda <- 13.230   # observed LRT statistic
+lambda <- sum(residuals(model3, type = "pearson")^2)   # observed Pearson X2
 df <- 10          # degrees of freedom
 
 gf_dist("chisq", df = df, geom = "area",
@@ -344,3 +315,17 @@ gf_dist("chisq", df = df, geom = "area",
 
 ```
 
+## 
+
+::: medium
+|                             | Binary logistic                                                                                       | Binomial logistic                                                                                                                       |
+|:----------------------------|:------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------|
+| Response                    | A single 0/1 outcome      | The number of successes $Y_i$ out of $n_i$ trials                               |
+| `glm()` response            | `y ~ x`, with `y` coded 0/1                                                                           | `y/n ~ x, weights = n`                                                                                |
+| Residual plots              | Empirical logit plots (bin $x$ first) and Pearson residuals with a smoother (two bands)| Empirical logit plots (no binning) and Pearson residuals; $\approx N(0,1)$ when the $n_i$ are large                    |
+| Goodness-of-fit test valid? | No ($n_i = 1$)                                                                                        | Yes, if the $n_i$ are large enough       |
+
+-   Binomial logistic regression models the **probability** of success for each row, using the same logit link as binary logistic regression.
+-   The variance of $Y_i$ is $n_i\pi_i(1-\pi_i)$, so it depends on $\pi_i$.
+
+:::

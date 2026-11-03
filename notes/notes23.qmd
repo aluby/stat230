@@ -10,6 +10,7 @@ library(broom)
 library(patchwork)
 library(here)
 library(ggResidpanel)
+library(ggthemes)
 theme_set(theme_minimal(base_size = 12))
 source("notes-helpers.R")
 
@@ -29,7 +30,6 @@ f2 <- function(x) sprintf("%.2f", x)
 f3 <- function(x) sprintf("%.3f", x)
 ```
 
-So far, every row of our data has been a *single* observation: one article, one student, one machine. Today each row is a **group** of observations that share the same predictor values, and the response is the **number** of successes in that group. This is **binomial logistic regression**.
 
 ## Data: moths and natural selection
 
@@ -46,42 +46,33 @@ moths |>
   knitr::kable(digits = 3, col.names = c("morph", "distance", "placed", "removed", "proportion removed"))
 ```
 
-**Q1.** What is the unit of observation (what does one row represent)? Why is this *not* the same kind of response as the fake news data?
-
-\vspace{1in}
-
-## Where we left off (HW8)
-
-On the homework, we modeled the empirical log odds with `lm()`:
-
-$$\text{log odds removed} = \log\left(\frac{\text{removed}}{\text{not removed}}\right) = \beta_0 + \beta_1\,\text{distance} + \beta_2\,\text{light} + \beta_3\,\text{distance}\times\text{light} + \varepsilon$$
+On HW8, we used the model:
 
 ```{r}
-#| fig-width: 6
-#| fig-height: 3.2
-gf_point(log_odds_removed ~ distance, color = ~morph, size = ~Placed, data = moths) |>
-  gf_lm() |>
-  gf_labs(x = "Distance from Liverpool (km)", y = "Empirical log odds") +
-  theme(legend.position = "bottom")
+#| echo: True
+model1 <- lm(log_odds_removed ~ distance + morph + distance * morph, 
+             data = moths)
 ```
 
-**Q2.** What did we have to do by hand to make this work? Name two problems with this approach. (*Hint:* think about a row with 0 moths removed, and about the points on the plot above that are based on more moths than others.)
+What is the Y variable? What is the fitted equation?
 
-\vspace{1.25in}
+\vspace{2in}
 
-Why can't we just give `glm()` the count of moths removed?
+Why doesn't this `glm` code work?
 
 ```{r}
-#| eval: false
-#| echo: true
-glm(Removed ~ distance * morph, data = moths, family = "binomial")   # error
+#| echo: TRUE 
+#| error: TRUE
+#| message: true
+#| warning: true
+model1 <- glm(Removed ~ distance + morph + distance * morph, 
+             data = moths, family = "binomial")
 ```
 
-The response needs to be a 0/1 outcome or a **proportion** (with the number of trials supplied separately).
 
 ## The binomial response
 
-Let $Y_i$ be the ______________ of successes (here: moths removed) out of $n_i$ trials (here: moths placed) in row $i$. We **assume** the $n_i$ trials in each row are independent and have the same probability of success $\pi_i$.
+Let $Y_i$ be the ______________ of successes (here: moths removed) out of $n_i$ trials (here: moths placed) in row $i$. We assume the $n_i$ trials in each row are independent and have the same probability of success $\pi_i$.
 
 ::: callout-note
 ## Binomial distribution
@@ -90,16 +81,15 @@ The sum of $n$ independent success/failure trials, each with success probability
 
 $$E(Y) = \underline{\hspace{2cm}} \qquad\qquad Var(Y) = \underline{\hspace{3cm}}$$
 
-A binary response is the special case $n = $ ______.
+A binary response is the special case $n =$ ______.
 :::
 
-**Q3.** The variance of a binomial count depends on $\pi$. What does that tell us about the "equal variance" condition we needed for OLS? Do we need to check it here?
-
-\vspace{1in}
 
 ## The binomial logistic regression model
 
 The model is the same as before: it describes how the **probability** of success depends on the predictors, using the logit link.
+
+$$\pi_i = P(Y=1| x_1, ..., x_p)$$
 
 Log-odds scale:
 
@@ -107,42 +97,41 @@ $$\text{logit}(\pi_i) = \log\left(\frac{\pi_i}{1 - \pi_i}\right) = \underline{\h
 
 Probability scale:
 
-$$\pi_i = \underline{\hspace{5cm}}$$
+$$\underline{\hspace{1cm}} = \dfrac{e^{\eta_i}}{1 + e^{\eta_i}}= \dfrac{e^{\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi}}}{1 + e^{\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi}}}$$
 
-Response distribution: $Y_i \sim \text{Binomial}(n_i, \pi_i)$ independently.
+Response distribution: $Y_i \sim \text{Binomial}(n_i, \pi_i)$.
 
-Instead of creating the log odds by hand, we give `glm()` the **proportion** removed as the response, and tell it how many trials each proportion is based on with `weights`:
+
+On the homework, we modeled the empirical log odds with `lm()`:
+
+$$
+\operatorname{\widehat{log\_odds\_removed}} = -1.123 + 0.018(\operatorname{distance}) + 0.374(\operatorname{morph}_{\operatorname{light}}) - 0.028(\operatorname{distance} \times \operatorname{morph}_{\operatorname{light}})
+$$
 
 ```{r}
-#| eval: false
+#| fig-width: 5
+#| fig-height: 2.5
+gf_point(log_odds_removed ~ Distance, color =~morph, data = moths, size =~Placed) |>
+  gf_lm() |>
+  gf_refine(scale_color_colorblind())
+```
+
+This approach required calculating the empirical log-odds "by hand" and adding to the dataset.  Alternatively, we can fit with `glm()` using the `weights` argument
+
+```{r}
 #| echo: true
-model3 <- glm(Removed / Placed ~ distance * morph, weights = Placed,
-              data = moths, family = "binomial")
+#| error: true
+model3 <- glm(Removed/Placed ~ distance + morph + distance*morph, 
+              weights = Placed,
+              data = moths, 
+              family = "binomial")
 ```
-
-(Equivalently, `cbind(Removed, Placed - Removed)` can be the response, with no `weights`.)
 
 ```{r}
-kable_coef(model3, terms = c("Intercept", "distance", "morphlight", "distance:morphlight"))
+tidy(model3)
 ```
 
-**Q4.** Write the fitted model on the log-odds scale for **dark** moths and for **light** moths.
-
-Dark:
-
-\vspace{.75in}
-
-Light:
-
-\vspace{.75in}
-
-**Q5.** Interpret $e^{\hat\beta_1}$ (`distance`) in context. Which moths does this apply to?
-
-\vspace{1in}
-
-**Q6.** For light moths, each additional km from Liverpool multiplies the odds of removal by ____________. How does this compare to dark moths? What does this say about the hypothesis from the study?
-
-\vspace{1.25in}
+*Note:* the estimates are slightly different due to different ________________________
 
 ## Checking conditions
 
@@ -155,21 +144,18 @@ Light:
 -   **Variance structure**: $Var(Y_i) =$ ______________, which is not constant, but is determined by the mean. We don't need an "equal variance" condition.
 :::
 
-We check **linearity** with empirical logit plots (as in Day 20), but now every row is already a group, so we don't need to bin:
-
-```{r}
-#| fig-width: 6
-#| fig-height: 3.2
-gf_point(log_odds_removed ~ distance, color = ~morph, size = ~Placed, data = moths) |>
-  gf_labs(x = "Distance from Liverpool (km)", y = "Empirical log odds") +
-  theme(legend.position = "bottom")
-```
+We check **linearity** with empirical logit plots (as in Day 20), but now every row is already a group, so we don't need to bin. 
 
 And we check linearity after accounting for the other predictors with **Pearson residuals**:
+
+::: callout-note
+## Pearson Residuals
 
 $$\text{Pres}_i = \frac{Y_i - n_i\hat\pi_i}{\sqrt{n_i\hat\pi_i(1-\hat\pi_i)}}$$
 
 For large enough $n_i$, Pearson residuals behave approximately like draws from a ______________ distribution (unlike binary logistic regression, where the residuals were in two bands). We plot them against the fitted values and the predictors, with a smoother.
+
+:::
 
 ```{r}
 #| fig-width: 7
@@ -179,41 +165,42 @@ p2 <- resid_xpanel(model3, type = "pearson", smoother = TRUE, nrow = 1)
 p1 / p2
 ```
 
-**Q7.** What do you see in the Pearson residual plots? Is there evidence of nonlinearity or outliers? (The `X.weights.` panel is just the number of moths placed, which `glm()` stores as a predictor.)
 
-\vspace{1.25in}
+Because each row is a group, we can ask a question we couldn't ask before: **does the model fit the group proportions?** 
 
-## Goodness of fit
 
-Because each row is a group, we can ask a question we couldn't ask before: **does the model fit the group proportions?** The **deviance** compares the observed counts $Y_i$ to the counts the model predicts, $n_i\hat\pi_i$:
+::: callout-note
+## Pearson $\chi^2$
 
-$$D = 2\sum_i\left[Y_i\log\left(\frac{Y_i}{n_i\hat\pi_i}\right) + (n_i - Y_i)\log\left(\frac{n_i - Y_i}{n_i - n_i\hat\pi_i}\right)\right]$$
+The **Pearson $\chi^2$ statistic** compares the observed counts $Y_i$ to the counts the model predicts, $n_i\hat\pi_i$:
 
--   $D$ is ______________ when the predicted counts are close to the observed counts (good), and ______________ when they are far away (bad).
--   If the model is correct and all the counts are large enough (about 5 or more successes *and* failures in every row), $D \overset{\cdot}{\sim} \chi^2$ with $df = n - (p+1)$, where $n$ is the number of **rows** (binomial observations), not the number of moths.
+$$X^2 = \sum_i\frac{(Y_i - n_i\hat\pi_i)^2}{n_i\hat\pi_i(1-\hat\pi_i)} = \sum_i \text{Pres}_i^2$$
+
+-   $X^2$ is ______________ when the predicted counts are close to the observed counts (good), and ______________ when they are far away (bad).
+-   If the model is correct and all the counts are large enough (about 5 or more successes *and* failures in every row), $X^2 \overset{\cdot}{\sim} \chi^2$ with $df = n - (p+1)$, where $n$ is the number of **rows** (binomial observations), not the number of moths.
+
+:::
 
 ::: callout-note
 ## Goodness-of-fit test
 
-**Hypotheses:** $H_0$: ______________________________ (the model is adequate) vs. $H_a$: the logit of $\pi_i$ is *not* a linear function of the predictors (the model is inadequate)
+**Hypotheses:** $H_0$: ______________________________ (the model is adequate) vs. $H_a$: the model is inadequate
 
-**Test statistic:** $D$ = the **residual deviance** reported by `summary()`
+**Test statistic:** $X^2$ = the sum of the squared Pearson residuals
 
 **Reference distribution:** $\chi^2$ with $df =$ ______________________________
 
-**p-value:** the area ______________ $D$ (upper tail). A *small* p-value is evidence of lack of fit.
+**p-value:** the area ______________ $X^2$ (upper tail). A *small* p-value is evidence of lack of fit.
 :::
 
 ```{r}
 #| echo: true
-summary(model3)
+X2 <- sum(residuals(model3, type = "pearson")^2)
+X2
+df.residual(model3)
 ```
 
-**Q8.** How many binomial observations are there? How many parameters does the model have? Verify the residual degrees of freedom.
-
-\vspace{.75in}
-
-**Q9.** Calculate the p-value for the goodness-of-fit test, and state your conclusion in context.
+To find the p-value:
 
 ```{r}
 #| eval: false
@@ -221,12 +208,12 @@ summary(model3)
 1 - pchisq(____, ____)
 ```
 
-\vspace{1.25in}
+
 
 ```{r}
 #| fig-width: 5
 #| fig-height: 2
-lambda <- deviance(model3)
+lambda <- sum(residuals(model3, type = "pearson")^2)
 dfr <- df.residual(model3)
 
 gf_dist("chisq", df = dfr, geom = "area",
@@ -234,7 +221,7 @@ gf_dist("chisq", df = dfr, geom = "area",
         show.legend = FALSE) |>
   gf_vline(xintercept = lambda, linetype = 2) |>
   gf_labs(x = "Chi-square statistic", y = "Density",
-          title = paste0("p-value = ", round(1 - pchisq(lambda, dfr), 3))) +
+          title = "") +
   scale_fill_manual(values = c("gray85", "darkorange"))
 ```
 
@@ -242,35 +229,38 @@ gf_dist("chisq", df = dfr, geom = "area",
 This goodness-of-fit test is only valid for **binomial** logistic regression with large enough $n_i$. It is *not* valid for binary logistic regression (each row has $n_i = 1$).
 :::
 
-**Q10.** The **likelihood ratio test** also uses deviances. What question does the LRT answer, and how is it different from the goodness-of-fit test? (*Hint:* what models are being compared?)
-
-\vspace{1.25in}
-
-**Q11.** If the goodness-of-fit test had a very small p-value, what might be wrong with the model? List two things we could try.
-
-\vspace{1in}
 
 ## Summary
 
 |                         | Binary logistic        | Binomial logistic       |
 |:------------------------|:-----------------------|:------------------------|
 | Response                |                        |                         |
+|                         |                        |                         |
 | `glm()` response        |                        |                         |
+|                         |                        |                         |
 | Residual plots          |                        |                         |
+|                         |                        |                         |
 | Goodness-of-fit test valid? |                    |                         |
+|                         |                        |                         |
+
 
 -   Binomial logistic regression models the ______________ of success for each row, using the same logit link as binary logistic regression.
 -   The variance of $Y_i$ is ______________, so it depends on $\pi_i$.
 -   **Pearson residuals** behave like $N(0,1)$ draws when the $n_i$ are large, so we can plot them against fitted values and predictors.
--   The **residual deviance** is compared to a $\chi^2$ distribution with $n-(p+1)$ df to test **goodness of fit**.
+-   The **Pearson $X^2$ statistic** is compared to a $\chi^2$ distribution with $n-(p+1)$ df to test **goodness of fit**.
 
 ## R function reference
 
 | Function | Purpose |
 |:--|:--|
 | `glm(y/n ~ x, weights = n, data, family = "binomial")` | Fit a binomial logistic regression (proportion response with `weights`) |
+| | |
 | `glm(cbind(y, n - y) ~ x, data, family = "binomial")` | Same model, with a (successes, failures) response |
+| | |
 | `resid_panel(model, type = "pearson", smoother = TRUE)` | Pearson residual plots |
+| | |
 | `resid_xpanel(model, type = "pearson", smoother = TRUE)` | Pearson residuals against each predictor |
-| `summary(model)` | Residual deviance and df for the goodness-of-fit test |
-| `1 - pchisq(D, df)` | Upper-tail $\chi^2$ probability (p-value) |
+| | |
+| `sum(residuals(model, type = "pearson")^2)` | Pearson $X^2$ statistic for the goodness-of-fit test |
+| | |
+| `1 - pchisq(X2, df)` | Upper-tail $\chi^2$ probability (p-value) |
