@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
-  <title>stat230 – Intro to Poisson Regression</title>
+  <title>stat230 – Case Study Tips</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,72 +28,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #767676;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #767676;  padding-left: 4px; }
-    div.sourceCode
-      { color: #545454; background-color: #fefefe; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #545454; } /* Normal */
-    code span.al { color: #7928a1; } /* Alert */
-    code span.an { color: #696969; } /* Annotation */
-    code span.at { color: #a55a00; } /* Attribute */
-    code span.bn { color: #7928a1; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #d91e18; } /* ControlFlow */
-    code span.ch { color: #008000; } /* Char */
-    code span.cn { color: #d91e18; } /* Constant */
-    code span.co { color: #696969; } /* Comment */
-    code span.cv { color: #696969; font-style: italic; } /* CommentVar */
-    code span.do { color: #696969; font-style: italic; } /* Documentation */
-    code span.dt { color: #7928a1; } /* DataType */
-    code span.dv { color: #7928a1; } /* DecVal */
-    code span.er { color: #7928a1; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #a55a00; } /* Float */
-    code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
-    code span.in { color: #696969; } /* Information */
-    code span.kw { color: #d91e18; } /* Keyword */
-    code span.op { color: #00769e; } /* Operator */
-    code span.ot { color: #d91e18; } /* Other */
-    code span.pp { color: #7928a1; } /* Preprocessor */
-    code span.sc { color: #00769e; } /* SpecialChar */
-    code span.ss { color: #008000; } /* SpecialString */
-    code span.st { color: #008000; } /* String */
-    code span.va { color: #a55a00; } /* Variable */
-    code span.vs { color: #008000; } /* VerbatimString */
-    code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-4b8f244490ab824b6183a9146e95bcf1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -196,8 +130,8 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#003300" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Intro to Poisson Regression</h1>
-  <p class="subtitle">Day 25</p>
+  <h1 class="title">Case Study Tips</h1>
+  <p class="subtitle">Day 24</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -211,235 +145,107 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section id="motivating-data-number-of-anti-discrimination-laws" class="slide level2">
-<h2>Motivating data: number of anti-discrimination laws</h2>
-<p>The <code>equality_index</code> data includes the observed number of anti-discrimination laws in each state, <span class="math inline">\(Y\)</span> . We are interested in modeling <span class="math inline">\(Y\)</span> by a state’s <code>percent_urban</code> and its <code>historical</code> presidential voting patterns. The <code>historical</code> variable has 3 levels:</p>
+<section id="common-issues-on-case-studies" class="slide level2">
+<h2>Common issues on case studies</h2>
 <ul>
-<li><code>dem</code> = the state typically votes for the Democratic candidate</li>
-<li><code>gop</code> = the state typically votes for the Republican (GOP) candidate</li>
-<li><code>swing</code> = the state often swings back and forth between Democratic and Republican candidates</li>
+<li>Correct things in an incorrect order</li>
+<li>What goes in an EDA?</li>
+<li>What types of plots go in the main text?</li>
+<li>Report appendix vs quarto appendix</li>
 </ul>
-<div class="footer">
-<p>Source: the {bayesrules} R package</p>
-</div>
 </section>
-<section id="eda" class="slide level2">
-<h2>EDA</h2>
-
-<img data-src="slides25_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section>
-<section id="eda-log-scale" class="slide level2">
-<h2>EDA (log scale)</h2>
-
-<img data-src="slides25_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
-<section id="slr-model-ignoring-historical-for-now" class="slide level2">
-<h2>SLR Model (ignoring <code>historical</code> for now)</h2>
-<div class="cell">
-
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 5
-  term          estimate std.error statistic  p.value
-  &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)    -1.22      0.793      -1.53 0.132   
-2 percent_urban   0.0418    0.0106      3.95 0.000255</code></pre>
-</div>
-</div>
-<img data-src="slides25_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
-<section id="section" class="slide level2">
-<h2></h2>
-
-<img data-src="slides25_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"><div class="fragment">
-<p>→ some remaining nonlinearity, but is it worth going the transformation route? Why might we prefer a different model entirely?</p>
-</div>
+<section id="general-order" class="slide level2 scrollable">
+<h2>General order</h2>
+<ul>
+<li><p>Intro: What is the research question? What background information should the reader have to understand your study? What is the response and (general) predictor variables?</p></li>
+<li><p>EDA/Data: What dataset are you using? How many observations/variables? What is the distribution of the response variable? How are the predictors related to the response variable? Is there collinearity or skewness that should be addressed before fitting any models?</p></li>
+<li><p>Results:</p>
+<ol type="a">
+<li>Model building: what were your candidate models? what were your criteria for choosing a model? (You can report <em>theoretical</em> model here)</li>
+<li>Conditions and diagnostics: does everything look OK? Did you need to do any further investigation?</li>
+<li>Now that you have verified the validity of your model, you can report the <em>fitted</em> model equation or the coefficient table</li>
+<li>Interpretations of coefficients (with uncertainty!) or results from tests. Answer your research question here</li>
+</ol></li>
+<li><p>Discussion:</p>
+<ul>
+<li>Reiterate your main result without any technical results</li>
+<li>Are there any limitations to your analysis?</li>
+<li>If you had another week, what could you investigate? If you had another dataset, what could you investigate?</li>
+</ul></li>
+<li><p>Report appendix</p></li>
+<li><p>Quarto appendix</p></li>
+</ul>
 </section>
-<section id="assumed-slr-model-simulated-data" class="slide level2">
-<h2>Assumed SLR model (simulated data)</h2>
-
-<img data-src="slides25_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
-<section id="model-for-count-data" class="slide level2">
-<h2>Model for count data</h2>
-
-<img data-src="slides25_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
-<section id="generalized-linear-model" class="slide level2">
-<h2>Generalized linear model</h2>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Random component: </strong></p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>What distribution does the response variable follow?</p>
-</div>
-<p><br></p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Linear predictor (systematic component): </strong></p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p>What function of the predictors should we use?</p>
-</div>
-<p><br></p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Link function: </strong></p>
-</div>
-<div class="fragment" data-fragment-index="4">
-<p>How can we relate the expectation of <span class="math inline">\(Y\)</span> and our linear predictor?</p>
-</div>
-</section>
-<section id="random-component" class="slide level2">
-<h2>Random component</h2>
-<p>What distribution does the response variable follow?</p>
-<p><br></p>
-<p><strong>Possible values:</strong> We are counting the number of events that occur over a fixed interval, so <span class="math inline">\(Y =0, 1, 2, \ldots\)</span></p>
-<p><br></p>
-<p><strong>Poisson distribution</strong></p>
-<p><span class="math inline">\(P(Y = y) = \frac{e^{-\lambda} \lambda^y}{y!}, \quad \text{for} \quad y = 0, 2, 1, \ldots\)</span></p>
-</section>
-<section id="linear-predictor" class="slide level2">
-<h2>Linear predictor</h2>
-<p>What function of the predictors should we use?</p>
-<p><br></p>
-<p><span class="math inline">\(\eta = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p\)</span></p>
-
-<aside><div>
-<p><span class="math inline">\(\eta =\)</span> “eta”</p>
-</div></aside></section>
-<section id="link-function" class="slide level2">
-<h2>Link function</h2>
-<p>How can we relate the expectation of <span class="math inline">\(Y\)</span> and our linear predictor?</p>
-<div class="fragment">
-<p><br></p>
-<p><span class="math inline">\(E(Y) = \lambda\)</span> between 0 and <span class="math inline">\(\infty\)</span></p>
-<p><br></p>
-<p><span class="math inline">\(\eta = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p \longrightarrow\)</span> between <span class="math inline">\(-\infty\)</span> and <span class="math inline">\(\infty\)</span></p>
-<p><br></p>
-<p>What function takes numbers between between 0 and <span class="math inline">\(\infty\)</span> as input and maps them to the real line?</p>
-</div>
-</section>
-<section id="link-function-1" class="slide level2">
-<h2>Link function</h2>
-<p>How can we relate the expectation of <span class="math inline">\(Y\)</span> and our linear predictor?</p>
-<p><span class="math inline">\(\log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p = \eta\)</span></p>
-</section>
-<section id="poisson-regression-model-for-counts" class="slide level2">
-<h2>Poisson regression model for counts</h2>
-<p><strong>Random component:</strong> <span class="math inline">\(Y_i = \#\)</span> anti-discrimination laws in a state; Poisson distribution is reasonable</p>
-<div class="fragment">
-<p><br></p>
-<p><strong>Link function:</strong> <span class="math inline">\(E(Y) = \lambda\)</span> and <span class="math inline">\(\lambda &gt;0\)</span></p>
-<p><span class="math inline">\(\Longrightarrow \log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p = \eta\)</span></p>
-</div>
-<div class="fragment">
-<p><br></p>
-<p><strong>Inverse-link function:</strong> <span class="math inline">\(E(Y) = e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}\)</span></p>
-</div>
-</section>
-<section id="eda-1" class="slide level2">
-<h2>EDA</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
+<section id="presenting-equation" class="slide level2">
+<h2>Presenting equation</h2>
+<div class="small">
+<p>My recommendation is to report the <em>theoretical</em> equation first, then include a coefficient table.</p>
+<p><span class="math display">\[
+\log\left[ \frac { P( \operatorname{Removed} ) }{ 1 - P( \operatorname{Removed} ) } \right] = \beta_{0} + \beta_{1}(\operatorname{morph}_{\operatorname{light}}) + \beta_{2}(\operatorname{distance}) + \beta_{3}(\operatorname{morph}_{\operatorname{light}} \times \operatorname{distance})
+\]</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides25_files/figure-revealjs/unnamed-chunk-8-1.png" style="width:100.0%"></p>
-</figure>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-1.13</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">-1.46</td>
+<td style="text-align: right;">-0.81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">morphlight</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">-0.04</td>
+<td style="text-align: right;">0.86</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">distance</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">morphlight:distance</td>
+<td style="text-align: right;">-0.03</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">-0.04</td>
+<td style="text-align: right;">-0.01</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:40%;">
-<!-- - Why did we use <br> `log(nests + 0.5)`? -->
-<p>What structure are we looking for in this plot?</p>
-<p><br></p>
-<p><br></p>
-<p>There are no 0 counts in this data set, how could we create this plot if we had observed 0s?</p>
-</div></div>
 </section>
-<section id="model-fitting" class="slide level2">
-<h2>Model fitting</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban, <span class="at">data =</span> equality_index, </span>
-<span id="cb2-2"><a></a>    <span class="at">family =</span> poisson)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>                 Estimate Std. Error   z value     Pr(&gt;|z|)
-(Intercept)   -2.18343918 0.30155147 -7.240685 4.464246e-13
-percent_urban  0.06057098 0.00358636 16.889266 5.397062e-64</code></pre>
-</div>
-</div>
-<p><br></p>
-<p><strong>Fitted model:</strong> <span class="math inline">\(\log(\widehat{\lambda}) = -2.18 + 0.06 \cdot \tt{percent urban}\)</span></p>
-<div class="fragment">
-<p><strong>How can we interpret the coefficients?</strong></p>
-</div>
-</section>
-<section id="interpreting-the-coefficients" class="slide level2">
-<h2>Interpreting the coefficients</h2>
-<p><span class="math inline">\(\log(\widehat{\lambda}) = \widehat{\beta}_0 + \widehat{\beta}_1 x\)</span></p>
-<p>How does the expected (average) number of events, <span class="math inline">\(\widehat{\lambda}\)</span>, change for a 1-unit increase in <span class="math inline">\(x\)</span>?</p>
-<div class="fragment">
-<p>Let’s consider <span class="math inline">\(x=0\)</span> and <span class="math inline">\(x=1\)</span>:</p>
+<section id="alternatively-put-coefficient-table-in-the-report-appendix-and-include-a-coefficent-graph" class="slide level2">
+<h2>Alternatively, put coefficient table in the report appendix and include a coefficent graph</h2>
+
+<img data-src="slides25_files/figure-html/unnamed-chunk-4-1.png" width="672" class="r-stretch"></section>
+<section id="removing-intercept" class="slide level2">
+<h2>Removing intercept</h2>
+
+<img data-src="slides25_files/figure-html/unnamed-chunk-5-1.png" width="672" class="r-stretch"></section>
+<section id="examples" class="slide level2">
+<h2>Examples:</h2>
 <ul>
-<li><p><span class="math inline">\(\widehat{\lambda} = e^{\widehat{\beta}_0 + \widehat{\beta}_1(0)}=e^{\widehat{\beta}_0}\)</span></p></li>
-<li><p><span class="math inline">\(\widehat{\lambda} = e^{\widehat{\beta}_0 + \widehat{\beta}_1(1)}=e^{\widehat{\beta}_0} e^{\widehat{\beta}_1}\)</span></p></li>
-</ul>
-</div>
-<div class="fragment">
-<p>The expectation at <span class="math inline">\(x+1\)</span> is <span class="math inline">\(e^{\widehat{\beta}_1}\)</span> times the expectation at <span class="math inline">\(x\)</span></p>
-</div>
-</section>
-<section id="interpreting-the-coefficients-1" class="slide level2">
-<h2>Interpreting the coefficients</h2>
-<p>In our example: <span class="math inline">\(\log(\widehat{\lambda}) = -2.18 + 0.06 \cdot \tt{percent urban}\)</span></p>
-<div class="fragment">
-<p><span class="math inline">\(e^{0.06} \approx 1.06\)</span></p>
-<p>. . . <br></p>
-<p>→ A 1 percent increase in the percent of urban residents is associated with an increase in the average number of antidiscrimination laws by a factor of 1.06 (i.e., a 6% increase).</p>
-</div>
-</section>
-<section id="multiple-predictors" class="slide level2">
-<h2>Multiple predictors</h2>
-<div class="small">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>full <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban <span class="sc">+</span> historical,</span>
-<span id="cb4-2"><a></a>            <span class="at">data =</span> equality_index,</span>
-<span id="cb4-3"><a></a>            <span class="at">family =</span> poisson)</span>
-<span id="cb4-4"><a></a><span class="fu">summary</span>(full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = laws ~ percent_urban + historical, family = poisson, 
-    data = equality_index)
-
-Coefficients:
-                 Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)      0.759017   0.326858   2.322   0.0202 *  
-percent_urban    0.031358   0.003723   8.423  &lt; 2e-16 ***
-historicalgop   -1.612143   0.133244 -12.099  &lt; 2e-16 ***
-historicalswing -0.828788   0.101472  -8.168 3.14e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for poisson family taken to be 1)
-
-    Null deviance: 962.66  on 49  degrees of freedom
-Residual deviance: 413.49  on 46  degrees of freedom
-AIC: 608.83
-
-Number of Fisher Scoring iterations: 5</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="today" class="slide level2">
-<h2>Today:</h2>
-<ul>
-<li>EDA</li>
-<li>Interpretations</li>
-<li>Wald-based tests and CI’s</li>
-</ul>
-<h3 id="next-time">Next time:</h3>
-<ul>
-<li>Conditions for inference</li>
-<li>LRT</li>
-<li>quasipoisson</li>
+<li><p><a href="https://www.causeweb.org/usproc/sites/default/files/usclap/2024-2/usclap%203418%20-%20community%20factors%20on%20violent%20crime%20rates.pdf">Multiple linear regression example</a>)</p></li>
+<li><p><a href="https://causeweb.org/usproc/sites/default/files/usclap/2025-2/usclap%203657%20-%20predicting%20health%20insurance%20coverage.pdf">Logistic regression example</a></p></li>
+<li><p><a href="https://causeweb.org/usproc/sites/default/files/usclap/2025-2/usclap%203675%20-%20modeling%20sockeye%20salmon%20populations.pdf">Advanced method example</a></p></li>
+<li><p><a href="https://causeweb.org/usproc/sites/default/files/usclap/2025-1/usclap%203471.pdf">Experiment example</a></p></li>
+<li><p><a href="https://causeweb.org/usproc/sites/default/files/usclap/2025-1/usclap%203502.pdf">A logistic regression example</a></p></li>
 </ul>
 
 
@@ -661,44 +467,6 @@ Number of Fisher Scoring iterations: 5</code></pre>
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
@@ -769,7 +537,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

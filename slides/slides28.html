@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
-  <title>stat230 – Preparing for Lightning Talks</title>
+  <title>stat230 – Overdispersion and Inference for Poisson Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,6 +28,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #767676;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #767676;  padding-left: 4px; }
+    div.sourceCode
+      { color: #545454; background-color: #fefefe; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #545454; } /* Normal */
+    code span.al { color: #7928a1; } /* Alert */
+    code span.an { color: #696969; } /* Annotation */
+    code span.at { color: #a55a00; } /* Attribute */
+    code span.bn { color: #7928a1; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #d91e18; } /* ControlFlow */
+    code span.ch { color: #008000; } /* Char */
+    code span.cn { color: #d91e18; } /* Constant */
+    code span.co { color: #696969; } /* Comment */
+    code span.cv { color: #696969; font-style: italic; } /* CommentVar */
+    code span.do { color: #696969; font-style: italic; } /* Documentation */
+    code span.dt { color: #7928a1; } /* DataType */
+    code span.dv { color: #7928a1; } /* DecVal */
+    code span.er { color: #7928a1; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #a55a00; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #696969; } /* Information */
+    code span.kw { color: #d91e18; } /* Keyword */
+    code span.op { color: #00769e; } /* Operator */
+    code span.ot { color: #d91e18; } /* Other */
+    code span.pp { color: #7928a1; } /* Preprocessor */
+    code span.sc { color: #00769e; } /* SpecialChar */
+    code span.ss { color: #008000; } /* SpecialString */
+    code span.st { color: #008000; } /* String */
+    code span.va { color: #a55a00; } /* Variable */
+    code span.vs { color: #008000; } /* VerbatimString */
+    code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-4b8f244490ab824b6183a9146e95bcf1.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -130,8 +196,8 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#003300" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Preparing for Lightning Talks</h1>
-  <p class="subtitle">Day 28</p>
+  <h1 class="title">Overdispersion and Inference for Poisson Regression</h1>
+  <p class="subtitle">Day 27</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -145,142 +211,273 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section id="what-is-a-lightning-talk" class="slide level2">
-<h2>What is a lightning talk?</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p><strong>Is:</strong></p>
+<section id="motivating-data-number-of-anti-discrimination-laws" class="slide level2">
+<h2>Motivating data: number of anti-discrimination laws</h2>
+<p>The <code>equality_index</code> data includes the observed number of anti-discrimination laws in each state, <span class="math inline">\(Y\)</span> . We are interested in modeling <span class="math inline">\(Y\)</span> by a state’s <code>percent_urban</code> and its <code>historical</code> presidential voting patterns. The <code>historical</code> variable has 3 levels:</p>
 <ul>
-<li>An appetizer</li>
-<li>A movie trailer</li>
-<li>A way to get us interested in your research question</li>
-<li>A work in progress</li>
-<li>A chance for you to get targeted feedback</li>
+<li><code>dem</code> = the state typically votes for the Democratic candidate</li>
+<li><code>gop</code> = the state typically votes for the Republican (GOP) candidate</li>
+<li><code>swing</code> = the state often swings back and forth between Democratic and Republican candidates</li>
 </ul>
-</div><div class="column" style="width:40%;">
-<p><strong>Is not</strong>:</p>
-<ul>
-<li>The full meal</li>
-<li>The entire movie</li>
-<li>Everything you have done to this point</li>
-<li>Your final analysis</li>
-<li>A way to get a pre-grade</li>
-</ul>
-</div></div>
-</section>
-<section id="data-overview-slide" class="slide level2">
-<h2>Data Overview Slide</h2>
-<div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Example 1</a></li><li><a href="#tabset-1-2">Example 2</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1">
-<p><img data-src="img/data-2.png"></p>
-</div>
-<div id="tabset-1-2">
-<p><img data-src="img/data-1.png"></p>
-</div>
-</div>
+<div class="footer">
+<p>Source: the {bayesrules} R package</p>
 </div>
 </section>
-<section id="model-slide" class="slide level2">
-<h2>Model Slide</h2>
-<div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Example 1</a></li><li><a href="#tabset-2-2">Example 2</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1">
-<p><img data-src="img/model-2.png"></p>
-</div>
-<div id="tabset-2-2">
-<p><img data-src="img/model-1.png"></p>
-</div>
+<section id="eda" class="slide level2">
+<h2>EDA</h2>
+
+<img data-src="slides28_files/figure-revealjs/unnamed-chunk-2-1.png" width="768" class="r-stretch"><ul>
+<li><code>laws</code> is skewed</li>
+<li>as percent urban increases, laws also increases</li>
+<li><code>dem</code> and <code>swing</code> generally have more laws than <code>gop</code></li>
+</ul>
+</section>
+<section id="review-poisson-regression-model" class="slide level2">
+<h2>Review: Poisson regression model</h2>
+<ul>
+<li><p>If <span class="math inline">\(Y_i =\)</span> # of events in a fixed interval of time/space, then <span class="math inline">\(Y_i \sim \text{Poisson}(\lambda)\)</span></p></li>
+<li><p>This leads to the Poisson regression model for counts:</p>
+<p><span class="math display">\[\log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p\]</span></p></li>
+<li><p>or equivalently</p></li>
+</ul>
+<p><span class="math display">\[\lambda = e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}\]</span></p>
+</section>
+<section id="assumptions" class="slide level2 scrollable">
+<h2>Assumptions</h2>
+<ol type="1">
+<li><p><strong>Linearity</strong>: the log of the mean of Y, <span class="math inline">\(\log(\lambda)\)</span>, must be a linear function of the predictors</p></li>
+<li><p><strong>Mean = Variance</strong>: the mean of a Poisson random variable must be equal to its variance</p></li>
+<li><p><strong>Independence</strong>: the observations must be independent</p></li>
+</ol>
+</section>
+<section id="model-fitting" class="slide level2 smaller">
+<h2>Model fitting</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>full_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban <span class="sc">+</span> historical,</span>
+<span id="cb1-2"><a></a>            <span class="at">data =</span> equality_index,</span>
+<span id="cb1-3"><a></a>            <span class="at">family =</span> poisson)</span>
+<span id="cb1-4"><a></a><span class="fu">summary</span>(full_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = laws ~ percent_urban + historical, family = poisson, 
+    data = equality_index)
+
+Coefficients:
+                 Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)      0.759017   0.326858   2.322   0.0202 *  
+percent_urban    0.031358   0.003723   8.423  &lt; 2e-16 ***
+historicalgop   -1.612143   0.133244 -12.099  &lt; 2e-16 ***
+historicalswing -0.828788   0.101472  -8.168 3.14e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 962.66  on 49  degrees of freedom
+Residual deviance: 413.49  on 46  degrees of freedom
+AIC: 608.83
+
+Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 </div>
 </section>
-<section id="one-thing-slide" class="slide level2">
-<h2>“One thing” slide</h2>
-<div class="panel-tabset">
-<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Example 1</a></li><li><a href="#tabset-3-2">Example 2</a></li></ul>
-<div class="tab-content">
-<div id="tabset-3-1">
-<p><img data-src="img/onething-2.png"></p>
+<section id="pearson-residuals" class="slide level2">
+<h2>Pearson residuals</h2>
+<p><span class="math display">\[Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}}\]</span></p>
+
+<img data-src="slides28_files/figure-revealjs/unnamed-chunk-4-1.png" width="768" class="r-stretch"></section>
+<section id="for-poisson-model" class="slide level2">
+<h2>For Poisson model</h2>
+<p><span class="math display">\[Pres_i = \frac{Y_i - \widehat \mu_i}{\widehat{SD(Y_i)}}\]</span></p>
+<ul>
+<li>Mean = <span class="math inline">\(\widehat \lambda\)</span>, SD = <span class="math inline">\(\sqrt{\widehat \lambda}\)</span></li>
+<li>Pearson residual: <span class="math inline">\(\frac{Y_i - \widehat \lambda_i}{\sqrt{\widehat \lambda_i}}\)</span></li>
+<li>If <span class="math inline">\(\widehat\lambda\)</span>’s are “big” (<span class="math inline">\(\ge 5\)</span>), Pearson residuals are <span class="math inline">\(\approx N(0,1)\)</span> if Poisson model is correct. Can use to diagnose problems with linearity</li>
+<li>If overdispersed, then SD of Pearson residuals is <span class="math inline">\(&gt;1\)</span></li>
+</ul>
+</section>
+<section id="goodness-of-fit-test" class="slide level2">
+<h2>Goodness of Fit test</h2>
+<p><br></p>
+<p><strong><span class="math inline">\(H_0\)</span>:</strong> The Poisson model fits the data adequately.</p>
+<p><strong><span class="math inline">\(H_A\)</span>:</strong> The Poisson model is deficient (a more complex, saturated model is required).</p>
+<p><br></p>
+<p>The <strong>Residual Deviance</strong> (<span class="math inline">\(D\)</span>) serves as our test statistic: <span class="math display">\[D = 2 \sum_{i=1}^n \left[ y_i \log\left(\frac{y_i}{\widehat{\lambda}_i}\right) - (y_i - \widehat{\lambda}_i) \right]\]</span></p>
+<div class="small">
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(D \sim \chi^2\)</span> distribution with <span class="math inline">\(df = n - (p + 1)\)</span>.</p>
 </div>
-<div id="tabset-3-2">
-<p><img data-src="img/onething-1.png"></p>
+</section>
+<section id="are-means-big-enough-for-gof-test" class="slide level2">
+<h2>Are means big enough for GoF test?</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.962   3.532   7.267  13.460  20.429  42.016 </code></pre>
+</div>
+</div>
+</section>
+<section id="quasipoisson-model" class="slide level2 smaller">
+<h2>Quasipoisson model</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = laws ~ percent_urban + historical, family = quasipoisson, 
+    data = equality_index)
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      0.75902    1.09483   0.693 0.491625    
+percent_urban    0.03136    0.01247   2.515 0.015471 *  
+historicalgop   -1.61214    0.44631  -3.612 0.000748 ***
+historicalswing -0.82879    0.33989  -2.438 0.018672 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for quasipoisson family taken to be 11.2196)
+
+    Null deviance: 962.66  on 49  degrees of freedom
+Residual deviance: 413.49  on 46  degrees of freedom
+AIC: NA
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+</section>
+<section id="pearson-resids-still-show-overdispersion" class="slide level2">
+<h2>Pearson resids still show overdispersion</h2>
+<p>Since they use the Poisson mean/sd</p>
+
+<img data-src="slides28_files/figure-revealjs/unnamed-chunk-7-1.png" width="768" class="r-stretch"></section>
+<section id="standardized-pearson-residuals" class="slide level2">
+<h2>Standardized Pearson residuals</h2>
+<p>Use quasi versions of SD: <span class="math inline">\(SD(Y_i) = \sqrt{\psi \lambda_i}\)</span> (also adjusts for leverage)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_xpanel</span>(full_quasi, <span class="at">type =</span> <span class="st">"stand.pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="slides28_files/figure-revealjs/unnamed-chunk-8-1.png" width="768" class="r-stretch"><div class="fragment">
+<p>→ better! perhaps one outlier we’d want to investigate further</p>
+</div>
+</section>
+<section id="inference-for-coefficients" class="slide level2">
+<h2>Inference for coefficients</h2>
+<p><strong>Confidence interval</strong> for <span class="math inline">\(\beta\)</span>:</p>
+<ul>
+<li>For Poisson model: <span class="math inline">\(\widehat \beta \pm z^* SE(\widehat\beta)\)</span></li>
+<li>For Quasi model: <span class="math inline">\(\widehat \beta \pm t_{n-(p+1)}^* SE_{quasi}(\widehat\beta)\)</span></li>
+</ul>
+<p><br></p>
+<p><strong>Hypothesis testing</strong> for <span class="math inline">\(H_0: \beta = 0\)</span> against <span class="math inline">\(H_A: \beta \ne 0\)</span></p>
+<ul>
+<li>Test stat: <span class="math inline">\(\frac{\widehat \beta - 0}{SE}\)</span>
+<ul>
+<li><span class="math inline">\(\sim N(0,1)\)</span> under Poisson model</li>
+<li><span class="math inline">\(\sim t_{n-(p+1)}\)</span> under Quasi model</li>
+</ul></li>
+</ul>
+</section>
+<section id="confidence-intervals-interpretation" class="slide level2">
+<h2>Confidence Intervals: Interpretation</h2>
+<p><br></p>
+<p>We construct intervals on the <strong>log (link) scale</strong> first, then exponentiate:</p>
+<p><span class="math display">\[\text{Log scale:} \quad \hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)\]</span> <span class="math display">\[\text{Count/Response scale:} \quad e^{\hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)}\]</span></p>
+<p><br></p>
+<div class="fragment">
+<p>→ We are <span class="math inline">\((1-\alpha)\times100\%\)</span> confident that a 1-unit increase in <span class="math inline">\(X_j\)</span> is associated with a multiplicative change in the expected count by a factor between <span class="math inline">\(e^L\)</span> and <span class="math inline">\(e^U\)</span>, holding all other variables constant.</p>
+</div>
+</section>
+<section id="inference-for-lambda" class="slide level2 scrollable">
+<h2>Inference for <span class="math inline">\(\lambda\)</span></h2>
+<div class="medium">
+<p>Reminder: <span class="math inline">\(\log \lambda = \eta\)</span></p>
+<ol type="1">
+<li>Compute the predicted value and standard error on the <strong>link (log) scale</strong>: <span class="math display">\[\widehat{\eta} = \widehat{\beta}_0 + \widehat{\beta}_1 X_1 + \dots + \widehat{\beta}_p X_p\]</span></li>
+<li>Build the interval on the log scale: <span class="math inline">\([\widehat{\eta} - z^*SE, \,\, \widehat{\eta} + z^*SE]\)</span></li>
+<li>Exponentiate the endpoints to map back to the <strong>original count scale</strong>: <span class="math display">\[\left[ e^{\widehat{\eta} - z^*SE}, \,\, e^{\widehat{\eta} + z^*SE} \right]\]</span></li>
+</ol>
+<p>In R:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> ...), <span class="at">type =</span> <span class="st">"link"</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-2"><a></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> ...), <span class="at">type =</span> <span class="st">"response"</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="example-link-scale" class="slide level2">
+<h2>Example: <code>link</code> scale</h2>
+<div class="medium">
+<p>Minnesota historically votes <code>dem</code> and has 73.3% of the population in urban areas.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">predict</span>(full_glm, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">historical =</span> <span class="st">"dem"</span>, </span>
+<span id="cb7-2"><a></a>                                       <span class="at">percent_urban =</span> <span class="fl">73.3</span>), </span>
+<span id="cb7-3"><a></a>        <span class="at">type =</span> <span class="st">"link"</span>, </span>
+<span id="cb7-4"><a></a>        <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fit
+       1 
+3.057568 
+
+$se.fit
+[1] 0.06903723
+
+$residual.scale
+[1] 1</code></pre>
 </div>
 </div>
 </div>
+<p><span class="math inline">\(3.06 \pm 2\cdot .07 = [2.92, 3.20] \to [e^{2.92}, e^{3.20}] = [18.54, 24.53]\)</span></p>
 </section>
-<section id="data" class="slide level2">
-<h2>Data</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p><strong>Do:</strong></p>
-<ul>
-<li>Show a plot</li>
-<li>Tell us where you found it</li>
-<li>“Hook” us with your research question right away: why should we care about your project?</li>
-</ul>
-</div><div class="column" style="width:40%;">
-<p><strong>Don’t</strong>:</p>
-<ul>
-<li>List 15 variables in a list or a screenshot of R</li>
-<li>Read variables like a grocery list</li>
-</ul>
-</div></div>
+<section id="example-response-scale" class="slide level2">
+<h2>Example: <code>response</code> scale</h2>
+<div class="medium">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">predict</span>(full_glm, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">historical =</span> <span class="st">"dem"</span>, </span>
+<span id="cb9-2"><a></a>                                       <span class="at">percent_urban =</span> <span class="fl">73.3</span>), </span>
+<span id="cb9-3"><a></a>        <span class="at">type =</span> <span class="st">"response"</span>, </span>
+<span id="cb9-4"><a></a>        <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fit
+       1 
+21.27575 
+
+$se.fit
+       1 
+1.468819 
+
+$residual.scale
+[1] 1</code></pre>
+</div>
+</div>
+</div>
+<p><span class="math inline">\(21.275 \pm 2\cdot 1.47 = [18.33, 24.22]\)</span></p>
+<div class="fragment">
+<p>→ We are 95% confident that the average number of anti-discrimination laws in states like Minnesota is between 18.33 and 24.22</p>
+</div>
 </section>
-<section id="modeling-approach" class="slide level2">
-<h2>Modeling approach</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p><strong>Do:</strong></p>
+<section id="likelihood-ratio-test" class="slide level2">
+<h2>Likelihood Ratio Test</h2>
+<p><strong>Hypotheses:</strong></p>
+<p><span class="math inline">\(H_0: \beta_i = \beta_j = ... = 0\)</span></p>
+<p><span class="math inline">\(H_A\)</span>: at least one <span class="math inline">\(\ne\)</span> 0</p>
+<p><br></p>
+<p><strong>Test Statistic</strong>:</p>
+<p><span class="math display">\[\Delta  = D_{\text{Reduced}} - D_{\text{Full}}\]</span></p>
+<p><strong>Reference distribution</strong>:</p>
 <ul>
-<li>Use context (eg <code>laws</code>) instead of variable names (<code>y</code>)</li>
-<li>Format your math!</li>
-<li>Justify why this model is appropriate</li>
-</ul>
-</div><div class="column" style="width:40%;">
-<p><strong>Don’t</strong>:</p>
-<ul>
-<li>Copy-paste a massive <code>summary</code> output</li>
-</ul>
-</div></div>
-</section>
-<section id="the-one-thing" class="slide level2">
-<h2>The “one thing”</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p><strong>Do:</strong></p>
-<ul>
-<li>Think about the “10 second rule”: can someone in this class figure out what the main point of the slide is in 10 seconds without you speaking?</li>
-<li>Use a large font</li>
-<li>Show us a picture!</li>
-<li>Tell us what your “next steps” are</li>
-</ul>
-</div><div class="column" style="width:40%;">
-<p><strong>Don’t</strong>:</p>
-<ul>
-<li>Include too much text</li>
-<li>Include too many pictures</li>
-<li>Think of this as an afterthought</li>
-</ul>
-</div></div>
-</section>
-<section id="other-tips" class="slide level2">
-<h2>Other tips</h2>
-<ul>
-<li>You cannot successfully “wing” a 3 minute talk, especially as a group.</li>
-<li>Practice together at least twice</li>
-<li>This is a work in progress! Your graphs do not need to be perfect (but they do need to be readable)</li>
-<li><em>no code</em> unless there is a specific question/thing you want to mention</li>
+<li>Depends on standard poisson vs quasipoisson</li>
 </ul>
 </section>
-<section id="your-role-as-an-audience-member" class="slide level2">
-<h2>Your role as an audience member</h2>
-<ul>
-<li>Be respectful: no open computers or side tasks</li>
-<li>Ask a question or provide an answer to a presenter’s question at least once</li>
-<li>Think about how your experience can help the presenters’, but also how you can learn from the different groups</li>
-</ul>
+<section id="lrt-reference-distribution" class="slide level2">
+<h2>LRT reference distribution</h2>
+<p><strong>Standard Poisson GLM:</strong> We compare <span class="math inline">\(\Delta\)</span> to a <span class="math inline">\(\chi^2\)</span> distribution with <span class="math inline">\(df = \Delta p\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">anova</span>(reduced_glm, full_glm, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><br></p>
+<p><strong>Quasipoisson GLM</strong>: Variance has been inflated by <span class="math inline">\(\widehat{\psi}\)</span>. Instead, we scale the drop in deviance and perform an F-test:</p>
+<p>R automatically handles the scale adjustment when you ask for test = “F”:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">anova</span>(reduced_quasi, full_quasi, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
 
 </section>
