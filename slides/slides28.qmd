@@ -1,6 +1,6 @@
 ---
-title: Preparing for Lightning Talks
-subtitle: Day 28
+title: Overdispersion and Inference for Poisson Regression
+subtitle: Day 27
 title-slide-attributes:
   data-background-color: "#003300"
   data-slide-number: none
@@ -80,159 +80,292 @@ news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent,
 
 ```
 
+## Motivating data: number of anti-discrimination laws
 
-## What is a lightning talk? 
+The `equality_index` data includes the observed number of anti-discrimination laws in each state,  $Y$ . We are interested in modeling  $Y$ by a state’s `percent_urban` and its `historical` presidential voting patterns. The `historical` variable has 3 levels:
 
-:::: {.columns}
+- `dem` = the state typically votes for the Democratic candidate
+- `gop` = the state typically votes for the Republican (GOP) candidate
+- `swing` = the state often swings back and forth between Democratic and Republican candidates
 
-::: {.column width="60%"}
-**Is:** 
-
-- An appetizer
-- A movie trailer
-- A way to get us interested in your research question
-- A work in progress
-- A chance for you to get targeted feedback
+::: footer
+Source: the {bayesrules} R package
 :::
 
-::: {.column width="40%"}
-
-**Is not**:
-
-- The full meal
-- The entire movie
-- Everything you have done to this point
-- Your final analysis
-- A way to get a pre-grade
-:::
-
-::::
+## EDA
 
 
-## Data Overview Slide
-
-::: {.panel-tabset}
-
-## Example 1
-
-![](img/data-2.png)
-
-## Example 2
-
-![](img/data-1.png)
-
-:::
-
-## Model Slide
-
-::: {.panel-tabset}
-
-## Example 1
-
-![](img/model-2.png)
-
-## Example 2
-
-![](img/model-1.png)
-
-:::
-
-## "One thing" slide
-
-::: {.panel-tabset}
-
-## Example 1
-
-![](img/onething-2.png)
-
-## Example 2
-
-![](img/onething-1.png)
-
-:::
+```{r}
+#| echo: false 
+#| fig-width: 8
+#| fig-height: 3
 
 
-## Data
+data("equality_index")
 
-:::: {.columns}
+p1 <- ggplot(equality_index, aes(x = laws)) + 
+  geom_histogram(col = "white")
 
-::: {.column width="60%"}
-**Do:** 
+p2 <- ggplot(equality_index, aes(y = laws, x = percent_urban)) + 
+  geom_point(size = .5)
 
-- Show a plot
-- Tell us where you found it
-- "Hook" us with your research question right away: why should we care about your project?
+p3 <- ggplot(equality_index, aes(y = laws, x = historical)) + 
+  geom_boxplot(aes(fill = historical), alpha = .6) +
+  geom_point(size = .5) +
+  theme(legend.position = "none")
 
-:::
+p2 + p1 + p3
+```
+- `laws` is skewed
+- as percent urban increases, laws also increases
+- `dem` and `swing` generally have more laws than `gop`
 
-::: {.column width="40%"}
+## Review: Poisson regression model
 
-**Don't**:
+- If $Y_i =$ # of events in a fixed interval of time/space, then $Y_i \sim \text{Poisson}(\lambda)$ 
 
-- List 15 variables in a list or a screenshot of R 
-- Read variables like a grocery list
 
-:::
+- This leads to the Poisson regression model for counts:
 
-::::
+    $$\log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p$$
+    
 
-## Modeling approach
+- or equivalently
 
-:::: {.columns}
+$$\lambda = e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}$$
 
-::: {.column width="60%"}
-**Do:** 
 
-- Use context (eg `laws`) instead of variable names (`y`)
-- Format your math! 
-- Justify why this model is appropriate
+## Assumptions
 
-:::
+1. **Linearity**: the log of the mean of Y, $\log(\lambda)$, must be a linear function of the predictors
 
-::: {.column width="40%"}
+2. **Mean = Variance**: the mean of a Poisson random variable must be equal to its variance
 
-**Don't**:
+3. **Independence**: the observations must be independent
 
-- Copy-paste a massive `summary` output
+## Model fitting {.smaller}
+
+```{r echo=TRUE}
+full_glm <- glm(laws ~ percent_urban + historical,
+            data = equality_index,
+            family = poisson)
+summary(full_glm)
+```
+
+## Pearson residuals
+
+$$Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}}$$
+
+
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+ggResidpanel::resid_xpanel(full_glm, type = "pearson")
+```
+
+
+## For Poisson model
+
+$$Pres_i = \frac{Y_i - \widehat \mu_i}{\widehat{SD(Y_i)}}$$
+
+
+- Mean = $\widehat \lambda$, SD = $\sqrt{\widehat \lambda}$
+- Pearson residual: $\frac{Y_i - \widehat \lambda_i}{\sqrt{\widehat \lambda_i}}$
+- If $\widehat\lambda$'s are "big" ($\ge 5$), Pearson residuals are $\approx N(0,1)$ if Poisson model is correct. Can use to diagnose problems with linearity
+- If overdispersed, then SD of Pearson residuals is $>1$
+
+## Goodness of Fit test
+
+<br> 
+
+**$H_0$:** The Poisson model fits the data adequately.
+
+**$H_A$:** The Poisson model is deficient (a more complex, saturated model is required).
+
+<br>
+
+The **Residual Deviance** ($D$) serves as our test statistic:
+$$D = 2 \sum_{i=1}^n \left[ y_i \log\left(\frac{y_i}{\widehat{\lambda}_i}\right) - (y_i - \widehat{\lambda}_i) \right]$$
+
+::: small
+
+Under $H_0$, $D \sim \chi^2$ distribution with $df = n - (p + 1)$.
 
 :::
 
-::::
+## Are means big enough for GoF test? 
 
-## The "one thing"
+```{r}
+summary(predict(full_glm, type = "response"))
+```
 
-:::: {.columns}
 
-::: {.column width="60%"}
-**Do:** 
+## Quasipoisson model {.smaller}
 
-- Think about the "10 second rule": can someone in this class figure out what the main point of the slide is in 10 seconds without you speaking? 
-- Use a large font
-- Show us a picture! 
-- Tell us what your "next steps" are
+```{r}
+full_quasi <- glm(laws ~ percent_urban + historical,
+            data = equality_index,
+            family = quasipoisson)
+summary(full_quasi)
+```
+
+## Pearson resids still show overdispersion
+
+Since they use the Poisson mean/sd
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+ggResidpanel::resid_xpanel(full_quasi, type = "pearson")
+```
+
+## Standardized Pearson residuals
+
+Use quasi versions of SD: $SD(Y_i) = \sqrt{\psi \lambda_i}$ (also adjusts for leverage)
+
+```{r}
+#| fig-width: 8
+#| fig-height: 2.75
+#| echo: true
+ggResidpanel::resid_xpanel(full_quasi, type = "stand.pearson")
+```
+
+. . . 
+
+&rarr; better! perhaps one outlier we'd want to investigate further
+
+## Inference for coefficients
+
+**Confidence interval** for $\beta$:
+
+- For Poisson model: $\widehat \beta \pm z^* SE(\widehat\beta)$
+- For Quasi model: $\widehat \beta \pm t_{n-(p+1)}^* SE_{quasi}(\widehat\beta)$
+
+<br>
+
+**Hypothesis testing** for $H_0: \beta = 0$ against $H_A: \beta \ne 0$
+
+- Test stat: $\frac{\widehat \beta - 0}{SE}$
+  - $\sim N(0,1)$ under Poisson model
+  - $\sim t_{n-(p+1)}$ under Quasi model
+
+
+## Confidence Intervals: Interpretation
+
+<br>
+
+We construct intervals on the **log (link) scale** first, then exponentiate:
+
+$$\text{Log scale:} \quad \hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)$$
+$$\text{Count/Response scale:} \quad e^{\hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)}$$
+
+<br>
+
+. . . 
+
+&rarr; We are $(1-\alpha)\times100\%$ confident that a 1-unit increase in $X_j$ is associated with a multiplicative change in the expected count by a factor between $e^L$ and $e^U$, holding all other variables constant.
+
+## Inference for $\lambda$
+
+::: medium
+
+Reminder: $\log \lambda = \eta$
+
+1. Compute the predicted value and standard error on the **link (log) scale**:
+   $$\widehat{\eta} = \widehat{\beta}_0 + \widehat{\beta}_1 X_1 + \dots + \widehat{\beta}_p X_p$$
+2. Build the interval on the log scale: $[\widehat{\eta} - z^*SE, \,\, \widehat{\eta} + z^*SE]$
+3. Exponentiate the endpoints to map back to the **original count scale**:
+   $$\left[ e^{\widehat{\eta} - z^*SE}, \,\, e^{\widehat{\eta} + z^*SE} \right]$$
+
+In R: 
+
+```r
+predict(model, newdata = data.frame(x = ...), type = "link", se.fit = TRUE)
+predict(model, newdata = data.frame(x = ...), type = "response", se.fit = TRUE)
+```
 
 :::
 
-::: {.column width="40%"}
+## Example: `link` scale
 
-**Don't**:
+::: medium
+Minnesota historically votes `dem` and has 73.3% of the population in urban areas.
 
-- Include too much text
-- Include too many pictures 
-- Think of this as an afterthought
+
+```{r}
+#| echo: true
+
+predict(full_glm, newdata = data.frame(historical = "dem", 
+                                       percent_urban = 73.3), 
+        type = "link", 
+        se.fit = TRUE)
+```
+
 :::
 
-::::
+$3.06 \pm 2\cdot .07 = [2.92, 3.20] \to [e^{2.92}, e^{3.20}] = [18.54, 24.53]$
 
-## Other tips
+## Example: `response` scale
 
-- You cannot successfully "wing" a 3 minute talk, especially as a group. 
-- Practice together at least twice 
-- This is a work in progress! Your graphs do not need to be perfect (but they do need to be readable) 
-- *no code* unless there is a specific question/thing you want to mention
+::: medium
 
-## Your role as an audience member
+```{r}
+#| echo: true
 
-- Be respectful: no open computers or side tasks
-- Ask a question or provide an answer to a presenter's question at least once
-- Think about how your experience can help the presenters', but also how you can learn from the different groups
+
+predict(full_glm, newdata = data.frame(historical = "dem", 
+                                       percent_urban = 73.3), 
+        type = "response", 
+        se.fit = TRUE)
+```
+
+:::
+
+$21.275 \pm 2\cdot 1.47 = [18.33, 24.22]$
+
+. . . 
+
+&rarr; We are 95% confident that the average number of anti-discrimination laws in states like Minnesota is between 18.33 and 24.22
+
+## Likelihood Ratio Test
+
+**Hypotheses:**
+
+$H_0: \beta_i = \beta_j = ... = 0$
+
+$H_A$: at least one $\ne$ 0
+
+<br>
+
+**Test Statistic**: 
+
+$$\Delta  = D_{\text{Reduced}} - D_{\text{Full}}$$
+
+**Reference distribution**:
+
+- Depends on standard poisson vs quasipoisson
+
+## LRT reference distribution
+
+**Standard Poisson GLM:** We compare $\Delta$ to a $\chi^2$ distribution with $df = \Delta p$.
+
+```{r}
+#| eval: false
+#| echo: true
+
+anova(reduced_glm, full_glm, test = "Chisq")
+```
+
+<br>
+
+**Quasipoisson GLM**: Variance has been inflated by $\widehat{\psi}$. Instead, we scale the drop in deviance and perform an F-test: 
+
+R automatically handles the scale adjustment when you ask for test = "F":
+
+```{r}
+#| eval: false
+#| echo: true
+anova(reduced_quasi, full_quasi, test = "F")
+```
+
