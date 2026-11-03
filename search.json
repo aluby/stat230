@@ -3497,14 +3497,14 @@
     "href": "slides/slides23.html#binomial-response",
     "title": "Binomial Logistic Regression",
     "section": "Binomial response",
-    "text": "Binomial response\n\n\\(Y_i\\): the number of moths removed (i.e. “success”) on each tree for each morph\nWe will assume each trial (success/failure) is independent\n\n\n\n\n\n\n\nBinomial distribution\n\n\nThe sum of independent and identically distributed success/failure trials follows a Binomial(n, p) distribution."
+    "text": "Binomial response\n\n\\(Y_i\\): the number of moths removed (i.e. “success”) on each tree for each morph\nWe will assume each trial (success/failure) is independent\n\n\n\n\n\n\n\nBinomial distribution\n\n\nThe sum of independent and identically distributed success/failure trials follows a Binomial(n, p) distribution.\n\nTheoretical mean: \\(E(Y) = np\\)\nTheoretical variance: \\(Var(Y) = np(1-p)\\)\nA binary response is the special case where \\(n=1\\)"
   },
   {
     "objectID": "slides/slides23.html#binomial-logistic-regression",
     "href": "slides/slides23.html#binomial-logistic-regression",
     "title": "Binomial Logistic Regression",
     "section": "Binomial logistic regression",
-    "text": "Binomial logistic regression\n\\[\\pi_i = P(success | x_1, ..., x_3)\\]\nLog-odds scale:\n\\[\\text{logit}(\\pi_i) = \\log (\\frac{\\pi_i}{1-\\pi_i}) = \\beta_0 + \\beta_1 x_1 + ... + \\beta_p x_p = \\eta_i\\]\nProbability scale:\n\\[\\pi_i = \\dfrac{e^{\\eta_i}}{1 + e^{\\eta_i}}= \\dfrac{e^{\\beta_0 + \\beta_1 x_{1i} + \\beta_2 x_{2i} + \\cdots + \\beta_p x_{pi}}}{1 + e^{\\beta_0 + \\beta_1 x_{1i} + \\beta_2 x_{2i} + \\cdots + \\beta_p x_{pi}}}\\]"
+    "text": "Binomial logistic regression\n\\[\\pi_i = P(success | x_1, ..., x_p)\\]\nLog-odds scale:\n\\[\\text{logit}(\\pi_i) = \\log (\\frac{\\pi_i}{1-\\pi_i}) = \\beta_0 + \\beta_1 x_1 + ... + \\beta_p x_p = \\eta_i\\]\nProbability scale:\n\\[\\pi_i = \\dfrac{e^{\\eta_i}}{1 + e^{\\eta_i}}= \\dfrac{e^{\\beta_0 + \\beta_1 x_{1i} + \\beta_2 x_{2i} + \\cdots + \\beta_p x_{pi}}}{1 + e^{\\beta_0 + \\beta_1 x_{1i} + \\beta_2 x_{2i} + \\cdots + \\beta_p x_{pi}}}\\]"
   },
   {
     "objectID": "slides/slides23.html#fitted-model-from-hw8",
@@ -3542,39 +3542,32 @@
     "text": "Pearson residuals"
   },
   {
-    "objectID": "slides/slides23.html#deviance",
-    "href": "slides/slides23.html#deviance",
+    "objectID": "slides/slides23.html#pearson-chi2",
+    "href": "slides/slides23.html#pearson-chi2",
     "title": "Binomial Logistic Regression",
-    "section": "Deviance",
-    "text": "Deviance\n\nDeviance can be used to assess the overall fit of a binomial logistic regression model\n\n\n\n\n\n\n\n\n\nObserved Count\nPredicted P(Success)\nTrue P(Success)\nPredicted Count\n\n\n\n\n\\(Y_i\\)\n\\(\\widehat{\\pi}_i\\)\n\\(\\pi_i\\)\n\\(m_i \\widehat\\pi_i\\)\n\n\n\n\n\nDeviance: \\(D = 2 \\sum \\left[ Y_i \\log \\left( \\dfrac{Y_i}{m_i\\widehat{\\pi}_i} \\right)  + (m_i - Y_i)  \\log \\left( \\dfrac{m_i - Y_i}{m_i - m_i \\widehat{\\pi}_i} \\right) \\right]\\)\n\n\n\n\\(D\\) is small when the predicted counts are close to the observed counts (good), and large when they are far away (bad)\n\n\\(D \\overset{\\cdot}{\\sim} \\chi^2\\) with \\(\\text{d.f.}= n-(p+1)\\), if the model is correct and all \\(m_i\\) are large enough (&gt;5)\n\\(n =\\) # of binomial observations (# of proportions, not # of moths)"
-  },
-  {
-    "objectID": "slides/slides23.html#deviance-residuals",
-    "href": "slides/slides23.html#deviance-residuals",
-    "title": "Binomial Logistic Regression",
-    "section": "Deviance residuals",
-    "text": "Deviance residuals\n\n\\({\\rm Dres}_i = {\\rm sign}(Y_i - n_i \\widehat{\\pi}_i) \\sqrt{2 \\left[ Y_i \\log \\left( \\dfrac{Y_i}{n_i \\widehat{\\pi}_i} \\right) + (n_i - Y_i) \\log \\left( \\frac{n_i - Y_i}{n_i - n_i \\widehat{\\pi}_i} \\right) \\right]}\\)\n\nFor large enough \\(n_i\\), deviance residuals tend to behave like they come from \\(N(0,1)\\)\nHow to use?\n\nPlot against fitted values, predictors\nCheck for curvature, outliers"
-  },
-  {
-    "objectID": "slides/slides23.html#deviance-residuals-1",
-    "href": "slides/slides23.html#deviance-residuals-1",
-    "title": "Binomial Logistic Regression",
-    "section": "Deviance residuals",
-    "text": "Deviance residuals"
+    "section": "Pearson \\(\\chi^2\\)",
+    "text": "Pearson \\(\\chi^2\\)\n\nPearson’s \\(\\chi^2\\) statistic can be used to assess the overall fit of a binomial logistic regression model\n\n\n\n\n\n\n\n\n\nObserved Count\nPredicted P(Success)\nTrue P(Success)\nPredicted Count\n\n\n\n\n\\(Y_i\\)\n\\(\\widehat{\\pi}_i\\)\n\\(\\pi_i\\)\n\\(m_i \\widehat\\pi_i\\)\n\n\n\nPearson \\(\\chi^2\\): \\(X^2 = \\sum \\dfrac{(Y_i - m_i\\widehat{\\pi}_i)^2}{m_i\\widehat{\\pi}_i (1 - \\widehat{\\pi}_i)} = \\sum {\\rm Pres}_i^2\\)\n\n\n\\(X^2\\) is small when the predicted counts are close to the observed counts (good), and large when they are far away (bad)\n\n\\(X^2 \\overset{\\cdot}{\\sim} \\chi^2\\) with \\(\\text{d.f.}= n-(p+1)\\), if the model is correct and all \\(m_i\\) are large enough (&gt;5)\n\\(n =\\) # of binomial observations (# of proportions, not # of moths)"
   },
   {
     "objectID": "slides/slides23.html#goodness-of-fit-test",
     "href": "slides/slides23.html#goodness-of-fit-test",
     "title": "Binomial Logistic Regression",
     "section": "Goodness-of-fit test",
-    "text": "Goodness-of-fit test\n\n(the model is adequate)\n\n\nH0: \\({\\rm logit}(\\pi_i) = \\beta_0 + \\beta_1 x_{1i} + \\cdots + \\beta_p x_{pi}\\)\n\n\n(the model is inadequate)\n\n\nHa: \\({\\rm logit}(\\pi_i) = \\alpha_i\\)\n\n\n\nCall:\nglm(formula = Removed/Placed ~ Distance * Morph,\n    family = binomial, data = case2102, weights = Placed)\n\n    Null deviance: 35.385  on 13  degrees of freedom\n*Residual deviance: 13.230  on 10  degrees of freedom\n\n\n1- pchisq(13.230, 10)\n\n[1] 0.2110951\n\n\n\n\n\nNote: This test is only valid for the binomial logistic regression, it is not valid for binary logistic regression."
+    "text": "Goodness-of-fit test\n\n(the model is adequate)\n\n\nH0: \\({\\rm logit}(\\pi_i) = \\beta_0 + \\beta_1 x_{1i} + \\cdots + \\beta_p x_{pi}\\)\n\n\n(the model is inadequate)\n\n\nHa: \\({\\rm logit}(\\pi_i) = \\alpha_i\\)\n\n\n\n\nX2 &lt;- sum(residuals(model3, type = \"pearson\")^2)\nX2\n\n[1] 12.70859\n\ndf.residual(model3)\n\n[1] 10\n\n\n\n\n1 - pchisq(X2, 10)\n\n[1] 0.2404243\n\n\n\n\n\nNote: This test is only valid for the binomial logistic regression, it is not valid for binary logistic regression."
   },
   {
     "objectID": "slides/slides23.html#goodness-of-fit-test-1",
     "href": "slides/slides23.html#goodness-of-fit-test-1",
     "title": "Binomial Logistic Regression",
-    "section": "Goodness of fit test",
-    "text": "Goodness of fit test"
+    "section": "Goodness-of-fit test",
+    "text": "Goodness-of-fit test"
+  },
+  {
+    "objectID": "slides/slides23.html#section-1",
+    "href": "slides/slides23.html#section-1",
+    "title": "Binomial Logistic Regression",
+    "section": "",
+    "text": "Binary logistic\nBinomial logistic\n\n\n\n\nResponse\nA single 0/1 outcome\nThe number of successes \\(Y_i\\) out of \\(n_i\\) trials\n\n\nglm() response\ny ~ x, with y coded 0/1\ny/n ~ x, weights = n\n\n\nResidual plots\nEmpirical logit plots (bin \\(x\\) first) and Pearson residuals with a smoother (two bands)\nEmpirical logit plots (no binning) and Pearson residuals; \\(\\approx N(0,1)\\) when the \\(n_i\\) are large\n\n\nGoodness-of-fit test valid?\nNo (\\(n_i = 1\\))\nYes, if the \\(n_i\\) are large enough\n\n\n\n\nBinomial logistic regression models the probability of success for each row, using the same logit link as binary logistic regression.\nThe variance of \\(Y_i\\) is \\(n_i\\pi_i(1-\\pi_i)\\), so it depends on \\(\\pi_i\\)."
   },
   {
     "objectID": "slides/slides20.html#last-time",
@@ -5863,14 +5856,14 @@
     "href": "activities/23-binomial-logistic.html#additive-model",
     "title": "22: Binomial Logistic Regression",
     "section": "Additive model",
-    "text": "Additive model\nTo begin, let’s fit an additive logistic regression model where the main effects for variety and root are both included. Like in binary logistic regression, we use the glm() function to fit the model and specify family = binomial. The difference is in how we specify the response variable. For binomial logistics regression we specify the response as a proportion (e.g., y/n), and we need to use the weights argument to indicate the number of trials (i.e., n).\n3 Fill in the blanks in the below code chunk to fit the additive binomial logistic regression model:\n\noro_glm1 &lt;- glm(___ ~ variety + root, weights = ___, family = binomial, data = orobanche)\n\noro_glm1 &lt;- glm(y/n ~ variety + root, weights = n, family = binomial, data = orobanche)\n\n3. Report the fitted equation for the linear predictor (i.e., the log-odds of germination).\n4. Interpret the coefficient for varietyoa75 in context.\n5. We can create plots of the Pearson or deviance residuals using the resid_panel function from the car package and setting type = \"pearson\" or type = \"deviance\". Create deviance residual plots for the fitted model. Do you see any model deficiencies?\n\nggResidpanel::resid_panel(oro_glm1, type = ___, plots = c(\"resid\", \"qq\"), smoother = TRUE)\n\n6. Next, use the output from the summary() function to perform a Goodness of Fit test. What do you conclude?\n\nsummary(oro_glm1)"
+    "text": "Additive model\nTo begin, let’s fit an additive logistic regression model where the main effects for variety and root are both included. Like in binary logistic regression, we use the glm() function to fit the model and specify family = binomial. The difference is in how we specify the response variable. For binomial logistics regression we specify the response as a proportion (e.g., y/n), and we need to use the weights argument to indicate the number of trials (i.e., n).\n3 Fill in the blanks in the below code chunk to fit the additive binomial logistic regression model:\n\noro_glm1 &lt;- glm(___ ~ variety + root, weights = ___, family = binomial, data = orobanche)\n\noro_glm1 &lt;- glm(y/n ~ variety + root, weights = n, family = binomial, data = orobanche)\n\n3. Report the fitted equation for the linear predictor (i.e., the log-odds of germination).\n4. Interpret the coefficient for varietyoa75 in context.\n5. We can create plots of the Pearson or deviance residuals using the resid_panel function from the car package and setting type = \"pearson\". Create pearson residual plots for the fitted model. Do you see any model deficiencies?\n\nggResidpanel::resid_panel(oro_glm1, type = ___, plots = c(\"resid\", \"qq\"), smoother = TRUE)\n\n6. Next, use the Pearson residuals to perform a Goodness of Fit test. What do you conclude?\n\n# your code here"
   },
   {
     "objectID": "activities/23-binomial-logistic.html#adding-an-interaction-term",
     "href": "activities/23-binomial-logistic.html#adding-an-interaction-term",
     "title": "22: Binomial Logistic Regression",
     "section": "Adding an interaction term",
-    "text": "Adding an interaction term\nYou should have found evidence of lack of fit, so we may be missing a term. The only other thing we can add here is an interaction.\n6. Fit a new model that includes an interaction\n\noro_glm2 &lt;- glm(___ ~ variety*root, weights = ___, family = binomial, data = orobanche)\n\n7. Create deviance residual plots for the fitted model. Do you see any model deficiencies?\n\nggResidpanel::resid_panel(oro_glm2, type = ___, plots = c(\"resid\", \"qq\"), smoother = TRUE)\n\n8. Perform a Wald-based test to determine if the interaction is needed.\n9. Perform a Likelihood Ratio Test to compare the two models.\n10. Do the results from 8 and 9 agree? What do you conclude?\n11. Now, perform an overall Goodness of Fit test using the summary() output. What do you conclude?"
+    "text": "Adding an interaction term\nYou should have found evidence of lack of fit, so we may be missing a term. The only other thing we can add here is an interaction.\n6. Fit a new model that includes an interaction\n\noro_glm2 &lt;- glm(___ ~ variety*root, weights = ___, family = binomial, data = orobanche)\n\n7. Create pearson residual plots for the fitted model. Do you see any model deficiencies?\n\nggResidpanel::resid_panel(oro_glm2, type = ___, plots = c(\"resid\", \"qq\"), smoother = TRUE)\n\n8. Perform a Wald-based test to determine if the interaction is needed.\n9. Perform a Likelihood Ratio Test to compare the two models.\n10. Do the results from 8 and 9 agree? What do you conclude?\n11. Now, perform an overall Goodness of Fit test. What do you conclude? Does it agree with your results from 8 and 9?"
   },
   {
     "objectID": "activities/23-binomial-logistic.html#function-quick-reference",

@@ -486,13 +486,18 @@ Prof Amanda Luby
 </div>
 <div class="callout-content">
 <p>The sum of independent and identically distributed success/failure trials follows a Binomial(n, p) distribution.</p>
+<ul>
+<li>Theoretical mean: <span class="math inline">\(E(Y) = np\)</span></li>
+<li>Theoretical variance: <span class="math inline">\(Var(Y) = np(1-p)\)</span></li>
+<li>A binary response is the special case where <span class="math inline">\(n=1\)</span></li>
+</ul>
 </div>
 </div>
 </div>
 </section>
 <section id="binomial-logistic-regression" class="slide level2">
 <h2>Binomial logistic regression</h2>
-<p><span class="math display">\[\pi_i = P(success | x_1, ..., x_3)\]</span></p>
+<p><span class="math display">\[\pi_i = P(success | x_1, ..., x_p)\]</span></p>
 <p>Log-odds scale:</p>
 <p><span class="math display">\[\text{logit}(\pi_i) = \log (\frac{\pi_i}{1-\pi_i}) = \beta_0 + \beta_1 x_1 + ... + \beta_p x_p = \eta_i\]</span></p>
 <p>Probability scale:</p>
@@ -559,10 +564,10 @@ Prof Amanda Luby
 <h2>Pearson residuals</h2>
 
 <img data-src="slides23_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
-<section id="deviance" class="slide level2">
-<h2>Deviance</h2>
+<section id="pearson-chi2" class="slide level2">
+<h2>Pearson <span class="math inline">\(\chi^2\)</span></h2>
 <div class="medium">
-<p>Deviance can be used to assess the <strong>overall fit</strong> of a binomial logistic regression model</p>
+<p>Pearson’s <span class="math inline">\(\chi^2\)</span> statistic can be used to assess the <strong>overall fit</strong> of a binomial logistic regression model</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 25%">
@@ -587,34 +592,15 @@ Prof Amanda Luby
 </tr>
 </tbody>
 </table>
-<p><br></p>
-<p><br></p>
-<p><strong>Deviance:</strong> <span class="math inline">\(D = 2 \sum \left[ Y_i \log \left( \dfrac{Y_i}{m_i\widehat{\pi}_i} \right)  + (m_i - Y_i)  \log \left( \dfrac{m_i - Y_i}{m_i - m_i \widehat{\pi}_i} \right) \right]\)</span></p>
+<p><strong>Pearson <span class="math inline">\(\chi^2\)</span>:</strong> <span class="math inline">\(X^2 = \sum \dfrac{(Y_i - m_i\widehat{\pi}_i)^2}{m_i\widehat{\pi}_i (1 - \widehat{\pi}_i)} = \sum {\rm Pres}_i^2\)</span></p>
 </div>
-<p><br></p>
 <div class="small">
-<p><span class="math inline">\(D\)</span> is small when the predicted counts are close to the observed counts (good), and large when they are far away (bad)</p>
+<p><span class="math inline">\(X^2\)</span> is small when the predicted counts are close to the observed counts (good), and large when they are far away (bad)</p>
 <p><br></p>
-<p><span class="math inline">\(D \overset{\cdot}{\sim} \chi^2\)</span> with <span class="math inline">\(\text{d.f.}= n-(p+1)\)</span>, <strong>if</strong> the model is correct and all <span class="math inline">\(m_i\)</span> are large enough (&gt;5)</p>
+<p><span class="math inline">\(X^2 \overset{\cdot}{\sim} \chi^2\)</span> with <span class="math inline">\(\text{d.f.}= n-(p+1)\)</span>, <strong>if</strong> the model is correct and all <span class="math inline">\(m_i\)</span> are large enough (&gt;5)</p>
 <p><span class="math inline">\(n =\)</span> # of binomial observations (# of proportions, not # of moths)</p>
 </div>
 </section>
-<section id="deviance-residuals" class="slide level2">
-<h2>Deviance residuals</h2>
-<div class="medium">
-<p><span class="math inline">\({\rm Dres}_i = {\rm sign}(Y_i - n_i \widehat{\pi}_i) \sqrt{2 \left[ Y_i \log \left( \dfrac{Y_i}{n_i \widehat{\pi}_i} \right) + (n_i - Y_i) \log \left( \frac{n_i - Y_i}{n_i - n_i \widehat{\pi}_i} \right) \right]}\)</span></p>
-</div>
-<p>For large enough <span class="math inline">\(n_i\)</span>, deviance residuals tend to behave like they come from <span class="math inline">\(N(0,1)\)</span></p>
-<p>How to use?</p>
-<ul>
-<li><p>Plot against fitted values, predictors</p></li>
-<li><p>Check for curvature, outliers</p></li>
-</ul>
-</section>
-<section id="deviance-residuals-1" class="slide level2">
-<h2>Deviance residuals</h2>
-
-<img data-src="slides23_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
 <section id="goodness-of-fit-test" class="slide level2">
 <h2>Goodness-of-fit test</h2>
 <div style="float: right; clear: right; margin: 10px;">
@@ -631,17 +617,22 @@ Prof Amanda Luby
 </div>
 <p><br></p>
 <div class="medium">
-<pre><code>Call:
-glm(formula = Removed/Placed ~ Distance * Morph,
-    family = binomial, data = case2102, weights = Placed)
-
-    Null deviance: 35.385  on 13  degrees of freedom
-*Residual deviance: 13.230  on 10  degrees of freedom</code></pre>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>X2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(model3, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb8-2"><a></a>X2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12.70859</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">df.residual</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
 <p><br></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="dv">1</span><span class="sc">-</span> <span class="fu">pchisq</span>(<span class="fl">13.230</span>, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(X2, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2110951</code></pre>
+<pre><code>[1] 0.2404243</code></pre>
 </div>
 </div>
 </div>
@@ -651,11 +642,56 @@ glm(formula = Removed/Placed ~ Distance * Morph,
 </div>
 </section>
 <section id="goodness-of-fit-test-1" class="slide level2">
-<h2>Goodness of fit test</h2>
+<h2>Goodness-of-fit test</h2>
+
+<img data-src="slides23_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<div class="medium">
+<table class="caption-top">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 38%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Binary logistic</th>
+<th style="text-align: left;">Binomial logistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Response</td>
+<td style="text-align: left;">A single 0/1 outcome</td>
+<td style="text-align: left;">The number of successes <span class="math inline">\(Y_i\)</span> out of <span class="math inline">\(n_i\)</span> trials</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>glm()</code> response</td>
+<td style="text-align: left;"><code>y ~ x</code>, with <code>y</code> coded 0/1</td>
+<td style="text-align: left;"><code>y/n ~ x, weights = n</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Residual plots</td>
+<td style="text-align: left;">Empirical logit plots (bin <span class="math inline">\(x\)</span> first) and Pearson residuals with a smoother (two bands)</td>
+<td style="text-align: left;">Empirical logit plots (no binning) and Pearson residuals; <span class="math inline">\(\approx N(0,1)\)</span> when the <span class="math inline">\(n_i\)</span> are large</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Goodness-of-fit test valid?</td>
+<td style="text-align: left;">No (<span class="math inline">\(n_i = 1\)</span>)</td>
+<td style="text-align: left;">Yes, if the <span class="math inline">\(n_i\)</span> are large enough</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Binomial logistic regression models the <strong>probability</strong> of success for each row, using the same logit link as binary logistic regression.</li>
+<li>The variance of <span class="math inline">\(Y_i\)</span> is <span class="math inline">\(n_i\pi_i(1-\pi_i)\)</span>, so it depends on <span class="math inline">\(\pi_i\)</span>.</li>
+</ul>
+</div>
 
 
-
-<img data-src="slides23_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

@@ -200,13 +200,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><strong>3.</strong> Report the fitted equation for the linear predictor (i.e., the log-odds of germination).</p>
 <p><strong>4.</strong> Interpret the coefficient for <code>varietyoa75</code> in context.</p>
-<p><strong>5.</strong> We can create plots of the Pearson or deviance residuals using the <code>resid_panel</code> function from the <code>car</code> package and setting <code>type = "pearson"</code> or <code>type = "deviance"</code>. Create deviance residual plots for the fitted model. Do you see any model deficiencies?</p>
+<p><strong>5.</strong> We can create plots of the Pearson or deviance residuals using the <code>resid_panel</code> function from the <code>car</code> package and setting <code>type = "pearson"</code>. Create pearson residual plots for the fitted model. Do you see any model deficiencies?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_panel</span>(oro_glm1, <span class="at">type =</span> ___, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>, <span class="st">"qq"</span>), <span class="at">smoother =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><strong>6.</strong> Next, use the output from the <code>summary()</code> function to perform a Goodness of Fit test. What do you conclude?</p>
+<p><strong>6.</strong> Next, use the Pearson residuals to perform a Goodness of Fit test. What do you conclude?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(oro_glm1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="adding-an-interaction-term" class="level2">
@@ -216,14 +216,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>oro_glm2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(___ <span class="sc">~</span> variety<span class="sc">*</span>root, <span class="at">weights =</span> ___, <span class="at">family =</span> binomial, <span class="at">data =</span> orobanche)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><strong>7.</strong> Create deviance residual plots for the fitted model. Do you see any model deficiencies?</p>
+<p><strong>7.</strong> Create pearson residual plots for the fitted model. Do you see any model deficiencies?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_panel</span>(oro_glm2, <span class="at">type =</span> ___, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>, <span class="st">"qq"</span>), <span class="at">smoother =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>8.</strong> Perform a Wald-based test to determine if the interaction is needed.</p>
 <p><strong>9.</strong> Perform a Likelihood Ratio Test to compare the two models.</p>
 <p><strong>10.</strong> Do the results from 8 and 9 agree? What do you conclude?</p>
-<p><strong>11.</strong> Now, perform an overall Goodness of Fit test using the <code>summary()</code> output. What do you conclude?</p>
+<p><strong>11.</strong> Now, perform an overall Goodness of Fit test. What do you conclude? Does it agree with your results from 8 and 9?</p>
 <hr>
 </section>
 <section id="function-quick-reference" class="level2">
@@ -785,7 +785,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>**4.** Interpret the coefficient for <span class="in">`varietyoa75`</span> in context.</span>
 <span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>**5.** We can create plots of the Pearson or deviance residuals using the <span class="in">`resid_panel`</span> function from the <span class="in">`car`</span> package and setting <span class="in">`type = "pearson"`</span> or <span class="in">`type = "deviance"`</span>. Create deviance residual plots for the fitted model. Do you see any model deficiencies?</span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>**5.** We can create plots of the Pearson or deviance residuals using the <span class="in">`resid_panel`</span> function from the <span class="in">`car`</span> package and setting <span class="in">`type = "pearson"`</span>. Create pearson residual plots for the fitted model. Do you see any model deficiencies?</span>
 <span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
@@ -795,12 +795,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_panel</span>(oro_glm1, <span class="at">type =</span> ___, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"resid"</span>, <span class="st">"qq"</span>), <span class="at">smoother =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>**6.** Next, use the output from the <span class="in">`summary()`</span> function to perform a Goodness of Fit test. What do you conclude?</span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>**6.** Next, use the Pearson residuals to perform a Goodness of Fit test. What do you conclude?</span>
 <span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(oro_glm1)</span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a><span class="co"># your code here</span></span>
 <span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adding an interaction term</span></span>
@@ -814,7 +814,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>oro_glm2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(___ <span class="sc">~</span> variety<span class="sc">*</span>root, <span class="at">weights =</span> ___, <span class="at">family =</span> binomial, <span class="at">data =</span> orobanche)</span>
 <span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>**7.** Create deviance residual plots for the fitted model. Do you see any model deficiencies?</span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>**7.** Create pearson residual plots for the fitted model. Do you see any model deficiencies?</span>
 <span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
@@ -827,7 +827,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>**10.** Do the results from 8 and 9 agree? What do you conclude? </span>
 <span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>**11.** Now, perform an overall Goodness of Fit test using the <span class="in">`summary()`</span> output. What do you conclude? </span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>**11.** Now, perform an overall Goodness of Fit test. What do you conclude? Does it agree with your results from 8 and 9?</span>
 <span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>***</span>
 <span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a></span>
