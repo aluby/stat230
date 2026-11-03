@@ -14,6 +14,8 @@ website:
         text: Home
       - href: slides.qmd      
         text: Slides
+      - href: notes.qmd  
+        text: Notes
       - href: activities.qmd  
         text: Activities
       - href: readings.qmd   
