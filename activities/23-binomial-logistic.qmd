@@ -2,6 +2,12 @@
 title: "22: Binomial Logistic Regression"
 ---
 
+```{r}
+library(tidyverse)
+library(ggformula)
+library(patchwork)
+```
+
 ## Data overview
 
 *Orobanche* is a genus of parasitic plants without chlorophyll that grow on the roots of flowering plants. In an experiment, seeds from two varieties, Orobanche aegyptiaca 75 and Orobanche aegyptiaca 73, where brushed with extract from either a cucumber root or a bean root. Researchers recorded the number of seeds that eventually germinated.
@@ -9,8 +15,7 @@ title: "22: Binomial Logistic Regression"
 Run the code chunk below to load the data:
 
 ```{r}
-# orobanche <- read.csv("https://aluby.github.io/stat230/data/orabanche.csv")
-orobanche <- read.csv(here::here("data/orabanche.csv"))
+orobanche <- read.csv("https://aluby.github.io/stat230/data/orabanche.csv")
 ```
 
 The variables in the data set are:
@@ -27,7 +32,23 @@ The variables in the data set are:
 
 i. create boxplots of the estimated proportion by each variable.
 
+```{r}
+#| eval: false 
+p1 <- gf_boxplot(___ ~ variety, data = orobanche)
+
+p2 <- gf_boxplot(___ ~ root, data = orobanche)
+
+p1 + p2
+```
+
 ii. create boxplots of the estimated proportion using one variable on the x-axis and the other as the `fill` color.
+
+```{r}
+#| eval: false 
+
+
+gf_boxplot(___ ~ variety, fill = ~root, data = orobanche)
+```
 
 What do you learn from these plots?
 
@@ -40,6 +61,11 @@ To begin, let's fit an additive logistic regression model where the main effects
 **3** Fill in the blanks in the below code chunk to fit the additive binomial logistic regression model:
 
 ```{r}
+#| eval: false 
+
+
+oro_glm1 <- glm(___ ~ variety + root, weights = ___, family = binomial, data = orobanche)
+
 oro_glm1 <- glm(y/n ~ variety + root, weights = n, family = binomial, data = orobanche)
 ```
 
@@ -55,9 +81,16 @@ oro_glm1 <- glm(y/n ~ variety + root, weights = n, family = binomial, data = oro
 #| fig-width: 8
 #| fig-height: 3
 
-ggResidpanel::resid_panel(oro_glm1, type = "deviance", plots = c("resid", "qq"), smoother = TRUE)
+ggResidpanel::resid_panel(oro_glm1, type = ___, plots = c("resid", "qq"), smoother = TRUE)
 ```
 
+**6.** Next, use the output from the `summary()` function to perform a Goodness of Fit test. What do you conclude?
+
+```{r}
+#| eval: false
+
+summary(oro_glm1)
+```
 
 ## Adding an interaction term
 
@@ -73,7 +106,8 @@ oro_glm2 <- glm(___ ~ variety*root, weights = ___, family = binomial, data = oro
 **7.** Create deviance residual plots for the fitted model. Do you see any model deficiencies?
 
 ```{r}
-# Put your residual plot code here
+#| eval: false
+ggResidpanel::resid_panel(oro_glm2, type = ___, plots = c("resid", "qq"), smoother = TRUE)
 ```
 
 **8.** Perform a Wald-based test to determine if the interaction is needed.
@@ -82,6 +116,7 @@ oro_glm2 <- glm(___ ~ variety*root, weights = ___, family = binomial, data = oro
 
 **10.** Do the results from 8 and 9 agree? What do you conclude? 
 
+**11.** Now, perform an overall Goodness of Fit test using the `summary()` output. What do you conclude? 
 
 ***
 

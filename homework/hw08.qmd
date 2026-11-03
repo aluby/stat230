@@ -31,10 +31,13 @@ There is a [homework template](../files/hw-template.qmd) available if you'd like
 
 Use Problem 5 from HW7 (Cars) for this problem.
 ```{r}
-car_purchase <- read.csv("https://aluby.github.io/stat230/data/car_purchase.csv")
+car_purchase <- read.csv("https://aluby.github.io/stat230/data/car_purchase.csv")[-33,]
 cars_glm <- glm(y ~ income + car_age, data = car_purchase, family = "binomial")
 ```
 
+:::callout-note
+For some reason, `resid_xpanel` did not like an odd number of data points. Homework updated on Monday around 4pm to remove the last data point (`[-33 ,]`) so that `resid_xpanel` will work. 
+:::
 
 (a) Create three residual plots of the Pearson residuals with a smoother to assess this model:
 
@@ -74,7 +77,7 @@ An article in the *Journal of Animal Ecology* by [Bishop (1972)](https://doi.org
   - `removed` = number of moths of a specific morph removed after 24 hours
   - `log_odds_removed` = log odds of being removed
 
-The model with `log_odds_removed` as the response and `distance`, `morph`, the interaction `distance*morph` as the predictor variables is shown below. 
+The model with `log_odds_removed` as the response and `distance`, `morph`, the interaction `distance*morph` as the predictor variables is shown below. The confidence intervals in the table are the 80% intervals.
 
 ```{r echo = F}
 moth <- read_csv(here("data/moths.csv"))
@@ -92,7 +95,7 @@ model1 <- lm(log_odds_removed ~ distance + morph + distance * morph, data = moth
 ```
 
 ```{r echo = F}
-knitr::kable(tidy(model1, conf.int = TRUE),format = "markdown", digits = 3)
+knitr::kable(tidy(model1, conf.int = TRUE, conf.level = .8),format = "markdown", digits = 3)
 ```
 
 (a) If you examine the R code that I used to fit this model, you'll see that I used `lm()` instead of `glm()`. Why is this approach OK in this case?
