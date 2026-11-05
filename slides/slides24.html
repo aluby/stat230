@@ -197,7 +197,7 @@
 
 <section id="title-slide" data-background-color="#003300" data-slide-number="none" class="quarto-title-block center">
   <h1 class="title">Overdispersion and the Quasibinomial model</h1>
-  <p class="subtitle">Day 23</p>
+  <p class="subtitle">Day 24</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -211,56 +211,19 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section id="moths-from-last-homework" class="slide level2">
-<h2><code>moths</code> from last homework</h2>
-<div class="medium">
+<section id="recap-binomial-logistic-regression-model" class="slide level2">
+<h2>Recap: Binomial logistic regression model</h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>   Morph Distance Placed Removed
-1  light      0.0     56      17
-2   dark      0.0     56      14
-3  light      7.2     80      28
-4   dark      7.2     80      20
-5  light     24.1     52      18
-6   dark     24.1     52      22
-7  light     30.2     60       9
-8   dark     30.2     60      16
-9  light     36.4     60      16
-10  dark     36.4     60      23
-11 light     41.5     84      20
-12  dark     41.5     84      40
-13 light     51.2     92      24
-14  dark     51.2     92      39</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>binomial_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Y<span class="sc">/</span>n <span class="sc">~</span> predictors, <span class="at">weights =</span> n,</span>
+<span id="cb1-2"><a></a>                <span class="at">data =</span> dataset, </span>
+<span id="cb1-3"><a></a>                <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-</div>
-</section>
-<section id="binomial-logistic-regression-model" class="slide level2">
-<h2>Binomial logistic regression model</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>binomial_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Y<span class="sc">/</span>n <span class="sc">~</span> predictors, <span class="at">weights =</span> n,</span>
-<span id="cb2-2"><a></a>                <span class="at">data =</span> dataset, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>moth_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Removed<span class="sc">/</span>Placed <span class="sc">~</span> morph<span class="sc">*</span>distance, <span class="at">weights =</span> Placed,</span>
+<span id="cb2-2"><a></a>                <span class="at">data =</span> moths, </span>
 <span id="cb2-3"><a></a>                <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>moth_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Removed<span class="sc">/</span>Placed <span class="sc">~</span> morph<span class="sc">*</span>distance, <span class="at">weights =</span> Placed,</span>
-<span id="cb3-2"><a></a>                <span class="at">data =</span> moths, </span>
-<span id="cb3-3"><a></a>                <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 5
-  term                estimate std.error statistic      p.value
-  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-1 (Intercept)          -1.13     0.198       -5.70 0.0000000117
-2 morphlight            0.411    0.274        1.50 0.134       
-3 distance              0.0185   0.00565      3.28 0.00105     
-4 morphlight:distance  -0.0278   0.00809     -3.44 0.000588    </code></pre>
-</div>
-</div>
-</section>
-<section id="model-assumptions" class="slide level2">
-<h2>Model assumptions</h2>
+<div class="medium">
 <ul>
 <li><p><strong>Binomial counts</strong>: <span class="math inline">\(Y_i \sim \text{Binom}(m_i, \pi_i)\)</span></p></li>
 <li><p><strong>Independence</strong>: observations are independent (<span class="math inline">\(Y_i\)</span>’s are independent <em>and</em> each 1/0 that contributes to <span class="math inline">\(Y_i\)</span> is independent)</p></li>
@@ -268,78 +231,6 @@ Prof Amanda Luby
 <li><p><strong>Variance structure</strong>: the variance of a binomial random variable is <span class="math inline">\(n \pi (1 - \pi)\)</span></p>
 <p><span class="math inline">\(\Longrightarrow\)</span> so the variance of <span class="math inline">\(Y_i\)</span> is <span class="math inline">\(m_i \pi_i (1 - \pi_i)\)</span> (not constant!)</p></li>
 </ul>
-</section>
-<section id="goodness-of-fit-test" class="slide level2">
-<h2>Goodness-of-fit test</h2>
-<div class="medium">
-<p>Deviance can be used to assess the <strong>overall fit</strong> of a binomial logistic regression model</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Observed Count</th>
-<th style="text-align: center;">Predicted P(Success)</th>
-<th style="text-align: center;">True P(Success)</th>
-<th style="text-align: center;">Predicted Count</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Y_i\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\widehat{\pi}_i\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\pi_i\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(m_i \widehat\pi_i\)</span></td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<p><br></p>
-<p><strong>Deviance:</strong> <span class="math inline">\(D = 2 \sum \left[ Y_i \log \left( \dfrac{Y_i}{m_i\widehat{\pi}_i} \right)  + (m_i - Y_i)  \log \left( \dfrac{m_i - Y_i}{m_i - m_i \widehat{\pi}_i} \right) \right]\)</span></p>
-</div>
-<p><br></p>
-<div class="small">
-<p><span class="math inline">\(D \overset{\cdot}{\sim} \chi^2\)</span> with <span class="math inline">\(\text{d.f.}= n-(p+1)\)</span>, <strong>if</strong> the model is correct and all <span class="math inline">\(m_i\)</span> are large enough (&gt;5)</p>
-<p><span class="math inline">\(n =\)</span> # of binomial observations (# of proportions, not # of moths)</p>
-</div>
-</section>
-<section id="goodness-of-fit-test-1" class="slide level2">
-<h2>Goodness-of-fit test</h2>
-<div style="float: right; clear: right; margin: 10px;">
-(the model is adequate)
-</div>
-<div style="font-size:0.9em">
-<p>H<sub>0</sub>: <span class="math inline">\({\rm logit}(\pi_i) = \beta_0 + \beta_1 x_{1i} + \cdots + \beta_p x_{pi}\)</span></p>
-</div>
-<div style="float: right; clear: right; margin: 10px;">
-(the model is inadequate)
-</div>
-<div style="font-size:0.9em">
-<p>H<sub>a</sub>: <span class="math inline">\({\rm logit}(\pi_i) = \alpha_i\)</span></p>
-</div>
-<p><br></p>
-<div class="medium">
-<pre><code>Call:
-glm(formula = Removed/Placed ~ Distance * Morph,
-    family = binomial, data = case2102, weights = Placed)
-
-    Null deviance: 35.385  on 13  degrees of freedom
-*Residual deviance: 13.230  on 10  degrees of freedom</code></pre>
-<p><br></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="dv">1</span><span class="sc">-</span> <span class="fu">pchisq</span>(<span class="fl">13.230</span>, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2110951</code></pre>
-</div>
-</div>
-</div>
-<p><br></p>
-<div style="font-size:0.5em">
-<p>Note: This test is <em>only valid for the binomial logistic regression</em>, it is not valid for binary logistic regression.</p>
 </div>
 </section>
 <section id="communication-development-study" class="slide level2">
@@ -453,11 +344,11 @@ glm(formula = Removed/Placed ~ Distance * Morph,
 <h2>Binomial model</h2>
 <div class="medium">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>lang_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(success<span class="sc">/</span>trials <span class="sc">~</span> sex <span class="sc">+</span> kbit <span class="sc">+</span> ppvt <span class="sc">+</span> </span>
-<span id="cb9-2"><a></a>                  maternal_ed <span class="sc">+</span> age <span class="sc">+</span> language, </span>
-<span id="cb9-3"><a></a>                <span class="at">data =</span> language, </span>
-<span id="cb9-4"><a></a>                <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb9-5"><a></a>                <span class="at">weights =</span> trials)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>lang_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(success<span class="sc">/</span>trials <span class="sc">~</span> sex <span class="sc">+</span> kbit <span class="sc">+</span> ppvt <span class="sc">+</span> </span>
+<span id="cb4-2"><a></a>                  maternal_ed <span class="sc">+</span> age <span class="sc">+</span> language, </span>
+<span id="cb4-3"><a></a>                <span class="at">data =</span> language, </span>
+<span id="cb4-4"><a></a>                <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb4-5"><a></a>                <span class="at">weights =</span> trials)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -479,10 +370,10 @@ glm(formula = Removed/Placed ~ Distance * Morph,
 <p>→ Relative to Bilingual children, after accounting for all other variables in the model, monolingual children are worse at the task</p>
 </div>
 </section>
-<section id="goodness-of-fit-test-2" class="slide level2">
+<section id="goodness-of-fit-test" class="slide level2">
 <h2>Goodness of fit test</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">summary</span>(lang_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">summary</span>(lang_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code>    Null deviance: 197.54  on 68  degrees of freedom
 Residual deviance: 167.35  on 61  degrees of freedom
@@ -490,9 +381,14 @@ Residual deviance: 167.35  on 61  degrees of freedom
 AIC: 237.72</code></pre>
 <p><br></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(<span class="fl">167.35</span>, <span class="at">df =</span> <span class="dv">61</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>x2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(lang_glm, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb8-2"><a></a>x2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 7.557399e-12</code></pre>
+<pre><code>[1] 143.4482</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(x2, <span class="at">df =</span> <span class="dv">61</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.358071e-08</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -503,19 +399,19 @@ AIC: 237.72</code></pre>
 <h2></h2>
 <p>If model is correct, Pearson residuals should be approximate N(0,1)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>lang_aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(lang_glm, <span class="at">type.residuals =</span> <span class="st">"pearson"</span>)</span>
-<span id="cb15-2"><a></a></span>
-<span id="cb15-3"><a></a><span class="fu">mean</span>(lang_aug<span class="sc">$</span>.resid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>lang_aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(lang_glm, <span class="at">type.residuals =</span> <span class="st">"pearson"</span>)</span>
+<span id="cb12-2"><a></a></span>
+<span id="cb12-3"><a></a><span class="fu">mean</span>(lang_aug<span class="sc">$</span>.resid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.002170125</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">sd</span>(lang_aug<span class="sc">$</span>.resid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">sd</span>(lang_aug<span class="sc">$</span>.resid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.452421</code></pre>
 </div>
 </div>
 
-<img data-src="slides24_files/figure-html/unnamed-chunk-14-1.png" width="768" class="r-stretch"><div class="fragment">
+<img data-src="slides24_files/figure-revealjs/unnamed-chunk-10-1.png" width="768" class="r-stretch"><div class="fragment">
 <p>→ These Pearson residuals are too variable</p>
 </div>
 </section>
@@ -523,25 +419,33 @@ AIC: 237.72</code></pre>
 <h2></h2>
 <p>In linear regression, the mean model (<span class="math inline">\(\mu_y\)</span>) and the variance term (<span class="math inline">\(\epsilon\)</span>) are independent. We can have points that are tightly clustered along the line or widely spread and both models are equally “valid”</p>
 
-<img data-src="slides24_files/figure-html/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
+<img data-src="slides24_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
 <section id="section-3" class="slide level2">
 <h2></h2>
 <p>In binomial logistic regression, the variance term is related to the mean model through a mathematical relationship:</p>
 <p><span class="math display">\[\mu(Y) = n\pi \quad Var(Y) = n\pi(1-\pi)\]</span></p>
 <p><strong>Overdispersion</strong> occurs when the actual, observed variance in our data is significantly larger than what we’d expect from these formulas</p>
+<div class="fragment">
+<div class="task">
+<p>The binomial model assumes that each child’s 4 trials are independent and have the same probability of success. Why might that not be true here? What would that do to the variance of <span class="math inline">\(Y_i\)</span>?</p>
+</div>
+</div>
 </section>
 <section id="diagnosing-overdispersion" class="slide level2">
 <h2>Diagnosing overdispersion</h2>
+<p>If the model is correct, the Pearson residuals are approximately <span class="math inline">\(N(0,1)\)</span>, and the sum of the squared Pearson residuals should be close to the degrees of freedom</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">summary</span>(lang_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>X2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(lang_glm, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb16-2"><a></a>X2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 143.4482</code></pre>
 </div>
-<pre><code>(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 197.54  on 68  degrees of freedom
-Residual deviance: 167.35  on 61  degrees of freedom
-  (3 observations deleted due to missingness)
-AIC: 237.72</code></pre>
-<p>Ad-hoc dispersion test: <span class="math inline">\(\text{disp} = \widehat\psi = \frac{\text{Residual Deviance}}{\text{degrees of freedom}} = \frac{167.35}{61} \approx 2.7\)</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">df.residual</span>(lang_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 61</code></pre>
+</div>
+</div>
+<p>Ad-hoc dispersion test: <span class="math inline">\(\text{disp} = \widehat\psi = \frac{\sum {\rm Pres}_i^2}{\text{degrees of freedom}} = \frac{143.45}{61} \approx 2.35\)</span></p>
 <ul>
 <li><span class="math inline">\(\widehat\psi  \approx 1\)</span>: not overdispersed</li>
 <li><span class="math inline">\(\widehat\psi &gt;&gt; 1\)</span> overdispersed</li>
@@ -549,12 +453,14 @@ AIC: 237.72</code></pre>
 </section>
 <section id="fixing-overdispersion-the-quasibinomial-family" class="slide level2">
 <h2>Fixing overdispersion: the <code>quasibinomial</code> family</h2>
+<p>The <strong>quasibinomial</strong> model keeps the same model for <span class="math inline">\(\pi_i\)</span>, but lets the variance be larger than the binomial variance:</p>
+<p><span class="math display">\[Var(Y_i) = \psi\, n_i\pi_i(1-\pi_i)\]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>lang_qglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(success<span class="sc">/</span>trials <span class="sc">~</span> sex <span class="sc">+</span> kbit <span class="sc">+</span> ppvt <span class="sc">+</span> </span>
-<span id="cb21-2"><a></a>                  maternal_ed <span class="sc">+</span> age <span class="sc">+</span> language, </span>
-<span id="cb21-3"><a></a>                <span class="at">data =</span> language, </span>
-<span id="cb21-4"><a></a>                <span class="at">family =</span> <span class="st">"quasibinomial"</span>, </span>
-<span id="cb21-5"><a></a>                <span class="at">weights =</span> trials)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>lang_qglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(success<span class="sc">/</span>trials <span class="sc">~</span> sex <span class="sc">+</span> kbit <span class="sc">+</span> ppvt <span class="sc">+</span> </span>
+<span id="cb20-2"><a></a>                  maternal_ed <span class="sc">+</span> age <span class="sc">+</span> language, </span>
+<span id="cb20-3"><a></a>                <span class="at">data =</span> language, </span>
+<span id="cb20-4"><a></a>                <span class="at">family =</span> <span class="st">"quasibinomial"</span>, </span>
+<span id="cb20-5"><a></a>                <span class="at">weights =</span> trials)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code>(Dispersion parameter for quasibinomial family taken to be 2.351658)
 
@@ -562,9 +468,6 @@ AIC: 237.72</code></pre>
 Residual deviance: 167.35  on 61  degrees of freedom
   (3 observations deleted due to missingness)
 AIC: NA</code></pre>
-<div class="small">
-<p>R uses a slightly different formula to calculate dispersion parameter; should not make a difference in deciding whether model is overdispersed</p>
-</div>
 </section>
 <section id="what-changed" class="slide level2">
 <h2>What changed?</h2>
@@ -660,13 +563,13 @@ AIC: NA</code></pre>
 <p><span class="math inline">\(H_0: \beta_6 = \beta_7 = 0 \quad H_A:\)</span> at least one <span class="math inline">\(\ne 0\)</span></p>
 <div class="small">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>reduced_qglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(success<span class="sc">/</span>trials <span class="sc">~</span> sex <span class="sc">+</span> kbit <span class="sc">+</span> ppvt <span class="sc">+</span> </span>
-<span id="cb25-2"><a></a>                  maternal_ed <span class="sc">+</span> age, </span>
-<span id="cb25-3"><a></a>                <span class="at">data =</span> language, </span>
-<span id="cb25-4"><a></a>                <span class="at">family =</span> <span class="st">"quasibinomial"</span>, </span>
-<span id="cb25-5"><a></a>                <span class="at">weights =</span> trials)</span>
-<span id="cb25-6"><a></a></span>
-<span id="cb25-7"><a></a><span class="fu">anova</span>(reduced_qglm, lang_qglm, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>reduced_qglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(success<span class="sc">/</span>trials <span class="sc">~</span> sex <span class="sc">+</span> kbit <span class="sc">+</span> ppvt <span class="sc">+</span> </span>
+<span id="cb24-2"><a></a>                  maternal_ed <span class="sc">+</span> age, </span>
+<span id="cb24-3"><a></a>                <span class="at">data =</span> language, </span>
+<span id="cb24-4"><a></a>                <span class="at">family =</span> <span class="st">"quasibinomial"</span>, </span>
+<span id="cb24-5"><a></a>                <span class="at">weights =</span> trials)</span>
+<span id="cb24-6"><a></a></span>
+<span id="cb24-7"><a></a><span class="fu">anova</span>(reduced_qglm, lang_qglm, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Deviance Table
 
@@ -689,7 +592,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="what-about-effect-of-monolinguism" class="slide level2">
 <h2>What about effect of <em>monolinguism</em>?</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">exp</span>(<span class="fu">confint</span>(lang_qglm))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">exp</span>(<span class="fu">confint</span>(lang_qglm))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                        2.5 %       97.5 %
 (Intercept)         0.7790849 3.523281e+04
@@ -705,6 +608,12 @@ languageMonolingual 0.1148159 9.750352e-01</code></pre>
 <p><br></p>
 <p>→ We are 95% confident that the odds of success for monolingual children is somewhere between 2.5% to 89% smaller than for bilingual children, holding the other variables constant.</p>
 </section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+<div class="task">
+<p>With the binomial model, this interval was (0.17, 0.68). Why is the quasibinomial interval wider? Which one should we report?</p>
+</div>
+</section>
 <section id="strategy-for-binomial-logistic-regression" class="slide level2 scrollable">
 <h2>Strategy for binomial logistic regression:</h2>
 <ol type="1">
@@ -716,6 +625,15 @@ languageMonolingual 0.1148159 9.750352e-01</code></pre>
 <li>If <span class="math inline">\(\psi \le 1\)</span>, switch to the binomial model</li>
 </ul></li>
 </ol>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li><strong>Overdispersion</strong>: the data are more variable than the binomial model allows, so the binomial standard errors are too small.</li>
+<li>Estimate the dispersion with <span class="math inline">\(\widehat\psi = X^2 / (n - (p+1))\)</span>, the sum of the squared Pearson residuals divided by the residual df.</li>
+<li>The <strong>quasibinomial</strong> model gives the same estimates, but multiplies the standard errors by <span class="math inline">\(\sqrt{\widehat\psi}\)</span>.</li>
+<li>With a quasibinomial model, use t tests for one coefficient and drop-in-deviance F tests for several.</li>
+</ul>
 
 
 </section>
@@ -936,6 +854,44 @@ languageMonolingual 0.1148159 9.750352e-01</code></pre>
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
@@ -1006,7 +962,7 @@ languageMonolingual 0.1148159 9.750352e-01</code></pre>
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
