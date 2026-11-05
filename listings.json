@@ -45,6 +45,45 @@
     ]
   },
   {
+    "listing": "/notes.html",
+    "items": [
+      "/notes/notes02.pdf",
+      "/notes/notes03.pdf",
+      "/notes/notes04.pdf",
+      "/notes/notes05.pdf",
+      "/notes/notes06.pdf",
+      "/notes/notes08.pdf",
+      "/notes/notes09.pdf",
+      "/notes/notes10.pdf",
+      "/notes/notes11.pdf",
+      "/notes/notes12.pdf",
+      "/notes/notes13.pdf",
+      "/notes/notes14.pdf",
+      "/notes/notes15.pdf",
+      "/notes/notes19.pdf",
+      "/notes/notes20.pdf",
+      "/notes/notes21.pdf",
+      "/notes/notes22.pdf",
+      "/notes/notes23.pdf"
+    ]
+  },
+  {
+    "listing": "/readings.html",
+    "items": [
+      "/readings/latex-for-stat230.html",
+      "/readings/exam01-practice.html",
+      "/readings/intro-review.html",
+      "/readings/exam01-review.html",
+      "/readings/quiz02-practice.html",
+      "/readings/exam02-review.html",
+      "/readings/exam03-review.html",
+      "/readings/r-functions-reference.html",
+      "/readings/revisions.html",
+      "/readings/r-for-stat230.html",
+      "/readings/logistic-videos.html"
+    ]
+  },
+  {
     "listing": "/slides.html",
     "items": [
       "/slides/slides29.html",
@@ -71,45 +110,6 @@
       "/slides/slides02.html",
       "/slides/slides-cheat-sheet.html",
       "/slides/slides01.html"
-    ]
-  },
-  {
-    "listing": "/readings.html",
-    "items": [
-      "/readings/latex-for-stat230.html",
-      "/readings/exam01-practice.html",
-      "/readings/intro-review.html",
-      "/readings/exam01-review.html",
-      "/readings/quiz02-practice.html",
-      "/readings/exam02-review.html",
-      "/readings/exam03-review.html",
-      "/readings/r-functions-reference.html",
-      "/readings/revisions.html",
-      "/readings/r-for-stat230.html",
-      "/readings/logistic-videos.html"
-    ]
-  },
-  {
-    "listing": "/notes.html",
-    "items": [
-      "/notes/notes02.pdf",
-      "/notes/notes03.pdf",
-      "/notes/notes04.pdf",
-      "/notes/notes05.pdf",
-      "/notes/notes06.pdf",
-      "/notes/notes08.pdf",
-      "/notes/notes09.pdf",
-      "/notes/notes10.pdf",
-      "/notes/notes11.pdf",
-      "/notes/notes12.pdf",
-      "/notes/notes13.pdf",
-      "/notes/notes14.pdf",
-      "/notes/notes15.pdf",
-      "/notes/notes19.pdf",
-      "/notes/notes20.pdf",
-      "/notes/notes21.pdf",
-      "/notes/notes22.pdf",
-      "/notes/notes23.pdf"
     ]
   }
 ]
