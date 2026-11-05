@@ -191,7 +191,7 @@ Each row is one batch of `N` = 20 moths. To model the proportion that died, use 
 
 # Problem 6: Esophageal cancer (6 parts, Wed)
 
-<!-- The `esoph` data (built into R) come from a case-control study of esophageal cancer in Ille-et-Vilaine, France. Each row is a group of men with the same age group, daily alcohol consumption, and daily tobacco consumption. `ncases` is the number of men in that group with esophageal cancer and `ncontrols` is the number without. (If you'd like to see more info about the data, run `?esoph` in R) The predictors are stored as ordered categories, so we create numeric versions using the midpoint of each category:
+The `esoph` data (built into R) come from a case-control study of esophageal cancer in Ille-et-Vilaine, France. Each row is a group of men with the same age group, daily alcohol consumption, and daily tobacco consumption. `ncases` is the number of men in that group with esophageal cancer and `ncontrols` is the number without. (If you'd like to see more info about the data, run `?esoph` in R) The predictors are stored as ordered categories, so we create numeric versions using the midpoint of each category:
 
 ```{r}
 esoph_data <- esoph |>
@@ -205,10 +205,10 @@ esoph_data <- esoph |>
 
 (b) Fit a binomial logistic regression model using `agemid` and `alcmid` as predictors of the proportion of men with esophageal cancer (the response is `cbind(ncases, ncontrols)`). Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.
 
-(c) Create plots of the Pearson residuals versus the predictors for the model from part (b), with a smoother. Is there any evidence of non-linearity? (Many groups contain only a handful of men, so the individual points will be noisy. Focus on the smoother.)
+(c) Create plots of the Pearson residuals versus the predictors for the model from part (b), with a smoother. Is there any evidence of non-linearity? 
 
 (d) Add $\text{agemid}^2$ and `tobmid` to the model from part (b). Use a likelihood ratio test to test whether these two terms are needed. Then compare the AIC and BIC of the two models. Do the criteria agree with the test?
 
 (e) Using the model from part (d), interpret the effect of alcohol consumption on the **odds** of esophageal cancer for a 40 g/day increase (about one alcohol category), holding the other variables fixed.
 
-(f) This was a case-control study: the researchers chose a set of men with cancer (cases) and a set of men without (controls), rather than sampling men at random from a population. Explain why it would not make sense to use this model to estimate the probability that a man with a given age, alcohol, and tobacco level has esophageal cancer, even though the odds ratio in part (e) is still meaningful. -->
+(f) This was a case-control study: the researchers chose a set of men with cancer (cases) and a set of men without (controls), rather than sampling men at random from a population. Explain why it would not make sense to use this model to estimate the probability that a man with a given age, alcohol, and tobacco level has esophageal cancer, even though the odds ratio in part (e) is still meaningful.
