@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -414,32 +414,22 @@ Each row is one batch of `N` = 20 moths. To model the proportion that died, use 
 </section>
 <section id="problem-6-esophageal-cancer-6-parts-wed" class="level1">
 <h1>Problem 6: Esophageal cancer (6 parts, Wed)</h1>
-<!-- The `esoph` data (built into R) come from a case-control study of esophageal cancer in Ille-et-Vilaine, France. Each row is a group of men with the same age group, daily alcohol consumption, and daily tobacco consumption. `ncases` is the number of men in that group with esophageal cancer and `ncontrols` is the number without. (If you'd like to see more info about the data, run `?esoph` in R) The predictors are stored as ordered categories, so we create numeric versions using the midpoint of each category:
-
-
-::: {.cell}
-
-```{.r .cell-code}
-esoph_data <- esoph |>
-  mutate(agemid = c(29.5, 39.5, 49.5, 59.5, 69.5, 79.5)[as.integer(agegp)],  # age (years)
-         alcmid = c(20, 60, 100, 140)[as.integer(alcgp)],                    # alcohol (g/day)
-         tobmid = c(5, 15, 25, 35)[as.integer(tobgp)],                       # tobacco (g/day)
-         ntotal = ncases + ncontrols)                                        # create "total" 
-```
-:::
-
-
-(a) Create empirical logit plots of the log odds of esophageal cancer against `alcmid` and against `agemid`. Does either relationship look nonlinear?
-
-(b) Fit a binomial logistic regression model using `agemid` and `alcmid` as predictors of the proportion of men with esophageal cancer (the response is `cbind(ncases, ncontrols)`). Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.
-
-(c) Create plots of the Pearson residuals versus the predictors for the model from part (b), with a smoother. Is there any evidence of non-linearity? (Many groups contain only a handful of men, so the individual points will be noisy. Focus on the smoother.)
-
-(d) Add $\text{agemid}^2$ and `tobmid` to the model from part (b). Use a likelihood ratio test to test whether these two terms are needed. Then compare the AIC and BIC of the two models. Do the criteria agree with the test?
-
-(e) Using the model from part (d), interpret the effect of alcohol consumption on the **odds** of esophageal cancer for a 40 g/day increase (about one alcohol category), holding the other variables fixed.
-
-(f) This was a case-control study: the researchers chose a set of men with cancer (cases) and a set of men without (controls), rather than sampling men at random from a population. Explain why it would not make sense to use this model to estimate the probability that a man with a given age, alcohol, and tobacco level has esophageal cancer, even though the odds ratio in part (e) is still meaningful. -->
+<p>The <code>esoph</code> data (built into R) come from a case-control study of esophageal cancer in Ille-et-Vilaine, France. Each row is a group of men with the same age group, daily alcohol consumption, and daily tobacco consumption. <code>ncases</code> is the number of men in that group with esophageal cancer and <code>ncontrols</code> is the number without. (If you’d like to see more info about the data, run <code>?esoph</code> in R) The predictors are stored as ordered categories, so we create numeric versions using the midpoint of each category:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>esoph_data <span class="ot">&lt;-</span> esoph <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">agemid =</span> <span class="fu">c</span>(<span class="fl">29.5</span>, <span class="fl">39.5</span>, <span class="fl">49.5</span>, <span class="fl">59.5</span>, <span class="fl">69.5</span>, <span class="fl">79.5</span>)[<span class="fu">as.integer</span>(agegp)],  <span class="co"># age (years)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">alcmid =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">60</span>, <span class="dv">100</span>, <span class="dv">140</span>)[<span class="fu">as.integer</span>(alcgp)],                    <span class="co"># alcohol (g/day)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">tobmid =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">25</span>, <span class="dv">35</span>)[<span class="fu">as.integer</span>(tobgp)],                       <span class="co"># tobacco (g/day)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ntotal =</span> ncases <span class="sc">+</span> ncontrols)                                        <span class="co"># create "total" </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="a">
+<li><p>Create empirical logit plots of the log odds of esophageal cancer against <code>alcmid</code> and against <code>agemid</code>. Does either relationship look nonlinear?</p></li>
+<li><p>Fit a binomial logistic regression model using <code>agemid</code> and <code>alcmid</code> as predictors of the proportion of men with esophageal cancer (the response is <code>cbind(ncases, ncontrols)</code>). Report the fitted model equation and the results of the likelihood ratio test against the null model. Be sure to include the test statistic, d.f., and p-value, as well as a conclusion in context.</p></li>
+<li><p>Create plots of the Pearson residuals versus the predictors for the model from part (b), with a smoother. Is there any evidence of non-linearity?</p></li>
+<li><p>Add <span class="math inline">\(\text{agemid}^2\)</span> and <code>tobmid</code> to the model from part (b). Use a likelihood ratio test to test whether these two terms are needed. Then compare the AIC and BIC of the two models. Do the criteria agree with the test?</p></li>
+<li><p>Using the model from part (d), interpret the effect of alcohol consumption on the <strong>odds</strong> of esophageal cancer for a 40 g/day increase (about one alcohol category), holding the other variables fixed.</p></li>
+<li><p>This was a case-control study: the researchers chose a set of men with cancer (cases) and a set of men without (controls), rather than sampling men at random from a population. Explain why it would not make sense to use this model to estimate the probability that a man with a given age, alcohol, and tobacco level has esophageal cancer, even though the odds ratio in part (e) is still meaningful.</p></li>
+</ol>
 
 
 </section>
@@ -518,7 +508,7 @@ esoph_data <- esoph |>
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
