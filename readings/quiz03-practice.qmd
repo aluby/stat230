@@ -1,0 +1,722 @@
+---
+title: "Quiz03 Practice Questions"
+format:
+    html: default
+    pdf: default
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+library(bayesrules)
+library(ggResidpanel)
+theme_set(theme_minimal())
+
+news <- read.csv(here::here("data/fake_news_bayesrules.csv"))
+budworm <- read.csv(here::here("data/budworm.csv"))
+medschool <- read.csv("https://aloy.rbind.io/data/medschool.csv")
+sleep <- read.csv(here::here("data/smartphone_sleep.csv"))
+moths <- read.csv(here::here("data/moths.csv"))
+car_purchase <- read.csv(here::here("data/car_purchase.csv"))
+possums <- read.csv(here::here("data/possums.csv"))
+tires <- Sleuth3::ex2018[-1, ]
+data(equality_index)
+
+language <- read.csv(here::here("data/Lang.csv")) |>
+  mutate(sex = gender - 1,
+         language = case_when(language == 1 ~ "Monolingual",
+                              language == 2 ~ "Exposed",
+                              language == 3 ~ "Bilingual"),
+         maternal_ed = mated,
+         success = grid,
+         trials = 4) |>
+  drop_na(success)
+
+f2 <- function(x) sprintf("%.2f", x)
+f3 <- function(x) sprintf("%.3f", x)
+f4 <- function(x) sprintf("%.4f", x)
+nosci <- function(x, d = 2) format(signif(x, d), scientific = FALSE)
+```
+
+Practice questions for each skill on the [Quiz03 Review](exam03-review.qmd) sheet. The data sets are ones we've seen in class or on the homework, but the models and questions are new.
+
+## 1. Express a regression model using proper notation
+
+*Example question* The fake news data includes `negative`, the percent of words in the article with negative sentiment, and `title_has_excl`, whether the title has an exclamation point. The model below allows the relationship between `negative` and the chance that an article is fake to be different for titles with and without an exclamation point.
+
+```{r}
+news_int <- glm(type_num ~ negative * title_has_excl, data = news, family = "binomial")
+tidy(news_int)
+```
+
+(a) Using proper statistical notation, write down the theoretical model that was fit, on both the log-odds scale and the probability scale. Define all variables.
+
+(b) Write down the fitted log-odds equation for titles **with** an exclamation point and for titles **without** one.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+nb <- coef(news_int)
+```
+
+(a) $Y_i \sim \text{Bernoulli}(\pi_i)$, where $Y_i = 1$ if article $i$ is fake and 0 if it is real, and
+
+$$\log\left(\frac{\pi_i}{1 - \pi_i}\right) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i1} x_{i2}$$
+
+$$\pi_i = \frac{e^{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i1} x_{i2}}}{1 + e^{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i1} x_{i2}}}$$
+
+where $\pi_i$ is the probability that article $i$ is fake, $x_{i1}$ is the percent of words with negative sentiment, and $x_{i2}$ is an indicator variable that equals 1 if the title has an exclamation point and 0 if not. There is no error term: the randomness comes from $Y_i$ being a 0 or a 1.
+
+(b) Without an exclamation point ($x_2 = 0$):
+
+$$\text{logit}(\widehat\pi) = `r f3(nb[1])` + `r f3(nb[2])` \times \text{negative}$$
+
+With an exclamation point ($x_2 = 1$):
+
+$$\text{logit}(\widehat\pi) = (`r f3(nb[1])` + `r f3(nb[3])`) + (`r f3(nb[2])` `r f3(nb[4])`) \times \text{negative} = `r f3(nb[1] + nb[3])` + `r f3(nb[2] + nb[4])` \times \text{negative}$$
+
+:::
+:::
+
+*Example question* In the budworm experiment, batches of 20 moths of each sex were exposed to different doses of a toxin, and the number of moths in each batch that died was recorded. The model below uses `sex` and $\log_2(\text{dose})$, and their interaction.
+
+```{r}
+bud_int <- glm(cbind(numdead, N - numdead) ~ sex * log2(dose),
+               data = budworm, family = "binomial")
+tidy(bud_int)
+```
+
+(a) What is $Y_i$, and what is $n_i$? Using proper notation, write down the theoretical binomial logistic regression model that was fit. Define all variables.
+
+(b) Write down the fitted log-odds equation for female moths and for male moths.
+
+(c) Why is $\log_2(\text{dose})$ a convenient scale for this predictor? What does a 1-unit increase in $\log_2(\text{dose})$ mean in terms of the dose?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+bb <- coef(bud_int)
+```
+
+(a) $Y_i$ is the number of moths in batch $i$ that died, and $n_i = 20$ is the number of moths in the batch. The model is $Y_i \sim \text{Binomial}(n_i, \pi_i)$ with
+
+$$\log\left(\frac{\pi_i}{1 - \pi_i}\right) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i1} x_{i2}$$
+
+where $\pi_i$ is the probability that a moth in batch $i$ dies, $x_{i1}$ is an indicator variable that equals 1 if the batch is male and 0 if female, and $x_{i2} = \log_2(\text{dose})$ for batch $i$.
+
+(b) Females ($x_1 = 0$):
+
+$$\text{logit}(\widehat\pi) = `r f3(bb[1])` + `r f3(bb[3])` \log_2(\text{dose})$$
+
+Males ($x_1 = 1$):
+
+$$\text{logit}(\widehat\pi) = (`r f3(bb[1])` + `r f3(bb[2])`) + (`r f3(bb[3])` + `r f3(bb[4])`) \log_2(\text{dose}) = `r f3(bb[1] + bb[2])` + `r f3(bb[3] + bb[4])` \log_2(\text{dose})$$
+
+(c) The doses in the experiment double each time (1, 2, 4, 8, 16, 32), so they are equally spaced on the $\log_2$ scale. A 1-unit increase in $\log_2(\text{dose})$ is a **doubling** of the dose.
+
+:::
+:::
+
+## 2. Interpret the coefficients of a model in context
+
+*Example question* Below is a model for whether an applicant was accepted to medical school, using their undergraduate `GPA` and `MCAT` score.
+
+```{r}
+med_glm <- glm(Acceptance ~ GPA + MCAT, data = medschool, family = "binomial")
+tidy(med_glm)
+```
+
+(a) Interpret the coefficient for `GPA` on the odds scale, for a **0.1**-point increase in GPA.
+
+(b) Interpret the coefficient for `MCAT` on the odds scale, for a **5**-point increase in MCAT score.
+
+(c) Does the intercept have a meaningful interpretation here? Explain.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+mb <- coef(med_glm)
+```
+
+(a) $e^{0.1 \times `r f3(mb[2])`} = `r f2(exp(0.1 * mb[2]))`$. Holding MCAT score constant, a 0.1-point increase in GPA is associated with the odds of acceptance being multiplied by `r f2(exp(0.1 * mb[2]))` (about a `r round(100 * (exp(0.1 * mb[2]) - 1))`% increase in the odds).
+
+(b) $e^{5 \times `r f3(mb[3])`} = `r f2(exp(5 * mb[3]))`$. Holding GPA constant, a 5-point increase in MCAT score is associated with the odds of acceptance being multiplied by `r f2(exp(5 * mb[3]))`.
+
+(c) No. The intercept is the log-odds of acceptance for an applicant with a GPA of 0 and an MCAT score of 0, which is far outside the range of the data (GPAs range from `r min(medschool$GPA)` to `r max(medschool$GPA)`).
+
+:::
+:::
+
+*Example question* Below is the binomial logistic regression model for the number of successes (out of 4 trials) on the communication task from the language exposure study. `Bilingual` is the reference level for `language`.
+
+```{r}
+lang_glm <- glm(success/trials ~ sex + kbit + ppvt + maternal_ed + age + language,
+                data = language, family = "binomial", weights = trials)
+tidy(lang_glm)
+```
+
+(a) Interpret the coefficient for `age` on the odds scale. (Age is measured in years.)
+
+(b) Interpret the coefficient for `languageExposed` on the odds scale.
+
+(c) We saw in class that these data are overdispersed. Would your interpretations in (a) and (b) change if we used the quasibinomial model instead? Explain.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+lb <- coef(lang_glm)
+```
+
+(a) $e^{`r f3(lb["age"])`} = `r f2(exp(lb["age"]))`$. Holding the other variables constant, each additional year of age is associated with the odds of success on a trial being multiplied by `r f2(exp(lb["age"]))` (about `r round(100 * (1 - exp(lb["age"])))`% lower odds).
+
+(b) $e^{`r f3(lb["languageExposed"])`} = `r f2(exp(lb["languageExposed"]))`$. Holding the other variables constant, the estimated odds of success for children who are exposed to another language are `r f2(exp(lb["languageExposed"]))` times the odds for bilingual children; that is, about the same.
+
+(c) No. The quasibinomial model gives the same estimates, so the interpretations are the same. Only the standard errors (and so the tests and confidence intervals) change.
+
+:::
+:::
+
+## 3. Check necessary conditions for a regression model and discuss the implications of a model deficiency
+
+*Example question* Below are the leverage and Cook's distance plots for the smartphone and sleep model, `good_sleep ~ phone_dependence + age + bmi + smoking + drinking + phone_before_bed` ($n = 409$), and the three students with the largest Cook's distances.
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+#| fig-alt: "Residual-leverage plot and Cook's distance plot for the smartphone and sleep model. One point has much larger leverage and Cook's distance than the others."
+sleep_glm <- glm(good_sleep ~ phone_dependence + age + bmi + smoking + drinking + phone_before_bed,
+                 data = sleep, family = "binomial")
+resid_panel(sleep_glm, plots = c("lev", "cookd"), type = "pearson")
+```
+
+```{r}
+sleep_aug <- augment(sleep_glm, data = sleep)
+sleep_aug |>
+  arrange(desc(.cooksd)) |>
+  select(good_sleep, phone_dependence, age, bmi, .hat, .cooksd) |>
+  head(3)
+```
+
+(a) Which student has high leverage? Use the table to explain why.
+
+(b) Is this student influential? Explain.
+
+(c) The students in this study were all ages 15 to 21. What would you do with this observation?
+
+(d) Why can't we use the Pearson $\chi^2$ goodness-of-fit test to check this model?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+top <- sleep_aug |> arrange(desc(.cooksd)) |> slice(1)
+```
+
+(a) The student with age `r top$age` and BMI `r f2(top$bmi)` has leverage `r f2(top$.hat)`, far above the rule of thumb $2(p+1)/n = 2(7)/409 = `r f3(14/409)`$. Their age and BMI are both far from the rest of the data.
+
+(b) Yes. Their Cook's distance is `r f2(top$.cooksd)`, which is above 1 and about 50 times larger than the next largest value. Including this student changes the fitted model a lot.
+
+(c) An age of 76 (and a BMI of 1.04) isn't possible in this study, so this is almost certainly a data entry error. We should not use this value as is: we could try to find the correct value, or remove the row, refit the model, and report that we did so.
+
+(d) This is a binary logistic regression ($n_i = 1$ for every row). The $\chi^2$ approximation for the goodness-of-fit test needs the counts in each row to be large, so the test is only valid for binomial logistic regression with large enough $n_i$.
+
+:::
+:::
+
+*Example question* Below is a binomial logistic regression model for the moths data, using `Distance` and `Morph` **without** an interaction, along with the Pearson $\chi^2$ statistic and an empirical logit plot.
+
+```{r}
+moth_add <- glm(Removed/Placed ~ Distance + Morph, weights = Placed,
+                data = moths, family = "binomial")
+tidy(moth_add)
+
+X2 <- sum(residuals(moth_add, type = "pearson")^2)
+X2
+df.residual(moth_add)
+1 - pchisq(X2, df = df.residual(moth_add))
+```
+
+```{r}
+#| fig-width: 5
+#| fig-height: 3
+#| fig-alt: "Empirical logit of the proportion removed against distance from Liverpool, with a separate line for light and dark moths. The line for dark moths increases and the line for light moths decreases."
+moths |>
+  mutate(emp_logit = log((Removed + 0.5) / (Placed - Removed + 0.5))) |>
+  gf_point(emp_logit ~ Distance, color = ~Morph, ylab = "Empirical logit") |>
+  gf_lm()
+```
+
+(a) State the hypotheses for the goodness-of-fit test, and give your conclusion in context.
+
+(b) Every row has at least `r min(moths$Removed)` moths removed and `r min(moths$Placed - moths$Removed)` not removed. Why does this matter for the test in (a)?
+
+(c) Based on the plot, what is wrong with this model? What would you change?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) $H_0$: the model $\text{logit}(\pi_i) = \beta_0 + \beta_1 \text{distance}_i + \beta_2 \text{light}_i$ is adequate, vs. $H_a$: the model is inadequate (each row needs its own probability). $X^2 = `r f2(X2)`$ on `r df.residual(moth_add)` df, p-value $= `r f3(1 - pchisq(X2, df.residual(moth_add)))`$. There is strong evidence that the additive model does not fit the moths data well.
+
+(b) The $\chi^2$ approximation for the goodness-of-fit test is only reliable when the counts of successes and failures in every row are large enough (about 5 or more). That holds here, so we can trust the test.
+
+(c) The empirical logits increase with distance for dark moths but decrease for light moths, so the slopes are different for the two morphs. The additive model forces the slopes to be the same. We should add a `Distance * Morph` interaction.
+
+:::
+:::
+
+## 4. Perform hypothesis tests about a single regression coefficient
+
+*Example question* Use the model below for whether an article is fake, using `negative` and `title_has_excl`. Before looking at the data, a researcher hypothesized that articles with more negative sentiment are *more* likely to be fake, after accounting for whether the title has an exclamation point.
+
+```{r}
+news_add <- glm(type_num ~ negative + title_has_excl, data = news, family = "binomial")
+tidy(news_add)
+```
+
+(a) State the hypotheses for the researcher's question in words and in notation.
+
+(b) Find the p-value for this test, and give your conclusion in context.
+
+(c) What would the p-value be if the researcher had instead hypothesized that articles with more negative sentiment are *less* likely to be fake?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+na <- tidy(news_add)
+```
+
+(a) $H_0: \beta_1 = 0$ (after accounting for exclamation points, negative sentiment is not associated with the odds of an article being fake) vs. $H_a: \beta_1 > 0$ (more negative sentiment is associated with higher odds of being fake), where $\beta_1$ is the coefficient for `negative`.
+
+(b) R gives a two-sided p-value. The test statistic $z = `r f2(na$statistic[2])`$ is in the direction of $H_a$, so the one-sided p-value is half of R's: $`r f4(na$p.value[2])` / 2 = `r f4(na$p.value[2] / 2)`$. There is strong evidence that, after accounting for whether the title has an exclamation point, articles with more negative sentiment have higher odds of being fake.
+
+(c) The test statistic is in the opposite direction of this $H_a$, so the p-value is $1 - `r f4(na$p.value[2] / 2)` = `r f4(1 - na$p.value[2] / 2)`$.
+
+:::
+:::
+
+*Example question* Use the `bud_int` output from Skill 1. Is there evidence that the association between dose and the chance of dying is different for male and female moths?
+
+```{r}
+#| echo: true
+2 * (1 - pnorm(1.31))
+```
+
+(a) State the hypotheses in words and in notation.
+
+(b) Show where the test statistic in the output comes from, and explain how the p-value is calculated.
+
+(c) Give your conclusion in context.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+bt <- tidy(bud_int)
+```
+
+(a) $H_0: \beta_3 = 0$ (the slope for $\log_2(\text{dose})$ is the same for males and females) vs. $H_a: \beta_3 \ne 0$ (the slopes are different), where $\beta_3$ is the coefficient of the interaction `sexM:log2(dose)`.
+
+(b) $z = \dfrac{\widehat\beta_3 - 0}{SE(\widehat\beta_3)} = \dfrac{`r f3(bt$estimate[4])`}{`r f3(bt$std.error[4])`} = `r f2(bt$statistic[4])`$. The p-value is the probability of a $z$ statistic at least this far from 0 (in either direction) using the $N(0,1)$ distribution: $2 P(Z > `r f2(bt$statistic[4])`) = `r f2(bt$p.value[4])`$.
+
+(c) The p-value is large, so there is not evidence that the association between dose and the odds of dying is different for male and female moths.
+
+:::
+:::
+
+## 5. Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients
+
+*Example question* Use the `med_glm` output from Skill 2, and the `qnorm()` output below.
+
+```{r}
+#| echo: true
+qnorm(0.95)
+```
+
+(a) Calculate a 90% confidence interval for the coefficient of `GPA`.
+
+(b) Interpret your interval on the odds scale, for a 0.1-point increase in GPA.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+mt <- tidy(med_glm)
+ci_gpa <- mt$estimate[2] + c(-1, 1) * qnorm(0.95) * mt$std.error[2]
+```
+
+(a) $z^* = 1.645$, so the interval is $`r f3(mt$estimate[2])` \pm 1.645(`r f3(mt$std.error[2])`) = (`r f3(ci_gpa[1])`, `r f3(ci_gpa[2])`)$.
+
+(b) For a 0.1-point increase, multiply the endpoints by 0.1 and exponentiate: $(e^{`r f4(0.1 * ci_gpa[1])`}, e^{`r f4(0.1 * ci_gpa[2])`}) = (`r f2(exp(0.1 * ci_gpa[1]))`, `r f2(exp(0.1 * ci_gpa[2]))`)$. We are 90% confident that, holding MCAT score constant, a 0.1-point increase in GPA is associated with the odds of acceptance being multiplied by between `r f2(exp(0.1 * ci_gpa[1]))` and `r f2(exp(0.1 * ci_gpa[2]))`.
+
+:::
+:::
+
+*Example question* Use the `bud_int` model from Skill 1. Below is the covariance matrix of the estimated coefficients.
+
+```{r}
+round(vcov(bud_int), 4)
+```
+
+(a) Write the slope of $\log_2(\text{dose})$ for **male** moths as a linear combination of the $\beta$'s, and calculate its estimate.
+
+(b) Calculate the standard error of your estimate in (a).
+
+(c) Calculate a 95% confidence interval for the slope for male moths, and interpret it on the odds scale.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+bv <- vcov(bud_int)
+g_hat <- unname(bb[3] + bb[4])
+g_se <- unname(sqrt(bv[3, 3] + bv[4, 4] + 2 * bv[3, 4]))
+g_ci <- g_hat + c(-1, 1) * 1.96 * g_se
+```
+
+(a) $\gamma = \beta_2 + \beta_3$, so $\widehat\gamma = `r f3(bb[3])` + `r f3(bb[4])` = `r f3(g_hat)`$.
+
+(b) $SE(\widehat\gamma) = \sqrt{Var(\widehat\beta_2) + Var(\widehat\beta_3) + 2 Cov(\widehat\beta_2, \widehat\beta_3)} = \sqrt{`r f4(bv[3, 3])` + `r f4(bv[4, 4])` + 2(`r f4(bv[3, 4])`)} = `r f3(g_se)`$
+
+(c) $`r f3(g_hat)` \pm 1.96(`r f3(g_se)`) = (`r f3(g_ci[1])`, `r f3(g_ci[2])`)$. Exponentiating, $(e^{`r f3(g_ci[1])`}, e^{`r f3(g_ci[2])`}) = (`r f2(exp(g_ci[1]))`, `r f2(exp(g_ci[2]))`)$. We are 95% confident that, for male moths, each doubling of the dose is associated with the odds of dying being multiplied by between `r f2(exp(g_ci[1]))` and `r f2(exp(g_ci[2]))`.
+
+:::
+:::
+
+## 6. Use a regression model to make appropriate predictions
+
+*Example question* Below is the model from the homework for whether a fatal accident was tire-related (`Cause`), using the age of the vehicle (in years), the number of passengers, and the make of the vehicle (Ford or Other).
+
+```{r}
+tire_glm <- glm(Cause ~ VehicleAge + I(VehicleAge^2) + Passengers * Make,
+                data = tires, family = "binomial")
+tidy(tire_glm)
+```
+
+(a) Calculate the predicted log-odds, odds, and probability that an accident in a 3-year-old Ford with 2 passengers was tire-related.
+
+(b) Repeat (a) for a 3-year-old vehicle of another make with 2 passengers.
+
+(c) For a Ford with 2 passengers, at what vehicle age are the predicted odds of a tire-related accident the highest?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+tb <- coef(tire_glm)
+eta_ford <- unname(tb[1] + 3 * tb[2] + 9 * tb[3] + 2 * tb[4])
+eta_other <- unname(eta_ford + tb[5] + 2 * tb[6])
+```
+
+(a) $\widehat\eta = `r f3(tb[1])` + `r f3(tb[2])`(3) `r f3(tb[3])`(3^2) + `r f3(tb[4])`(2) = `r f3(eta_ford)`$. The predicted odds are $e^{`r f3(eta_ford)`} = `r f4(exp(eta_ford))`$, and the predicted probability is $`r f4(exp(eta_ford))` / (1 + `r f4(exp(eta_ford))`) = `r f4(exp(eta_ford) / (1 + exp(eta_ford)))`$.
+
+(b) Add the `MakeOther` and interaction terms: $\widehat\eta = `r f3(eta_ford)` `r f3(tb[5])` + (`r f3(tb[6])`)(2) = `r f3(eta_other)`$. The predicted odds are $e^{`r f3(eta_other)`} = `r f4(exp(eta_other))`$, and the predicted probability is `r f4(exp(eta_other) / (1 + exp(eta_other)))`.
+
+(c) The log-odds is a downward-facing parabola in vehicle age, which is highest at $-\widehat\beta_1 / (2\widehat\beta_2) = `r f3(tb[2])` / (2 \times `r f3(-tb[3])`) = `r f2(-tb[2] / (2 * tb[3]))`$ years. (This is the same for any make and number of passengers, since age doesn't interact with them.)
+
+:::
+:::
+
+*Example question* Below is the model from the homework for whether a family purchases a new car in the next year, using `income` (in thousands of dollars) and `car_age` (the age of their oldest car, in years).
+
+```{r}
+cars_glm <- glm(y ~ income + car_age, data = car_purchase, family = "binomial")
+tidy(cars_glm)
+```
+
+(a) Calculate the predicted probability that a family with an income of \$150 thousand and an oldest car that is 5 years old will purchase a new car.
+
+(b) For a family whose oldest car is 2 years old, what income gives a predicted probability of 0.5 of purchasing a new car? (*Hint:* what are the odds and log-odds when the probability is 0.5?)
+
+(c) Two families have the same income, but one family's oldest car is 5 years old and the other's is 2 years old. How many times larger are the predicted odds of purchasing a new car for the first family?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+cb <- coef(cars_glm)
+eta_c <- unname(cb[1] + 150 * cb[2] + 5 * cb[3])
+inc50 <- unname(-(cb[1] + 2 * cb[3]) / cb[2])
+```
+
+(a) $\widehat\eta = `r f3(cb[1])` + `r f4(cb[2])`(150) + `r f3(cb[3])`(5) = `r f3(eta_c)`$, so $\widehat\pi = e^{`r f3(eta_c)`} / (1 + e^{`r f3(eta_c)`}) = `r f3(exp(eta_c) / (1 + exp(eta_c)))`$.
+
+(b) A probability of 0.5 means odds of 1 and log-odds of 0. Solve $0 = `r f3(cb[1])` + `r f4(cb[2])`(\text{income}) + `r f3(cb[3])`(2)$ to get an income of about \$`r round(inc50)` thousand.
+
+(c) $e^{3 \times `r f3(cb[3])`} = `r f2(exp(3 * cb[3]))`$ times larger (a 3-year difference in car age).
+
+:::
+:::
+
+## 7. Conduct inference to compare nested regression models
+
+*Example question* For the smartphone and sleep data, we want to know whether smoking and drinking help explain sleep quality, after accounting for smartphone dependence, age, BMI, and smartphone use before bed. Below are the residual deviances of the two models and some $\chi^2$ critical values.
+
+```{r}
+sleep_reduced <- glm(good_sleep ~ phone_dependence + age + bmi + phone_before_bed,
+                     data = sleep, family = "binomial")
+sleep_full <- glm(good_sleep ~ phone_dependence + age + bmi + phone_before_bed + smoking + drinking,
+                  data = sleep, family = "binomial")
+
+deviance(sleep_reduced)
+deviance(sleep_full)
+```
+
+```{r}
+#| echo: true
+qchisq(0.95, df = 1:3)
+```
+
+(a) Explain why these two models are nested.
+
+(b) State the null and alternative hypotheses.
+
+(c) Calculate the likelihood ratio test statistic and give its degrees of freedom. What do you conclude at $\alpha = 0.05$?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+lam_s <- deviance(sleep_reduced) - deviance(sleep_full)
+```
+
+(a) The reduced model is the full model with the coefficients for `smoking` and `drinking` set to 0.
+
+(b) $H_0: \beta_{\text{smoking}} = \beta_{\text{drinking}} = 0$ vs. $H_a$: at least one of these is not 0 (in the full model).
+
+(c) $\Lambda = `r f2(deviance(sleep_reduced))` - `r f2(deviance(sleep_full))` = `r f2(lam_s)`$ on 2 df. This is less than the critical value of 5.99, so the p-value is larger than 0.05 (it is `r f3(1 - pchisq(lam_s, 2))`). There is not enough evidence that smoking and drinking help explain sleep quality, after accounting for the other variables.
+
+:::
+:::
+
+*Example question* Below is a model for medical school acceptance that adds the applicant's `Sex` to `med_glm` from Skill 2, along with a likelihood ratio test comparing the two models.
+
+```{r}
+med_sex <- glm(Acceptance ~ GPA + MCAT + Sex, data = medschool, family = "binomial")
+tidy(med_sex)
+anova(med_glm, med_sex, test = "LRT")
+```
+
+(a) State the hypotheses for the likelihood ratio test, and give your conclusion at $\alpha = 0.05$.
+
+(b) The `SexM` row of the coefficient table also tests whether `Sex` is needed. Compare its p-value to the LRT p-value. Why aren't they exactly the same?
+
+(c) Calculate AIC for both models ($AIC = \text{deviance} + 2k$, where $k$ is the number of coefficients). Which model does AIC prefer? Does this contradict your answer to (a)?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+med_lrt <- anova(med_glm, med_sex, test = "LRT")
+```
+
+(a) $H_0: \beta_{\text{SexM}} = 0$ vs. $H_a: \beta_{\text{SexM}} \ne 0$ (in the model with GPA, MCAT, and Sex). $\Lambda = `r f2(med_lrt$Deviance[2])`$ on 1 df, p-value $= `r f3(med_lrt[2, "Pr(>Chi)"])`$. At $\alpha = 0.05$, there is not enough evidence that sex is associated with the odds of acceptance, after accounting for GPA and MCAT score.
+
+(b) The $z$-test p-value is `r f3(tidy(med_sex)$p.value[4])` and the LRT p-value is `r f3(med_lrt[2, "Pr(>Chi)"])`. Both test the same hypothesis, but in logistic regression the $z$-test and LRT use different approximations, so they aren't exactly equal (unlike the $t$- and $F$-tests in linear regression). They lead to the same conclusion here. If they disagreed, we'd trust the LRT more.
+
+(c) Without Sex: $`r f2(deviance(med_glm))` + 2(3) = `r f2(AIC(med_glm))`$. With Sex: $`r f2(deviance(med_sex))` + 2(4) = `r f2(AIC(med_sex))`$. AIC prefers the model with Sex. This doesn't contradict (a): the two methods answer different questions with different thresholds. AIC adds a coefficient whenever the deviance drops by more than 2, while the LRT at $\alpha = 0.05$ requires a drop of more than 3.84. The drop here (`r f2(med_lrt$Deviance[2])`) is in between.
+
+:::
+:::
+
+## 8. Identify a binomial logistic regression scenario and whether overdispersion is present
+
+*Example question* For each scenario, say whether you would use binary logistic regression, binomial logistic regression, or neither. For the binomial scenarios, what is $n_i$?
+
+(a) Each row is a news article, and the response is whether it is fake or real.
+
+(b) Each row is a batch of 20 budworm moths, and the response is the number in the batch that died.
+
+(c) Each row is a child in the language exposure study, and the response is the number of the 4 trials the child got right.
+
+(d) Each row is a forest site, and the response is the number of possum species found there.
+
+(e) Each row is a student, and the response is whether they have good sleep quality (a PSQI of 5 or below).
+
+(f) Each row is a moth in the budworm experiment, and the response is whether it died. Which model is this, and how is it related to (b)?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+(a) Binary.
+
+(b) Binomial, $n_i = 20$.
+
+(c) Binomial, $n_i = 4$.
+
+(d) Neither: the response is a count with no fixed number of trials, so we'd use Poisson regression.
+
+(e) Binary. (The PSQI score itself is quantitative, but the response is the 0/1 version.)
+
+(f) Binary. It is the same data as (b), recorded one moth per row. The two give the same estimates and standard errors, but only the grouped (binomial) version lets us use the goodness-of-fit test and check for overdispersion.
+
+:::
+:::
+
+*Example question* Below are the Pearson $\chi^2$ statistics and residual degrees of freedom for two binomial logistic regression models: the budworm model `sex + log2(dose)`, and the language exposure model from Skill 2.
+
+```{r}
+bud_add <- glm(cbind(numdead, N - numdead) ~ sex + log2(dose),
+               data = budworm, family = "binomial")
+sum(residuals(bud_add, type = "pearson")^2)
+df.residual(bud_add)
+
+sum(residuals(lang_glm, type = "pearson")^2)
+df.residual(lang_glm)
+```
+
+(a) Estimate the dispersion parameter $\widehat\psi$ for each model. Which model shows evidence of overdispersion?
+
+(b) For the language model, the binomial $z$-test for `ppvt` gives $z = `r f2(tidy(lang_glm)$statistic[4])`$ (p = `r f3(tidy(lang_glm)$p.value[4])`). Calculate the test statistic for `ppvt` under the quasibinomial model. Would your conclusion at $\alpha = 0.10$ change?
+
+(c) Give one reason why the language data might be overdispersed when the budworm data are not.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+psi_bud <- sum(residuals(bud_add, type = "pearson")^2) / df.residual(bud_add)
+psi_lang <- sum(residuals(lang_glm, type = "pearson")^2) / df.residual(lang_glm)
+lt <- tidy(lang_glm)
+lang_q <- glm(success/trials ~ sex + kbit + ppvt + maternal_ed + age + language,
+              data = language, family = "quasibinomial", weights = trials)
+```
+
+(a) Budworm: $\widehat\psi = `r f2(sum(residuals(bud_add, type = "pearson")^2))` / `r df.residual(bud_add)` = `r f2(psi_bud)`$. Language: $\widehat\psi = `r f2(sum(residuals(lang_glm, type = "pearson")^2))` / `r df.residual(lang_glm)` = `r f2(psi_lang)`$. The language model is overdispersed ($\widehat\psi$ is much bigger than 1). The budworm model is not.
+
+(b) The quasibinomial standard error is $\sqrt{`r f2(psi_lang)`} \times `r f4(lt$std.error[4])` = `r f4(sqrt(psi_lang) * lt$std.error[4])`$, so $t = `r f4(lt$estimate[4])` / `r f4(sqrt(psi_lang) * lt$std.error[4])` = `r f2(lt$estimate[4] / (sqrt(psi_lang) * lt$std.error[4]))`$. Equivalently, $t = z / \sqrt{\widehat\psi}$. Using a $t$ distribution with `r df.residual(lang_glm)` df, the p-value is about `r f2(tidy(lang_q)$p.value[4])`, so the conclusion changes: `ppvt` was significant at $\alpha = 0.10$ under the binomial model, but not under the quasibinomial model.
+
+(c) The binomial model assumes each child's 4 trials are independent with the same probability of success. But some children are better at the task than others in ways the predictors don't capture, so a child's trials tend to be all right or all wrong, which makes the counts more variable than the binomial model expects. In the budworm experiment, every moth in a batch got the same dose under controlled conditions, so the binomial assumptions are more plausible (and $\widehat\psi < 1$ agrees).
+
+:::
+:::
+
+## 9. Poisson regression
+
+*Example question* The `equality_index` data records the number of anti-discrimination `laws` in each US state. The model below uses the percent of the state's population that lives in urban areas (`percent_urban`) and the state's `region` (`midwest` is the reference level).
+
+```{r}
+eq_glm <- glm(laws ~ percent_urban + region, data = equality_index, family = "poisson")
+tidy(eq_glm)
+```
+
+(a) Using proper notation, write the theoretical Poisson regression model that was fit. Define all variables.
+
+(b) Interpret the coefficient for `percent_urban` for a 10-percentage-point increase, and the coefficient for `regionwest`, in context.
+
+(c) Calculate the predicted mean number of laws for a midwest state where 70% of the population lives in urban areas.
+
+(d) Below is a likelihood ratio test for whether `region` is needed. State the hypotheses, the test statistic and degrees of freedom, and your conclusion.
+
+```{r}
+eq_reduced <- glm(laws ~ percent_urban, data = equality_index, family = "poisson")
+anova(eq_reduced, eq_glm, test = "LRT")
+```
+
+(e) The sum of the squared Pearson residuals for `eq_glm` is `r f2(sum(residuals(eq_glm, type = "pearson")^2))` on `r df.residual(eq_glm)` df. What does this tell you? How would the standard errors change if we used a quasipoisson model?
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+eb <- coef(eq_glm)
+eta_mw <- unname(eb[1] + 70 * eb[2])
+eq_lrt <- anova(eq_reduced, eq_glm, test = "LRT")
+psi_eq <- sum(residuals(eq_glm, type = "pearson")^2) / df.residual(eq_glm)
+```
+
+(a) $Y_i \sim \text{Poisson}(\lambda_i)$, where $Y_i$ is the number of anti-discrimination laws in state $i$ and $\lambda_i$ is its mean, with
+
+$$\log(\lambda_i) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i3} + \beta_4 x_{i4}$$
+
+where $x_{i1}$ is the percent urban, and $x_{i2}$, $x_{i3}$, and $x_{i4}$ are indicator variables for the northeast, south, and west regions.
+
+(b) `percent_urban`: $e^{10 \times `r f4(eb[2])`} = `r f2(exp(10 * eb[2]))`$. Holding region constant, a 10-percentage-point increase in the urban population is associated with the mean number of laws being multiplied by `r f2(exp(10 * eb[2]))` (about a `r round(100 * (exp(10 * eb[2]) - 1))`% increase).
+
+`regionwest`: $e^{`r f3(eb[5])`} = `r f2(exp(eb[5]))`$. For states with the same percent urban, the mean number of laws in western states is estimated to be `r f2(exp(eb[5]))` times the mean in midwestern states.
+
+(c) $\log(\widehat\lambda) = `r f3(eb[1])` + `r f4(eb[2])`(70) = `r f3(eta_mw)`$, so $\widehat\lambda = e^{`r f3(eta_mw)`} = `r f2(exp(eta_mw))`$ laws.
+
+(d) $H_0: \beta_2 = \beta_3 = \beta_4 = 0$ (after accounting for percent urban, the mean number of laws is the same in every region) vs. $H_a$: at least one is not 0. $\Lambda = `r f2(eq_lrt$Deviance[2])`$ on 3 df, and the p-value is less than 0.0001. There is strong evidence that region is associated with the number of laws, after accounting for percent urban.
+
+(e) $\widehat\psi = `r f2(sum(residuals(eq_glm, type = "pearson")^2))` / `r df.residual(eq_glm)` = `r f2(psi_eq)`$, which is much bigger than 1, so the data are overdispersed: the number of laws varies much more than a Poisson model allows. The quasipoisson model would multiply every standard error by $\sqrt{`r f2(psi_eq)`} = `r f2(sqrt(psi_eq))`$, so the tests in this output (including the LRT in (d)) overstate the evidence.
+
+:::
+:::
+
+*Example question* Below is a Poisson regression model for the number of possum species found at a forest site (`y`), using the basal area of acacia (`Acacia`), the number of shrubs (`Shrubs`), and whether stumps from logging are present (`Stumps`, 1 = yes).
+
+```{r}
+possum_glm <- glm(y ~ Acacia + Shrubs + Stumps, data = possums, family = "poisson")
+tidy(possum_glm)
+```
+
+(a) Interpret the coefficient for `Stumps` in context.
+
+(b) Calculate a 95% confidence interval for the coefficient of `Acacia`, and interpret it for a 10-unit increase in `Acacia`.
+
+(c) The sum of the squared Pearson residuals is `r f2(sum(residuals(possum_glm, type = "pearson")^2))` on `r df.residual(possum_glm)` df. Is there evidence of overdispersion? Should we use the Poisson or the quasipoisson model?
+
+(d) One of the Poisson model's assumptions is that the mean equals the variance. Explain what this means in the context of these data.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+#| include: false
+pt <- tidy(possum_glm)
+ci_ac <- pt$estimate[2] + c(-1, 1) * 1.96 * pt$std.error[2]
+psi_p <- sum(residuals(possum_glm, type = "pearson")^2) / df.residual(possum_glm)
+```
+
+(a) $e^{`r f3(pt$estimate[4])`} = `r f2(exp(pt$estimate[4]))`$. Holding acacia and shrubs constant, sites with logging stumps are estimated to have a mean number of possum species that is `r f2(exp(pt$estimate[4]))` times the mean for sites without stumps (about `r round(100 * (1 - exp(pt$estimate[4])))`% fewer species, on average).
+
+(b) $`r f4(pt$estimate[2])` \pm 1.96(`r f4(pt$std.error[2])`) = (`r f4(ci_ac[1])`, `r f4(ci_ac[2])`)$. For a 10-unit increase: $(e^{10 \times `r f4(ci_ac[1])`}, e^{10 \times `r f4(ci_ac[2])`}) = (`r f2(exp(10 * ci_ac[1]))`, `r f2(exp(10 * ci_ac[2]))`)$. We are 95% confident that, holding shrubs and stumps constant, a 10-unit increase in the basal area of acacia is associated with the mean number of possum species being multiplied by between `r f2(exp(10 * ci_ac[1]))` and `r f2(exp(10 * ci_ac[2]))`.
+
+(c) $\widehat\psi = `r f2(sum(residuals(possum_glm, type = "pearson")^2))` / `r df.residual(possum_glm)` = `r f2(psi_p)`$, which is close to 1, so there is no evidence of overdispersion. We can use the Poisson model.
+
+(d) For sites with the same acacia, shrubs, and stumps, the number of possum species should vary around its mean with a variance equal to that mean. For example, sites where the model expects 2 species should have a variance of about 2 in the number of species, and sites where it expects 1 species should have a variance of about 1.
+
+:::
+:::

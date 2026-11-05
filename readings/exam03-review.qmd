@@ -7,9 +7,11 @@ This is an outline of things you should review for Quiz03 scheduled for Monday o
 
 I recommend beginning by *carefully* reviewing your notes and activities from class and the homework questions. It's best to do this actively: by reading, thinking, solving problems, and asking questions. 
 
+See the [Quiz03 Practice Questions](quiz03-practice.pdf) for two example questions of each skill below.
+
 # Materials
 
- - You may bring **both sides** of one 3x5 inch notecard of your own notes. 
+ - You may bring **one side** of a large notecard or **both sides** of a 3x5 inch notecard of your own notes. 
  - I will not ask you to write down any R code, but you should be comfortable reading R output. 
  - I will bring basic calculators but you may not use other calculators
 
@@ -22,7 +24,6 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   - You should be able to express either the theoretical model or the fitted model, and know the difference between the two.
   - You should know how and when to use an indicator variable and interaction variable 
   
-*Example question:* TBD
 
 **2. Interpret the coefficients of a model in context.**
 
@@ -33,7 +34,6 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   - Be able to interpret slopes in terms of a 1-unit and a C-unit increase in x
   - Your interpretations should always be given in context, so don’t just talk about “x” and “y.”
   
-*Example question:* TBD
 
 **3. Check necessary conditions for a  regression model and discuss the implications of a model deficiency**
 
@@ -41,9 +41,8 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   - Know how to assess each assumption
   - Know how to read each type of residual plot and when to use each
   - Know how to read each type of diagnostic plot (leverage, Cook's distance, standardized residuals, etc.) and identify possible problematic points
-  - Be able to conduct a deivance goodness-of-fit test to detect model deficiencies
+  - Be able to conduct a Pearson $\chi^2$ goodness-of-fit test to detect model deficiencies (binomial logistic regression only)
   
-*Example question:* TBD
 
 **4. Perform hypothesis tests about a single regression coefficient**
   
@@ -53,7 +52,6 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   - Given a research question, state the hypotheses for your test in both words and proper notation
   - Know the difference between a one-sided and two-sided p-value, and know when each is required (or given by R)
   
-*Example question:* TBD
   
 **5.  Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients**
 
@@ -62,14 +60,12 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   - Describe how to find $z^*$ for a given confidence level
   - Be able to interpret a confidence interval for each regression coefficient in context
   
-*Example question:* TBD
 
 **6. Use a regression model to make appropriate predictions and communicate the uncertainty of these predictions through an interval**
 
   - Given a fitted logistic regression model, be able to calculate the predicted log-odds, odds, and probability for a given set of predictor values.
   - Know the equations for converting between log-odds, odds, and probability.
   
-*Example question:* TBD
 
 **7. Conduct inference to compare nested regression models.** 
 
@@ -81,12 +77,21 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
   - Understand where the p-value comes from using the $\chi^2$ distribution
   - The steps of a hypothesis test include: stating the hypotheses, calculating a test statistic, calculating a p-value, and stating a conclusion in context.
 
-*Example question:* TBD
 
 **8. Identify a binomial logistic regression scenario and whether overdispersion is present** 
 
   - Given a dataset, identify whether binary logistic regression or binomial logistic regression should be used
   - Understand what overdispersion means and how to fix it
+
+**9. Fit and interpret Poisson regression models for count data**
+
+  - Identify when the response is a count and Poisson regression is appropriate
+  - Using proper notation, write down the Poisson regression model (log link, mean $\lambda_i$)
+  - State the assumptions (linearity on the log scale, mean = variance, independence) and know how to assess them
+  - Interpret coefficients as multiplicative changes in the mean count, for a 1-unit and a C-unit increase in $x$
+  - Calculate the predicted mean count for a given set of predictor values
+  - Conduct Wald tests, confidence intervals, and likelihood ratio tests for a Poisson model
+  - Diagnose overdispersion and understand how the quasipoisson model changes the standard errors and inference
   
 # Formulas
 
@@ -122,7 +127,7 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
 
 ## Logistic Regression
 
-- $\log(\pi_i) = \eta = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p$
+- $\text{logit}(\pi_i) = \log\left(\frac{\pi_i}{1 - \pi_i}\right) = \eta = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p$
 - $\pi = e^{\eta}/(1+ e^{\eta})$
 - $\omega = e^\eta$
 - $Z=\frac{\hat \beta_j - \beta_j}{SE(\hat\beta_j)}$
@@ -131,4 +136,17 @@ I recommend beginning by *carefully* reviewing your notes and activities from cl
 - AIC = deviance + 2p
 - BIC = deviance + $\log(n)\cdot p$
 - ${\rm Pres}_i = \dfrac{Y_i - n_i \widehat{\pi}_i}{\sqrt{n_i \widehat{\pi}_i (1 - \widehat{\pi}_i)}}$
-- ${\rm Dres}_i = {\rm sign}(Y_i - n_i \widehat{\pi}_i) \sqrt{2 \left[ Y_i \log \left( \dfrac{Y_i}{n_i \widehat{\pi}_i} \right) + (n_i - Y_i) \log \left( \frac{n_i - Y_i}{n_i - n_i \widehat{\pi}_i} \right) \right]}$
+
+## Poisson Regression
+
+- $\log(\lambda_i) = \eta = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p$
+- $\lambda = e^{\eta}$
+- $E(Y_i) = Var(Y_i) = \lambda_i$
+- ${\rm Pres}_i = \dfrac{Y_i - \widehat{\lambda}_i}{\sqrt{\widehat{\lambda}_i}}$
+
+## Overdispersion (quasibinomial and quasipoisson)
+
+- $\widehat\psi = \dfrac{\sum {\rm Pres}_i^2}{n - (p+1)}$
+- $SE_{\text{quasi}}(\widehat\beta) = \sqrt{\widehat\psi}\, SE(\widehat\beta)$
+- $t = \dfrac{\widehat\beta - 0}{SE_{\text{quasi}}(\widehat\beta)}$, compared to $t_{n-(p+1)}$
+- $F = \dfrac{(\text{Deviance}_{\text{reduced}} - \text{Deviance}_{\text{full}})/d}{\widehat\psi}$, compared to $F_{d,\, n-(p+1)}$
