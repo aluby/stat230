@@ -1,6 +1,6 @@
 ---
 title: Overdispersion and the Quasibinomial model
-subtitle: Day 23
+subtitle: Day 24
 title-slide-attributes:
   data-background-color: "#003300"
   data-slide-number: none
@@ -43,64 +43,12 @@ library(ggthemes)
 notes_theme = theme_minimal(base_size = 14, base_family = "Source Sans 3")
 theme_set(notes_theme)
 
-regression_panel <- function(formula, scat.formula = NULL, data, xlab, ylab) {
-  mod <- lm(formula, data = data)
-  
-  aug <- augment(mod)
-  
-  plot_fit <- makeFun(mod)
-  
-  if(is.null(scat.formula)) {
-    orig_data <- gf_point(formula, data = data, xlab = xlab, ylab = ylab, color = "#003300")
-  } else {
-    orig_data <- gf_point(scat.formula, data = data, xlab = xlab, ylab = ylab, color = "#003300") 
-  }
-  
-  orig_data <- orig_data %>% gf_fun(plot_fit(x) ~ x, color = "#f15a31")
-  
-  resid_plot <- gf_point(.std.resid ~ .fitted, data = aug, xlab = "Fitted values", ylab = "Standardized residuals") %>%
-    gf_hline(yintercept = 0, linetype = 2, color = "#f15a31")
-  
-  qq_plot <- gf_qq(~.std.resid, data = aug, xlab = "N(0,1) quantiles", ylab = "Standardized residuals", color = "#003300") %>%
-    gf_qqline(color = "#f15a31")
-  
-  (orig_data | resid_plot | qq_plot)
-}
-
-
-bikes_mlr <- lm(rides ~ temp_actual*weekend, data = bikes)
-
-news <- bayesrules::fake_news |>
-  mutate(has_excl = ifelse(title_has_excl | text_excl > 0, TRUE, FALSE)) |>
-  select(title, url, type, title_words, has_excl, title_caps_percent, negative, positive) |>
-  mutate(type_num = as.numeric(type == "fake"))
-
-news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent, 
-                data = news, family = "binomial")
+f2 <- function(x) sprintf("%.2f", x)
+f3 <- function(x) sprintf("%.3f", x)
 
 ```
 
-## `moths` from last homework
-
-::: medium
-
-```{r}
-# moths <- read.csv("https://aluby.github.io/stat230/data/moths.csv") |>
-moths <- read.csv(here::here("data/moths.csv")) |>
-  mutate(notremoved = Placed - Removed, 
-               log_odds_removed = log(Removed / notremoved),
-               prop_removed = Removed / Placed, 
-               dark = ifelse(Morph=="dark",1,0), 
-               distance = Distance, 
-               morph = Morph) 
-
-moths |>
-  select(Morph, Distance, Placed, Removed)
-```
-
-:::
-
-## Binomial logistic regression model
+## Recap: Binomial logistic regression model
 
 ```{r}
 #| echo: true
@@ -114,6 +62,7 @@ binomial_glm <- glm(Y/n ~ predictors, weights = n,
 
 ```{r}
 #| echo: true
+#| eval: false
 
 
 moth_glm <- glm(Removed/Placed ~ morph*distance, weights = Placed,
@@ -121,11 +70,7 @@ moth_glm <- glm(Removed/Placed ~ morph*distance, weights = Placed,
                 family = "binomial")
 ```
 
-```{r}
-tidy(moth_glm)
-```
-
-## Model assumptions
+::: {.medium .nonincremental}
 
 - **Binomial counts**: $Y_i \sim \text{Binom}(m_i, \pi_i)$
 
@@ -137,83 +82,6 @@ tidy(moth_glm)
 
     $\Longrightarrow$ so the variance of $Y_i$ is $m_i \pi_i (1 - \pi_i)$ (not constant!)
 
-
-## Goodness-of-fit test
-
-::: medium
-
-Deviance can be used to assess the **overall fit** of a binomial logistic regression model
-
-
-
-Observed Count | Predicted P(Success) | True P(Success) | Predicted Count 
-:---------:|:---------:|:---------:|:---------:
-$Y_i$ | $\widehat{\pi}_i$ | $\pi_i$ | $m_i \widehat\pi_i$
-
-
-<br>
-
-<br>
-
-**Deviance:** $D = 2 \sum \left[ Y_i \log \left( \dfrac{Y_i}{m_i\widehat{\pi}_i} \right)  + (m_i - Y_i)  \log \left( \dfrac{m_i - Y_i}{m_i - m_i \widehat{\pi}_i} \right) \right]$
-
-:::
-<br>
-
-
-::: small
-
-$D \overset{\cdot}{\sim} \chi^2$ with $\text{d.f.}= n-(p+1)$, **if** the model is correct and all $m_i$ are large enough (>5)
-
-
-$n =$ \# of binomial observations (\# of proportions, not # of moths)
-:::
-
-
-## Goodness-of-fit test
-
-<div style="float: right; clear: right; margin: 10px;">(the model is adequate)</div>
-
-:::{style="font-size:0.9em"}
-H<sub>0</sub>: ${\rm logit}(\pi_i) = \beta_0 + \beta_1 x_{1i} + \cdots + \beta_p x_{pi}$
-:::
-
-<div style="float: right; clear: right; margin: 10px;">(the model is inadequate)</div>
-
-:::{style="font-size:0.9em"}
-H<sub>a</sub>: ${\rm logit}(\pi_i) = \alpha_i$
-:::
-
-
-<br>
-
-::: medium
-
-```{r eval=FALSE}
-summary(moth_glm)
-```
-```
-Call:
-glm(formula = Removed/Placed ~ Distance * Morph,
-    family = binomial, data = case2102, weights = Placed)
-
-    Null deviance: 35.385  on 13  degrees of freedom
-*Residual deviance: 13.230  on 10  degrees of freedom
-```
-
-<br>
-
-```{r}
-#| echo: true
-1- pchisq(13.230, 10)
-```
-
-:::
-
-<br>
-
-:::{style="font-size:0.5em"}
-Note: This test is *only valid for the binomial logistic regression*, it is not valid for binary logistic regression.
 :::
 
 ## Communication Development Study
@@ -316,8 +184,9 @@ AIC: 237.72
 
 ```{r}
 #| echo: true
-
-1 - pchisq(167.35, df = 61)
+x2 <- sum(residuals(lang_glm, type = "pearson")^2)
+x2
+1 - pchisq(x2, df = 61)
 ```
 
 . . . 
@@ -392,30 +261,33 @@ $$\mu(Y) = n\pi \quad Var(Y) = n\pi(1-\pi)$$
 
 **Overdispersion** occurs when the actual, observed variance in our data is significantly larger than what we'd expect from these formulas
 
+. . . 
+
+::: task
+The binomial model assumes that each child's 4 trials are independent and have the same probability of success. Why might that not be true here? What would that do to the variance of $Y_i$?
+:::
 
 ## Diagnosing overdispersion
 
+If the model is correct, the Pearson residuals are approximately $N(0,1)$, and the sum of the squared Pearson residuals should be close to the degrees of freedom
+
 ```{r}
 #| echo: true
-#| eval: false
-summary(lang_glm)
+X2 <- sum(residuals(lang_glm, type = "pearson")^2)
+X2
+df.residual(lang_glm)
 ```
 
-```
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 197.54  on 68  degrees of freedom
-Residual deviance: 167.35  on 61  degrees of freedom
-  (3 observations deleted due to missingness)
-AIC: 237.72
-```
-
-Ad-hoc dispersion test: $\text{disp} = \widehat\psi = \frac{\text{Residual Deviance}}{\text{degrees of freedom}} = \frac{167.35}{61} \approx 2.7$
+Ad-hoc dispersion test: $\text{disp} = \widehat\psi = \frac{\sum {\rm Pres}_i^2}{\text{degrees of freedom}} = \frac{`r round(X2, 2)`}{`r df.residual(lang_glm)`} \approx `r round(X2 / df.residual(lang_glm), 2)`$
 
 - $\widehat\psi  \approx 1$: not overdispersed
 - $\widehat\psi >> 1$ overdispersed
 
 ## Fixing overdispersion: the `quasibinomial` family
+
+The **quasibinomial** model keeps the same model for $\pi_i$, but lets the variance be larger than the binomial variance:
+
+$$Var(Y_i) = \psi\, n_i\pi_i(1-\pi_i)$$
 
 ```{r}
 #| echo: true
@@ -435,10 +307,6 @@ Residual deviance: 167.35  on 61  degrees of freedom
   (3 observations deleted due to missingness)
 AIC: NA
 ```
-
-::: small
-R uses a slightly different formula to calculate dispersion parameter; should not make a difference in deciding whether model is overdispersed
-:::
 
 ## What changed?
 
@@ -587,6 +455,13 @@ exp(confint(lang_qglm))
 
 &rarr; We are 95% confident that the odds of success for monolingual children is somewhere between 2.5% to 89% smaller than for bilingual children, holding the other variables constant.
 
+## 
+
+::: task
+With the binomial model, this interval was (`r f2(exp(confint(lang_glm))["languageMonolingual", 1])`, `r f2(exp(confint(lang_glm))["languageMonolingual", 2])`). Why is the quasibinomial interval wider? Which one should we report?
+:::
+
+
 ## Strategy for binomial logistic regression: 
 
 1. First, make sure data is grouped appropriately (each row is independent)
@@ -595,3 +470,9 @@ exp(confint(lang_qglm))
     - If $\psi \approx 1$, doesn't matter which one you choose
     - If $\psi \le 1$, switch to the binomial model 
   
+## Summary
+
+-   **Overdispersion**: the data are more variable than the binomial model allows, so the binomial standard errors are too small.
+-   Estimate the dispersion with $\widehat\psi = X^2 / (n - (p+1))$, the sum of the squared Pearson residuals divided by the residual df.
+-   The **quasibinomial** model gives the same estimates, but multiplies the standard errors by $\sqrt{\widehat\psi}$.
+-   With a quasibinomial model, use t tests for one coefficient and drop-in-deviance F tests for several.

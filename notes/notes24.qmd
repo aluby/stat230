@@ -1,0 +1,289 @@
+---
+title: "Day 24: Overdispersion and the quasibinomial model"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+library(patchwork)
+library(here)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+Lang <- read.csv(here("data", "Lang.csv"))
+
+language <- Lang |>
+  mutate(sex = gender - 1,
+         language = case_when(language == 1 ~ "Monolingual",
+                              language == 2 ~ "Exposed",
+                              language == 3 ~ "Bilingual"),
+         maternal_ed = mated,
+         success = grid,
+         trials = 4) |>
+  drop_na(success) |>
+  select(subject, age, sex, language, kbit, maternal_ed, ppvt, success, trials)
+
+lang_glm <- glm(success/trials ~ sex + kbit + ppvt + maternal_ed + age + language,
+                data = language, family = "binomial", weights = trials)
+lang_qglm <- glm(success/trials ~ sex + kbit + ppvt + maternal_ed + age + language,
+                 data = language, family = "quasibinomial", weights = trials)
+reduced_qglm <- glm(success/trials ~ sex + kbit + ppvt + maternal_ed + age,
+                    data = language, family = "quasibinomial", weights = trials)
+
+X2 <- sum(residuals(lang_glm, type = "pearson")^2)
+dfr <- df.residual(lang_glm)
+psi <- summary(lang_qglm)$dispersion
+
+f2 <- function(x) sprintf("%.2f", x)
+f3 <- function(x) sprintf("%.3f", x)
+```
+
+Last time we fit binomial logistic regression models and used the Pearson $X^2$ statistic to check whether the model fits. Today: what do we do when the goodness of fit test fails?
+
+## Recap: binomial logistic regression
+
+```{r}
+#| echo: true
+#| eval: false
+binomial_glm <- glm(Y/n ~ predictors, weights = n,
+                    data = dataset,
+                    family = "binomial")
+```
+
+- **Binomial counts**: $Y_i \sim \text{Binom}(m_i, \pi_i)$
+
+- **Independence**: observations are independent ($Y_i$'s are independent *and* each 1/0 that contributes to $Y_i$ is independent)
+
+- **Linearity**: the log odds is a linear function of the predictors
+
+- **Variance structure**: the variance of a binomial random variable is $n \pi (1 - \pi)$
+
+    $\Longrightarrow$ so the variance of $Y_i$ is $m_i \pi_i (1 - \pi_i)$ (not constant!)
+
+## Data: early exposure to multiple languages
+
+Fan et al. (2015) asked whether children who regularly *hear* other languages, even if they don't speak them, are better at taking another person's perspective. Children ages 4 to 6 played a game in which an adult asked them to move an object (for example, "I see a small car. Can you move the small car under the spoon?"). The adult could not see every object, so to succeed, the child had to think about which car the *adult* meant. Each child did 4 of these trials.
+
+-   `success`: number of the 4 trials the child got right
+-   `language`: `Monolingual`, `Exposed` (regularly hears another language but speaks only English), or `Bilingual`
+-   `age` (years), `sex`, `kbit` (a nonverbal IQ score), `ppvt` (a vocabulary score), and `maternal_ed` (maternal education)
+
+::: small
+Fan, S. P., Liberman, Z., Keysar, B., & Kinzler, K. D. (2015). The Exposure Advantage: Early Exposure to a Multilingual Environment Promotes Effective Communication. *Psychological Science*, 26(7), 1090–1097.
+:::
+
+```{r}
+language |>
+  head(6) |>
+  knitr::kable()
+```
+
+What is $Y$? What is $n_i$? What are the possible predictors? What is the primary predictor we want to make inference about?
+
+\vspace{1.25in}
+
+```{r}
+#| echo: false
+lang_glm <- glm(success/trials ~ sex + kbit + ppvt + maternal_ed + age + language,
+                data = language,
+                family = "binomial",
+                weights = trials)
+```
+
+```{r}
+kable_coef(lang_glm)
+```
+
+Relative to _______________________ children, after accounting for all other variables in the model, ____________________ children are worse at the task. 
+
+## Goodness of Fit Test
+
+- $H_0:$
+- $H_A:$
+
+```{r}
+#| echo: true
+X2 <- sum(residuals(lang_glm, type = "pearson")^2)
+X2
+df.residual(lang_glm)
+1 - pchisq(X2, df = 61)
+```
+
+Indicates the model is:
+
+If the model is correct, the Pearson residuals should be approximately $N(0,1)$:
+
+```{r}
+#| echo: true
+lang_aug <- augment(lang_glm, type.residuals = "pearson")
+
+mean(lang_aug$.resid)
+sd(lang_aug$.resid)
+```
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2
+p1 <- gf_qq(~.resid, data = lang_aug) |>
+  gf_qqline()
+
+p2 <- gf_dhistogram(~.resid, data = lang_aug, col = "white", fill = "darkgreen") |>
+  gf_dist("norm", linewidth = 1.5)
+
+p1 + p2
+```
+
+These pearson residuals are ____________________________________________________________
+
+## More on variance
+
+In linear regression, the mean ($\mu_Y$) and the variance ($\sigma^2$) are separate parameters. Points can be tightly clustered around the line or widely spread, and the model works either way.
+
+In binomial logistic regression, the variance is determined by the mean:
+
+$$E(Y_i) = n_i\pi_i \qquad\qquad Var(Y_i) = \underline{\hspace{3cm}}$$
+
+::: callout-note
+## Overdispersion
+
+**Overdispersion** occurs when the observed variance in the data is ______________________ than the binomial model says it should be.
+:::
+
+The binomial model assumes that each child's 4 trials are independent and have the same probability of success. Why might that not be true here? What would that do to the variance of $Y_i$?
+
+\vspace{1in}
+
+## Diagnosing overdispersion
+
+If the model is correct, each Pearson residual is approximately $N(0,1)$, so each squared Pearson residual is about ______ on average. That means $X^2 = \sum \text{Pres}_i^2$ should be close to the degrees of freedom.
+
+::: callout-note
+## Dispersion parameter
+
+$$\widehat\psi = \frac{\sum \text{Pres}_i^2}{n - (p+1)} = \frac{X^2}{\text{residual df}}$$
+
+-   $\widehat\psi \approx 1$: ______________________
+-   $\widehat\psi \gg 1$: ______________________
+:::
+
+For the language model: $\widehat\psi = \underline{\hspace{2cm}}\approx$ ______
+
+## Fixing overdispersion: the quasibinomial model
+
+The **quasibinomial** model keeps the same model for $\pi_i$, but lets the variance be larger than the binomial variance:
+
+$$Var(Y_i) = \psi\, n_i\pi_i(1-\pi_i)$$
+
+```{r}
+#| echo: true
+lang_qglm <- glm(success/trials ~ sex + kbit + ppvt + maternal_ed + age + language,
+                 data = language,
+                 family = "quasibinomial",
+                 weights = trials)
+
+summary(lang_qglm)$dispersion
+```
+
+This is the same $\widehat\psi$ we calculated from the Pearson residuals.
+
+Comparison of binomial and quasibinomial estimates: 
+
+```{r}
+bind_cols(
+  tidy(lang_glm) |> select(term, estimate, std.error),
+  tidy(lang_qglm) |> select(estimate, std.error)
+) |>
+  knitr::kable(digits = 3,
+               col.names = c("term", "estimate (binomial)", "SE (binomial)",
+                             "estimate (quasi)", "SE (quasi)"))
+```
+
+What changed when we switched to the quasibinomial model? What stayed the same?
+
+\vspace{1in}
+
+## Inference with the quasibinomial model
+
+Because we *estimate* $\psi$, we go back to $t$ and $F$ distributions (like in linear regression, where we estimated $\sigma$).
+
+::: callout-note
+## One coefficient: $t$-test
+
+**Test statistic:** $t = \dfrac{\widehat\beta - 0}{SE_{\text{quasi}}(\widehat\beta)} = \dfrac{\widehat\beta - 0}{\sqrt{\widehat\psi}\, SE_{\text{binom}}(\widehat\beta)}$
+
+**Reference distribution:** $t$ with $df =$ ______________________
+:::
+
+::: callout-note
+## Several coefficients: drop-in-deviance $F$-test
+
+**Hypotheses:** $H_0: \beta_i = \beta_j = \cdots = 0$ vs. $H_a$: at least one $\ne 0$
+
+**Test statistic:** $F = \dfrac{(\text{Deviance}_{\text{reduced}} - \text{Deviance}_{\text{full}}) / d}{\widehat\psi}$, where $d$ = ______________________
+
+**Reference distribution:** $F$ with $d$ and $n - (p+1)$ df (residual df of the full model)
+:::
+
+In R, use `anova(reduced, full, test = "F")`.
+
+## Is `language` needed in the model?
+
+- $H_0:$
+- $H_A:$
+
+```{r}
+#| echo: true
+reduced_qglm <- glm(success/trials ~ sex + kbit + ppvt + maternal_ed + age,
+                    data = language,
+                    family = "quasibinomial",
+                    weights = trials)
+
+anova(reduced_qglm, lang_qglm, test = "F")
+```
+
+
+## What about the effect of monolinguism?
+
+```{r}
+#| echo: true
+exp(confint(lang_qglm))
+```
+
+ We are 95% confident that the __________________________ for __________________________ children is somewhere between ____% to ____% smaller than for __________________________, holding the other variables constant.
+
+With the binomial model, this interval was (`r f2(exp(confint(lang_glm))["languageMonolingual", 1])`, `r f2(exp(confint(lang_glm))["languageMonolingual", 2])`). Why is the quasibinomial interval wider? Which one should we report?
+
+\vspace{1in}
+
+## Strategy for binomial logistic regression
+
+1.  Make sure the data are grouped appropriately (each row is independent).
+2.  Start by fitting `family = "quasibinomial"`, and look at $\widehat\psi$:
+    -   If $\widehat\psi > 1$: ______________________
+    -   If $\widehat\psi \approx 1$: ______________________
+    -   If $\widehat\psi < 1$: ______________________
+
+## Summary
+
+-   **Overdispersion**: the data are more variable than the binomial model allows, so the binomial standard errors are too ______________.
+-   Estimate the dispersion with $\widehat\psi = X^2 / (n - (p+1))$, the sum of the squared Pearson residuals divided by the residual df.
+-   The **quasibinomial** model gives the same estimates, but multiplies the standard errors by ______________.
+-   With a quasibinomial model, use ______ tests for one coefficient and drop-in-deviance ______ tests for several.
+
+## R function reference
+
+| Function | Purpose |
+|:--|:--|
+| `glm(y/n ~ x, weights = n, data, family = "binomial")` | Fit a binomial logistic regression |
+| | |
+| `sum(residuals(model, type = "pearson")^2)` | Pearson $X^2$ statistic |
+| | |
+| `glm(y/n ~ x, weights = n, data, family = "quasibinomial")` | Fit a quasibinomial model |
+| | |
+| `summary(model)$dispersion` | Estimated dispersion parameter $\widehat\psi$ |
+| | |
+| `anova(reduced, full, test = "F")` | Drop-in-deviance $F$-test for a quasibinomial model |
+| | |
+| `exp(confint(model))` | Confidence intervals on the odds ratio scale |
