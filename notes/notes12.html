@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,10 +72,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0e22b05e5ce3ed5c9d0e2453666dc67e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,6 +105,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -134,7 +138,6 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.scss">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -192,21 +195,8 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#reading-the-table-what-is-significantly-different-than-0" id="toc-reading-the-table-what-is-significantly-different-than-0" class="nav-link active" data-scroll-target="#reading-the-table-what-is-significantly-different-than-0">Reading the table: what is significantly different than 0?</a></li>
-  <li><a href="#the-covariance-matrix-of-the-coefficients" id="toc-the-covariance-matrix-of-the-coefficients" class="nav-link" data-scroll-target="#the-covariance-matrix-of-the-coefficients">The covariance matrix of the coefficients</a></li>
-  <li><a href="#example-1-ci-for-the-smoker-slope" id="toc-example-1-ci-for-the-smoker-slope" class="nav-link" data-scroll-target="#example-1-ci-for-the-smoker-slope">Example 1: CI for the smoker slope</a></li>
-  <li><a href="#testing-a-linear-combination" id="toc-testing-a-linear-combination" class="nav-link" data-scroll-target="#testing-a-linear-combination">Testing a linear combination</a></li>
-  <li><a href="#your-turn-smokers-vs.-nonsmokers-at-age-15" id="toc-your-turn-smokers-vs.-nonsmokers-at-age-15" class="nav-link" data-scroll-target="#your-turn-smokers-vs.-nonsmokers-at-age-15">Your turn: smokers vs.&nbsp;nonsmokers at age 15</a></li>
-  <li><a href="#a-shortcut-re-center-the-model" id="toc-a-shortcut-re-center-the-model" class="nav-link" data-scroll-target="#a-shortcut-re-center-the-model">A shortcut: re-center the model</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
-  <li><a href="#your-turn-in-r" id="toc-your-turn-in-r" class="nav-link" data-scroll-target="#your-turn-in-r">Your turn: in R</a></li>
-  </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="notes12.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
-    </div>
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="notes12.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -464,42 +454,36 @@ Age:SmokeTRUE      0.0052 -0.0004   -0.0234        0.0018</code></pre>
 </section>
 <section id="your-turn-in-r" class="level2">
 <h2 class="anchored" data-anchor-id="your-turn-in-r">Your turn: in R</h2>
-<p>The R activity is posted on moodle. Here are some functions that might be helpful:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 73%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Function</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>coef()</code></td>
-<td>Extract the estimated coefficients from a fitted model (as a named vector)</td>
-</tr>
-<tr class="even">
-<td><code>vcov()</code></td>
-<td>Extract the covariance matrix of the estimated coefficients from a fitted model</td>
-</tr>
-<tr class="odd">
-<td><code>x[i]</code>, <code>m[i, j]</code></td>
-<td>Pull off element <code>i</code> of a vector, or the entry in row <code>i</code> and column <code>j</code> of a matrix</td>
-</tr>
-<tr class="even">
-<td><code>sqrt()</code></td>
-<td>Take the square root (e.g., to turn a variance into a standard error)</td>
-</tr>
-</tbody>
-</table>
 
 
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../notes";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

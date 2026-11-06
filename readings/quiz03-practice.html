@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Quiz03 Practice Questions – stat230</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.scss">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#express-a-regression-model-using-proper-notation" id="toc-express-a-regression-model-using-proper-notation" class="nav-link active" data-scroll-target="#express-a-regression-model-using-proper-notation">1. Express a regression model using proper notation</a></li>
+  <li><a href="#interpret-the-coefficients-of-a-model-in-context" id="toc-interpret-the-coefficients-of-a-model-in-context" class="nav-link" data-scroll-target="#interpret-the-coefficients-of-a-model-in-context">2. Interpret the coefficients of a model in context</a></li>
+  <li><a href="#check-necessary-conditions-for-a-regression-model-and-discuss-the-implications-of-a-model-deficiency" id="toc-check-necessary-conditions-for-a-regression-model-and-discuss-the-implications-of-a-model-deficiency" class="nav-link" data-scroll-target="#check-necessary-conditions-for-a-regression-model-and-discuss-the-implications-of-a-model-deficiency">3. Check necessary conditions for a regression model and discuss the implications of a model deficiency</a></li>
+  <li><a href="#perform-hypothesis-tests-about-a-single-regression-coefficient" id="toc-perform-hypothesis-tests-about-a-single-regression-coefficient" class="nav-link" data-scroll-target="#perform-hypothesis-tests-about-a-single-regression-coefficient">4. Perform hypothesis tests about a single regression coefficient</a></li>
+  <li><a href="#construct-and-interpret-confidence-intervals-for-regression-coefficients-and-linear-combinations-of-regression-coefficients" id="toc-construct-and-interpret-confidence-intervals-for-regression-coefficients-and-linear-combinations-of-regression-coefficients" class="nav-link" data-scroll-target="#construct-and-interpret-confidence-intervals-for-regression-coefficients-and-linear-combinations-of-regression-coefficients">5. Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients</a></li>
+  <li><a href="#use-a-regression-model-to-make-appropriate-predictions" id="toc-use-a-regression-model-to-make-appropriate-predictions" class="nav-link" data-scroll-target="#use-a-regression-model-to-make-appropriate-predictions">6. Use a regression model to make appropriate predictions</a></li>
+  <li><a href="#conduct-inference-to-compare-nested-regression-models" id="toc-conduct-inference-to-compare-nested-regression-models" class="nav-link" data-scroll-target="#conduct-inference-to-compare-nested-regression-models">7. Conduct inference to compare nested regression models</a></li>
+  <li><a href="#identify-a-binomial-logistic-regression-scenario-and-whether-overdispersion-is-present" id="toc-identify-a-binomial-logistic-regression-scenario-and-whether-overdispersion-is-present" class="nav-link" data-scroll-target="#identify-a-binomial-logistic-regression-scenario-and-whether-overdispersion-is-present">8. Identify a binomial logistic regression scenario and whether overdispersion is present</a></li>
+  <li><a href="#poisson-regression" id="toc-poisson-regression" class="nav-link" data-scroll-target="#poisson-regression">9. Poisson regression</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="quiz03-practice.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Quiz03 Practice Questions</h1>
+<p class="subtitle lead">Stat 230 - Spring 2026</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Practice questions for each skill on the <a href="../readings/exam03-review.html">Quiz03 Review</a> sheet. The data sets are ones we’ve seen in class or on the homework, but the models and questions are new.</p>
+<section id="express-a-regression-model-using-proper-notation" class="level2">
+<h2 class="anchored" data-anchor-id="express-a-regression-model-using-proper-notation">1. Express a regression model using proper notation</h2>
+<p><em>Example question</em> The fake news data includes <code>negative</code>, the percent of words in the article with negative sentiment, and <code>title_has_excl</code>, whether the title has an exclamation point. The model below allows the relationship between <code>negative</code> and the chance that an article is fake to be different for titles with and without an exclamation point.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>news_int <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> negative <span class="sc">*</span> title_has_excl, <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(news_int)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term                        estimate std.error statistic  p.value
+  &lt;chr&gt;                          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)                   -1.95      0.523    -3.72  0.000199
+2 negative                       0.404     0.153     2.64  0.00841 
+3 title_has_exclTRUE             3.57      2.27      1.57  0.116   
+4 negative:title_has_exclTRUE   -0.289     0.562    -0.515 0.607   </code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Using proper statistical notation, write down the theoretical model that was fit, on both the log-odds scale and the probability scale. Define all variables.</p></li>
+<li><p>Write down the fitted log-odds equation for titles <strong>with</strong> an exclamation point and for titles <strong>without</strong> one.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><span class="math inline">\(Y_i \sim \text{Bernoulli}(\pi_i)\)</span>, where <span class="math inline">\(Y_i = 1\)</span> if article <span class="math inline">\(i\)</span> is fake and 0 if it is real, and</li>
+</ol>
+<p><span class="math display">\[\log\left(\frac{\pi_i}{1 - \pi_i}\right) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i1} x_{i2}\]</span></p>
+<p><span class="math display">\[\pi_i = \frac{e^{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i1} x_{i2}}}{1 + e^{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i1} x_{i2}}}\]</span></p>
+<p>where <span class="math inline">\(\pi_i\)</span> is the probability that article <span class="math inline">\(i\)</span> is fake, <span class="math inline">\(x_{i1}\)</span> is the percent of words with negative sentiment, and <span class="math inline">\(x_{i2}\)</span> is an indicator variable that equals 1 if the title has an exclamation point and 0 if not. There is no error term: the randomness comes from <span class="math inline">\(Y_i\)</span> being a 0 or a 1.</p>
+<ol start="2" type="a">
+<li>Without an exclamation point (<span class="math inline">\(x_2 = 0\)</span>):</li>
+</ol>
+<p><span class="math display">\[\text{logit}(\widehat\pi) = -1.947 + 0.404 \times \text{negative}\]</span></p>
+<p>With an exclamation point (<span class="math inline">\(x_2 = 1\)</span>):</p>
+<p><span class="math display">\[\text{logit}(\widehat\pi) = (-1.947 + 3.575) + (0.404 -0.289) \times \text{negative} = 1.628 + 0.115 \times \text{negative}\]</span></p>
+</div>
+</div>
+</div>
+<p><em>Example question</em> In the budworm experiment, batches of 20 moths of each sex were exposed to different doses of a toxin, and the number of moths in each batch that died was recorded. The model below uses <code>sex</code> and <span class="math inline">\(\log_2(\text{dose})\)</span>, and their interaction.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bud_int <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(numdead, N <span class="sc">-</span> numdead) <span class="sc">~</span> sex <span class="sc">*</span> <span class="fu">log2</span>(dose),</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> budworm, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(bud_int)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term            estimate std.error statistic      p.value
+  &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+1 (Intercept)       -2.99      0.553    -5.42  0.0000000609
+2 sexM               0.175     0.778     0.225 0.822       
+3 log2(dose)         0.906     0.167     5.42  0.0000000589
+4 sexM:log2(dose)    0.353     0.270     1.31  0.191       </code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>What is <span class="math inline">\(Y_i\)</span>, and what is <span class="math inline">\(n_i\)</span>? Using proper notation, write down the theoretical binomial logistic regression model that was fit. Define all variables.</p></li>
+<li><p>Write down the fitted log-odds equation for female moths and for male moths.</p></li>
+<li><p>Why is <span class="math inline">\(\log_2(\text{dose})\)</span> a convenient scale for this predictor? What does a 1-unit increase in <span class="math inline">\(\log_2(\text{dose})\)</span> mean in terms of the dose?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><span class="math inline">\(Y_i\)</span> is the number of moths in batch <span class="math inline">\(i\)</span> that died, and <span class="math inline">\(n_i = 20\)</span> is the number of moths in the batch. The model is <span class="math inline">\(Y_i \sim \text{Binomial}(n_i, \pi_i)\)</span> with</li>
+</ol>
+<p><span class="math display">\[\log\left(\frac{\pi_i}{1 - \pi_i}\right) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i1} x_{i2}\]</span></p>
+<p>where <span class="math inline">\(\pi_i\)</span> is the probability that a moth in batch <span class="math inline">\(i\)</span> dies, <span class="math inline">\(x_{i1}\)</span> is an indicator variable that equals 1 if the batch is male and 0 if female, and <span class="math inline">\(x_{i2} = \log_2(\text{dose})\)</span> for batch <span class="math inline">\(i\)</span>.</p>
+<ol start="2" type="a">
+<li>Females (<span class="math inline">\(x_1 = 0\)</span>):</li>
+</ol>
+<p><span class="math display">\[\text{logit}(\widehat\pi) = -2.994 + 0.906 \log_2(\text{dose})\]</span></p>
+<p>Males (<span class="math inline">\(x_1 = 1\)</span>):</p>
+<p><span class="math display">\[\text{logit}(\widehat\pi) = (-2.994 + 0.175) + (0.906 + 0.353) \log_2(\text{dose}) = -2.819 + 1.259 \log_2(\text{dose})\]</span></p>
+<ol start="3" type="a">
+<li>The doses in the experiment double each time (1, 2, 4, 8, 16, 32), so they are equally spaced on the <span class="math inline">\(\log_2\)</span> scale. A 1-unit increase in <span class="math inline">\(\log_2(\text{dose})\)</span> is a <strong>doubling</strong> of the dose.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="interpret-the-coefficients-of-a-model-in-context" class="level2">
+<h2 class="anchored" data-anchor-id="interpret-the-coefficients-of-a-model-in-context">2. Interpret the coefficients of a model in context</h2>
+<p><em>Example question</em> Below is a model for whether an applicant was accepted to medical school, using their undergraduate <code>GPA</code> and <code>MCAT</code> score.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>med_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Acceptance <span class="sc">~</span> GPA <span class="sc">+</span> MCAT, <span class="at">data =</span> medschool, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(med_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  -22.4       6.45      -3.47 0.000527
+2 GPA            4.68      1.64       2.85 0.00439 
+3 MCAT           0.165     0.103      1.59 0.111   </code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Interpret the coefficient for <code>GPA</code> on the odds scale, for a <strong>0.1</strong>-point increase in GPA.</p></li>
+<li><p>Interpret the coefficient for <code>MCAT</code> on the odds scale, for a <strong>5</strong>-point increase in MCAT score.</p></li>
+<li><p>Does the intercept have a meaningful interpretation here? Explain.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(e^{0.1 \times 4.676} = 1.60\)</span>. Holding MCAT score constant, a 0.1-point increase in GPA is associated with the odds of acceptance being multiplied by 1.60 (about a 60% increase in the odds).</p></li>
+<li><p><span class="math inline">\(e^{5 \times 0.165} = 2.28\)</span>. Holding GPA constant, a 5-point increase in MCAT score is associated with the odds of acceptance being multiplied by 2.28.</p></li>
+<li><p>No.&nbsp;The intercept is the log-odds of acceptance for an applicant with a GPA of 0 and an MCAT score of 0, which is far outside the range of the data (GPAs range from 2.72 to 3.97).</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Below is the binomial logistic regression model for the number of successes (out of 4 trials) on the communication task from the language exposure study. <code>Bilingual</code> is the reference level for <code>language</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lang_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(success<span class="sc">/</span>trials <span class="sc">~</span> sex <span class="sc">+</span> kbit <span class="sc">+</span> ppvt <span class="sc">+</span> maternal_ed <span class="sc">+</span> age <span class="sc">+</span> language,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> language, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">weights =</span> trials)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lang_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 5
+  term                estimate std.error statistic p.value
+  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)          4.82       1.76      2.75   0.00600
+2 sex                  0.185      0.282     0.655  0.513  
+3 kbit                 0.00953    0.0102    0.932  0.352  
+4 ppvt                -0.0185     0.0108   -1.71   0.0875 
+5 maternal_ed          0.142      0.351     0.404  0.686  
+6 age                 -0.515      0.165    -3.12   0.00181
+7 languageExposed     -0.0167     0.377    -0.0443 0.965  
+8 languageMonolingual -1.07       0.353    -3.03   0.00247</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Interpret the coefficient for <code>age</code> on the odds scale. (Age is measured in years.)</p></li>
+<li><p>Interpret the coefficient for <code>languageExposed</code> on the odds scale.</p></li>
+<li><p>We saw in class that these data are overdispersed. Would your interpretations in (a) and (b) change if we used the quasibinomial model instead? Explain.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(e^{-0.515} = 0.60\)</span>. Holding the other variables constant, each additional year of age is associated with the odds of success on a trial being multiplied by 0.60 (about 40% lower odds).</p></li>
+<li><p><span class="math inline">\(e^{-0.017} = 0.98\)</span>. Holding the other variables constant, the estimated odds of success for children who are exposed to another language are 0.98 times the odds for bilingual children; that is, about the same.</p></li>
+<li><p>No.&nbsp;The quasibinomial model gives the same estimates, so the interpretations are the same. Only the standard errors (and so the tests and confidence intervals) change.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="check-necessary-conditions-for-a-regression-model-and-discuss-the-implications-of-a-model-deficiency" class="level2">
+<h2 class="anchored" data-anchor-id="check-necessary-conditions-for-a-regression-model-and-discuss-the-implications-of-a-model-deficiency">3. Check necessary conditions for a regression model and discuss the implications of a model deficiency</h2>
+<p><em>Example question</em> Below are the leverage and Cook’s distance plots for the smartphone and sleep model, <code>good_sleep ~ phone_dependence + age + bmi + smoking + drinking + phone_before_bed</code> (<span class="math inline">\(n = 409\)</span>), and the three students with the largest Cook’s distances.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sleep_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(good_sleep <span class="sc">~</span> phone_dependence <span class="sc">+</span> age <span class="sc">+</span> bmi <span class="sc">+</span> smoking <span class="sc">+</span> drinking <span class="sc">+</span> phone_before_bed,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> sleep, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_panel</span>(sleep_glm, <span class="at">plots =</span> <span class="fu">c</span>(<span class="st">"lev"</span>, <span class="st">"cookd"</span>), <span class="at">type =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="quiz03-practice_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" alt="Residual-leverage plot and Cook's distance plot for the smartphone and sleep model. One point has much larger leverage and Cook's distance than the others." width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sleep_aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(sleep_glm, <span class="at">data =</span> sleep)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sleep_aug <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(.cooksd)) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(good_sleep, phone_dependence, age, bmi, .hat, .cooksd) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  good_sleep phone_dependence   age   bmi  .hat .cooksd
+       &lt;int&gt;            &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+1          1               15    76  1.04 0.834  4.13  
+2          1               16    16 19.4  0.102  0.0841
+3          1               16    18 20.2  0.101  0.0839</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Which student has high leverage? Use the table to explain why.</p></li>
+<li><p>Is this student influential? Explain.</p></li>
+<li><p>The students in this study were all ages 15 to 21. What would you do with this observation?</p></li>
+<li><p>Why can’t we use the Pearson <span class="math inline">\(\chi^2\)</span> goodness-of-fit test to check this model?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>The student with age 76 and BMI 1.04 has leverage 0.83, far above the rule of thumb <span class="math inline">\(2(p+1)/n = 2(7)/409 = 0.034\)</span>. Their age and BMI are both far from the rest of the data.</p></li>
+<li><p>Yes. Their Cook’s distance is 4.13, which is above 1 and about 50 times larger than the next largest value. Including this student changes the fitted model a lot.</p></li>
+<li><p>An age of 76 (and a BMI of 1.04) isn’t possible in this study, so this is almost certainly a data entry error. We should not use this value as is: we could try to find the correct value, or remove the row, refit the model, and report that we did so.</p></li>
+<li><p>This is a binary logistic regression (<span class="math inline">\(n_i = 1\)</span> for every row). The <span class="math inline">\(\chi^2\)</span> approximation for the goodness-of-fit test needs the counts in each row to be large, so the test is only valid for binomial logistic regression with large enough <span class="math inline">\(n_i\)</span>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Below is a binomial logistic regression model for the moths data, using <code>Distance</code> and <code>Morph</code> <strong>without</strong> an interaction, along with the Pearson <span class="math inline">\(\chi^2\)</span> statistic and an empirical logit plot.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>moth_add <span class="ot">&lt;-</span> <span class="fu">glm</span>(Removed<span class="sc">/</span>Placed <span class="sc">~</span> Distance <span class="sc">+</span> Morph, <span class="at">weights =</span> Placed,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> moths, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(moth_add)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term        estimate std.error statistic    p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 (Intercept) -0.733     0.151       -4.85 0.00000127
+2 Distance     0.00531   0.00400      1.33 0.184     
+3 Morphlight  -0.404     0.139       -2.90 0.00374   </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(moth_add, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>X2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24.79796</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(moth_add)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(X2, <span class="at">df =</span> <span class="fu">df.residual</span>(moth_add))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.009757989</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>moths <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">emp_logit =</span> <span class="fu">log</span>((Removed <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">/</span> (Placed <span class="sc">-</span> Removed <span class="sc">+</span> <span class="fl">0.5</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(emp_logit <span class="sc">~</span> Distance, <span class="at">color =</span> <span class="sc">~</span>Morph, <span class="at">ylab =</span> <span class="st">"Empirical logit"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="quiz03-practice_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" alt="Empirical logit of the proportion removed against distance from Liverpool, with a separate line for light and dark moths. The line for dark moths increases and the line for light moths decreases." width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li><p>State the hypotheses for the goodness-of-fit test, and give your conclusion in context.</p></li>
+<li><p>Every row has at least 9 moths removed and 30 not removed. Why does this matter for the test in (a)?</p></li>
+<li><p>Based on the plot, what is wrong with this model? What would you change?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(H_0\)</span>: the model <span class="math inline">\(\text{logit}(\pi_i) = \beta_0 + \beta_1 \text{distance}_i + \beta_2 \text{light}_i\)</span> is adequate, vs.&nbsp;<span class="math inline">\(H_a\)</span>: the model is inadequate (each row needs its own probability). <span class="math inline">\(X^2 = 24.80\)</span> on 11 df, p-value <span class="math inline">\(= 0.010\)</span>. There is strong evidence that the additive model does not fit the moths data well.</p></li>
+<li><p>The <span class="math inline">\(\chi^2\)</span> approximation for the goodness-of-fit test is only reliable when the counts of successes and failures in every row are large enough (about 5 or more). That holds here, so we can trust the test.</p></li>
+<li><p>The empirical logits increase with distance for dark moths but decrease for light moths, so the slopes are different for the two morphs. The additive model forces the slopes to be the same. We should add a <code>Distance * Morph</code> interaction.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="perform-hypothesis-tests-about-a-single-regression-coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="perform-hypothesis-tests-about-a-single-regression-coefficient">4. Perform hypothesis tests about a single regression coefficient</h2>
+<p><em>Example question</em> Use the model below for whether an article is fake, using <code>negative</code> and <code>title_has_excl</code>. Before looking at the data, a researcher hypothesized that articles with more negative sentiment are <em>more</em> likely to be fake, after accounting for whether the title has an exclamation point.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>news_add <span class="ot">&lt;-</span> <span class="fu">glm</span>(type_num <span class="sc">~</span> negative <span class="sc">+</span> title_has_excl, <span class="at">data =</span> news, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(news_add)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term               estimate std.error statistic  p.value
+  &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)          -1.88      0.502     -3.75 0.000180
+2 negative              0.383     0.146      2.61 0.00893 
+3 title_has_exclTRUE    2.53      0.786      3.21 0.00131 </code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>State the hypotheses for the researcher’s question in words and in notation.</p></li>
+<li><p>Find the p-value for this test, and give your conclusion in context.</p></li>
+<li><p>What would the p-value be if the researcher had instead hypothesized that articles with more negative sentiment are <em>less</em> likely to be fake?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(H_0: \beta_1 = 0\)</span> (after accounting for exclamation points, negative sentiment is not associated with the odds of an article being fake) vs.&nbsp;<span class="math inline">\(H_a: \beta_1 &gt; 0\)</span> (more negative sentiment is associated with higher odds of being fake), where <span class="math inline">\(\beta_1\)</span> is the coefficient for <code>negative</code>.</p></li>
+<li><p>R gives a two-sided p-value. The test statistic <span class="math inline">\(z = 2.61\)</span> is in the direction of <span class="math inline">\(H_a\)</span>, so the one-sided p-value is half of R’s: <span class="math inline">\(0.0089 / 2 = 0.0045\)</span>. There is strong evidence that, after accounting for whether the title has an exclamation point, articles with more negative sentiment have higher odds of being fake.</p></li>
+<li><p>The test statistic is in the opposite direction of this <span class="math inline">\(H_a\)</span>, so the p-value is <span class="math inline">\(1 - 0.0045 = 0.9955\)</span>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Use the <code>bud_int</code> output from Skill 1. Is there evidence that the association between dose and the chance of dying is different for male and female moths?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fl">1.31</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1901958</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>State the hypotheses in words and in notation.</p></li>
+<li><p>Show where the test statistic in the output comes from, and explain how the p-value is calculated.</p></li>
+<li><p>Give your conclusion in context.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(H_0: \beta_3 = 0\)</span> (the slope for <span class="math inline">\(\log_2(\text{dose})\)</span> is the same for males and females) vs.&nbsp;<span class="math inline">\(H_a: \beta_3 \ne 0\)</span> (the slopes are different), where <span class="math inline">\(\beta_3\)</span> is the coefficient of the interaction <code>sexM:log2(dose)</code>.</p></li>
+<li><p><span class="math inline">\(z = \dfrac{\widehat\beta_3 - 0}{SE(\widehat\beta_3)} = \dfrac{0.353}{0.270} = 1.31\)</span>. The p-value is the probability of a <span class="math inline">\(z\)</span> statistic at least this far from 0 (in either direction) using the <span class="math inline">\(N(0,1)\)</span> distribution: <span class="math inline">\(2 P(Z &gt; 1.31) = 0.19\)</span>.</p></li>
+<li><p>The p-value is large, so there is not evidence that the association between dose and the odds of dying is different for male and female moths.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="construct-and-interpret-confidence-intervals-for-regression-coefficients-and-linear-combinations-of-regression-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="construct-and-interpret-confidence-intervals-for-regression-coefficients-and-linear-combinations-of-regression-coefficients">5. Construct and interpret confidence intervals for regression coefficients and linear combinations of regression coefficients</h2>
+<p><em>Example question</em> Use the <code>med_glm</code> output from Skill 2, and the <code>qnorm()</code> output below.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.644854</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Calculate a 90% confidence interval for the coefficient of <code>GPA</code>.</p></li>
+<li><p>Interpret your interval on the odds scale, for a 0.1-point increase in GPA.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(z^* = 1.645\)</span>, so the interval is <span class="math inline">\(4.676 \pm 1.645(1.642) = (1.976, 7.377)\)</span>.</p></li>
+<li><p>For a 0.1-point increase, multiply the endpoints by 0.1 and exponentiate: <span class="math inline">\((e^{0.1976}, e^{0.7377}) = (1.22, 2.09)\)</span>. We are 90% confident that, holding MCAT score constant, a 0.1-point increase in GPA is associated with the odds of acceptance being multiplied by between 1.22 and 2.09.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Use the <code>bud_int</code> model from Skill 1. Below is the covariance matrix of the estimated coefficients.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">vcov</span>(bud_int), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                (Intercept)    sexM log2(dose) sexM:log2(dose)
+(Intercept)          0.3055 -0.3055    -0.0839          0.0839
+sexM                -0.3055  0.6058     0.0839         -0.1866
+log2(dose)          -0.0839  0.0839     0.0279         -0.0279
+sexM:log2(dose)      0.0839 -0.1866    -0.0279          0.0729</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Write the slope of <span class="math inline">\(\log_2(\text{dose})\)</span> for <strong>male</strong> moths as a linear combination of the <span class="math inline">\(\beta\)</span>’s, and calculate its estimate.</p></li>
+<li><p>Calculate the standard error of your estimate in (a).</p></li>
+<li><p>Calculate a 95% confidence interval for the slope for male moths, and interpret it on the odds scale.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(\gamma = \beta_2 + \beta_3\)</span>, so <span class="math inline">\(\widehat\gamma = 0.906 + 0.353 = 1.259\)</span>.</p></li>
+<li><p><span class="math inline">\(SE(\widehat\gamma) = \sqrt{Var(\widehat\beta_2) + Var(\widehat\beta_3) + 2 Cov(\widehat\beta_2, \widehat\beta_3)} = \sqrt{0.0279 + 0.0729 + 2(-0.0279)} = 0.212\)</span></p></li>
+<li><p><span class="math inline">\(1.259 \pm 1.96(0.212) = (0.843, 1.675)\)</span>. Exponentiating, <span class="math inline">\((e^{0.843}, e^{1.675}) = (2.32, 5.34)\)</span>. We are 95% confident that, for male moths, each doubling of the dose is associated with the odds of dying being multiplied by between 2.32 and 5.34.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="use-a-regression-model-to-make-appropriate-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="use-a-regression-model-to-make-appropriate-predictions">6. Use a regression model to make appropriate predictions</h2>
+<p><em>Example question</em> Below is the model from the homework for whether a fatal accident was tire-related (<code>Cause</code>), using the age of the vehicle (in years), the number of passengers, and the make of the vehicle (Ford or Other).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tire_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Cause <span class="sc">~</span> VehicleAge <span class="sc">+</span> <span class="fu">I</span>(VehicleAge<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Passengers <span class="sc">*</span> Make,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> tires, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(tire_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  term                 estimate std.error statistic      p.value
+  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+1 (Intercept)           -10.8       2.23      -4.87 0.00000110  
+2 VehicleAge              3.42      1.30       2.62 0.00871     
+3 I(VehicleAge^2)        -0.396     0.194     -2.04 0.0412      
+4 Passengers              0.839     0.149      5.65 0.0000000159
+5 MakeOther              -1.53      0.717     -2.14 0.0326      
+6 Passengers:MakeOther   -0.636     0.330     -1.93 0.0539      </code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Calculate the predicted log-odds, odds, and probability that an accident in a 3-year-old Ford with 2 passengers was tire-related.</p></li>
+<li><p>Repeat (a) for a 3-year-old vehicle of another make with 2 passengers.</p></li>
+<li><p>For a Ford with 2 passengers, at what vehicle age are the predicted odds of a tire-related accident the highest?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(\widehat\eta = -10.847 + 3.421(3) -0.396(3^2) + 0.839(2) = -2.470\)</span>. The predicted odds are <span class="math inline">\(e^{-2.470} = 0.0846\)</span>, and the predicted probability is <span class="math inline">\(0.0846 / (1 + 0.0846) = 0.0780\)</span>.</p></li>
+<li><p>Add the <code>MakeOther</code> and interaction terms: <span class="math inline">\(\widehat\eta = -2.470 -1.532 + (-0.636)(2) = -5.274\)</span>. The predicted odds are <span class="math inline">\(e^{-5.274} = 0.0051\)</span>, and the predicted probability is 0.0051.</p></li>
+<li><p>The log-odds is a downward-facing parabola in vehicle age, which is highest at <span class="math inline">\(-\widehat\beta_1 / (2\widehat\beta_2) = 3.421 / (2 \times 0.396) = 4.32\)</span> years. (This is the same for any make and number of passengers, since age doesn’t interact with them.)</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Below is the model from the homework for whether a family purchases a new car in the next year, using <code>income</code> (in thousands of dollars) and <code>car_age</code> (the age of their oldest car, in years).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>cars_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> income <span class="sc">+</span> car_age, <span class="at">data =</span> car_purchase, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(cars_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term        estimate std.error statistic p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)  -4.74      2.10       -2.25  0.0242
+2 income        0.0251    0.0104      2.41  0.0158
+3 car_age       0.599     0.390       1.53  0.125 </code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Calculate the predicted probability that a family with an income of $150 thousand and an oldest car that is 5 years old will purchase a new car.</p></li>
+<li><p>For a family whose oldest car is 2 years old, what income gives a predicted probability of 0.5 of purchasing a new car? (<em>Hint:</em> what are the odds and log-odds when the probability is 0.5?)</p></li>
+<li><p>Two families have the same income, but one family’s oldest car is 5 years old and the other’s is 2 years old. How many times larger are the predicted odds of purchasing a new car for the first family?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(\widehat\eta = -4.739 + 0.0251(150) + 0.599(5) = 2.017\)</span>, so <span class="math inline">\(\widehat\pi = e^{2.017} / (1 + e^{2.017}) = 0.883\)</span>.</p></li>
+<li><p>A probability of 0.5 means odds of 1 and log-odds of 0. Solve <span class="math inline">\(0 = -4.739 + 0.0251(\text{income}) + 0.599(2)\)</span> to get an income of about $141 thousand.</p></li>
+<li><p><span class="math inline">\(e^{3 \times 0.599} = 6.02\)</span> times larger (a 3-year difference in car age).</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="conduct-inference-to-compare-nested-regression-models" class="level2">
+<h2 class="anchored" data-anchor-id="conduct-inference-to-compare-nested-regression-models">7. Conduct inference to compare nested regression models</h2>
+<p><em>Example question</em> For the smartphone and sleep data, we want to know whether smoking and drinking help explain sleep quality, after accounting for smartphone dependence, age, BMI, and smartphone use before bed. Below are the residual deviances of the two models and some <span class="math inline">\(\chi^2\)</span> critical values.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sleep_reduced <span class="ot">&lt;-</span> <span class="fu">glm</span>(good_sleep <span class="sc">~</span> phone_dependence <span class="sc">+</span> age <span class="sc">+</span> bmi <span class="sc">+</span> phone_before_bed,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> sleep, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>sleep_full <span class="ot">&lt;-</span> <span class="fu">glm</span>(good_sleep <span class="sc">~</span> phone_dependence <span class="sc">+</span> age <span class="sc">+</span> bmi <span class="sc">+</span> phone_before_bed <span class="sc">+</span> smoking <span class="sc">+</span> drinking,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> sleep, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(sleep_reduced)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 546.6407</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(sleep_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 542.1046</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qchisq</span>(<span class="fl">0.95</span>, <span class="at">df =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.841459 5.991465 7.814728</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Explain why these two models are nested.</p></li>
+<li><p>State the null and alternative hypotheses.</p></li>
+<li><p>Calculate the likelihood ratio test statistic and give its degrees of freedom. What do you conclude at <span class="math inline">\(\alpha = 0.05\)</span>?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>The reduced model is the full model with the coefficients for <code>smoking</code> and <code>drinking</code> set to 0.</p></li>
+<li><p><span class="math inline">\(H_0: \beta_{\text{smoking}} = \beta_{\text{drinking}} = 0\)</span> vs.&nbsp;<span class="math inline">\(H_a\)</span>: at least one of these is not 0 (in the full model).</p></li>
+<li><p><span class="math inline">\(\Lambda = 546.64 - 542.10 = 4.54\)</span> on 2 df. This is less than the critical value of 5.99, so the p-value is larger than 0.05 (it is 0.104). There is not enough evidence that smoking and drinking help explain sleep quality, after accounting for the other variables.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Below is a model for medical school acceptance that adds the applicant’s <code>Sex</code> to <code>med_glm</code> from Skill 2, along with a likelihood ratio test comparing the two models.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>med_sex <span class="ot">&lt;-</span> <span class="fu">glm</span>(Acceptance <span class="sc">~</span> GPA <span class="sc">+</span> MCAT <span class="sc">+</span> Sex, <span class="at">data =</span> medschool, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(med_sex)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  -24.0       6.97      -3.44 0.000578
+2 GPA            5.14      1.85       2.78 0.00549 
+3 MCAT           0.181     0.108      1.67 0.0939  
+4 SexM          -1.26      0.730     -1.72 0.0850  </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(med_glm, med_sex, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: Acceptance ~ GPA + MCAT
+Model 2: Acceptance ~ GPA + MCAT + Sex
+  Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)  
+1        52     54.014                       
+2        51     50.786  1   3.2278   0.0724 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>State the hypotheses for the likelihood ratio test, and give your conclusion at <span class="math inline">\(\alpha = 0.05\)</span>.</p></li>
+<li><p>The <code>SexM</code> row of the coefficient table also tests whether <code>Sex</code> is needed. Compare its p-value to the LRT p-value. Why aren’t they exactly the same?</p></li>
+<li><p>Calculate AIC for both models (<span class="math inline">\(AIC = \text{deviance} + 2k\)</span>, where <span class="math inline">\(k\)</span> is the number of coefficients). Which model does AIC prefer? Does this contradict your answer to (a)?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(H_0: \beta_{\text{SexM}} = 0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \beta_{\text{SexM}} \ne 0\)</span> (in the model with GPA, MCAT, and Sex). <span class="math inline">\(\Lambda = 3.23\)</span> on 1 df, p-value <span class="math inline">\(= 0.072\)</span>. At <span class="math inline">\(\alpha = 0.05\)</span>, there is not enough evidence that sex is associated with the odds of acceptance, after accounting for GPA and MCAT score.</p></li>
+<li><p>The <span class="math inline">\(z\)</span>-test p-value is 0.085 and the LRT p-value is 0.072. Both test the same hypothesis, but in logistic regression the <span class="math inline">\(z\)</span>-test and LRT use different approximations, so they aren’t exactly equal (unlike the <span class="math inline">\(t\)</span>- and <span class="math inline">\(F\)</span>-tests in linear regression). They lead to the same conclusion here. If they disagreed, we’d trust the LRT more.</p></li>
+<li><p>Without Sex: <span class="math inline">\(54.01 + 2(3) = 60.01\)</span>. With Sex: <span class="math inline">\(50.79 + 2(4) = 58.79\)</span>. AIC prefers the model with Sex. This doesn’t contradict (a): the two methods answer different questions with different thresholds. AIC adds a coefficient whenever the deviance drops by more than 2, while the LRT at <span class="math inline">\(\alpha = 0.05\)</span> requires a drop of more than 3.84. The drop here (3.23) is in between.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="identify-a-binomial-logistic-regression-scenario-and-whether-overdispersion-is-present" class="level2">
+<h2 class="anchored" data-anchor-id="identify-a-binomial-logistic-regression-scenario-and-whether-overdispersion-is-present">8. Identify a binomial logistic regression scenario and whether overdispersion is present</h2>
+<p><em>Example question</em> For each scenario, say whether you would use binary logistic regression, binomial logistic regression, or neither. For the binomial scenarios, what is <span class="math inline">\(n_i\)</span>?</p>
+<ol type="a">
+<li><p>Each row is a news article, and the response is whether it is fake or real.</p></li>
+<li><p>Each row is a batch of 20 budworm moths, and the response is the number in the batch that died.</p></li>
+<li><p>Each row is a child in the language exposure study, and the response is the number of the 4 trials the child got right.</p></li>
+<li><p>Each row is a forest site, and the response is the number of possum species found there.</p></li>
+<li><p>Each row is a student, and the response is whether they have good sleep quality (a PSQI of 5 or below).</p></li>
+<li><p>Each row is a moth in the budworm experiment, and the response is whether it died. Which model is this, and how is it related to (b)?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Binary.</p></li>
+<li><p>Binomial, <span class="math inline">\(n_i = 20\)</span>.</p></li>
+<li><p>Binomial, <span class="math inline">\(n_i = 4\)</span>.</p></li>
+<li><p>Neither: the response is a count with no fixed number of trials, so we’d use Poisson regression.</p></li>
+<li><p>Binary. (The PSQI score itself is quantitative, but the response is the 0/1 version.)</p></li>
+<li><p>Binary. It is the same data as (b), recorded one moth per row. The two give the same estimates and standard errors, but only the grouped (binomial) version lets us use the goodness-of-fit test and check for overdispersion.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Below are the Pearson <span class="math inline">\(\chi^2\)</span> statistics and residual degrees of freedom for two binomial logistic regression models: the budworm model <code>sex + log2(dose)</code>, and the language exposure model from Skill 2.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>bud_add <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(numdead, N <span class="sc">-</span> numdead) <span class="sc">~</span> sex <span class="sc">+</span> <span class="fu">log2</span>(dose),</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> budworm, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">residuals</span>(bud_add, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.306017</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(bud_add)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">residuals</span>(lang_glm, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 143.4482</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(lang_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 61</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Estimate the dispersion parameter <span class="math inline">\(\widehat\psi\)</span> for each model. Which model shows evidence of overdispersion?</p></li>
+<li><p>For the language model, the binomial <span class="math inline">\(z\)</span>-test for <code>ppvt</code> gives <span class="math inline">\(z = -1.71\)</span> (p = 0.087). Calculate the test statistic for <code>ppvt</code> under the quasibinomial model. Would your conclusion at <span class="math inline">\(\alpha = 0.10\)</span> change?</p></li>
+<li><p>Give one reason why the language data might be overdispersed when the budworm data are not.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Budworm: <span class="math inline">\(\widehat\psi = 5.31 / 9 = 0.59\)</span>. Language: <span class="math inline">\(\widehat\psi = 143.45 / 61 = 2.35\)</span>. The language model is overdispersed (<span class="math inline">\(\widehat\psi\)</span> is much bigger than 1). The budworm model is not.</p></li>
+<li><p>The quasibinomial standard error is <span class="math inline">\(\sqrt{2.35} \times 0.0108 = 0.0166\)</span>, so <span class="math inline">\(t = -0.0185 / 0.0166 = -1.11\)</span>. Equivalently, <span class="math inline">\(t = z / \sqrt{\widehat\psi}\)</span>. Using a <span class="math inline">\(t\)</span> distribution with 61 df, the p-value is about 0.27, so the conclusion changes: <code>ppvt</code> was significant at <span class="math inline">\(\alpha = 0.10\)</span> under the binomial model, but not under the quasibinomial model.</p></li>
+<li><p>The binomial model assumes each child’s 4 trials are independent with the same probability of success. But some children are better at the task than others in ways the predictors don’t capture, so a child’s trials tend to be all right or all wrong, which makes the counts more variable than the binomial model expects. In the budworm experiment, every moth in a batch got the same dose under controlled conditions, so the binomial assumptions are more plausible (and <span class="math inline">\(\widehat\psi &lt; 1\)</span> agrees).</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="poisson-regression" class="level2">
+<h2 class="anchored" data-anchor-id="poisson-regression">9. Poisson regression</h2>
+<p><em>Example question</em> The <code>equality_index</code> data records the number of anti-discrimination <code>laws</code> in each US state. The model below uses the percent of the state’s population that lives in urban areas (<code>percent_urban</code>) and the state’s <code>region</code> (<code>midwest</code> is the reference level).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>eq_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban <span class="sc">+</span> region, <span class="at">data =</span> equality_index, <span class="at">family =</span> <span class="st">"poisson"</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(eq_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  term            estimate std.error statistic  p.value
+  &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)      -1.51     0.302      -4.99  6.03e- 7
+2 percent_urban     0.0458   0.00376    12.2   4.69e-34
+3 regionnortheast   0.643    0.148       4.33  1.47e- 5
+4 regionsouth       0.0964   0.151       0.639 5.23e- 1
+5 regionwest        0.918    0.136       6.74  1.58e-11</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Using proper notation, write the theoretical Poisson regression model that was fit. Define all variables.</p></li>
+<li><p>Interpret the coefficient for <code>percent_urban</code> for a 10-percentage-point increase, and the coefficient for <code>regionwest</code>, in context.</p></li>
+<li><p>Calculate the predicted mean number of laws for a midwest state where 70% of the population lives in urban areas.</p></li>
+<li><p>Below is a likelihood ratio test for whether <code>region</code> is needed. State the hypotheses, the test statistic and degrees of freedom, and your conclusion.</p></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>eq_reduced <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban, <span class="at">data =</span> equality_index, <span class="at">family =</span> <span class="st">"poisson"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(eq_reduced, eq_glm, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: laws ~ percent_urban
+Model 2: laws ~ percent_urban + region
+  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    
+1        48     601.82                          
+2        45     525.76  3   76.058 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<ol start="5" type="a">
+<li>The sum of the squared Pearson residuals for <code>eq_glm</code> is 723.53 on 45 df. What does this tell you? How would the standard errors change if we used a quasipoisson model?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><span class="math inline">\(Y_i \sim \text{Poisson}(\lambda_i)\)</span>, where <span class="math inline">\(Y_i\)</span> is the number of anti-discrimination laws in state <span class="math inline">\(i\)</span> and <span class="math inline">\(\lambda_i\)</span> is its mean, with</li>
+</ol>
+<p><span class="math display">\[\log(\lambda_i) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i3} + \beta_4 x_{i4}\]</span></p>
+<p>where <span class="math inline">\(x_{i1}\)</span> is the percent urban, and <span class="math inline">\(x_{i2}\)</span>, <span class="math inline">\(x_{i3}\)</span>, and <span class="math inline">\(x_{i4}\)</span> are indicator variables for the northeast, south, and west regions.</p>
+<ol start="2" type="a">
+<li><code>percent_urban</code>: <span class="math inline">\(e^{10 \times 0.0458} = 1.58\)</span>. Holding region constant, a 10-percentage-point increase in the urban population is associated with the mean number of laws being multiplied by 1.58 (about a 58% increase).</li>
+</ol>
+<p><code>regionwest</code>: <span class="math inline">\(e^{0.918} = 2.50\)</span>. For states with the same percent urban, the mean number of laws in western states is estimated to be 2.50 times the mean in midwestern states.</p>
+<ol start="3" type="a">
+<li><p><span class="math inline">\(\log(\widehat\lambda) = -1.509 + 0.0458(70) = 1.694\)</span>, so <span class="math inline">\(\widehat\lambda = e^{1.694} = 5.44\)</span> laws.</p></li>
+<li><p><span class="math inline">\(H_0: \beta_2 = \beta_3 = \beta_4 = 0\)</span> (after accounting for percent urban, the mean number of laws is the same in every region) vs.&nbsp;<span class="math inline">\(H_a\)</span>: at least one is not 0. <span class="math inline">\(\Lambda = 76.06\)</span> on 3 df, and the p-value is less than 0.0001. There is strong evidence that region is associated with the number of laws, after accounting for percent urban.</p></li>
+<li><p><span class="math inline">\(\widehat\psi = 723.53 / 45 = 16.08\)</span>, which is much bigger than 1, so the data are overdispersed: the number of laws varies much more than a Poisson model allows. The quasipoisson model would multiply every standard error by <span class="math inline">\(\sqrt{16.08} = 4.01\)</span>, so the tests in this output (including the LRT in (d)) overstate the evidence.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p><em>Example question</em> Below is a Poisson regression model for the number of possum species found at a forest site (<code>y</code>), using the basal area of acacia (<code>Acacia</code>), the number of shrubs (<code>Shrubs</code>), and whether stumps from logging are present (<code>Stumps</code>, 1 = yes).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>possum_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> Acacia <span class="sc">+</span> Shrubs <span class="sc">+</span> Stumps, <span class="at">data =</span> possums, <span class="at">family =</span> <span class="st">"poisson"</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(possum_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term        estimate std.error statistic   p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)  -0.300    0.206       -1.46 0.145    
+2 Acacia        0.0323   0.00815      3.96 0.0000749
+3 Shrubs        0.0437   0.0187       2.34 0.0194   
+4 Stumps       -0.398    0.272       -1.46 0.144    </code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Interpret the coefficient for <code>Stumps</code> in context.</p></li>
+<li><p>Calculate a 95% confidence interval for the coefficient of <code>Acacia</code>, and interpret it for a 10-unit increase in <code>Acacia</code>.</p></li>
+<li><p>The sum of the squared Pearson residuals is 141.02 on 147 df. Is there evidence of overdispersion? Should we use the Poisson or the quasipoisson model?</p></li>
+<li><p>One of the Poisson model’s assumptions is that the mean equals the variance. Explain what this means in the context of these data.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p><span class="math inline">\(e^{-0.398} = 0.67\)</span>. Holding acacia and shrubs constant, sites with logging stumps are estimated to have a mean number of possum species that is 0.67 times the mean for sites without stumps (about 33% fewer species, on average).</p></li>
+<li><p><span class="math inline">\(0.0323 \pm 1.96(0.0081) = (0.0163, 0.0482)\)</span>. For a 10-unit increase: <span class="math inline">\((e^{10 \times 0.0163}, e^{10 \times 0.0482}) = (1.18, 1.62)\)</span>. We are 95% confident that, holding shrubs and stumps constant, a 10-unit increase in the basal area of acacia is associated with the mean number of possum species being multiplied by between 1.18 and 1.62.</p></li>
+<li><p><span class="math inline">\(\widehat\psi = 141.02 / 147 = 0.96\)</span>, which is close to 1, so there is no evidence of overdispersion. We can use the Poisson model.</p></li>
+<li><p>For sites with the same acacia, shrubs, and stumps, the number of possum species should vary around its mean with a variance equal to that mean. For example, sites where the model expects 2 species should have a variance of about 2 in the number of species, and sites where it expects 1 species should have a variance of about 1.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
