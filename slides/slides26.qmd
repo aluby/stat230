@@ -1,6 +1,6 @@
 ---
 title: Overdispersion and Inference for Poisson Regression
-subtitle: Day 27
+subtitle: Day 26
 title-slide-attributes:
   data-background-color: "#003300"
   data-slide-number: none

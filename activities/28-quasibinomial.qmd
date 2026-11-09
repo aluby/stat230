@@ -1,4 +1,0 @@
----
-title: "28: Quasibinomial Logistic Regression"
----
-

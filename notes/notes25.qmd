@@ -1,0 +1,225 @@
+---
+title: "Day 25: Intro to Poisson regression"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(broom)
+library(patchwork)
+library(bayesrules)
+library(ggResidpanel)
+theme_set(theme_minimal(base_size = 12))
+source("notes-helpers.R")
+
+data(equality_index)
+
+equality_slr <- lm(log(laws) ~ percent_urban, data = equality_index)
+pois1 <- glm(laws ~ percent_urban, data = equality_index, family = "poisson")
+full <- glm(laws ~ percent_urban + historical, data = equality_index, family = "poisson")
+
+f2 <- function(x) sprintf("%.2f", x)
+f3 <- function(x) sprintf("%.3f", x)
+```
+
+So far, our responses have been quantitative (linear regression) or a success/failure (logistic regression). Today: what if the response is a **count**?
+
+The `equality_index` data (from the `bayesrules` package) records the number of anti-discrimination `laws` in each of the 50 states. We want to model the number of laws using:
+
+-   `percent_urban`: the percent of the state's population that lives in urban areas
+-   `historical`: the state's historical voting pattern in presidential elections: `dem` (typically votes Democratic), `gop` (typically votes Republican), or `swing`
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2.25
+p1 <- gf_point(laws ~ percent_urban, data = equality_index, size = .75)
+p2 <- gf_histogram(~laws, data = equality_index, color = "white", bins = 20)
+p3 <- gf_boxplot(laws ~ historical, data = equality_index)
+
+p1 + p2 + p3
+```
+
+
+## Option 1: transform the response
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2.25
+p1 <- gf_point(log(laws) ~ percent_urban, data = equality_index, size = .75)
+p2 <- gf_histogram(~log(laws), data = equality_index, color = "white", bins = 20)
+p3 <- gf_boxplot(log(laws) ~ historical, data = equality_index)
+
+p1 + p2 + p3
+```
+
+```{r}
+#| echo: true
+equality_slr <- lm(log(laws) ~ percent_urban, data = equality_index)
+```
+
+```{r}
+kable_coef(equality_slr)
+```
+
+```{r}
+#| fig-width: 6
+#| fig-height: 2
+resid_panel(equality_slr, plots = c("resid", "qq"))
+```
+
+## Option 2: a model for counts
+
+::: callout-note
+## Poisson distribution
+
+The **Poisson distribution** describes the number of events that occur in a fixed interval of time or space, $Y = 0, 1, 2, \ldots$
+
+$$P(Y = y) = \frac{e^{-\lambda}\lambda^y}{y!}, \qquad y = 0, 1, 2, \ldots$$
+
+$$E(Y) = \underline{\hspace{2cm}} \qquad\qquad Var(Y) = \underline{\hspace{2cm}}$$
+:::
+
+The picture below shows simulated data from a Poisson regression model, with the Poisson distribution of $Y$ at three values of $x$.
+
+```{r}
+#| fig-width: 4
+#| fig-height: 2.5
+set.seed(0)
+dat <- data.frame(x = runif(100, 35, 95)) |>
+  mutate(y = rpois(100, exp(-2.18 + 0.061 * x)))
+
+anchor_points <- c(45, 65, 85)
+dens_steps <- lapply(anchor_points, function(x_anchor) {
+  lambda <- exp(-2.18 + 0.061 * x_anchor)
+  y_vals <- 0:max(dat$y + 5)
+  p_vals <- dpois(y_vals, lambda)
+  data.frame(x = rep(x_anchor - 45 * p_vals, each = 2),
+             y = rep(y_vals, each = 2) + c(-0.5, 0.5),
+             group = as.character(x_anchor))
+}) |>
+  bind_rows()
+
+ggplot(dat, aes(x, y)) +
+  geom_point(alpha = 0.5) +
+  geom_function(fun = \(x) exp(-2.18 + 0.061 * x)) +
+  geom_vline(xintercept = anchor_points, linetype = "dashed", alpha = 0.5) +
+  geom_path(data = dens_steps, aes(x, y, group = group), color = "orange", linewidth = 1) +
+  labs(x = "percent_urban", y = "laws")
+```
+
+## Generalized linear models
+
+Linear, logistic, and Poisson regression are all **generalized linear models (GLMs)**, with three parts:
+
+-   **Random component:** what distribution does the response follow?
+-   **Linear predictor:** $\eta = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p$
+-   **Link function:** how do we connect the mean of $Y$ to $\eta$?
+
+|  | Linear regression | Logistic regression | Poisson regression |
+|:--|:--|:--|:--|
+| Response |  |  |  |
+| |  |  |  |
+| |  |  |  |
+| Random component |  |  |  |
+| |  |  |  |
+| |  |  |  |
+| Mean of $Y$ |  |  |  |
+| |  |  |  |
+| |  |  |  |
+| Possible values of the mean |  |  |  |
+| |  |  |  |
+| |  |  |  |
+| Link function |  |  |  |
+| |  |  |  |
+| |  |  |  |
+
+
+## The Poisson regression model
+
+::: callout-note
+## Poisson regression
+
+$$Y_i \sim \text{Poisson}(\lambda_i)$$
+
+Log scale: $\log(\lambda_i) = \underline{\hspace{5cm}} = \eta_i$
+
+Count scale: $\lambda_i = \underline{\hspace{5cm}}$
+:::
+
+To check whether this model is reasonable, we plot $\log(Y)$ against each quantitative predictor and look for a ______________ relationship.
+
+## Fitting the model
+
+```{r}
+#| echo: true
+pois1 <- glm(laws ~ percent_urban, data = equality_index, family = "poisson")
+```
+
+```{r}
+kable_coef(pois1, digits = 4)
+```
+
+Fitted model: $\log(\widehat\lambda) =$ ______________________________
+
+## Interpreting the coefficients
+
+Compare the fitted mean at $x$ and at $x + 1$:
+
+$$\widehat\lambda(x) = e^{\widehat\beta_0 + \widehat\beta_1 x} \qquad\qquad \widehat\lambda(x + 1) = e^{\widehat\beta_0 + \widehat\beta_1 (x + 1)} = \underline{\hspace{4cm}}$$
+
+::: callout-note
+## Interpreting a slope in Poisson regression
+
+A 1-unit increase in $x$ is associated with the mean count being multiplied by ______. A $C$-unit increase multiplies the mean count by ______.
+:::
+
+
+## Multiple predictors
+
+```{r}
+#| echo: true
+full <- glm(laws ~ percent_urban + historical, data = equality_index, family = "poisson")
+```
+
+```{r}
+kable_coef(full, digits = 4)
+```
+
+**Example:** Interpret the coefficient for `percent_urban` in this model. Why is it different from the coefficient in `pois1`?
+
+\vspace{1in}
+
+**Example:** Interpret the coefficients for `historicalgop` and `historicalswing`. What is the reference level?
+
+\vspace{1.25in}
+
+## Wald tests and confidence intervals
+
+These work the same way as in logistic regression:
+
+-   Test $H_0: \beta_j = 0$ with $z = \dfrac{\widehat\beta_j - 0}{SE(\widehat\beta_j)}$, compared to a $N(0, 1)$ distribution
+-   A confidence interval for $\beta_j$ is $\widehat\beta_j \pm z^* SE(\widehat\beta_j)$. Exponentiate the endpoints to get an interval for the multiplicative change in the mean count.
+
+**Example:** Calculate a 95% confidence interval for the `percent_urban` coefficient in `full`, and interpret it for a 10-percentage-point increase.
+
+\vspace{1in}
+
+## Summary
+
+-   Poisson regression models a **count** response, $Y_i \sim \text{Poisson}(\lambda_i)$, where the mean and the variance are both ______.
+-   The link function is the ______, so $\log(\lambda_i) = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p$.
+-   A 1-unit increase in $x_j$ multiplies the mean count by ______, holding the other predictors constant.
+-   To check linearity, plot ______ against each quantitative predictor.
+
+## R function reference
+
+| Function | Purpose |
+|:--|:--|
+| `glm(y ~ x, data, family = "poisson")` | Fit a Poisson regression model |
+| | |
+| `exp(coef(model))` | Multiplicative change in the mean count for a 1-unit increase in each predictor |
+| | |
+| `predict(model, newdata, type = "response")` | Predicted mean count ($\widehat\lambda$) |
+| | |
+| `confint.default(model)` | Wald confidence intervals for the coefficients (on the log scale) |
