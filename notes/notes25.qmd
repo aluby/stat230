@@ -23,8 +23,6 @@ f2 <- function(x) sprintf("%.2f", x)
 f3 <- function(x) sprintf("%.3f", x)
 ```
 
-So far, our responses have been quantitative (linear regression) or a success/failure (logistic regression). Today: what if the response is a **count**?
-
 The `equality_index` data (from the `bayesrules` package) records the number of anti-discrimination `laws` in each of the 50 states. We want to model the number of laws using:
 
 -   `percent_urban`: the percent of the state's population that lives in urban areas
@@ -40,6 +38,9 @@ p3 <- gf_boxplot(laws ~ historical, data = equality_index)
 p1 + p2 + p3
 ```
 
+EDA notes: 
+
+\vspace{1in}
 
 ## Option 1: transform the response
 
@@ -52,6 +53,10 @@ p3 <- gf_boxplot(log(laws) ~ historical, data = equality_index)
 
 p1 + p2 + p3
 ```
+
+EDA notes: 
+
+\vspace{1in}
 
 ```{r}
 #| echo: true
@@ -67,6 +72,10 @@ kable_coef(equality_slr)
 #| fig-height: 2
 resid_panel(equality_slr, plots = c("resid", "qq"))
 ```
+
+One reason why we might not want to go the transformation route for this data: 
+
+\vspace{1in}
 
 ## Option 2: a model for counts
 

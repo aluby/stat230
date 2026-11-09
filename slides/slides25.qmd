@@ -87,6 +87,8 @@ Source: the {bayesrules} R package
 
 ```{r}
 #| echo: false 
+#| fig-width: 12
+#| fig-height: 4
 
 
 data("equality_index")
@@ -114,6 +116,9 @@ p2 + p1 + p3
 
 ```{r}
 #| echo: false 
+#| fig-width: 12
+#| fig-height: 4
+
 
 data("equality_index")
 
@@ -268,6 +273,7 @@ How can we relate the expectation of $Y$ and our linear predictor?
 :::
 
 
+
 ## Random component
 
 What distribution does the response variable follow?
@@ -304,6 +310,31 @@ $\eta =$ "eta"
 
 {{< video https://www.youtube.com/embed/6pDH66X3ClA?si=IsolyWEfJizfItxS width="100%" height="100%" >}}
 
+## 
+
+::: task
+
+Fill in the first two columns of the table (linear + logistic) 
+
+|  | Linear regression | Logistic regression | Poisson regression |
+|:--|:--|:--|:--|
+| Response |  |  |  |
+| |  |  |  |
+| |  |  |  |
+| Random component |  |  |  |
+| |  |  |  |
+| |  |  |  |
+| Mean of $Y$ |  |  |  |
+| |  |  |  |
+| |  |  |  |
+| Possible values of the mean |  |  |  |
+| |  |  |  |
+| |  |  |  |
+| Link function |  |  |  |
+| |  |  |  |
+| |  |  |  |
+
+:::
 
 ## Link function
 
@@ -348,7 +379,7 @@ $\Longrightarrow \log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p = 
 
 <br>
 
-**Inverse-link function:** $E(Y) = e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}$
+**Inverse-link function:** $E(Y) = \lambda = e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}$
 
 ## EDA
 
@@ -417,6 +448,9 @@ Let's consider $x=0$ and $x=1$:
 
 The expectation at $x+1$ is $e^{\widehat{\beta}_1}$ times the expectation at $x$
 
+A C-unit increase multiplies the mean count by $e^{C \widehat{\beta}_1}$ 
+
+
 ## Interpreting the coefficients
 
 In our example:  $\log(\widehat{\lambda}) = -2.18 + 0.06 \cdot \tt{percent urban}$
@@ -441,7 +475,8 @@ $e^{0.06} \approx 1.06$
 full <- glm(laws ~ percent_urban + historical,
             data = equality_index,
             family = poisson)
-summary(full)
+
+tidy(full)
 ```
 
 
@@ -494,16 +529,17 @@ In R: `confint.default(full)` gives these Wald intervals (`confint()` gives a sl
 :::
 
 
-## Today:
+## Summary
 
-- EDA
-- Interpretations
-- Wald-based tests and CI's
+-   Poisson regression models a **count** response, $Y_i \sim \text{Poisson}(\lambda_i)$, where the mean and the variance are both $\lambda_i$.
+-   The link function is the **log**, so $\log(\lambda_i) = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p$.
+-   A 1-unit increase in $x_j$ multiplies the mean count by $e^{\hat \beta_j}$, holding the other predictors constant.
+-   To check linearity, plot $log(Y)$ against each quantitative predictor.
 
 ### Next time: 
 
 - Conditions for inference
-- LRT 
+- More $\chi^2$/$F$ tests
 - quasipoisson
 
 

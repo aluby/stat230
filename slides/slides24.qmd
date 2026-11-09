@@ -308,6 +308,7 @@ Residual deviance: 167.35  on 61  degrees of freedom
 AIC: NA
 ```
 
+
 ## What changed?
 
 :::: {.columns}
