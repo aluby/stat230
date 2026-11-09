@@ -109,7 +109,6 @@ trout <- Sleuth3::ex2116
 
 # Problem 3: Salamanders (by hand, 5 parts)
 
-<!-- 
 > Researchers counted the number of Del Norte salamanders found in a 7-hectare area at each of 47 randomly chosen sites in northern California. At each site, they also recorded the percent of the ground covered by the forest canopy (`PctCover`) and the age of the forest in years (`ForestAge`).
 
 ```{r}
@@ -130,7 +129,7 @@ deviance(sal_reduced)
 
 (d) Calculate the predicted mean number of salamanders at a site with 80% canopy cover in a 100-year-old forest.
 
-(e) Use a likelihood ratio test to test whether `ForestAge` is needed in the model, after accounting for `PctCover`. State the hypotheses, the test statistic and degrees of freedom, and your conclusion. Does the $z$-test for `ForestAge` agree? -->
+(e) Use a likelihood ratio test to test whether `ForestAge` is needed in the model, after accounting for `PctCover`. State the hypotheses, the test statistic and degrees of freedom, and your conclusion. Does the $z$-test for `ForestAge` agree? 
 
 # Problem 4: Salamanders and overdispersion (by hand, 5 parts)
 

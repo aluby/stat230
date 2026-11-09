@@ -544,3 +544,20 @@ In R: `confint.default(full)` gives these Wald intervals (`confint()` gives a sl
 
 
 
+|  | Linear regression | Logistic regression | Poisson regression |
+|:--|:--|:--|:--|
+| Response | Quantitative (any numeric value) | Binary (0/1), or a binomial count out of $n_i$ trials | Count of events in a fixed interval of time or space |
+| | Example: bike rides per day | Example: fake vs. real news; number of moths removed out of $n_i$ placed | Example: number of possum species at a site; number of laws in a state |
+| | $Y_i \in (-\infty, \infty)$ | $Y_i \in \{0, 1\}$ (or $\{0, 1, \ldots, n_i\}$) | $Y_i \in \{0, 1, 2, \ldots\}$ |
+| Random component | Normal | Bernoulli (binary) or Binomial (count) | Poisson |
+| | $Y_i \sim N(\mu_i, \sigma^2)$ | $Y_i \sim \text{Binomial}(n_i, \pi_i)$ ($n_i = 1$ for binary) | $Y_i \sim \text{Poisson}(\lambda_i)$ |
+| | $Var(Y_i) = \sigma^2$ (constant) | $Var(Y_i) = n_i\pi_i(1-\pi_i)$ (depends on the mean) | $Var(Y_i) = \lambda_i$ (equals the mean) |
+| Mean of $Y$ | $\mu_i = E(Y_i)$ | $\pi_i = P(Y_i = 1)$ (binary); $E(Y_i) = n_i\pi_i$ (binomial) | $\lambda_i = E(Y_i)$ |
+| | $\mu_i = \eta_i = \beta_0 + \beta_1 x_{1i} + \cdots + \beta_p x_{pi}$ | $\pi_i = \dfrac{e^{\eta_i}}{1 + e^{\eta_i}}$ | $\lambda_i = e^{\eta_i}$ |
+| | The mean is the linear predictor itself | S-shaped curve in $\eta_i$ | Exponential curve in $\eta_i$ |
+| Possible values of the mean | Any real number, $(-\infty, \infty)$ | Between 0 and 1 (a probability) | Positive, $(0, \infty)$ |
+| | Same range as the linear predictor $\eta_i$ | $\eta_i$ can be any real number, so we need a link to squeeze it into $(0, 1)$ | $\eta_i$ can be negative, so we need a link to keep $\lambda_i$ positive |
+| | No transformation needed | Odds can be any positive number | Counts can't have a negative mean |
+| Link function | Identity | Logit | Log |
+| | $g(\mu_i) = \mu_i = \eta_i$ | $g(\pi_i) = \log\left(\dfrac{\pi_i}{1-\pi_i}\right) = \eta_i$ | $g(\lambda_i) = \log(\lambda_i) = \eta_i$ |
+| | $\beta_j$ is the change in the mean for a 1-unit increase in $x_j$ | $e^{\beta_j}$ is the multiplicative change in the **odds** | $e^{\beta_j}$ is the multiplicative change in the **mean** |
