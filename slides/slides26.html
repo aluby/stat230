@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.23">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Overdispersion and Inference for Poisson Regression</title>
@@ -226,7 +226,7 @@ Prof Amanda Luby
 <section id="eda" class="slide level2">
 <h2>EDA</h2>
 
-<img data-src="slides26_files/figure-html/unnamed-chunk-2-1.png" width="768" class="r-stretch"><ul>
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-2-1.png" width="768" class="r-stretch"><ul>
 <li><code>laws</code> is skewed</li>
 <li>as percent urban increases, laws also increases</li>
 <li><code>dem</code> and <code>swing</code> generally have more laws than <code>gop</code></li>
@@ -286,7 +286,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <h2>Pearson residuals</h2>
 <p><span class="math display">\[Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}}\]</span></p>
 
-<img data-src="slides26_files/figure-html/unnamed-chunk-4-1.png" width="768" class="r-stretch"></section>
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-4-1.png" width="768" class="r-stretch"></section>
 <section id="for-poisson-model" class="slide level2">
 <h2>For Poisson model</h2>
 <p><span class="math display">\[Pres_i = \frac{Y_i - \widehat \mu_i}{\widehat{SD(Y_i)}}\]</span></p>
@@ -349,7 +349,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <h2>Pearson resids still show overdispersion</h2>
 <p>Since they use the Poisson mean/sd</p>
 
-<img data-src="slides26_files/figure-html/unnamed-chunk-7-1.png" width="768" class="r-stretch"></section>
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-7-1.png" width="768" class="r-stretch"></section>
 <section id="standardized-pearson-residuals" class="slide level2">
 <h2>Standardized Pearson residuals</h2>
 <p>Use quasi versions of SD: <span class="math inline">\(SD(Y_i) = \sqrt{\psi \lambda_i}\)</span> (also adjusts for leverage)</p>
@@ -357,7 +357,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_xpanel</span>(full_quasi, <span class="at">type =</span> <span class="st">"stand.pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="slides26_files/figure-html/unnamed-chunk-8-1.png" width="768" class="r-stretch"><div class="fragment">
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-8-1.png" width="768" class="r-stretch"><div class="fragment">
 <p>→ better! perhaps one outlier we’d want to investigate further</p>
 </div>
 </section>
@@ -698,6 +698,44 @@ $residual.scale
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
