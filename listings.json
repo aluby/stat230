@@ -37,57 +37,10 @@
       "/activities/23-binomial-logistic.html",
       "/activities/24-overdispersion.html",
       "/activities/24-case-studies.html",
-      "/activities/26-poisson-intro.html",
-      "/activities/27-poisson.html",
-      "/activities/28-quasibinomial.html",
+      "/activities/25-poisson-intro.html",
+      "/activities/26-poisson.html",
       "/activities/group-expectations.html",
       "/activities/18T-prediction.html"
-    ]
-  },
-  {
-    "listing": "/slides.html",
-    "items": [
-      "/slides/slides29.html",
-      "/slides/slides28.html",
-      "/slides/slides27.html",
-      "/slides/slides25.html",
-      "/slides/slides24.html",
-      "/slides/slides23.html",
-      "/slides/slides21.html",
-      "/slides/slides20.html",
-      "/slides/slides19.html",
-      "/slides/slides15.html",
-      "/slides/slides14.html",
-      "/slides/slides13.html",
-      "/slides/slides12.html",
-      "/slides/slides11.html",
-      "/slides/slides10.html",
-      "/slides/slides09.html",
-      "/slides/slides08.html",
-      "/slides/slides06.html",
-      "/slides/slides05.html",
-      "/slides/slides04.html",
-      "/slides/slides03.html",
-      "/slides/slides02.html",
-      "/slides/slides-cheat-sheet.html",
-      "/slides/slides01.html"
-    ]
-  },
-  {
-    "listing": "/readings.html",
-    "items": [
-      "/readings/latex-for-stat230.html",
-      "/readings/exam01-practice.html",
-      "/readings/intro-review.html",
-      "/readings/exam01-review.html",
-      "/readings/quiz02-practice.html",
-      "/readings/exam02-review.html",
-      "/readings/quiz03-practice.html",
-      "/readings/exam03-review.html",
-      "/readings/r-functions-reference.html",
-      "/readings/revisions.html",
-      "/readings/r-for-stat230.html",
-      "/readings/logistic-videos.html"
     ]
   },
   {
@@ -111,7 +64,54 @@
       "/notes/notes21.pdf",
       "/notes/notes22.pdf",
       "/notes/notes23.pdf",
-      "/notes/notes24.pdf"
+      "/notes/notes24.pdf",
+      "/notes/notes25.pdf"
+    ]
+  },
+  {
+    "listing": "/readings.html",
+    "items": [
+      "/readings/latex-for-stat230.html",
+      "/readings/exam01-practice.html",
+      "/readings/intro-review.html",
+      "/readings/exam01-review.html",
+      "/readings/quiz02-practice.html",
+      "/readings/exam02-review.html",
+      "/readings/quiz03-practice.html",
+      "/readings/exam03-review.html",
+      "/readings/r-functions-reference.html",
+      "/readings/revisions.html",
+      "/readings/r-for-stat230.html",
+      "/readings/logistic-videos.html"
+    ]
+  },
+  {
+    "listing": "/slides.html",
+    "items": [
+      "/slides/slides29.html",
+      "/slides/slides26.html",
+      "/slides/slides25.html",
+      "/slides/slidesXX-casestudies.html",
+      "/slides/slides24.html",
+      "/slides/slides23.html",
+      "/slides/slides21.html",
+      "/slides/slides20.html",
+      "/slides/slides19.html",
+      "/slides/slides15.html",
+      "/slides/slides14.html",
+      "/slides/slides13.html",
+      "/slides/slides12.html",
+      "/slides/slides11.html",
+      "/slides/slides10.html",
+      "/slides/slides09.html",
+      "/slides/slides08.html",
+      "/slides/slides06.html",
+      "/slides/slides05.html",
+      "/slides/slides04.html",
+      "/slides/slides03.html",
+      "/slides/slides02.html",
+      "/slides/slides-cheat-sheet.html",
+      "/slides/slides01.html"
     ]
   }
 ]

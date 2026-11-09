@@ -6,11 +6,11 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
-  <title>stat230 – Intro to Poisson Regression</title>
+  <title>stat230 – Overdispersion and Inference for Poisson Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -196,7 +196,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#003300" data-slide-number="none" class="quarto-title-block center">
-  <h1 class="title">Intro to Poisson Regression</h1>
+  <h1 class="title">Overdispersion and Inference for Poisson Regression</h1>
   <p class="subtitle">Day 26</p>
 
 <div class="quarto-title-authors">
@@ -226,197 +226,37 @@ Prof Amanda Luby
 <section id="eda" class="slide level2">
 <h2>EDA</h2>
 
-<img data-src="slides26_files/figure-revealjs/unnamed-chunk-2-1.png" width="768" class="r-stretch"><ul>
+<img data-src="slides26_files/figure-html/unnamed-chunk-2-1.png" width="768" class="r-stretch"><ul>
 <li><code>laws</code> is skewed</li>
 <li>as percent urban increases, laws also increases</li>
 <li><code>dem</code> and <code>swing</code> generally have more laws than <code>gop</code></li>
 </ul>
 </section>
-<section id="eda-log-scale" class="slide level2">
-<h2>EDA (log scale)</h2>
-
-<img data-src="slides26_files/figure-revealjs/unnamed-chunk-3-1.png" width="768" class="r-stretch"><ul>
-<li><code>log(laws)</code> is still a little skewed</li>
-<li><code>log(laws)</code> and <code>percent_urban</code> is more linear</li>
-<li>if we had states with 0 laws, might have to do <code>log(laws + 1)</code></li>
+<section id="review-poisson-regression-model" class="slide level2">
+<h2>Review: Poisson regression model</h2>
+<ul>
+<li><p>If <span class="math inline">\(Y_i =\)</span> # of events in a fixed interval of time/space, then <span class="math inline">\(Y_i \sim \text{Poisson}(\lambda)\)</span></p></li>
+<li><p>This leads to the Poisson regression model for counts:</p>
+<p><span class="math display">\[\log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p\]</span></p></li>
+<li><p>or equivalently</p></li>
 </ul>
+<p><span class="math display">\[\lambda = e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}\]</span></p>
 </section>
-<section id="slr-model-ignoring-historical-for-now" class="slide level2">
-<h2>SLR Model (ignoring <code>historical</code> for now)</h2>
-<div class="cell">
-
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 5
-  term          estimate std.error statistic  p.value
-  &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)    -1.22      0.793      -1.53 0.132   
-2 percent_urban   0.0418    0.0106      3.95 0.000255</code></pre>
-</div>
-</div>
-<img data-src="slides26_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
-<section id="section" class="slide level2">
-<h2></h2>
-
-<img data-src="slides26_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"><div class="fragment">
-<p>→ some remaining nonlinearity, but is it worth going the transformation route? Why might we prefer a different model entirely?</p>
-</div>
+<section id="assumptions" class="slide level2 scrollable">
+<h2>Assumptions</h2>
+<ol type="1">
+<li><p><strong>Linearity</strong>: the log of the mean of Y, <span class="math inline">\(\log(\lambda)\)</span>, must be a linear function of the predictors</p></li>
+<li><p><strong>Mean = Variance</strong>: the mean of a Poisson random variable must be equal to its variance</p></li>
+<li><p><strong>Independence</strong>: the observations must be independent</p></li>
+</ol>
 </section>
-<section id="assumed-slr-model-simulated-data" class="slide level2">
-<h2>Assumed SLR model (simulated data)</h2>
-
-<img data-src="slides26_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
-<section id="model-for-count-data" class="slide level2">
-<h2>Model for count data</h2>
-
-<img data-src="slides26_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
-<section id="generalized-linear-model" class="slide level2">
-<h2>Generalized linear model</h2>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Random component: </strong></p>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>What distribution does the response variable follow?</p>
-</div>
-<p><br></p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Linear predictor (systematic component): </strong></p>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p>What function of the predictors should we use?</p>
-</div>
-<p><br></p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Link function: </strong></p>
-</div>
-<div class="fragment" data-fragment-index="4">
-<p>How can we relate the expectation of <span class="math inline">\(Y\)</span> and our linear predictor?</p>
-</div>
-</section>
-<section id="random-component" class="slide level2">
-<h2>Random component</h2>
-<p>What distribution does the response variable follow?</p>
-<p><br></p>
-<p><strong>Possible values:</strong> We are counting the number of events that occur over a fixed interval, so <span class="math inline">\(Y =0, 1, 2, \ldots\)</span></p>
-<p><br></p>
-<p><strong>Poisson distribution</strong></p>
-<p><span class="math inline">\(P(Y = y) = \frac{e^{-\lambda} \lambda^y}{y!}, \quad \text{for} \quad y = 0, 2, 1, \ldots\)</span></p>
-</section>
-<section id="linear-predictor" class="slide level2">
-<h2>Linear predictor</h2>
-<p>What function of the predictors should we use?</p>
-<p><br></p>
-<p><span class="math inline">\(\eta = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p\)</span></p>
-
-<aside><div>
-<p><span class="math inline">\(\eta =\)</span> “eta”</p>
-</div></aside></section>
-<section id="section-1" class="slide level2">
-<h2></h2>
-<iframe data-external="1" src="https://www.youtube.com/embed/6pDH66X3ClA?si=IsolyWEfJizfItxS" width="100%" height="100%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-</section>
-<section id="link-function" class="slide level2">
-<h2>Link function</h2>
-<p>How can we relate the expectation of <span class="math inline">\(Y\)</span> and our linear predictor?</p>
-<div class="fragment">
-<p><br></p>
-<p><span class="math inline">\(E(Y) = \lambda\)</span> between 0 and <span class="math inline">\(\infty\)</span></p>
-<p><br></p>
-<p><span class="math inline">\(\eta = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p \longrightarrow\)</span> between <span class="math inline">\(-\infty\)</span> and <span class="math inline">\(\infty\)</span></p>
-<p><br></p>
-<p>What function takes numbers between between 0 and <span class="math inline">\(\infty\)</span> as input and maps them to the real line?</p>
-</div>
-</section>
-<section id="link-function-1" class="slide level2">
-<h2>Link function</h2>
-<p>How can we relate the expectation of <span class="math inline">\(Y\)</span> and our linear predictor?</p>
-<p><span class="math inline">\(\log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p = \eta\)</span></p>
-</section>
-<section id="poisson-regression-model-for-counts" class="slide level2">
-<h2>Poisson regression model for counts</h2>
-<p><strong>Random component:</strong> <span class="math inline">\(Y_i = \#\)</span> anti-discrimination laws in a state; Poisson distribution is reasonable</p>
-<div class="fragment">
-<p><br></p>
-<p><strong>Link function:</strong> <span class="math inline">\(E(Y) = \lambda\)</span> and <span class="math inline">\(\lambda &gt;0\)</span></p>
-<p><span class="math inline">\(\Longrightarrow \log(\lambda) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p = \eta\)</span></p>
-</div>
-<div class="fragment">
-<p><br></p>
-<p><strong>Inverse-link function:</strong> <span class="math inline">\(E(Y) = e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}\)</span></p>
-</div>
-</section>
-<section id="eda-1" class="slide level2">
-<h2>EDA</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="slides26_files/figure-revealjs/unnamed-chunk-8-1.png" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:40%;">
-<!-- - Why did we use <br> `log(nests + 0.5)`? -->
-<p>What structure are we looking for in this plot?</p>
-<p><br></p>
-<p><br></p>
-<p>There are no 0 counts in this data set, how could we create this plot if we had observed 0s?</p>
-</div></div>
-</section>
-<section id="model-fitting" class="slide level2">
+<section id="model-fitting" class="slide level2 smaller">
 <h2>Model fitting</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban, <span class="at">data =</span> equality_index, </span>
-<span id="cb2-2"><a></a>    <span class="at">family =</span> poisson)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>                 Estimate Std. Error   z value     Pr(&gt;|z|)
-(Intercept)   -2.18343918 0.30155147 -7.240685 4.464246e-13
-percent_urban  0.06057098 0.00358636 16.889266 5.397062e-64</code></pre>
-</div>
-</div>
-<p><br></p>
-<p><strong>Fitted model:</strong> <span class="math inline">\(\log(\widehat{\lambda}) = -2.18 + 0.06 \cdot \tt{percent urban}\)</span></p>
-<div class="fragment">
-<p><strong>How can we interpret the coefficients?</strong></p>
-</div>
-</section>
-<section id="interpreting-the-coefficients" class="slide level2">
-<h2>Interpreting the coefficients</h2>
-<p><span class="math inline">\(\log(\widehat{\lambda}) = \widehat{\beta}_0 + \widehat{\beta}_1 x\)</span></p>
-<p>How does the expected (average) number of events, <span class="math inline">\(\widehat{\lambda}\)</span>, change for a 1-unit increase in <span class="math inline">\(x\)</span>?</p>
-<div class="fragment">
-<p>Let’s consider <span class="math inline">\(x=0\)</span> and <span class="math inline">\(x=1\)</span>:</p>
-<ul>
-<li><p><span class="math inline">\(\widehat{\lambda} = e^{\widehat{\beta}_0 + \widehat{\beta}_1(0)}=e^{\widehat{\beta}_0}\)</span></p></li>
-<li><p><span class="math inline">\(\widehat{\lambda} = e^{\widehat{\beta}_0 + \widehat{\beta}_1(1)}=e^{\widehat{\beta}_0} e^{\widehat{\beta}_1}\)</span></p></li>
-</ul>
-</div>
-<div class="fragment">
-<p>The expectation at <span class="math inline">\(x+1\)</span> is <span class="math inline">\(e^{\widehat{\beta}_1}\)</span> times the expectation at <span class="math inline">\(x\)</span></p>
-</div>
-</section>
-<section id="interpreting-the-coefficients-1" class="slide level2">
-<h2>Interpreting the coefficients</h2>
-<p>In our example: <span class="math inline">\(\log(\widehat{\lambda}) = -2.18 + 0.06 \cdot \tt{percent urban}\)</span></p>
-<div class="fragment">
-<p><span class="math inline">\(e^{0.06} \approx 1.06\)</span></p>
-</div>
-<div class="fragment">
-<p><br></p>
-<p>→ A 1 percent increase in the percent of urban residents is associated with an increase in the average number of antidiscrimination laws by a factor of 1.06 (i.e., a 6% increase).</p>
-</div>
-</section>
-<section id="multiple-predictors" class="slide level2 smaller">
-<h2>Multiple predictors</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>full <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban <span class="sc">+</span> historical,</span>
-<span id="cb4-2"><a></a>            <span class="at">data =</span> equality_index,</span>
-<span id="cb4-3"><a></a>            <span class="at">family =</span> poisson)</span>
-<span id="cb4-4"><a></a><span class="fu">summary</span>(full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>full_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban <span class="sc">+</span> historical,</span>
+<span id="cb1-2"><a></a>            <span class="at">data =</span> equality_index,</span>
+<span id="cb1-3"><a></a>            <span class="at">family =</span> poisson)</span>
+<span id="cb1-4"><a></a><span class="fu">summary</span>(full_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -442,32 +282,202 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 </div>
 </section>
-<section id="section-2" class="slide level2">
-<h2></h2>
+<section id="pearson-residuals" class="slide level2">
+<h2>Pearson residuals</h2>
+<p><span class="math display">\[Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}}\]</span></p>
+
+<img data-src="slides26_files/figure-html/unnamed-chunk-4-1.png" width="768" class="r-stretch"></section>
+<section id="for-poisson-model" class="slide level2">
+<h2>For Poisson model</h2>
+<p><span class="math display">\[Pres_i = \frac{Y_i - \widehat \mu_i}{\widehat{SD(Y_i)}}\]</span></p>
+<ul>
+<li>Mean = <span class="math inline">\(\widehat \lambda\)</span>, SD = <span class="math inline">\(\sqrt{\widehat \lambda}\)</span></li>
+<li>Pearson residual: <span class="math inline">\(\frac{Y_i - \widehat \lambda_i}{\sqrt{\widehat \lambda_i}}\)</span></li>
+<li>If <span class="math inline">\(\widehat\lambda\)</span>’s are “big” (<span class="math inline">\(\ge 5\)</span>), Pearson residuals are <span class="math inline">\(\approx N(0,1)\)</span> if Poisson model is correct. Can use to diagnose problems with linearity</li>
+<li>If overdispersed, then SD of Pearson residuals is <span class="math inline">\(&gt;1\)</span></li>
+</ul>
+</section>
+<section id="goodness-of-fit-test" class="slide level2">
+<h2>Goodness of Fit test</h2>
 <p><br></p>
-<p>→ A 1 percent increase in the percent of urban residents is associated with an increase in the average number of antidiscrimination laws by a factor of <span class="math inline">\(e^{.03} = 1.03\)</span>, holding <code>historical</code> constant (i.e., a 3% increase).</p>
-<div class="fragment">
+<p><strong><span class="math inline">\(H_0\)</span>:</strong> The Poisson model fits the data adequately.</p>
+<p><strong><span class="math inline">\(H_A\)</span>:</strong> The Poisson model is deficient (a more complex, saturated model is required).</p>
 <p><br></p>
-<p>→ Compared to <code>dem</code> states, <code>gop</code> states have fewer antidiscrimination laws by a factor of <span class="math inline">\(e^{-1.6} = .202\)</span>, assuming <code>percent_urban</code> is held constant (i.e., a 80% decrease).</p>
-</div>
-<div class="fragment">
-<p><br></p>
-<p>→ Compared to <code>dem</code> states, <code>swing</code> states have fewer antidiscrimination laws by a factor of <span class="math inline">\(e^{-.83} = .44\)</span>, assuming <code>percent_urban</code> is held constant (i.e., a 56% decrease).</p>
+<p>The <strong>Residual Deviance</strong> (<span class="math inline">\(D\)</span>) serves as our test statistic: <span class="math display">\[D = 2 \sum_{i=1}^n \left[ y_i \log\left(\frac{y_i}{\widehat{\lambda}_i}\right) - (y_i - \widehat{\lambda}_i) \right]\]</span></p>
+<div class="small">
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(D \sim \chi^2\)</span> distribution with <span class="math inline">\(df = n - (p + 1)\)</span>.</p>
 </div>
 </section>
-<section id="today" class="slide level2">
-<h2>Today:</h2>
+<section id="are-means-big-enough-for-gof-test" class="slide level2">
+<h2>Are means big enough for GoF test?</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.962   3.532   7.267  13.460  20.429  42.016 </code></pre>
+</div>
+</div>
+</section>
+<section id="quasipoisson-model" class="slide level2 smaller">
+<h2>Quasipoisson model</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = laws ~ percent_urban + historical, family = quasipoisson, 
+    data = equality_index)
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      0.75902    1.09483   0.693 0.491625    
+percent_urban    0.03136    0.01247   2.515 0.015471 *  
+historicalgop   -1.61214    0.44631  -3.612 0.000748 ***
+historicalswing -0.82879    0.33989  -2.438 0.018672 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for quasipoisson family taken to be 11.2196)
+
+    Null deviance: 962.66  on 49  degrees of freedom
+Residual deviance: 413.49  on 46  degrees of freedom
+AIC: NA
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+</section>
+<section id="pearson-resids-still-show-overdispersion" class="slide level2">
+<h2>Pearson resids still show overdispersion</h2>
+<p>Since they use the Poisson mean/sd</p>
+
+<img data-src="slides26_files/figure-html/unnamed-chunk-7-1.png" width="768" class="r-stretch"></section>
+<section id="standardized-pearson-residuals" class="slide level2">
+<h2>Standardized Pearson residuals</h2>
+<p>Use quasi versions of SD: <span class="math inline">\(SD(Y_i) = \sqrt{\psi \lambda_i}\)</span> (also adjusts for leverage)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_xpanel</span>(full_quasi, <span class="at">type =</span> <span class="st">"stand.pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="slides26_files/figure-html/unnamed-chunk-8-1.png" width="768" class="r-stretch"><div class="fragment">
+<p>→ better! perhaps one outlier we’d want to investigate further</p>
+</div>
+</section>
+<section id="inference-for-coefficients" class="slide level2">
+<h2>Inference for coefficients</h2>
+<p><strong>Confidence interval</strong> for <span class="math inline">\(\beta\)</span>:</p>
 <ul>
-<li>EDA</li>
-<li>Interpretations</li>
-<li>Wald-based tests and CI’s</li>
+<li>For Poisson model: <span class="math inline">\(\widehat \beta \pm z^* SE(\widehat\beta)\)</span></li>
+<li>For Quasi model: <span class="math inline">\(\widehat \beta \pm t_{n-(p+1)}^* SE_{quasi}(\widehat\beta)\)</span></li>
 </ul>
-<h3 id="next-time">Next time:</h3>
+<p><br></p>
+<p><strong>Hypothesis testing</strong> for <span class="math inline">\(H_0: \beta = 0\)</span> against <span class="math inline">\(H_A: \beta \ne 0\)</span></p>
 <ul>
-<li>Conditions for inference</li>
-<li>LRT</li>
-<li>quasipoisson</li>
+<li>Test stat: <span class="math inline">\(\frac{\widehat \beta - 0}{SE}\)</span>
+<ul>
+<li><span class="math inline">\(\sim N(0,1)\)</span> under Poisson model</li>
+<li><span class="math inline">\(\sim t_{n-(p+1)}\)</span> under Quasi model</li>
+</ul></li>
 </ul>
+</section>
+<section id="confidence-intervals-interpretation" class="slide level2">
+<h2>Confidence Intervals: Interpretation</h2>
+<p><br></p>
+<p>We construct intervals on the <strong>log (link) scale</strong> first, then exponentiate:</p>
+<p><span class="math display">\[\text{Log scale:} \quad \hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)\]</span> <span class="math display">\[\text{Count/Response scale:} \quad e^{\hat{\beta}_j \pm z^* \cdot SE(\hat{\beta}_j)}\]</span></p>
+<p><br></p>
+<div class="fragment">
+<p>→ We are <span class="math inline">\((1-\alpha)\times100\%\)</span> confident that a 1-unit increase in <span class="math inline">\(X_j\)</span> is associated with a multiplicative change in the expected count by a factor between <span class="math inline">\(e^L\)</span> and <span class="math inline">\(e^U\)</span>, holding all other variables constant.</p>
+</div>
+</section>
+<section id="inference-for-lambda" class="slide level2 scrollable">
+<h2>Inference for <span class="math inline">\(\lambda\)</span></h2>
+<div class="medium">
+<p>Reminder: <span class="math inline">\(\log \lambda = \eta\)</span></p>
+<ol type="1">
+<li>Compute the predicted value and standard error on the <strong>link (log) scale</strong>: <span class="math display">\[\widehat{\eta} = \widehat{\beta}_0 + \widehat{\beta}_1 X_1 + \dots + \widehat{\beta}_p X_p\]</span></li>
+<li>Build the interval on the log scale: <span class="math inline">\([\widehat{\eta} - z^*SE, \,\, \widehat{\eta} + z^*SE]\)</span></li>
+<li>Exponentiate the endpoints to map back to the <strong>original count scale</strong>: <span class="math display">\[\left[ e^{\widehat{\eta} - z^*SE}, \,\, e^{\widehat{\eta} + z^*SE} \right]\]</span></li>
+</ol>
+<p>In R:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> ...), <span class="at">type =</span> <span class="st">"link"</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-2"><a></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> ...), <span class="at">type =</span> <span class="st">"response"</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="example-link-scale" class="slide level2">
+<h2>Example: <code>link</code> scale</h2>
+<div class="medium">
+<p>Minnesota historically votes <code>dem</code> and has 73.3% of the population in urban areas.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">predict</span>(full_glm, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">historical =</span> <span class="st">"dem"</span>, </span>
+<span id="cb7-2"><a></a>                                       <span class="at">percent_urban =</span> <span class="fl">73.3</span>), </span>
+<span id="cb7-3"><a></a>        <span class="at">type =</span> <span class="st">"link"</span>, </span>
+<span id="cb7-4"><a></a>        <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fit
+       1 
+3.057568 
+
+$se.fit
+[1] 0.06903723
+
+$residual.scale
+[1] 1</code></pre>
+</div>
+</div>
+</div>
+<p><span class="math inline">\(3.06 \pm 2\cdot .07 = [2.92, 3.20] \to [e^{2.92}, e^{3.20}] = [18.54, 24.53]\)</span></p>
+</section>
+<section id="example-response-scale" class="slide level2">
+<h2>Example: <code>response</code> scale</h2>
+<div class="medium">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">predict</span>(full_glm, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">historical =</span> <span class="st">"dem"</span>, </span>
+<span id="cb9-2"><a></a>                                       <span class="at">percent_urban =</span> <span class="fl">73.3</span>), </span>
+<span id="cb9-3"><a></a>        <span class="at">type =</span> <span class="st">"response"</span>, </span>
+<span id="cb9-4"><a></a>        <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fit
+       1 
+21.27575 
+
+$se.fit
+       1 
+1.468819 
+
+$residual.scale
+[1] 1</code></pre>
+</div>
+</div>
+</div>
+<p><span class="math inline">\(21.275 \pm 2\cdot 1.47 = [18.33, 24.22]\)</span></p>
+<div class="fragment">
+<p>→ We are 95% confident that the average number of anti-discrimination laws in states like Minnesota is between 18.33 and 24.22</p>
+</div>
+</section>
+<section id="likelihood-ratio-test" class="slide level2">
+<h2>Likelihood Ratio Test</h2>
+<p><strong>Hypotheses:</strong></p>
+<p><span class="math inline">\(H_0: \beta_i = \beta_j = ... = 0\)</span></p>
+<p><span class="math inline">\(H_A\)</span>: at least one <span class="math inline">\(\ne\)</span> 0</p>
+<p><br></p>
+<p><strong>Test Statistic</strong>:</p>
+<p><span class="math display">\[\Delta  = D_{\text{Reduced}} - D_{\text{Full}}\]</span></p>
+<p><strong>Reference distribution</strong>:</p>
+<ul>
+<li>Depends on standard poisson vs quasipoisson</li>
+</ul>
+</section>
+<section id="lrt-reference-distribution" class="slide level2">
+<h2>LRT reference distribution</h2>
+<p><strong>Standard Poisson GLM:</strong> We compare <span class="math inline">\(\Delta\)</span> to a <span class="math inline">\(\chi^2\)</span> distribution with <span class="math inline">\(df = \Delta p\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">anova</span>(reduced_glm, full_glm, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><br></p>
+<p><strong>Quasipoisson GLM</strong>: Variance has been inflated by <span class="math inline">\(\widehat{\psi}\)</span>. Instead, we scale the drop in deviance and perform an F-test:</p>
+<p>R automatically handles the scale adjustment when you ask for test = “F”:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">anova</span>(reduced_quasi, full_quasi, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
 
 </section>
@@ -688,44 +698,6 @@ Number of Fisher Scoring iterations: 5</code></pre>
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

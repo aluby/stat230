@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -149,10 +149,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#problem-1-possums" id="toc-problem-1-possums" class="nav-link active" data-scroll-target="#problem-1-possums">Problem 1: <code>possums</code></a></li>
-  <li><a href="#problem-2-more-possums" id="toc-problem-2-more-possums" class="nav-link" data-scroll-target="#problem-2-more-possums">Problem 2: More <code>possums</code></a></li>
-  <li><a href="#problem-3-trout" id="toc-problem-3-trout" class="nav-link" data-scroll-target="#problem-3-trout">Problem 3: Trout</a></li>
-  <li><a href="#problem-4-reflections" id="toc-problem-4-reflections" class="nav-link" data-scroll-target="#problem-4-reflections">Problem 4: Reflections</a></li>
+  <li><a href="#problem-1-binary-logistic-regression-review-no-r-needed" id="toc-problem-1-binary-logistic-regression-review-no-r-needed" class="nav-link active" data-scroll-target="#problem-1-binary-logistic-regression-review-no-r-needed">Problem 1: Binary logistic regression review (no R needed)</a></li>
+  <li><a href="#problem-2-trout" id="toc-problem-2-trout" class="nav-link" data-scroll-target="#problem-2-trout">Problem 2: Trout</a></li>
+  <li><a href="#problem-3-salamanders-by-hand-5-parts" id="toc-problem-3-salamanders-by-hand-5-parts" class="nav-link" data-scroll-target="#problem-3-salamanders-by-hand-5-parts">Problem 3: Salamanders (by hand, 5 parts)</a></li>
+  <li><a href="#problem-4-salamanders-and-overdispersion-by-hand-5-parts" id="toc-problem-4-salamanders-and-overdispersion-by-hand-5-parts" class="nav-link" data-scroll-target="#problem-4-salamanders-and-overdispersion-by-hand-5-parts">Problem 4: Salamanders and overdispersion (by hand, 5 parts)</a></li>
+  <li><a href="#problem-5-binary-binomial-or-poisson" id="toc-problem-5-binary-binomial-or-poisson" class="nav-link" data-scroll-target="#problem-5-binary-binomial-or-poisson">Problem 5: Binary, binomial, or Poisson?</a></li>
+  <li><a href="#problem-6-reflections" id="toc-problem-6-reflections" class="nav-link" data-scroll-target="#problem-6-reflections">Problem 6: Reflections</a></li>
   </ul>
 </nav>
     </div>
@@ -180,93 +182,67 @@ window.Quarto = {
 
 <p>Due: Monday of Week 10 at start of class</p>
 <p>There is a <a href="../files/hw-template.pdf">homework template</a> available if you’d like to use that as a starter file, and copy and paste the code as needed.</p>
-<section id="problem-1-possums" class="level1">
-<h1>Problem 1: <code>possums</code></h1>
+<section id="problem-1-binary-logistic-regression-review-no-r-needed" class="level1">
+<h1>Problem 1: Binary logistic regression review (no R needed)</h1>
+<blockquote class="blockquote">
+<p>A case-control study in The Hague, Netherlands, compared 49 people with lung cancer to 98 people without lung cancer who were similar in age. The researchers wanted to know whether keeping pet birds is associated with lung cancer, after accounting for smoking and other factors.</p>
+</blockquote>
+<p>The variables are lung cancer (<code>lung_cancer</code>, 1 = yes), sex (<code>FM</code>), socioeconomic status (<code>SS</code>, high or low), whether the person kept birds (<code>BK</code>), age (<code>AG</code>, in years), years of smoking (<code>YR</code>), and cigarettes per day (<code>CD</code>).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># possums &lt;- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>possums <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/possums.csv"</span>), <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><strong>1.</strong> Make a plot of <code>y</code> vs.&nbsp;<code>Bark</code> and argue that there is a need for a transformation of <strong>at least one of the response and/or predictor</strong>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>I recommend that you jitter the value of <code>y</code> so that you can more easily see the density of points. Replace <code>gf_point</code> with <code>gf_jitter</code>. You can vary the amount of horizontal “jitter” with <code>width = .25</code> and the amount of vertical jitter with <code>height = .25</code> (and replace .25 with whatever number you want!)</p>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  -1.27      1.83      -0.696 0.486   
+2 FMMale       -0.561     0.531     -1.06  0.291   
+3 SSLow        -0.105     0.469     -0.225 0.822   
+4 AG           -0.0398    0.0355    -1.12  0.263   
+5 YR            0.0729    0.0265     2.75  0.00594 
+6 CD            0.0260    0.0255     1.02  0.308   
+7 BKBird        1.36      0.411      3.31  0.000923</code></pre>
 </div>
 </div>
-<p><strong>2.</strong> The variable <code>y</code> can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot <code>log(y+1)</code> vs.&nbsp;<code>Bark</code> and fit the corresponding log-normal linear model. Interpret the estimated slope coefficient.</p>
-<p><strong>3.</strong> Now estimate the Poisson regression model, using <code>y</code> as the response variable and <code>Bark</code> as the predictor (and the log link function). Interpret the estimated slope coefficient.</p>
-<p><strong>4.</strong> Let’s visualize how well our two models capture the data on its original count scale. Fill in the missing pieces of the predict() functions in the starter code below to generate predictions across a range of bark indices from 0 to 30, then complete the plot.</p>
-<p>Compare and contrast the two fitted curves. Explain why the Poisson model predictions are bigger than the Gaussian model predictions. (Hint: the Poisson model gives estimates of the mean on the original scale.)</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Here is some starter code that first makes a <code>preds</code> dataset showing the predicted values under the two models for all <code>Bark</code> values between 0 and 30. Then, it creates a jittered scatterplot of the original data, and overlays the two fits.</p>
-<ul>
-<li>For the Log-Normal OLS model (<code>possum_lognormal</code>): Remember that this model predicts <span class="math inline">\(\log(y+1)\)</span>. To map these predictions back to the original count scale (<span class="math inline">\(y\)</span>), you will need to mathematically undo both operations.</li>
-<li>For the Poisson GLM model (<code>possum_glm</code>): By default, <code>predict()</code> returns values on the log-link scale (<span class="math inline">\(\eta\)</span>). Look at the help documentation (<code>?predict.glm</code>) to find the specific character string needed for the type argument to return predictions on the original response scale (<span class="math inline">\(\mu\)</span>).</li>
-<li>Fill in both blanks in the code with a version of <code>predict(model, newdata = data.frame(Bark = Bark))</code>. I’ve given you most of the <code>possum_glm</code> code.</li>
-</ul>
+<ol type="a">
+<li><p>Write out the theoretical regression model</p></li>
+<li><p>Interpret the coefficient for <code>BKBird</code> on the odds scale, in context.</p></li>
+<li><p>Calculate a 95% confidence interval for the odds ratio for keeping birds, and interpret it in context.</p></li>
+<li><p>Interpret the coefficient for <code>YR</code> on the odds scale, for 10 additional years of smoking.</p></li>
+<li><p>Calculate the predicted log-odds, odds, and probability of lung cancer for a 60-year-old man of high socioeconomic status who has smoked 20 cigarettes a day for 30 years and keeps birds. Why shouldn’t we interpret your answer as the chance that a man like this in the population has lung cancer?</p></li>
+<li><p>Below are the leverage and Cook’s distance plots, and the people with the largest leverage and the largest Cook’s distance.</p></li>
+<li><p>Calculate the cutoff <span class="math inline">\(2(p+1)/n\)</span> for high leverage. Which people have high leverage, and why? (Use the first table output)</p></li>
+</ol>
+<ol start="2" type="i">
+<li><p>The person with the largest Cook’s distance has lung cancer but never smoked. Why is their standardized residual large? (Use the second table output)</p></li>
+<li><p>Is anyone influential? Would you remove anyone from the data? Explain.</p></li>
+</ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>preds <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Bark =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">30</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_ols =</span> _______,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_glm =</span> <span class="fu">predict</span>(possum_glm, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Bark =</span> Bark), <span class="at">type =</span> <span class="st">"____"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(y <span class="sc">~</span> Bark, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">25</span>, <span class="at">height =</span> .<span class="dv">25</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>(y_ols <span class="sc">~</span> Bark, <span class="at">data =</span> preds, <span class="at">col =</span> <span class="st">"darkgreen"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>(y_glm <span class="sc">~</span> Bark, <span class="at">data =</span> preds, <span class="at">col =</span> <span class="st">"darkblue"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
-<p><strong>5.</strong> Calculate a 95% Wald-based confidence interval for the slope coefficient (<span class="math inline">\(\beta_1\)</span>) of <code>Bark</code> using the Poisson model. Do this (1) by hand using the formula and (2) with R using <code>confint</code> or <code>tidy</code>.</p>
-<p><strong>6.</strong> Suppose a newly surveyed forest site has a bark quality index of <code>Bark = 15</code>. Use your Poisson regression model to calculate the predicted mean number of possum species (<span class="math inline">\(\hat{\mu}\)</span>) for this site. Be careful with your scales!</p>
-</section>
-<section id="problem-2-more-possums" class="level1">
-<h1>Problem 2: More <code>possums</code></h1>
-<p><strong>1.</strong> As discussed last class, the variable <code>y</code> can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot <code>log(y+1)</code> vs.&nbsp;each of the predictors and describe what you see. (Starter code below to save you time)</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Acacia, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Bark, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Habitat, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Shrubs, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Stags, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">gf_jitter</span>(y <span class="sc">~</span> Stumps, <span class="at">data =</span> possums, <span class="at">width =</span> .<span class="dv">15</span>, <span class="at">height =</span> .<span class="dv">15</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> p4 <span class="sc">+</span> p5 <span class="sc">+</span> p6</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hw09_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Six jittered scatterplots, each with the count response y on the y-axis and one predictor on the x-axis: Acacia, Bark, Habitat, Shrubs, Stags, and Stumps." width="768"></p>
+<p><img src="hw09_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="Residual-leverage plot and Cook's distance plot for the lung cancer model. No point has a Cook's distance near 1." width="768"></p>
 </figure>
 </div>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 10
+  lung_cancer FM    SS    BK        AG    YR    CD  .hat .std.resid .cooksd
+        &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+1           1 Male  High  Bird      64    13    30 0.150       1.90  0.107 
+2           0 Male  High  NoBird    65    47    45 0.138      -1.35  0.0319
+3           0 Male  Low   Bird      47    28    40 0.110      -1.55  0.0377</code></pre>
 </div>
-<p><strong>2.</strong> Fit the quasipoisson regression model using <code>y</code> as the response variable and include all the other predictors as main effects. The estimated dispersion parameter is less than one; argue that using the “regular” Poisson model will give more a conservative (cautious) assessment of uncertainty.</p>
-<p><strong>3.</strong> Refit the model above, now using the standard Poisson model (setting <span class="math inline">\(\phi = 1\)</span>). Interpret the estimated effect of the number of hollow trees (<code>Stags</code>).</p>
-<p><strong>4.</strong> Give a 95% confidence interval for the effect of the number of hollow trees on the mean number of species.</p>
-<p><strong>5.</strong> Take a look at the fitted values (the estimated means). Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Deviance Goodness of Fit test?</p>
-<p><strong>6.</strong> Drop <code>Acacia</code>, <code>Shrubs</code>, and <code>Stumps</code> from your model. On the basis of the likelihood ratio test, is there evidence against this reduced model?</p>
-<p><strong>7.</strong> Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of <del>stumps</del> stags is 10. Give a 95% confidence interval for this estimate by treating the <span class="math inline">\(\log(\hat{\mu})\)</span> as approximately normally distributed. Why is this justified?</p>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 10
+  lung_cancer FM     SS    BK        AG    YR    CD   .hat .std.resid .cooksd
+        &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt; &lt;fct&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+1           1 Female Low   Bird      61     0     0 0.0624       2.32  0.116 
+2           1 Male   High  Bird      64    13    30 0.150        1.90  0.107 
+3           1 Male   High  NoBird    43    19    15 0.0491       2.01  0.0454</code></pre>
+</div>
+</div>
 </section>
-<section id="problem-3-trout" class="level1">
-<h1>Problem 3: Trout</h1>
+<section id="problem-2-trout" class="level1">
+<h1>Problem 2: Trout</h1>
 <blockquote class="blockquote">
 <p>An experiment at the Marine/Freshwater Biomedical Sciences Center at Oregon State University investigated the carcinogenic effects of aflatoxicol, a metabolite of Aflatoxin B1, which is a toxic by-product produced by a mold that infects cottonseed meal, peanuts, and grains. Twenty tanks of rainbow trout embryos were exposed to one of five doses of Aflatoxicol for one hour. The data below represent the numbers of fish in each tank and the numbers of these that had liver tumors after one year.</p>
 </blockquote>
@@ -274,14 +250,186 @@ Note
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trout <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex2116</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><strong>1.</strong> Make a plot of the empirical log-odds of cancer vs dose (one point per tank), and another of the empirical log-odds vs <span class="math inline">\(1/\sqrt{\text{dose}}\)</span>. Which predictor looks more appropriate for a linear model on the log-odds scale?</p>
-<p><strong>2.</strong> Fit the binomial logistic model for the odds of cancer using <span class="math inline">\(\frac{1}{\sqrt{\text{dose}}}\)</span> as the sole predictor. (<em>Note:</em> to do this, the predictor in the <code>glm</code> command should be written as <code>I(1/sqrt(Dose))</code>, and the response is <code>cbind(Tumor, Total - Tumor)</code>.) Report the fitted model, then plot the Pearson residuals vs <span class="math inline">\(\frac{1}{\sqrt{\text{dose}}}\)</span> with a smoother. Is there evidence of nonlinearity between the log odds and the predictor variable?</p>
-<p><strong>3.</strong> Give the dose at which your model estimates a 50% chance of getting a tumor. (<em>Hint:</em> what log-odds does this correspond to?)</p>
-<p><strong>4.</strong> Calculate the Pearson <span class="math inline">\(X^2\)</span> statistic (the sum of the squared Pearson residuals) and use it to calculate <span class="math inline">\(X^2 / \text{df}\)</span> and the p-value for the goodness-of-fit test. Does the binomial model fit these data adequately? What does a value of <span class="math inline">\(X^2 / \text{df}\)</span> greater than 1 suggest?</p>
-<p><strong>5.</strong> Refit the model from part 2 using the quasibinomial procedure. Give the dispersion parameter estimate (how does it compare to your <span class="math inline">\(X^2 / \text{df}\)</span> from part 4?). Compare the standard errors from the quasibinomial model to the standard binomial model.</p>
+<ol type="a">
+<li><p>Make a plot of the empirical log-odds of cancer vs dose (one point per tank), and another of the empirical log-odds vs <span class="math inline">\(1/\sqrt{\text{dose}}\)</span>. Which predictor looks more appropriate for a linear model on the log-odds scale?</p></li>
+<li><p>Fit the binomial logistic model for the odds of cancer using <span class="math inline">\(\frac{1}{\sqrt{\text{dose}}}\)</span> as the sole predictor. (<em>Note:</em> to do this, the predictor in the <code>glm</code> command should be written as <code>I(1/sqrt(Dose))</code>. Report the fitted model, then plot the Pearson residuals vs <span class="math inline">\(\frac{1}{\sqrt{\text{dose}}}\)</span> with a smoother. Is there evidence of nonlinearity between the log odds and the predictor variable?</p></li>
+<li><p>Give the dose at which your model estimates a 50% chance of getting a tumor. (<em>Hint:</em> what log-odds does this correspond to?)</p></li>
+<li><p>Calculate the Pearson <span class="math inline">\(X^2\)</span> statistic and use it to calculate <span class="math inline">\(X^2 / \text{df}\)</span> and the p-value for the goodness-of-fit test. Does the binomial model fit these data adequately?</p></li>
+<li><p>Refit the model from part 2 using the quasibinomial procedure. Give the dispersion parameter estimate (how does it compare to your <span class="math inline">\(X^2 / \text{df}\)</span> from part 4?). Compare the standard errors from the quasibinomial model to the standard binomial model.</p></li>
+</ol>
 </section>
-<section id="problem-4-reflections" class="level1">
-<h1>Problem 4: Reflections</h1>
+<section id="problem-3-salamanders-by-hand-5-parts" class="level1">
+<h1>Problem 3: Salamanders (by hand, 5 parts)</h1>
+<!-- 
+> Researchers counted the number of Del Norte salamanders found in a 7-hectare area at each of 47 randomly chosen sites in northern California. At each site, they also recorded the percent of the ground covered by the forest canopy (`PctCover`) and the age of the forest in years (`ForestAge`).
+
+
+::: {.cell}
+
+```{.r .cell-code}
+salamanders <- Sleuth3::case2202
+
+sal_glm <- glm(Salamanders ~ PctCover + ForestAge, data = salamanders, family = "poisson")
+summary(sal_glm)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+
+Call:
+glm(formula = Salamanders ~ PctCover + ForestAge, family = "poisson", 
+    data = salamanders)
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -1.483e+00  4.573e-01  -3.244  0.00118 ** 
+PctCover     3.249e-02  5.735e-03   5.666 1.46e-08 ***
+ForestAge   -2.111e-05  4.981e-04  -0.042  0.96620    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 190.22  on 46  degrees of freedom
+Residual deviance: 121.30  on 44  degrees of freedom
+AIC: 212.36
+
+Number of Fisher Scoring iterations: 5
+```
+
+
+:::
+
+```{.r .cell-code}
+sal_reduced <- glm(Salamanders ~ PctCover, data = salamanders, family = "poisson")
+deviance(sal_reduced)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 121.305
+```
+
+
+:::
+:::
+
+
+(a) Using proper notation, write down the Poisson regression model that was fit. Define all variables.
+
+(b) Interpret the coefficient for `PctCover` in context, for a 10-percentage-point increase in canopy cover.
+
+(c) Calculate a 95% confidence interval for the coefficient of `PctCover`. Interpret it for a 10-percentage-point increase in canopy cover.
+
+(d) Calculate the predicted mean number of salamanders at a site with 80% canopy cover in a 100-year-old forest.
+
+(e) Use a likelihood ratio test to test whether `ForestAge` is needed in the model, after accounting for `PctCover`. State the hypotheses, the test statistic and degrees of freedom, and your conclusion. Does the $z$-test for `ForestAge` agree? -->
+</section>
+<section id="problem-4-salamanders-and-overdispersion-by-hand-5-parts" class="level1">
+<h1>Problem 4: Salamanders and overdispersion (by hand, 5 parts)</h1>
+<!-- 
+Continue with `sal_glm` from Problem 4. Below are the first three sites with their fitted means ($\widehat\lambda_i$) and Pearson residuals, along with some other output.
+
+
+::: {.cell}
+
+```{.r .cell-code}
+salamanders |>
+  mutate(fitted_mean = fitted(sal_glm),
+         pearson_resid = residuals(sal_glm, type = "pearson")) |>
+  head(3)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+  Site Salamanders PctCover ForestAge fitted_mean pearson_resid
+1    1          13       85       316    3.566917      4.994674
+2    2          11       86        88    3.702492      3.792517
+3    3          11       90       548    4.175633      3.339652
+```
+
+
+:::
+
+```{.r .cell-code}
+sum(residuals(sal_glm, type = "pearson")^2)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 122.8492
+```
+
+
+:::
+
+```{.r .cell-code}
+df.residual(sal_glm)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 44
+```
+
+
+:::
+
+```{.r .cell-code}
+qt(0.975, df = 44)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 2.015368
+```
+
+
+:::
+
+```{.r .cell-code}
+qf(0.95, df1 = 1, df2 = 44)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 4.061706
+```
+
+
+:::
+:::
+
+
+(a) Calculate the estimated dispersion parameter $\widehat\psi$. What does it tell you about these data? Why might the counts be more variable than a Poisson model allows?
+
+(b) Calculate the quasipoisson standard errors for `PctCover` and `ForestAge`, and the quasipoisson $t$-statistic for each.
+
+(c) Recalculate the 95% confidence interval for the `PctCover` coefficient using the quasipoisson model. How does it compare to the interval from Problem 4?
+
+(d) Calculate the drop-in-deviance $F$-statistic for testing whether `ForestAge` is needed in the quasipoisson model, and give your conclusion.
+
+(e) Check your answers to 3–5 by fitting the model with `family = "quasipoisson"` in R. Which conclusions from Problem 4 changed, and which did not? -->
+</section>
+<section id="problem-5-binary-binomial-or-poisson" class="level1">
+<h1>Problem 5: Binary, binomial, or Poisson?</h1>
+<p>For each scenario, say whether you would use binary logistic regression, binomial logistic regression, Poisson regression, or none of these. For binomial scenarios, say what <span class="math inline">\(n_i\)</span> is. For Poisson scenarios, say what is being counted.</p>
+<ol type="a">
+<li><p>Each row is a male elephant, and the response is the number of offspring he had over an 8-year period.</p></li>
+<li><p>Each row is an island in Finland, and the response is the number of bird species that went extinct on the island over 10 years, out of the species that were living there at the start.</p></li>
+<li><p>Each row is a US state, and the response is the percent of adults who smoke. (The number of adults surveyed in each state is not given.)</p></li>
+<li><p>Each row is a day, and the response is the number of rides in a bike share system (the <code>bikes</code> data from class). We used linear regression for these data earlier in the term. What would be one advantage of Poisson regression, and what is the advantage of using linear regression?</p></li>
+</ol>
+</section>
+<section id="problem-6-reflections" class="level1">
+<h1>Problem 6: Reflections</h1>
 <ol type="a">
 <li><p>Start by reviewing either HW2 or Case Study 1. (Look at your submission on gradescope) What was something you found difficult initially, but now seems “easy”?</p></li>
 <li><p>Write 2-3 sentences describing how you have grown this term. (Some ideas to get you started: overcoming a technical hurdle; managing group work; incorporating R and math; study skills; time management; etc.)</p></li>
