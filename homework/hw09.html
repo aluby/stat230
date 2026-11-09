@@ -260,29 +260,22 @@ window.Quarto = {
 </section>
 <section id="problem-3-salamanders-by-hand-5-parts" class="level1">
 <h1>Problem 3: Salamanders (by hand, 5 parts)</h1>
-<!-- 
-> Researchers counted the number of Del Norte salamanders found in a 7-hectare area at each of 47 randomly chosen sites in northern California. At each site, they also recorded the percent of the ground covered by the forest canopy (`PctCover`) and the age of the forest in years (`ForestAge`).
-
-
-::: {.cell}
-
-```{.r .cell-code}
-salamanders <- Sleuth3::case2202
-
-sal_glm <- glm(Salamanders ~ PctCover + ForestAge, data = salamanders, family = "poisson")
-summary(sal_glm)
-```
-
-::: {.cell-output .cell-output-stdout}
-
-```
-
+<blockquote class="blockquote">
+<p>Researchers counted the number of Del Norte salamanders found in a 7-hectare area at each of 47 randomly chosen sites in northern California. At each site, they also recorded the percent of the ground covered by the forest canopy (<code>PctCover</code>) and the age of the forest in years (<code>ForestAge</code>).</p>
+</blockquote>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>salamanders <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>case2202</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sal_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Salamanders <span class="sc">~</span> PctCover <span class="sc">+</span> ForestAge, <span class="at">data =</span> salamanders, <span class="at">family =</span> <span class="st">"poisson"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sal_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
 Call:
 glm(formula = Salamanders ~ PctCover + ForestAge, family = "poisson", 
     data = salamanders)
 
 Coefficients:
-              Estimate Std. Error z value Pr(>|z|)    
+              Estimate Std. Error z value Pr(&gt;|z|)    
 (Intercept) -1.483e+00  4.573e-01  -3.244  0.00118 ** 
 PctCover     3.249e-02  5.735e-03   5.666 1.46e-08 ***
 ForestAge   -2.111e-05  4.981e-04  -0.042  0.96620    
@@ -295,37 +288,21 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual deviance: 121.30  on 44  degrees of freedom
 AIC: 212.36
 
-Number of Fisher Scoring iterations: 5
-```
-
-
-:::
-
-```{.r .cell-code}
-sal_reduced <- glm(Salamanders ~ PctCover, data = salamanders, family = "poisson")
-deviance(sal_reduced)
-```
-
-::: {.cell-output .cell-output-stdout}
-
-```
-[1] 121.305
-```
-
-
-:::
-:::
-
-
-(a) Using proper notation, write down the Poisson regression model that was fit. Define all variables.
-
-(b) Interpret the coefficient for `PctCover` in context, for a 10-percentage-point increase in canopy cover.
-
-(c) Calculate a 95% confidence interval for the coefficient of `PctCover`. Interpret it for a 10-percentage-point increase in canopy cover.
-
-(d) Calculate the predicted mean number of salamanders at a site with 80% canopy cover in a 100-year-old forest.
-
-(e) Use a likelihood ratio test to test whether `ForestAge` is needed in the model, after accounting for `PctCover`. State the hypotheses, the test statistic and degrees of freedom, and your conclusion. Does the $z$-test for `ForestAge` agree? -->
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sal_reduced <span class="ot">&lt;-</span> <span class="fu">glm</span>(Salamanders <span class="sc">~</span> PctCover, <span class="at">data =</span> salamanders, <span class="at">family =</span> <span class="st">"poisson"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(sal_reduced)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 121.305</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>Using proper notation, write down the Poisson regression model that was fit. Define all variables.</p></li>
+<li><p>Interpret the coefficient for <code>PctCover</code> in context, for a 10-percentage-point increase in canopy cover.</p></li>
+<li><p>Calculate a 95% confidence interval for the coefficient of <code>PctCover</code>. Interpret it for a 10-percentage-point increase in canopy cover.</p></li>
+<li><p>Calculate the predicted mean number of salamanders at a site with 80% canopy cover in a 100-year-old forest.</p></li>
+<li><p>Use a likelihood ratio test to test whether <code>ForestAge</code> is needed in the model, after accounting for <code>PctCover</code>. State the hypotheses, the test statistic and degrees of freedom, and your conclusion. Does the <span class="math inline">\(z\)</span>-test for <code>ForestAge</code> agree?</p></li>
+</ol>
 </section>
 <section id="problem-4-salamanders-and-overdispersion-by-hand-5-parts" class="level1">
 <h1>Problem 4: Salamanders and overdispersion (by hand, 5 parts)</h1>
@@ -513,7 +490,7 @@ qf(0.95, df1 = 1, df2 = 44)
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

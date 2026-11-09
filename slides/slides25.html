@@ -585,6 +585,114 @@ percent_urban  0.06057098 0.00358636 16.889266 5.397062e-64</code></pre>
 <li>More <span class="math inline">\(\chi^2\)</span>/<span class="math inline">\(F\)</span> tests</li>
 <li>quasipoisson</li>
 </ul>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Linear regression</th>
+<th style="text-align: left;">Logistic regression</th>
+<th style="text-align: left;">Poisson regression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Response</td>
+<td style="text-align: left;">Quantitative (any numeric value)</td>
+<td style="text-align: left;">Binary (0/1), or a binomial count out of <span class="math inline">\(n_i\)</span> trials</td>
+<td style="text-align: left;">Count of events in a fixed interval of time or space</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Example: bike rides per day</td>
+<td style="text-align: left;">Example: fake vs.&nbsp;real news; number of moths removed out of <span class="math inline">\(n_i\)</span> placed</td>
+<td style="text-align: left;">Example: number of possum species at a site; number of laws in a state</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><span class="math inline">\(Y_i \in (-\infty, \infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(Y_i \in \{0, 1\}\)</span> (or <span class="math inline">\(\{0, 1, \ldots, n_i\}\)</span>)</td>
+<td style="text-align: left;"><span class="math inline">\(Y_i \in \{0, 1, 2, \ldots\}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Random component</td>
+<td style="text-align: left;">Normal</td>
+<td style="text-align: left;">Bernoulli (binary) or Binomial (count)</td>
+<td style="text-align: left;">Poisson</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><span class="math inline">\(Y_i \sim N(\mu_i, \sigma^2)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(Y_i \sim \text{Binomial}(n_i, \pi_i)\)</span> (<span class="math inline">\(n_i = 1\)</span> for binary)</td>
+<td style="text-align: left;"><span class="math inline">\(Y_i \sim \text{Poisson}(\lambda_i)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><span class="math inline">\(Var(Y_i) = \sigma^2\)</span> (constant)</td>
+<td style="text-align: left;"><span class="math inline">\(Var(Y_i) = n_i\pi_i(1-\pi_i)\)</span> (depends on the mean)</td>
+<td style="text-align: left;"><span class="math inline">\(Var(Y_i) = \lambda_i\)</span> (equals the mean)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean of <span class="math inline">\(Y\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mu_i = E(Y_i)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\pi_i = P(Y_i = 1)\)</span> (binary); <span class="math inline">\(E(Y_i) = n_i\pi_i\)</span> (binomial)</td>
+<td style="text-align: left;"><span class="math inline">\(\lambda_i = E(Y_i)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><span class="math inline">\(\mu_i = \eta_i = \beta_0 + \beta_1 x_{1i} + \cdots + \beta_p x_{pi}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\pi_i = \dfrac{e^{\eta_i}}{1 + e^{\eta_i}}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\lambda_i = e^{\eta_i}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">The mean is the linear predictor itself</td>
+<td style="text-align: left;">S-shaped curve in <span class="math inline">\(\eta_i\)</span></td>
+<td style="text-align: left;">Exponential curve in <span class="math inline">\(\eta_i\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Possible values of the mean</td>
+<td style="text-align: left;">Any real number, <span class="math inline">\((-\infty, \infty)\)</span></td>
+<td style="text-align: left;">Between 0 and 1 (a probability)</td>
+<td style="text-align: left;">Positive, <span class="math inline">\((0, \infty)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Same range as the linear predictor <span class="math inline">\(\eta_i\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\eta_i\)</span> can be any real number, so we need a link to squeeze it into <span class="math inline">\((0, 1)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\eta_i\)</span> can be negative, so we need a link to keep <span class="math inline">\(\lambda_i\)</span> positive</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">No transformation needed</td>
+<td style="text-align: left;">Odds can be any positive number</td>
+<td style="text-align: left;">Counts can’t have a negative mean</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Link function</td>
+<td style="text-align: left;">Identity</td>
+<td style="text-align: left;">Logit</td>
+<td style="text-align: left;">Log</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><span class="math inline">\(g(\mu_i) = \mu_i = \eta_i\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(g(\pi_i) = \log\left(\dfrac{\pi_i}{1-\pi_i}\right) = \eta_i\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(g(\lambda_i) = \log(\lambda_i) = \eta_i\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><span class="math inline">\(\beta_j\)</span> is the change in the mean for a 1-unit increase in <span class="math inline">\(x_j\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(e^{\beta_j}\)</span> is the multiplicative change in the <strong>odds</strong></td>
+<td style="text-align: left;"><span class="math inline">\(e^{\beta_j}\)</span> is the multiplicative change in the <strong>mean</strong></td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
@@ -913,7 +1021,7 @@ percent_urban  0.06057098 0.00358636 16.889266 5.397062e-64</code></pre>
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
