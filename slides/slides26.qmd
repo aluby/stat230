@@ -80,45 +80,40 @@ news_mod <- glm(type_num ~ title_words + has_excl + title_caps_percent,
 
 ```
 
-## Motivating data: number of anti-discrimination laws
+## Recap: where we left off
 
-The `equality_index` data includes the observed number of anti-discrimination laws in each state,  $Y$ . We are interested in modeling  $Y$ by a state’s `percent_urban` and its `historical` presidential voting patterns. The `historical` variable has 3 levels:
+The `equality_index` data includes the number of anti-discrimination laws in each state (`laws`). We are modeling `laws` using `percent_urban` and `historical` (`dem`, `gop`, or `swing`) with a **Poisson regression** model.
 
-- `dem` = the state typically votes for the Democratic candidate
-- `gop` = the state typically votes for the Republican (GOP) candidate
-- `swing` = the state often swings back and forth between Democratic and Republican candidates
+```{r}
+#| echo: false
+data("equality_index")
+full_glm <- glm(laws ~ percent_urban + historical,
+                data = equality_index,
+                family = poisson)
+tidy(full_glm) |>
+  knitr::kable(digits = 4)
+```
 
 ::: footer
 Source: the {bayesrules} R package
 :::
 
-## EDA
+## Warm up
 
+::: task
+1. In binomial logistic regression, what is the response variable? How is a Poisson count different?
 
-```{r}
-#| echo: false 
-#| fig-width: 8
-#| fig-height: 3
+::: {.fragment}
+Binomial: the number of successes out of a **fixed** number of trials $n_i$ (so $0 \le Y_i \le n_i$). Poisson: a count of events with **no upper limit**.
+:::
 
+2. Interpret the `percent_urban` coefficient (0.031) in context.
 
-data("equality_index")
+::: {.fragment}
+Holding `historical` constant, each additional percentage point of urban residents multiplies the expected number of laws by $e^{0.031} = 1.03$ (a 3% increase).
+:::
 
-p1 <- ggplot(equality_index, aes(x = laws)) + 
-  geom_histogram(col = "white")
-
-p2 <- ggplot(equality_index, aes(y = laws, x = percent_urban)) + 
-  geom_point(size = .5)
-
-p3 <- ggplot(equality_index, aes(y = laws, x = historical)) + 
-  geom_boxplot(aes(fill = historical), alpha = .6) +
-  geom_point(size = .5) +
-  theme(legend.position = "none")
-
-p2 + p1 + p3
-```
-- `laws` is skewed
-- as percent urban increases, laws also increases
-- `dem` and `swing` generally have more laws than `gop`
+:::
 
 ## Review: Poisson regression model
 
@@ -143,7 +138,29 @@ $$\lambda = e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}$$
 
 3. **Independence**: the observations must be independent
 
-## Model fitting {.smaller}
+## Overdispersion
+
+The Poisson model assumes $Var(Y_i) = \lambda_i$.
+
+<br>
+
+**Overdispersion:** the data are *more* variable than a Poisson model allows, $Var(Y_i) > \lambda_i$
+
+- Typical causes: counts that are clustered, differences between units that we haven't measured, events that are not independent
+- Consequence: the Poisson standard errors are **too small**, so confidence intervals are too narrow and p-values are too small
+
+## Quasipoisson model 
+
+$Var(Y_i) = \psi\, \lambda_i$, where $\psi$ is the **dispersion parameter**
+
+- $\psi = 1$: Poisson
+- $\psi > 1$: overdispersed
+- $\psi < 1$: underdispersed
+
+
+How do we find $\psi$? 
+
+## Model fitting: Poisson {.smaller}
 
 ```{r echo=TRUE}
 full_glm <- glm(laws ~ percent_urban + historical,
@@ -157,23 +174,23 @@ summary(full_glm)
 $$Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}}$$
 
 
-
-```{r}
-#| fig-width: 8
-#| fig-height: 3
-ggResidpanel::resid_xpanel(full_glm, type = "pearson")
-```
-
-
-## For Poisson model
-
-$$Pres_i = \frac{Y_i - \widehat \mu_i}{\widehat{SD(Y_i)}}$$
-
-
 - Mean = $\widehat \lambda$, SD = $\sqrt{\widehat \lambda}$
 - Pearson residual: $\frac{Y_i - \widehat \lambda_i}{\sqrt{\widehat \lambda_i}}$
 - If $\widehat\lambda$'s are "big" ($\ge 5$), Pearson residuals are $\approx N(0,1)$ if Poisson model is correct. Can use to diagnose problems with linearity
 - If overdispersed, then SD of Pearson residuals is $>1$
+
+## Pearson residuals for the Poisson model
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+#| echo: true
+ggResidpanel::resid_xpanel(full_glm, type = "pearson")
+```
+
+- Looking for any "left over" nonlinearity after fitting the model 
+- For categorical predictors, average should be $\approx 0$ 
+- Should be $N(0,1)$ if model is correct, so within $\pm 3$
 
 ## Goodness of Fit test
 
@@ -185,14 +202,27 @@ $$Pres_i = \frac{Y_i - \widehat \mu_i}{\widehat{SD(Y_i)}}$$
 
 <br>
 
-The **Residual Deviance** ($D$) serves as our test statistic:
-$$D = 2 \sum_{i=1}^n \left[ y_i \log\left(\frac{y_i}{\widehat{\lambda}_i}\right) - (y_i - \widehat{\lambda}_i) \right]$$
+The **Pearson $\chi^2$ statistic** ($X^2$) serves as our test statistic:
+$$X^2 = \sum_{i=1}^n \frac{(y_i - \widehat{\lambda}_i)^2}{\widehat{\lambda}_i} = \sum_{i=1}^n Pres_i^2$$
+
 
 ::: small
 
-Under $H_0$, $D \sim \chi^2$ distribution with $df = n - (p + 1)$.
+Under $H_0$, $X^2 \overset{\cdot}{\sim} \chi^2$ distribution with $df = n - (p + 1)$.
 
 :::
+
+## Goodness of Fit test: example
+
+```{r}
+#| echo: true
+X2 <- sum(residuals(full_glm, type = "pearson")^2)
+X2
+df.residual(full_glm)
+1 - pchisq(X2, 46)
+```
+
+&rarr; Strong evidence that the Poisson model is inadequate
 
 ## Are means big enough for GoF test? 
 
@@ -200,6 +230,18 @@ Under $H_0$, $D \sim \chi^2$ distribution with $df = n - (p + 1)$.
 summary(predict(full_glm, type = "response"))
 ```
 
+<br> 
+
+. . . 
+
+&rarr; The smallest fitted mean is about 2 and `r sprintf("%.0f", 100 * mean(fitted(full_glm) < 5))`% of the fitted means are below 5, so the $\chi^2$ approximation is only rough. But $X^2 =$ `r sprintf("%.0f", X2)` on 46 df is so extreme that we are not worried about the conclusion.
+
+## Estimating the dispersion parameter
+
+$$\widehat\psi = \frac{X^2}{n - (p+1)} = \frac{`r sprintf("%.1f", X2)`}{`r df.residual(full_glm)`} \approx `r sprintf("%.1f", X2 / df.residual(full_glm))`$$
+
+- If the Poisson model is correct, $\widehat\psi \approx 1$
+- Here $\widehat\psi \approx 11$: the variance is about **11 times** what the Poisson model assumes
 
 ## Quasipoisson model {.smaller}
 
@@ -209,6 +251,23 @@ full_quasi <- glm(laws ~ percent_urban + historical,
             family = quasipoisson)
 summary(full_quasi)
 ```
+
+## Poisson vs. quasipoisson standard errors
+
+```{r}
+sp <- summary(full_glm)$coefficients
+sq <- summary(full_quasi)$coefficients
+tibble(term = rownames(sp),
+       estimate = sp[, 1],
+       `SE (Poisson)` = sp[, 2],
+       `SE (quasi)` = sq[, 2],
+       ratio = sq[, 2] / sp[, 2]) |>
+  knitr::kable(digits = 4)
+```
+
+- The estimates do not change
+- Every quasipoisson SE is the Poisson SE multiplied by $\sqrt{\widehat\psi} = `r sprintf("%.2f", sqrt(summary(full_quasi)$dispersion))`$
+- Test statistics are compared to a $t_{n-(p+1)}$ distribution instead of $N(0,1)$
 
 ## Pearson resids still show overdispersion
 
@@ -266,6 +325,34 @@ $$\text{Count/Response scale:} \quad e^{\hat{\beta}_j \pm z^* \cdot SE(\hat{\bet
 
 &rarr; We are $(1-\alpha)\times100\%$ confident that a 1-unit increase in $X_j$ is associated with a multiplicative change in the expected count by a factor between $e^L$ and $e^U$, holding all other variables constant.
 
+## Example: CI for `percent_urban`
+
+How much does the average number of anti-discrimination laws change for a 10 percentage point increase in `percent_urban`?
+
+```{r}
+#| include: false
+b_pu <- 10 * coef(full_glm)[2]
+se_p <- 10 * summary(full_glm)$coefficients[2, 2]
+se_q <- 10 * summary(full_quasi)$coefficients[2, 2]
+tstar <- qt(.975, df.residual(full_glm))
+ci_p <- b_pu + c(-1, 1) * 1.96 * se_p
+ci_q <- b_pu + c(-1, 1) * tstar * se_q
+```
+
+For a 10 point increase, multiply the estimate and the SE by 10 (**before** exponentiating):
+
+**Poisson:** $`r sprintf("%.3f", b_pu)` \pm 1.96(`r sprintf("%.3f", se_p)`) = (`r sprintf("%.3f", ci_p[1])`, `r sprintf("%.3f", ci_p[2])`) \to (`r sprintf("%.3f", exp(ci_p[1]))`, `r sprintf("%.3f", exp(ci_p[2]))`)$
+
+**Quasipoisson:** $`r sprintf("%.3f", b_pu)` \pm `r sprintf("%.3f", tstar)`(`r sprintf("%.3f", se_q)`) = (`r sprintf("%.3f", ci_q[1])`, `r sprintf("%.3f", ci_q[2])`) \to (`r sprintf("%.3f", exp(ci_q[1]))`, `r sprintf("%.3f", exp(ci_q[2]))`)$
+
+. . .
+
+&rarr; Quasipoisson: we are 95% confident that a 10 percentage point increase in the percent of urban residents is associated with the average number of anti-discrimination laws being multiplied by between `r sprintf("%.2f", exp(ci_q[1]))` and `r sprintf("%.2f", exp(ci_q[2]))`, holding `historical` constant.
+
+. . .
+
+&rarr; The quasipoisson interval is about `r sprintf("%.1f", diff(ci_q) / diff(ci_p))` times as wide as the Poisson interval. Using the Poisson model would make us **overconfident** about the effect of `percent_urban`.
+
 ## Inference for $\lambda$
 
 ::: medium
@@ -290,45 +377,47 @@ predict(model, newdata = data.frame(x = ...), type = "response", se.fit = TRUE)
 ## Example: `link` scale
 
 ::: medium
-Minnesota historically votes `dem` and has 73.3% of the population in urban areas.
+Minnesota historically votes `dem` and has 73.3% of the population in urban areas. Because the data are overdispersed, we use the **quasipoisson** model:
 
 
 ```{r}
 #| echo: true
 
-predict(full_glm, newdata = data.frame(historical = "dem", 
-                                       percent_urban = 73.3), 
+predict(full_quasi, newdata = data.frame(historical = "dem", 
+                                         percent_urban = 73.3), 
         type = "link", 
         se.fit = TRUE)
 ```
 
 :::
 
-$3.06 \pm 2\cdot .07 = [2.92, 3.20] \to [e^{2.92}, e^{3.20}] = [18.54, 24.53]$
-
-## Example: `response` scale
-
-::: medium
-
 ```{r}
-#| echo: true
-
-
-predict(full_glm, newdata = data.frame(historical = "dem", 
-                                       percent_urban = 73.3), 
-        type = "response", 
-        se.fit = TRUE)
+#| include: false
+nd <- data.frame(historical = "dem", percent_urban = 73.3)
+pq <- predict(full_quasi, newdata = nd, type = "link", se.fit = TRUE)
+pp <- predict(full_glm, newdata = nd, type = "link", se.fit = TRUE)
+ci_q_mn <- exp(pq$fit + c(-1, 1) * tstar * pq$se.fit)
+ci_p_mn <- exp(pp$fit + c(-1, 1) * 1.96 * pp$se.fit)
 ```
 
-:::
-
-$21.275 \pm 2\cdot 1.47 = [18.33, 24.22]$
+$`r sprintf("%.2f", pq$fit)` \pm `r sprintf("%.2f", tstar)`\cdot `r sprintf("%.3f", pq$se.fit)` = [`r sprintf("%.2f", pq$fit - tstar * pq$se.fit)`, `r sprintf("%.2f", pq$fit + tstar * pq$se.fit)`] \to [e^{`r sprintf("%.2f", pq$fit - tstar * pq$se.fit)`}, e^{`r sprintf("%.2f", pq$fit + tstar * pq$se.fit)`}] = [`r sprintf("%.1f", ci_q_mn[1])`, `r sprintf("%.1f", ci_q_mn[2])`]$
 
 . . . 
 
-&rarr; We are 95% confident that the average number of anti-discrimination laws in states like Minnesota is between 18.33 and 24.22
+&rarr; We are 95% confident that the average number of anti-discrimination laws in states like Minnesota is between `r sprintf("%.1f", ci_q_mn[1])` and `r sprintf("%.1f", ci_q_mn[2])`
 
-## Likelihood Ratio Test
+## Example: Poisson vs. quasipoisson
+
+The same prediction using the standard Poisson model (which ignores the overdispersion):
+
+- **Poisson:** $[`r sprintf("%.1f", ci_p_mn[1])`, `r sprintf("%.1f", ci_p_mn[2])`]$
+- **Quasipoisson:** $[`r sprintf("%.1f", ci_q_mn[1])`, `r sprintf("%.1f", ci_q_mn[2])`]$
+
+. . . 
+
+&rarr; The standard error on the link scale is $\sqrt{\widehat\psi}$ times larger, so the quasipoisson interval is much wider. The Poisson interval is **too narrow**.
+
+## Likelihood ratio test (drop-in-deviance) for nested models
 
 **Hypotheses:**
 
@@ -340,32 +429,78 @@ $H_A$: at least one $\ne$ 0
 
 **Test Statistic**: 
 
-$$\Delta  = D_{\text{Reduced}} - D_{\text{Full}}$$
+$$G = D_{\text{Reduced}} - D_{\text{Full}}$$
+
+where $D$ is the deviance of each model
 
 **Reference distribution**:
 
 - Depends on standard poisson vs quasipoisson
 
-## LRT reference distribution
+## Reference distribution
 
-**Standard Poisson GLM:** We compare $\Delta$ to a $\chi^2$ distribution with $df = \Delta p$.
+**Standard Poisson GLM:** We compare $G$ to a $\chi^2$ distribution with $df = d$, the number of coefficients being tested.
 
 ```{r}
 #| eval: false
 #| echo: true
 
-anova(reduced_glm, full_glm, test = "Chisq")
+anova(reduced_glm, full_glm, test = "LRT")
 ```
 
 <br>
 
 **Quasipoisson GLM**: Variance has been inflated by $\widehat{\psi}$. Instead, we scale the drop in deviance and perform an F-test: 
 
-R automatically handles the scale adjustment when you ask for test = "F":
+$$F = \frac{G / d}{\widehat\psi} \sim F_{d,\; n-(p+1)}$$
 
 ```{r}
 #| eval: false
 #| echo: true
 anova(reduced_quasi, full_quasi, test = "F")
 ```
+
+## Example: is `historical` needed?
+::: small
+
+$H_0: \beta_{gop} = \beta_{swing} = 0$ (so $d = 2$)
+
+
+```{r}
+reduced_glm   <- glm(laws ~ percent_urban, data = equality_index, family = poisson)
+reduced_quasi <- glm(laws ~ percent_urban, data = equality_index, family = quasipoisson)
+```
+
+```{r}
+#| echo: true
+
+anova(reduced_glm, full_glm, test = "LRT")
+anova(reduced_quasi, full_quasi, test = "F")
+```
+
+:::
+
+. . .
+
+```{r}
+G <- deviance(reduced_glm) - deviance(full_glm)
+psi_hat_q <- summary(full_quasi)$dispersion
+```
+
+&rarr; Both reject, but the quasipoisson test is far less extreme because it accounts for the overdispersion.
+
+## Summary
+
+::: medium 
+
+-   Poisson regression assumes $Var(Y_i) = \lambda_i$. **Overdispersion** means the variance is larger.
+-   Check with $\widehat\psi = X^2 / (n - (p+1))$.
+-   **Quasipoisson**: coefficients stay the same, SEs are multiplied by $\sqrt{\widehat\psi}$, tests and CIs use $t$, and nested-model  tests become $F$-tests 
+-   Rule of thumb: $\widehat\psi \approx 1$ keep Poisson; $\widehat\psi > 1$ use quasipoisson; $\widehat\psi < 1$ keep Poisson (it is conservative).
+
+::: 
+
+### Friday: 
+
+- Quiz 3 (logistic and count regression)
 

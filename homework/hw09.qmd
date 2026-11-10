@@ -56,11 +56,11 @@ tidy(bird_glm)
 
 (f) Below are the leverage and Cook's distance plots, and the people with the largest leverage and the largest Cook's distance.
 
-  (i) Calculate the cutoff $2(p+1)/n$ for high leverage. Which people have high leverage, and why? (Use the first table output)
+    (i) Calculate the cutoff $2(p+1)/n$ for high leverage. Which people have high leverage, and why? (Use the first table output)
 
-  (ii) The person with the largest Cook's distance has lung cancer but never smoked. Why is their standardized residual large? (Use the second table output)
+    (ii) The person with the largest Cook's distance has lung cancer but never smoked. Why is their standardized residual large? (Use the second table output)
 
-  (iii) Is anyone influential? Would you remove anyone from the data? Explain.
+    (iii) Is anyone influential? Would you remove anyone from the data? Explain.
 
 ```{r}
 #| fig-width: 8

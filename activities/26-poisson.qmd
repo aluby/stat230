@@ -1,12 +1,11 @@
 ---
-title: "27: Poisson Regression and Overdispersion"
+title: "26: Poisson Regression and Overdispersion"
 ---
 
 ```{r}
 #| include: false
-library(ggformula)
 library(tidyverse)
-library(patchwork)
+library(broom)
 ```
 
 ## Data Overview
@@ -25,36 +24,81 @@ These data come from a study of 151 separate 3 hectare sites in Victoria, Austra
 Load the dataset:
 
 ```{r}
-# possums <- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)
-possums <- read.csv(here::here("data/possums.csv"), header = TRUE)
+possums <- read.csv("https://aluby.github.io/stat230/data/possums.csv", header = TRUE)
 ```
 
-**1.** As discussed last class, the variable `y` can take the value 0, so we cannot take its logarithm. One possibility for transformation is to add 1 to the value before taking the logarithm. Plot `log(y+1)` vs. each of the predictors and describe what you see. (Starter code below to save you time)
+## Part 1: Is the Poisson model appropriate?
+
+**1.** Fit the Poisson regression model using `y` as the response variable and all of the other variables as main effects. Interpret the estimated effect of the number of hollow trees (`Stags`).
 
 ```{r}
-#| fig-width: 8
-#| fig-height: 6
-#| fig-alt: "Six jittered scatterplots, each with the count response y on the y-axis and one predictor on the x-axis: Acacia, Bark, Habitat, Shrubs, Stags, and Stumps."
-
-p1 <- gf_jitter(y ~ Acacia, data = possums, width = .15, height = .15)
-p2 <- gf_jitter(y ~ Bark, data = possums, width = .15, height = .15)
-p3 <- gf_jitter(y ~ Habitat, data = possums, width = .15, height = .15)
-p4 <- gf_jitter(y ~ Shrubs, data = possums, width = .15, height = .15)
-p5 <- gf_jitter(y ~ Stags, data = possums, width = .15, height = .15)
-p6 <- gf_jitter(y ~ Stumps, data = possums, width = .15, height = .15)
-
-p1 + p2 + p3 + p4 + p5 + p6
+#| eval: false
+possum_glm <- glm(___ ~ Acacia + Bark + Habitat + Shrubs + Stags + Stumps,
+                  data = possums,
+                  family = ___)
+summary(possum_glm)
 ```
 
-**2.** Fit the quasipoisson regression model using `y` as the response variable and include all the other predictors as main effects. The estimated dispersion parameter is less than one; argue that using the "regular" Poisson model will give more a conservative (cautious) assessment of uncertainty.
+**2.** A Poisson model assumes that the variance equals the mean. We can estimate the dispersion parameter using the Pearson $\chi^2$ statistic: $\widehat\psi = \frac{X^2}{n - (p+1)}$. Run the code below, then say what the value of $\widehat\psi$ tells you about these data.
 
-**3.** Refit the model above, now using the standard Poisson model (setting $\phi = 1$). Interpret the estimated effect of the number of hollow trees (`Stags`).
+```{r}
+#| eval: false
+X2 <- sum(residuals(possum_glm, type = "pearson")^2)
+X2
+df.residual(possum_glm)
 
-**4.** Give a 95% confidence interval for the effect of the number of hollow trees on the mean number of species.
+psi_hat <- X2 / df.residual(possum_glm)
+psi_hat
+```
 
-**5.** Take a look at the fitted values (the estimated means). Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Deviance Goodness of Fit test?
+**3.** Now fit the quasipoisson regression model with the same predictors (call it `possum_quasi`). Find the estimated dispersion parameter in the `summary()` output. How does it compare to your answer in Question 2? Argue that, since $\widehat\psi < 1$, using the "regular" Poisson model gives a more conservative (cautious) assessment of uncertainty than the quasipoisson model. (*Hint:* how are the two sets of standard errors related?)
 
-**6.** Drop `Acacia`, `Shrubs`, and `Stumps` from your model. On the basis of the likelihood ratio test, is there evidence against this reduced model?
+**4.** Take a look at the fitted values (the estimated means) from the Poisson model. Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Pearson $\chi^2$ goodness-of-fit test?
 
-**7.** Using the reduced model from part 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of stumps is 10. Give a 95% confidence interval for this estimate by treating the $\log(\hat{\mu})$ as approximately normally distributed. Why is this justified?
+```{r}
+#| eval: false
+summary(fitted(possum_glm))
+```
 
+## Part 2: Inference
+
+**5.** Give a 95% confidence interval for the effect of the number of hollow trees on the mean number of species.
+
+   a. Use the Poisson model and `confint.default()` (remember to exponentiate!).
+
+   b. Now repeat using the quasipoisson model. Use $\widehat\beta \pm t^*\, SE_{quasi}(\widehat\beta)$ with `qt(.975, df.residual(possum_quasi))`. Which interval is wider? Why?
+
+**6.** Drop `Acacia`, `Shrubs`, and `Stumps` from your model (call the reduced model `possum_reduced`). On the basis of the drop-in-deviance (likelihood ratio) test, is there evidence against this reduced model? State the hypotheses, the test statistic and degrees of freedom, and your conclusion.
+
+```{r}
+#| eval: false
+possum_reduced <- glm(___ ~ ___, data = possums, family = poisson)
+
+anova(possum_reduced, possum_glm, test = "LRT")
+```
+
+Does the answer change if you use the quasipoisson models and `test = "F"`? Why does (or doesn't) it?
+
+**7.** Using the reduced model from Question 6, give an estimate of the mean number of species when the bark index is 8, the habitat score is 4, and the number of hollow trees is 10. Give a 95% confidence interval for this estimate by treating $\log(\hat{\mu})$ as approximately normally distributed. Why is this justified?
+
+```{r}
+#| eval: false
+predict(possum_reduced, newdata = data.frame(Bark = ___, Habitat = ___, Stags = ___),
+        type = "link", se.fit = TRUE)
+```
+
+
+***
+
+## Function quick reference
+
+| Function | Purpose |
+|----|-----------|
+| `glm(y ~ x, data, family = poisson)` | Fit a Poisson regression model |
+| `glm(y ~ x, data, family = quasipoisson)` | Fit a quasipoisson regression model |
+| `residuals(model, type = "pearson")` | Pearson residuals; $X^2$ is the sum of their squares |
+| `df.residual(model)` | Residual degrees of freedom, $n - (p+1)$ |
+| `confint.default(model)` | Wald confidence intervals for the coefficients (use `exp()` to get multiplicative effects) |
+| `anova(reduced, full, test = "LRT")` | Drop-in-deviance (likelihood ratio) test for Poisson models |
+| `anova(reduced, full, test = "F")` | Drop-in-deviance $F$-test for quasipoisson models |
+| `predict(model, newdata, type = "link", se.fit = TRUE)` | Predicted log mean and its standard error |
