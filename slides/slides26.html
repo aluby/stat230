@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f54fa83ccd8f86fe7238c9291c42d766.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-631ded8afafd89da02f6c04f3e24cdd8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.23">
 
   <meta name="author" content="Prof Amanda Luby">
   <title>stat230 – Overdispersion and Inference for Poisson Regression</title>
@@ -211,26 +211,74 @@ Prof Amanda Luby
 </div>
 
 </section>
-<section id="motivating-data-number-of-anti-discrimination-laws" class="slide level2">
-<h2>Motivating data: number of anti-discrimination laws</h2>
-<p>The <code>equality_index</code> data includes the observed number of anti-discrimination laws in each state, <span class="math inline">\(Y\)</span> . We are interested in modeling <span class="math inline">\(Y\)</span> by a state’s <code>percent_urban</code> and its <code>historical</code> presidential voting patterns. The <code>historical</code> variable has 3 levels:</p>
-<ul>
-<li><code>dem</code> = the state typically votes for the Democratic candidate</li>
-<li><code>gop</code> = the state typically votes for the Republican (GOP) candidate</li>
-<li><code>swing</code> = the state often swings back and forth between Democratic and Republican candidates</li>
-</ul>
+<section id="recap-where-we-left-off" class="slide level2">
+<h2>Recap: where we left off</h2>
+<p>The <code>equality_index</code> data includes the number of anti-discrimination laws in each state (<code>laws</code>). We are modeling <code>laws</code> using <code>percent_urban</code> and <code>historical</code> (<code>dem</code>, <code>gop</code>, or <code>swing</code>) with a <strong>Poisson regression</strong> model.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">0.7590</td>
+<td style="text-align: right;">0.3269</td>
+<td style="text-align: right;">2.3222</td>
+<td style="text-align: right;">0.0202</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">percent_urban</td>
+<td style="text-align: right;">0.0314</td>
+<td style="text-align: right;">0.0037</td>
+<td style="text-align: right;">8.4233</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">historicalgop</td>
+<td style="text-align: right;">-1.6121</td>
+<td style="text-align: right;">0.1332</td>
+<td style="text-align: right;">-12.0992</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">historicalswing</td>
+<td style="text-align: right;">-0.8288</td>
+<td style="text-align: right;">0.1015</td>
+<td style="text-align: right;">-8.1676</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div class="footer">
 <p>Source: the {bayesrules} R package</p>
 </div>
 </section>
-<section id="eda" class="slide level2">
-<h2>EDA</h2>
-
-<img data-src="slides26_files/figure-revealjs/unnamed-chunk-2-1.png" width="768" class="r-stretch"><ul>
-<li><code>laws</code> is skewed</li>
-<li>as percent urban increases, laws also increases</li>
-<li><code>dem</code> and <code>swing</code> generally have more laws than <code>gop</code></li>
-</ul>
+<section id="warm-up" class="slide level2 scrollable">
+<h2>Warm up</h2>
+<div class="task">
+<ol type="1">
+<li>In binomial logistic regression, what is the response variable? How is a Poisson count different?</li>
+</ol>
+<div class="fragment">
+<p>Binomial: the number of successes out of a <strong>fixed</strong> number of trials <span class="math inline">\(n_i\)</span> (so <span class="math inline">\(0 \le Y_i \le n_i\)</span>). Poisson: a count of events with <strong>no upper limit</strong>.</p>
+</div>
+<ol start="2" type="1">
+<li>Interpret the <code>percent_urban</code> coefficient (0.031) in context.</li>
+</ol>
+<div class="fragment">
+<p>Holding <code>historical</code> constant, each additional percentage point of urban residents multiplies the expected number of laws by <span class="math inline">\(e^{0.031} = 1.03\)</span> (a 3% increase).</p>
+</div>
+</div>
 </section>
 <section id="review-poisson-regression-model" class="slide level2">
 <h2>Review: Poisson regression model</h2>
@@ -250,8 +298,28 @@ Prof Amanda Luby
 <li><p><strong>Independence</strong>: the observations must be independent</p></li>
 </ol>
 </section>
-<section id="model-fitting" class="slide level2 smaller">
-<h2>Model fitting</h2>
+<section id="overdispersion" class="slide level2">
+<h2>Overdispersion</h2>
+<p>The Poisson model assumes <span class="math inline">\(Var(Y_i) = \lambda_i\)</span>.</p>
+<p><br></p>
+<p><strong>Overdispersion:</strong> the data are <em>more</em> variable than a Poisson model allows, <span class="math inline">\(Var(Y_i) &gt; \lambda_i\)</span></p>
+<ul>
+<li>Typical causes: counts that are clustered, differences between units that we haven’t measured, events that are not independent</li>
+<li>Consequence: the Poisson standard errors are <strong>too small</strong>, so confidence intervals are too narrow and p-values are too small</li>
+</ul>
+</section>
+<section id="quasipoisson-model" class="slide level2">
+<h2>Quasipoisson model</h2>
+<p><span class="math inline">\(Var(Y_i) = \psi\, \lambda_i\)</span>, where <span class="math inline">\(\psi\)</span> is the <strong>dispersion parameter</strong></p>
+<ul>
+<li><span class="math inline">\(\psi = 1\)</span>: Poisson</li>
+<li><span class="math inline">\(\psi &gt; 1\)</span>: overdispersed</li>
+<li><span class="math inline">\(\psi &lt; 1\)</span>: underdispersed</li>
+</ul>
+<p>How do we find <span class="math inline">\(\psi\)</span>?</p>
+</section>
+<section id="model-fitting-poisson" class="slide level2 smaller">
+<h2>Model fitting: Poisson</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>full_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban <span class="sc">+</span> historical,</span>
 <span id="cb1-2"><a></a>            <span class="at">data =</span> equality_index,</span>
@@ -284,17 +352,23 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </section>
 <section id="pearson-residuals" class="slide level2">
 <h2>Pearson residuals</h2>
-<p><span class="math display">\[Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}}\]</span></p>
-
-<img data-src="slides26_files/figure-revealjs/unnamed-chunk-4-1.png" width="768" class="r-stretch"></section>
-<section id="for-poisson-model" class="slide level2">
-<h2>For Poisson model</h2>
-<p><span class="math display">\[Pres_i = \frac{Y_i - \widehat \mu_i}{\widehat{SD(Y_i)}}\]</span></p>
+<p><span class="math display">\[Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}} = \frac{Y_i - \widehat \lambda_i}{\sqrt{\widehat \lambda_i}}\]</span></p>
 <ul>
 <li>Mean = <span class="math inline">\(\widehat \lambda\)</span>, SD = <span class="math inline">\(\sqrt{\widehat \lambda}\)</span></li>
-<li>Pearson residual: <span class="math inline">\(\frac{Y_i - \widehat \lambda_i}{\sqrt{\widehat \lambda_i}}\)</span></li>
 <li>If <span class="math inline">\(\widehat\lambda\)</span>’s are “big” (<span class="math inline">\(\ge 5\)</span>), Pearson residuals are <span class="math inline">\(\approx N(0,1)\)</span> if Poisson model is correct. Can use to diagnose problems with linearity</li>
 <li>If overdispersed, then SD of Pearson residuals is <span class="math inline">\(&gt;1\)</span></li>
+</ul>
+</section>
+<section id="pearson-residuals-for-the-poisson-model" class="slide level2">
+<h2>Pearson residuals for the Poisson model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_xpanel</span>(full_glm, <span class="at">type =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-4-1.png" width="768" class="r-stretch"><ul>
+<li>Looking for any “left over” nonlinearity after fitting the model</li>
+<li>For categorical predictors, average should be <span class="math inline">\(\approx 0\)</span></li>
+<li>Should be <span class="math inline">\(N(0,1)\)</span> if model is correct, so within <span class="math inline">\(\pm 3\)</span></li>
 </ul>
 </section>
 <section id="goodness-of-fit-test" class="slide level2">
@@ -303,10 +377,29 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <p><strong><span class="math inline">\(H_0\)</span>:</strong> The Poisson model fits the data adequately.</p>
 <p><strong><span class="math inline">\(H_A\)</span>:</strong> The Poisson model is deficient (a more complex, saturated model is required).</p>
 <p><br></p>
-<p>The <strong>Residual Deviance</strong> (<span class="math inline">\(D\)</span>) serves as our test statistic: <span class="math display">\[D = 2 \sum_{i=1}^n \left[ y_i \log\left(\frac{y_i}{\widehat{\lambda}_i}\right) - (y_i - \widehat{\lambda}_i) \right]\]</span></p>
+<p>The <strong>Pearson <span class="math inline">\(\chi^2\)</span> statistic</strong> (<span class="math inline">\(X^2\)</span>) serves as our test statistic: <span class="math display">\[X^2 = \sum_{i=1}^n \frac{(y_i - \widehat{\lambda}_i)^2}{\widehat{\lambda}_i} = \sum_{i=1}^n Pres_i^2\]</span></p>
 <div class="small">
-<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(D \sim \chi^2\)</span> distribution with <span class="math inline">\(df = n - (p + 1)\)</span>.</p>
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(X^2 \overset{\cdot}{\sim} \chi^2\)</span> distribution with <span class="math inline">\(df = n - (p + 1)\)</span>.</p>
 </div>
+</section>
+<section id="goodness-of-fit-test-example" class="slide level2">
+<h2>Goodness of Fit test: example</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>X2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(full_glm, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb4-2"><a></a>X2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 516.1012</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">df.residual</span>(full_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 46</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(X2, <span class="dv">46</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>→ Strong evidence that the Poisson model is inadequate</p>
 </section>
 <section id="are-means-big-enough-for-gof-test" class="slide level2">
 <h2>Are means big enough for GoF test?</h2>
@@ -316,8 +409,20 @@ Number of Fisher Scoring iterations: 5</code></pre>
   1.962   3.532   7.267  13.460  20.429  42.016 </code></pre>
 </div>
 </div>
+<p><br></p>
+<div class="fragment">
+<p>→ The smallest fitted mean is about 2 and 38% of the fitted means are below 5, so the <span class="math inline">\(\chi^2\)</span> approximation is only rough. But <span class="math inline">\(X^2 =\)</span> 516 on 46 df is so extreme that we are not worried about the conclusion.</p>
+</div>
 </section>
-<section id="quasipoisson-model" class="slide level2 smaller">
+<section id="estimating-the-dispersion-parameter" class="slide level2">
+<h2>Estimating the dispersion parameter</h2>
+<p><span class="math display">\[\widehat\psi = \frac{X^2}{n - (p+1)} = \frac{516.1}{46} \approx 11.2\]</span></p>
+<ul>
+<li>If the Poisson model is correct, <span class="math inline">\(\widehat\psi \approx 1\)</span></li>
+<li>Here <span class="math inline">\(\widehat\psi \approx 11\)</span>: the variance is about <strong>11 times</strong> what the Poisson model assumes</li>
+</ul>
+</section>
+<section id="quasipoisson-model-1" class="slide level2 smaller">
 <h2>Quasipoisson model</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -345,19 +450,72 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 </div>
 </section>
+<section id="poisson-vs.-quasipoisson-standard-errors" class="slide level2">
+<h2>Poisson vs.&nbsp;quasipoisson standard errors</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">SE (Poisson)</th>
+<th style="text-align: right;">SE (quasi)</th>
+<th style="text-align: right;">ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">0.7590</td>
+<td style="text-align: right;">0.3269</td>
+<td style="text-align: right;">1.0948</td>
+<td style="text-align: right;">3.3496</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">percent_urban</td>
+<td style="text-align: right;">0.0314</td>
+<td style="text-align: right;">0.0037</td>
+<td style="text-align: right;">0.0125</td>
+<td style="text-align: right;">3.3496</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">historicalgop</td>
+<td style="text-align: right;">-1.6121</td>
+<td style="text-align: right;">0.1332</td>
+<td style="text-align: right;">0.4463</td>
+<td style="text-align: right;">3.3496</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">historicalswing</td>
+<td style="text-align: right;">-0.8288</td>
+<td style="text-align: right;">0.1015</td>
+<td style="text-align: right;">0.3399</td>
+<td style="text-align: right;">3.3496</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>The estimates do not change</li>
+<li>Every quasipoisson SE is the Poisson SE multiplied by <span class="math inline">\(\sqrt{\widehat\psi} = 3.35\)</span></li>
+<li>Test statistics are compared to a <span class="math inline">\(t_{n-(p+1)}\)</span> distribution instead of <span class="math inline">\(N(0,1)\)</span></li>
+</ul>
+</section>
 <section id="pearson-resids-still-show-overdispersion" class="slide level2">
 <h2>Pearson resids still show overdispersion</h2>
 <p>Since they use the Poisson mean/sd</p>
 
-<img data-src="slides26_files/figure-revealjs/unnamed-chunk-7-1.png" width="768" class="r-stretch"></section>
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-9-1.png" width="768" class="r-stretch"></section>
 <section id="standardized-pearson-residuals" class="slide level2">
 <h2>Standardized Pearson residuals</h2>
 <p>Use quasi versions of SD: <span class="math inline">\(SD(Y_i) = \sqrt{\psi \lambda_i}\)</span> (also adjusts for leverage)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_xpanel</span>(full_quasi, <span class="at">type =</span> <span class="st">"stand.pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>ggResidpanel<span class="sc">::</span><span class="fu">resid_xpanel</span>(full_quasi, <span class="at">type =</span> <span class="st">"stand.pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="slides26_files/figure-revealjs/unnamed-chunk-8-1.png" width="768" class="r-stretch"><div class="fragment">
+<img data-src="slides26_files/figure-revealjs/unnamed-chunk-10-1.png" width="768" class="r-stretch"><div class="fragment">
 <p>→ better! perhaps one outlier we’d want to investigate further</p>
 </div>
 </section>
@@ -388,6 +546,19 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <p>→ We are <span class="math inline">\((1-\alpha)\times100\%\)</span> confident that a 1-unit increase in <span class="math inline">\(X_j\)</span> is associated with a multiplicative change in the expected count by a factor between <span class="math inline">\(e^L\)</span> and <span class="math inline">\(e^U\)</span>, holding all other variables constant.</p>
 </div>
 </section>
+<section id="example-ci-for-percent_urban" class="slide level2">
+<h2>Example: CI for <code>percent_urban</code></h2>
+<p>How much does the average number of anti-discrimination laws change for a 10 percentage point increase in <code>percent_urban</code>?</p>
+<p>For a 10 point increase, multiply the estimate and the SE by 10 (<strong>before</strong> exponentiating):</p>
+<p><strong>Poisson:</strong> <span class="math inline">\(0.314 \pm 1.96(0.037) = (0.241, 0.387) \to (1.272, 1.472)\)</span></p>
+<p><strong>Quasipoisson:</strong> <span class="math inline">\(0.314 \pm 2.013(0.125) = (0.063, 0.565) \to (1.065, 1.759)\)</span></p>
+<div class="fragment">
+<p>→ Quasipoisson: we are 95% confident that a 10 percentage point increase in the percent of urban residents is associated with the average number of anti-discrimination laws being multiplied by between 1.06 and 1.76, holding <code>historical</code> constant.</p>
+</div>
+<div class="fragment">
+<p>→ The quasipoisson interval is about 3.4 times as wide as the Poisson interval. Using the Poisson model would make us <strong>overconfident</strong> about the effect of <code>percent_urban</code>.</p>
+</div>
+</section>
 <section id="inference-for-lambda" class="slide level2 scrollable">
 <h2>Inference for <span class="math inline">\(\lambda\)</span></h2>
 <div class="medium">
@@ -398,86 +569,124 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <li>Exponentiate the endpoints to map back to the <strong>original count scale</strong>: <span class="math display">\[\left[ e^{\widehat{\eta} - z^*SE}, \,\, e^{\widehat{\eta} + z^*SE} \right]\]</span></li>
 </ol>
 <p>In R:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> ...), <span class="at">type =</span> <span class="st">"link"</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-2"><a></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> ...), <span class="at">type =</span> <span class="st">"response"</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> ...), <span class="at">type =</span> <span class="st">"link"</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-2"><a></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> ...), <span class="at">type =</span> <span class="st">"response"</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="example-link-scale" class="slide level2">
 <h2>Example: <code>link</code> scale</h2>
 <div class="medium">
-<p>Minnesota historically votes <code>dem</code> and has 73.3% of the population in urban areas.</p>
+<p>Minnesota historically votes <code>dem</code> and has 73.3% of the population in urban areas. Because the data are overdispersed, we use the <strong>quasipoisson</strong> model:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">predict</span>(full_glm, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">historical =</span> <span class="st">"dem"</span>, </span>
-<span id="cb7-2"><a></a>                                       <span class="at">percent_urban =</span> <span class="fl">73.3</span>), </span>
-<span id="cb7-3"><a></a>        <span class="at">type =</span> <span class="st">"link"</span>, </span>
-<span id="cb7-4"><a></a>        <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">predict</span>(full_quasi, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">historical =</span> <span class="st">"dem"</span>, </span>
+<span id="cb14-2"><a></a>                                         <span class="at">percent_urban =</span> <span class="fl">73.3</span>), </span>
+<span id="cb14-3"><a></a>        <span class="at">type =</span> <span class="st">"link"</span>, </span>
+<span id="cb14-4"><a></a>        <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$fit
        1 
 3.057568 
 
 $se.fit
-[1] 0.06903723
+[1] 0.2312448
 
 $residual.scale
-[1] 1</code></pre>
+[1] 3.349567</code></pre>
 </div>
 </div>
 </div>
-<p><span class="math inline">\(3.06 \pm 2\cdot .07 = [2.92, 3.20] \to [e^{2.92}, e^{3.20}] = [18.54, 24.53]\)</span></p>
-</section>
-<section id="example-response-scale" class="slide level2">
-<h2>Example: <code>response</code> scale</h2>
-<div class="medium">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">predict</span>(full_glm, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">historical =</span> <span class="st">"dem"</span>, </span>
-<span id="cb9-2"><a></a>                                       <span class="at">percent_urban =</span> <span class="fl">73.3</span>), </span>
-<span id="cb9-3"><a></a>        <span class="at">type =</span> <span class="st">"response"</span>, </span>
-<span id="cb9-4"><a></a>        <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$fit
-       1 
-21.27575 
-
-$se.fit
-       1 
-1.468819 
-
-$residual.scale
-[1] 1</code></pre>
-</div>
-</div>
-</div>
-<p><span class="math inline">\(21.275 \pm 2\cdot 1.47 = [18.33, 24.22]\)</span></p>
+<p><span class="math inline">\(3.06 \pm 2.01\cdot 0.231 = [2.59, 3.52] \to [e^{2.59}, e^{3.52}] = [13.4, 33.9]\)</span></p>
 <div class="fragment">
-<p>→ We are 95% confident that the average number of anti-discrimination laws in states like Minnesota is between 18.33 and 24.22</p>
+<p>→ We are 95% confident that the average number of anti-discrimination laws in states like Minnesota is between 13.4 and 33.9</p>
 </div>
 </section>
-<section id="likelihood-ratio-test" class="slide level2">
-<h2>Likelihood Ratio Test</h2>
+<section id="example-poisson-vs.-quasipoisson" class="slide level2">
+<h2>Example: Poisson vs.&nbsp;quasipoisson</h2>
+<p>The same prediction using the standard Poisson model (which ignores the overdispersion):</p>
+<ul>
+<li><strong>Poisson:</strong> <span class="math inline">\([18.6, 24.4]\)</span></li>
+<li><strong>Quasipoisson:</strong> <span class="math inline">\([13.4, 33.9]\)</span></li>
+</ul>
+<div class="fragment">
+<p>→ The standard error on the link scale is <span class="math inline">\(\sqrt{\widehat\psi}\)</span> times larger, so the quasipoisson interval is much wider. The Poisson interval is <strong>too narrow</strong>.</p>
+</div>
+</section>
+<section id="likelihood-ratio-test-drop-in-deviance-for-nested-models" class="slide level2">
+<h2>Likelihood ratio test (drop-in-deviance) for nested models</h2>
 <p><strong>Hypotheses:</strong></p>
 <p><span class="math inline">\(H_0: \beta_i = \beta_j = ... = 0\)</span></p>
 <p><span class="math inline">\(H_A\)</span>: at least one <span class="math inline">\(\ne\)</span> 0</p>
 <p><br></p>
 <p><strong>Test Statistic</strong>:</p>
-<p><span class="math display">\[\Delta  = D_{\text{Reduced}} - D_{\text{Full}}\]</span></p>
+<p><span class="math display">\[G = D_{\text{Reduced}} - D_{\text{Full}}\]</span></p>
+<p>where <span class="math inline">\(D\)</span> is the deviance of each model</p>
 <p><strong>Reference distribution</strong>:</p>
 <ul>
 <li>Depends on standard poisson vs quasipoisson</li>
 </ul>
 </section>
-<section id="lrt-reference-distribution" class="slide level2">
-<h2>LRT reference distribution</h2>
-<p><strong>Standard Poisson GLM:</strong> We compare <span class="math inline">\(\Delta\)</span> to a <span class="math inline">\(\chi^2\)</span> distribution with <span class="math inline">\(df = \Delta p\)</span>.</p>
+<section id="reference-distribution" class="slide level2">
+<h2>Reference distribution</h2>
+<p><strong>Standard Poisson GLM:</strong> We compare <span class="math inline">\(G\)</span> to a <span class="math inline">\(\chi^2\)</span> distribution with <span class="math inline">\(df = d\)</span>, the number of coefficients being tested.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">anova</span>(reduced_glm, full_glm, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">anova</span>(reduced_glm, full_glm, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br></p>
 <p><strong>Quasipoisson GLM</strong>: Variance has been inflated by <span class="math inline">\(\widehat{\psi}\)</span>. Instead, we scale the drop in deviance and perform an F-test:</p>
-<p>R automatically handles the scale adjustment when you ask for test = “F”:</p>
+<p><span class="math display">\[F = \frac{G / d}{\widehat\psi} \sim F_{d,\; n-(p+1)}\]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">anova</span>(reduced_quasi, full_quasi, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">anova</span>(reduced_quasi, full_quasi, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="example-is-historical-needed" class="slide level2">
+<h2>Example: is <code>historical</code> needed?</h2>
+<div class="small">
+<p><span class="math inline">\(H_0: \beta_{gop} = \beta_{swing} = 0\)</span> (so <span class="math inline">\(d = 2\)</span>)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">anova</span>(reduced_glm, full_glm, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: laws ~ percent_urban
+Model 2: laws ~ percent_urban + historical
+  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    
+1        48     601.82                          
+2        46     413.49  2   188.32 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">anova</span>(reduced_quasi, full_quasi, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: laws ~ percent_urban
+Model 2: laws ~ percent_urban + historical
+  Resid. Df Resid. Dev Df Deviance      F    Pr(&gt;F)    
+1        48     601.82                                 
+2        46     413.49  2   188.32 8.3927 0.0007811 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>→ Both reject, but the quasipoisson test is far less extreme because it accounts for the overdispersion.</p>
+</div>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<div class="medium">
+<ul>
+<li>Poisson regression assumes <span class="math inline">\(Var(Y_i) = \lambda_i\)</span>. <strong>Overdispersion</strong> means the variance is larger.</li>
+<li>Check with <span class="math inline">\(\widehat\psi = X^2 / (n - (p+1))\)</span>.</li>
+<li><strong>Quasipoisson</strong>: coefficients stay the same, SEs are multiplied by <span class="math inline">\(\sqrt{\widehat\psi}\)</span>, tests and CIs use <span class="math inline">\(t\)</span>, and nested-model tests become <span class="math inline">\(F\)</span>-tests</li>
+<li>Rule of thumb: <span class="math inline">\(\widehat\psi \approx 1\)</span> keep Poisson; <span class="math inline">\(\widehat\psi &gt; 1\)</span> use quasipoisson; <span class="math inline">\(\widehat\psi &lt; 1\)</span> keep Poisson (it is conservative).</li>
+</ul>
+</div>
+<h3 id="friday">Friday:</h3>
+<ul>
+<li>Quiz 3 (logistic and count regression)</li>
+</ul>
 
 
 </section>
