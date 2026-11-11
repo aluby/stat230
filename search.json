@@ -4316,7 +4316,7 @@
     "href": "slides/slides26.html#are-means-big-enough-for-gof-test",
     "title": "Overdispersion and Inference for Poisson Regression",
     "section": "Are means big enough for GoF test?",
-    "text": "Are means big enough for GoF test?\n\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  1.962   3.532   7.267  13.460  20.429  42.016 \n\n\n\n. . .\n→ The smallest fitted mean is about 2 and 38% of the fitted means are below 5, so the \\(\\chi^2\\) approximation is only rough. But \\(X^2 =\\) 516 on 46 df is so extreme that we are not worried about the conclusion."
+    "text": "Are means big enough for GoF test?\n\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  1.962   3.532   7.267  13.460  20.429  42.016 \n\n\n\n\n→ The smallest fitted mean is about 2 and 38% of the fitted means are below 5, so the \\(\\chi^2\\) approximation is only rough. But \\(X^2 =\\) 516 on 46 df is so extreme that we are not worried about the conclusion."
   },
   {
     "objectID": "slides/slides26.html#quasipoisson-model",
@@ -4337,7 +4337,7 @@
     "href": "slides/slides26.html#standardized-pearson-residuals",
     "title": "Overdispersion and Inference for Poisson Regression",
     "section": "Standardized Pearson residuals",
-    "text": "Standardized Pearson residuals\nUse quasi versions of SD: \\(SD(Y_i) = \\sqrt{\\psi \\lambda_i}\\) (also adjusts for leverage)\n\nggResidpanel::resid_xpanel(full_quasi, type = \"stand.pearson\")\n\n\n\n\n\n\n\n\n. . .\n→ better! perhaps one outlier we’d want to investigate further"
+    "text": "Standardized Pearson residuals\nUse quasi versions of SD: \\(SD(Y_i) = \\sqrt{\\psi \\lambda_i}\\) (also adjusts for leverage)\n\nggResidpanel::resid_xpanel(full_quasi, type = \"stand.pearson\")\n\n\n\n→ better! perhaps one outlier we’d want to investigate further"
   },
   {
     "objectID": "slides/slides26.html#inference-for-coefficients",
@@ -4351,7 +4351,7 @@
     "href": "slides/slides26.html#confidence-intervals-interpretation",
     "title": "Overdispersion and Inference for Poisson Regression",
     "section": "Confidence Intervals: Interpretation",
-    "text": "Confidence Intervals: Interpretation\n\nWe construct intervals on the log (link) scale first, then exponentiate:\n\\[\\text{Log scale:} \\quad \\hat{\\beta}_j \\pm z^* \\cdot SE(\\hat{\\beta}_j)\\] \\[\\text{Count/Response scale:} \\quad e^{\\hat{\\beta}_j \\pm z^* \\cdot SE(\\hat{\\beta}_j)}\\]\n\n. . .\n→ We are \\((1-\\alpha)\\times100\\%\\) confident that a 1-unit increase in \\(X_j\\) is associated with a multiplicative change in the expected count by a factor between \\(e^L\\) and \\(e^U\\), holding all other variables constant."
+    "text": "Confidence Intervals: Interpretation\n\nWe construct intervals on the log (link) scale first, then exponentiate:\n\\[\\text{Log scale:} \\quad \\hat{\\beta}_j \\pm z^* \\cdot SE(\\hat{\\beta}_j)\\] \\[\\text{Count/Response scale:} \\quad e^{\\hat{\\beta}_j \\pm z^* \\cdot SE(\\hat{\\beta}_j)}\\]\n\n\n→ We are \\((1-\\alpha)\\times100\\%\\) confident that a 1-unit increase in \\(X_j\\) is associated with a multiplicative change in the expected count by a factor between \\(e^L\\) and \\(e^U\\), holding all other variables constant."
   },
   {
     "objectID": "slides/slides26.html#inference-for-lambda",
@@ -4365,7 +4365,7 @@
     "href": "slides/slides26.html#example-link-scale",
     "title": "Overdispersion and Inference for Poisson Regression",
     "section": "Example: link scale",
-    "text": "Example: link scale\n\nMinnesota historically votes dem and has 73.3% of the population in urban areas. Because the data are overdispersed, we use the quasipoisson model:\n\npredict(full_quasi, newdata = data.frame(historical = \"dem\", \n                                         percent_urban = 73.3), \n        type = \"link\", \n        se.fit = TRUE)\n\n$fit\n       1 \n3.057568 \n\n$se.fit\n[1] 0.2312448\n\n$residual.scale\n[1] 3.349567\n\n\n\n\\(3.06 \\pm 2.01\\cdot 0.231 = [2.59, 3.52] \\to [e^{2.59}, e^{3.52}] = [13.4, 33.9]\\)\n. . .\n→ We are 95% confident that the average number of anti-discrimination laws in states like Minnesota is between 13.4 and 33.9"
+    "text": "Example: link scale\n\nMinnesota historically votes dem and has 73.3% of the population in urban areas. Because the data are overdispersed, we use the quasipoisson model:\n\npredict(full_quasi, newdata = data.frame(historical = \"dem\", \n                                         percent_urban = 73.3), \n        type = \"link\", \n        se.fit = TRUE)\n\n$fit\n       1 \n3.057568 \n\n$se.fit\n[1] 0.2312448\n\n$residual.scale\n[1] 3.349567\n\n\n\n\\(3.06 \\pm 2.01\\cdot 0.231 = [2.59, 3.52] \\to [e^{2.59}, e^{3.52}] = [13.4, 33.9]\\)\n\n→ We are 95% confident that the average number of anti-discrimination laws in states like Minnesota is between 13.4 and 33.9"
   },
   {
     "objectID": "slides/slides26.html#example-response-scale",
@@ -6415,8 +6415,8 @@
     "objectID": "slides/slides26.html#recap-where-we-left-off",
     "href": "slides/slides26.html#recap-where-we-left-off",
     "title": "Overdispersion and Inference for Poisson Regression",
-    "section": "",
-    "text": "The equality_index data includes the number of anti-discrimination laws in each state (laws). We are modeling laws using percent_urban and historical (dem, gop, or swing) with a Poisson regression model.\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n0.7590\n0.3269\n2.3222\n0.0202\n\n\npercent_urban\n0.0314\n0.0037\n8.4233\n0.0000\n\n\nhistoricalgop\n-1.6121\n0.1332\n-12.0992\n0.0000\n\n\nhistoricalswing\n-0.8288\n0.1015\n-8.1676\n0.0000\n\n\n\n\n\n\nSource: the {bayesrules} R package"
+    "section": "Recap: where we left off",
+    "text": "Recap: where we left off\nThe equality_index data includes the number of anti-discrimination laws in each state (laws). We are modeling laws using percent_urban and historical (dem, gop, or swing) with a Poisson regression model.\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n0.7590\n0.3269\n2.3222\n0.0202\n\n\npercent_urban\n0.0314\n0.0037\n8.4233\n0.0000\n\n\nhistoricalgop\n-1.6121\n0.1332\n-12.0992\n0.0000\n\n\nhistoricalswing\n-0.8288\n0.1015\n-8.1676\n0.0000\n\n\n\n\n\n\nSource: the {bayesrules} R package"
   },
   {
     "objectID": "slides/slides26.html#check-yourself",
@@ -6437,7 +6437,7 @@
     "href": "slides/slides26.html#pearson-residuals-for-the-poisson-model",
     "title": "Overdispersion and Inference for Poisson Regression",
     "section": "Pearson residuals for the Poisson model",
-    "text": "Pearson residuals for the Poisson model\n\nsd(residuals(full_glm, type = \"pearson\"))\n\n[1] 3.24535\n\nggResidpanel::resid_xpanel(full_glm, type = \"pearson\")\n\n\n\n\n\n\n\n\n\nLooking for any “left over” nonlinearity after fitting the model\nFor categorical predictors, average should be \\(\\approx 0\\)\nShould be \\(N(0,1)\\) if model is correct, so within \\(\\pm 3\\)"
+    "text": "Pearson residuals for the Poisson model\n\nsd(residuals(full_glm, type = \"pearson\"))\n\n[1] 3.24535\n\nggResidpanel::resid_xpanel(full_glm, type = \"pearson\")\n\n\n\nLooking for any “left over” nonlinearity after fitting the model\nFor categorical predictors, average should be \\(\\approx 0\\)\nShould be \\(N(0,1)\\) if model is correct, so within \\(\\pm 3\\)"
   },
   {
     "objectID": "slides/slides26.html#goodness-of-fit-test-example",
@@ -6465,28 +6465,28 @@
     "href": "slides/slides26.html#example-ci-for-percent_urban",
     "title": "Overdispersion and Inference for Poisson Regression",
     "section": "Example: CI for percent_urban",
-    "text": "Example: CI for percent_urban\nHow much does the average number of anti-discrimination laws change for a 10 percentage point increase in percent_urban?\nFor a 10 point increase, multiply the estimate and the SE by 10 (before exponentiating):\nPoisson: \\(0.314 \\pm 1.96(0.037) = (0.241, 0.387) \\to (1.272, 1.472)\\)\nQuasipoisson: \\(0.314 \\pm 2.013(0.125) = (0.063, 0.565) \\to (1.065, 1.759)\\)\n. . .\n→ Quasipoisson: we are 95% confident that a 10 percentage point increase in the percent of urban residents is associated with the average number of anti-discrimination laws being multiplied by between 1.06 and 1.76, holding historical constant.\n. . .\n→ The quasipoisson interval is about 3.4 times as wide as the Poisson interval. Using the Poisson model would make us overconfident about the effect of percent_urban."
+    "text": "Example: CI for percent_urban\nHow much does the average number of anti-discrimination laws change for a 10 percentage point increase in percent_urban?\nFor a 10 point increase, multiply the estimate and the SE by 10 (before exponentiating):\nPoisson: \\(0.314 \\pm 1.96(0.037) = (0.241, 0.387) \\to (1.272, 1.472)\\)\nQuasipoisson: \\(0.314 \\pm 2.013(0.125) = (0.063, 0.565) \\to (1.065, 1.759)\\)\n\n→ Quasipoisson: we are 95% confident that a 10 percentage point increase in the percent of urban residents is associated with the average number of anti-discrimination laws being multiplied by between 1.06 and 1.76, holding historical constant.\n\n\n→ The quasipoisson interval is about 3.4 times as wide as the Poisson interval. Using the Poisson model would make us overconfident about the effect of percent_urban."
   },
   {
     "objectID": "slides/slides26.html#example-poisson-vs.-quasipoisson",
     "href": "slides/slides26.html#example-poisson-vs.-quasipoisson",
     "title": "Overdispersion and Inference for Poisson Regression",
     "section": "Example: Poisson vs. quasipoisson",
-    "text": "Example: Poisson vs. quasipoisson\nThe same prediction using the standard Poisson model (which ignores the overdispersion):\n\nPoisson: \\([18.6, 24.4]\\)\nQuasipoisson: \\([13.4, 33.9]\\)\n\n. . .\n→ The standard error on the link scale is \\(\\sqrt{\\widehat\\psi}\\) times larger, so the quasipoisson interval is much wider. The Poisson interval is too narrow."
+    "text": "Example: Poisson vs. quasipoisson\nThe same prediction using the standard Poisson model (which ignores the overdispersion):\n\nPoisson: \\([18.6, 24.4]\\)\nQuasipoisson: \\([13.4, 33.9]\\)\n\n\n→ The standard error on the link scale is \\(\\sqrt{\\widehat\\psi}\\) times larger, so the quasipoisson interval is much wider. The Poisson interval is too narrow."
   },
   {
     "objectID": "slides/slides26.html#example-is-historical-needed",
     "href": "slides/slides26.html#example-is-historical-needed",
     "title": "Overdispersion and Inference for Poisson Regression",
     "section": "Example: is historical needed?",
-    "text": "Example: is historical needed?\n\n\\(H_0: \\beta_{gop} = \\beta_{swing} = 0\\) (so \\(d = 2\\))\n\nanova(reduced_glm, full_glm, test = \"LRT\")\n\nAnalysis of Deviance Table\n\nModel 1: laws ~ percent_urban\nModel 2: laws ~ percent_urban + historical\n  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    \n1        48     601.82                          \n2        46     413.49  2   188.32 &lt; 2.2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nanova(reduced_quasi, full_quasi, test = \"F\")\n\nAnalysis of Deviance Table\n\nModel 1: laws ~ percent_urban\nModel 2: laws ~ percent_urban + historical\n  Resid. Df Resid. Dev Df Deviance      F    Pr(&gt;F)    \n1        48     601.82                                 \n2        46     413.49  2   188.32 8.3927 0.0007811 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n. . .\n→ Both reject, but the quasipoisson test is far less extreme because it accounts for the overdispersion."
+    "text": "Example: is historical needed?\n\n\\(H_0: \\beta_{gop} = \\beta_{swing} = 0\\) (so \\(d = 2\\))\n\nanova(reduced_glm, full_glm, test = \"LRT\")\n\nAnalysis of Deviance Table\n\nModel 1: laws ~ percent_urban\nModel 2: laws ~ percent_urban + historical\n  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    \n1        48     601.82                          \n2        46     413.49  2   188.32 &lt; 2.2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nanova(reduced_quasi, full_quasi, test = \"F\")\n\nAnalysis of Deviance Table\n\nModel 1: laws ~ percent_urban\nModel 2: laws ~ percent_urban + historical\n  Resid. Df Resid. Dev Df Deviance      F    Pr(&gt;F)    \n1        48     601.82                                 \n2        46     413.49  2   188.32 8.3927 0.0007811 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n→ Both reject, but the quasipoisson test is far less extreme because it accounts for the overdispersion."
   },
   {
     "objectID": "slides/slides26.html#summary",
     "href": "slides/slides26.html#summary",
     "title": "Overdispersion and Inference for Poisson Regression",
     "section": "Summary",
-    "text": "Summary\n\n\nPoisson regression assumes \\(Var(Y_i) = \\lambda_i\\). Overdispersion means the variance is larger.\nCheck with \\(\\widehat\\psi = X^2 / (n - (p+1))\\).\nQuasipoisson: coefficients stay the same, SEs are multiplied by \\(\\sqrt{\\widehat\\psi}\\), tests and CIs use \\(t\\), and nested-model tests become \\(F\\)-tests\nRule of thumb: \\(\\widehat\\psi \\approx 1\\) keep Poisson; \\(\\widehat\\psi &gt; 1\\) use quasipoisson; \\(\\widehat\\psi &lt; 1\\) keep Poisson (it is conservative).\n\n\n\nFriday:\n\nQuiz 3 (logistic and count regression)"
+    "text": "Summary\n\n\nPoisson regression assumes \\(Var(Y_i) = \\lambda_i\\). Overdispersion means the variance is larger.\nCheck with \\(\\widehat\\psi = X^2 / (n - (p+1))\\).\nQuasipoisson: coefficients stay the same, SEs are multiplied by \\(\\sqrt{\\widehat\\psi}\\), tests and CIs use \\(t\\), and nested-model tests become \\(F\\)-tests\nRule of thumb: \\(\\widehat\\psi \\approx 1\\) keep Poisson; \\(\\widehat\\psi &gt; 1\\) use quasipoisson; \\(\\widehat\\psi &lt; 1\\) keep Poisson (it is conservative).\n\n\nFriday:\n\nQuiz 3 (logistic and count regression)"
   },
   {
     "objectID": "slides/slides26.html#warm-up",
