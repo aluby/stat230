@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -165,10 +165,6 @@ window.Quarto = {
 <span class="menu-text">Slides</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../notes.html"> 
-<span class="menu-text">Notes</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../activities.html"> 
 <span class="menu-text">Activities</span></a>
   </li>  
@@ -201,9 +197,11 @@ window.Quarto = {
    
   <ul>
   <li><a href="#data-moths-and-natural-selection" id="toc-data-moths-and-natural-selection" class="nav-link active" data-scroll-target="#data-moths-and-natural-selection">Data: moths and natural selection</a></li>
+  <li><a href="#where-we-left-off-hw8" id="toc-where-we-left-off-hw8" class="nav-link" data-scroll-target="#where-we-left-off-hw8">Where we left off (HW8)</a></li>
   <li><a href="#the-binomial-response" id="toc-the-binomial-response" class="nav-link" data-scroll-target="#the-binomial-response">The binomial response</a></li>
   <li><a href="#the-binomial-logistic-regression-model" id="toc-the-binomial-logistic-regression-model" class="nav-link" data-scroll-target="#the-binomial-logistic-regression-model">The binomial logistic regression model</a></li>
   <li><a href="#checking-conditions" id="toc-checking-conditions" class="nav-link" data-scroll-target="#checking-conditions">Checking conditions</a></li>
+  <li><a href="#goodness-of-fit" id="toc-goodness-of-fit" class="nav-link" data-scroll-target="#goodness-of-fit">Goodness of fit</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   <li><a href="#r-function-reference" id="toc-r-function-reference" class="nav-link" data-scroll-target="#r-function-reference">R function reference</a></li>
   </ul>
@@ -231,6 +229,7 @@ window.Quarto = {
 </header>
 
 
+<p>So far, every row of our data has been a <em>single</em> observation: one article, one student, one machine. Today each row is a <strong>group</strong> of observations that share the same predictor values, and the response is the <strong>number</strong> of successes in that group. This is <strong>binomial logistic regression</strong>.</p>
 <section id="data-moths-and-natural-selection" class="level2">
 <h2 class="anchored" data-anchor-id="data-moths-and-natural-selection">Data: moths and natural selection</h2>
 <p>Researchers glued equal numbers of light and dark morph moths to tree trunks at 7 locations from 0 to 51.2 km from Liverpool, where the trees were blackened by pollution. After 24 hours, they recorded how many moths had been removed (presumably eaten by predators).</p>
@@ -355,25 +354,31 @@ window.Quarto = {
 </table>
 </div>
 </div>
-<p>On HW8, we used the model:</p>
+<p><strong>Q1.</strong> What is the unit of observation (what does one row represent)? Why is this <em>not</em> the same kind of response as the fake news data?</p>
+</section>
+<section id="where-we-left-off-hw8" class="level2">
+<h2 class="anchored" data-anchor-id="where-we-left-off-hw8">Where we left off (HW8)</h2>
+<p>On the homework, we modeled the empirical log odds with <code>lm()</code>:</p>
+<p><span class="math display">\[\text{log odds removed} = \log\left(\frac{\text{removed}}{\text{not removed}}\right) = \beta_0 + \beta_1\,\text{distance} + \beta_2\,\text{light} + \beta_3\,\text{distance}\times\text{light} + \varepsilon\]</span></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_odds_removed <span class="sc">~</span> distance <span class="sc">+</span> morph <span class="sc">+</span> distance <span class="sc">*</span> morph, </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> moths)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes23_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
 </div>
-<p>What is the Y variable? What is the fitted equation?</p>
-<p>Why doesn’t this <code>glm</code> code work?</p>
+</div>
+</div>
+<p><strong>Q2.</strong> What did we have to do by hand to make this work? Name two problems with this approach. (<em>Hint:</em> think about a row with 0 moths removed, and about the points on the plot above that are based on more moths than others.)</p>
+<p>Why can’t we just give <code>glm()</code> the count of moths removed?</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Removed <span class="sc">~</span> distance <span class="sc">+</span> morph <span class="sc">+</span> distance <span class="sc">*</span> morph, </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> moths, <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error:
-! y values must be 0 &lt;= y &lt;= 1</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(Removed <span class="sc">~</span> distance <span class="sc">*</span> morph, <span class="at">data =</span> moths, <span class="at">family =</span> <span class="st">"binomial"</span>)   <span class="co"># error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
+<p>The response needs to be a 0/1 outcome or a <strong>proportion</strong> (with the number of trials supplied separately).</p>
 </section>
 <section id="the-binomial-response" class="level2">
 <h2 class="anchored" data-anchor-id="the-binomial-response">The binomial response</h2>
-<p>Let <span class="math inline">\(Y_i\)</span> be the ______________ of successes (here: moths removed) out of <span class="math inline">\(n_i\)</span> trials (here: moths placed) in row <span class="math inline">\(i\)</span>. We assume the <span class="math inline">\(n_i\)</span> trials in each row are independent and have the same probability of success <span class="math inline">\(\pi_i\)</span>.</p>
+<p>Let <span class="math inline">\(Y_i\)</span> be the ______________ of successes (here: moths removed) out of <span class="math inline">\(n_i\)</span> trials (here: moths placed) in row <span class="math inline">\(i\)</span>. We <strong>assume</strong> the <span class="math inline">\(n_i\)</span> trials in each row are independent and have the same probability of success <span class="math inline">\(\pi_i\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -386,51 +391,75 @@ window.Quarto = {
 <div class="callout-body-container callout-body">
 <p>The sum of <span class="math inline">\(n\)</span> independent success/failure trials, each with success probability <span class="math inline">\(\pi\)</span>, follows a <strong>Binomial</strong><span class="math inline">\((n, \pi)\)</span> distribution:</p>
 <p><span class="math display">\[E(Y) = \underline{\hspace{2cm}} \qquad\qquad Var(Y) = \underline{\hspace{3cm}}\]</span></p>
-<p>A binary response is the special case <span class="math inline">\(n =\)</span> ______.</p>
+<p>A binary response is the special case $n = $ ______.</p>
 </div>
 </div>
+<p><strong>Q3.</strong> The variance of a binomial count depends on <span class="math inline">\(\pi\)</span>. What does that tell us about the “equal variance” condition we needed for OLS? Do we need to check it here?</p>
 </section>
 <section id="the-binomial-logistic-regression-model" class="level2">
 <h2 class="anchored" data-anchor-id="the-binomial-logistic-regression-model">The binomial logistic regression model</h2>
 <p>The model is the same as before: it describes how the <strong>probability</strong> of success depends on the predictors, using the logit link.</p>
-<p><span class="math display">\[\pi_i = P(Y=1| x_1, ..., x_p)\]</span></p>
 <p>Log-odds scale:</p>
 <p><span class="math display">\[\text{logit}(\pi_i) = \log\left(\frac{\pi_i}{1 - \pi_i}\right) = \underline{\hspace{5cm}} = \eta_i\]</span></p>
 <p>Probability scale:</p>
-<p><span class="math display">\[\underline{\hspace{1cm}} = \dfrac{e^{\eta_i}}{1 + e^{\eta_i}}= \dfrac{e^{\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi}}}{1 + e^{\beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi}}}\]</span></p>
-<p>Response distribution: <span class="math inline">\(Y_i \sim \text{Binomial}(n_i, \pi_i)\)</span>.</p>
-<p>On the homework, we modeled the empirical log odds with <code>lm()</code>:</p>
-<p><span class="math display">\[
-\operatorname{\widehat{log\_odds\_removed}} = -1.123 + 0.018(\operatorname{distance}) + 0.374(\operatorname{morph}_{\operatorname{light}}) - 0.028(\operatorname{distance} \times \operatorname{morph}_{\operatorname{light}})
-\]</span></p>
+<p><span class="math display">\[\pi_i = \underline{\hspace{5cm}}\]</span></p>
+<p>Response distribution: <span class="math inline">\(Y_i \sim \text{Binomial}(n_i, \pi_i)\)</span> independently.</p>
+<p>Instead of creating the log odds by hand, we give <code>glm()</code> the <strong>proportion</strong> removed as the response, and tell it how many trials each proportion is based on with <code>weights</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Removed <span class="sc">/</span> Placed <span class="sc">~</span> distance <span class="sc">*</span> morph, <span class="at">weights =</span> Placed,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> moths, <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>(Equivalently, <code>cbind(Removed, Placed - Removed)</code> can be the response, with no <code>weights</code>.)</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="notes23_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
-</figure>
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: left;">estimate</th>
+<th style="text-align: left;">std. error</th>
+<th style="text-align: left;">z</th>
+<th style="text-align: left;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">-1.129</td>
+<td style="text-align: left;">0.198</td>
+<td style="text-align: left;">-5.70</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">distance</td>
+<td style="text-align: left;">0.019</td>
+<td style="text-align: left;">0.006</td>
+<td style="text-align: left;">3.28</td>
+<td style="text-align: left;">0.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">morphlight</td>
+<td style="text-align: left;">0.411</td>
+<td style="text-align: left;">0.274</td>
+<td style="text-align: left;">1.50</td>
+<td style="text-align: left;">0.134</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">distance:morphlight</td>
+<td style="text-align: left;">-0.028</td>
+<td style="text-align: left;">0.008</td>
+<td style="text-align: left;">-3.44</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
-<p>This approach required calculating the empirical log-odds “by hand” and adding to the dataset. Alternatively, we can fit with <code>glm()</code> using the <code>weights</code> argument</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Removed<span class="sc">/</span>Placed <span class="sc">~</span> distance <span class="sc">+</span> morph <span class="sc">+</span> distance<span class="sc">*</span>morph, </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">weights =</span> Placed,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> moths, </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="st">"binomial"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 5
-  term                estimate std.error statistic      p.value
-  &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
-1 (Intercept)          -1.13     0.198       -5.70 0.0000000117
-2 distance              0.0185   0.00565      3.28 0.00105     
-3 morphlight            0.411    0.274        1.50 0.134       
-4 distance:morphlight  -0.0278   0.00809     -3.44 0.000588    </code></pre>
-</div>
-</div>
-<p><em>Note:</em> the estimates are slightly different due to different ________________________</p>
+<p><strong>Q4.</strong> Write the fitted model on the log-odds scale for <strong>dark</strong> moths and for <strong>light</strong> moths.</p>
+<p>Dark:</p>
+<p>Light:</p>
+<p><strong>Q5.</strong> Interpret <span class="math inline">\(e^{\hat\beta_1}\)</span> (<code>distance</code>) in context. Which moths does this apply to?</p>
+<p><strong>Q6.</strong> For light moths, each additional km from Liverpool multiplies the odds of removal by ____________. How does this compare to dark moths? What does this say about the hypothesis from the study?</p>
 </section>
 <section id="checking-conditions" class="level2">
 <h2 class="anchored" data-anchor-id="checking-conditions">Checking conditions</h2>
@@ -452,22 +481,19 @@ window.Quarto = {
 </ul>
 </div>
 </div>
-<p>We check <strong>linearity</strong> with empirical logit plots (as in Day 20), but now every row is already a group, so we don’t need to bin.</p>
+<p>We check <strong>linearity</strong> with empirical logit plots (as in Day 20), but now every row is already a group, so we don’t need to bin:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes23_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>And we check linearity after accounting for the other predictors with <strong>Pearson residuals</strong>:</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Pearson Residuals
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <p><span class="math display">\[\text{Pres}_i = \frac{Y_i - n_i\hat\pi_i}{\sqrt{n_i\hat\pi_i(1-\hat\pi_i)}}\]</span></p>
 <p>For large enough <span class="math inline">\(n_i\)</span>, Pearson residuals behave approximately like draws from a ______________ distribution (unlike binary logistic regression, where the residuals were in two bands). We plot them against the fitted values and the predictors, with a smoother.</p>
-</div>
-</div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -477,25 +503,16 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Because each row is a group, we can ask a question we couldn’t ask before: <strong>does the model fit the group proportions?</strong></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Pearson <span class="math inline">\(\chi^2\)</span>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The <strong>Pearson <span class="math inline">\(\chi^2\)</span> statistic</strong> compares the observed counts <span class="math inline">\(Y_i\)</span> to the counts the model predicts, <span class="math inline">\(n_i\hat\pi_i\)</span>:</p>
-<p><span class="math display">\[X^2 = \sum_i\frac{(Y_i - n_i\hat\pi_i)^2}{n_i\hat\pi_i(1-\hat\pi_i)} = \sum_i \text{Pres}_i^2\]</span></p>
+<p><strong>Q7.</strong> What do you see in the Pearson residual plots? Is there evidence of nonlinearity or outliers? (The <code>X.weights.</code> panel is just the number of moths placed, which <code>glm()</code> stores as a predictor.)</p>
+</section>
+<section id="goodness-of-fit" class="level2">
+<h2 class="anchored" data-anchor-id="goodness-of-fit">Goodness of fit</h2>
+<p>Because each row is a group, we can ask a question we couldn’t ask before: <strong>does the model fit the group proportions?</strong> The <strong>deviance</strong> compares the observed counts <span class="math inline">\(Y_i\)</span> to the counts the model predicts, <span class="math inline">\(n_i\hat\pi_i\)</span>:</p>
+<p><span class="math display">\[D = 2\sum_i\left[Y_i\log\left(\frac{Y_i}{n_i\hat\pi_i}\right) + (n_i - Y_i)\log\left(\frac{n_i - Y_i}{n_i - n_i\hat\pi_i}\right)\right]\]</span></p>
 <ul>
-<li><span class="math inline">\(X^2\)</span> is ______________ when the predicted counts are close to the observed counts (good), and ______________ when they are far away (bad).</li>
-<li>If the model is correct and all the counts are large enough (about 5 or more successes <em>and</em> failures in every row), <span class="math inline">\(X^2 \overset{\cdot}{\sim} \chi^2\)</span> with <span class="math inline">\(df = n - (p+1)\)</span>, where <span class="math inline">\(n\)</span> is the number of <strong>rows</strong> (binomial observations), not the number of moths.</li>
+<li><span class="math inline">\(D\)</span> is ______________ when the predicted counts are close to the observed counts (good), and ______________ when they are far away (bad).</li>
+<li>If the model is correct and all the counts are large enough (about 5 or more successes <em>and</em> failures in every row), <span class="math inline">\(D \overset{\cdot}{\sim} \chi^2\)</span> with <span class="math inline">\(df = n - (p+1)\)</span>, where <span class="math inline">\(n\)</span> is the number of <strong>rows</strong> (binomial observations), not the number of moths.</li>
 </ul>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -506,26 +523,42 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Hypotheses:</strong> <span class="math inline">\(H_0\)</span>: ______________________________ (the model is adequate) vs.&nbsp;<span class="math inline">\(H_a\)</span>: the model is inadequate</p>
-<p><strong>Test statistic:</strong> <span class="math inline">\(X^2\)</span> = the sum of the squared Pearson residuals</p>
+<p><strong>Hypotheses:</strong> <span class="math inline">\(H_0\)</span>: ______________________________ (the model is adequate) vs.&nbsp;<span class="math inline">\(H_a\)</span>: the logit of <span class="math inline">\(\pi_i\)</span> is <em>not</em> a linear function of the predictors (the model is inadequate)</p>
+<p><strong>Test statistic:</strong> <span class="math inline">\(D\)</span> = the <strong>residual deviance</strong> reported by <code>summary()</code></p>
 <p><strong>Reference distribution:</strong> <span class="math inline">\(\chi^2\)</span> with <span class="math inline">\(df =\)</span> ______________________________</p>
-<p><strong>p-value:</strong> the area ______________ <span class="math inline">\(X^2\)</span> (upper tail). A <em>small</em> p-value is evidence of lack of fit.</p>
+<p><strong>p-value:</strong> the area ______________ <span class="math inline">\(D\)</span> (upper tail). A <em>small</em> p-value is evidence of lack of fit.</p>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(model3, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>X2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 12.70859</code></pre>
+<pre><code>
+Call:
+glm(formula = Removed/Placed ~ distance * morph, family = "binomial", 
+    data = moths, weights = Placed)
+
+Coefficients:
+                     Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)         -1.128987   0.197906  -5.705 1.17e-08 ***
+distance             0.018502   0.005645   3.277 0.001048 ** 
+morphlight           0.411257   0.274490   1.498 0.134066    
+distance:morphlight -0.027789   0.008085  -3.437 0.000588 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 35.385  on 13  degrees of freedom
+Residual deviance: 13.230  on 10  degrees of freedom
+AIC: 83.904
+
+Number of Fisher Scoring iterations: 4</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 10</code></pre>
 </div>
-</div>
-<p>To find the p-value:</p>
+<p><strong>Q8.</strong> How many binomial observations are there? How many parameters does the model have? Verify the residual degrees of freedom.</p>
+<p><strong>Q9.</strong> Calculate the p-value for the goodness-of-fit test, and state your conclusion in context.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(____, ____)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(____, ____)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -549,6 +582,8 @@ Warning
 <p>This goodness-of-fit test is only valid for <strong>binomial</strong> logistic regression with large enough <span class="math inline">\(n_i\)</span>. It is <em>not</em> valid for binary logistic regression (each row has <span class="math inline">\(n_i = 1\)</span>).</p>
 </div>
 </div>
+<p><strong>Q10.</strong> The <strong>likelihood ratio test</strong> also uses deviances. What question does the LRT answer, and how is it different from the goodness-of-fit test? (<em>Hint:</em> what models are being compared?)</p>
+<p><strong>Q11.</strong> If the goodness-of-fit test had a very small p-value, what might be wrong with the model? List two things we could try.</p>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
@@ -572,17 +607,7 @@ Warning
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;"><code>glm()</code> response</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 </tr>
@@ -592,17 +617,7 @@ Warning
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">Goodness-of-fit test valid?</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 </tr>
@@ -612,7 +627,7 @@ Warning
 <li>Binomial logistic regression models the ______________ of success for each row, using the same logit link as binary logistic regression.</li>
 <li>The variance of <span class="math inline">\(Y_i\)</span> is ______________, so it depends on <span class="math inline">\(\pi_i\)</span>.</li>
 <li><strong>Pearson residuals</strong> behave like <span class="math inline">\(N(0,1)\)</span> draws when the <span class="math inline">\(n_i\)</span> are large, so we can plot them against fitted values and predictors.</li>
-<li>The <strong>Pearson <span class="math inline">\(X^2\)</span> statistic</strong> is compared to a <span class="math inline">\(\chi^2\)</span> distribution with <span class="math inline">\(n-(p+1)\)</span> df to test <strong>goodness of fit</strong>.</li>
+<li>The <strong>residual deviance</strong> is compared to a <span class="math inline">\(\chi^2\)</span> distribution with <span class="math inline">\(n-(p+1)\)</span> df to test <strong>goodness of fit</strong>.</li>
 </ul>
 </section>
 <section id="r-function-reference" class="level2">
@@ -634,43 +649,23 @@ Warning
 <td style="text-align: left;">Fit a binomial logistic regression (proportion response with <code>weights</code>)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;"><code>glm(cbind(y, n - y) ~ x, data, family = "binomial")</code></td>
 <td style="text-align: left;">Same model, with a (successes, failures) response</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>resid_panel(model, type = "pearson", smoother = TRUE)</code></td>
 <td style="text-align: left;">Pearson residual plots</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;"><code>resid_xpanel(model, type = "pearson", smoother = TRUE)</code></td>
 <td style="text-align: left;">Pearson residuals against each predictor</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
 <tr class="odd">
-<td style="text-align: left;"><code>sum(residuals(model, type = "pearson")^2)</code></td>
-<td style="text-align: left;">Pearson <span class="math inline">\(X^2\)</span> statistic for the goodness-of-fit test</td>
+<td style="text-align: left;"><code>summary(model)</code></td>
+<td style="text-align: left;">Residual deviance and df for the goodness-of-fit test</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>1 - pchisq(X2, df)</code></td>
+<td style="text-align: left;"><code>1 - pchisq(D, df)</code></td>
 <td style="text-align: left;">Upper-tail <span class="math inline">\(\chi^2\)</span> probability (p-value)</td>
 </tr>
 </tbody>

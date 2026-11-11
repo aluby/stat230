@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Day 26: Overdispersion and inference for Poisson regression – stat230</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.scss">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">stat230</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../slides.html"> 
+<span class="menu-text">Slides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../notes.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../readings.html"> 
+<span class="menu-text">Readings</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#recap-where-we-left-off" id="toc-recap-where-we-left-off" class="nav-link active" data-scroll-target="#recap-where-we-left-off">Recap: where we left off</a></li>
+  <li><a href="#overdispersion" id="toc-overdispersion" class="nav-link" data-scroll-target="#overdispersion">Overdispersion</a></li>
+  <li><a href="#pearson-residuals" id="toc-pearson-residuals" class="nav-link" data-scroll-target="#pearson-residuals">Pearson residuals</a></li>
+  <li><a href="#goodness-of-fit-test" id="toc-goodness-of-fit-test" class="nav-link" data-scroll-target="#goodness-of-fit-test">Goodness-of-fit test</a></li>
+  <li><a href="#estimating-the-dispersion-parameter" id="toc-estimating-the-dispersion-parameter" class="nav-link" data-scroll-target="#estimating-the-dispersion-parameter">Estimating the dispersion parameter</a></li>
+  <li><a href="#fitting-the-quasipoisson-model" id="toc-fitting-the-quasipoisson-model" class="nav-link" data-scroll-target="#fitting-the-quasipoisson-model">Fitting the quasipoisson model</a></li>
+  <li><a href="#residuals-for-the-quasipoisson-model" id="toc-residuals-for-the-quasipoisson-model" class="nav-link" data-scroll-target="#residuals-for-the-quasipoisson-model">Residuals for the quasipoisson model</a></li>
+  <li><a href="#inference-for-the-coefficients" id="toc-inference-for-the-coefficients" class="nav-link" data-scroll-target="#inference-for-the-coefficients">Inference for the coefficients</a></li>
+  <li><a href="#inference-for-the-mean-count-lambda" id="toc-inference-for-the-mean-count-lambda" class="nav-link" data-scroll-target="#inference-for-the-mean-count-lambda">Inference for the mean count (<span class="math inline">\(\lambda\)</span>)</a></li>
+  <li><a href="#testing-nested-models-the-drop-in-deviance-test" id="toc-testing-nested-models-the-drop-in-deviance-test" class="nav-link" data-scroll-target="#testing-nested-models-the-drop-in-deviance-test">Testing nested models: the drop-in-deviance test</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#r-function-reference" id="toc-r-function-reference" class="nav-link" data-scroll-target="#r-function-reference">R function reference</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="notes26.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Day 26: Overdispersion and inference for Poisson regression</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="recap-where-we-left-off" class="level2">
+<h2 class="anchored" data-anchor-id="recap-where-we-left-off">Recap: where we left off</h2>
+<p>We are modeling the number of anti-discrimination <code>laws</code> in each state using <code>percent_urban</code> and <code>historical</code> (<code>dem</code>, <code>gop</code>, or <code>swing</code>) with a <strong>Poisson regression</strong> model:</p>
+<p><span class="math display">\[Y_i \sim \text{Poisson}(\lambda_i) \qquad\qquad \log(\lambda_i) = \beta_0 + \beta_1 \text{percent\_urban}_i + \beta_2 \text{gop}_i + \beta_3 \text{swing}_i\]</span></p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>full_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban <span class="sc">+</span> historical, <span class="at">data =</span> equality_index, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">family =</span> <span class="st">"poisson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: left;">estimate</th>
+<th style="text-align: left;">std. error</th>
+<th style="text-align: left;">z</th>
+<th style="text-align: left;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: left;">0.7590</td>
+<td style="text-align: left;">0.3269</td>
+<td style="text-align: left;">2.32</td>
+<td style="text-align: left;">0.020</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">percent_urban</td>
+<td style="text-align: left;">0.0314</td>
+<td style="text-align: left;">0.0037</td>
+<td style="text-align: left;">8.42</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">historicalgop</td>
+<td style="text-align: left;">-1.6121</td>
+<td style="text-align: left;">0.1332</td>
+<td style="text-align: left;">-12.10</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">historicalswing</td>
+<td style="text-align: left;">-0.8288</td>
+<td style="text-align: left;">0.1015</td>
+<td style="text-align: left;">-8.17</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Example:</strong> In binomial logistic regression, what is the response variable? How is a Poisson count different?</p>
+<p><strong>Example:</strong> Interpret the <code>percent_urban</code> coefficient in context.</p>
+<p>The Poisson model makes three assumptions:</p>
+<ol type="1">
+<li><strong>Linearity</strong>: <span class="math inline">\(\log(\lambda_i)\)</span> is a linear function of the predictors</li>
+<li><strong>Mean = Variance</strong>:</li>
+<li><strong>Independence</strong>: the observations are independent</li>
+</ol>
+<p>Today: what do we do when the second assumption fails?</p>
+</section>
+<section id="overdispersion" class="level2">
+<h2 class="anchored" data-anchor-id="overdispersion">Overdispersion</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Overdispersion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Overdispersion</strong> means the data are <em>more</em> variable than a Poisson model allows: <span class="math inline">\(Var(Y_i) \underline{\hspace{1cm}} \lambda_i\)</span>.</p>
+</div>
+</div>
+<ul>
+<li>Typical causes: counts that are clustered, differences between units that we haven’t measured, events that are not independent.</li>
+<li>Consequence: the Poisson standard errors are too ______________, so confidence intervals are too ______________ and p-values are too ______________.</li>
+</ul>
+</section>
+<section id="pearson-residuals" class="level2">
+<h2 class="anchored" data-anchor-id="pearson-residuals">Pearson residuals</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Pearson residuals for a Poisson model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\text{Pres}_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}} = \underline{\hspace{4cm}}\]</span></p>
+<ul>
+<li>If the <span class="math inline">\(\widehat\lambda_i\)</span> are big enough (about 5 or more), the Pearson residuals behave approximately like draws from a ______________ distribution if the Poisson model is correct.</li>
+<li>If the data are overdispersed, the standard deviation of the Pearson residuals will be ______________</li>
+</ul>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_xpanel</span>(full_glm, <span class="at">type =</span> <span class="st">"pearson"</span>, <span class="at">smoother =</span> <span class="cn">TRUE</span>, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes26_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What are we looking for in these plots?</p>
+</section>
+<section id="goodness-of-fit-test" class="level2">
+<h2 class="anchored" data-anchor-id="goodness-of-fit-test">Goodness-of-fit test</h2>
+<p>Just as in binomial logistic regression, we can test whether the model fits using the <strong>Pearson <span class="math inline">\(\chi^2\)</span> statistic</strong>:</p>
+<p><span class="math display">\[X^2 = \sum_{i=1}^n \frac{(Y_i - \widehat\lambda_i)^2}{\widehat\lambda_i} = \sum_{i=1}^n \text{Pres}_i^2\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Goodness-of-fit test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Hypotheses:</strong> <span class="math inline">\(H_0\)</span>: ______________________________ vs.&nbsp;<span class="math inline">\(H_a\)</span>: the model is inadequate</p>
+<p><strong>Test statistic:</strong> <span class="math inline">\(X^2\)</span></p>
+<p><strong>Reference distribution:</strong> <span class="math inline">\(\chi^2\)</span> with <span class="math inline">\(df =\)</span> ______________________________</p>
+<p><strong>p-value:</strong> the area ______________ <span class="math inline">\(X^2\)</span> (upper tail)</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(full_glm, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 516.1012</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(full_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 46</code></pre>
+</div>
+</div>
+<p>To find the p-value:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(____, ____)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Conclusion:</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Are the means big enough?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <span class="math inline">\(\chi^2\)</span> approximation (for both the test and the Pearson residuals) needs the fitted means <span class="math inline">\(\widehat\lambda_i\)</span> to be large enough (about 5 or more).</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">fitted</span>(full_glm))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.962   3.532   7.267  13.460  20.429  42.016 </code></pre>
+</div>
+</div>
+<p>Should we trust the test here? Why or why not?</p>
+</section>
+<section id="estimating-the-dispersion-parameter" class="level2">
+<h2 class="anchored" data-anchor-id="estimating-the-dispersion-parameter">Estimating the dispersion parameter</h2>
+<p>If <span class="math inline">\(X^2\)</span> is much bigger than <span class="math inline">\(n - (p+1)\)</span>, the data are overdispersed. We can measure <em>how much</em> with the <strong>dispersion parameter</strong> <span class="math inline">\(\psi\)</span>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Quasipoisson model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[Var(Y_i) = \psi \lambda_i \qquad\qquad \widehat\psi = \frac{X^2}{n - (p+1)}\]</span></p>
+</div>
+</div>
+<p>Calculate <span class="math inline">\(\widehat\psi\)</span> for the <code>equality_index</code> model, and say what it means in context:</p>
+</section>
+<section id="fitting-the-quasipoisson-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-the-quasipoisson-model">Fitting the quasipoisson model</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>full_quasi <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban <span class="sc">+</span> historical, <span class="at">data =</span> equality_index,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">"quasipoisson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: left;">estimate</th>
+<th style="text-align: left;">std. error</th>
+<th style="text-align: left;">t</th>
+<th style="text-align: left;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: left;">0.7590</td>
+<td style="text-align: left;">1.0948</td>
+<td style="text-align: left;">0.69</td>
+<td style="text-align: left;">0.492</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">percent_urban</td>
+<td style="text-align: left;">0.0314</td>
+<td style="text-align: left;">0.0125</td>
+<td style="text-align: left;">2.51</td>
+<td style="text-align: left;">0.015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">historicalgop</td>
+<td style="text-align: left;">-1.6121</td>
+<td style="text-align: left;">0.4463</td>
+<td style="text-align: left;">-3.61</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">historicalswing</td>
+<td style="text-align: left;">-0.8288</td>
+<td style="text-align: left;">0.3399</td>
+<td style="text-align: left;">-2.44</td>
+<td style="text-align: left;">0.019</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Compare with the Poisson fit:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">SE (Poisson)</th>
+<th style="text-align: right;">SE (quasi)</th>
+<th style="text-align: right;">ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">0.7590</td>
+<td style="text-align: right;">0.3269</td>
+<td style="text-align: right;">1.0948</td>
+<td style="text-align: right;">3.3496</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">percent_urban</td>
+<td style="text-align: right;">0.0314</td>
+<td style="text-align: right;">0.0037</td>
+<td style="text-align: right;">0.0125</td>
+<td style="text-align: right;">3.3496</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">historicalgop</td>
+<td style="text-align: right;">-1.6121</td>
+<td style="text-align: right;">0.1332</td>
+<td style="text-align: right;">0.4463</td>
+<td style="text-align: right;">3.3496</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">historicalswing</td>
+<td style="text-align: right;">-0.8288</td>
+<td style="text-align: right;">0.1015</td>
+<td style="text-align: right;">0.3399</td>
+<td style="text-align: right;">3.3496</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>The estimates ______________ change.</li>
+<li>Every quasipoisson SE is the Poisson SE multiplied by ______________ <span class="math inline">\(=\)</span> 3.35.</li>
+<li>Test statistics are compared to a ______________ distribution (with <span class="math inline">\(n-(p+1)\)</span> df) instead of a <span class="math inline">\(N(0,1)\)</span> distribution.</li>
+</ul>
+</section>
+<section id="residuals-for-the-quasipoisson-model" class="level2">
+<h2 class="anchored" data-anchor-id="residuals-for-the-quasipoisson-model">Residuals for the quasipoisson model</h2>
+<p>The ordinary Pearson residuals still use the Poisson standard deviation, so they still look overdispersed:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_xpanel</span>(full_quasi, <span class="at">type =</span> <span class="st">"pearson"</span>, <span class="at">smoother =</span> <span class="cn">TRUE</span>, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes26_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Standardized Pearson residuals</strong> use the quasipoisson standard deviation <span class="math inline">\(SD(Y_i) = \sqrt{\psi\lambda_i}\)</span> (and also adjust for leverage):</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_xpanel</span>(full_quasi, <span class="at">type =</span> <span class="st">"stand.pearson"</span>, <span class="at">smoother =</span> <span class="cn">TRUE</span>, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes26_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Does the quasipoisson model fix the problem?</p>
+</section>
+<section id="inference-for-the-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="inference-for-the-coefficients">Inference for the coefficients</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Confidence intervals and tests for <span class="math inline">\(\beta_j\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 44%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Poisson</th>
+<th style="text-align: left;">Quasipoisson</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Confidence interval</td>
+<td style="text-align: left;"><span class="math inline">\(\widehat\beta_j \pm z^* SE(\widehat\beta_j)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\widehat\beta_j \pm t^*_{n-(p+1)} SE_{quasi}(\widehat\beta_j)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test of <span class="math inline">\(H_0: \beta_j = 0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(z = \dfrac{\widehat\beta_j}{SE}\)</span>, compared to <span class="math inline">\(N(0,1)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(t = \dfrac{\widehat\beta_j}{SE_{quasi}}\)</span>, compared to <span class="math inline">\(t_{n-(p+1)}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We build intervals on the <strong>log scale</strong> first, then exponentiate. For a <span class="math inline">\(C\)</span>-unit increase in <span class="math inline">\(x_j\)</span>, multiply the estimate <em>and</em> the SE by <span class="math inline">\(C\)</span> <strong>before</strong> exponentiating:</p>
+<p><span class="math display">\[\left(e^{C\widehat\beta_j - z^* \cdot C \cdot SE},\;\; e^{C\widehat\beta_j + z^* \cdot C \cdot SE}\right)\]</span></p>
+<p><strong>Example:</strong> Calculate 95% confidence intervals for the effect of a <strong>10 percentage point</strong> increase in <code>percent_urban</code> under both models.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">coef</span>(full_glm)[<span class="dv">2</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>se_pois <span class="ot">&lt;-</span> <span class="fu">summary</span>(full_glm)<span class="sc">$</span>coefficients[<span class="dv">2</span>, <span class="dv">2</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>se_quasi <span class="ot">&lt;-</span> <span class="fu">summary</span>(full_quasi)<span class="sc">$</span>coefficients[<span class="dv">2</span>, <span class="dv">2</span>]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>tstar <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">975</span>, <span class="fu">df.residual</span>(full_glm))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Interpret the quasipoisson interval in context. Which interval is wider, and which should we trust?</p>
+</section>
+<section id="inference-for-the-mean-count-lambda" class="level2">
+<h2 class="anchored" data-anchor-id="inference-for-the-mean-count-lambda">Inference for the mean count (<span class="math inline">\(\lambda\)</span>)</h2>
+<p>To estimate the mean number of laws, <span class="math inline">\(\lambda\)</span>, for a particular state:</p>
+<ol type="1">
+<li>Predict <span class="math inline">\(\widehat\eta\)</span> and its standard error on the <strong>link (log) scale</strong></li>
+<li>Build the interval on the log scale: <span class="math inline">\(\widehat\eta \pm t^* \cdot SE(\widehat\eta)\)</span> (use <span class="math inline">\(z^*\)</span> for the Poisson model)</li>
+<li>Exponentiate the endpoints</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(full_quasi, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">historical =</span> <span class="st">"dem"</span>, <span class="at">percent_urban =</span> <span class="fl">73.3</span>),</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"link"</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$fit
+       1 
+3.057568 
+
+$se.fit
+[1] 0.2312448
+
+$residual.scale
+[1] 3.349567</code></pre>
+</div>
+</div>
+<p><strong>Example:</strong> Minnesota historically votes <code>dem</code> and has 73.3% of its population in urban areas. Find a 95% confidence interval for the mean number of laws in states like Minnesota.</p>
+<p>Why is the interval built on the log scale rather than the count scale?</p>
+<p>How would the interval from the standard Poisson model compare?</p>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="testing-nested-models-the-drop-in-deviance-test" class="level2">
+<h2 class="anchored" data-anchor-id="testing-nested-models-the-drop-in-deviance-test">Testing nested models: the drop-in-deviance test</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Likelihood ratio (drop-in-deviance) test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Hypotheses:</strong> <span class="math inline">\(H_0\)</span>: ______________________________ vs.&nbsp;<span class="math inline">\(H_a\)</span>: at least one of these coefficients is not 0</p>
+<p><strong>Test statistic:</strong> <span class="math inline">\(G = D_{\text{Reduced}} - D_{\text{Full}}\)</span>, where <span class="math inline">\(D\)</span> is the ______________ of each model</p>
+<p><strong>Reference distribution:</strong></p>
+<ul>
+<li>Poisson: <span class="math inline">\(G \overset{\cdot}{\sim} \chi^2_d\)</span>, where <span class="math inline">\(d\)</span> is the number of coefficients being tested</li>
+<li>Quasipoisson: <span class="math inline">\(F = \dfrac{G/d}{\widehat\psi} \sim F_{d,\; n-(p+1)}\)</span></li>
+</ul>
+</div>
+</div>
+<p><strong>Example:</strong> Is <code>historical</code> needed in the model, after accounting for <code>percent_urban</code>?</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>reduced_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban, <span class="at">data =</span> equality_index, <span class="at">family =</span> <span class="st">"poisson"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>reduced_quasi <span class="ot">&lt;-</span> <span class="fu">glm</span>(laws <span class="sc">~</span> percent_urban, <span class="at">data =</span> equality_index, <span class="at">family =</span> <span class="st">"quasipoisson"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(reduced_glm, full_glm, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: laws ~ percent_urban
+Model 2: laws ~ percent_urban + historical
+  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    
+1        48     601.82                          
+2        46     413.49  2   188.32 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(reduced_quasi, full_quasi, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: laws ~ percent_urban
+Model 2: laws ~ percent_urban + historical
+  Resid. Df Resid. Dev Df Deviance      F    Pr(&gt;F)    
+1        48     601.82                                 
+2        46     413.49  2   188.32 8.3927 0.0007811 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>State <span class="math inline">\(H_0\)</span>, <span class="math inline">\(d\)</span>, and your conclusion under each model. Why is the quasipoisson test less extreme?</p>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<ul>
+<li>Poisson regression assumes the mean and variance are ______________. <strong>Overdispersion</strong> means the variance is larger, and the Poisson SEs are too ______________.</li>
+<li>Check with the Pearson <span class="math inline">\(X^2\)</span> statistic and <span class="math inline">\(\widehat\psi = X^2/(n-(p+1))\)</span>.</li>
+<li>Rule of thumb: <span class="math inline">\(\widehat\psi \approx 1\)</span> keep Poisson; <span class="math inline">\(\widehat\psi &gt; 1\)</span> use ______________; <span class="math inline">\(\widehat\psi &lt; 1\)</span> keep ______________.</li>
+<li>Confidence intervals for the mean count are built on the ______________ scale, then exponentiated.</li>
+</ul>
+</section>
+<section id="r-function-reference" class="level2">
+<h2 class="anchored" data-anchor-id="r-function-reference">R function reference</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>glm(y ~ x, data, family = "quasipoisson")</code></td>
+<td style="text-align: left;">Fit a quasipoisson regression model</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sum(residuals(model, type = "pearson")^2)</code></td>
+<td style="text-align: left;">Pearson <span class="math inline">\(X^2\)</span> statistic</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>df.residual(model)</code></td>
+<td style="text-align: left;">Residual degrees of freedom, <span class="math inline">\(n - (p+1)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>resid_xpanel(model, type = "stand.pearson")</code></td>
+<td style="text-align: left;">Standardized Pearson residuals against each predictor</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>confint.default(model)</code></td>
+<td style="text-align: left;">Wald confidence intervals for the coefficients (log scale)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>predict(model, newdata, type = "link", se.fit = TRUE)</code></td>
+<td style="text-align: left;">Predicted log mean and its standard error</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>anova(reduced, full, test = "LRT")</code></td>
+<td style="text-align: left;">Drop-in-deviance test for Poisson models</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>anova(reduced, full, test = "F")</code></td>
+<td style="text-align: left;">Drop-in-deviance <span class="math inline">\(F\)</span>-test for quasipoisson models</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

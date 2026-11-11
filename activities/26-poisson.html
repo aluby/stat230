@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -214,7 +214,7 @@ window.Quarto = {
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>psi_hat <span class="ot">&lt;-</span> X2 <span class="sc">/</span> <span class="fu">df.residual</span>(possum_glm)</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>psi_hat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><strong>3.</strong> Now fit the quasipoisson regression model with the same predictors (call it <code>possum_quasi</code>). Find the estimated dispersion parameter in the <code>summary()</code> output. How does it compare to your answer in Question 2? Argue that, since <span class="math inline">\(\widehat\psi &lt; 1\)</span>, using the “regular” Poisson model gives a more conservative (cautious) assessment of uncertainty than the quasipoisson model. (<em>Hint:</em> how are the two sets of standard errors related?)</p>
+<p><strong>3.</strong> Now fit the quasipoisson regression model with the same predictors (call it <code>possum_quasi</code>). Find the estimated dispersion parameter in the <code>summary()</code> output. How does it compare to your answer in Question 2? Argue that, since <span class="math inline">\(\widehat\psi &lt; 1\)</span>, using the “regular” Poisson model gives a more conservative (cautious) assessment of uncertainty than the quasipoisson model.</p>
 <p><strong>4.</strong> Take a look at the fitted values (the estimated means) from the Poisson model. Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Pearson <span class="math inline">\(\chi^2\)</span> goodness-of-fit test?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">fitted</span>(possum_glm))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -420,7 +420,7 @@ window.Quarto = {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -800,7 +800,7 @@ window.Quarto = {
 <span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>psi_hat</span>
 <span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>**3.** Now fit the quasipoisson regression model with the same predictors (call it <span class="in">`possum_quasi`</span>). Find the estimated dispersion parameter in the <span class="in">`summary()`</span> output. How does it compare to your answer in Question 2? Argue that, since $\widehat\psi &lt; 1$, using the "regular" Poisson model gives a more conservative (cautious) assessment of uncertainty than the quasipoisson model. (*Hint:* how are the two sets of standard errors related?)</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>**3.** Now fit the quasipoisson regression model with the same predictors (call it <span class="in">`possum_quasi`</span>). Find the estimated dispersion parameter in the <span class="in">`summary()`</span> output. How does it compare to your answer in Question 2? Argue that, since $\widehat\psi &lt; 1$, using the "regular" Poisson model gives a more conservative (cautious) assessment of uncertainty than the quasipoisson model. </span>
 <span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>**4.** Take a look at the fitted values (the estimated means) from the Poisson model. Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Pearson $\chi^2$ goodness-of-fit test?</span>
 <span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
