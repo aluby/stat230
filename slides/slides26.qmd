@@ -149,27 +149,14 @@ The Poisson model assumes $Var(Y_i) = \lambda_i$.
 - Typical causes: counts that are clustered, differences between units that we haven't measured, events that are not independent
 - Consequence: the Poisson standard errors are **too small**, so confidence intervals are too narrow and p-values are too small
 
-## Quasipoisson model 
 
-$Var(Y_i) = \psi\, \lambda_i$, where $\psi$ is the **dispersion parameter**
+## Pearson residuals
 
-- $\psi = 1$: Poisson
-- $\psi > 1$: overdispersed
-- $\psi < 1$: underdispersed
-
-
-How do we find $\psi$? 
-
-## Model fitting: Poisson {.smaller}
-
-```{r echo=TRUE}
+```{r echo=FALSE}
 full_glm <- glm(laws ~ percent_urban + historical,
             data = equality_index,
             family = poisson)
-summary(full_glm)
 ```
-
-## Pearson residuals
 
 $$Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}} = \frac{Y_i - \widehat \lambda_i}{\sqrt{\widehat \lambda_i}}$$
 
@@ -184,6 +171,7 @@ $$Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}} = \frac{Y_
 #| fig-width: 8
 #| fig-height: 3
 #| echo: true
+sd(residuals(full_glm, type = "pearson"))
 ggResidpanel::resid_xpanel(full_glm, type = "pearson")
 ```
 
