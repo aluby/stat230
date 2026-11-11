@@ -32,12 +32,17 @@ $$Y_i \sim \text{Poisson}(\lambda_i) \qquad\qquad \log(\lambda_i) = \beta_0 + \b
 
 ```{r}
 #| echo: true
-full_glm <- glm(laws ~ percent_urban + historical, data = equality_index, family = "poisson")
+full_glm <- glm(laws ~ percent_urban + historical, data = equality_index, 
+family = "poisson")
 ```
 
 ```{r}
 kable_coef(full_glm, digits = 4)
 ```
+
+**Example:** In binomial logistic regression, what is the response variable? How is a Poisson count different?
+
+\vspace{0.75in}
 
 **Example:** Interpret the `percent_urban` coefficient in context.
 
@@ -46,7 +51,7 @@ kable_coef(full_glm, digits = 4)
 The Poisson model makes three assumptions:
 
 1.  **Linearity**: $\log(\lambda_i)$ is a linear function of the predictors
-2.  **Mean = Variance**: $E(Y_i) = Var(Y_i) = \underline{\hspace{1.5cm}}$
+2.  **Mean = Variance**: 
 3.  **Independence**: the observations are independent
 
 Today: what do we do when the second assumption fails?
@@ -69,8 +74,8 @@ Today: what do we do when the second assumption fails?
 
 $$\text{Pres}_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}} = \underline{\hspace{4cm}}$$
 
--   If the $\widehat\lambda_i$ are big enough (about 5 or more), the Pearson residuals behave approximately like draws from a ______________ distribution if the Poisson model is correct.
--   If the data are overdispersed, the standard deviation of the Pearson residuals will be ______________ than 1.
+-   If the $\widehat\lambda_i$ are big enough (about 5 or more), the Pearson residuals behave approximately like draws from a ______________ distribution if the Poisson model is correct. 
+-   If the data are overdispersed, the standard deviation of the Pearson residuals will be ______________ 
 :::
 
 ```{r}
@@ -145,9 +150,7 @@ If $X^2$ is much bigger than $n - (p+1)$, the data are overdispersed. We can mea
 
 $$Var(Y_i) = \psi \lambda_i \qquad\qquad \widehat\psi = \frac{X^2}{n - (p+1)}$$
 
--   $\psi = 1$: ______________ ($\widehat\psi \approx 1$: keep the Poisson model)
--   $\psi > 1$: ______________
--   $\psi < 1$: ______________ (the Poisson model is conservative, so we keep it)
+
 :::
 
 Calculate $\widehat\psi$ for the `equality_index` model, and say what it means in context:
@@ -241,7 +244,7 @@ Interpret the quasipoisson interval in context. Which interval is wider, and whi
 
 \vspace{1in}
 
-## Inference for the mean count
+## Inference for the mean count ($\lambda$)
 
 To estimate the mean number of laws, $\lambda$, for a particular state:
 
@@ -302,19 +305,6 @@ State $H_0$, $d$, and your conclusion under each model. Why is the quasipoisson 
 \newpage
 
 ## Summary
-
-|                          | Poisson              | Quasipoisson        |
-|:-------------------------|:---------------------|:--------------------|
-| Variance of $Y_i$        |                      |                     |
-|                          |                      |                     |
-| Estimates of $\beta$     |                      |                     |
-|                          |                      |                     |
-| Standard errors          |                      |                     |
-|                          |                      |                     |
-| Tests / CIs for $\beta$  |                      |                     |
-|                          |                      |                     |
-| Nested model test        |                      |                     |
-|                          |                      |                     |
 
 -   Poisson regression assumes the mean and variance are ______________. **Overdispersion** means the variance is larger, and the Poisson SEs are too ______________.
 -   Check with the Pearson $X^2$ statistic and $\widehat\psi = X^2/(n-(p+1))$.

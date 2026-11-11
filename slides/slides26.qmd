@@ -171,11 +171,10 @@ summary(full_glm)
 
 ## Pearson residuals
 
-$$Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}}$$
+$$Pres_i = \frac{Y_i - \widehat{\text{mean}(Y_i)}}{\widehat{SD(Y_i)}} = \frac{Y_i - \widehat \lambda_i}{\sqrt{\widehat \lambda_i}}$$
 
 
 - Mean = $\widehat \lambda$, SD = $\sqrt{\widehat \lambda}$
-- Pearson residual: $\frac{Y_i - \widehat \lambda_i}{\sqrt{\widehat \lambda_i}}$
 - If $\widehat\lambda$'s are "big" ($\ge 5$), Pearson residuals are $\approx N(0,1)$ if Poisson model is correct. Can use to diagnose problems with linearity
 - If overdispersed, then SD of Pearson residuals is $>1$
 
