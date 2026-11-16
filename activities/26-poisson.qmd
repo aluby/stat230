@@ -51,7 +51,7 @@ psi_hat <- X2 / df.residual(possum_glm)
 psi_hat
 ```
 
-**3.** Now fit the quasipoisson regression model with the same predictors (call it `possum_quasi`). Find the estimated dispersion parameter in the `summary()` output. How does it compare to your answer in Question 2? Argue that, since $\widehat\psi < 1$, using the "regular" Poisson model gives a more conservative (cautious) assessment of uncertainty than the quasipoisson model. (*Hint:* how are the two sets of standard errors related?)
+**3.** Now fit the quasipoisson regression model with the same predictors (call it `possum_quasi`). Find the estimated dispersion parameter in the `summary()` output. How does it compare to your answer in Question 2? Argue that, since $\widehat\psi < 1$, using the "regular" Poisson model gives a more conservative (cautious) assessment of uncertainty than the quasipoisson model. 
 
 **4.** Take a look at the fitted values (the estimated means) from the Poisson model. Should we expect the Pearson residuals to follow a normal distribution in this setting? Can we trust the Pearson $\chi^2$ goodness-of-fit test?
 
