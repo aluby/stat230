@@ -90,12 +90,66 @@ Use the same recipe as Case Study 2:
 
 ## Poster session
 
-On the last day of class, each group will present a one-page poster summarizing their question, data, and main finding.
+On the last day of class (Wednesday of Week 10), each group will present an **11 x 17** poster. The session is split into three 20-minute blocks, and your group will present during one of them. The poster is a **progress report**, not a final product: the goal is to show where your project is and get feedback from your classmates and me before you finish the final report. You do not need a final model, a coefficient table, or conclusions yet.
+
+Your group should prepare a ~2 minute "elevator pitch" explaining your poster. Plan for visits to last ~5 minutes: 2 minutes for the elevator pitch and 2 minutes for follow-up questions or further discussion. 
+
+Your poster should include:
+
+1. **Title and group members**
+2. **Research question:** in one or two sentences. You should include the *response*, your *variable(s) of interest*, and the variables you plan to *adjust for*.
+3. **Data:** where the data come from and how they were collected, what each row represents, and the number of observations.
+4. **EDA:** one or two well-labeled plots that focus on the relationship between the response and your variable(s) of interest. (If you've made other EDA that will help us understand your data, feel free to include that!) Include a sentence or two under each plot describing what it tells you. 
+5. **Modeling approach:** which type of regression you are using and why it fits your response. Include a *theoretical model* statement in proper notation, with each variable defined.
+6. **Plans:** what is left to do. For example: the candidate models you plan to compare, the conditions you still need to check (such as linearity, overdispersion, or unusual cases), and any questions you'd like feedback on. You can also discuss any data issues that you've run into and are in the process of solving
+
+A few tips:
+
+  - Use short bullet points, not paragraphs. Someone should be able to understand your project in about a minute.
+  - Make your plots large enough to read, with informative axis labels and titles.
+  - Be ready to explain your poster and answer questions about it. The feedback you get should help you write the Methods and Results sections of your final report. (For example, if everybody you talked to is confused about a plot you have, you'll probably want to make some changes for the final report)
+
+### Peer review
+
+During the two blocks when your group is not presenting, you will visit other groups' posters and complete a short peer review for each poster you visit. For each poster, you'll fill out a form:
+
+  - One thing that is clear or interesting about the project
+  - One question you have about the data, the research question, or the model
+  - One suggestion for the group's plans (for example, a variable to adjust for, a condition to check, or a plot that would help)
+
+Your feedback will be shared (anonymously) with each group to help them finish their final report.
+
+### Poster rubric
+
+- Title and group members (5%)
+    - [ ] Has an informative title and lists the group members
+- Research question (15%)
+    - [ ] States the research question clearly in one or two sentences
+    - [ ] Identifies the response variable
+    - [ ] Identifies the variable(s) of interest and the variables to adjust for
+- Data (15%)
+    - [ ] Describes where the data come from and how they were collected
+    - [ ] Says what one row represents and gives the number of observations
+- EDA (20%)
+    - [ ] One or two plots that show the relationship between the response and the variable(s) of interest
+    - [ ] Plots are readable, with informative axis labels and titles
+    - [ ] Each plot has a sentence or two describing what it shows
+- Modeling approach (20%)
+    - [ ] Identifies the type of regression and why it fits the response
+    - [ ] States the theoretical model in proper notation
+    - [ ] Defines each variable in the model
+- Plans (15%) (*Note:* This may vary quite a bit from group to group - it's OK if yours are different!)
+    - [ ] Describes the candidate models the group plans to compare
+    - [ ] Identifies conditions still to check (such as linearity, overdispersion, or unusual cases)
+    - [ ] Describes any data issues you've run into
+    - [ ] Lists any questions the group would like feedback on
+- Peer review (10%)
+    - [ ] Completed a peer review all posters expected
+    - [ ] Feedback is specific and constructive 
 
 # Starter Datasets
 
 Each option below gives some background, the data, and example questions. These are starting points: you are welcome to ask a different question with the same data.
-
 
 
 ## Option 1: Caring for city trees (logistic regression)
