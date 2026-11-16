@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -126,7 +126,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#building-your-model" id="toc-building-your-model" class="nav-link" data-scroll-target="#building-your-model">Building your model</a></li>
   <li><a href="#format" id="toc-format" class="nav-link" data-scroll-target="#format">Format</a></li>
-  <li><a href="#poster-session" id="toc-poster-session" class="nav-link" data-scroll-target="#poster-session">Poster session</a></li>
+  <li><a href="#poster-session" id="toc-poster-session" class="nav-link" data-scroll-target="#poster-session">Poster session</a>
+  <ul class="collapse">
+  <li><a href="#peer-review" id="toc-peer-review" class="nav-link" data-scroll-target="#peer-review">Peer review</a></li>
+  <li><a href="#poster-rubric" id="toc-poster-rubric" class="nav-link" data-scroll-target="#poster-rubric">Poster rubric</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#starter-datasets" id="toc-starter-datasets" class="nav-link" data-scroll-target="#starter-datasets">Starter Datasets</a>
   <ul class="collapse">
@@ -236,7 +240,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="poster-session" class="level2">
 <h2 class="anchored" data-anchor-id="poster-session">Poster session</h2>
-<p>On the last day of class, each group will present a one-page poster summarizing their question, data, and main finding.</p>
+<p>On the last day of class (Wednesday of Week 10), each group will present an <strong>11 x 17</strong> poster. The session is split into three 20-minute blocks, and your group will present during one of them. The poster is a <strong>progress report</strong>, not a final product: the goal is to show where your project is and get feedback from your classmates and me before you finish the final report. You do not need a final model, a coefficient table, or conclusions yet.</p>
+<p>Your group should prepare a ~2 minute “elevator pitch” explaining your poster. Plan for visits to last ~5 minutes: 2 minutes for the elevator pitch and 2 minutes for follow-up questions or further discussion.</p>
+<p>Your poster should include:</p>
+<ol type="1">
+<li><strong>Title and group members</strong></li>
+<li><strong>Research question:</strong> in one or two sentences. You should include the <em>response</em>, your <em>variable(s) of interest</em>, and the variables you plan to <em>adjust for</em>.</li>
+<li><strong>Data:</strong> where the data come from and how they were collected, what each row represents, and the number of observations.</li>
+<li><strong>EDA:</strong> one or two well-labeled plots that focus on the relationship between the response and your variable(s) of interest. (If you’ve made other EDA that will help us understand your data, feel free to include that!) Include a sentence or two under each plot describing what it tells you.</li>
+<li><strong>Modeling approach:</strong> which type of regression you are using and why it fits your response. Include a <em>theoretical model</em> statement in proper notation, with each variable defined.</li>
+<li><strong>Plans:</strong> what is left to do. For example: the candidate models you plan to compare, the conditions you still need to check (such as linearity, overdispersion, or unusual cases), and any questions you’d like feedback on. You can also discuss any data issues that you’ve run into and are in the process of solving</li>
+</ol>
+<p>A few tips:</p>
+<ul>
+<li>Use short bullet points, not paragraphs. Someone should be able to understand your project in about a minute.</li>
+<li>Make your plots large enough to read, with informative axis labels and titles.</li>
+<li>Be ready to explain your poster and answer questions about it. The feedback you get should help you write the Methods and Results sections of your final report. (For example, if everybody you talked to is confused about a plot you have, you’ll probably want to make some changes for the final report)</li>
+</ul>
+<section id="peer-review" class="level3">
+<h3 class="anchored" data-anchor-id="peer-review">Peer review</h3>
+<p>During the two blocks when your group is not presenting, you will visit other groups’ posters and complete a short peer review for each poster you visit. For each poster, you’ll fill out a form:</p>
+<ul>
+<li>One thing that is clear or interesting about the project</li>
+<li>One question you have about the data, the research question, or the model</li>
+<li>One suggestion for the group’s plans (for example, a variable to adjust for, a condition to check, or a plot that would help)</li>
+</ul>
+<p>Your feedback will be shared (anonymously) with each group to help them finish their final report.</p>
+</section>
+<section id="poster-rubric" class="level3">
+<h3 class="anchored" data-anchor-id="poster-rubric">Poster rubric</h3>
+<ul>
+<li>Title and group members (5%)
+<ul class="task-list">
+<li><label><input type="checkbox">Has an informative title and lists the group members</label></li>
+</ul></li>
+<li>Research question (15%)
+<ul class="task-list">
+<li><label><input type="checkbox">States the research question clearly in one or two sentences</label></li>
+<li><label><input type="checkbox">Identifies the response variable</label></li>
+<li><label><input type="checkbox">Identifies the variable(s) of interest and the variables to adjust for</label></li>
+</ul></li>
+<li>Data (15%)
+<ul class="task-list">
+<li><label><input type="checkbox">Describes where the data come from and how they were collected</label></li>
+<li><label><input type="checkbox">Says what one row represents and gives the number of observations</label></li>
+</ul></li>
+<li>EDA (20%)
+<ul class="task-list">
+<li><label><input type="checkbox">One or two plots that show the relationship between the response and the variable(s) of interest</label></li>
+<li><label><input type="checkbox">Plots are readable, with informative axis labels and titles</label></li>
+<li><label><input type="checkbox">Each plot has a sentence or two describing what it shows</label></li>
+</ul></li>
+<li>Modeling approach (20%)
+<ul class="task-list">
+<li><label><input type="checkbox">Identifies the type of regression and why it fits the response</label></li>
+<li><label><input type="checkbox">States the theoretical model in proper notation</label></li>
+<li><label><input type="checkbox">Defines each variable in the model</label></li>
+</ul></li>
+<li>Plans (15%) (<em>Note:</em> This may vary quite a bit from group to group - it’s OK if yours are different!)
+<ul class="task-list">
+<li><label><input type="checkbox">Describes the candidate models the group plans to compare</label></li>
+<li><label><input type="checkbox">Identifies conditions still to check (such as linearity, overdispersion, or unusual cases)</label></li>
+<li><label><input type="checkbox">Describes any data issues you’ve run into</label></li>
+<li><label><input type="checkbox">Lists any questions the group would like feedback on</label></li>
+</ul></li>
+<li>Peer review (10%)
+<ul class="task-list">
+<li><label><input type="checkbox">Completed a peer review all posters expected</label></li>
+<li><label><input type="checkbox">Feedback is specific and constructive</label></li>
+</ul></li>
+</ul>
+</section>
 </section>
 </section>
 <section id="starter-datasets" class="level1">

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -306,42 +306,94 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </section>
 <section id="problem-4-salamanders-and-overdispersion-by-hand-5-parts" class="level1">
 <h1>Problem 4: Salamanders and overdispersion (by hand, 5 parts)</h1>
-<p>Continue with <code>sal_glm</code> from Problem 4. Below are the first three sites with their fitted means (<span class="math inline">\(\widehat\lambda_i\)</span>) and Pearson residuals, along with some other output.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>salamanders <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fitted_mean =</span> <span class="fu">fitted</span>(sal_glm),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">pearson_resid =</span> <span class="fu">residuals</span>(sal_glm, <span class="at">type =</span> <span class="st">"pearson"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Site Salamanders PctCover ForestAge fitted_mean pearson_resid
+<!-- 
+Continue with `sal_glm` from Problem 4. Below are the first three sites with their fitted means ($\widehat\lambda_i$) and Pearson residuals, along with some other output.
+
+
+::: {.cell}
+
+```{.r .cell-code}
+salamanders |>
+  mutate(fitted_mean = fitted(sal_glm),
+         pearson_resid = residuals(sal_glm, type = "pearson")) |>
+  head(3)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+  Site Salamanders PctCover ForestAge fitted_mean pearson_resid
 1    1          13       85       316    3.566917      4.994674
 2    2          11       86        88    3.702492      3.792517
-3    3          11       90       548    4.175633      3.339652</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">residuals</span>(sal_glm, <span class="at">type =</span> <span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 122.8492</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(sal_glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 44</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">44</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.015368</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> <span class="dv">1</span>, <span class="at">df2 =</span> <span class="dv">44</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.061706</code></pre>
-</div>
-</div>
-<ol type="a">
-<li><p>Calculate the estimated dispersion parameter <span class="math inline">\(\widehat\psi\)</span>. What does it tell you about these data? Why might the counts be more variable than a Poisson model allows?</p></li>
-<li><p>Calculate the quasipoisson standard errors for <code>PctCover</code> and <code>ForestAge</code>, and the quasipoisson <span class="math inline">\(t\)</span>-statistic for each.</p></li>
-<li><p>Recalculate the 95% confidence interval for the <code>PctCover</code> coefficient using the quasipoisson model. How does it compare to the interval from Problem 4?</p></li>
-<li><p>Calculate the drop-in-deviance <span class="math inline">\(F\)</span>-statistic for testing whether <code>ForestAge</code> is needed in the quasipoisson model, and give your conclusion.</p></li>
-<li><p>Check your answers to 3–5 by fitting the model with <code>family = "quasipoisson"</code> in R. Which conclusions from Problem 4 changed, and which did not?</p></li>
-</ol>
+3    3          11       90       548    4.175633      3.339652
+```
+
+
+:::
+
+```{.r .cell-code}
+sum(residuals(sal_glm, type = "pearson")^2)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 122.8492
+```
+
+
+:::
+
+```{.r .cell-code}
+df.residual(sal_glm)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 44
+```
+
+
+:::
+
+```{.r .cell-code}
+qt(0.975, df = 44)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 2.015368
+```
+
+
+:::
+
+```{.r .cell-code}
+qf(0.95, df1 = 1, df2 = 44)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 4.061706
+```
+
+
+:::
+:::
+
+
+(a) Calculate the estimated dispersion parameter $\widehat\psi$. What does it tell you about these data? Why might the counts be more variable than a Poisson model allows?
+
+(b) Calculate the quasipoisson standard errors for `PctCover` and `ForestAge`, and the quasipoisson $t$-statistic for each.
+
+(c) Recalculate the 95% confidence interval for the `PctCover` coefficient using the quasipoisson model. How does it compare to the interval from Problem 4?
+
+(d) Calculate the drop-in-deviance $F$-statistic for testing whether `ForestAge` is needed in the quasipoisson model, and give your conclusion.
+
+(e) Check your answers to 3–5 by fitting the model with `family = "quasipoisson"` in R. Which conclusions from Problem 4 changed, and which did not? -->
 </section>
 <section id="problem-5-binary-binomial-or-poisson" class="level1">
 <h1>Problem 5: Binary, binomial, or Poisson?</h1>
@@ -438,7 +490,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/aluby\.github\.io\/stat230\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

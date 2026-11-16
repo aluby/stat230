@@ -2,11 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Name: ________________________________">
 
 <title>Day 05: Evaluating SLR models – stat230</title>
 <style>
@@ -20,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -38,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-f4f5b63388da9725c4ce2c62b8120838.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -167,16 +201,22 @@ window.Quarto = {
   <li><a href="#conditions-for-inference-line" id="toc-conditions-for-inference-line" class="nav-link" data-scroll-target="#conditions-for-inference-line">Conditions for inference: LINE</a></li>
   <li><a href="#residuals" id="toc-residuals" class="nav-link" data-scroll-target="#residuals">Residuals</a></li>
   <li><a href="#residual-plots" id="toc-residual-plots" class="nav-link" data-scroll-target="#residual-plots">Residual plots</a></li>
-  <li><a href="#assessing-normality" id="toc-assessing-normality" class="nav-link" data-scroll-target="#assessing-normality">Assessing normality</a></li>
+  <li><a href="#assessing-linearity" id="toc-assessing-linearity" class="nav-link" data-scroll-target="#assessing-linearity">Assessing Linearity</a></li>
+  <li><a href="#assessing-equal-variance" id="toc-assessing-equal-variance" class="nav-link" data-scroll-target="#assessing-equal-variance">Assessing Equal Variance</a></li>
+  <li><a href="#assessing-normality" id="toc-assessing-normality" class="nav-link" data-scroll-target="#assessing-normality">Assessing Normality</a></li>
   <li><a href="#assessing-independence" id="toc-assessing-independence" class="nav-link" data-scroll-target="#assessing-independence">Assessing independence</a></li>
+  <li><a href="#making-residual-plots-in-r" id="toc-making-residual-plots-in-r" class="nav-link" data-scroll-target="#making-residual-plots-in-r">Making Residual Plots in R</a>
+  <ul class="collapse">
   <li><a href="#what-happens-if-the-conditions-arent-met" id="toc-what-happens-if-the-conditions-arent-met" class="nav-link" data-scroll-target="#what-happens-if-the-conditions-arent-met">What happens if the conditions aren’t met?</a></li>
   <li><a href="#what-do-we-do-if-assumptions-are-violated" id="toc-what-do-we-do-if-assumptions-are-violated" class="nav-link" data-scroll-target="#what-do-we-do-if-assumptions-are-violated">What do we do if assumptions are violated?</a></li>
+  </ul></li>
   <li><a href="#is-x-a-good-predictor-of-y" id="toc-is-x-a-good-predictor-of-y" class="nav-link" data-scroll-target="#is-x-a-good-predictor-of-y">Is x a “good” predictor of y?</a>
   <ul class="collapse">
   <li><a href="#partitioning-variability" id="toc-partitioning-variability" class="nav-link" data-scroll-target="#partitioning-variability">Partitioning variability</a></li>
   <li><a href="#properties-of-r2" id="toc-properties-of-r2" class="nav-link" data-scroll-target="#properties-of-r2">Properties of <span class="math inline">\(R^2\)</span></a></li>
-  <li><a href="#r2-dangers-high-r2-doesnt-mean-good-fit" id="toc-r2-dangers-high-r2-doesnt-mean-good-fit" class="nav-link" data-scroll-target="#r2-dangers-high-r2-doesnt-mean-good-fit"><span class="math inline">\(R^2\)</span> dangers: high <span class="math inline">\(R^2\)</span> doesn’t mean “good fit”</a></li>
+  <li><a href="#r2-dangers" id="toc-r2-dangers" class="nav-link" data-scroll-target="#r2-dangers"><span class="math inline">\(R^2\)</span> dangers:</a></li>
   </ul></li>
+  <li><a href="#finding-r2-in-r" id="toc-finding-r2-in-r" class="nav-link" data-scroll-target="#finding-r2-in-r">Finding <span class="math inline">\(R^2\)</span> in R</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="notes05.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -192,12 +232,6 @@ window.Quarto = {
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Name: ________________________________ </p>
-          </div>
-  </div>
     
   
     
@@ -210,18 +244,17 @@ window.Quarto = {
 
 <section id="data-for-today" class="level2">
 <h2 class="anchored" data-anchor-id="data-for-today">Data for today</h2>
-<p>We return to the Capital Bikeshare data, this time working with a small random sample of 50 days so that patterns are easier to see by eye.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
+<p>We return to the Riverview data (income vs.&nbsp;education) from last time</p>
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="notes05_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
 </figure>
 </div>
 </div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -235,20 +268,21 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Intercept</td>
-<td style="text-align: left;">-2940.400</td>
-<td style="text-align: left;">1072.078</td>
-<td style="text-align: left;">-2.74</td>
-<td style="text-align: left;">0.009</td>
+<td style="text-align: left;">11.321</td>
+<td style="text-align: left;">6.123</td>
+<td style="text-align: left;">1.85</td>
+<td style="text-align: left;">0.074</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">temp_actual</td>
-<td style="text-align: left;">100.995</td>
-<td style="text-align: left;">16.567</td>
-<td style="text-align: left;">6.10</td>
+<td style="text-align: left;">education</td>
+<td style="text-align: left;">2.651</td>
+<td style="text-align: left;">0.370</td>
+<td style="text-align: left;">7.17</td>
 <td style="text-align: left;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 </section>
@@ -302,17 +336,17 @@ Note
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="notes05_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+<p><img src="notes05_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
-<p><strong>A “good” residual plot</strong> shows no pattern: residuals bounce randomly around zero with roughly constant spread across the range of fitted values.</p>
+<p><strong>A ______________ residual plot</strong> shows no pattern: residuals bounce randomly around zero with roughly constant spread across the range of fitted values.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="notes05_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="432"></p>
+<p><img src="notes05_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="288"></p>
 </figure>
 </div>
 </div>
@@ -334,15 +368,41 @@ Note
 </ol>
 </div>
 </div>
+<p>(wait to fill these in until after we discuss)</p>
 </section>
-<section id="assessing-normality" class="level2">
-<h2 class="anchored" data-anchor-id="assessing-normality">Assessing normality</h2>
-<p>Use a histogram or normal Q-Q plot of the residuals. A “good” Q-Q plot hugs the diagonal reference line closely.</p>
+<section id="assessing-linearity" class="level2">
+<h2 class="anchored" data-anchor-id="assessing-linearity">Assessing Linearity</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes05_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="assessing-equal-variance" class="level2">
+<h2 class="anchored" data-anchor-id="assessing-equal-variance">Assessing Equal Variance</h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="notes05_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="assessing-normality" class="level2">
+<h2 class="anchored" data-anchor-id="assessing-normality">Assessing Normality</h2>
+<p>Use a histogram or normal Q-Q plot of the residuals. A “good” Q-Q plot hugs the diagonal reference line closely.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes05_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -363,17 +423,91 @@ Note
 </section>
 <section id="assessing-independence" class="level2">
 <h2 class="anchored" data-anchor-id="assessing-independence">Assessing independence</h2>
-<p>Plot residuals against whatever variable might induce dependence (time, location, subject, batch, …). Using the <em>full</em> bikes dataset ordered by date reveals a clear pattern – a strong hint that day-to-day ridership is <strong>not</strong> independent once we condition only on temperature:</p>
+<p>Plot residuals against whatever variable might induce dependence (time, location, subject, batch, …). A clear pattern is a strong hint that the independence condition is violated. For example, if employees were hired in waves and residuals cycled up and down with the order they were added to the dataset, that would be a red flag:</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="notes05_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+<p><img src="notes05_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
+<section id="making-residual-plots-in-r" class="level1">
+<h1>Making Residual Plots in R</h1>
+<p>In order to make residual plots, we first need to find the residuals. While we can do this by hand for a couple of points, it would be extremely tedious to do it for <em>every single data point</em>! Instead, we’ll use the <code>augment()</code> function from the {broom} R package to created an augmented dataset. This takes the original X and Y variables and adds the <span class="math inline">\(\hat{y}\)</span> values (<code>.fitted</code>) and residuals (<code>.resid</code>) (along with some other columns that we’ll use later)</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>city_aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(city_lm)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>city_aug</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 8
+   income education .fitted .resid   .hat .sigma .cooksd .std.resid
+    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+ 1   26.4         8    32.5  -6.10 0.140    9.05 0.0436      -0.733
+ 2   37.4         8    32.5   4.92 0.140    9.08 0.0283       0.590
+ 3   34.2        10    37.8  -3.65 0.0923   9.10 0.00927     -0.427
+ 4   25.5        10    37.8 -12.4  0.0923   8.81 0.106       -1.44 
+ 5   47.0        10    37.8   9.20 0.0923   8.95 0.0588       1.08 
+ 6   46.5        12    43.1   3.35 0.0584   9.11 0.00459      0.385
+ 7   52.5        12    43.1   9.34 0.0584   8.95 0.0356       1.07 
+ 8   37.7        12    43.1  -5.48 0.0584   9.07 0.0123      -0.629
+ 9   50.3        12    43.1   7.13 0.0584   9.03 0.0207       0.818
+10   32.6        14    48.4 -15.8  0.0380   8.63 0.0637      -1.80 
+# ℹ 22 more rows</code></pre>
+</div>
+</div>
+<p>Once we have the augmented dataset, we can make scatterplots, etc. as usual with <code>gf_point</code>/<code>gf_histogram</code> etc.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(.resid <span class="sc">~</span> .fitted, <span class="at">data =</span> city_aug)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>(<span class="sc">~</span>.resid, <span class="at">data =</span> city_aug, <span class="at">col =</span> <span class="st">"white"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>(<span class="sc">~</span> .resid, <span class="at">data =</span> <span class="fu">augment</span>(city_lm)) <span class="sc">|&gt;</span> <span class="fu">gf_qqline</span>()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(.resid <span class="sc">~</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(city_aug), <span class="at">data =</span> city_aug)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="4">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes05_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes05_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes05_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="notes05_files/figure-html/unnamed-chunk-10-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Group task
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try Part 1 of the R activity together</p>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
 <section id="what-happens-if-the-conditions-arent-met" class="level2">
 <h2 class="anchored" data-anchor-id="what-happens-if-the-conditions-arent-met">What happens if the conditions aren’t met?</h2>
 <ul>
@@ -391,6 +525,7 @@ Note
 <li>Change the type of inference (e.g.&nbsp;bootstrap)</li>
 </ol>
 </section>
+</section>
 <section id="is-x-a-good-predictor-of-y" class="level1">
 <h1>Is x a “good” predictor of y?</h1>
 <section id="partitioning-variability" class="level2">
@@ -399,14 +534,15 @@ Note
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="notes05_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+<p><img src="notes05_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="864"></p>
 </figure>
 </div>
 </div>
 </div>
-<p><span class="math display">\[\underbrace{\sum (y_i - \overline y)^2}_{SSTO} = \underbrace{\sum (\widehat y_i - \overline y)^2}_{SSR} + \underbrace{\sum e_i^2}_{SSE}\]</span></p>
+<p>Each gray/blue segment is one squared deviation in the sum – same <span class="math inline">\(x_i\)</span>’s, three different “distances”: how far each point is from <span class="math inline">\(\overline y\)</span> (Total), how far the model’s prediction <span class="math inline">\(\widehat y_i\)</span> is from <span class="math inline">\(\overline y\)</span> (Regression – the part <span class="math inline">\(x\)</span> explains), and how far each point is from its own prediction <span class="math inline">\(\widehat y_i\)</span> (Error – the residuals).</p>
+<p><span class="math display">\[\underbrace{\sum (y_i - \overline y)^2}_{SST} = \underbrace{\sum (\widehat y_i - \overline y)^2}_{SSR} + \underbrace{\sum e_i^2}_{SSE}\]</span></p>
 <p><span class="math display">\[\text{total variability} = \text{variability of } \widehat Y\text{'s} \; + \; \text{variability of residuals (}\underline{\hspace{2cm}}\text{)}\]</span></p>
-<p><span class="math display">\[R^2 = \frac{SSR}{SSTO} = \frac{\text{variability of } \widehat Y}{\text{variability of } Y}\]</span></p>
+<p><span class="math display">\[R^2 = \frac{SSR}{SST} = \frac{\text{variability of } \widehat Y}{\text{variability of } Y}\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -420,7 +556,7 @@ Note
 <p><span class="math inline">\(R^2\)</span> gives the proportion of total variability in <span class="math inline">\(Y\)</span> explained by the SLR model.</p>
 </div>
 </div>
-<p>For our small bike sample, <span class="math inline">\(R^2 =\)</span> 0.436 – about 43.6% of the variability in rides is explained by temperature.</p>
+<p>For the Riverview data, <span class="math inline">\(R^2 =\)</span> 0.632 – about 63.2% of the variability in income is explained by education.</p>
 </section>
 <section id="properties-of-r2" class="level2">
 <h2 class="anchored" data-anchor-id="properties-of-r2">Properties of <span class="math inline">\(R^2\)</span></h2>
@@ -459,39 +595,22 @@ Note
 <td style="text-align: left;"><span class="math inline">\(R^2\)</span></td>
 <td style="text-align: left;">coefficient of determination</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;"><span class="math inline">\(p\)</span></td>
-<td style="text-align: left;">a population proportion</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(\widehat p\)</span></td>
-<td style="text-align: left;">a sample proportion</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">p-value</td>
-<td style="text-align: left;"><span class="math inline">\(P(\text{test statistic} \mid H_0)\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(P(A)\)</span></td>
-<td style="text-align: left;">probability of event <span class="math inline">\(A\)</span></td>
-</tr>
 </tbody>
 </table>
 </div>
 </div>
 </section>
-<section id="r2-dangers-high-r2-doesnt-mean-good-fit" class="level2">
-<h2 class="anchored" data-anchor-id="r2-dangers-high-r2-doesnt-mean-good-fit"><span class="math inline">\(R^2\)</span> dangers: high <span class="math inline">\(R^2\)</span> doesn’t mean “good fit”</h2>
+<section id="r2-dangers" class="level2">
+<h2 class="anchored" data-anchor-id="r2-dangers"><span class="math inline">\(R^2\)</span> dangers:</h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="notes05_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+<p><img src="notes05_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>A single high-leverage point drove <span class="math inline">\(R^2\)</span> up to 0.938 even though the residual plot shows an obvious curve – the linear model is a bad fit! <strong>Always check the residual plot, not just <span class="math inline">\(R^2\)</span>.</strong></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -505,9 +624,43 @@ Note
 <p>Would you trust this model just based on its <span class="math inline">\(R^2\)</span>? What does the residual plot tell you that <span class="math inline">\(R^2\)</span> alone can’t?</p>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="finding-r2-in-r" class="level1">
+<h1>Finding <span class="math inline">\(R^2\)</span> in R</h1>
+<p>We get <span class="math inline">\(R^2\)</span> as part of the <code>summary()</code> output:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(city_lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = income ~ education, data = city)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.809  -5.783   2.088   5.127  18.379 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  11.3214     6.1232   1.849   0.0743 .  
+education     2.6513     0.3696   7.173 5.56e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 8.978 on 30 degrees of freedom
+Multiple R-squared:  0.6317,    Adjusted R-squared:  0.6194 
+F-statistic: 51.45 on 1 and 30 DF,  p-value: 5.562e-08</code></pre>
+</div>
+</div>
+<p>and you can access it directly with <code>$</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(city_lm)<span class="sc">$</span>r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6316828</code></pre>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
