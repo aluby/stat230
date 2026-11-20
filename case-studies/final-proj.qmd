@@ -340,6 +340,7 @@ help establish the context of your data.
 - Quarto appendix (separate file) (5%)
     - [ ] R code used for the analysis is shown and implemented correctly, using general conventions from class
     - [ ] R code is approximately ordered as the results are presented in the report
+    - [ ] Note: you likely ran into issues when working with your final project data that we didn't cover in class, and may have had to do some internet searches or AI prompts to solve them. That's OK! Please make sure to include an "external sources" statement that tells me if/how you used these tools (see "academic integrity" above). If your code looks substantially different than what we covered in class and you don't submit such a statement, your group may receive a 10% penalty on the final paper, and will be treated as a possible academic integrity violation. 
 - Overall presentation (10%) 
   - [ ] A separate references section is included, with any standard citation style
   - [ ] The report is structured according to the instructions
