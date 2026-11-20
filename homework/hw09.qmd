@@ -133,7 +133,6 @@ deviance(sal_reduced)
 
 # Problem 4: Salamanders and overdispersion (by hand, 5 parts)
 
-<!-- 
 Continue with `sal_glm` from Problem 4. Below are the first three sites with their fitted means ($\widehat\lambda_i$) and Pearson residuals, along with some other output.
 
 ```{r}
